@@ -1,4 +1,5 @@
-const preciosContpaqi = {
+// precios-contpaqi.js
+window.preciosContpaqi = {
   "CONTPAQi Contabilidad": {
     "anual": {
       "MonoRFC": { precio_base: 4190, usuario_adicional: 1590, renovacion: 3990 },
@@ -94,6 +95,7 @@ const preciosContpaqi = {
       Equipos: { precio_base: 5890, usuarios_incluidos: "multi", empleados_incluidos: 50, empleado_adicional: 100 },
       Empresarial: { precio_base: 9390, usuarios_incluidos: "multi", empleados_incluidos: 100, empleado_adicional: 70 },
       Corporativo: { precio_base: 23090, usuarios_incluidos: "multi", empleados_incluidos: 500, empleado_adicional: 60 }
+      // Nota: si quieres cobrar usuario extra en nube, agrega: usuario_adicional: <monto>
     }
   },
 
