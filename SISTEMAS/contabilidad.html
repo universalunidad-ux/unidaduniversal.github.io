@@ -14,12 +14,15 @@
   </style>
 </head>
 <body data-product="contpaqi-contabilidad">
-  <!-- Header: puedes copiar el mismo bloque del index tal cual -->
+  <!-- Header (igual al del index) -->
   <header>
     <div class="container nav">
       <a href="/" class="brand" aria-label="Inicio Expiriti">
         <div class="logo" aria-hidden="true">Ex</div>
-        <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
+        <div>
+          Expiriti
+          <small>Distribuidor CONTPAQi</small>
+        </div>
       </a>
       <nav aria-label="Principal">
         <ul>
@@ -46,29 +49,30 @@
   <main class="container" style="padding:32px 0">
     <a href="/#productos" class="hint">← Volver a productos</a>
     <h1 style="margin:8px 0 6px">CONTPAQi Contabilidad</h1>
-    <p class="lead" style="margin:0 0 12px">
+    <p class="lead" style="margin:0 0 16px">
       Catálogos, pólizas y reportes fiscales listos para cumplir con el SAT. Ideal para despachos y PyMEs.
     </p>
 
     <div class="grid-2" style="align-items:start">
-      <div class="card" style="padding:16px">
-        <!-- Imagen del producto (cárgala directo desde /IMG) -->
-        <img src="/IMG/Contabilidad.webp" alt="CONTPAQi Contabilidad" style="width:200px;height:auto;margin-bottom:12px">
-        <ul class="features">
-          <li>Contabilidad electrónica y balanzas</li>
-          <li>Pólizas automáticas desde bancos y comercial</li>
-          <li>Reportes fiscales y DIOT</li>
+      <!-- Columna 1: info + imagen -->
+      <article class="card" style="padding:16px">
+        <!-- Imagen del producto (desde /IMG) -->
+        <img src="/IMG/Contabilidad.webp" alt="CONTPAQi Contabilidad" style="width:220px;height:auto;margin-bottom:12px">
+        <ul class="features" style="margin-top:8px">
+          <li>Contabilidad electrónica (balanzas, pólizas, auxiliares)</li>
+          <li>DIOT, XML y reportes fiscales listos para SAT</li>
+          <li>Integración con Bancos y Comercial (pólizas automáticas)</li>
           <li>Soporte y capacitación con Expiriti</li>
         </ul>
-        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
           <a class="btn-sm" href="https://wa.me/525568437918?text=Quiero%20demo%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Pedir demo</a>
           <a class="btn-sm btn-brand" href="#calculadora">Calcular precio</a>
         </div>
-      </div>
+      </article>
 
-      <!-- Calculadora simple (puedes reemplazar por la completa cuando gustes) -->
-      <div class="card" style="padding:16px" id="calculadora">
-        <h3 style="margin:0 0 8px">Calcula tu licencia</h3>
+      <!-- Columna 2: calculadora -->
+      <article class="card" style="padding:16px" id="calculadora">
+        <h3 style="margin:0 0 10px">Calcula tu licencia</h3>
         <div class="grid-2">
           <label>Tipo RFC
             <select id="calcTipo">
@@ -88,8 +92,22 @@
         </div>
         <button id="calcDo" class="btn btn-brand" style="margin-top:10px">Calcular</button>
         <div id="calcResult" class="badge" style="margin-top:8px">Ingresa parámetros</div>
-      </div>
+
+        <!-- (Opcional) beneficios visibles tras calcular -->
+        <ul id="calcExtras" class="features" style="margin-top:12px"></ul>
+      </article>
     </div>
+
+    <!-- Sección extra (SEO / contenido) -->
+    <section style="margin-top:28px">
+      <div class="card" style="padding:16px">
+        <h3 style="margin:0 0 8px">¿Para quién es Contabilidad?</h3>
+        <p class="body" style="margin:0">
+          Despachos contables, fiscalistas y PyMEs que requieren control de pólizas, balanza y cumplimiento
+          con SAT (XML, DIOT, contabilidad electrónica). Integramos mejores prácticas y capacitación a tu equipo.
+        </p>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -112,15 +130,15 @@
       document.getElementById('mobileMenu')?.classList.toggle('open');
     });
 
-    // --- Calculadora mínima (puedes conectar tu preciosContpaqi más adelante) ---
-    // EJEMPLO: mismos tiers del index para Contabilidad.
+    // --- Calculadora mínima (mismos tiers que en tu index para Contabilidad) ---
+    // Si luego quieres conectar preciosContpaqi.js, aquí lo cambiamos.
     const PRICING = {
-      'monoRFC': {
-        'anual':       [{max:1,precio:3050},{max:3,precio:4550},{max:5,precio:6050}],
-        'tradicional': [{max:1,precio:2550},{max:3,precio:4050},{max:5,precio:5550}]
+      monoRFC: {
+        anual:       [{max:1,precio:3050},{max:3,precio:4550},{max:5,precio:6050}],
+        tradicional: [{max:1,precio:2550},{max:3,precio:4050},{max:5,precio:5550}]
       },
-      'multiRFC': {
-        'anual':       [{max:5,precio:8050},{max:10,precio:10050}]
+      multiRFC: {
+        anual:       [{max:5,precio:8050},{max:10,precio:10050}]
       }
     };
     const fmt = n => new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(n);
@@ -130,11 +148,22 @@
       const tipo = document.getElementById('calcTipo').value;
       const lic  = document.getElementById('calcLicencia').value;
       const u    = Math.max(1, parseInt(document.getElementById('calcUsuarios').value||'1',10));
+
       const tiers = PRICING?.[tipo]?.[lic];
-      const res = document.getElementById('calcResult');
-      if(!tiers){ res.textContent = 'No disponible para esa combinación'; return; }
+      const res   = document.getElementById('calcResult');
+      const list  = document.getElementById('calcExtras');
+
+      if(!tiers){ res.textContent = 'No disponible para esa combinación'; list.innerHTML=''; return; }
+
       const tier = closest(u, tiers);
       res.textContent = `Precio: ${fmt(tier.precio)} (hasta ${tier.max} usuarios)`;
+
+      // extras de valor
+      list.innerHTML = `
+        <li>Incluye instalación y guía de arranque</li>
+        <li>Soporte y capacitación inicial</li>
+        <li>Plantillas fiscales y mejores prácticas</li>
+      `;
     });
   </script>
 </body>
