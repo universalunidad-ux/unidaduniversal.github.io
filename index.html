@@ -381,12 +381,42 @@
     // Año dinámico
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Base de imágenes (GitHub permalink)
-    const ASSET_BASE = 'https://raw.githubusercontent.com/universalunidad-ux/Expiriti/c097948a9f81eae4180ff1ade206236cf92aeb78/IMGG/';
-    document.querySelectorAll('.card .icon').forEach(img=>{
-      const file = img.getAttribute('data-img');
-      if(file){ img.src = ASSET_BASE + file; }
-    });
+<script>
+  // --- IMÁGENES DE PRODUCTO (usa tus archivos .webp en GitHub Pages) ---
+  const IMG_BASE = 'https://unidaduniversal.github.io/IMG/';
+
+  // Mapa: data-img (del HTML) -> archivo real .webp en /IMG/
+  // (si cambias un nombre en /IMG/, solo actualiza aquí)
+  const IMG_MAP = {
+    // Panel Contable
+    'contabilidad.png': 'Contabilidad.webp',
+    'nominas.png':      'Nominas.webp',
+    'bancos.png':       'Bancos.webp',
+    'xml.png':          'XMLenlinea+.webp',          // ojo: lleva +
+
+    // Panel Comercial
+    'comercial-start.png':   'ComerStart.webp',
+    'comercial-premium.png': 'ComerPremium.webp',
+    'comercial-pro.png':     'ComercialPro.webp',
+
+    // Extras (por si luego los usas)
+    'factura-electronica.png': 'Facturaelectronica.webp',
+    'cfdi-en-linea.png':       'CFDI en linea+.webp'   // ojo: tiene espacios y +
+  };
+
+  // Asigna src a todos los <img class="icon" data-img="...">
+  document.querySelectorAll('.card .icon').forEach(img => {
+    const key = img.getAttribute('data-img');
+    const file = IMG_MAP[key];
+    if (!file) {
+      console.warn('Imagen no mapeada para', key);
+      return;
+    }
+    // encodeURIComponent cubre espacios y el signo + (→ %2B)
+    img.src = IMG_BASE + encodeURIComponent(file);
+  });
+</script>
+
 
     // Menú mobile
     const burger = document.getElementById('burger');
