@@ -1,13 +1,13 @@
+<script>
 (function () {
   // =========================================
   // CONFIG: Descripciones y videos por sistema
-  // Edita estos valores para cada sistema si quieres texto / video propio
   // =========================================
   const DESCRIPCIONES = {
     "CONTPAQi Contabilidad": {
       titulo: "CONTPAQi Contabilidad",
       descripcion: "Sistema para llevar contabilidad electrónica, pólizas y reportes fiscales.",
-      video: "", // pon URL de YouTube o archivo si quieres (opcional)
+      video: "",
       caracteristicas: [
         "Pólizas automáticas",
         "Reportes fiscales y estados financieros",
@@ -19,17 +19,16 @@
       descripcion: "Gestión de nóminas, pagos y obligaciones laborales.",
       video: "",
       caracteristicas: ["Cálculo de ISR", "Timbrado de nómina", "Reportes de pagos"]
-    },
-    // Agrega aquí más sistemas con la misma estructura
+    }
   };
 
   // =========================================
-  // Helpers: formato moneda, tooltip simple
+  // Helpers: formato moneda, tooltip
   // =========================================
-  const fmt = v => $${(Math.round(v) || 0).toLocaleString("es-MX")};
-  const pct = v => ${(v * 100).toFixed(0)}%;
+  const money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
+  const fmt = v => money.format(Math.round(Number(v || 0)));
+  const pct = v => `${((v || 0) * 100).toFixed(0)}%`;
 
-  // simple tooltip helper markup (uses title attribute)
   function questionMark(titleText) {
     const span = document.createElement("span");
     span.className = "tooltip-question";
@@ -47,12 +46,12 @@
 
     const sistemaActual = app.dataset.system;
     if (!sistemaActual || !preciosContpaqi[sistemaActual]) {
-      app.innerHTML = <p>Error: sistema no encontrado. Asegura data-system="${sistemaActual}" y que precios-contpaqi.js esté cargado.</p>;
+      app.innerHTML = `<p>Error: sistema no encontrado. Asegura data-system="${sistemaActual}" y que precios-contpaqi.js esté cargado.</p>`;
       return;
     }
 
     // build UI
-    app.innerHTML = ""; // limpiar
+    app.innerHTML = "";
     const desc = DESCRIPCIONES[sistemaActual] || {
       titulo: sistemaActual,
       descripcion: "",
@@ -60,7 +59,7 @@
       caracteristicas: []
     };
 
-    // Header: titulo, descripcion, video
+    // Header
     const header = document.createElement("div");
     header.className = "sys-header";
     const h = document.createElement("h2");
@@ -74,9 +73,7 @@
     if (desc.video) {
       const videoWrapper = document.createElement("div");
       videoWrapper.className = "sys-video";
-      // If YouTube link -> embed; otherwise show link:
       if (desc.video.includes("youtube.com") || desc.video.includes("youtu.be")) {
-        // attempt to extract id
         let id = "";
         const m = desc.video.match(/(?:v=|\/)([A-Za-z0-9_-]{6,})/);
         if (m && m[1]) id = m[1];
@@ -84,8 +81,8 @@
           const iframe = document.createElement("iframe");
           iframe.width = "560";
           iframe.height = "315";
-          iframe.src = https://www.youtube.com/embed/${id};
-          iframe.title = ${desc.titulo} video;
+          iframe.src = `https://www.youtube.com/embed/${id}`;
+          iframe.title = `${desc.titulo} video`;
           iframe.setAttribute("frameborder", "0");
           iframe.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture");
           iframe.setAttribute("allowfullscreen", "");
@@ -107,7 +104,6 @@
       header.appendChild(videoWrapper);
     }
 
-    // caracteristicas
     if (desc.caracteristicas && desc.caracteristicas.length) {
       const ul = document.createElement("ul");
       desc.caracteristicas.forEach(c => {
@@ -120,72 +116,71 @@
 
     app.appendChild(header);
 
-    // Contenedor principal para calculadora y opciones
+    // Contenedor principal
     const main = document.createElement("div");
     main.className = "sys-main";
 
-    // Crear calculadora primaria
+    // Calculadora primaria
     const calc1Container = document.createElement("div");
     calc1Container.id = "calc-primary";
     calc1Container.className = "calc-container";
     main.appendChild(calc1Container);
 
-    // Panel para integrar segundo sistema
+    // Panel integración
     const integrPanel = document.createElement("div");
     integrPanel.className = "integr-panel";
     const integrText = document.createElement("p");
-    integrText.innerHTML = Integra tu sistema con otro adicional y recibe <strong>15% de descuento</strong> en cada sistema!;
+    integrText.innerHTML = `Integra tu sistema con otro adicional y recibe <strong>15% de descuento</strong> en cada sistema!`;
     integrPanel.appendChild(integrText);
 
-    // icons list
     const iconsWrap = document.createElement("div");
     iconsWrap.className = "icons-wrap";
-    // create clickable icons for other systems
     Object.keys(preciosContpaqi).forEach(name => {
-      if (name === sistemaActual) return; // skip current
+      if (name === sistemaActual) return;
       const btn = document.createElement("button");
       btn.className = "system-icon";
       btn.type = "button";
       btn.dataset.system = name;
       btn.title = name;
-      btn.innerHTML = <div class="icon-placeholder">${name.split(" ")[1] || "S"}</div><div class="icon-label">${name}</div>;
+      btn.innerHTML = `
+        <div class="icon-placeholder">${name.split(" ")[1] || "S"}</div>
+        <div class="icon-label">${name}</div>
+      `;
       btn.addEventListener("click", () => {
-        // load second system container
-        showSecondarySystem(name, app);
+        showSecondarySystem(name);
       });
       iconsWrap.appendChild(btn);
     });
     integrPanel.appendChild(iconsWrap);
     main.appendChild(integrPanel);
 
-    // Secondary system container placeholder
+    // Contenedor secundario + resumen
     const secondaryWrap = document.createElement("div");
     secondaryWrap.id = "secondary-wrap";
     main.appendChild(secondaryWrap);
 
-    // Summary combined
     const combinedWrap = document.createElement("div");
     combinedWrap.id = "combined-wrap";
     main.appendChild(combinedWrap);
 
     app.appendChild(main);
 
-    // ===== create calculators
+    // crear calculadora 1
     createCalculator(calc1Container, sistemaActual, true);
-    // combined summary update watcher
-    setInterval(() => updateCombinedSummary(sistemaActual), 400); // small interval to update when second calc exists
+    // refresco del combinado
+    setInterval(() => updateCombinedSummary(), 400);
   }
 
   // =========================================
-  // show secondary system panel (loads description + calculator)
+  // Panel secundario
   // =========================================
-  function showSecondarySystem(name, app) {
+  function showSecondarySystem(name) {
     const secWrap = document.getElementById("secondary-wrap");
-    secWrap.innerHTML = ""; // limpiar
+    secWrap.innerHTML = "";
 
-    const header = document.createElement("h3");
-    header.textContent = Sistema adicional: ${name};
-    secWrap.appendChild(header);
+    const h3 = document.createElement("h3");
+    h3.textContent = `Sistema adicional: ${name}`;
+    secWrap.appendChild(h3);
 
     const descObj = DESCRIPCIONES[name] || { descripcion: "", video: "", caracteristicas: [] };
     const p = document.createElement("p");
@@ -200,48 +195,42 @@
       secWrap.appendChild(a);
     }
 
-    // create second calculator
     const calc2Container = document.createElement("div");
     calc2Container.id = "calc-secondary";
     calc2Container.className = "calc-container";
     secWrap.appendChild(calc2Container);
 
-    createCalculator(calc2Container, name, false); // second calculator
+    createCalculator(calc2Container, name, false);
 
-    // Add small note about discount eligibility
     const note = document.createElement("p");
-    note.innerHTML = <small>Nota: XML en Línea no aplica para descuento de integración.</small>;
+    note.innerHTML = `<small>Nota: XML en Línea no aplica para descuento de integración.</small>`;
     secWrap.appendChild(note);
   }
 
   // =========================================
-  // createCalculator: genera UI + lógica para un sistema dentro de un contenedor
-  // container: DOM element
-  // sistemaName: string key de preciosContpaqi
-  // isPrimary: boolean (true para primer sistema)
+  // Crear calculadora
   // =========================================
   function createCalculator(container, sistemaName, isPrimary) {
     container.innerHTML = "";
     const systemPrices = preciosContpaqi[sistemaName];
 
-    // Title
+    // Título
     const title = document.createElement("h4");
-    title.textContent = ${sistemaName} — Calculadora;
+    title.textContent = `${sistemaName} — Calculadora`;
     container.appendChild(title);
 
-    // Build form elements
+    // Formulario
     const form = document.createElement("div");
     form.className = "calc-form";
 
-    // Licencia select (anual/tradicional/nube)
+    // Modalidad
     const licenciaLabel = document.createElement("label");
     licenciaLabel.textContent = "Modalidad: ";
     const licenciaSel = document.createElement("select");
-    licenciaSel.id = ${isPrimary ? "lic1" : "lic2"};
+    licenciaSel.id = (isPrimary ? "lic1" : "lic2");
     Object.keys(systemPrices).forEach(k => {
       const opt = document.createElement("option");
       opt.value = k;
-      // nicer label mapping
       const lbl = k === "anual" ? "Anual (renovación)" : k === "tradicional" ? "Tradicional (licencia)" : "Nube";
       opt.textContent = lbl;
       licenciaSel.appendChild(opt);
@@ -249,50 +238,49 @@
     licenciaLabel.appendChild(licenciaSel);
     form.appendChild(licenciaLabel);
 
-    // Subselect: RFC types or niveles (rfc/nivel)
+    // Tipo/Opción
     const rfcLabel = document.createElement("label");
     rfcLabel.textContent = "Tipo / Opción: ";
     const rfcSel = document.createElement("select");
-    rfcSel.id = ${isPrimary ? "rfc1" : "rfc2"};
+    rfcSel.id = (isPrimary ? "rfc1" : "rfc2");
     rfcLabel.appendChild(rfcSel);
     form.appendChild(rfcLabel);
 
-    // Mono/Multi tooltip
+    // Ayuda Mono/Multi
     const mmHelp = questionMark("MonoRFC: solo 1 RFC (empresa). MultiRFC: permite varias empresas/folios en la misma licencia.");
     form.appendChild(mmHelp);
 
-    // Nivel (solo para nube)
+    // Nivel (nube)
     const nivelLabel = document.createElement("label");
     nivelLabel.textContent = "Nivel (solo nube): ";
     const nivelSel = document.createElement("select");
-    nivelSel.id = ${isPrimary ? "niv1" : "niv2"};
+    nivelSel.id = (isPrimary ? "niv1" : "niv2");
     nivelLabel.appendChild(nivelSel);
     nivelLabel.style.display = "none";
     form.appendChild(nivelLabel);
 
-    // Usuarios input
+    // Usuarios
     const userLabel = document.createElement("label");
     userLabel.textContent = "Usuarios: ";
     const userInput = document.createElement("input");
     userInput.type = "number";
     userInput.min = "1";
     userInput.value = "1";
-    userInput.id = ${isPrimary ? "usr1" : "usr2"};
+    userInput.id = (isPrimary ? "usr1" : "usr2");
     userLabel.appendChild(userInput);
     form.appendChild(userLabel);
 
-    // Tipo de operación (nueva / renovación / actualización) - explicit text
+    // Operación
     const opLabel = document.createElement("label");
     opLabel.textContent = "Operación: ";
     const opSel = document.createElement("select");
-    opSel.id = ${isPrimary ? "op1" : "op2"};
-    // options will depend on modality, we'll fill after
+    opSel.id = (isPrimary ? "op1" : "op2");
     opLabel.appendChild(opSel);
     form.appendChild(opLabel);
 
     container.appendChild(form);
 
-    // Results area: detailed table
+    // Resultados
     const results = document.createElement("div");
     results.className = "calc-results";
     const table = document.createElement("table");
@@ -311,7 +299,7 @@
     results.appendChild(table);
     container.appendChild(results);
 
-    // attach events & populate rfc/nivel options based on selected modality
+    // Rellenar selects según modalidad
     function refreshOptions() {
       const lic = licenciaSel.value;
       rfcSel.innerHTML = "";
@@ -320,7 +308,6 @@
       opSel.innerHTML = "";
 
       if (lic === "nube") {
-        // list niveles
         if (systemPrices.nube) {
           Object.keys(systemPrices.nube).forEach(n => {
             const opt = document.createElement("option");
@@ -330,7 +317,6 @@
           });
         }
         nivelLabel.style.display = "inline-block";
-        // operation options for nube (treat as new/annual model)
         ["Contratar (nueva)", "Renovación anual"].forEach(o => {
           const opt = document.createElement("option");
           opt.value = o;
@@ -338,13 +324,11 @@
           opSel.appendChild(opt);
         });
       } else {
-        // anual or tradicional -> list inner keys
         const block = systemPrices[lic];
         if (block) {
           Object.keys(block).forEach(k => {
             const opt = document.createElement("option");
             opt.value = k;
-            // map readable labels for keys
             let lbl = k;
             if (k.toLowerCase().includes("mono")) lbl = "MonoRFC";
             if (k.toLowerCase().includes("multi")) lbl = "MultiRFC";
@@ -355,7 +339,6 @@
             rfcSel.appendChild(opt);
           });
         }
-        // operation options:
         if (lic === "anual") {
           ["Renovación anual", "Nueva anual (contratar)"].forEach(o => {
             const opt = document.createElement("option");
@@ -364,7 +347,6 @@
             opSel.appendChild(opt);
           });
         } else {
-          // tradicional
           ["Licencia Tradicional (nueva)", "Actualización tradicional"].forEach(o => {
             const opt = document.createElement("option");
             opt.value = o;
@@ -373,121 +355,112 @@
           });
         }
       }
-      // add tooltip for Mono/Multi if rfcSel contains them
-      // (we keep the simple title via questionMark earlier)
       calculateAndRender();
     }
 
-    // calculation logic
+    // Calcular y pintar
     function calculateAndRender() {
       const lic = licenciaSel.value;
       const rfcType = rfcSel.value;
       const nivel = nivelSel.value;
       const usuarios = parseInt(userInput.value) || 1;
-      const op = opSel.value;
+      const op = opSel.value || "";
 
       let base = 0;
       let usuariosAddImporte = 0;
       let usuariosExtras = 0;
 
-      // NUBE
       if (lic === "nube") {
         const datosNube = systemPrices.nube && systemPrices.nube[nivel];
         if (!datosNube) return writeZeros();
-        base = datosNube.precio_base || 0;
-        // check included users
-        let incluidos = datosNube.usuarios_incluidos === "multi" ? usuarios : (datosNube.usuarios_incluidos || 1);
+        base = Number(datosNube.precio_base || 0);
+        const incluidos = datosNube.usuarios_incluidos === "multi"
+          ? usuarios
+          : Number(datosNube.usuarios_incluidos || 1);
         usuariosExtras = Math.max(usuarios - incluidos, 0);
-        // price per extra user for nube stored at systemPrices.nube.usuario_adicional (if exists)
-        const perUserNube = systemPrices.nube.usuario_adicional || 0;
+        const perUserNube = Number(systemPrices.nube.usuario_adicional || 0);
         usuariosAddImporte = usuariosExtras * perUserNube;
+
       } else {
-        // anual o tradicional
         const datosLic = (systemPrices[lic] && systemPrices[lic][rfcType]) || null;
         if (!datosLic) return writeZeros();
-        base = datosLic.precio_base || 0;
-        // logic difference: you asked que el precio por usuario adicional para anuales sea precio por usuario en red,
-        // y que "usuario_adicional" sea solo para tradicionales.
-        // We'll use this rule:
-        // - If lic === "anual": look for datosLic.usuario_en_red OR datosLic.usuario_adicional as fallback.
-        // - If lic === "tradicional": use datosLic.usuario_adicional (si existe)
-        let perUser = 0;
+
+        // === Base según operación ===
         if (lic === "anual") {
-          perUser = datosLic.usuario_en_red || datosLic.usuario_adicional || 0;
-        } else {
-          perUser = datosLic.usuario_adicional || 0;
+          const esRenov = /renovación/i.test(op);
+          base = Number((esRenov ? (datosLic.renovacion ?? datosLic.precio_base) : datosLic.precio_base) || 0);
+          const perUser = Number(datosLic.usuario_en_red ?? datosLic.usuario_adicional ?? 0);
+          usuariosExtras = Math.max(usuarios - 1, 0);
+          usuariosAddImporte = usuariosExtras * perUser;
+
+        } else { // tradicional
+          if (rfcType === "crecimiento_usuario") {
+            base = 0;
+            const perUser = Number((systemPrices.tradicional.crecimiento_usuario && systemPrices.tradicional.crecimiento_usuario.usuario_adicional) || 0);
+            usuariosExtras = Math.max(usuarios - 1, 0);
+            usuariosAddImporte = usuariosExtras * perUser;
+          } else {
+            base = Number(datosLic.precio_base || 0);
+            // usuario adicional de la fila o fallback al crecimiento_usuario
+            const perUser = Number(
+              (datosLic.usuario_adicional != null ? datosLic.usuario_adicional : (systemPrices.tradicional.crecimiento_usuario && systemPrices.tradicional.crecimiento_usuario.usuario_adicional)) || 0
+            );
+            usuariosExtras = Math.max(usuarios - 1, 0);
+            usuariosAddImporte = usuariosExtras * perUser;
+          }
         }
-        usuariosExtras = Math.max(usuarios - 1, 0);
-        usuariosAddImporte = usuariosExtras * perUser;
       }
 
-      // subtotal before discount
-      let subtotal = base + usuariosAddImporte;
+      const subtotal = base + usuariosAddImporte;
 
-      // discount logic when two systems chosen:
-      // global check: if there's a secondary system loaded and both are eligible, apply 15% each
+      // Descuento por 2do sistema (excepto XML en Línea)
       let discountPct = 0;
       const secondaryExists = !!document.getElementById("calc-secondary");
-      if (secondaryExists) {
-        // we will apply discount outside, but for display we indicate potential 15%
-        // However if current system is "CONTPAQi XML en Línea" exclude discount
-        if (!sistemaName.includes("XML en Línea")) {
-          discountPct = 0.15;
-        } else {
-          discountPct = 0;
-        }
+      if (secondaryExists && !sistemaName.includes("XML en Línea")) {
+        discountPct = 0.15;
       }
 
-      // compute discount amount for this system
       const discountAmt = subtotal * discountPct;
       const afterDiscount = subtotal - discountAmt;
-
       const iva = afterDiscount * 0.16;
       const total = afterDiscount + iva;
 
-      // write values to DOM
       document.getElementById(isPrimary ? 'base1' : 'base2').textContent = fmt(base);
-      document.getElementById(isPrimary ? 'uadd1' : 'uadd2').textContent = fmt(usuariosAddImporte) + ` (${usuariosExtras} extras)`;
-      document.getElementById(isPrimary ? 'disc1' : 'disc2').textContent = ${pct(discountPct)} / ${fmt(discountAmt)};
+      document.getElementById(isPrimary ? 'uadd1' : 'uadd2').textContent = `${fmt(usuariosAddImporte)} (${usuariosExtras} extras)`;
+      document.getElementById(isPrimary ? 'disc1' : 'disc2').textContent = `${pct(discountPct)} / ${fmt(discountAmt)}`;
       document.getElementById(isPrimary ? 'sub1' : 'sub2').textContent = fmt(afterDiscount);
       document.getElementById(isPrimary ? 'iva1' : 'iva2').textContent = fmt(iva);
       document.getElementById(isPrimary ? 'tot1' : 'tot2').textContent = fmt(total);
 
-      // update combined summary too
-      updateCombinedSummary(); // immediate
+      updateCombinedSummary();
     }
 
     function writeZeros() {
       document.getElementById(isPrimary ? 'base1' : 'base2').textContent = fmt(0);
       document.getElementById(isPrimary ? 'uadd1' : 'uadd2').textContent = fmt(0);
-      document.getElementById(isPrimary ? 'disc1' : 'disc2').textContent = 0% / ${fmt(0)};
+      document.getElementById(isPrimary ? 'disc1' : 'disc2').textContent = `0% / ${fmt(0)}`;
       document.getElementById(isPrimary ? 'sub1' : 'sub2').textContent = fmt(0);
       document.getElementById(isPrimary ? 'iva1' : 'iva2').textContent = fmt(0);
       document.getElementById(isPrimary ? 'tot1' : 'tot2').textContent = fmt(0);
     }
 
-    // events
+    // Eventos
     licenciaSel.addEventListener("change", refreshOptions);
     rfcSel.addEventListener("change", calculateAndRender);
     nivelSel.addEventListener("change", calculateAndRender);
     userInput.addEventListener("change", calculateAndRender);
     opSel.addEventListener("change", calculateAndRender);
 
-    // initial fill
     refreshOptions();
   }
 
   // =========================================
-  // updateCombinedSummary: muestra resumen si hay dos calculadoras
+  // Resumen combinado
   // =========================================
-  function updateCombinedSummary(primarySystemName) {
+  function updateCombinedSummary() {
     const combined = document.getElementById("combined-wrap");
-    combined.innerHTML = ""; // limpiar
+    combined.innerHTML = "";
 
-    const calcPrimaryExists = document.getElementById("calc-primary");
-    const calcSecondaryExists = document.getElementById("calc-secondary");
-
-    // gather totals
     function parseCurrencyEl(id) {
       const el = document.getElementById(id);
       if (!el) return 0;
@@ -497,42 +470,40 @@
 
     const total1 = parseCurrencyEl("tot1");
     const total2 = parseCurrencyEl("tot2");
+    const calcSecondaryExists = document.getElementById("calc-secondary");
 
     if (!calcSecondaryExists) {
-      // show single total and CTA to integrate
       const p = document.createElement("p");
-      p.innerHTML = <strong>Total:</strong> ${fmt(total1)};
+      p.innerHTML = `<strong>Total:</strong> ${fmt(total1)}`;
       combined.appendChild(p);
-    } else {
-      // combined totals - also compute combined discount percent and amounts for display
-      // compute subtotal and discount amounts read from fields
-      const sub1 = parseCurrencyEl("sub1"); // after discount
-      const sub2 = parseCurrencyEl("sub2");
-      const disc1Text = document.getElementById("disc1")?.textContent || "0% / $0";
-      const disc2Text = document.getElementById("disc2")?.textContent || "0% / $0";
-
-      const box = document.createElement("div");
-      box.className = "combined-summary";
-      box.innerHTML = `
-        <h4>Resumen combinado</h4>
-        <p>Sistema 1: ${fmt(total1)}</p>
-        <p>Sistema 2: ${fmt(total2)}</p>
-        <p><strong>Total combinado:</strong> ${fmt(total1 + total2)}</p>
-        <table class="combined-table">
-          <thead><tr><th>Concepto</th><th>Importe</th></tr></thead>
-          <tbody>
-            <tr><td>Subtotal sistema 1 (después descuento)</td><td>${fmt(sub1)}</td></tr>
-            <tr><td>Subtotal sistema 2 (después descuento)</td><td>${fmt(sub2)}</td></tr>
-            <tr><td>IVA total (sistemas)</td><td>${fmt((parseCurrencyEl("iva1") + parseCurrencyEl("iva2")))}</td></tr>
-            <tr><td><strong>Total combinado</strong></td><td><strong>${fmt(total1 + total2)}</strong></td></tr>
-          </tbody>
-        </table>
-      `;
-      combined.appendChild(box);
+      return;
     }
+
+    const sub1 = parseCurrencyEl("sub1");
+    const sub2 = parseCurrencyEl("sub2");
+    const ivaTotal = parseCurrencyEl("iva1") + parseCurrencyEl("iva2");
+
+    const box = document.createElement("div");
+    box.className = "combined-summary";
+    box.innerHTML = `
+      <h4>Resumen combinado</h4>
+      <p>Sistema 1: ${fmt(total1)}</p>
+      <p>Sistema 2: ${fmt(total2)}</p>
+      <p><strong>Total combinado:</strong> ${fmt(total1 + total2)}</p>
+      <table class="combined-table">
+        <thead><tr><th>Concepto</th><th>Importe</th></tr></thead>
+        <tbody>
+          <tr><td>Subtotal sistema 1 (después descuento)</td><td>${fmt(sub1)}</td></tr>
+          <tr><td>Subtotal sistema 2 (después descuento)</td><td>${fmt(sub2)}</td></tr>
+          <tr><td>IVA total (sistemas)</td><td>${fmt(ivaTotal)}</td></tr>
+          <tr><td><strong>Total combinado</strong></td><td><strong>${fmt(total1 + total2)}</strong></td></tr>
+        </tbody>
+      </table>
+    `;
+    combined.appendChild(box);
   }
 
-  // add minimal CSS for readability (you can move to file)
+  // CSS mínimo
   function addStyles() {
     const css = `
       #app { font-family: Arial, Helvetica, sans-serif; max-width: 980px; margin: 14px;}
@@ -554,7 +525,7 @@
     document.head.appendChild(style);
   }
 
-  // init on DOM ready
+  // init
   addStyles();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
@@ -562,3 +533,4 @@
     init();
   }
 })();
+</script>
