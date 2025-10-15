@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<base href="./">
 
   <style>
     :root{--bg:#0b0f14;--card:#111723;--muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--maxw:1100px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)}
@@ -95,7 +96,7 @@
   <!-- Header -->
   <header>
     <div class="container nav">
-      <a href="./" class="brand" aria-label="Inicio Expiriti">
+ <a href="./" class="brand" aria-label="Inicio Expiriti">
         <div class="logo" aria-hidden="true">Ex</div>
         <div>
           Expiriti
@@ -456,7 +457,15 @@
     });
 
     // -------- IMÁGENES (.webp locales en /IMG) --------
-const IMG_BASE = 'IMG/';   // o './IMG/'
+const IMG_BASE = 'IMG/'; // o './IMG/'
+
+document.querySelectorAll('.card .icon').forEach(img=>{
+  const key = img.getAttribute('data-key');
+  const file = IMG_MAP[key];
+  if(!file){ console.warn('Imagen no mapeada:', key); return; }
+  img.src = IMG_BASE + encodeURIComponent(file);
+});
+
     const IMG_MAP = {
       // contable
       'contabilidad':      'contabilidad.webp',
