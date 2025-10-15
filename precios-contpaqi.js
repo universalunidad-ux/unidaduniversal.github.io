@@ -1,4 +1,4 @@
-<script>
+ <script>
 // precios-contpaqi.js (actualizado)
 window.preciosContpaqi = {
   "CONTPAQi Contabilidad": {
