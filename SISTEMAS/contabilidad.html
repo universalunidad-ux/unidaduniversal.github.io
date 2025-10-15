@@ -108,30 +108,12 @@
         </div>
       </div>
 
-      <!-- Calculadora -->
-      <div class="card" id="calculadora" style="padding:16px">
-        <h3 style="margin:0 0 8px">Calcula tu licencia</h3>
-        <div class="grid-2">
-          <label>Tipo RFC
-            <select id="calcTipo">
-              <option value="monoRFC">monoRFC</option>
-              <option value="multiRFC">multiRFC</option>
-            </select>
-          </label>
-          <label>Licencia
-            <select id="calcLicencia">
-              <option value="anual">Anual</option>
-              <option value="tradicional">Tradicional</option>
-            </select>
-          </label>
-          <label>Usuarios
-            <input id="calcUsuarios" type="number" min="1" step="1" value="1">
-          </label>
-        </div>
-        <button id="calcDo" class="btn btn-brand" style="margin-top:10px">Calcular</button>
-        <div id="calcResult" class="badge" style="margin-top:8px">Ingresa parámetros</div>
-      </div>
-    </div>
+<!-- Calculadora (general) -->
+<div class="card" id="calculadora" style="padding:16px">
+  <h3 style="margin:0 0 8px">Calcula tu licencia</h3>
+  <div id="app" data-system="CONTPAQi Contabilidad"></div>
+</div>
+
 
     <!-- Sección de características ampliada (opcional) -->
     <section>
@@ -168,15 +150,9 @@
     });
 
     // Calculadora mínima (puedes sustituir con tu preciosContpaqi.js después)
-    const PRICING = {
-      monoRFC: {
-        anual:       [{max:1,precio:3050},{max:3,precio:4550},{max:5,precio:6050}],
-        tradicional: [{max:1,precio:2550},{max:3,precio:4050},{max:5,precio:5550}]
-      },
-      multiRFC: {
-        anual:       [{max:5,precio:8050},{max:10,precio:10050}]
-      }
-    };
+<script src="/precios-contpaqi.js"></script>
+<script src="/calculadora.js"></script>
+
     const fmt = n => new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(n);
     const closest = (u,tiers)=> tiers.find(t=>u<=t.max) || tiers[tiers.length-1];
 
