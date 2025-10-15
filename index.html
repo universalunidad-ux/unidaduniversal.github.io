@@ -41,7 +41,7 @@
     .badge{border:1px solid #1f2a3a;background:#0e1520;border-radius:999px;padding:8px 12px;color:#c8d3e5;font-size:13px}
     .hero-card{background:radial-gradient(1200px 500px at 30% -20%, rgba(45,212,191,.18), transparent 40%), #0d131d;border:1px solid #1b2535;border-radius:18px;padding:18px}
 
-    /* Secciones y tarjetas */
+    /* Sections & cards */
     section{padding:42px 0;border-top:1px solid #11182725}
     .section-title{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:18px}
     .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -67,7 +67,7 @@
     /* Grid helpers */
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 
-    /* Formularios */
+    /* Forms */
     form{display:grid;gap:12px}
     input, select, textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #223044;background:#0e1520;color:#e2e8f0}
     label{font-size:14px;color:#b8c4d7}
@@ -183,45 +183,57 @@
       <div id="panel-contable" role="tabpanel" aria-labelledby="tab-contable">
         <div class="cards">
           <article class="card" data-category="contable">
-            <a class="card-link" href="sistemas/contabilidad.html" style="display:block">
-              <div class="head"><img class="icon" data-img="contabilidad.png" alt="Icono Contabilidad"><span class="tag">Contabilidad</span><h3>CONTPAQi Contabilidad</h3></div>
+            <a class="card-link" href="/SISTEMAS/contabilidad.html" style="display:block">
+              <div class="head">
+                <img class="icon" data-key="contabilidad" alt="Icono Contabilidad">
+                <span class="tag">Contabilidad</span><h3>CONTPAQi Contabilidad</h3>
+              </div>
               <div class="body"><p>Catálogos, pólizas y reportes fiscales listos para cumplir con el SAT. Ideal para despachos y PyMEs.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="sistemas/contabilidad.html">Ver más</a>
+              <a class="btn-sm" href="/SISTEMAS/contabilidad.html">Ver más</a>
               <a class="btn-sm btn-brand" href="https://wa.me/525568437918?text=Info%20Contabilidad" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="contable">
-            <a class="card-link" href="sistemas/nominas.html" style="display:block">
-              <div class="head"><img class="icon" data-img="nominas.png" alt="Icono Nóminas"><span class="tag">Nóminas</span><h3>CONTPAQi Nóminas</h3></div>
+            <a class="card-link" href="/SISTEMAS/nominas.html" style="display:block">
+              <div class="head">
+                <img class="icon" data-key="nominas" alt="Icono Nóminas">
+                <span class="tag">Nóminas</span><h3>CONTPAQi Nóminas</h3>
+              </div>
               <div class="body"><p>Cálculo, incidencias y timbrado sin complicaciones. Capacitación y migración incluidas.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="sistemas/nominas.html">Ver más</a>
+              <a class="btn-sm" href="/SISTEMAS/nominas.html">Ver más</a>
               <a class="btn-sm btn-brand" href="https://wa.me/525568437918?text=Info%20N%C3%B3minas" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="contable">
-            <a class="card-link" href="sistemas/bancos.html" style="display:block">
-              <div class="head"><img class="icon" data-img="bancos.png" alt="Icono Bancos"><span class="tag">Bancos</span><h3>CONTPAQi Bancos</h3></div>
+            <a class="card-link" href="/SISTEMAS/bancos.html" style="display:block">
+              <div class="head">
+                <img class="icon" data-key="bancos" alt="Icono Bancos">
+                <span class="tag">Bancos</span><h3>CONTPAQi Bancos</h3>
+              </div>
               <div class="body"><p>Conciliación bancaria ágil, flujos de caja y plantillas para acelerar tu cierre.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="sistemas/bancos.html">Ver más</a>
+              <a class="btn-sm" href="/SISTEMAS/bancos.html">Ver más</a>
               <a class="btn-sm btn-brand" href="https://wa.me/525568437918?text=Info%20Bancos" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="contable">
-            <a class="card-link" href="sistemas/xml.html" style="display:block">
-              <div class="head"><img class="icon" data-img="xml.png" alt="Icono XML en línea+"><span class="tag">XML</span><h3>XML en línea+</h3></div>
+            <a class="card-link" href="/SISTEMAS/xml.html" style="display:block">
+              <div class="head">
+                <img class="icon" data-key="xml" alt="Icono XML en línea+">
+                <span class="tag">XML</span><h3>XML en línea+</h3>
+              </div>
               <div class="body"><p>Descarga y administración de CFDI directamente del SAT para tu contabilidad.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="sistemas/xml.html">Ver más</a>
+              <a class="btn-sm" href="/SISTEMAS/xml.html">Ver más</a>
               <a class="btn-sm btn-brand" href="https://wa.me/525568437918?text=Info%20XML%20en%20l%C3%ADnea%2B" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
@@ -232,34 +244,43 @@
       <div id="panel-comercial" class="hidden" role="tabpanel" aria-labelledby="tab-comercial">
         <div class="cards">
           <article class="card" data-category="comercial">
-            <a class="card-link" href="sistemas/comercial-start.html" style="display:block">
-              <div class="head"><img class="icon" data-img="comercial-start.png" alt="Icono Comercial Start"><span class="tag">Comercial</span><h3>CONTPAQi Comercial Start</h3></div>
+            <a class="card-link" href="/SISTEMAS/comercial-start.html" style="display:block">
+              <div class="head">
+                <img class="icon" data-key="comercial-start" alt="Icono Comercial Start">
+                <span class="tag">Comercial</span><h3>CONTPAQi Comercial Start</h3>
+              </div>
               <div class="body"><p>Entrada ideal para ventas e inventario con lo esencial para arrancar.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="sistemas/comercial-start.html">Ver más</a>
+              <a class="btn-sm" href="/SISTEMAS/comercial-start.html">Ver más</a>
               <a class="btn-sm btn-brand" href="https://wa.me/525568437918?text=Info%20Comercial%20Start" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="comercial">
-            <a class="card-link" href="sistemas/comercial-premium.html" style="display:block">
-              <div class="head"><img class="icon" data-img="comercial-premium.png" alt="Icono Comercial Premium"><span class="tag">Comercial</span><h3>CONTPAQi Comercial Premium</h3></div>
+            <a class="card-link" href="/SISTEMAS/comercial-premium.html" style="display:block">
+              <div class="head">
+                <img class="icon" data-key="comercial-premium" alt="Icono Comercial Premium">
+                <span class="tag">Comercial</span><h3>CONTPAQi Comercial Premium</h3>
+              </div>
               <div class="body"><p>Control avanzado de listas de precio, políticas y reportes. Ideal para crecimiento.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="sistemas/comercial-premium.html">Ver más</a>
+              <a class="btn-sm" href="/SISTEMAS/comercial-premium.html">Ver más</a>
               <a class="btn-sm btn-brand" href="https://wa.me/525568437918?text=Info%20Comercial%20Premium" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="comercial">
-            <a class="card-link" href="sistemas/comercial-pro.html" style="display:block">
-              <div class="head"><img class="icon" data-img="comercial-pro.png" alt="Icono Comercial Pro"><span class="tag">Comercial</span><h3>CONTPAQi Comercial Pro</h3></div>
+            <a class="card-link" href="/SISTEMAS/comercial-pro.html" style="display:block">
+              <div class="head">
+                <img class="icon" data-key="comercial-pro" alt="Icono Comercial Pro">
+                <span class="tag">Comercial</span><h3>CONTPAQi Comercial Pro</h3>
+              </div>
               <div class="body"><p>Para operaciones con alto volumen y resurtidos. Compatible multi-sucursal.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="sistemas/comercial-pro.html">Ver más</a>
+              <a class="btn-sm" href="/SISTEMAS/comercial-pro.html">Ver más</a>
               <a class="btn-sm btn-brand" href="https://wa.me/525568437918?text=Info%20Comercial%20Pro" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
@@ -303,7 +324,7 @@
     </div>
   </section>
 
-  <!-- Testimonios (placeholder) -->
+  <!-- Testimonios -->
   <section id="testimonios">
     <div class="container">
       <div class="section-title">
@@ -434,38 +455,36 @@
       window.open(`https://wa.me/525568437918?text=${texto}`, '_blank');
     });
 
-    // ----------------- IMÁGENES (.webp en GitHub Pages) -----------------
-    const IMG_BASE = 'https://unidaduniversal.github.io/IMG/';
+    // -------- IMÁGENES (.webp locales en /IMG) --------
+    const IMG_BASE = '/IMG/';
     const IMG_MAP = {
-      // panel contable
-      'contabilidad.png': 'Contabilidad.webp',
-      'nominas.png':      'Nominas.webp',
-      'bancos.png':       'Bancos.webp',
-      'xml.png':          'XMLenlinea.webp',
-      // panel comercial
-      'comercial-start.png':   'ComerStart.webp',
-      'comercial-premium.png': 'ComerPremium.webp',
-      'comercial-pro.png':     'ComercialPro.webp',
-      'factura-electronica.png': 'Facturaelectronica.webp',
-      'cfdi-en-linea.png':       'CFDIenlinea.webp'
-      // opcionales
-
+      // contable
+      'contabilidad':      'Contabilidad.webp',
+      'nominas':           'Nominas.webp',
+      'bancos':            'Bancos.webp',
+      'xml':               'XMLenlinea.webp',
+      // comercial
+      'comercial-start':   'ComerStart.webp',
+      'comercial-premium': 'ComerPremium.webp',
+      'comercial-pro':     'ComercialPro.webp',
+      // extras (si los usas)
+      'factura-electronica':'Facturaelectronica.webp',
+      'cfdi-en-linea':      'CFDIenlinea.webp'
     };
     document.querySelectorAll('.card .icon').forEach(img=>{
-      const key = img.getAttribute('data-img');
+      const key = img.getAttribute('data-key');
       const file = IMG_MAP[key];
       if(!file){ console.warn('Imagen no mapeada:', key); return; }
       img.src = IMG_BASE + encodeURIComponent(file);
     });
 
-    // ----------------- TABS (accesibles y robustos) -----------------
+    // -------- TABS --------
     const tabs = Array.from(document.querySelectorAll('.tablist .tab'));
     const panels = {
-      'tab-contable': document.getElementById('panel-contable'),
+      'tab-contable':  document.getElementById('panel-contable'),
       'tab-comercial': document.getElementById('panel-comercial'),
-      'tab-nube': document.getElementById('panel-nube')
+      'tab-nube':      document.getElementById('panel-nube')
     };
-
     function activateTab(id){
       tabs.forEach(b=>b.setAttribute('aria-selected','false'));
       Object.values(panels).forEach(p=>p.classList.add('hidden'));
@@ -474,10 +493,8 @@
       btn?.setAttribute('aria-selected','true');
       if(panelId) document.getElementById(panelId)?.classList.remove('hidden');
     }
-
     tabs.forEach(btn=>{
       btn.addEventListener('click', ()=> activateTab(btn.id));
-      // soporte teclado
       btn.addEventListener('keydown', (e)=>{
         const i = tabs.indexOf(btn);
         if(e.key==='ArrowRight'){ (tabs[i+1]||tabs[0]).focus(); }
@@ -485,10 +502,8 @@
         if(e.key==='Enter' || e.key===' '){ e.preventDefault(); activateTab(btn.id); }
       });
     });
-
-    // Asegura estado inicial correcto
+    // estado inicial
     activateTab('tab-contable');
-
   </script>
 </body>
 </html>
