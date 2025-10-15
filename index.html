@@ -95,7 +95,7 @@
   <!-- Header -->
   <header>
     <div class="container nav">
-      <a href="#" class="brand" aria-label="Inicio Expiriti">
+      <a href="/" class="brand" aria-label="Inicio Expiriti">
         <div class="logo" aria-hidden="true">Ex</div>
         <div>
           Expiriti
@@ -353,9 +353,9 @@
     <div class="container">
       <div class="section-title"><h2 style="margin:0">Servicios</h2></div>
       <div class="cards">
-        <article class="card" style="padding:16px"><h3>Implementación</h3><p class="body">Instalación, configuración inicial y migración de catálogos.</p></article>
-        <article class="card" style="padding:16px"><h3>Capacitación</h3><p class="body">Cursos para tu equipo por módulo y rol.</p></article>
-        <article class="card" style="padding:16px"><h3>Soporte</h3><p class="body">Acompañamiento por WhatsApp y sesiones remotas.</p></article>
+        <article class="card" style="padding:16px"><a class="card-link" href="/SISTEMAS/implementacion.html" style="display:block"><h3>Implementación</h3><p class="body">Instalación, configuración inicial y migración de catálogos.</p></a><div class="foot"><a class="btn-sm" href="/SISTEMAS/implementacion.html">Ver más</a></div></article>
+        <article class="card" style="padding:16px"><a class="card-link" href="/SISTEMAS/capacitacion.html" style="display:block"><h3>Capacitación</h3><p class="body">Cursos para tu equipo por módulo y rol.</p></a><div class="foot"><a class="btn-sm" href="/SISTEMAS/capacitacion.html">Ver más</a></div></article>
+        <article class="card" style="padding:16px"><a class="card-link" href="/SISTEMAS/soporte.html" style="display:block"><h3>Soporte</h3><p class="body">Acompañamiento por WhatsApp y sesiones remotas.</p></a><div class="foot"><a class="btn-sm" href="/SISTEMAS/soporte.html">Ver más</a></div></article>
       </div>
     </div>
   </section>
@@ -428,7 +428,7 @@
   </footer>
 
   <script>
-    // Año dinámico
+    // Año
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Menú mobile
@@ -492,6 +492,7 @@
       const panelId = btn?.getAttribute('aria-controls');
       btn?.setAttribute('aria-selected','true');
       if(panelId) document.getElementById(panelId)?.classList.remove('hidden');
+      document.getElementById('productos').scrollIntoView({behavior:'smooth', block:'start'});
     }
     tabs.forEach(btn=>{
       btn.addEventListener('click', ()=> activateTab(btn.id));
