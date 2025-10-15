@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CONTPAQi Nóminas | Expiriti</title>
+
+  <!-- Reutilizamos exactamente el mismo CSS inline del index -->
+  <!-- SUGERENCIA: más adelante moveremos el <style> a styles.css para compartirlo -->
+  <!-- COPIA aquí el mismo <style> de tu index (tal cual) -->
+  <style>
+    /* ← Pega aquí el MISMO <style> del index, sin cambiar nada */
+  </style>
+</head>
+<body data-product="contpaqi-nominas">
+  <header>
+    <div class="container nav">
+      <a href="/" class="brand" aria-label="Inicio Expiriti">
+        <div class="logo" aria-hidden="true">Ex</div>
+        <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
+      </a>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="/#productos">Productos</a></li>
+          <li><a href="/#servicios">Servicios</a></li>
+          <li><a href="/#promociones">Promociones</a></li>
+          <li><a href="/#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="cta">
+        <a class="btn" href="tel:+525568437918">55 6843 7918</a>
+        <a class="btn btn-brand" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
+      </div>
+    </div>
+    <div class="container mobile" id="mobileMenu">
+      <a href="/#productos">Productos</a>
+      <a href="/#servicios">Servicios</a>
+      <a href="/#promociones">Promociones</a>
+      <a href="/#contacto">Contacto</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding:32px 0">
+    <a href="/#productos" class="hint">← Volver a productos</a>
+    <h1 style="margin:8px 0 6px">CONTPAQi Nóminas</h1>
+    <p class="lead" style="margin:0 0 16px">
+      Cálculo, incidencias y timbrado de recibos con procesos claros. Capacitación y migraciones con Expiriti.
+    </p>
+
+    <div class="grid-2" style="align-items:start">
+      <article class="card" style="padding:16px">
+        <img src="/IMG/Nominas.webp" alt="CONTPAQi Nóminas" style="width:220px;height:auto;margin-bottom:12px">
+        <ul class="features">
+          <li>Catálogos y conceptos de percepción/deducción configurables</li>
+          <li>Timbrado, pólizas automáticas y reportes</li>
+          <li>Control de incidencias y acumulados</li>
+          <li>Soporte y capacitación con Expiriti</li>
+        </ul>
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+          <a class="btn-sm" href="https://wa.me/525568437918?text=Quiero%20demo%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">Pedir demo</a>
+          <a class="btn-sm btn-brand" href="#calculadora">Calcular precio</a>
+        </div>
+      </article>
+
+      <article class="card" style="padding:16px" id="calculadora">
+        <h3 style="margin:0 0 10px">Calcula tu licencia</h3>
+        <div class="grid-2">
+          <label>Tipo RFC
+            <select id="calcTipo">
+              <option value="monoRFC">monoRFC</option>
+              <option value="multiRFC" disabled>multiRFC (N/A)</option>
+            </select>
+          </label>
+          <label>Licencia
+            <select id="calcLicencia">
+              <option value="anual">Anual</option>
+            </select>
+          </label>
+          <label>Usuarios
+            <input id="calcUsuarios" type="number" min="1" step="1" value="1">
+          </label>
+        </div>
+        <button id="calcDo" class="btn btn-brand" style="margin-top:10px">Calcular</button>
+        <div id="calcResult" class="badge" style="margin-top:8px">Ingresa parámetros</div>
+        <ul id="calcExtras" class="features" style="margin-top:12px"></ul>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="logo" aria-hidden="true">Ex</div>
+        <div>
+          <strong>Expiriti</strong>
+          <div class="hint">© <span id="year"></span> · Todos los derechos reservados</div>
+        </div>
+      </div>
+      <div class="hint">Aviso de privacidad · Términos</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('burger')?.addEventListener('click', ()=>{ document.getElementById('mobileMenu')?.classList.toggle('open'); });
+
+    // Precios mínimos (alineados a tu index)
+    const PRICING = {
+      monoRFC: {
+        anual: [{max:1,precio:2990},{max:5,precio:4990}]
+      }
+    };
+    const fmt = n => new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(n);
+    const closest = (u,tiers)=> tiers.find(t=>u<=t.max) || tiers[tiers.length-1];
+
+    document.getElementById('calcDo')?.addEventListener('click', ()=>{
+      const lic  = 'anual';
+      const u    = Math.max(1, parseInt(document.getElementById('calcUsuarios').value||'1',10));
+      const tiers = PRICING.monoRFC[lic];
+      const res   = document.getElementById('calcResult');
+      const list  = document.getElementById('calcExtras');
+      const tier = closest(u, tiers);
+      res.textContent = `Precio: ${fmt(tier.precio)} (hasta ${tier.max} usuarios)`;
+      list.innerHTML = `<li>Incluye guía de arranque</li><li>Soporte y capacitación inicial</li>`;
+    });
+  </script>
+</body>
+</html>
