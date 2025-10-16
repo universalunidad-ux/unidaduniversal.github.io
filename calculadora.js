@@ -1,4 +1,3 @@
-<script>
 (function () {
   // =========================================
   // CONFIG: Descripciones y videos por sistema
@@ -389,6 +388,7 @@
         if (lic === "anual") {
           const esRenov = /renovación/i.test(op);
           base = Number((esRenov ? (datosLic.renovacion ?? datosLic.precio_base) : datosLic.precio_base) || 0);
+          // Para anual, usuario adicional = usuario en red
           const perUser = Number(datosLic.usuario_en_red ?? datosLic.usuario_adicional ?? 0);
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser;
@@ -533,4 +533,3 @@
     init();
   }
 })();
-</script>
