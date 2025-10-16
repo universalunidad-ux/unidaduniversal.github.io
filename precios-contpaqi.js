@@ -1,5 +1,5 @@
- <script>
-// precios-contpaqi.js (actualizado)
+// precios-contpaqi.js
+// JS puro: SIN <script> y SIN texto suelto
 window.preciosContpaqi = {
   "CONTPAQi Contabilidad": {
     "anual": {
@@ -76,7 +76,7 @@ window.preciosContpaqi = {
     "anual": {
       "MultiRFC": { "precio_base": 8790, "usuario_adicional": 2590, "renovacion": 8490 }
     }
-    // En la lista 2025-2 no aparecen precios de Tradicional para PRO
+    // Nota: no hay precios tradicionales listados para PRO en tu fuente 2025-2
   },
 
   "CONTPAQi Comercial PREMIUM": {
@@ -145,4 +145,3 @@ window.preciosContpaqi = {
     }
   }
 };
-</script>
