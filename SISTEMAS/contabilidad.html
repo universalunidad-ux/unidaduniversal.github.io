@@ -32,10 +32,10 @@
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
          padding:8px 12px;border-radius:999px;border:1px solid #1c2533;background:#121a25;
          box-shadow:var(--shadow);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
-    .btn-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#0b0f14;border:none}
-    .btn-purple{background:linear-gradient(145deg,#7c3aed,#a855f7);color:#fff;border:none}
-    .btn-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
-    .btn-red{background:linear-gradient(145deg,#dc2626,#ef4444);color:#fff;border:none}
+    .btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#0b0f14;border:none}
+    .btn-grad-purple{background:linear-gradient(145deg,#7c3aed,#a855f7);color:#fff;border:none}
+    .btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
+    .btn-grad-red{background:linear-gradient(145deg,#dc2626,#ef4444);color:#fff;border:none}
     .btn-ghost{background:#121a25;color:#e8eef6}
 
     .hero{padding:32px 0 0}
@@ -55,14 +55,13 @@
     .features li{list-style:none;display:flex;gap:8px;align-items:flex-start}
     .features li::before{content:"✓";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:6px;background:#132033;color:var(--brand);font-size:12px;margin-top:2px}
 
-    /* Calculadora layout horizontal */
+    /* Calculadora: horizontal, centrada */
     .calc-strip{display:flex;flex-direction:column;align-items:center;gap:12px}
     .calc-row{width:100%;display:flex;gap:12px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
     .calc-container{border:1px solid #1c2533;padding:10px;border-radius:12px;background:#0f1622;min-width:320px;flex:1;max-width:540px}
     .calc-table, .combined-table{width:100%;border-collapse:collapse;margin-top:8px}
     .calc-table td, .calc-table th, .combined-table td, .combined-table th{border:1px solid #223044;padding:8px;text-align:right}
     .calc-table th, .combined-table th{text-align:left;background:#101826}
-    .integr-panel{border:1px dashed #223044;border-radius:12px;padding:10px;background:#0f1622;text-align:center}
     .icons-wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
     .btn-chip{padding:6px 10px;border-radius:999px;border:1px solid #223044;background:#121a25;font-weight:700;font-size:13px;cursor:pointer}
 
@@ -81,7 +80,7 @@
     .comparison-table tbody tr:nth-child(odd){background:#0f1622}
     .highlight{background:linear-gradient(145deg,rgba(45,212,191,.08),rgba(96,165,250,.08))}
 
-    /* FAQ (acordeón) */
+    /* FAQ (acordeón exclusivo) */
     details{background:#0f1622;border:1px solid #1c2533;border-radius:12px;padding:10px}
     details+details{margin-top:10px}
     summary{cursor:pointer;font-weight:700}
@@ -95,10 +94,13 @@
     .close{border:1px solid #223044;background:#101826;border-radius:10px;padding:6px 10px;cursor:pointer;color:#e8eef6}
     .pdf-frame{width:100%;height:min(72vh,800px);border:0;border-radius:12px;background:#0b0f14}
 
-    /* Tooltip ? */
+    /* Tooltips */
     .help-wrapper{position:relative;display:inline-flex;align-items:center;gap:6px;}
-    .help-icon{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#132033;color:#e8eef6;border:1px solid #223044;cursor:pointer;font-weight:bold;}
-    .tooltip-box{position:absolute;top:110%;left:50%;transform:translateX(-50%);background:#0f1622;border:1px solid #223044;padding:12px;border-radius:12px;max-width:300px;box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;z-index:100;}
+    .help-icon,.info-icon{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+      background:#132033;color:#e8eef6;border:1px solid #223044;cursor:pointer;font-weight:bold;}
+    .tooltip-box{position:absolute;top:110%;left:50%;transform:translateX(-50%);
+      background:#0f1622;border:1px solid #223044;padding:12px;border-radius:12px;
+      width:min(92vw,320px);box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;z-index:100;}
     .tooltip-box.open{display:block;}
     .tooltip-close{position:absolute;top:6px;right:8px;border:none;background:transparent;color:#aaa;font-size:16px;cursor:pointer;}
 
@@ -152,7 +154,7 @@
   <h1>CONTPAQi Contabilidad <span class="badge">Actualizado 2025</span></h1>
   <p class="lead">Catálogos, pólizas y reportes fiscales listos para cumplir con el SAT, integrados con otros sistemas CONTPAQi.</p>
 
-  <!-- Resumen y acciones compactas -->
+  <!-- Resumen y acciones -->
   <section aria-label="Resumen">
     <div class="card body">
       <div class="grid-2" style="align-items:center">
@@ -166,11 +168,17 @@
           </ul>
         </div>
         <div class="stack">
-          <a class="btn btn-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Compra ahora</a>
-          <div class="hint">💳 Pago disponible a <strong>Meses Sin Intereses</strong></div>
+          <div class="help-wrapper">
+            <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Compra ahora</a>
+            <button class="info-icon" id="buyInfoBtn" aria-describedby="tip-buy">!</button>
+            <div id="tip-buy" role="tooltip" class="tooltip-box">
+              <button class="tooltip-close" id="buyInfoClose">×</button>
+              <p>💳 Pago disponible a <strong>Meses Sin Intereses</strong>.</p>
+            </div>
+          </div>
 
           <div class="help-wrapper">
-            <a class="btn btn-purple" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
+            <a class="btn btn-grad-purple" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
             <button class="help-icon" id="helpBtn" aria-describedby="tip-trial">?</button>
             <div id="tip-trial" role="tooltip" class="tooltip-box">
               <button class="tooltip-close" id="helpClose">×</button>
@@ -178,10 +186,10 @@
             </div>
           </div>
 
-          <a class="btn btn-blue" href="#sesion-guiada">Sesión guiada 1h por Zoom</a>
+          <a class="btn btn-grad-blue" href="#sesion-guiada">Sesión guiada 1h por Zoom</a>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-red" data-open="modalFicha">Ver ficha técnica (PDF)</button>
-            <button class="btn btn-red" data-open="modalResumen">Resumen ficha técnica</button>
+            <button class="btn btn-grad-red" data-open="modalFicha">Ver ficha técnica (PDF)</button>
+            <button class="btn btn-grad-red" data-open="modalResumen">Resumen ficha técnica</button>
           </div>
         </div>
       </div>
@@ -213,8 +221,19 @@
   <section id="calculadora-section" aria-labelledby="calc">
     <h3 id="calc">Calcula tu licencia</h3>
     <div class="calc-strip">
+      <!-- clave de precios -->
       <div id="app" data-system="CONTPAQi Contabilidad" hidden></div>
-      <div class="integr-panel">
+
+      <div class="calc-row">
+        <div id="calc-primary" class="calc-container"></div>
+        <div id="calc-secondary" class="calc-container"></div>
+      </div>
+
+      <!-- Resumen combinado -->
+      <div id="combined-wrap" style="text-align:center"></div>
+
+      <!-- Panel integra (AHORA debajo del total) -->
+      <div class="integr-panel" aria-live="polite">
         Integra un sistema adicional y recibe <strong>−15%</strong> en cada uno.
         <div class="icons-wrap" style="margin-top:8px">
           <button class="btn-chip" onclick='CalculadoraContpaqi.setSecondarySystem("CONTPAQi Nóminas")'>+ Nóminas</button>
@@ -223,13 +242,6 @@
         </div>
         <div class="hint" style="margin-top:6px"><small>Nota: “XML en Línea” no aplica para descuento.</small></div>
       </div>
-
-      <div class="calc-row">
-        <div id="calc-primary" class="calc-container"></div>
-        <div id="calc-secondary" class="calc-container"></div>
-      </div>
-
-      <div id="combined-wrap" style="text-align:center"></div>
     </div>
   </section>
 
@@ -240,11 +252,11 @@
       <div class="card body">
         <h4>Video principal</h4>
         <div style="aspect-ratio:16/9;background:#0f1622;border:1px solid #1c2533;border-radius:12px;overflow:hidden">
-          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VIDEO_ID_1" title="Demo CONTPAQi Contabilidad" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VIDEO_ID_1" title="Demo CONTPAQi Contabilidad" frameborder="0" allowfullscreen></iframe>
         </div>
         <!-- Acordeón gradiente para segundo video -->
         <details style="margin-top:10px">
-          <summary class="btn btn-purple" style="list-style:none;display:inline-flex">Video del sistema</summary>
+          <summary class="btn btn-grad-purple" style="list-style:none;display:inline-flex">Video del sistema</summary>
           <div style="margin-top:10px;aspect-ratio:16/9;background:#0f1622;border:1px solid #1c2533;border-radius:12px;overflow:hidden">
             <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VIDEO_ID_2" title="Video del sistema" frameborder="0" allowfullscreen></iframe>
           </div>
@@ -295,23 +307,29 @@
   <!-- FAQ (acordeón exclusivo) -->
   <section aria-labelledby="faq">
     <h3 id="faq">Preguntas frecuentes</h3>
+
     <details class="faq-item" open>
       <summary>¿Qué diferencia hay entre MonoRFC y MultiRFC?</summary>
       <p><strong>MonoRFC</strong> permite administrar la contabilidad de una sola empresa o contribuyente.<br>
       <strong>MultiRFC</strong> permite manejar varias empresas o RFC dentro de la misma licencia, ideal para despachos o contadores con múltiples clientes.</p>
     </details>
+
     <details class="faq-item">
       <summary>¿Cuál es la diferencia entre licencia anual y tradicional?</summary>
       <p><strong>Licencia anual:</strong> incluye actualizaciones durante 12 meses y renovación con costo preferencial.<br>
       <strong>Licencia tradicional:</strong> es pago único; actualizaciones futuras se adquieren por separado.</p>
     </details>
-    <summary>¿Puedo migrar datos desde Excel o Aspel COI?</summary>
-        <p>Sí. Te apoyamos con una migración básica de catálogos (plan de cuentas, clientes/proveedores si aplica).</p>
-      </details>
-      <details>
-        <summary>¿Cómo funciona el descuento por integrar otro sistema?</summary>
-        <p>Al cotizar dos sistemas CONTPAQi juntos (ej. Contabilidad + Nóminas) se aplica −15% en cada uno (excepto XML en Línea).</p>
-      </details>
+
+    <details class="faq-item">
+      <summary>¿Puedo migrar datos desde Excel o Aspel COI?</summary>
+      <p>Sí. Te apoyamos con una migración básica de catálogos (plan de cuentas, clientes/proveedores si aplica).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>¿Cómo funciona el descuento por integrar otro sistema?</summary>
+      <p>Al cotizar dos sistemas CONTPAQi juntos (ej. Contabilidad + Nóminas) se aplica −15% en cada uno (excepto XML en Línea).</p>
+    </details>
+
     <details class="faq-item">
       <summary>¿Cómo puedo pagar con tarjeta o a meses sin intereses (TAC)?</summary>
       <p>Te enviamos un enlace de pago seguro de nuestra <strong>TAC</strong>. Ahí eliges tu banco y meses sin intereses; tras aprobarse, recibes factura y tu clave de activación.</p>
@@ -323,8 +341,8 @@
     <h3>¿Listo para empezar?</h3>
     <p>Agenda una sesión con nuestros especialistas o tramita tu prueba sin costo.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a class="btn btn-blue" href="https://wa.me/5568437918?text=Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%201%20hora%20por%20Zoom" target="_blank" rel="noopener">Agendar sesión guiada</a>
-      <a class="btn btn-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Comprar ahora</a>
+      <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%201%20hora%20por%20Zoom" target="_blank" rel="noopener">Agendar sesión guiada</a>
+      <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Comprar ahora</a>
     </div>
   </section>
 </main>
@@ -382,20 +400,24 @@
     document.getElementById('mobileMenu')?.classList.toggle('open');
   });
 
-  // Tooltip ? (cierra con X o clic fuera)
+  // Tooltip Prueba (?)
   const helpBtn=document.getElementById('helpBtn');
-  const tip=document.getElementById('tip-trial');
-  const tipClose=document.getElementById('helpClose');
-  helpBtn?.addEventListener('click', (e)=> {
-    e.stopPropagation();
-    tip.classList.toggle('open');
-  });
-  tipClose?.addEventListener('click', (e)=> {
-    e.stopPropagation();
-    tip.classList.remove('open');
-  });
+  const tipTrial=document.getElementById('tip-trial');
+  const helpClose=document.getElementById('helpClose');
+  helpBtn?.addEventListener('click', (e)=>{ e.stopPropagation(); tipTrial.classList.toggle('open'); });
+  helpClose?.addEventListener('click', (e)=>{ e.stopPropagation(); tipTrial.classList.remove('open'); });
+
+  // Tooltip Compra (!)
+  const buyBtn=document.getElementById('buyInfoBtn');
+  const tipBuy=document.getElementById('tip-buy');
+  const buyClose=document.getElementById('buyInfoClose');
+  buyBtn?.addEventListener('click', (e)=>{ e.stopPropagation(); tipBuy.classList.toggle('open'); });
+  buyClose?.addEventListener('click', (e)=>{ e.stopPropagation(); tipBuy.classList.remove('open'); });
+
+  // cerrar tooltips al hacer clic fuera
   document.addEventListener('click', (e)=>{
-    if (tip && !tip.contains(e.target) && e.target!==helpBtn) tip.classList.remove('open');
+    if (tipTrial && !tipTrial.contains(e.target) && e.target!==helpBtn) tipTrial.classList.remove('open');
+    if (tipBuy   && !tipBuy.contains(e.target)   && e.target!==buyBtn)  tipBuy.classList.remove('open');
   });
 
   // Modales
@@ -422,12 +444,18 @@
     });
   })();
 
-  // FAQ acordeón exclusivo: abrir una cierra las demás
+  // FAQ acordeón exclusivo (abre una, cierra las demás)
   (function(){
     const items = document.querySelectorAll('.faq-item');
-    items.forEach((d)=>{
-      d.addEventListener('toggle', ()=>{
-        if (d.open) items.forEach(o=>{ if(o!==d) o.open=false; });
+    items.forEach((el)=>{
+      el.addEventListener('click', (e)=>{
+        // si se da clic en el summary, alternamos manualmente para controlar exclusividad
+        if(e.target.tagName.toLowerCase() === 'summary'){
+          e.preventDefault();
+          const willOpen = !el.open;
+          items.forEach(o=>o.open=false);
+          el.open = willOpen;
+        }
       });
     });
   })();
