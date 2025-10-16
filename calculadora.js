@@ -1,4 +1,3 @@
-<script>
 (function () {
   // =========================================
   // Helpers: formato moneda, %
@@ -306,7 +305,7 @@
   // =========================================
   function initCalculadora(opts = {}) {
     const {
-      systemName,                    // obligatorio (coincide con precios-contpaqi.js)
+      systemName,
       primarySelector = "#calc-primary",
       secondarySelector = "#calc-secondary",
       combinedSelector = "#combined-wrap"
@@ -316,7 +315,6 @@
     if (!primaryEl) return console.warn("No existe contenedor primario de calculadora:", primarySelector);
     createCalculator(primaryEl, systemName, true, combinedSelector);
 
-    // Si ya existe un contenedor secundario en el HTML, lo dejamos vacío
     const secEl = document.querySelector(secondarySelector);
     if (secEl) secEl.innerHTML = "";
   }
@@ -339,7 +337,7 @@
     updateCombinedSummary
   };
 
-  // Auto-init sencillo: si hay #app con data-system, y existen contenedores por defecto
+  // Auto-init sencillo
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       const app = document.getElementById("app");
@@ -356,4 +354,3 @@
     }
   }
 })();
-</script>
