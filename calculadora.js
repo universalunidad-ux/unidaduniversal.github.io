@@ -1,219 +1,24 @@
+<script>
 (function () {
   // =========================================
-  // CONFIG: Descripciones y videos por sistema
-  // =========================================
-  const DESCRIPCIONES = {
-    "CONTPAQi Contabilidad": {
-      titulo: "CONTPAQi Contabilidad",
-      descripcion: "Sistema para llevar contabilidad electrónica, pólizas y reportes fiscales.",
-      video: "",
-      caracteristicas: [
-        "Pólizas automáticas",
-        "Reportes fiscales y estados financieros",
-        "Integración con Factura Electrónica"
-      ]
-    },
-    "CONTPAQi Nóminas": {
-      titulo: "CONTPAQi Nóminas",
-      descripcion: "Gestión de nóminas, pagos y obligaciones laborales.",
-      video: "",
-      caracteristicas: ["Cálculo de ISR", "Timbrado de nómina", "Reportes de pagos"]
-    }
-  };
-
-  // =========================================
-  // Helpers: formato moneda, tooltip
+  // Helpers: formato moneda, %
   // =========================================
   const money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
   const fmt = v => money.format(Math.round(Number(v || 0)));
   const pct = v => `${((v || 0) * 100).toFixed(0)}%`;
 
-  function questionMark(titleText) {
-    const span = document.createElement("span");
-    span.className = "tooltip-question";
-    span.title = titleText;
-    span.textContent = " ? ";
-    return span;
-  }
-
   // =========================================
-  // MAIN: init page
+  // createCalculator: Render de una calculadora
   // =========================================
-  function init() {
-    const app = document.getElementById("app");
-    if (!app) return console.warn("No #app container on page.");
-
-    const sistemaActual = app.dataset.system;
-    if (!sistemaActual || !preciosContpaqi[sistemaActual]) {
-      app.innerHTML = `<p>Error: sistema no encontrado. Asegura data-system="${sistemaActual}" y que precios-contpaqi.js esté cargado.</p>`;
+  function createCalculator(container, sistemaName, isPrimary, combinedSelector) {
+    container.innerHTML = "";
+    const systemPrices = window.preciosContpaqi?.[sistemaName];
+    if (!systemPrices) {
+      container.innerHTML = `<p style="margin:0">Error: faltan precios para <strong>${sistemaName}</strong>.</p>`;
       return;
     }
 
-    // build UI
-    app.innerHTML = "";
-    const desc = DESCRIPCIONES[sistemaActual] || {
-      titulo: sistemaActual,
-      descripcion: "",
-      video: "",
-      caracteristicas: []
-    };
-
-    // Header
-    const header = document.createElement("div");
-    header.className = "sys-header";
-    const h = document.createElement("h2");
-    h.textContent = desc.titulo;
-    header.appendChild(h);
-
-    const p = document.createElement("p");
-    p.textContent = desc.descripcion;
-    header.appendChild(p);
-
-    if (desc.video) {
-      const videoWrapper = document.createElement("div");
-      videoWrapper.className = "sys-video";
-      if (desc.video.includes("youtube.com") || desc.video.includes("youtu.be")) {
-        let id = "";
-        const m = desc.video.match(/(?:v=|\/)([A-Za-z0-9_-]{6,})/);
-        if (m && m[1]) id = m[1];
-        if (id) {
-          const iframe = document.createElement("iframe");
-          iframe.width = "560";
-          iframe.height = "315";
-          iframe.src = `https://www.youtube.com/embed/${id}`;
-          iframe.title = `${desc.titulo} video`;
-          iframe.setAttribute("frameborder", "0");
-          iframe.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture");
-          iframe.setAttribute("allowfullscreen", "");
-          videoWrapper.appendChild(iframe);
-        } else {
-          const a = document.createElement("a");
-          a.href = desc.video;
-          a.textContent = "Ver video";
-          a.target = "_blank";
-          videoWrapper.appendChild(a);
-        }
-      } else {
-        const a = document.createElement("a");
-        a.href = desc.video;
-        a.textContent = "Ver video";
-        a.target = "_blank";
-        videoWrapper.appendChild(a);
-      }
-      header.appendChild(videoWrapper);
-    }
-
-    if (desc.caracteristicas && desc.caracteristicas.length) {
-      const ul = document.createElement("ul");
-      desc.caracteristicas.forEach(c => {
-        const li = document.createElement("li");
-        li.textContent = c;
-        ul.appendChild(li);
-      });
-      header.appendChild(ul);
-    }
-
-    app.appendChild(header);
-
-    // Contenedor principal
-    const main = document.createElement("div");
-    main.className = "sys-main";
-
-    // Calculadora primaria
-    const calc1Container = document.createElement("div");
-    calc1Container.id = "calc-primary";
-    calc1Container.className = "calc-container";
-    main.appendChild(calc1Container);
-
-    // Panel integración
-    const integrPanel = document.createElement("div");
-    integrPanel.className = "integr-panel";
-    const integrText = document.createElement("p");
-    integrText.innerHTML = `Integra tu sistema con otro adicional y recibe <strong>15% de descuento</strong> en cada sistema!`;
-    integrPanel.appendChild(integrText);
-
-    const iconsWrap = document.createElement("div");
-    iconsWrap.className = "icons-wrap";
-    Object.keys(preciosContpaqi).forEach(name => {
-      if (name === sistemaActual) return;
-      const btn = document.createElement("button");
-      btn.className = "system-icon";
-      btn.type = "button";
-      btn.dataset.system = name;
-      btn.title = name;
-      btn.innerHTML = `
-        <div class="icon-placeholder">${name.split(" ")[1] || "S"}</div>
-        <div class="icon-label">${name}</div>
-      `;
-      btn.addEventListener("click", () => {
-        showSecondarySystem(name);
-      });
-      iconsWrap.appendChild(btn);
-    });
-    integrPanel.appendChild(iconsWrap);
-    main.appendChild(integrPanel);
-
-    // Contenedor secundario + resumen
-    const secondaryWrap = document.createElement("div");
-    secondaryWrap.id = "secondary-wrap";
-    main.appendChild(secondaryWrap);
-
-    const combinedWrap = document.createElement("div");
-    combinedWrap.id = "combined-wrap";
-    main.appendChild(combinedWrap);
-
-    app.appendChild(main);
-
-    // crear calculadora 1
-    createCalculator(calc1Container, sistemaActual, true);
-    // refresco del combinado
-    setInterval(() => updateCombinedSummary(), 400);
-  }
-
-  // =========================================
-  // Panel secundario
-  // =========================================
-  function showSecondarySystem(name) {
-    const secWrap = document.getElementById("secondary-wrap");
-    secWrap.innerHTML = "";
-
-    const h3 = document.createElement("h3");
-    h3.textContent = `Sistema adicional: ${name}`;
-    secWrap.appendChild(h3);
-
-    const descObj = DESCRIPCIONES[name] || { descripcion: "", video: "", caracteristicas: [] };
-    const p = document.createElement("p");
-    p.textContent = descObj.descripcion;
-    secWrap.appendChild(p);
-
-    if (descObj.video) {
-      const a = document.createElement("a");
-      a.href = descObj.video;
-      a.textContent = "Ver video";
-      a.target = "_blank";
-      secWrap.appendChild(a);
-    }
-
-    const calc2Container = document.createElement("div");
-    calc2Container.id = "calc-secondary";
-    calc2Container.className = "calc-container";
-    secWrap.appendChild(calc2Container);
-
-    createCalculator(calc2Container, name, false);
-
-    const note = document.createElement("p");
-    note.innerHTML = `<small>Nota: XML en Línea no aplica para descuento de integración.</small>`;
-    secWrap.appendChild(note);
-  }
-
-  // =========================================
-  // Crear calculadora
-  // =========================================
-  function createCalculator(container, sistemaName, isPrimary) {
-    container.innerHTML = "";
-    const systemPrices = preciosContpaqi[sistemaName];
-
-    // Título
+    // Título local de la caja
     const title = document.createElement("h4");
     title.textContent = `${sistemaName} — Calculadora`;
     container.appendChild(title);
@@ -244,10 +49,6 @@
     rfcSel.id = (isPrimary ? "rfc1" : "rfc2");
     rfcLabel.appendChild(rfcSel);
     form.appendChild(rfcLabel);
-
-    // Ayuda Mono/Multi
-    const mmHelp = questionMark("MonoRFC: solo 1 RFC (empresa). MultiRFC: permite varias empresas/folios en la misma licencia.");
-    form.appendChild(mmHelp);
 
     // Nivel (nube)
     const nivelLabel = document.createElement("label");
@@ -285,7 +86,7 @@
     const table = document.createElement("table");
     table.className = "calc-table";
     table.innerHTML = `
-      <thead><tr><th>Concepto</th><th>Importe</th></tr></thead>
+      <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>
       <tbody>
         <tr><td>Precio base</td><td id="${isPrimary ? 'base1' : 'base2'}">$0</td></tr>
         <tr><td>Usuarios adicionales</td><td id="${isPrimary ? 'uadd1' : 'uadd2'}">$0</td></tr>
@@ -384,11 +185,9 @@
         const datosLic = (systemPrices[lic] && systemPrices[lic][rfcType]) || null;
         if (!datosLic) return writeZeros();
 
-        // === Base según operación ===
         if (lic === "anual") {
           const esRenov = /renovación/i.test(op);
           base = Number((esRenov ? (datosLic.renovacion ?? datosLic.precio_base) : datosLic.precio_base) || 0);
-          // Para anual, usuario adicional = usuario en red
           const perUser = Number(datosLic.usuario_en_red ?? datosLic.usuario_adicional ?? 0);
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser;
@@ -401,7 +200,6 @@
             usuariosAddImporte = usuariosExtras * perUser;
           } else {
             base = Number(datosLic.precio_base || 0);
-            // usuario adicional de la fila o fallback al crecimiento_usuario
             const perUser = Number(
               (datosLic.usuario_adicional != null ? datosLic.usuario_adicional : (systemPrices.tradicional.crecimiento_usuario && systemPrices.tradicional.crecimiento_usuario.usuario_adicional)) || 0
             );
@@ -413,9 +211,9 @@
 
       const subtotal = base + usuariosAddImporte;
 
-      // Descuento por 2do sistema (excepto XML en Línea)
+      // Descuento por 2do sistema (se aplica solo si existe calculadora secundaria renderizada)
       let discountPct = 0;
-      const secondaryExists = !!document.getElementById("calc-secondary");
+      const secondaryExists = !!document.getElementById("calc-secondary")?.querySelector("table");
       if (secondaryExists && !sistemaName.includes("XML en Línea")) {
         discountPct = 0.15;
       }
@@ -432,7 +230,7 @@
       document.getElementById(isPrimary ? 'iva1' : 'iva2').textContent = fmt(iva);
       document.getElementById(isPrimary ? 'tot1' : 'tot2').textContent = fmt(total);
 
-      updateCombinedSummary();
+      updateCombinedSummary(combinedSelector);
     }
 
     function writeZeros() {
@@ -442,6 +240,7 @@
       document.getElementById(isPrimary ? 'sub1' : 'sub2').textContent = fmt(0);
       document.getElementById(isPrimary ? 'iva1' : 'iva2').textContent = fmt(0);
       document.getElementById(isPrimary ? 'tot1' : 'tot2').textContent = fmt(0);
+      updateCombinedSummary(combinedSelector);
     }
 
     // Eventos
@@ -455,11 +254,11 @@
   }
 
   // =========================================
-  // Resumen combinado
+  // Resumen combinado (usa los totales ya pintados)
   // =========================================
-  function updateCombinedSummary() {
-    const combined = document.getElementById("combined-wrap");
-    combined.innerHTML = "";
+  function updateCombinedSummary(combinedSelector = "#combined-wrap") {
+    const combined = document.querySelector(combinedSelector);
+    if (!combined) return;
 
     function parseCurrencyEl(id) {
       const el = document.getElementById(id);
@@ -470,12 +269,11 @@
 
     const total1 = parseCurrencyEl("tot1");
     const total2 = parseCurrencyEl("tot2");
-    const calcSecondaryExists = document.getElementById("calc-secondary");
+    const calcSecondaryExists = document.getElementById("calc-secondary")?.querySelector("table");
 
+    combined.innerHTML = "";
     if (!calcSecondaryExists) {
-      const p = document.createElement("p");
-      p.innerHTML = `<strong>Total:</strong> ${fmt(total1)}`;
-      combined.appendChild(p);
+      combined.innerHTML = `<p style="margin:0"><strong>Total:</strong> ${fmt(total1)}</p>`;
       return;
     }
 
@@ -491,7 +289,7 @@
       <p>Sistema 2: ${fmt(total2)}</p>
       <p><strong>Total combinado:</strong> ${fmt(total1 + total2)}</p>
       <table class="combined-table">
-        <thead><tr><th>Concepto</th><th>Importe</th></tr></thead>
+        <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>
         <tbody>
           <tr><td>Subtotal sistema 1 (después descuento)</td><td>${fmt(sub1)}</td></tr>
           <tr><td>Subtotal sistema 2 (después descuento)</td><td>${fmt(sub2)}</td></tr>
@@ -503,33 +301,59 @@
     combined.appendChild(box);
   }
 
-  // CSS mínimo
-  function addStyles() {
-    const css = `
-      #app { font-family: Arial, Helvetica, sans-serif; max-width: 980px; margin: 14px;}
-      .sys-header h2 { margin:0 0 6px 0; }
-      .sys-video iframe { max-width:100%; }
-      .calc-container { border:1px solid #e0e0e0; padding:10px; margin:10px 0; border-radius:6px; background:#fafafa;}
-      .calc-form label { display:inline-block; margin-right:10px; }
-      .calc-form input[type="number"] { width:70px; }
-      .tooltip-question { display:inline-block; background:#eee; border-radius:50%; width:18px; height:18px; text-align:center; line-height:18px; margin-left:6px; cursor:help; }
-      .icons-wrap { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
-      .system-icon { border:1px solid #ddd; border-radius:6px; padding:8px; cursor:pointer; background:#fff; display:flex; align-items:center; gap:8px;}
-      .icon-placeholder { width:36px; height:36px; border-radius:6px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-weight:bold; }
-      .calc-table, .combined-table { width:100%; border-collapse:collapse; margin-top:8px;}
-      .calc-table td, .calc-table th, .combined-table td, .combined-table th { border:1px solid #eee; padding:8px; text-align:right;}
-      .calc-table th, .combined-table th { text-align:left; background:#fafafa; }
-    `;
-    const style = document.createElement("style");
-    style.textContent = css;
-    document.head.appendChild(style);
+  // =========================================
+  // API pública mínima
+  // =========================================
+  function initCalculadora(opts = {}) {
+    const {
+      systemName,                    // obligatorio (coincide con precios-contpaqi.js)
+      primarySelector = "#calc-primary",
+      secondarySelector = "#calc-secondary",
+      combinedSelector = "#combined-wrap"
+    } = opts;
+
+    const primaryEl = document.querySelector(primarySelector);
+    if (!primaryEl) return console.warn("No existe contenedor primario de calculadora:", primarySelector);
+    createCalculator(primaryEl, systemName, true, combinedSelector);
+
+    // Si ya existe un contenedor secundario en el HTML, lo dejamos vacío
+    const secEl = document.querySelector(secondarySelector);
+    if (secEl) secEl.innerHTML = "";
   }
 
-  // init
-  addStyles();
+  function setSecondarySystem(name, opts = {}) {
+    const {
+      secondarySelector = "#calc-secondary",
+      combinedSelector = "#combined-wrap"
+    } = opts;
+
+    const secEl = document.querySelector(secondarySelector);
+    if (!secEl) return console.warn("No existe contenedor secundario:", secondarySelector);
+    createCalculator(secEl, name, false, combinedSelector);
+  }
+
+  // Exponer en window
+  window.CalculadoraContpaqi = {
+    init: initCalculadora,
+    setSecondarySystem,
+    updateCombinedSummary
+  };
+
+  // Auto-init sencillo: si hay #app con data-system, y existen contenedores por defecto
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", () => {
+      const app = document.getElementById("app");
+      const sys = app?.dataset.system;
+      if (sys && document.querySelector("#calc-primary")) {
+        window.CalculadoraContpaqi.init({ systemName: sys });
+      }
+    });
   } else {
-    init();
+    const app = document.getElementById("app");
+    const sys = app?.dataset.system;
+    if (sys && document.querySelector("#calc-primary")) {
+      window.CalculadoraContpaqi.init({ systemName: sys });
+    }
   }
 })();
+</script>
