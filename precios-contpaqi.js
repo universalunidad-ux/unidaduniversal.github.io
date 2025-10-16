@@ -1,5 +1,3 @@
-// precios-contpaqi.js
-// JS puro: SIN <script> y SIN texto suelto
 window.preciosContpaqi = {
   "CONTPAQi Contabilidad": {
     "anual": {
