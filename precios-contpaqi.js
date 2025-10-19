@@ -3,7 +3,7 @@ window.preciosContpaqi = {
     "anual": {
       "MonoRFC": { "precio_base": 4190, "usuario_adicional": 1590, "renovacion": 3990 },
       "MultiRFC": { "precio_base": 5590, "usuario_adicional": 1590, "renovacion": 5190 }
-    },
+    }, 
     "tradicional": {
       "actualizacion": { "precio_base": 6990, "usuario_adicional": 1690 },
       "especial": { "precio_base": 6090, "usuario_adicional": 1590 },
