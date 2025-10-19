@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CONTPAQi Contabilidad | Expiriti</title>
   <meta name="description" content="CONTPAQi Contabilidad con Expiriti: implementación, capacitación, compra directa, prueba de 30 días y sesión guiada por Zoom.">
-  <!-- Asegura rutas relativas para imágenes y assets -->
+  <!-- Rutas relativas para imágenes y assets -->
   <base href="./">
   <style>
     :root{
@@ -68,9 +68,13 @@
     .sys-icon:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.35)}
     .sys-icon.active{border-color:transparent;box-shadow:0 0 0 2px rgba(45,212,191,.25) inset, 0 10px 24px rgba(45,212,191,.18)}
 
-    .calc-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:8px;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
-    .calc-table td,.calc-table th{padding:10px;border-bottom:1px solid #1e2b3c}
-    .calc-table tr:last-child td{border-bottom:none}
+    /* ===== Tablas “comparativa-like” (incluye resumen combinado) ===== */
+    .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
+    .table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
+    .table-like tr:last-child td{border-bottom:none}
+    .table-like thead th{background:#0e1724;color:#dce8ff;text-align:left}
+    .table-like td.right{text-align:right}
+    .table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
 
     /* ===== Carruseles genéricos ===== */
     .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;height:100%;min-height:280px}
@@ -104,9 +108,6 @@
     .arrowCircle .chev{ font-size:24px; line-height:1; animation:chevPulse 1.8s ease-in-out infinite; }
     @keyframes chevPulse{ 0%,100%{ transform:translateX(0) } 50%{ transform:translateX(3px) } }
 
-    /* Igualamos estilos si quedara .listArrow/.nav en DOM */
-    .listArrow, .carouselX .nav{ composes: arrowCircle; } /* (no todos los navegadores soportan 'composes', pero dejamos las clases nuevas) */
-
     /* ===== Carrusel Sistemas ===== */
     .carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
     .carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px}
@@ -125,12 +126,17 @@
     .fhead{display:flex;align-items:center;gap:10px;margin-bottom:4px}
     .ficon{width:28px;height:28px;border-radius:8px;background:#101a2a;object-fit:cover}
 
-    /* ===== TOC flotante (abajo a la derecha) ===== */
+    /* ===== TOC flotante (colapsado por defecto) ===== */
     .toc{
       position:fixed; right:16px; bottom:16px; width:240px; max-height:48vh; overflow:auto;
-      background:#0f1826; border:1px solid #1c2533; border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:6px; z-index:60;
-      box-shadow:0 10px 24px rgba(0,0,0,.35)
+      background:rgba(15,24,38,.75); border:1px solid #1c2533; border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:6px; z-index:60;
+      box-shadow:0 10px 24px rgba(0,0,0,.35); backdrop-filter: blur(6px);
+      transition:all .2s ease;
     }
+    .toc.collapsed{width:auto;max-height:none;padding:6px 10px;border-radius:999px;gap:0}
+    .toc.collapsed .toc-title,.toc.collapsed a{display:none}
+    .toc-toggle{display:flex;align-items:center;gap:8px;font-weight:700}
+    .toc.collapsed .toc-toggle{gap:6px}
     .toc-title{font-weight:800;color:#b9c8de;margin-bottom:6px}
     .toc a{padding:6px 8px;border-radius:10px;color:#cfe3ff;border:1px solid transparent}
     .toc a:hover{border-color:#233347;background:#101b2a}
@@ -211,14 +217,12 @@
       <span class="badge">Soporte y capacitación Expiriti</span>
     </div>
 
-    <!-- Resumen y acciones (logo + botones, sin mover galería) -->
+    <!-- RESUMEN (IZQ: logo+botones | DER: GALERÍA) -->
     <section aria-label="Resumen">
       <div class="card body">
         <div class="grid-2" style="align-items:center">
-          <div>
-            <img src="../IMG/contabilidad.webp" alt="CONTPAQi Contabilidad" style="width:220px;margin-bottom:12px;border-radius:12px">
-          </div>
           <div class="stack" style="align-items:center">
+            <img src="../IMG/contabilidad.webp" alt="CONTPAQi Contabilidad" style="width:220px;margin-bottom:12px;border-radius:12px">
             <div class="help-wrapper">
               <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Compra ahora</a>
               <button class="info-icon" id="buyInfoBtn" aria-describedby="tip-buy">!</button>
@@ -243,77 +247,30 @@
               <button class="btn btn-grad-red" data-open="modalResumen">Resumen ficha técnica</button>
             </div>
           </div>
+
+          <!-- GALERÍA MOVIDA AQUÍ (DERECHA) -->
+          <aside class="card body" style="height:100%">
+            <h4>Galería</h4>
+            <div class="carousel" id="carousel1">
+              <div class="carousel-track" aria-label="Carrusel de capturas">
+                <img class="carousel-slide" src="../IMG/1conta.webp" alt="Siempre alineado al SAT">
+                <img class="carousel-slide" src="../IMG/3conta.webp" alt="Precisión CONTPAQi">
+                <img class="carousel-slide" src="../IMG/2conta.webp" alt="Olvídate de la DIOT">
+                <img class="carousel-slide" src="../IMG/4conta.webp" alt="Optimiza tus procesos">
+              </div>
+              <div class="carousel-nav" role="tablist" aria-label="Navegación carrusel">
+                <button class="dot active" aria-label="1"></button>
+                <button class="dot" aria-label="2"></button>
+                <button class="dot" aria-label="3"></button>
+                <button class="dot" aria-label="4"></button>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
 
-    <!-- ===== Por qué usar (IZQ) + Galería a la DERECHA ===== -->
-    <section id="beneficios" aria-label="Por qué usar">
-      <div class="grid-2">
-        <!-- IZQ: beneficios -->
-        <div>
-          <h2>¿Por qué usar Contabilidad en tu empresa? <span class="badge">Características únicas</span></h2>
-          <p class="lead">Automatiza pólizas, cumple disposiciones y toma decisiones con información clara.</p>
-
-          <div class="listSlider">
-            <!-- Flechas unificadas y centradas -->
-            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-            <div class="listTrack" id="listTrack">
-              <div class="listPage">
-                <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/ic_mejora.webp" alt="Mejora en captura de pólizas"></div>
-                  <div><div class="listTitle">MEJORA EN CAPTURA DE PÓLIZAS</div><div class="listDesc">Desglose de IVA y CFDI por póliza/movimiento.</div></div>
-                </div>
-                <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/ic_descarga_cfdi.webp" alt="Descarga CFDI"></div>
-                  <div><div class="listTitle">DESCARGA CFDI DEL SAT</div><div class="listDesc">Sin necesidad de otro sistema.</div></div>
-                </div>
-                <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/ic_decisiones.webp" alt="Decisiones inteligentes"></div>
-                  <div><div class="listTitle">DECISIONES INTELIGENTES</div><div class="listDesc">Tableros y análisis para objetivos fiscales y de negocio.</div></div>
-                </div>
-              </div>
-              <div class="listPage">
-                <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/ic_ce.webp" alt="Contabilidad electrónica"></div>
-                  <div><div class="listTitle">CONTABILIDAD ELECTRÓNICA AL DÍA</div><div class="listDesc">Cumple cambios y disposiciones de ley.</div></div>
-                </div>
-                <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/ic_reportes.webp" alt="Reportes"></div>
-                  <div><div class="listTitle">REPORTES PODEROSOS</div><div class="listDesc">Estados financieros, balanzas e informes clave.</div></div>
-                </div>
-                <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/ic_facilita.webp" alt="Facilita la vida del contador"></div>
-                  <div><div class="listTitle">FACILITA LA VIDA DEL CONTADOR</div><div class="listDesc">Menos captura, menos errores, cierres más rápidos.</div></div>
-                </div>
-              </div>
-            </div>
-            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-          </div>
-        </div>
-
-        <!-- DER: Galería -->
-        <aside class="card body" style="height:100%">
-          <h4>Galería</h4>
-          <div class="carousel" id="carousel1">
-            <div class="carousel-track" aria-label="Carrusel de capturas">
-              <img class="carousel-slide" src="../IMG/1conta.webp" alt="Siempre alineado al SAT">
-              <img class="carousel-slide" src="../IMG/3conta.webp" alt="Precisión CONTPAQi">
-              <img class="carousel-slide" src="../IMG/2conta.webp" alt="Olvídate de la DIOT">
-              <img class="carousel-slide" src="../IMG/4conta.webp" alt="Optimiza tus procesos">
-            </div>
-            <div class="carousel-nav" role="tablist" aria-label="Navegación carrusel">
-              <button class="dot active" aria-label="1"></button>
-              <button class="dot" aria-label="2"></button>
-              <button class="dot" aria-label="3"></button>
-              <button class="dot" aria-label="4"></button>
-            </div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- Funciones -->
+    <!-- FUNCIONES (SUBE ARRIBA, ANTES DE BENEFICIOS) -->
     <section aria-labelledby="caracteristicas" id="caracteristicas">
       <div class="card body">
         <h3 id="caracteristicas">Funciones destacadas</h3>
@@ -352,7 +309,55 @@
       </div>
     </section>
 
-    <!-- NUEVO: Videos debajo de funciones -->
+    <!-- POR QUÉ USAR (sin galería, flechas centradas) -->
+    <section id="beneficios" aria-label="Por qué usar">
+      <div class="grid-2">
+        <div>
+          <h2>¿Por qué usar Contabilidad en tu empresa? <span class="badge">Características únicas</span></h2>
+          <p class="lead">Automatiza pólizas, cumple disposiciones y toma decisiones con información clara.</p>
+
+          <div class="listSlider">
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+            <div class="listTrack" id="listTrack">
+              <div class="listPage">
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/ic_mejora.webp" alt="Mejora en captura de pólizas"></div>
+                  <div><div class="listTitle">MEJORA EN CAPTURA DE PÓLIZAS</div><div class="listDesc">Desglose de IVA y CFDI por póliza/movimiento.</div></div>
+                </div>
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/ic_descarga_cfdi.webp" alt="Descarga CFDI"></div>
+                  <div><div class="listTitle">DESCARGA CFDI DEL SAT</div><div class="listDesc">Sin necesidad de otro sistema.</div></div>
+                </div>
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/ic_decisiones.webp" alt="Decisiones inteligentes"></div>
+                  <div><div class="listTitle">DECISIONES INTELIGENTES</div><div class="listDesc">Tableros y análisis para objetivos fiscales y de negocio.</div></div>
+                </div>
+              </div>
+              <div class="listPage">
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/ic_ce.webp" alt="Contabilidad electrónica"></div>
+                  <div><div class="listTitle">CONTABILIDAD ELECTRÓNICA AL DÍA</div><div class="listDesc">Cumple cambios y disposiciones de ley.</div></div>
+                </div>
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/ic_reportes.webp" alt="Reportes"></div>
+                  <div><div class="listTitle">REPORTES PODEROSOS</div><div class="listDesc">Estados financieros, balanzas e informes clave.</div></div>
+                </div>
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/ic_facilita.webp" alt="Facilita la vida del contador"></div>
+                  <div><div class="listTitle">FACILITA LA VIDA DEL CONTADOR</div><div class="listDesc">Menos captura, menos errores, cierres más rápidos.</div></div>
+                </div>
+              </div>
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+          </div>
+        </div>
+
+        <!-- Columna derecha queda libre para respirar (o texto adicional si luego quieres) -->
+        <div></div>
+      </div>
+    </section>
+
+    <!-- VIDEOS (debajo de funciones) -->
     <section class="card body" id="videos">
       <h3>Videos</h3>
       <div class="grid-2" style="margin-top:14px">
@@ -376,7 +381,6 @@
       <h3 id="integra">Sistemas que complementan tu Contabilidad</h3>
       <div class="card body">
         <div class="carouselX" data-step="3" tabindex="0" aria-label="Carrusel de sistemas integrables">
-          <!-- Flechas fuera del track (no desaparecen) -->
           <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
           <div class="track">
             <article class="sys"><img src="../IMG/bancos.webp" alt="CONTPAQi Bancos" /><h4>CONTPAQi Bancos</h4><p>Conciliación y pólizas automáticas desde movimientos bancarios.</p></article>
@@ -403,7 +407,7 @@
         <div class="calc-row" id="calc-row">
           <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
 
-          <!-- 2ª calculadora / panel centrado -->
+          <!-- 2ª calculadora / panel -->
           <div id="calc-slot-2" class="placeholder">
             <div class="note">
               <strong>Integra un sistema adicional y recibe −15% en cada uno.</strong><br>
@@ -419,7 +423,7 @@
           <!-- 3ª calculadora -->
           <div id="calc-tertiary" class="calc-container" style="display:none" aria-label="Tercera calculadora"></div>
 
-          <!-- Panel para “otro sistema” -->
+          <!-- Panel “otro sistema” -->
           <div id="add-more-panel" class="placeholder" style="display:none">
             <div class="note">
               <strong>¿Quieres agregar otro sistema?</strong><br>
@@ -433,8 +437,10 @@
           </div>
         </div>
 
-        <!-- Resumen combinado (Concepto / Importe) -->
-        <div id="combined-wrap" style="text-align:center;margin-top:10px"></div>
+        <!-- Resumen combinado (mismo estilo de tabla que comparativa) -->
+        <div id="combined-wrap" style="margin-top:12px">
+          <!-- calculadora.js inyectará el contenido; estos estilos lo harán verse como la tabla -->
+        </div>
       </div>
     </section>
 
@@ -442,23 +448,23 @@
     <section aria-labelledby="comparativa" id="comparativa">
       <h3>Comparativa con otros sistemas</h3>
       <div class="card body">
-        <table class="comparison-table">
+        <table class="table-like">
           <thead>
-          <tr><th>Característica</th><th class="highlight">CONTPAQi Contabilidad</th><th>Aspel COI</th><th>QuickBooks</th><th>Otro ERP</th></tr>
+            <tr><th>Característica</th><th class="highlight">CONTPAQi Contabilidad</th><th>Aspel COI</th><th>QuickBooks</th><th>Otro ERP</th></tr>
           </thead>
           <tbody>
-          <tr><td>Actualización fiscal (SAT)</td><td class="highlight">✅ Automática</td><td>⚠️ Parcial</td><td>❌ Limitada</td><td>⚠️ Depende del partner</td></tr>
-          <tr><td>Integración con Nóminas/Bancos/Comercial</td><td class="highlight">✅ Nativa</td><td>❌</td><td>❌</td><td>⚠️ Adicional</td></tr>
-          <tr><td>Licenciamiento</td><td class="highlight">✅ Mono/Multi RFC</td><td>⚠️ Limitado</td><td>❌ Solo nube</td><td>⚠️ Tradicional</td></tr>
+            <tr><td>Actualización fiscal (SAT)</td><td class="highlight">✅ Automática</td><td>⚠️ Parcial</td><td>❌ Limitada</td><td>⚠️ Depende del partner</td></tr>
+            <tr><td>Integración con Nóminas/Bancos/Comercial</td><td class="highlight">✅ Nativa</td><td>❌</td><td>❌</td><td>⚠️ Adicional</td></tr>
+            <tr><td>Licenciamiento</td><td class="highlight">✅ Mono/Multi RFC</td><td>⚠️ Limitado</td><td>❌ Solo nube</td><td>⚠️ Tradicional</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- FAQ -->
+    <!-- FAQ (estilo imagen 2; se cierra la anterior automáticamente) -->
     <section aria-labelledby="faq" id="faq">
       <h3>Preguntas frecuentes</h3>
-      <details class="faq-item" open>
+      <details class="faq-item">
         <summary>¿Qué diferencia hay entre MonoRFC y MultiRFC?</summary>
         <p><strong>MonoRFC</strong> permite administrar la contabilidad de una sola empresa o contribuyente.<br>
           <strong>MultiRFC</strong> permite manejar varias empresas o RFC dentro de la misma licencia, ideal para despachos o contadores con múltiples clientes.</p>
@@ -492,7 +498,8 @@
     </section>
 
     <!-- TOC flotante -->
-    <aside class="toc" id="toc">
+    <aside class="toc collapsed" id="toc">
+      <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
       <strong class="toc-title">Mapa del sitio</strong>
       <a href="#beneficios">Por qué usar</a>
       <a href="#caracteristicas">Funciones</a>
@@ -581,7 +588,7 @@
     document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
     document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m) closeModal(m.id);}));
 
-    // Carrusel genérico (galería derecha)
+    // Carrusel genérico (galería)
     (function wireCarousel(rootId){
       const root=document.getElementById(rootId); if(!root) return;
       const track=root.querySelector('.carousel-track'); const dots=[...root.querySelectorAll('.dot')];
@@ -590,7 +597,7 @@
       track.addEventListener('scroll',()=>{const i=Math.round(track.scrollLeft/track.clientWidth); dots.forEach((d,idx)=>d.classList.toggle('active',idx===i));});
     })('carousel1');
 
-    // Slider de beneficios (usa flechas arrowCircle)
+    // Slider de beneficios
     (function(){
       const slider=document.querySelector('#beneficios .listSlider'); if(!slider) return;
       const track =slider.querySelector('#listTrack');
@@ -616,7 +623,7 @@
       apply('proceso');
     })();
 
-    // Carrusel Sistemas (flechas arrowCircle fuera del track)
+    // Carrusel Sistemas
     (function(){
       document.querySelectorAll('.carouselX').forEach(root=>{
         const track=root.querySelector('.track');
@@ -644,25 +651,24 @@
     // ===== Helper: comprobar precios =====
     function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
 
-    // ===== Calculadora: secundaria / terciaria (con resumen combinado visible) =====
+    // ===== Calculadora secundaria/terciaria (y resumen combinado visible) =====
     (function(){
       const slot2=document.getElementById('calc-slot-2');
       const slot3=document.getElementById('calc-tertiary');
       const addMore=document.getElementById('add-more-panel');
       const pick2=document.getElementById('icons-sec-sys');
       const pick3=document.getElementById('icons-third-sys');
-      const hasP=n=>!!(window.preciosContpaqi && window.preciosContpaqi[n]);
 
       pick2?.addEventListener('click', e=>{
         const btn=e.target.closest('.sys-icon'); if(!btn) return;
         pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
-        const sys=btn.dataset.sys; if(!hasP(sys)) return;
+        const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
 
         slot2.className='calc-container'; slot2.id='calc-secondary';
         CalculadoraContpaqi.setSecondarySystem(sys, {
           secondarySelector:'#calc-secondary',
-          combinedSelector:'#combined-wrap' // <— vuelve el resumen Concepto/Importe
+          combinedSelector:'#combined-wrap'
         });
         addMore.style.display=''; addMore.scrollIntoView({behavior:'smooth',block:'nearest'});
       });
@@ -671,16 +677,27 @@
         const btn=e.target.closest('.sys-icon'); if(!btn) return;
         pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
-        const sys=btn.dataset.sys; if(!hasP(sys)) return;
+        const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
 
         slot3.style.display='';
         CalculadoraContpaqi.setTertiarySystem(sys, {
           tertiarySelector:'#calc-tertiary',
-          combinedSelector:'#combined-wrap' // <— también aquí
+          combinedSelector:'#combined-wrap'
         });
         addMore.style.display='none'; slot3.scrollIntoView({behavior:'smooth',block:'nearest'});
       });
     })();
+
+    // Estilo de tabla para cualquier contenido que inyecte la calculadora en #combined-wrap
+    const style = document.createElement('style');
+    style.textContent = `
+      #combined-wrap table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid #1e2b3c; border-radius:12px; overflow:hidden; }
+      #combined-wrap th,#combined-wrap td{ padding:12px 14px; border-bottom:1px solid #1e2b3c; }
+      #combined-wrap tr:last-child td{ border-bottom:none; }
+      #combined-wrap thead th{ background:#0e1724; color:#dce8ff; text-align:left; }
+      #combined-wrap td:last-child{ text-align:right; }
+    `;
+    document.head.appendChild(style);
 
     // FAQ: cerrar la anterior automáticamente
     (function(){
@@ -690,23 +707,26 @@
       });
     })();
 
-    // TOC Scrollspy
+    // TOC: colapsado/expandido
     (function(){
-      const toc=document.getElementById('toc'); if(!toc) return;
-      const links=toc.querySelectorAll('a');
-      const map=Array.from(links).map(a=>{
-        const id=a.getAttribute('href').replace('#','');
+      const toc=document.getElementById('toc');
+      const btn=document.getElementById('tocToggle');
+      btn.addEventListener('click',()=>toc.classList.toggle('collapsed'));
+      // Scrollspy solo cuando está abierto
+      const links=[...toc.querySelectorAll('a')];
+      const map=links.map(a=>{
+        const id=a.getAttribute('href').slice(1);
         const el=document.getElementById(id) || document.querySelector('[id="'+id+'"]');
         return {a,el};
       }).filter(x=>x.el);
 
       const obs=new IntersectionObserver((entries)=>{
+        if(toc.classList.contains('collapsed')) return;
         entries.forEach(entry=>{
           const hit=map.find(m=>m.el===entry.target); if(!hit) return;
           if(entry.isIntersecting){links.forEach(l=>l.classList.remove('active')); hit.a.classList.add('active');}
         });
       },{rootMargin:'-40% 0px -50% 0px',threshold:0.01});
-
       map.forEach(m=>obs.observe(m.el));
     })();
   </script>
