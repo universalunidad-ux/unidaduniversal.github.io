@@ -143,6 +143,20 @@
     .calc-row{flex-wrap:wrap}
   }
   html{scroll-behavior:smooth}
+
+  /* tooltips mínimos */
+  .help-wrapper{position:relative;display:flex;align-items:center;gap:8px}
+  .help-icon,.info-icon{width:28px;height:28px;border-radius:50%;border:1px solid #314057;background:#0e1724;cursor:pointer}
+  .tooltip-box{position:absolute;inset:auto auto 100% 0;transform:translateY(-8px);background:#0e1724;border:1px solid #1c2533;border-radius:10px;padding:10px;display:none;min-width:220px;z-index:5}
+  .tooltip-box.open{display:block}
+  .tooltip-close{position:absolute;top:6px;right:6px;background:transparent;border:none;color:#cfe3ff;font-size:16px;cursor:pointer}
+  .pdf-frame{width:100%;height:70vh;border:0}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
+  .modal.open{display:flex}
+  .modal-card{background:#0f1622;border:1px solid #1c2533;border-radius:14px;max-width:min(920px,90vw);width:100%;max-height:90vh;overflow:auto}
+  .modal-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #1c2533}
+  .modal-body{padding:12px 14px}
+  .close{background:#101722;border:1px solid #1c2533;border-radius:8px;color:#e8eef6;padding:6px 10px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -497,8 +511,14 @@
               <button class="sys-icon" data-sys="CONTPAQi Bancos" aria-pressed="false" title="Bancos">
                 <img src="../IMG/bancosh.webp" alt="Bancos">
               </button>
-              <button class="sys-icon" data-sys="CONTPAQi Comercial" aria-pressed="false" title="Comercial">
-                <img src="../IMG/comercialh.webp" alt="Comercial">
+              <button class="sys-icon" data-sys="CONTPAQi Comercial Start" aria-pressed="false" title="Comercial Start">
+                <img src="../IMG/comercialstart.webp" alt="Comercial Start">
+              </button>
+              <button class="sys-icon" data-sys="CONTPAQi Comercial Pro" aria-pressed="false" title="Comercial Pro">
+                <img src="../IMG/comercialpro.webp" alt="Comercial Pro">
+              </button>
+              <button class="sys-icon" data-sys="CONTPAQi Comercial Premium" aria-pressed="false" title="Comercial Premium">
+                <img src="../IMG/comercialpremium.webp" alt="Comercial Premium">
               </button>
             </div>
           </div>
@@ -516,7 +536,9 @@
           <div class="icons-wrap" id="icons-third-sys">
             <button class="sys-icon" data-sys="CONTPAQi Nóminas" title="Nóminas"><img src="../IMG/nominash.webp" alt="Nóminas"></button>
             <button class="sys-icon" data-sys="CONTPAQi Bancos" title="Bancos"><img src="../IMG/bancosh.webp" alt="Bancos"></button>
-            <button class="sys-icon" data-sys="CONTPAQi Comercial" title="Comercial"><img src="../IMG/comercialh.webp" alt="Comercial"></button>
+            <button class="sys-icon" data-sys="CONTPAQi Comercial Start" title="Comercial Start"><img src="../IMG/comercialstart.webp" alt="Comercial Start"></button>
+            <button class="sys-icon" data-sys="CONTPAQi Comercial Pro" title="Comercial Pro"><img src="../IMG/comercialpro.webp" alt="Comercial Pro"></button>
+            <button class="sys-icon" data-sys="CONTPAQi Comercial Premium" title="Comercial Premium"><img src="../IMG/comercialpremium.webp" alt="Comercial Premium"></button>
           </div>
         </div>
       </div>
@@ -636,7 +658,7 @@
   </div>
 </footer>
 
-<!-- Scripts -->
+<!-- Scripts principales de UI -->
 <script>
   // Año y menú
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -705,7 +727,7 @@
     apply('proceso');
   })();
 
-  // Carrusel Sistemas 3x (sin desplazamiento libre; por grupos con dots)
+  // Carrusel Sistemas 3x (por grupos con dots)
   (function(){
     document.querySelectorAll('.carouselX').forEach(root=>{
       const track = root.querySelector('.track');
@@ -717,11 +739,10 @@
         const cards = track.querySelectorAll('.sys').length;
         return Math.max(1, Math.ceil(cards / 3));
       }
-      function cardGroupWidth(){ return track.clientWidth; } // 3 visibles = ancho del track
+      function cardGroupWidth(){ return track.clientWidth; }
       function goTo(group){ track.scrollTo({left: group * cardGroupWidth(), behavior:'smooth'}); setDot(group); }
       function setDot(i){ dots.forEach((d,idx)=>d.classList.toggle('active', idx===i)); }
 
-      // construir dots
       dotsWrap.innerHTML = '';
       const dots = Array.from({length:groupsCount()},(_,i)=>{
         const b=document.createElement('button'); b.className='dot'+(i===0?' active':''); b.addEventListener('click',()=>goTo(i)); dotsWrap.appendChild(b); return b;
@@ -734,6 +755,25 @@
     });
   })();
 
+  // ===== Helper global para montar calculadoras secundarias/terciarias =====
+  function mountInto(containerId, systemName){
+    const sel = '#'+containerId;
+    if (window.CalculadoraContpaqi?.setSecondarySystem) {
+      window.CalculadoraContpaqi.setSecondarySystem(systemName, {
+        secondarySelector: sel,
+        combinedSelector: '#combined-wrap'
+      });
+    } else {
+      // fallback
+      const el = document.getElementById(containerId);
+      if (el) {
+        el.innerHTML =
+          '<div class="hint">Calculando <strong>'+systemName+
+          '</strong>… (verifica que calculadora.js y precios-contpaqi.js estén cargados).</div>';
+      }
+    }
+  }
+
   // ===== Calculadora: flujo 2ª y 3ª en línea =====
   (function(){
     const slot2 = document.getElementById('calc-slot-2');
@@ -742,24 +782,6 @@
     const pick2 = document.getElementById('icons-sec-sys');
     const pick3 = document.getElementById('icons-third-sys');
 
-    // helper para montar usando API existente si está disponible
-    function mountInto(containerId, systemName){
-      if(window.CalculadoraContpaqi?.mount){
-        CalculadoraContpaqi.mount('#'+containerId, systemName);
-      } else if(window.CalculadoraContpaqi?.render){
-        CalculadoraContpaqi.render('#'+containerId, systemName);
-      } else if(window.CalculadoraContpaqi?.setSecondarySystem && containerId==='calc-slot-2'){
-        CalculadoraContpaqi.setSecondarySystem(systemName);
-      } else if(window.CalculadoraContpaqi?.setTertiarySystem && containerId==='calc-slot-3'){
-        CalculadoraContpaqi.setTertiarySystem(systemName);
-      } else {
-        // fallback visual
-        document.getElementById(containerId).innerHTML =
-          '<div class="hint">Calculadora para <strong>'+systemName+
-          '</strong> (conéctame a calculadora.js para montarla aquí).</div>';
-      }
-    }
-
     // primera elección → monta en slot2, baja el panel
     pick2?.addEventListener('click', (e)=>{
       const btn = e.target.closest('.sys-icon'); if(!btn) return;
@@ -767,12 +789,15 @@
       btn.classList.add('active');
       const sys = btn.dataset.sys;
 
+      // Convierte el placeholder en contenedor de calculadora secundaria
       slot2.className = 'calc-container';
       slot2.id = 'calc-secondary';
+
+      // Monta usando setSecondarySystem en #calc-secondary
       mountInto('calc-secondary', sys);
 
+      // Muestra panel para tercer sistema
       addMore.style.display = '';
-      // mover foco visual al panel de "otro sistema"
       addMore.scrollIntoView({behavior:'smooth', block:'nearest'});
     });
 
@@ -784,12 +809,15 @@
       const sys = btn.dataset.sys;
 
       slot3.style.display = '';
+      // Reutiliza la misma API pero apuntando al contenedor #calc-slot-3
       mountInto('calc-slot-3', sys);
+
       addMore.style.display = 'none';
+      slot3.scrollIntoView({behavior:'smooth', block:'nearest'});
     });
   })();
 
-  // FAQ exclusivo
+  // FAQ exclusivo (acordeón de una sola abierta)
   (function(){
     const items = document.querySelectorAll('.faq-item');
     items.forEach((el)=>{
