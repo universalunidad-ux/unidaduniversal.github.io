@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CONTPAQi Contabilidad | Expiriti</title>
   <meta name="description" content="CONTPAQi Contabilidad con Expiriti: implementación, capacitación, compra directa, prueba de 30 días y sesión guiada por Zoom.">
-  <!-- Rutas relativas para imágenes y assets -->
   <base href="./">
   <style>
     :root{
@@ -68,7 +67,7 @@
     .sys-icon:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.35)}
     .sys-icon.active{border-color:transparent;box-shadow:0 0 0 2px rgba(45,212,191,.25) inset, 0 10px 24px rgba(45,212,191,.18)}
 
-    /* ===== Tablas “comparativa-like” (incluye resumen combinado) ===== */
+    /* ===== Tablas estilo comparativa (incluye Concepto/Importe) ===== */
     .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
     .table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
     .table-like tr:last-child td{border-bottom:none}
@@ -76,7 +75,7 @@
     .table-like td.right{text-align:right}
     .table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
 
-    /* ===== Carruseles genéricos ===== */
+    /* ===== Carrusel genérico ===== */
     .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;height:100%;min-height:280px}
     .carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
     .carousel-slide{min-width:100%;scroll-snap-align:center;object-fit:cover}
@@ -94,19 +93,16 @@
     .listTitle{font-weight:800;font-size:26px}
     .listDesc{color:#c9d3e3}
 
-    /* ===== Flechas unificadas (mismo estilo y centradas) ===== */
+    /* ===== Flechas unificadas ===== */
     .arrowCircle{
       position:absolute; top:50%; transform:translateY(-50%);
       width:44px; height:44px; border-radius:999px;
-      border:1px solid #2b3c56;
-      background:linear-gradient(145deg,#0f1a2a,#0f1c2c);
+      border:1px solid #2b3c56; background:linear-gradient(145deg,#0f1a2a,#0f1c2c);
       display:grid; place-items:center; cursor:pointer; z-index:3; color:#eaf2ff;
       box-shadow:0 6px 18px rgba(0,0,0,.35);
     }
-    .arrowCircle.prev{ left:8px; }
-    .arrowCircle.next{ right:8px; }
-    .arrowCircle .chev{ font-size:24px; line-height:1; animation:chevPulse 1.8s ease-in-out infinite; }
-    @keyframes chevPulse{ 0%,100%{ transform:translateX(0) } 50%{ transform:translateX(3px) } }
+    .arrowCircle.prev{ left:8px; } .arrowCircle.next{ right:8px; }
+    .arrowCircle .chev{ font-size:24px; line-height:1; }
 
     /* ===== Carrusel Sistemas ===== */
     .carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
@@ -126,21 +122,19 @@
     .fhead{display:flex;align-items:center;gap:10px;margin-bottom:4px}
     .ficon{width:28px;height:28px;border-radius:8px;background:#101a2a;object-fit:cover}
 
-    /* ===== TOC flotante (colapsado por defecto) ===== */
+    /* ===== TOC (mapa) con X — colapsado por defecto, autocierre ===== */
     .toc{
       position:fixed; right:16px; bottom:16px; width:240px; max-height:48vh; overflow:auto;
       background:rgba(15,24,38,.75); border:1px solid #1c2533; border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:6px; z-index:60;
-      box-shadow:0 10px 24px rgba(0,0,0,.35); backdrop-filter: blur(6px);
-      transition:all .2s ease;
+      box-shadow:0 10px 24px rgba(0,0,0,.35); backdrop-filter: blur(6px); transition:all .2s ease;
     }
     .toc.collapsed{width:auto;max-height:none;padding:6px 10px;border-radius:999px;gap:0}
-    .toc.collapsed .toc-title,.toc.collapsed a{display:none}
-    .toc-toggle{display:flex;align-items:center;gap:8px;font-weight:700}
-    .toc.collapsed .toc-toggle{gap:6px}
+    .toc.collapsed .toc-title,.toc.collapsed a,.toc.collapsed .toc-close{display:none}
     .toc-title{font-weight:800;color:#b9c8de;margin-bottom:6px}
     .toc a{padding:6px 8px;border-radius:10px;color:#cfe3ff;border:1px solid transparent}
     .toc a:hover{border-color:#233347;background:#101b2a}
     .toc a.active{border-color:#2dd4bf;background:rgba(45,212,191,.12);color:#eafffb}
+    .toc .toc-close{position:absolute;top:6px;right:8px;background:transparent;border:none;color:#cfe3ff;font-size:18px;cursor:pointer}
 
     footer{padding:28px 0;border-top:1px solid #11182725;color:#aebbd0}
 
@@ -158,12 +152,14 @@
 
     html{scroll-behavior:smooth}
 
-    /* Tooltips + Modales */
+    /* Tooltips “?” y “!” blancos con brillo */
     .help-wrapper{position:relative;display:flex;align-items:center;gap:8px}
-    .help-icon,.info-icon{width:28px;height:28px;border-radius:50%;border:1px solid #314057;background:#0e1724;cursor:pointer}
+    .help-icon,.info-icon{width:28px;height:28px;border-radius:50%;border:1px solid #314057;background:#0e1724;color:#fff;cursor:pointer;transition:box-shadow .15s ease, transform .15s ease}
+    .help-icon:hover,.help-icon:focus,.info-icon:hover,.info-icon:focus{box-shadow:0 0 0 3px rgba(255,255,255,.15),0 8px 20px rgba(0,0,0,.35);transform:translateY(-1px)}
     .tooltip-box{position:absolute;inset:auto auto 100% 0;transform:translateY(-8px);background:#0e1724;border:1px solid #1c2533;border-radius:10px;padding:10px;display:none;min-width:220px;z-index:5}
     .tooltip-box.open{display:block}
     .tooltip-close{position:absolute;top:6px;right:6px;background:transparent;border:none;color:#cfe3ff;font-size:16px;cursor:pointer}
+
     .pdf-frame{width:100%;height:70vh;border:0}
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
     .modal.open{display:flex}
@@ -171,6 +167,22 @@
     .modal-header{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #1c2533}
     .modal-body{padding:12px 14px}
     .close{background:#101722;border:1px solid #1c2533;border-radius:8px;color:#e8eef6;padding:6px 10px;cursor:pointer}
+
+    /* Tabla Concepto/Importe: centrar y menos ancha */
+    #combined-wrap{display:flex;justify-content:center;margin-top:12px}
+    #combined-wrap > *{max-width:860px;width:100%}
+    #combined-wrap h1,#combined-wrap h2,#combined-wrap h3,#combined-wrap h4,#combined-wrap h5{display:none !important}
+
+    /* FAQ estilo imagen 1 */
+    #faq .faq-item{border:1px solid #1c2533;border-radius:16px;margin:12px 0;overflow:hidden;background:#0e1724}
+    #faq .faq-item>summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:800;font-size:18px}
+    #faq .faq-item[open]>summary{background:#0f1c2c}
+    #faq .faq-item p{margin:0;padding:14px 20px 18px;font-size:17px}
+    #faq .faq-item p strong{font-weight:900}
+
+    /* Galería 25% más pequeña */
+    .gallery-wrap{width:75%;margin-left:auto}
+    @media (max-width:980px){.gallery-wrap{width:100%}}
   </style>
 </head>
 <body>
@@ -209,7 +221,7 @@
     <a href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" class="hint">← Volver a productos</a>
     <h1>CONTPAQi Contabilidad <span class="badge">Actualizado 2025</span></h1>
 
-    <!-- BADGES -->
+    <!-- badges -->
     <div class="badges">
       <span class="badge">Contabilidad electrónica</span>
       <span class="badge">Pólizas automáticas (Bancos/Comercial)</span>
@@ -217,7 +229,7 @@
       <span class="badge">Soporte y capacitación Expiriti</span>
     </div>
 
-    <!-- RESUMEN (IZQ: logo+botones | DER: GALERÍA) -->
+    <!-- Resumen (IZQ acciones | DER galería 25% menos y autoplay) -->
     <section aria-label="Resumen">
       <div class="card body">
         <div class="grid-2" style="align-items:center">
@@ -241,23 +253,25 @@
               </div>
             </div>
 
-            <a class="btn btn-grad-blue" href="#sesion-guiada">Sesión guiada 45 minutos por Zoom</a>
+            <a class="btn btn-grad-blue" href="#sesion-guiada">Sesión guiada 1h por Zoom</a>
             <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
               <button class="btn btn-grad-red" data-open="modalFicha">Ver ficha técnica (PDF)</button>
               <button class="btn btn-grad-red" data-open="modalResumen">Resumen ficha técnica</button>
             </div>
           </div>
 
-          <!-- GALERÍA MOVIDA AQUÍ (DERECHA) -->
-          <aside class="card body" style="height:100%">
+          <!-- Galería -->
+          <aside class="card body gallery-wrap">
             <h4>Galería</h4>
             <div class="carousel" id="carousel1">
+              <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
               <div class="carousel-track" aria-label="Carrusel de capturas">
                 <img class="carousel-slide" src="../IMG/1conta.webp" alt="Siempre alineado al SAT">
                 <img class="carousel-slide" src="../IMG/3conta.webp" alt="Precisión CONTPAQi">
                 <img class="carousel-slide" src="../IMG/2conta.webp" alt="Olvídate de la DIOT">
                 <img class="carousel-slide" src="../IMG/4conta.webp" alt="Optimiza tus procesos">
               </div>
+              <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
               <div class="carousel-nav" role="tablist" aria-label="Navegación carrusel">
                 <button class="dot active" aria-label="1"></button>
                 <button class="dot" aria-label="2"></button>
@@ -270,7 +284,7 @@
       </div>
     </section>
 
-    <!-- FUNCIONES (SUBE ARRIBA, ANTES DE BENEFICIOS) -->
+    <!-- Funciones (antes de beneficios) -->
     <section aria-labelledby="caracteristicas" id="caracteristicas">
       <div class="card body">
         <h3 id="caracteristicas">Funciones destacadas</h3>
@@ -309,7 +323,7 @@
       </div>
     </section>
 
-    <!-- POR QUÉ USAR (sin galería, flechas centradas) -->
+    <!-- Por qué usar (sin galería) -->
     <section id="beneficios" aria-label="Por qué usar">
       <div class="grid-2">
         <div>
@@ -351,13 +365,11 @@
             <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
           </div>
         </div>
-
-        <!-- Columna derecha queda libre para respirar (o texto adicional si luego quieres) -->
         <div></div>
       </div>
     </section>
 
-    <!-- VIDEOS (debajo de funciones) -->
+    <!-- Videos -->
     <section class="card body" id="videos">
       <h3>Videos</h3>
       <div class="grid-2" style="margin-top:14px">
@@ -423,7 +435,7 @@
           <!-- 3ª calculadora -->
           <div id="calc-tertiary" class="calc-container" style="display:none" aria-label="Tercera calculadora"></div>
 
-          <!-- Panel “otro sistema” -->
+          <!-- Panel “otro sistema” (solo aparece cuando ya hay 2) -->
           <div id="add-more-panel" class="placeholder" style="display:none">
             <div class="note">
               <strong>¿Quieres agregar otro sistema?</strong><br>
@@ -437,10 +449,8 @@
           </div>
         </div>
 
-        <!-- Resumen combinado (mismo estilo de tabla que comparativa) -->
-        <div id="combined-wrap" style="margin-top:12px">
-          <!-- calculadora.js inyectará el contenido; estos estilos lo harán verse como la tabla -->
-        </div>
+        <!-- Resumen Concepto/Importe (centrado, ancho reducido) -->
+        <div id="combined-wrap"></div>
       </div>
     </section>
 
@@ -461,7 +471,7 @@
       </div>
     </section>
 
-    <!-- FAQ (estilo imagen 2; se cierra la anterior automáticamente) -->
+    <!-- FAQ -->
     <section aria-labelledby="faq" id="faq">
       <h3>Preguntas frecuentes</h3>
       <details class="faq-item">
@@ -499,8 +509,9 @@
 
     <!-- TOC flotante -->
     <aside class="toc collapsed" id="toc">
-      <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa del sitio</button>
-      <strong class="toc-title">Secciones</strong>
+      <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
+      <button class="toc-close" aria-label="Cerrar">×</button>
+      <strong class="toc-title">Mapa del sitio</strong>
       <a href="#beneficios">Por qué usar</a>
       <a href="#caracteristicas">Funciones</a>
       <a href="#integra">Sistemas integrables</a>
@@ -557,13 +568,13 @@
 
   <!-- Scripts UI -->
   <script>
-    // Año y menú
+    // Año y menú móvil
     document.getElementById('year').textContent = new Date().getFullYear();
     document.getElementById('burger')?.addEventListener('click',()=> {
       document.getElementById('mobileMenu')?.classList.toggle('open');
     });
 
-    // Tooltips
+    // Tooltips ? y !
     const helpBtn=document.getElementById('helpBtn');
     const tipTrial=document.getElementById('tip-trial');
     const helpClose=document.getElementById('helpClose');
@@ -588,16 +599,41 @@
     document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
     document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m) closeModal(m.id);}));
 
-    // Carrusel genérico (galería)
+    // GALERÍA: autoplay 3s, flechas y dots, loop infinito, pausa al hover
     (function wireCarousel(rootId){
       const root=document.getElementById(rootId); if(!root) return;
-      const track=root.querySelector('.carousel-track'); const dots=[...root.querySelectorAll('.dot')];
-      function setActive(i){dots.forEach((d,idx)=>d.classList.toggle('active',idx===i)); track.scrollTo({left: track.clientWidth*i,behavior:'smooth'});}
-      dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
-      track.addEventListener('scroll',()=>{const i=Math.round(track.scrollLeft/track.clientWidth); dots.forEach((d,idx)=>d.classList.toggle('active',idx===i));});
+      const track=root.querySelector('.carousel-track');
+      const slides=[...track.querySelectorAll('.carousel-slide')];
+      const dots=[...root.querySelectorAll('.dot')];
+      const prev=root.querySelector('.arrowCircle.prev');
+      const next=root.querySelector('.arrowCircle.next');
+      let idx=0, timer=null;
+
+      function setActive(i){
+        idx=(i+slides.length)%slides.length;
+        dots.forEach((d,di)=>d.classList.toggle('active',di===idx));
+        track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});
+      }
+      function play(){ stop(); timer=setInterval(()=>setActive(idx+1), 3000); }
+      function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+
+      dots.forEach((d,i)=>d.addEventListener('click',()=>{ setActive(i); play(); }));
+      prev.addEventListener('click',()=>{ setActive(idx-1); play(); });
+      next.addEventListener('click',()=>{ setActive(idx+1); play(); });
+
+      track.addEventListener('scroll',()=>{
+        const i=Math.round(track.scrollLeft/track.clientWidth);
+        dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+        idx=i;
+      });
+
+      root.addEventListener('mouseenter',stop);
+      root.addEventListener('mouseleave',play);
+      window.addEventListener('resize',()=>setActive(idx));
+      setActive(0); play();
     })('carousel1');
 
-    // Slider de beneficios
+    // Slider beneficios (flechas)
     (function(){
       const slider=document.querySelector('#beneficios .listSlider'); if(!slider) return;
       const track =slider.querySelector('#listTrack');
@@ -611,7 +647,7 @@
       window.addEventListener('resize',()=>go(idx));
     })();
 
-    // Filtros de características
+    // Filtros funciones
     (function(){
       const pills=[...document.querySelectorAll('.pill')];
       const cards=[...document.querySelectorAll('.feature-grid .fcard')];
@@ -623,7 +659,7 @@
       apply('proceso');
     })();
 
-    // Carrusel Sistemas
+    // Carrusel sistemas
     (function(){
       document.querySelectorAll('.carouselX').forEach(root=>{
         const track=root.querySelector('.track');
@@ -648,16 +684,19 @@
       });
     })();
 
-    // ===== Helper: comprobar precios =====
+    // Helper precios
     function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
 
-    // ===== Calculadora secundaria/terciaria (y resumen combinado visible) =====
+    // Calculadora: mostrar "¿agregar otro sistema?" solo cuando ya hay 2
     (function(){
       const slot2=document.getElementById('calc-slot-2');
       const slot3=document.getElementById('calc-tertiary');
       const addMore=document.getElementById('add-more-panel');
       const pick2=document.getElementById('icons-sec-sys');
       const pick3=document.getElementById('icons-third-sys');
+      let haveSecondary=false;
+
+      function showAddMoreIfReady(){ addMore.style.display = haveSecondary ? '' : 'none'; }
 
       pick2?.addEventListener('click', e=>{
         const btn=e.target.closest('.sys-icon'); if(!btn) return;
@@ -670,7 +709,8 @@
           secondarySelector:'#calc-secondary',
           combinedSelector:'#combined-wrap'
         });
-        addMore.style.display=''; addMore.scrollIntoView({behavior:'smooth',block:'nearest'});
+        haveSecondary=true; showAddMoreIfReady();
+        addMore.scrollIntoView({behavior:'smooth',block:'nearest'});
       });
 
       pick3?.addEventListener('click', e=>{
@@ -684,20 +724,24 @@
           tertiarySelector:'#calc-tertiary',
           combinedSelector:'#combined-wrap'
         });
-        addMore.style.display='none'; slot3.scrollIntoView({behavior:'smooth',block:'nearest'});
+        addMore.style.display='none';
+        slot3.scrollIntoView({behavior:'smooth',block:'nearest'});
       });
     })();
 
-    // Estilo de tabla para cualquier contenido que inyecte la calculadora en #combined-wrap
-    const style = document.createElement('style');
-    style.textContent = `
-      #combined-wrap table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid #1e2b3c; border-radius:12px; overflow:hidden; }
-      #combined-wrap th,#combined-wrap td{ padding:12px 14px; border-bottom:1px solid #1e2b3c; }
-      #combined-wrap tr:last-child td{ border-bottom:none; }
-      #combined-wrap thead th{ background:#0e1724; color:#dce8ff; text-align:left; }
-      #combined-wrap td:last-child{ text-align:right; }
-    `;
-    document.head.appendChild(style);
+    // Estilo para la tabla que inyecta la calculadora en #combined-wrap
+    (function(){
+      const style = document.createElement('style');
+      style.textContent = `
+        #combined-wrap table{ width:100%; border-collapse:separate; border-spacing:0; border:1px solid #1e2b3c; border-radius:12px; overflow:hidden; }
+        #combined-wrap th,#combined-wrap td{ padding:12px 14px; border-bottom:1px solid #1e2b3c; }
+        #combined-wrap tr:last-child td{ border-bottom:none; }
+        #combined-wrap thead th{ background:#0e1724; color:#dce8ff; text-align:left; }
+        #combined-wrap td:last-child{ text-align:right; }
+        #combined-wrap h1,#combined-wrap h2,#combined-wrap h3,#combined-wrap h4,#combined-wrap h5{ display:none !important; }
+      `;
+      document.head.appendChild(style);
+    })();
 
     // FAQ: cerrar la anterior automáticamente
     (function(){
@@ -707,27 +751,17 @@
       });
     })();
 
-    // TOC: colapsado/expandido
+    // TOC: abrir/cerrar, autocerrar al clicar fuera o al navegar
     (function(){
       const toc=document.getElementById('toc');
       const btn=document.getElementById('tocToggle');
-      btn.addEventListener('click',()=>toc.classList.toggle('collapsed'));
-      // Scrollspy solo cuando está abierto
-      const links=[...toc.querySelectorAll('a')];
-      const map=links.map(a=>{
-        const id=a.getAttribute('href').slice(1);
-        const el=document.getElementById(id) || document.querySelector('[id="'+id+'"]');
-        return {a,el};
-      }).filter(x=>x.el);
-
-      const obs=new IntersectionObserver((entries)=>{
-        if(toc.classList.contains('collapsed')) return;
-        entries.forEach(entry=>{
-          const hit=map.find(m=>m.el===entry.target); if(!hit) return;
-          if(entry.isIntersecting){links.forEach(l=>l.classList.remove('active')); hit.a.classList.add('active');}
-        });
-      },{rootMargin:'-40% 0px -50% 0px',threshold:0.01});
-      map.forEach(m=>obs.observe(m.el));
+      const closeBtn=toc.querySelector('.toc-close');
+      function open(){ toc.classList.remove('collapsed'); }
+      function close(){ toc.classList.add('collapsed'); }
+      btn.addEventListener('click',(e)=>{ e.stopPropagation(); toc.classList.contains('collapsed')?open():close(); });
+      closeBtn.addEventListener('click',(e)=>{ e.stopPropagation(); close(); });
+      document.addEventListener('click',(e)=>{ if(!toc.contains(e.target)) close(); });
+      toc.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>close()));
     })();
   </script>
 
