@@ -1,23 +1,22 @@
 (function () {
-  // =========================================
-  // Helpers: formato moneda, %
-  // =========================================
+  // ========================= Helpers =========================
   const money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
   const fmt = v => money.format(Math.round(Number(v || 0)));
   const pct = v => `${((v || 0) * 100).toFixed(0)}%`;
 
-  // =========================================
-  // createCalculator: Render de una calculadora
-  // =========================================
-  function createCalculator(container, sistemaName, isPrimary, combinedSelector) {
+  // ===================== Render calculadora ===================
+  // idSuffix: "1" | "2" | "3"
+  function createCalculator(container, sistemaName, idSuffix, combinedSelector) {
     container.innerHTML = "";
+    container.dataset.systemName = sistemaName;
+
     const systemPrices = window.preciosContpaqi?.[sistemaName];
     if (!systemPrices) {
       container.innerHTML = `<p style="margin:0">Error: faltan precios para <strong>${sistemaName}</strong>.</p>`;
       return;
     }
 
-    // Título local de la caja
+    // Título
     const title = document.createElement("h4");
     title.textContent = `${sistemaName} — Calculadora`;
     container.appendChild(title);
@@ -30,12 +29,11 @@
     const licenciaLabel = document.createElement("label");
     licenciaLabel.textContent = "Modalidad: ";
     const licenciaSel = document.createElement("select");
-    licenciaSel.id = (isPrimary ? "lic1" : "lic2");
+    licenciaSel.id = `lic${idSuffix}`;
     Object.keys(systemPrices).forEach(k => {
       const opt = document.createElement("option");
       opt.value = k;
-      const lbl = k === "anual" ? "Anual (renovación)" : k === "tradicional" ? "Tradicional (licencia)" : "Nube";
-      opt.textContent = lbl;
+      opt.textContent = (k === "anual" ? "Anual (renovación)" : k === "tradicional" ? "Tradicional (licencia)" : "Nube");
       licenciaSel.appendChild(opt);
     });
     licenciaLabel.appendChild(licenciaSel);
@@ -45,7 +43,7 @@
     const rfcLabel = document.createElement("label");
     rfcLabel.textContent = "Tipo / Opción: ";
     const rfcSel = document.createElement("select");
-    rfcSel.id = (isPrimary ? "rfc1" : "rfc2");
+    rfcSel.id = `rfc${idSuffix}`;
     rfcLabel.appendChild(rfcSel);
     form.appendChild(rfcLabel);
 
@@ -53,7 +51,7 @@
     const nivelLabel = document.createElement("label");
     nivelLabel.textContent = "Nivel (solo nube): ";
     const nivelSel = document.createElement("select");
-    nivelSel.id = (isPrimary ? "niv1" : "niv2");
+    nivelSel.id = `niv${idSuffix}`;
     nivelLabel.appendChild(nivelSel);
     nivelLabel.style.display = "none";
     form.appendChild(nivelLabel);
@@ -65,7 +63,7 @@
     userInput.type = "number";
     userInput.min = "1";
     userInput.value = "1";
-    userInput.id = (isPrimary ? "usr1" : "usr2");
+    userInput.id = `usr${idSuffix}`;
     userLabel.appendChild(userInput);
     form.appendChild(userLabel);
 
@@ -73,7 +71,7 @@
     const opLabel = document.createElement("label");
     opLabel.textContent = "Operación: ";
     const opSel = document.createElement("select");
-    opSel.id = (isPrimary ? "op1" : "op2");
+    opSel.id = `op${idSuffix}`;
     opLabel.appendChild(opSel);
     form.appendChild(opLabel);
 
@@ -87,18 +85,18 @@
     table.innerHTML = `
       <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>
       <tbody>
-        <tr><td>Precio base</td><td id="${isPrimary ? 'base1' : 'base2'}">$0</td></tr>
-        <tr><td>Usuarios adicionales</td><td id="${isPrimary ? 'uadd1' : 'uadd2'}">$0</td></tr>
-        <tr><td>Descuento</td><td id="${isPrimary ? 'disc1' : 'disc2'}">0% / $0</td></tr>
-        <tr><td>Subtotal</td><td id="${isPrimary ? 'sub1' : 'sub2'}">$0</td></tr>
-        <tr><td>IVA (16%)</td><td id="${isPrimary ? 'iva1' : 'iva2'}">$0</td></tr>
-        <tr><td><strong>Total</strong></td><td id="${isPrimary ? 'tot1' : 'tot2'}"><strong>$0</strong></td></tr>
+        <tr><td>Precio base</td><td id="base${idSuffix}">$0</td></tr>
+        <tr><td>Usuarios adicionales</td><td id="uadd${idSuffix}">$0</td></tr>
+        <tr><td>Descuento</td><td id="disc${idSuffix}">0% / $0</td></tr>
+        <tr><td>Subtotal</td><td id="sub${idSuffix}">$0</td></tr>
+        <tr><td>IVA (16%)</td><td id="iva${idSuffix}">$0</td></tr>
+        <tr><td><strong>Total</strong></td><td id="tot${idSuffix}"><strong>$0</strong></td></tr>
       </tbody>
     `;
     results.appendChild(table);
     container.appendChild(results);
 
-    // Rellenar selects según modalidad
+    // -------- Opciones dependientes --------
     function refreshOptions() {
       const lic = licenciaSel.value;
       rfcSel.innerHTML = "";
@@ -110,16 +108,14 @@
         if (systemPrices.nube) {
           Object.keys(systemPrices.nube).forEach(n => {
             const opt = document.createElement("option");
-            opt.value = n;
-            opt.textContent = n;
+            opt.value = n; opt.textContent = n;
             nivelSel.appendChild(opt);
           });
         }
         nivelLabel.style.display = "inline-block";
         ["Contratar (nueva)", "Renovación anual"].forEach(o => {
           const opt = document.createElement("option");
-          opt.value = o;
-          opt.textContent = o;
+          opt.value = o; opt.textContent = o;
           opSel.appendChild(opt);
         });
       } else {
@@ -140,46 +136,35 @@
         }
         if (lic === "anual") {
           ["Renovación anual", "Nueva anual (contratar)"].forEach(o => {
-            const opt = document.createElement("option");
-            opt.value = o;
-            opt.textContent = o;
-            opSel.appendChild(opt);
+            const opt = document.createElement("option"); opt.value = o; opt.textContent = o; opSel.appendChild(opt);
           });
         } else {
           ["Licencia Tradicional (nueva)", "Actualización tradicional"].forEach(o => {
-            const opt = document.createElement("option");
-            opt.value = o;
-            opt.textContent = o;
-            opSel.appendChild(opt);
+            const opt = document.createElement("option"); opt.value = o; opt.textContent = o; opSel.appendChild(opt);
           });
         }
       }
       calculateAndRender();
     }
 
-    // Calcular y pintar
+    // ----------------- Cálculo -----------------
     function calculateAndRender() {
-      const lic = licenciaSel.value;
+      const lic = licenciaSel.value || Object.keys(systemPrices)[0];
       const rfcType = rfcSel.value;
       const nivel = nivelSel.value;
       const usuarios = parseInt(userInput.value) || 1;
       const op = opSel.value || "";
 
-      let base = 0;
-      let usuariosAddImporte = 0;
-      let usuariosExtras = 0;
+      let base = 0, usuariosAddImporte = 0, usuariosExtras = 0;
 
       if (lic === "nube") {
         const datosNube = systemPrices.nube && systemPrices.nube[nivel];
         if (!datosNube) return writeZeros();
         base = Number(datosNube.precio_base || 0);
-        const incluidos = datosNube.usuarios_incluidos === "multi"
-          ? usuarios
-          : Number(datosNube.usuarios_incluidos || 1);
+        const incluidos = datosNube.usuarios_incluidos === "multi" ? usuarios : Number(datosNube.usuarios_incluidos || 1);
         usuariosExtras = Math.max(usuarios - incluidos, 0);
         const perUserNube = Number(systemPrices.nube.usuario_adicional || 0);
         usuariosAddImporte = usuariosExtras * perUserNube;
-
       } else {
         const datosLic = (systemPrices[lic] && systemPrices[lic][rfcType]) || null;
         if (!datosLic) return writeZeros();
@@ -190,8 +175,7 @@
           const perUser = Number(datosLic.usuario_en_red ?? datosLic.usuario_adicional ?? 0);
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser;
-
-        } else { // tradicional
+        } else {
           if (rfcType === "crecimiento_usuario") {
             base = 0;
             const perUser = Number((systemPrices.tradicional.crecimiento_usuario && systemPrices.tradicional.crecimiento_usuario.usuario_adicional) || 0);
@@ -200,7 +184,8 @@
           } else {
             base = Number(datosLic.precio_base || 0);
             const perUser = Number(
-              (datosLic.usuario_adicional != null ? datosLic.usuario_adicional : (systemPrices.tradicional.crecimiento_usuario && systemPrices.tradicional.crecimiento_usuario.usuario_adicional)) || 0
+              (datosLic.usuario_adicional != null ? datosLic.usuario_adicional :
+               (systemPrices.tradicional.crecimiento_usuario && systemPrices.tradicional.crecimiento_usuario.usuario_adicional)) || 0
             );
             usuariosExtras = Math.max(usuarios - 1, 0);
             usuariosAddImporte = usuariosExtras * perUser;
@@ -210,35 +195,35 @@
 
       const subtotal = base + usuariosAddImporte;
 
-      // Descuento por 2do sistema (se aplica solo si existe calculadora secundaria renderizada)
+      // Descuento por paquete (si hay 2 o 3 cajas), excluye XML en Línea
       let discountPct = 0;
-      const secondaryExists = !!document.getElementById("calc-secondary")?.querySelector("table");
-      if (secondaryExists && !sistemaName.includes("XML en Línea")) {
-        discountPct = 0.15;
-      }
+      const has2 = !!document.getElementById("calc-secondary")?.querySelector("table");
+      const has3 = !!document.getElementById("calc-tertiary")?.querySelector("table");
+      const paquete = has2 || has3;
+      if (paquete && !sistemaName.includes("XML en Línea")) discountPct = 0.15;
 
       const discountAmt = subtotal * discountPct;
       const afterDiscount = subtotal - discountAmt;
       const iva = afterDiscount * 0.16;
       const total = afterDiscount + iva;
 
-      document.getElementById(isPrimary ? 'base1' : 'base2').textContent = fmt(base);
-      document.getElementById(isPrimary ? 'uadd1' : 'uadd2').textContent = `${fmt(usuariosAddImporte)} (${usuariosExtras} extras)`;
-      document.getElementById(isPrimary ? 'disc1' : 'disc2').textContent = `${pct(discountPct)} / ${fmt(discountAmt)}`;
-      document.getElementById(isPrimary ? 'sub1' : 'sub2').textContent = fmt(afterDiscount);
-      document.getElementById(isPrimary ? 'iva1' : 'iva2').textContent = fmt(iva);
-      document.getElementById(isPrimary ? 'tot1' : 'tot2').textContent = fmt(total);
+      document.getElementById(`base${idSuffix}`).textContent = fmt(base);
+      document.getElementById(`uadd${idSuffix}`).textContent = `${fmt(usuariosAddImporte)} (${usuariosExtras} extras)`;
+      document.getElementById(`disc${idSuffix}`).textContent = `${pct(discountPct)} / ${fmt(discountAmt)}`;
+      document.getElementById(`sub${idSuffix}`).textContent = fmt(afterDiscount);
+      document.getElementById(`iva${idSuffix}`).textContent = fmt(iva);
+      document.getElementById(`tot${idSuffix}`).textContent = fmt(total);
 
       updateCombinedSummary(combinedSelector);
     }
 
     function writeZeros() {
-      document.getElementById(isPrimary ? 'base1' : 'base2').textContent = fmt(0);
-      document.getElementById(isPrimary ? 'uadd1' : 'uadd2').textContent = fmt(0);
-      document.getElementById(isPrimary ? 'disc1' : 'disc2').textContent = `0% / ${fmt(0)}`;
-      document.getElementById(isPrimary ? 'sub1' : 'sub2').textContent = fmt(0);
-      document.getElementById(isPrimary ? 'iva1' : 'iva2').textContent = fmt(0);
-      document.getElementById(isPrimary ? 'tot1' : 'tot2').textContent = fmt(0);
+      document.getElementById(`base${idSuffix}`).textContent = fmt(0);
+      document.getElementById(`uadd${idSuffix}`).textContent = fmt(0);
+      document.getElementById(`disc${idSuffix}`).textContent = `0% / ${fmt(0)}`;
+      document.getElementById(`sub${idSuffix}`).textContent = fmt(0);
+      document.getElementById(`iva${idSuffix}`).textContent = fmt(0);
+      document.getElementById(`tot${idSuffix}`).textContent = fmt(0);
       updateCombinedSummary(combinedSelector);
     }
 
@@ -252,105 +237,98 @@
     refreshOptions();
   }
 
-  // =========================================
-  // Resumen combinado (usa los totales ya pintados)
-  // =========================================
+  // =================== Resumen combinado =====================
   function updateCombinedSummary(combinedSelector = "#combined-wrap") {
     const combined = document.querySelector(combinedSelector);
     if (!combined) return;
 
-    function parseCurrencyEl(id) {
+    const getNum = id => {
       const el = document.getElementById(id);
       if (!el) return 0;
-      const txt = el.textContent.replace(/[^\d.-]/g, "");
-      return parseFloat(txt) || 0;
-    }
+      const n = parseFloat(el.textContent.replace(/[^\d.-]/g, ""));
+      return isNaN(n) ? 0 : n;
+    };
 
-    const total1 = parseCurrencyEl("tot1");
-    const total2 = parseCurrencyEl("tot2");
-    const calcSecondaryExists = document.getElementById("calc-secondary")?.querySelector("table");
+    // ¿Existen?
+    const e1 = !!document.getElementById("tot1");
+    const e2 = !!document.getElementById("tot2");
+    const e3 = !!document.getElementById("tot3");
 
     combined.innerHTML = "";
-    if (!calcSecondaryExists) {
-      combined.innerHTML = `<p style="margin:0"><strong>Total:</strong> ${fmt(total1)}</p>`;
+
+    if (!e2 && !e3) {
+      // Solo una
+      combined.innerHTML = `<p style="margin:0"><strong>Total:</strong> ${fmt(getNum("tot1"))}</p>`;
       return;
     }
 
-    const sub1 = parseCurrencyEl("sub1");
-    const sub2 = parseCurrencyEl("sub2");
-    const ivaTotal = parseCurrencyEl("iva1") + parseCurrencyEl("iva2");
+    // Nombres
+    const n1 = document.getElementById("calc-primary")?.dataset.systemName || "Sistema 1";
+    const n2 = document.getElementById("calc-secondary")?.dataset.systemName || "Sistema 2";
+    const n3 = document.getElementById("calc-tertiary")?.dataset.systemName || "Sistema 3";
+
+    const filas = [];
+    const totales = [];
+    let ivaTotal = 0;
+
+    if (e1) { filas.push({label:`Subtotal ${n1} (después descuento)`, val:getNum("sub1")}); totales.push(getNum("tot1")); ivaTotal += getNum("iva1"); }
+    if (e2) { filas.push({label:`Subtotal ${n2} (después descuento)`, val:getNum("sub2")}); totales.push(getNum("tot2")); ivaTotal += getNum("iva2"); }
+    if (e3) { filas.push({label:`Subtotal ${n3} (después descuento)`, val:getNum("sub3")}); totales.push(getNum("tot3")); ivaTotal += getNum("iva3"); }
+
+    const totalCombinado = totales.reduce((a,b)=>a+b,0);
 
     const box = document.createElement("div");
     box.className = "combined-summary";
     box.innerHTML = `
       <h4>Resumen combinado</h4>
-      <p>Sistema 1: ${fmt(total1)}</p>
-      <p>Sistema 2: ${fmt(total2)}</p>
-      <p><strong>Total combinado:</strong> ${fmt(total1 + total2)}</p>
+      ${e1 ? `<p>${n1}: ${fmt(getNum("tot1"))}</p>` : ""}
+      ${e2 ? `<p>${n2}: ${fmt(getNum("tot2"))}</p>` : ""}
+      ${e3 ? `<p>${n3}: ${fmt(getNum("tot3"))}</p>` : ""}
+      <p><strong>Total combinado:</strong> ${fmt(totalCombinado)}</p>
       <table class="combined-table">
         <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>
         <tbody>
-          <tr><td>Subtotal sistema 1 (después descuento)</td><td>${fmt(sub1)}</td></tr>
-          <tr><td>Subtotal sistema 2 (después descuento)</td><td>${fmt(sub2)}</td></tr>
+          ${filas.map(f=>`<tr><td>${f.label}</td><td>${fmt(f.val)}</td></tr>`).join("")}
           <tr><td>IVA total (sistemas)</td><td>${fmt(ivaTotal)}</td></tr>
-          <tr><td><strong>Total combinado</strong></td><td><strong>${fmt(total1 + total2)}</strong></td></tr>
+          <tr><td><strong>Total combinado</strong></td><td><strong>${fmt(totalCombinado)}</strong></td></tr>
         </tbody>
       </table>
     `;
     combined.appendChild(box);
   }
 
-  // =========================================
-  // API pública mínima
-  // =========================================
+  // ====================== API pública =======================
   function initCalculadora(opts = {}) {
-    const {
-      systemName,
-      primarySelector = "#calc-primary",
-      secondarySelector = "#calc-secondary",
-      combinedSelector = "#combined-wrap"
-    } = opts;
-
-    const primaryEl = document.querySelector(primarySelector);
-    if (!primaryEl) return console.warn("No existe contenedor primario de calculadora:", primarySelector);
-    createCalculator(primaryEl, systemName, true, combinedSelector);
-
-    const secEl = document.querySelector(secondarySelector);
-    if (secEl) secEl.innerHTML = "";
+    const { systemName, primarySelector = "#calc-primary", combinedSelector = "#combined-wrap" } = opts;
+    const el = document.querySelector(primarySelector);
+    if (!el) return console.warn("No existe contenedor primario:", primarySelector);
+    createCalculator(el, systemName, "1", combinedSelector);
   }
 
   function setSecondarySystem(name, opts = {}) {
-    const {
-      secondarySelector = "#calc-secondary",
-      combinedSelector = "#combined-wrap"
-    } = opts;
-
-    const secEl = document.querySelector(secondarySelector);
-    if (!secEl) return console.warn("No existe contenedor secundario:", secondarySelector);
-    createCalculator(secEl, name, false, combinedSelector);
+    const { secondarySelector = "#calc-secondary", combinedSelector = "#combined-wrap" } = opts;
+    const el = document.querySelector(secondarySelector);
+    if (!el) return console.warn("No existe contenedor secundario:", secondarySelector);
+    createCalculator(el, name, "2", combinedSelector);
   }
 
-  // Exponer en window
-  window.CalculadoraContpaqi = {
-    init: initCalculadora,
-    setSecondarySystem,
-    updateCombinedSummary
-  };
+  function setTertiarySystem(name, opts = {}) {
+    const { tertiarySelector = "#calc-tertiary", combinedSelector = "#combined-wrap" } = opts;
+    const el = document.querySelector(tertiarySelector);
+    if (!el) return console.warn("No existe contenedor terciario:", tertiarySelector);
+    createCalculator(el, name, "3", combinedSelector);
+  }
 
-  // Auto-init sencillo
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      const app = document.getElementById("app");
-      const sys = app?.dataset.system;
-      if (sys && document.querySelector("#calc-primary")) {
-        window.CalculadoraContpaqi.init({ systemName: sys });
-      }
-    });
-  } else {
+  window.CalculadoraContpaqi = { init: initCalculadora, setSecondarySystem, setTertiarySystem, updateCombinedSummary };
+
+  // Auto-init
+  function autoInit() {
     const app = document.getElementById("app");
     const sys = app?.dataset.system;
     if (sys && document.querySelector("#calc-primary")) {
       window.CalculadoraContpaqi.init({ systemName: sys });
     }
   }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoInit);
+  else autoInit();
 })();
