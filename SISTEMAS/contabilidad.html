@@ -78,7 +78,7 @@
   .dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;filter:brightness(1.1);opacity:.6}
   .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
 
-  /* ===== Slider Beneficios (con iconos de imagen) ===== */
+  /* ===== Slider Beneficios ===== */
   .listSlider{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
   .listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
   .listPage{min-width:100%}
@@ -113,7 +113,7 @@
   .group-dots .dot{width:10px;height:10px;border-radius:999px;border:none;background:#223044}
   .group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2))}
 
-  /* ===== Funciones destacadas (píldoras centradas y gradiente activo) ===== */
+  /* ===== Píldoras ===== */
   .pillbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0 16px}
   .pill{padding:10px 14px;border-radius:999px;border:1px solid #1c2533;background:#0f1622;color:#cfe3ff;cursor:pointer;font-weight:700}
   .pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#05201c;border-color:transparent;box-shadow:0 4px 18px rgba(45,212,191,.25)}
@@ -122,7 +122,7 @@
   .fhead{display:flex;align-items:center;gap:10px;margin-bottom:4px}
   .ficon{width:28px;height:28px;border-radius:8px;background:#101a2a;object-fit:cover}
 
-  /* ===== TOC (scrollspy) ===== */
+  /* ===== TOC ===== */
   .toc{position:sticky; top:84px; margin-left:auto; width:220px; background:#0f1826; border:1px solid #1c2533; border-radius:14px; padding:12px; display:flex; flex-direction:column; gap:6px}
   .toc-title{font-weight:800;color:#b9c8de;margin-bottom:6px}
   .toc a{padding:6px 8px;border-radius:10px;color:#cfe3ff;border:1px solid transparent}
@@ -158,14 +158,14 @@
   .modal-body{padding:12px 14px}
   .close{background:#101722;border:1px solid #1c2533;border-radius:8px;color:#e8eef6;padding:6px 10px;cursor:pointer}
 
-  /* ===== Comparativa (restaura estilo de la imagen 1) ===== */
+  /* ===== Comparativa ===== */
   .comparison-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1f2a3b;border-radius:14px;overflow:hidden}
   .comparison-table thead th{background:#0f1b2a;padding:12px 10px;border-bottom:1px solid #1f2a3b;text-align:left}
   .comparison-table tbody td{padding:12px 10px;border-bottom:1px solid #192433}
   .comparison-table tbody tr:last-child td{border-bottom:none}
   .comparison-table .highlight{background:#0f2234}
 
-  /* ===== FAQ acordeón (estilo imagen 1) ===== */
+  /* ===== FAQ ===== */
   .faq-item{border:1px solid #1f2a3b;border-radius:14px;background:#0f1622;margin:10px 0;overflow:hidden}
   .faq-item>summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;display:flex;align-items:center;gap:8px}
   .faq-item>summary::marker{display:none}
@@ -256,10 +256,10 @@
     </div>
   </section>
 
-  <!-- ===== Por qué usar + Galería a la derecha ===== -->
+  <!-- ===== Por qué usar + Galería ===== -->
   <section id="beneficios" aria-label="Por qué usar">
     <div class="grid-2 media-split">
-      <!-- IZQ: beneficios + videos -->
+      <!-- IZQ -->
       <div>
         <h2>¿Por qué usar Contabilidad en tu empresa? <span class="badge">Características únicas</span></h2>
         <p class="lead">Automatiza pólizas, cumple disposiciones y toma decisiones con información clara.</p>
@@ -478,7 +478,7 @@
             <h4>Factura electrónica</h4>
             <p>Emisión y timbrado CFDI alineado al SAT.</p>
           </article>
-             <article class="sys">
+          <article class="sys">
             <img src="../IMG/comercialstart.webp" alt="Comercial Start" />
             <h4>Comercial Start</h4>
             <p>Ventas y facturación básica con enlace contable.</p>
@@ -531,7 +531,7 @@
         </div>
 
         <!-- 3ª calculadora -->
-        <div id="calc-slot-3" class="calc-container" aria-label="Tercera calculadora" style="display:none"></div>
+        <div id="calc-tertiary" class="calc-container" style="display:none" aria-label="Tercera calculadora"></div>
       </div>
 
       <!-- Panel para “otro sistema” -->
@@ -763,109 +763,49 @@
       window.addEventListener('resize', ()=>goTo(idx));
     });
   })();
+</script>
 
-  // ===== Helper: comprobar precios antes de montar =====
-  function hasPrices(systemName){
-    return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);
-  }
-  function mountInto(containerId, systemName){
-    const sel = '#'+containerId;
-    const wrap = document.getElementById(containerId);
-    if (!hasPrices(systemName)) {
-      // no desmontes el placeholder; muestra aviso
-      if (wrap) {
-        const note = document.createElement('div');
-        note.className = 'hint';
-        note.style.marginTop = '8px';
-        note.textContent = '“'+systemName+'” próximamente en la calculadora (falta cargar precios).';
-        wrap.querySelector('.note')?.appendChild(note);
-      }
-      return;
-    }
-    if (window.CalculadoraContpaqi?.setSecondarySystem) {
-      window.CalculadoraContpaqi.setSecondarySystem(systemName, {
-        secondarySelector: sel,
-        combinedSelector: '#combined-wrap'
-      });
-    }
-  }
+<!-- Aquí va exactamente el snippet que pediste -->
+<script>
+// ...
+(function(){
+  const slot2 = document.getElementById('calc-slot-2');
+  const slot3 = document.getElementById('calc-tertiary');
+  const addMore = document.getElementById('add-more-panel');
+  const pick2 = document.getElementById('icons-sec-sys');
+  const pick3 = document.getElementById('icons-third-sys');
 
-  // ===== Calculadora: flujo 2ª y 3ª =====
-  (function(){
-    const slot2 = document.getElementById('calc-slot-2');
-    const slot3 = document.getElementById('calc-slot-3');
-    const addMore = document.getElementById('add-more-panel');
-    const pick2 = document.getElementById('icons-sec-sys');
-    const pick3 = document.getElementById('icons-third-sys');
+  const hasPrices = n => !!(window.preciosContpaqi && window.preciosContpaqi[n]);
 
-    pick2?.addEventListener('click', (e)=>{
-      const btn = e.target.closest('.sys-icon'); if(!btn) return;
-      pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      const sys = btn.dataset.sys;
+  pick2?.addEventListener('click', e=>{
+    const btn = e.target.closest('.sys-icon'); if(!btn) return;
+    pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const sys = btn.dataset.sys;
+    if(!hasPrices(sys)) return;
 
-      // si hay precios, convierto y monto; si no, dejo el placeholder
-      if (hasPrices(sys)) {
-        slot2.className = 'calc-container';
-        slot2.id = 'calc-secondary';
-        mountInto('calc-secondary', sys);
-        addMore.style.display = '';
-        addMore.scrollIntoView({behavior:'smooth', block:'nearest'});
-      } else {
-        // ya se añadió aviso en mountInto()
-      }
-    });
+    // convertir placeholder a contenedor real secundario
+    slot2.className = 'calc-container';
+    slot2.id = 'calc-secondary';
+    CalculadoraContpaqi.setSecondarySystem(sys, { secondarySelector:'#calc-secondary', combinedSelector:'#combined-wrap' });
 
-    pick3?.addEventListener('click', (e)=>{
-      const btn = e.target.closest('.sys-icon'); if(!btn) return;
-      pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      const sys = btn.dataset.sys;
+    addMore.style.display = '';
+    addMore.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
 
-      if (hasPrices(sys)) {
-        slot3.style.display = '';
-        mountInto('calc-slot-3', sys);
-        addMore.style.display = 'none';
-        slot3.scrollIntoView({behavior:'smooth', block:'nearest'});
-      }
-    });
-  })();
+  pick3?.addEventListener('click', e=>{
+    const btn = e.target.closest('.sys-icon'); if(!btn) return;
+    pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const sys = btn.dataset.sys;
+    if(!hasPrices(sys)) return;
 
-  // FAQ exclusivo (una abierta)
-  (function(){
-    const items = document.querySelectorAll('.faq-item');
-    items.forEach((el)=>{
-      el.addEventListener('click', (e)=>{
-        if(e.target.tagName.toLowerCase() === 'summary'){
-          e.preventDefault();
-          const willOpen = !el.open;
-          items.forEach(o=>o.open=false);
-          el.open = willOpen;
-        }
-      });
-    });
-  })();
-
-  // TOC Scrollspy
-  (function(){
-    const toc = document.getElementById('toc'); if(!toc) return;
-    const links = toc.querySelectorAll('a');
-    const map = Array.from(links).map(a => {
-      const id = a.getAttribute('href').replace('#','');
-      const el = document.getElementById(id) || document.querySelector('[id="'+id+'"]');
-      return {a, el};
-    }).filter(x=>x.el);
-
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        const hit = map.find(m=>m.el===entry.target);
-        if(!hit) return;
-        if(entry.isIntersecting){ links.forEach(l=>l.classList.remove('active')); hit.a.classList.add('active'); }
-      });
-    }, {rootMargin:'-40% 0px -50% 0px', threshold:0.01});
-
-    map.forEach(m=>obs.observe(m.el));
-  })();
+    slot3.style.display = '';
+    CalculadoraContpaqi.setTertiarySystem(sys, { tertiarySelector:'#calc-tertiary', combinedSelector:'#combined-wrap' });
+    addMore.style.display = 'none';
+    slot3.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
+})();
 </script>
 
 <!-- Calculadora core -->
