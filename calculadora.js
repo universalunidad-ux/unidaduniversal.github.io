@@ -1,8 +1,12 @@
 (function () {
   // ========================= Helpers =========================
-  const money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
-  const fmt = v => money.format(Math.round(Number(v || 0)));
-  const pct = v => `${((v || 0) * 100).toFixed(0)}%`;
+  const money = new Intl.NumberFormat("es-MX", {
+    style: "currency",
+    currency: "MXN",
+    maximumFractionDigits: 0,
+  });
+  const fmt = (v) => money.format(Math.round(Number(v || 0)));
+  const pct = (v) => `${((v || 0) * 100).toFixed(0)}%`;
 
   // ===================== Render calculadora ===================
   // idSuffix: "1" | "2" | "3"
@@ -16,47 +20,59 @@
       return;
     }
 
-    // Título
+    // ---------- Título ----------
     const title = document.createElement("h4");
     title.textContent = `${sistemaName} — Calculadora`;
     container.appendChild(title);
 
-    // Formulario
+    // ---------- Formulario ----------
     const form = document.createElement("div");
     form.className = "calc-form";
 
-    // Modalidad
+    // 1) Licencia (Nueva / Renovación / Tradicional)
     const licenciaLabel = document.createElement("label");
-    licenciaLabel.textContent = "Modalidad: ";
+    licenciaLabel.textContent = "Licencia: ";
     const licenciaSel = document.createElement("select");
     licenciaSel.id = `lic${idSuffix}`;
-    Object.keys(systemPrices).forEach(k => {
+    [
+      { v: "nueva", t: "Nueva" },
+      { v: "renovacion", t: "Renovación" },
+      { v: "tradicional", t: "Tradicional" },
+    ].forEach(({ v, t }) => {
       const opt = document.createElement("option");
-      opt.value = k;
-      opt.textContent = (k === "anual" ? "Anual (renovación)" : k === "tradicional" ? "Tradicional (licencia)" : "Nube");
+      opt.value = v;
+      opt.textContent = t;
       licenciaSel.appendChild(opt);
     });
     licenciaLabel.appendChild(licenciaSel);
     form.appendChild(licenciaLabel);
 
-    // Tipo/Opción
+    // 2) Operación (dependiente de Licencia)
+    const opLabel = document.createElement("label");
+    opLabel.textContent = "Operación: ";
+    const opSel = document.createElement("select");
+    opSel.id = `op${idSuffix}`;
+    opLabel.appendChild(opSel);
+    form.appendChild(opLabel);
+
+    // 3) Tipo (RFC)
     const rfcLabel = document.createElement("label");
-    rfcLabel.textContent = "Tipo / Opción: ";
+    rfcLabel.textContent = "Tipo (RFC): ";
     const rfcSel = document.createElement("select");
     rfcSel.id = `rfc${idSuffix}`;
     rfcLabel.appendChild(rfcSel);
     form.appendChild(rfcLabel);
 
-    // Nivel (nube)
+    // (Nivel nube — no aplica en este flujo; lo dejamos oculto por si se usa con otros sistemas)
     const nivelLabel = document.createElement("label");
     nivelLabel.textContent = "Nivel (solo nube): ";
     const nivelSel = document.createElement("select");
     nivelSel.id = `niv${idSuffix}`;
     nivelLabel.appendChild(nivelSel);
-    nivelLabel.style.display = "none";
+    nivelLabel.style.display = "none"; // oculto
     form.appendChild(nivelLabel);
 
-    // Usuarios
+    // 4) Usuarios
     const userLabel = document.createElement("label");
     userLabel.textContent = "Usuarios: ";
     const userInput = document.createElement("input");
@@ -67,17 +83,9 @@
     userLabel.appendChild(userInput);
     form.appendChild(userLabel);
 
-    // Operación
-    const opLabel = document.createElement("label");
-    opLabel.textContent = "Operación: ";
-    const opSel = document.createElement("select");
-    opSel.id = `op${idSuffix}`;
-    opLabel.appendChild(opSel);
-    form.appendChild(opLabel);
-
     container.appendChild(form);
 
-    // Resultados
+    // ---------- Resultados ----------
     const results = document.createElement("div");
     results.className = "calc-results";
     const table = document.createElement("table");
@@ -98,104 +106,115 @@
 
     // -------- Opciones dependientes --------
     function refreshOptions() {
-      const lic = licenciaSel.value;
-      rfcSel.innerHTML = "";
-      nivelSel.innerHTML = "";
-      nivelLabel.style.display = "none";
-      opSel.innerHTML = "";
+      const lic = licenciaSel.value; // nueva | renovacion | tradicional
 
-      if (lic === "nube") {
-        if (systemPrices.nube) {
-          Object.keys(systemPrices.nube).forEach(n => {
-            const opt = document.createElement("option");
-            opt.value = n; opt.textContent = n;
-            nivelSel.appendChild(opt);
-          });
-        }
-        nivelLabel.style.display = "inline-block";
-        ["Contratar (nueva)", "Renovación anual"].forEach(o => {
-          const opt = document.createElement("option");
-          opt.value = o; opt.textContent = o;
-          opSel.appendChild(opt);
-        });
+      // Limpiar selects dependientes
+      opSel.innerHTML = "";
+      rfcSel.innerHTML = "";
+      rfcLabel.style.display = "inline-block"; // visible por defecto
+
+      // 2) Operación según Licencia
+      if (lic === "nueva") {
+        // Fija a Anual (Nueva)
+        opSel.appendChild(new Option("Anual (Nueva)", "nueva_anual"));
+        // RFC: Mono/Multi disponibles en anual (si existen)
+        const anual = systemPrices.anual || {};
+        if (anual.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
+        if (anual.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
+      } else if (lic === "renovacion") {
+        // Fija a Renovación Anual
+        opSel.appendChild(new Option("Renovación anual", "renovacion_anual"));
+        // RFC: Mono/Multi disponibles en anual (si existen)
+        const anual = systemPrices.anual || {};
+        if (anual.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
+        if (anual.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
       } else {
-        const block = systemPrices[lic];
-        if (block) {
-          Object.keys(block).forEach(k => {
-            const opt = document.createElement("option");
-            opt.value = k;
-            let lbl = k;
-            if (k.toLowerCase().includes("mono")) lbl = "MonoRFC";
-            if (k.toLowerCase().includes("multi")) lbl = "MultiRFC";
-            if (k === "actualizacion") lbl = "Actualización tradicional";
-            if (k === "especial") lbl = "Especial (tradicional)";
-            if (k === "crecimiento_usuario") lbl = "Crecimiento usuario (tradicional)";
-            opt.textContent = lbl;
-            rfcSel.appendChild(opt);
-          });
-        }
-        if (lic === "anual") {
-          ["Renovación anual", "Nueva anual (contratar)"].forEach(o => {
-            const opt = document.createElement("option"); opt.value = o; opt.textContent = o; opSel.appendChild(opt);
-          });
-        } else {
-          ["Licencia Tradicional (nueva)", "Actualización tradicional"].forEach(o => {
-            const opt = document.createElement("option"); opt.value = o; opt.textContent = o; opSel.appendChild(opt);
-          });
+        // Tradicional: Actualización / Especial / Incremento de usuarios
+        opSel.appendChild(new Option("Actualización", "actualizacion"));
+        opSel.appendChild(new Option("Actualización Especial", "especial"));
+        opSel.appendChild(new Option("Incremento de usuarios", "crecimiento_usuario"));
+
+        // Para actualizacion/especial mostramos RFC; para crecimiento_usuario lo ocultamos
+        const trad = systemPrices.tradicional || {};
+        const hasRFC =
+          trad.actualizacion || trad.especial; // aunque no varíe el precio por Mono/Multi, permitimos elegirlo
+        if (hasRFC) {
+          rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
+          rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
         }
       }
+
+      // Si no hay opciones de RFC (p. ej. crecimiento_usuario), oculta el campo
+      if (rfcSel.options.length === 0) {
+        rfcLabel.style.display = "none";
+      }
+
       calculateAndRender();
     }
 
     // ----------------- Cálculo -----------------
     function calculateAndRender() {
-      const lic = licenciaSel.value || Object.keys(systemPrices)[0];
-      const rfcType = rfcSel.value;
-      const nivel = nivelSel.value;
-      const usuarios = parseInt(userInput.value) || 1;
+      const lic = licenciaSel.value;
       const op = opSel.value || "";
+      const rfcType = rfcSel.value; // MonoRFC | MultiRFC | vacío en crecimiento_usuario
+      const usuarios = parseInt(userInput.value) || 1;
 
-      let base = 0, usuariosAddImporte = 0, usuariosExtras = 0;
+      let base = 0,
+        usuariosAddImporte = 0,
+        usuariosExtras = 0;
 
-      if (lic === "nube") {
-        const datosNube = systemPrices.nube && systemPrices.nube[nivel];
-        if (!datosNube) return writeZeros();
-        base = Number(datosNube.precio_base || 0);
-        const incluidos = datosNube.usuarios_incluidos === "multi" ? usuarios : Number(datosNube.usuarios_incluidos || 1);
-        usuariosExtras = Math.max(usuarios - incluidos, 0);
-        const perUserNube = Number(systemPrices.nube.usuario_adicional || 0);
-        usuariosAddImporte = usuariosExtras * perUserNube;
-      } else {
-        const datosLic = (systemPrices[lic] && systemPrices[lic][rfcType]) || null;
+      if (lic === "nueva" || lic === "renovacion") {
+        // Siempre se toma bloque ANUAL
+        const anual = systemPrices.anual || {};
+        const datosLic = anual[rfcType] || null;
         if (!datosLic) return writeZeros();
 
-        if (lic === "anual") {
-          const esRenov = /renovación/i.test(op);
-          base = Number((esRenov ? (datosLic.renovacion ?? datosLic.precio_base) : datosLic.precio_base) || 0);
-          const perUser = Number(datosLic.usuario_en_red ?? datosLic.usuario_adicional ?? 0);
+        // Base: precio_base para NUEVA; renovacion para RENOVACION (si existe, si no, precio_base)
+        if (lic === "nueva") {
+          base = Number(datosLic.precio_base || 0);
+        } else {
+          base = Number(
+            (datosLic.renovacion != null ? datosLic.renovacion : datosLic.precio_base) || 0
+          );
+        }
+
+        const perUser = Number(
+          datosLic.usuario_en_red != null
+            ? datosLic.usuario_en_red
+            : datosLic.usuario_adicional || 0
+        );
+        usuariosExtras = Math.max(usuarios - 1, 0);
+        usuariosAddImporte = usuariosExtras * perUser;
+      } else {
+        // TRADICIONAL
+        const trad = systemPrices.tradicional || {};
+        if (op === "crecimiento_usuario") {
+          // Solo usuarios adicionales
+          const perUser = Number(
+            (trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0
+          );
+          base = 0;
+          usuariosExtras = Math.max(usuarios - 1, 0);
+          usuariosAddImporte = usuariosExtras * perUser;
+        } else if (op === "actualizacion" || op === "especial") {
+          const datos = trad[op] || null;
+          if (!datos) return writeZeros();
+          base = Number(datos.precio_base || 0);
+          const perUser = Number(
+            datos.usuario_adicional != null
+              ? datos.usuario_adicional
+              : (trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0
+          );
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser;
         } else {
-          if (rfcType === "crecimiento_usuario") {
-            base = 0;
-            const perUser = Number((systemPrices.tradicional.crecimiento_usuario && systemPrices.tradicional.crecimiento_usuario.usuario_adicional) || 0);
-            usuariosExtras = Math.max(usuarios - 1, 0);
-            usuariosAddImporte = usuariosExtras * perUser;
-          } else {
-            base = Number(datosLic.precio_base || 0);
-            const perUser = Number(
-              (datosLic.usuario_adicional != null ? datosLic.usuario_adicional :
-               (systemPrices.tradicional.crecimiento_usuario && systemPrices.tradicional.crecimiento_usuario.usuario_adicional)) || 0
-            );
-            usuariosExtras = Math.max(usuarios - 1, 0);
-            usuariosAddImporte = usuariosExtras * perUser;
-          }
+          return writeZeros();
         }
       }
 
       const subtotal = base + usuariosAddImporte;
 
-      // Descuento por paquete (si hay 2 o 3 cajas), excluye XML en Línea
+      // Descuento por paquete (si hay 2 o 3 cajas), excluye “XML en Línea”
       let discountPct = 0;
       const has2 = !!document.getElementById("calc-secondary")?.querySelector("table");
       const has3 = !!document.getElementById("calc-tertiary")?.querySelector("table");
@@ -208,8 +227,12 @@
       const total = afterDiscount + iva;
 
       document.getElementById(`base${idSuffix}`).textContent = fmt(base);
-      document.getElementById(`uadd${idSuffix}`).textContent = `${fmt(usuariosAddImporte)} (${usuariosExtras} extras)`;
-      document.getElementById(`disc${idSuffix}`).textContent = `${pct(discountPct)} / ${fmt(discountAmt)}`;
+      document.getElementById(`uadd${idSuffix}`).textContent = `${fmt(
+        usuariosAddImporte
+      )} (${usuariosExtras} extras)`;
+      document.getElementById(`disc${idSuffix}`).textContent = `${pct(
+        discountPct
+      )} / ${fmt(discountAmt)}`;
       document.getElementById(`sub${idSuffix}`).textContent = fmt(afterDiscount);
       document.getElementById(`iva${idSuffix}`).textContent = fmt(iva);
       document.getElementById(`tot${idSuffix}`).textContent = fmt(total);
@@ -229,11 +252,33 @@
 
     // Eventos
     licenciaSel.addEventListener("change", refreshOptions);
+    opSel.addEventListener("change", () => {
+      // Mostrar/ocultar Tipo (RFC) en tradicional>crecimiento_usuario
+      const lic = licenciaSel.value;
+      const op = opSel.value;
+      if (lic === "tradicional" && op === "crecimiento_usuario") {
+        rfcLabel.style.display = "none";
+      } else {
+        if (rfcSel.options.length === 0) {
+          // repoblar si cambiaron
+          rfcSel.innerHTML = "";
+          if (lic === "nueva" || lic === "renovacion") {
+            const anual = systemPrices.anual || {};
+            if (anual.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
+            if (anual.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
+          } else {
+            rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
+            rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
+          }
+        }
+        rfcLabel.style.display = "inline-block";
+      }
+      calculateAndRender();
+    });
     rfcSel.addEventListener("change", calculateAndRender);
-    nivelSel.addEventListener("change", calculateAndRender);
     userInput.addEventListener("change", calculateAndRender);
-    opSel.addEventListener("change", calculateAndRender);
 
+    // Inicial
     refreshOptions();
   }
 
@@ -242,7 +287,7 @@
     const combined = document.querySelector(combinedSelector);
     if (!combined) return;
 
-    const getNum = id => {
+    const getNum = (id) => {
       const el = document.getElementById(id);
       if (!el) return 0;
       const n = parseFloat(el.textContent.replace(/[^\d.-]/g, ""));
@@ -271,11 +316,23 @@
     const totales = [];
     let ivaTotal = 0;
 
-    if (e1) { filas.push({label:`Subtotal ${n1} (después descuento)`, val:getNum("sub1")}); totales.push(getNum("tot1")); ivaTotal += getNum("iva1"); }
-    if (e2) { filas.push({label:`Subtotal ${n2} (después descuento)`, val:getNum("sub2")}); totales.push(getNum("tot2")); ivaTotal += getNum("iva2"); }
-    if (e3) { filas.push({label:`Subtotal ${n3} (después descuento)`, val:getNum("sub3")}); totales.push(getNum("tot3")); ivaTotal += getNum("iva3"); }
+    if (e1) {
+      filas.push({ label: `Subtotal ${n1} (después descuento)`, val: getNum("sub1") });
+      totales.push(getNum("tot1"));
+      ivaTotal += getNum("iva1");
+    }
+    if (e2) {
+      filas.push({ label: `Subtotal ${n2} (después descuento)`, val: getNum("sub2") });
+      totales.push(getNum("tot2"));
+      ivaTotal += getNum("iva2");
+    }
+    if (e3) {
+      filas.push({ label: `Subtotal ${n3} (después descuento)`, val: getNum("sub3") });
+      totales.push(getNum("tot3"));
+      ivaTotal += getNum("iva3");
+    }
 
-    const totalCombinado = totales.reduce((a,b)=>a+b,0);
+    const totalCombinado = totales.reduce((a, b) => a + b, 0);
 
     const box = document.createElement("div");
     box.className = "combined-summary";
@@ -288,7 +345,7 @@
       <table class="combined-table">
         <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>
         <tbody>
-          ${filas.map(f=>`<tr><td>${f.label}</td><td>${fmt(f.val)}</td></tr>`).join("")}
+          ${filas.map((f) => `<tr><td>${f.label}</td><td>${fmt(f.val)}</td></tr>`).join("")}
           <tr><td>IVA total (sistemas)</td><td>${fmt(ivaTotal)}</td></tr>
           <tr><td><strong>Total combinado</strong></td><td><strong>${fmt(totalCombinado)}</strong></td></tr>
         </tbody>
@@ -299,7 +356,8 @@
 
   // ====================== API pública =======================
   function initCalculadora(opts = {}) {
-    const { systemName, primarySelector = "#calc-primary", combinedSelector = "#combined-wrap" } = opts;
+    const { systemName, primarySelector = "#calc-primary", combinedSelector = "#combined-wrap" } =
+      opts;
     const el = document.querySelector(primarySelector);
     if (!el) return console.warn("No existe contenedor primario:", primarySelector);
     createCalculator(el, systemName, "1", combinedSelector);
@@ -319,7 +377,12 @@
     createCalculator(el, name, "3", combinedSelector);
   }
 
-  window.CalculadoraContpaqi = { init: initCalculadora, setSecondarySystem, setTertiarySystem, updateCombinedSummary };
+  window.CalculadoraContpaqi = {
+    init: initCalculadora,
+    setSecondarySystem,
+    setTertiarySystem,
+    updateCombinedSummary,
+  };
 
   // Auto-init
   function autoInit() {
