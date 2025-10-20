@@ -216,12 +216,10 @@
       const eq = $instEq();
       if (!on || !mode || !eq || !on.checked) return 0;
 
-      const usuarios = parseInt(userInput.value) || 1;
-
       if (mode.value === "mono") {
         return 800; // base sin IVA
       } else {
-        // multi: por equipo (por defecto equipos = usuarios, pero editable)
+        const usuarios = parseInt(userInput.value) || 1;
         const equipos = Math.max(1, parseInt(eq.value) || usuarios || 1);
         return 750 * equipos; // sin IVA
       }
@@ -333,6 +331,7 @@
 
     // ===== Eventos =====
     licenciaSel.addEventListener("change", refreshOptions);
+
     opSel.addEventListener("change", () => {
       // Mostrar/ocultar Tipo (RFC) en tradicional>crecimiento_usuario
       const lic = licenciaSel.value;
@@ -355,7 +354,9 @@
       }
       calculateAndRender();
     });
+
     rfcSel.addEventListener("change", calculateAndRender);
+
     userInput.addEventListener("change", () => {
       // Si no fue “manual”, sincroniza equipos con usuarios
       const eq = document.getElementById(`instEq${idSuffix}`);
@@ -370,18 +371,23 @@
       calculateAndRender();
     });
 
-    // Eventos de instalación
-    document.getElementById(`instOn${idSuffix}`).addEventListener("change", calculateAndRender);
-    document.getElementById(`instMode${idSuffix}`).addEventListener("change", () => {
-      const eq = document.getElementById(`instEq${idSuffix}`);
-      if (eq) eq.dataset.manual = ""; // al cambiar modo, volvemos a auto
-      syncInstallControls();
-      calculateAndRender();
-    });
-    document.getElementById(`instEq${idSuffix}`).addEventListener("input", (e) => {
-      e.target.dataset.manual = "1";
-      calculateAndRender();
-    });
+    // Eventos de instalación (con null-check para evitar crash)
+    const chk = document.getElementById(`instOn${idSuffix}`);
+    const mode = document.getElementById(`instMode${idSuffix}`);
+    const eq = document.getElementById(`instEq${idSuffix}`);
+
+    if (chk) chk.addEventListener("change", calculateAndRender);
+    if (mode)
+      mode.addEventListener("change", () => {
+        if (eq) eq.dataset.manual = ""; // al cambiar modo, volvemos a auto
+        syncInstallControls();
+        calculateAndRender();
+      });
+    if (eq)
+      eq.addEventListener("input", (e) => {
+        e.target.dataset.manual = "1";
+        calculateAndRender();
+      });
 
     // Inicial
     refreshOptions();
