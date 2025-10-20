@@ -25,9 +25,12 @@
     title.textContent = `${sistemaName} — Calculadora`;
     container.appendChild(title);
 
-    // ---------- Formulario ----------
-    const form = document.createElement("div");
+    // ---------- Formulario (usar <form> para entrar en tus reglas CSS) ----------
+    const form = document.createElement("form");
     form.className = "calc-form";
+    form.style.display = "grid";
+    form.style.gridTemplateColumns = "1fr";
+    form.style.gap = "8px";
 
     // 1) Licencia (Nueva / Renovación / Tradicional)
     const licenciaLabel = document.createElement("label");
@@ -69,7 +72,7 @@
     const nivelSel = document.createElement("select");
     nivelSel.id = `niv${idSuffix}`;
     nivelLabel.appendChild(nivelSel);
-    nivelLabel.style.display = "none"; // oculto
+    nivelLabel.style.display = "none";
     form.appendChild(nivelLabel);
 
     // 4) Usuarios
@@ -91,7 +94,6 @@
     instWrap.style.borderRadius = "12px";
     instWrap.style.padding = "10px";
     instWrap.style.marginTop = "8px";
-
     instWrap.innerHTML = `
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
         <input type="checkbox" id="instOn${idSuffix}" checked>
@@ -114,6 +116,8 @@
       </div>
     `;
     form.appendChild(instWrap);
+
+    container.appendChild(form);
 
     // ---------- Resultados ----------
     const results = document.createElement("div");
@@ -138,13 +142,10 @@
     // -------- Opciones dependientes --------
     function refreshOptions() {
       const lic = licenciaSel.value; // nueva | renovacion | tradicional
-
-      // Limpiar selects dependientes
       opSel.innerHTML = "";
       rfcSel.innerHTML = "";
-      rfcLabel.style.display = "inline-block"; // visible por defecto
+      rfcLabel.style.display = "inline-block";
 
-      // 2) Operación según Licencia
       if (lic === "nueva") {
         opSel.appendChild(new Option("Anual (Nueva)", "nueva_anual"));
         const anual = systemPrices.anual || {};
@@ -159,7 +160,6 @@
         opSel.appendChild(new Option("Actualización", "actualizacion"));
         opSel.appendChild(new Option("Actualización Especial", "especial"));
         opSel.appendChild(new Option("Incremento de usuarios", "crecimiento_usuario"));
-
         const trad = systemPrices.tradicional || {};
         const hasRFC = trad.actualizacion || trad.especial;
         if (hasRFC) {
@@ -168,77 +168,48 @@
         }
       }
 
-      // Si no hay opciones de RFC (p. ej. crecimiento_usuario), oculta el campo
-      if (rfcSel.options.length === 0) {
-        rfcLabel.style.display = "none";
-      }
+      if (rfcSel.options.length === 0) rfcLabel.style.display = "none";
 
-      // Sincroniza controles de instalación con usuarios
       syncInstallControls();
       calculateAndRender();
     }
 
-    // ----------------- Instalación (lógica UI) -----------------
+    // ----------------- Instalación (UI) -----------------
     const $instOn = () => document.getElementById(`instOn${idSuffix}`);
     const $instMode = () => document.getElementById(`instMode${idSuffix}`);
     const $instEq = () => document.getElementById(`instEq${idSuffix}`);
 
     function syncInstallControls() {
-      const on = $instOn();
-      const mode = $instMode();
-      const eq = $instEq();
+      const on = $instOn(), mode = $instMode(), eq = $instEq();
       if (!on || !mode || !eq) return;
-
-      // Por defecto: si usuarios > 1, multi; si no, mono
       const usuarios = parseInt(userInput.value) || 1;
       if (!eq.dataset.manual) {
-        if (usuarios > 1) {
-          mode.value = "multi";
-          eq.value = usuarios;
-        } else {
-          mode.value = "mono";
-          eq.value = 1;
-        }
+        if (usuarios > 1) { mode.value = "multi"; eq.value = usuarios; }
+        else { mode.value = "mono"; eq.value = 1; }
       }
-
-      // Mono fuerza 1 equipo
-      if (mode.value === "mono") {
-        eq.value = 1;
-        eq.disabled = true;
-      } else {
-        eq.disabled = false;
-      }
+      if (mode.value === "mono") { eq.value = 1; eq.disabled = true; }
+      else { eq.disabled = false; }
     }
 
     function calcInstallationAmount() {
-      const on = $instOn();
-      const mode = $instMode();
-      const eq = $instEq();
+      const on = $instOn(), mode = $instMode(), eq = $instEq();
       if (!on || !mode || !eq || !on.checked) return 0;
-
-      if (mode.value === "mono") {
-        return 800; // base sin IVA
-      } else {
-        const usuarios = parseInt(userInput.value) || 1;
-        const equipos = Math.max(1, parseInt(eq.value) || usuarios || 1);
-        return 750 * equipos; // sin IVA
-      }
+      if (mode.value === "mono") return 800; // sin IVA
+      const usuarios = parseInt(userInput.value) || 1;
+      const equipos = Math.max(1, parseInt(eq.value) || usuarios || 1);
+      return 750 * equipos; // sin IVA
     }
 
     // ----------------- Cálculo -----------------
     function calculateAndRender() {
       const lic = licenciaSel.value;
       const op = opSel.value || "";
-      const rfcType = rfcSel.value; // MonoRFC | MultiRFC | vacío en crecimiento_usuario
+      const rfcType = rfcSel.value;
       const usuarios = parseInt(userInput.value) || 1;
 
-      let base = 0,
-        usuariosAddImporte = 0,
-        usuariosExtras = 0;
+      let base = 0, usuariosAddImporte = 0, usuariosExtras = 0;
 
-      // ==== Sistemas ====
       if (lic === "nueva" || lic === "renovacion") {
-        // ANUAL
         const anual = systemPrices.anual || {};
         const datosLic = anual[rfcType] || null;
         if (!datosLic) return writeZeros();
@@ -250,18 +221,14 @@
         );
 
         const perUser = Number(
-          datosLic.usuario_en_red != null
-            ? datosLic.usuario_en_red
-            : datosLic.usuario_adicional || 0
+          datosLic.usuario_en_red != null ? datosLic.usuario_en_red : (datosLic.usuario_adicional || 0)
         );
         usuariosExtras = Math.max(usuarios - 1, 0);
         usuariosAddImporte = usuariosExtras * perUser;
       } else {
-        // TRADICIONAL
         const trad = systemPrices.tradicional || {};
         if (op === "crecimiento_usuario") {
-          const perUser =
-            Number(trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0;
+          const perUser = Number(trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0;
           base = 0;
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser;
@@ -270,9 +237,8 @@
           if (!datos) return writeZeros();
           base = Number(datos.precio_base || 0);
           const perUser = Number(
-            datos.usuario_adicional != null
-              ? datos.usuario_adicional
-              : (trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0
+            datos.usuario_adicional != null ? datos.usuario_adicional :
+            (trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0
           );
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser;
@@ -293,23 +259,17 @@
       const discountAmt = subtotalSistemas * discountPct;
       const afterDiscount = subtotalSistemas - discountAmt;
 
-      // ==== Instalación (NO descuenta) ====
+      // Instalación (no descuenta)
       syncInstallControls();
       const instAmount = calcInstallationAmount();
 
-      // Totales
-      const baseImponible = afterDiscount + instAmount; // IVA sobre sistemas descontados + instalación
+      const baseImponible = afterDiscount + instAmount;
       const iva = baseImponible * 0.16;
       const total = baseImponible + iva;
 
-      // Render
       document.getElementById(`base${idSuffix}`).textContent = fmt(base);
-      document.getElementById(`uadd${idSuffix}`).textContent = `${fmt(
-        usuariosAddImporte
-      )} (${usuariosExtras} extras)`;
-      document.getElementById(`disc${idSuffix}`).textContent = `${pct(
-        discountPct
-      )} / ${fmt(discountAmt)}`;
+      document.getElementById(`uadd${idSuffix}`).textContent = `${fmt(usuariosAddImporte)} (${usuariosExtras} extras)`;
+      document.getElementById(`disc${idSuffix}`).textContent = `${pct(discountPct)} / ${fmt(discountAmt)}`;
       document.getElementById(`inst${idSuffix}`).textContent = fmt(instAmount);
       document.getElementById(`sub${idSuffix}`).textContent = fmt(afterDiscount);
       document.getElementById(`iva${idSuffix}`).textContent = fmt(iva);
@@ -333,7 +293,6 @@
     licenciaSel.addEventListener("change", refreshOptions);
 
     opSel.addEventListener("change", () => {
-      // Mostrar/ocultar Tipo (RFC) en tradicional>crecimiento_usuario
       const lic = licenciaSel.value;
       const op = opSel.value;
       if (lic === "tradicional" && op === "crecimiento_usuario") {
@@ -358,36 +317,30 @@
     rfcSel.addEventListener("change", calculateAndRender);
 
     userInput.addEventListener("change", () => {
-      // Si no fue “manual”, sincroniza equipos con usuarios
       const eq = document.getElementById(`instEq${idSuffix}`);
       if (eq && !eq.dataset.manual) {
         const u = Math.max(1, parseInt(userInput.value || "1"));
-        if (document.getElementById(`instMode${idSuffix}`)?.value === "multi") {
-          eq.value = u;
-        } else {
-          eq.value = 1;
-        }
+        if (document.getElementById(`instMode${idSuffix}`)?.value === "multi") eq.value = u;
+        else eq.value = 1;
       }
       calculateAndRender();
     });
 
-    // Eventos de instalación (con null-check para evitar crash)
+    // Eventos de instalación (con null-check)
     const chk = document.getElementById(`instOn${idSuffix}`);
     const mode = document.getElementById(`instMode${idSuffix}`);
     const eq = document.getElementById(`instEq${idSuffix}`);
 
     if (chk) chk.addEventListener("change", calculateAndRender);
-    if (mode)
-      mode.addEventListener("change", () => {
-        if (eq) eq.dataset.manual = ""; // al cambiar modo, volvemos a auto
-        syncInstallControls();
-        calculateAndRender();
-      });
-    if (eq)
-      eq.addEventListener("input", (e) => {
-        e.target.dataset.manual = "1";
-        calculateAndRender();
-      });
+    if (mode) mode.addEventListener("change", () => {
+      if (eq) eq.dataset.manual = "";
+      syncInstallControls();
+      calculateAndRender();
+    });
+    if (eq) eq.addEventListener("input", (e) => {
+      e.target.dataset.manual = "1";
+      calculateAndRender();
+    });
 
     // Inicial
     refreshOptions();
@@ -405,7 +358,6 @@
       return isNaN(n) ? 0 : n;
     };
 
-    // ¿Existen?
     const e1 = !!document.getElementById("tot1");
     const e2 = !!document.getElementById("tot2");
     const e3 = !!document.getElementById("tot3");
@@ -413,12 +365,10 @@
     combined.innerHTML = "";
 
     if (!e2 && !e3) {
-      // Solo una
       combined.innerHTML = `<p style="margin:0"><strong>Total:</strong> ${fmt(getNum("tot1"))}</p>`;
       return;
     }
 
-    // Nombres
     const n1 = document.getElementById("calc-primary")?.dataset.systemName || "Sistema 1";
     const n2 = document.getElementById("calc-secondary")?.dataset.systemName || "Sistema 2";
     const n3 = document.getElementById("calc-tertiary")?.dataset.systemName || "Sistema 3";
@@ -427,21 +377,9 @@
     const totales = [];
     let ivaTotal = 0;
 
-    if (e1) {
-      filas.push({ label: `Subtotal ${n1} (después descuento)`, val: getNum("sub1") });
-      totales.push(getNum("tot1"));
-      ivaTotal += getNum("iva1");
-    }
-    if (e2) {
-      filas.push({ label: `Subtotal ${n2} (después descuento)`, val: getNum("sub2") });
-      totales.push(getNum("tot2"));
-      ivaTotal += getNum("iva2");
-    }
-    if (e3) {
-      filas.push({ label: `Subtotal ${n3} (después descuento)`, val: getNum("sub3") });
-      totales.push(getNum("tot3"));
-      ivaTotal += getNum("iva3");
-    }
+    if (e1) { filas.push({ label: `Subtotal ${n1} (después descuento)`, val: getNum("sub1") }); totales.push(getNum("tot1")); ivaTotal += getNum("iva1"); }
+    if (e2) { filas.push({ label: `Subtotal ${n2} (después descuento)`, val: getNum("sub2") }); totales.push(getNum("tot2")); ivaTotal += getNum("iva2"); }
+    if (e3) { filas.push({ label: `Subtotal ${n3} (después descuento)`, val: getNum("sub3") }); totales.push(getNum("tot3")); ivaTotal += getNum("iva3"); }
 
     const totalCombinado = totales.reduce((a, b) => a + b, 0);
 
@@ -467,8 +405,7 @@
 
   // ====================== API pública =======================
   function initCalculadora(opts = {}) {
-    const { systemName, primarySelector = "#calc-primary", combinedSelector = "#combined-wrap" } =
-      opts;
+    const { systemName, primarySelector = "#calc-primary", combinedSelector = "#combined-wrap" } = opts;
     const el = document.querySelector(primarySelector);
     if (!el) return console.warn("No existe contenedor primario:", primarySelector);
     createCalculator(el, systemName, "1", combinedSelector);
@@ -488,12 +425,7 @@
     createCalculator(el, name, "3", combinedSelector);
   }
 
-  window.CalculadoraContpaqi = {
-    init: initCalculadora,
-    setSecondarySystem,
-    setTertiarySystem,
-    updateCombinedSummary,
-  };
+  window.CalculadoraContpaqi = { init: initCalculadora, setSecondarySystem, setTertiarySystem, updateCombinedSummary };
 
   // Auto-init
   function autoInit() {
