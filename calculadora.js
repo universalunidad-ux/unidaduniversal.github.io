@@ -1,14 +1,14 @@
 (function () {
-  // ===== Forzar visibilidad del form =====
+  // ===== Parche CSS básico =====
   (function ensureFormVisible() {
     var id = "calc-form-visibility-patch";
     if (!document.getElementById(id)) {
       var st = document.createElement("style");
       st.id = id;
       st.textContent =
-        ".calc-container form{display:grid !important; grid-template-columns:1fr !important; gap:8px !important;}" +
-        ".calc-container label{display:block !important;}" +
-        ".calc-container select,.calc-container input[type='number']{display:block !important; visibility:visible !important; opacity:1 !important;}";
+        ".calc-container form{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}" +
+        ".calc-container label{display:block!important}" +
+        ".calc-container select,.calc-container input[type='number']{display:block!important;visibility:visible!important;opacity:1!important}";
       document.head.appendChild(st);
     }
   })();
@@ -78,8 +78,6 @@
     rfcLabel.appendChild(rfcSel);
     form.appendChild(rfcLabel);
 
-    // (SIN “nivel” — eliminado)
-
     // 4) Usuarios
     var userLabel = document.createElement("label");
     userLabel.textContent = "Usuarios: ";
@@ -88,7 +86,7 @@
     userLabel.appendChild(userInput);
     form.appendChild(userLabel);
 
-    // 5) Instalación (opcional) — automática por # usuarios
+    // 5) Instalación (opcional)
     var instWrap = document.createElement("div");
     instWrap.className = "inst-wrap";
     instWrap.style.border = "1px dashed #29425e";
@@ -104,6 +102,9 @@
       '<div style="color:#9fb2cb;font-size:12px">Servicio ofrecido por <strong>ExpIRI&nbsp;TI</strong> para instalar en tu equipo tu sistema.</div>';
     form.appendChild(instWrap);
 
+    // (por si algún navegador reordena, forzamos Licencia al inicio)
+    form.insertBefore(licenciaLabel, form.firstChild);
+
     container.appendChild(form);
 
     // ---------- Resultados ----------
@@ -114,14 +115,14 @@
     table.innerHTML =
       '<thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>' +
       '<tbody>' +
-      '  <tr><td>Precio base</td><td id="base'+idSuffix+'">$0</td></tr>' +
-      '  <tr><td>Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0</td></tr>' +
-      '  <tr><td>Descuento (sistemas)</td><td id="disc'+idSuffix+'">0% / $0</td></tr>' +
-      '  <tr><td>Instalación (opcional)</td><td id="inst'+idSuffix+'">$0</td></tr>' +
-      '  <tr><td>Descuento por primer servicio (instalación 50%)</td><td id="instdisc'+idSuffix+'">$0</td></tr>' +
-      '  <tr><td>Subtotal (sistemas)</td><td id="sub'+idSuffix+'">$0</td></tr>' +
-      '  <tr><td>IVA (16%)</td><td id="iva'+idSuffix+'">$0</td></tr>' +
-      '  <tr><td><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0</strong></td></tr>' +
+      '  <tr id="tr-base'+idSuffix+'"><td>Precio base</td><td id="base'+idSuffix+'">$0</td></tr>' +
+      '  <tr id="tr-uadd'+idSuffix+'"><td>Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0</td></tr>' +
+      '  <tr id="tr-disc'+idSuffix+'"><td>Descuento (sistemas)</td><td id="disc'+idSuffix+'">0% / $0</td></tr>' +
+      '  <tr id="tr-inst'+idSuffix+'"><td>Instalación (opcional)</td><td id="inst'+idSuffix+'">$0</td></tr>' +
+      '  <tr id="tr-instdisc'+idSuffix+'"><td>Descuento por primer servicio (instalación 50%)</td><td id="instdisc'+idSuffix+'">$0</td></tr>' +
+      '  <tr id="tr-sub'+idSuffix+'"><td>Subtotal (sistemas)</td><td id="sub'+idSuffix+'">$0</td></tr>' +
+      '  <tr id="tr-iva'+idSuffix+'"><td>IVA (16%)</td><td id="iva'+idSuffix+'">$0</td></tr>' +
+      '  <tr id="tr-tot'+idSuffix+'"><td><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0</strong></td></tr>' +
       '</tbody>';
     results.appendChild(table);
     container.appendChild(results);
@@ -166,8 +167,8 @@
       var on = instCheckbox();
       if (!on || !on.checked) return 0;
       var usuarios = Math.max(1, parseInt(userInput.value || "1", 10) || 1);
-      if (usuarios === 1) return 800;                 // 1 instalación modo servidor
-      return 800 + (usuarios - 1) * 750;              // 1 servidor + (usuarios-1) terminales
+      if (usuarios === 1) return 800;                // 1 servidor (+IVA se suma en el total)
+      return 800 + (usuarios - 1) * 750;             // 1 servidor + (usuarios-1) terminales (+IVA en total)
     }
 
     // ----------------- Cálculo -----------------
@@ -217,12 +218,11 @@
 
       var subtotalSistemas = base + usuariosAddImporte;
 
-      // 15% paquete (si hay 2 o 3 cajas) — aplica en todas desde el inicio
+      // 15% paquete (si hay 2 o 3 cajas)
       var discountPct = 0;
       if ((safeHasTable("calc-secondary") || safeHasTable("calc-tertiary")) && sistemaName.indexOf("XML en Línea") === -1) {
         discountPct = 0.15;
       }
-
       var discountAmt = subtotalSistemas * discountPct;
       var afterDiscount = subtotalSistemas - discountAmt;
 
@@ -231,10 +231,12 @@
       var instDiscount = instGross * 0.5;
       var instNet = instGross - instDiscount;
 
+      // IVA sobre (sistemas con descuento + instalación neta)
       var baseImponible = afterDiscount + instNet;
       var iva = baseImponible * 0.16;
       var total = baseImponible + iva;
 
+      // Render números
       document.getElementById("base"+idSuffix).textContent = fmt(base);
       document.getElementById("uadd"+idSuffix).textContent = fmt(usuariosAddImporte) + " ("+usuariosExtras+" extras)";
       document.getElementById("disc"+idSuffix).textContent = pct(discountPct) + " / " + fmt(discountAmt);
@@ -243,6 +245,19 @@
       document.getElementById("sub"+idSuffix).textContent = fmt(afterDiscount);
       document.getElementById("iva"+idSuffix).textContent = fmt(iva);
       document.getElementById("tot"+idSuffix).textContent = fmt(total);
+
+      // Mostrar/ocultar filas condicionales
+      // Usuarios adicionales
+      document.getElementById("tr-uadd"+idSuffix).style.display =
+        (usuariosExtras > 0) ? "" : "none";
+      // Descuento sistemas
+      document.getElementById("tr-disc"+idSuffix).style.display =
+        (discountPct > 0) ? "" : "none";
+      // Instalación & descuento de instalación (según checkbox)
+      var instOn = instCheckbox();
+      var showInst = !!(instOn && instOn.checked);
+      document.getElementById("tr-inst"+idSuffix).style.display = showInst ? "" : "none";
+      document.getElementById("tr-instdisc"+idSuffix).style.display = showInst ? "" : "none";
 
       updateCombinedSummary(combinedSelector);
     }
@@ -256,6 +271,12 @@
       document.getElementById("sub"+idSuffix).textContent = fmt(0);
       document.getElementById("iva"+idSuffix).textContent = fmt(0);
       document.getElementById("tot"+idSuffix).textContent = fmt(0);
+
+      document.getElementById("tr-uadd"+idSuffix).style.display = "none";
+      document.getElementById("tr-disc"+idSuffix).style.display = "none";
+      document.getElementById("tr-inst"+idSuffix).style.display = "none";
+      document.getElementById("tr-instdisc"+idSuffix).style.display = "none";
+
       updateCombinedSummary(combinedSelector);
     }
 
@@ -360,7 +381,6 @@
     var el = document.querySelector(primarySelector);
     if (!el) { console.warn("No existe contenedor primario:", primarySelector); return; }
     createCalculator(el, systemName, "1", combinedSelector);
-    // Si luego montas 2ª/3ª caja, fuerza 15% en todas
     setTimeout(function(){ recomputeAll(); }, 0);
   }
   function setSecondarySystem(name, opts) {
