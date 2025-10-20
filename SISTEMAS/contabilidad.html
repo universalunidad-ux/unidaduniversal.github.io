@@ -851,9 +851,15 @@
 
   <!-- Calculadora core -->
 
-<!-- Calculadora core: usa las rutas correctas y activa defer -->
-<script defer src="../JS/precios-contpaqi.js?v=3"></script>
-<script defer src="../JS/calculadora.js?v=12"></script>
+<script defer src="../precios-contpaqi.js?v=3"></script>
+<script defer src="../calculadora.js?v=12"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', ()=>{
+    if (!window.CalculadoraContpaqi) {
+      console.error('❌ calculadora.js NO se cargó. Revisa la ruta del <script src=...>.');
+    }
+  });
+</script>
 
 
 
