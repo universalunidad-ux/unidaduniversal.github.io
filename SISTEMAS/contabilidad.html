@@ -761,12 +761,7 @@
       });
     })();
 
-    // Reordenar controles de la calculadora: Operación → Modalidad → Tipo → Usuarios (idempotente)
-    function reorderCalcControls(container){
-      if(!container) return;
-      if(container.dataset.ordered === "1") return;
 
-      const host = container.querySelector('form') || container;
 
       // Si ya existe un wrapper previo, marcamos y salimos
       if(host.querySelector('.controls-order')){
@@ -800,18 +795,7 @@
       }
     }
 
-    // Observa render de la primaria y reordena cuando aparezca, luego se desconecta
-    (function(){
-      const target=document.getElementById('calc-primary');
-      if(!target) return;
-      const mo=new MutationObserver((mutations, obs)=>{
-        reorderCalcControls(target);
-        if(target.dataset.ordered === "1"){
-          obs.disconnect();
-        }
-      });
-      mo.observe(target,{childList:true,subtree:true});
-    })();
+
 
     // Inyección de estilos para la tabla combinada
     (function(){
