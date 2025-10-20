@@ -10,7 +10,7 @@
     :root{
       --bg:#0b0f14;--card:#111723;--muted:#95a2b3;--text:#e8eef6;
       --brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
-      --maxw:1040px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)
+      --maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)
     }
     *{box-sizing:border-box}
     html,body{margin:0;height:100%}
@@ -53,10 +53,17 @@
     .badges{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
     .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1c2c;border:1px solid #203044;color:#cfe3ff;font-size:12px}
 
+    /* Aviso de bloqueo/respeto */
+    .lock-note{margin:8px 0 0 0;font-size:12px;color:#94a8c6;display:inline-flex;gap:6px;align-items:center}
+    .lock-note::before{content:"⚠️";}
+
     /* ===== CALCULADORA ===== */
     .calc-strip{display:flex;flex-direction:column;gap:12px}
     .calc-row{width:100%;display:flex;gap:14px;align-items:stretch;flex-wrap:wrap;overflow:visible}
     .calc-row>*{align-self:stretch}
+    .calc-row.has-three{flex-wrap:nowrap}
+    .calc-row.has-three .calc-container{flex:0 0 calc((100% - 28px)/3);min-width:0}
+
     .calc-container{border:1px solid #1c2533;padding:10px;border-radius:12px;background:#0f1622;min-width:360px;flex:1}
     .placeholder{border:1px dashed #26405f;background:#0e1724;border-radius:12px;min-width:360px;flex:1;display:flex;align-items:center;justify-content:center;padding:14px;min-height:180px}
     .placeholder .note{text-align:center;color:#b9c8de}
@@ -81,7 +88,7 @@
     .calc-container thead th{background:#0e1724;color:#dce8ff;text-align:left}
     .calc-container thead th:last-child,.calc-container td:last-child{text-align:right}
 
-    /* Controles UNO POR LÍNEA (bloque) — intentamos cubrir los posibles contenedores */
+    /* Controles UNO POR LÍNEA (bloque) y reordenables */
     .calc-container form,
     .calc-container .controls,
     .calc-container .toolbar,
@@ -89,8 +96,6 @@
     .calc-container .controls-row{display:grid !important;grid-template-columns:1fr !important;gap:8px !important}
     .calc-container label,.calc-container .control-label{display:block;font-weight:700;color:#cfe3ff}
     .calc-container select,.calc-container input[type="number"]{width:100%!important;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
-    /* Quitar textos sueltos arriba de la tabla */
-    .calc-container h4,.calc-container .meta,.calc-container .legend,.calc-container p.meta,.calc-container .note-above-table{display:none!important}
 
     /* ===== COMPARATIVA ===== */
     .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
@@ -100,7 +105,7 @@
     .table-like td.right{text-align:right}
     .table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
 
-    /* ===== CARRUSEL PORTADA ===== */
+    /* ===== CARRUSEL PORTADA (GALERÍA) ===== */
     .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:280px}
     .carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
     .carousel-slide{min-width:100%;scroll-snap-align:center;object-fit:cover}
@@ -110,7 +115,7 @@
     .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
     .arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}.arrowCircle .chev{font-size:24px;line-height:1}
 
-    /* ===== SLIDER BENEFICIOS ===== */
+    /* ===== SLIDER BENEFICIOS (si existiera #beneficios) ===== */
     .listSlider{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
     .listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
     .listPage{min-width:100%}
@@ -179,7 +184,7 @@
 
     .pdf-frame{width:100%;height:70vh;border:0}
 
-    /* Galería 25% más pequeña */
+    /* Galería 25% más pequeña y a la derecha */
     .gallery-wrap{width:75%;margin-left:auto}
     @media (max-width:980px){.gallery-wrap{width:100%}}
 
@@ -193,6 +198,12 @@
     #combined-wrap th,#combined-wrap td{border-bottom:1px solid #1e2b3c;padding:12px 14px}
     #combined-wrap tr:last-child td{border-bottom:none}
     #combined-wrap td:last-child{text-align:right}
+
+    /* Videos YouTube responsivos */
+    .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .yt{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;border:1px solid #1c2533;background:#0f1622}
+    .yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    @media (max-width:980px){.yt-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -228,18 +239,21 @@
   </header>
 
   <main class="container hero" id="top">
+    <!-- ⚠️ no borrar esta sección, no tocar, respetar y mantener integro -->
     <a href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" class="hint">← Volver a productos</a>
+    <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h1>CONTPAQi Contabilidad <span class="badge">Actualizado 2025</span></h1>
 
-    <!-- badges -->
+    <!-- badges (⚠️ mantener íntegro) -->
     <div class="badges">
       <span class="badge">Contabilidad electrónica</span>
       <span class="badge">Pólizas automáticas (Bancos/Comercial)</span>
       <span class="badge">Reportes fiscales &amp; DIOT SAT</span>
       <span class="badge">Soporte y capacitación Expiriti</span>
     </div>
+    <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <!-- Resumen (mantener) -->
+    <!-- Resumen -->
     <section aria-label="Resumen">
       <div class="card body">
         <div class="grid-2" style="align-items:center">
@@ -270,7 +284,7 @@
             </div>
           </div>
 
-          <!-- Galería (75% de ancho) -->
+          <!-- Galería (75% de ancho a la derecha) -->
           <aside class="card body gallery-wrap">
             <h4>Galería</h4>
             <div class="carousel" id="carousel1">
@@ -296,6 +310,8 @@
 
     <!-- Funciones -->
     <section aria-labelledby="caracteristicas" id="caracteristicas">
+      <!-- ⚠️ no borrar esta sección, no tocar, respetar y mantener integro -->
+      <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <div class="card body">
         <h3 id="caracteristicas">Funciones destacadas</h3>
 
@@ -333,8 +349,25 @@
       </div>
     </section>
 
+    <!-- VIDEOS (debajo de funciones) -->
+    <section id="videos" aria-labelledby="videos-title">
+      <div class="card body">
+        <h3 id="videos-title">Videos del sistema</h3>
+        <div class="yt-grid">
+          <div class="yt">
+            <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_1" title="CONTPAQi Contabilidad — Demo 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="yt">
+            <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_2" title="CONTPAQi Contabilidad — Demo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Sistemas integrables -->
     <section aria-labelledby="integra" id="integra">
+      <!-- ⚠️ no borrar esta sección, no tocar, respetar y mantener integro -->
+      <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <h3 id="integra">Sistemas que complementan tu Contabilidad</h3>
       <div class="card body">
         <div class="carouselX" data-step="3" tabindex="0" aria-label="Carrusel de sistemas integrables">
@@ -401,6 +434,8 @@
 
     <!-- Comparativa -->
     <section aria-labelledby="comparativa" id="comparativa">
+      <!-- ⚠️ no borrar esta sección, no tocar, respetar y mantener integro -->
+      <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <h3>Comparativa con otros sistemas</h3>
       <div class="card body">
         <table class="table-like">
@@ -418,6 +453,8 @@
 
     <!-- FAQ -->
     <section aria-labelledby="faq" id="faq">
+      <!-- ⚠️ no borrar esta sección, no tocar, respetar y mantener integro -->
+      <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <h3>Preguntas frecuentes</h3>
       <details class="faq-item">
         <summary>¿Qué diferencia hay entre MonoRFC y MultiRFC?</summary>
@@ -444,6 +481,8 @@
 
     <!-- CTA -->
     <section class="card body" id="sesion-guiada">
+      <!-- ⚠️ no borrar esta sección, no tocar, respetar y mantener integro -->
+      <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <h3>¿Listo para empezar?</h3>
       <p>Agenda una sesión con nuestros especialistas o tramita tu prueba sin costo.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
@@ -452,13 +491,14 @@
       </div>
     </section>
 
-    <!-- TOC flotante -->
+    <!-- TOC flotante (mismo documento) -->
     <aside class="toc collapsed" id="toc">
       <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
       <button class="toc-close" aria-label="Cerrar">×</button>
       <strong class="toc-title">Mapa del sitio</strong>
       <a href="#beneficios">Por qué usar</a>
       <a href="#caracteristicas">Funciones</a>
+      <a href="#videos">Videos</a>
       <a href="#integra">Sistemas integrables</a>
       <a href="#calculadora-section">Calculadora</a>
       <a href="#comparativa">Comparativa</a>
@@ -544,9 +584,9 @@
     document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
     document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m) closeModal(m.id);}));
 
-    // GALERÍA
-    (function wireCarousel(rootId){
-      const root=document.getElementById(rootId); if(!root) return;
+    // GALERÍA: autoplay 3s + flechas centradas + dots
+    (function(){
+      const root=document.getElementById('carousel1'); if(!root) return;
       const track=root.querySelector('.carousel-track');
       const slides=[...track.querySelectorAll('.carousel-slide')];
       const dots=[...root.querySelectorAll('.dot')];
@@ -578,7 +618,7 @@
       setActive(0); play();
     })();
 
-    // Slider beneficios
+    // Slider beneficios (solo si existiera #beneficios)
     (function(){
       const slider=document.querySelector('#beneficios .listSlider'); if(!slider) return;
       const track =slider.querySelector('#listTrack');
@@ -604,7 +644,7 @@
       apply('proceso');
     })();
 
-    // Carrusel sistemas
+    // Carrusel sistemas (flechas iguales a la galería)
     (function(){
       document.querySelectorAll('.carouselX').forEach(root=>{
         const track=root.querySelector('.track');
@@ -634,6 +674,7 @@
 
     // Calculadora: 1→2→3 sistemas (panel “¿agregar otro…?” abajo)
     (function(){
+      const row=document.getElementById('calc-row');
       const slot2=document.getElementById('calc-slot-2');
       const slot3=document.getElementById('calc-tertiary');
       const addMore=document.getElementById('add-more-panel');
@@ -657,6 +698,7 @@
         });
         haveSecondary=true; showAddMoreIfReady();
         addMore.scrollIntoView({behavior:'smooth',block:'nearest'});
+        setTimeout(()=>reorderCalcControls(document.getElementById('calc-secondary')),100);
       });
 
       pick3?.addEventListener('click', e=>{
@@ -671,8 +713,43 @@
           combinedSelector:'#combined-wrap'
         });
         addMore.style.display='none';
+        row.classList.add('has-three'); // << tres en línea
         slot3.scrollIntoView({behavior:'smooth',block:'nearest'});
+        setTimeout(()=>reorderCalcControls(document.getElementById('calc-tertiary')),100);
       });
+    })();
+
+    // Reordenar controles de la calculadora: Operación → Modalidad → Tipo → Usuarios
+    function reorderCalcControls(container){
+      if(!container) return;
+      const host = container.querySelector('form') || container;
+      const labels=[...host.querySelectorAll('label')];
+      if(!labels.length) return;
+
+      const desired=['operación','modalidad','tipo','usuarios'];
+      const wrapper=document.createElement('div');
+      wrapper.className='controls-order';
+      let moved=0;
+
+      desired.forEach(name=>{
+        const lab=labels.find(l=> (l.textContent||'').trim().toLowerCase().startsWith(name));
+        if(lab){
+          const ctl=lab.nextElementSibling;
+          wrapper.appendChild(lab);
+          if(ctl) wrapper.appendChild(ctl);
+          moved++;
+        }
+      });
+
+      if(moved){ host.insertBefore(wrapper, host.firstChild); }
+    }
+
+    // Observa render de la primaria y reordena cuando aparezca
+    (function(){
+      const target=document.getElementById('calc-primary');
+      if(!target) return;
+      const mo=new MutationObserver(()=>reorderCalcControls(target));
+      mo.observe(target,{childList:true,subtree:true});
     })();
 
     // Inyección de estilos para la tabla combinada
@@ -697,7 +774,7 @@
       });
     })();
 
-    // TOC: abrir/cerrar
+    // TOC: abrir/cerrar (anclas internas)
     (function(){
       const toc=document.getElementById('toc');
       const btn=document.getElementById('tocToggle');
