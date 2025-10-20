@@ -1,18 +1,7 @@
-<script>
+/* calculadora.js v12 — Orden: Licencia → Operación → Tipo (RFC) → Usuarios → Instalación */
 (function () {
-  // ===== Parche CSS básico (asegura flujo por DOM y sin reordenar) =====
-  (function ensureFormVisible() {
-    var id = "calc-form-visibility-patch";
-    if (!document.getElementById(id)) {
-      var st = document.createElement("style");
-      st.id = id;
-      st.textContent =
-        ".calc-container form{display:grid!important;grid-auto-flow:row!important;grid-template-columns:1fr!important;gap:8px!important}" +
-        ".calc-container label{display:block!important}" +
-        ".calc-container select,.calc-container input[type='number']{display:block!important;visibility:visible!important;opacity:1!important}";
-      document.head.appendChild(st);
-    }
-  })();
+  'use strict';
+  console.log('calculadora.js v12 cargado — Orden: Licencia → Operación → Tipo (RFC) → Usuarios → Instalación');
 
   // ========================= Helpers =========================
   var money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
@@ -23,6 +12,20 @@
     return !!(el && el.querySelector && el.querySelector("table"));
   }
   function recomputeAll(){ window.dispatchEvent(new Event("calc-recompute")); }
+
+  // ===== Parche CSS mínimo para que respete el orden DOM (por si hay estilos externos) =====
+  (function ensureFormVisible() {
+    var id = "calc-form-visibility-patch";
+    if (!document.getElementById(id)) {
+      var st = document.createElement("style");
+      st.id = id;
+      st.textContent =
+        ".calc-container form{display:grid!important;grid-auto-flow:row!important;grid-template-columns:1fr!important;gap:8px!important}" +
+        ".calc-container label{display:block!important;font-weight:700}" +
+        ".calc-container select,.calc-container input[type='number']{display:block!important;visibility:visible!important;opacity:1!important}";
+      document.head.appendChild(st);
+    }
+  })();
 
   // ===================== Render calculadora ===================
   function createCalculator(container, sistemaName, idSuffix, combinedSelector) {
@@ -101,10 +104,10 @@
       '  <input type="checkbox" id="instOn'+idSuffix+'" checked>' +
       '  <label for="instOn'+idSuffix+'"><strong>Instalación (opcional)</strong></label>' +
       '</div>' +
-      '<div style="color:#9fb2cb;font-size:12px">Servicio ofrecido por <strong>ExpIRI&nbsp;TI</strong> para instalar en tu equipo tu sistema.</div>';
+      '<div style="color:#9fb2cb;font-size:12px">Servicio ofrecido por <strong>ExpIRITI</strong> para instalar en tu equipo tu sistema.</div>';
     form.appendChild(instWrap);
 
-    // (hardening: nos aseguramos de que Licencia quede arriba si algún CSS externo reordenara)
+    // Blindaje: aseguramos Licencia en primer lugar
     form.insertBefore(licenciaLabel, form.firstChild);
 
     container.appendChild(form);
@@ -159,7 +162,6 @@
       }
 
       if (rfcSel.options.length === 0) rfcLabel.style.display = "none";
-
       calculateAndRender();
     }
 
@@ -220,7 +222,7 @@
 
       var subtotalSistemas = base + usuariosAddImporte;
 
-      // 15% paquete (si hay 2 o 3 cajas, excepto XML en Línea)
+      // -15% por paquete (si hay 2 o 3 cajas); excluye “XML en Línea”
       var discountPct = 0;
       if ((safeHasTable("calc-secondary") || safeHasTable("calc-tertiary")) && sistemaName.indexOf("XML en Línea") === -1) {
         discountPct = 0.15;
@@ -228,7 +230,7 @@
       var discountAmt = subtotalSistemas * discountPct;
       var afterDiscount = subtotalSistemas - discountAmt;
 
-      // instalación con 50% descuento
+      // instalación con 50% descuento (se suma IVA al final)
       var instGross = calcInstallationGross();
       var instDiscount = instGross * 0.5;
       var instNet = instGross - instDiscount;
@@ -240,10 +242,10 @@
 
       // Render números
       document.getElementById("base"+idSuffix).textContent = fmt(base);
-      document.getElementById("uadd"+idSuffix).textContent = fmt(usuariosAddImporte) + " ("+usuariosExtras+" extras)";
+      document.getElementById("uadd"+idSuffix).textContent = fmt(usuariosAddImporte) + (usuariosExtras>0?(" ("+usuariosExtras+" extras)"):"");
       document.getElementById("disc"+idSuffix).textContent = pct(discountPct) + " / " + fmt(discountAmt);
       document.getElementById("inst"+idSuffix).textContent = fmt(instGross);
-      document.getElementById("instdisc"+idSuffix).textContent = "− " + fmt(instDiscount);
+      document.getElementById("instdisc"+idSuffix).textContent = (instGross>0?("− " + fmt(instDiscount)):fmt(0));
       document.getElementById("sub"+idSuffix).textContent = fmt(afterDiscount);
       document.getElementById("iva"+idSuffix).textContent = fmt(iva);
       document.getElementById("tot"+idSuffix).textContent = fmt(total);
@@ -405,7 +407,7 @@
     updateCombinedSummary: updateCombinedSummary
   };
 
-  // Auto-init
+  // Auto-init si existe #app con data-system y #calc-primary
   function autoInit() {
     var app = document.getElementById("app");
     var sys = app && app.dataset ? app.dataset.system : null;
@@ -416,4 +418,3 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoInit);
   else autoInit();
 })();
-</script>
