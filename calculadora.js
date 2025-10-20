@@ -1,12 +1,13 @@
+<script>
 (function () {
-  // ===== Parche CSS básico =====
+  // ===== Parche CSS básico (asegura flujo por DOM y sin reordenar) =====
   (function ensureFormVisible() {
     var id = "calc-form-visibility-patch";
     if (!document.getElementById(id)) {
       var st = document.createElement("style");
       st.id = id;
       st.textContent =
-        ".calc-container form{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}" +
+        ".calc-container form{display:grid!important;grid-auto-flow:row!important;grid-template-columns:1fr!important;gap:8px!important}" +
         ".calc-container label{display:block!important}" +
         ".calc-container select,.calc-container input[type='number']{display:block!important;visibility:visible!important;opacity:1!important}";
       document.head.appendChild(st);
@@ -44,6 +45,7 @@
     var form = document.createElement("form");
     form.className = "calc-form";
     form.style.display = "grid";
+    form.style.gridAutoFlow = "row";
     form.style.gridTemplateColumns = "1fr";
     form.style.gap = "8px";
 
@@ -102,7 +104,7 @@
       '<div style="color:#9fb2cb;font-size:12px">Servicio ofrecido por <strong>ExpIRI&nbsp;TI</strong> para instalar en tu equipo tu sistema.</div>';
     form.appendChild(instWrap);
 
-    // (por si algún navegador reordena, forzamos Licencia al inicio)
+    // (hardening: nos aseguramos de que Licencia quede arriba si algún CSS externo reordenara)
     form.insertBefore(licenciaLabel, form.firstChild);
 
     container.appendChild(form);
@@ -218,7 +220,7 @@
 
       var subtotalSistemas = base + usuariosAddImporte;
 
-      // 15% paquete (si hay 2 o 3 cajas)
+      // 15% paquete (si hay 2 o 3 cajas, excepto XML en Línea)
       var discountPct = 0;
       if ((safeHasTable("calc-secondary") || safeHasTable("calc-tertiary")) && sistemaName.indexOf("XML en Línea") === -1) {
         discountPct = 0.15;
@@ -247,13 +249,8 @@
       document.getElementById("tot"+idSuffix).textContent = fmt(total);
 
       // Mostrar/ocultar filas condicionales
-      // Usuarios adicionales
-      document.getElementById("tr-uadd"+idSuffix).style.display =
-        (usuariosExtras > 0) ? "" : "none";
-      // Descuento sistemas
-      document.getElementById("tr-disc"+idSuffix).style.display =
-        (discountPct > 0) ? "" : "none";
-      // Instalación & descuento de instalación (según checkbox)
+      document.getElementById("tr-uadd"+idSuffix).style.display = (usuariosExtras > 0) ? "" : "none";
+      document.getElementById("tr-disc"+idSuffix).style.display = (discountPct > 0) ? "" : "none";
       var instOn = instCheckbox();
       var showInst = !!(instOn && instOn.checked);
       document.getElementById("tr-inst"+idSuffix).style.display = showInst ? "" : "none";
@@ -419,3 +416,4 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoInit);
   else autoInit();
 })();
+</script>
