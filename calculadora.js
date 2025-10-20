@@ -1,13 +1,14 @@
 (function () {
-  // ====== parche CSS para asegurar visibilidad del form ======
+  // ===== Forzar visibilidad del form =====
   (function ensureFormVisible() {
     var id = "calc-form-visibility-patch";
     if (!document.getElementById(id)) {
       var st = document.createElement("style");
       st.id = id;
-      st.textContent = ".calc-container form{display:grid !important; grid-template-columns:1fr !important; gap:8px !important;}"
-        + ".calc-container label{display:block !important;}"
-        + ".calc-container select,.calc-container input[type='number']{display:block !important; visibility:visible !important; opacity:1 !important;}";
+      st.textContent =
+        ".calc-container form{display:grid !important; grid-template-columns:1fr !important; gap:8px !important;}" +
+        ".calc-container label{display:block !important;}" +
+        ".calc-container select,.calc-container input[type='number']{display:block !important; visibility:visible !important; opacity:1 !important;}";
       document.head.appendChild(st);
     }
   })();
@@ -16,12 +17,10 @@
   var money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
   function fmt(v){ return money.format(Math.round(Number(v || 0))); }
   function pct(v){ return ((v || 0) * 100).toFixed(0) + "%"; }
-
   function safeHasTable(id){
     var el = document.getElementById(id);
     return !!(el && el.querySelector && el.querySelector("table"));
   }
-
   function recomputeAll(){ window.dispatchEvent(new Event("calc-recompute")); }
 
   // ===================== Render calculadora ===================
@@ -41,7 +40,7 @@
     title.textContent = sistemaName + " — Calculadora";
     container.appendChild(title);
 
-    // ---------- Formulario ----------
+    // ---------- Formulario (orden solicitado) ----------
     var form = document.createElement("form");
     form.className = "calc-form";
     form.style.display = "grid";
@@ -79,16 +78,9 @@
     rfcLabel.appendChild(rfcSel);
     form.appendChild(rfcLabel);
 
-    // 4) (compatibilidad: nivel nube oculto)
-    var nivelLabel = document.createElement("label");
-    nivelLabel.textContent = "Nivel (solo nube): ";
-    var nivelSel = document.createElement("select");
-    nivelSel.id = "niv"+idSuffix;
-    nivelLabel.appendChild(nivelSel);
-    nivelLabel.style.display = "none";
-    form.appendChild(nivelLabel);
+    // (SIN “nivel” — eliminado)
 
-    // 5) Usuarios
+    // 4) Usuarios
     var userLabel = document.createElement("label");
     userLabel.textContent = "Usuarios: ";
     var userInput = document.createElement("input");
@@ -96,7 +88,7 @@
     userLabel.appendChild(userInput);
     form.appendChild(userLabel);
 
-    // 6) Instalación (opcional) — sin modalidad ni equipos
+    // 5) Instalación (opcional) — automática por # usuarios
     var instWrap = document.createElement("div");
     instWrap.className = "inst-wrap";
     instWrap.style.border = "1px dashed #29425e";
@@ -104,12 +96,12 @@
     instWrap.style.borderRadius = "12px";
     instWrap.style.padding = "10px";
     instWrap.style.marginTop = "8px";
-    instWrap.innerHTML = ''
-      + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
-      + '  <input type="checkbox" id="instOn'+idSuffix+'" checked>'
-      + '  <label for="instOn'+idSuffix+'"><strong>Instalación (opcional)</strong></label>'
-      + '</div>'
-      + '<div style="color:#9fb2cb;font-size:12px">Servicio ofrecido por <strong>ExpIRI&nbsp;TI</strong> para instalar en tu equipo tu sistema.</div>';
+    instWrap.innerHTML =
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
+      '  <input type="checkbox" id="instOn'+idSuffix+'" checked>' +
+      '  <label for="instOn'+idSuffix+'"><strong>Instalación (opcional)</strong></label>' +
+      '</div>' +
+      '<div style="color:#9fb2cb;font-size:12px">Servicio ofrecido por <strong>ExpIRI&nbsp;TI</strong> para instalar en tu equipo tu sistema.</div>';
     form.appendChild(instWrap);
 
     container.appendChild(form);
@@ -119,18 +111,18 @@
     results.className = "calc-results";
     var table = document.createElement("table");
     table.className = "calc-table";
-    table.innerHTML = ''
-      + '<thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>'
-      + '<tbody>'
-      + '  <tr><td>Precio base</td><td id="base'+idSuffix+'">$0</td></tr>'
-      + '  <tr><td>Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0</td></tr>'
-      + '  <tr><td>Descuento (sistemas)</td><td id="disc'+idSuffix+'">0% / $0</td></tr>'
-      + '  <tr><td>Instalación (opcional)</td><td id="inst'+idSuffix+'">$0</td></tr>'
-      + '  <tr><td>Descuento por primer servicio (instalación 50%)</td><td id="instdisc'+idSuffix+'">$0</td></tr>'
-      + '  <tr><td>Subtotal (sistemas)</td><td id="sub'+idSuffix+'">$0</td></tr>'
-      + '  <tr><td>IVA (16%)</td><td id="iva'+idSuffix+'">$0</td></tr>'
-      + '  <tr><td><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0</strong></td></tr>'
-      + '</tbody>';
+    table.innerHTML =
+      '<thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>' +
+      '<tbody>' +
+      '  <tr><td>Precio base</td><td id="base'+idSuffix+'">$0</td></tr>' +
+      '  <tr><td>Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0</td></tr>' +
+      '  <tr><td>Descuento (sistemas)</td><td id="disc'+idSuffix+'">0% / $0</td></tr>' +
+      '  <tr><td>Instalación (opcional)</td><td id="inst'+idSuffix+'">$0</td></tr>' +
+      '  <tr><td>Descuento por primer servicio (instalación 50%)</td><td id="instdisc'+idSuffix+'">$0</td></tr>' +
+      '  <tr><td>Subtotal (sistemas)</td><td id="sub'+idSuffix+'">$0</td></tr>' +
+      '  <tr><td>IVA (16%)</td><td id="iva'+idSuffix+'">$0</td></tr>' +
+      '  <tr><td><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0</strong></td></tr>' +
+      '</tbody>';
     results.appendChild(table);
     container.appendChild(results);
 
@@ -168,14 +160,14 @@
       calculateAndRender();
     }
 
-    // ---- instalación automática ----
+    // ---- instalación automática (800 servidor + 750 por usuario extra) ----
     function instCheckbox(){ return document.getElementById("instOn"+idSuffix); }
     function calcInstallationGross(){
       var on = instCheckbox();
       if (!on || !on.checked) return 0;
       var usuarios = Math.max(1, parseInt(userInput.value || "1", 10) || 1);
-      if (usuarios === 1) return 800;
-      return 800 + (usuarios - 1) * 750;
+      if (usuarios === 1) return 800;                 // 1 instalación modo servidor
+      return 800 + (usuarios - 1) * 750;              // 1 servidor + (usuarios-1) terminales
     }
 
     // ----------------- Cálculo -----------------
@@ -192,11 +184,8 @@
         var datosLic = anual[rfcType] || null;
         if (!datosLic) return writeZeros();
 
-        if (lic === "nueva") {
-          base = Number((datosLic.precio_base || 0));
-        } else {
-          base = Number((datosLic.renovacion != null ? datosLic.renovacion : (datosLic.precio_base || 0)));
-        }
+        if (lic === "nueva") base = Number((datosLic.precio_base || 0));
+        else base = Number((datosLic.renovacion != null ? datosLic.renovacion : (datosLic.precio_base || 0)));
 
         var perUser = Number(
           (datosLic.usuario_en_red != null ? datosLic.usuario_en_red :
@@ -228,7 +217,7 @@
 
       var subtotalSistemas = base + usuariosAddImporte;
 
-      // 15% paquete (si hay 2 o 3 cajas) — aplica desde el inicio en todas
+      // 15% paquete (si hay 2 o 3 cajas) — aplica en todas desde el inicio
       var discountPct = 0;
       if ((safeHasTable("calc-secondary") || safeHasTable("calc-tertiary")) && sistemaName.indexOf("XML en Línea") === -1) {
         discountPct = 0.15;
@@ -256,8 +245,6 @@
       document.getElementById("tot"+idSuffix).textContent = fmt(total);
 
       updateCombinedSummary(combinedSelector);
-
-      window.dispatchEvent(new Event("calc-updated"));
     }
 
     function writeZeros() {
@@ -274,7 +261,6 @@
 
     // ===== Eventos =====
     licenciaSel.addEventListener("change", refreshOptions);
-
     opSel.addEventListener("change", function(){
       var lic = licenciaSel.value;
       var op = opSel.value;
@@ -296,15 +282,13 @@
       }
       calculateAndRender();
     });
-
     rfcSel.addEventListener("change", calculateAndRender);
     userInput.addEventListener("change", calculateAndRender);
     var chk = document.getElementById("instOn"+idSuffix);
     if (chk) chk.addEventListener("change", calculateAndRender);
 
-    // Recalcular cuando otra calculadora cambie o aparezca
+    // Recalcular cuando aparezca otra caja (sin bucles)
     window.addEventListener("calc-recompute", calculateAndRender);
-    window.addEventListener("calc-updated", calculateAndRender);
 
     // Inicial
     refreshOptions();
@@ -350,20 +334,20 @@
 
     var box = document.createElement("div");
     box.className = "combined-summary";
-    box.innerHTML = ''
-      + '<h4>Resumen combinado</h4>'
-      + (e1 ? '<p>'+n1+': '+fmt(getNum("tot1"))+'</p>' : '')
-      + (e2 ? '<p>'+n2+': '+fmt(getNum("tot2"))+'</p>' : '')
-      + (e3 ? '<p>'+n3+': '+fmt(getNum("tot3"))+'</p>' : '')
-      + '<p><strong>Total combinado:</strong> '+fmt(totalCombinado)+'</p>'
-      + '<table class="combined-table">'
-      + '  <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>'
-      + '  <tbody>'
-      +       filas.map(function(f){ return '<tr><td>'+f.label+'</td><td>'+fmt(f.val)+'</td></tr>'; }).join("")
-      + '    <tr><td>IVA total (sistemas + instalación)</td><td>'+fmt(ivaTotal)+'</td></tr>'
-      + '    <tr><td><strong>Total combinado</strong></td><td><strong>'+fmt(totalCombinado)+'</strong></td></tr>'
-      + '  </tbody>'
-      + '</table>';
+    box.innerHTML =
+      '<h4>Resumen combinado</h4>' +
+      (e1 ? '<p>'+n1+': '+fmt(getNum("tot1"))+'</p>' : '') +
+      (e2 ? '<p>'+n2+': '+fmt(getNum("tot2"))+'</p>' : '') +
+      (e3 ? '<p>'+n3+': '+fmt(getNum("tot3"))+'</p>' : '') +
+      '<p><strong>Total combinado:</strong> '+fmt(totalCombinado)+'</p>' +
+      '<table class="combined-table">' +
+      '  <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>' +
+      '  <tbody>' +
+           filas.map(function(f){ return '<tr><td>'+f.label+'</td><td>'+fmt(f.val)+'</td></tr>'; }).join("") +
+      '    <tr><td>IVA total (sistemas + instalación)</td><td>'+fmt(ivaTotal)+'</td></tr>' +
+      '    <tr><td><strong>Total combinado</strong></td><td><strong>'+fmt(totalCombinado)+'</strong></td></tr>' +
+      '  </tbody>' +
+      '</table>';
     combined.appendChild(box);
   }
 
@@ -376,9 +360,9 @@
     var el = document.querySelector(primarySelector);
     if (!el) { console.warn("No existe contenedor primario:", primarySelector); return; }
     createCalculator(el, systemName, "1", combinedSelector);
+    // Si luego montas 2ª/3ª caja, fuerza 15% en todas
     setTimeout(function(){ recomputeAll(); }, 0);
   }
-
   function setSecondarySystem(name, opts) {
     opts = opts || {};
     var secondarySelector = opts.secondarySelector || "#calc-secondary";
@@ -388,7 +372,6 @@
     createCalculator(el, name, "2", combinedSelector);
     recomputeAll();
   }
-
   function setTertiarySystem(name, opts) {
     opts = opts || {};
     var tertiarySelector = opts.tertiarySelector || "#calc-tertiary";
@@ -398,7 +381,6 @@
     createCalculator(el, name, "3", combinedSelector);
     recomputeAll();
   }
-
   window.CalculadoraContpaqi = {
     init: initCalculadora,
     setSecondarySystem: setSecondarySystem,
@@ -417,4 +399,3 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoInit);
   else autoInit();
 })();
- 
