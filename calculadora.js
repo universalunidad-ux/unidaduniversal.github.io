@@ -1,15 +1,31 @@
 (function () {
+  // ====== parche CSS para asegurar visibilidad del form ======
+  (function ensureFormVisible() {
+    const id = "calc-form-visibility-patch";
+    if (!document.getElementById(id)) {
+      const st = document.createElement("style");
+      st.id = id;
+      st.textContent = `
+        .calc-container form{display:grid !important; grid-template-columns:1fr !important; gap:8px !important;}
+        .calc-container label{display:block !important;}
+        .calc-container select,
+        .calc-container input[type="number"]{display:block !important; visibility:visible !important; opacity:1 !important;}
+      `;
+      document.head.appendChild(st);
+    }
+  })();
+
   // ========================= Helpers =========================
-  const money = new Intl.NumberFormat("es-MX", {
-    style: "currency",
-    currency: "MXN",
-    maximumFractionDigits: 0,
-  });
-  const fmt = (v) => money.format(Math.round(Number(v || 0)));
-  const pct = (v) => `${((v || 0) * 100).toFixed(0)}%`;
+  const money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
+  const fmt = v => money.format(Math.round(Number(v || 0)));
+  const pct = v => `${((v || 0) * 100).toFixed(0)}%`;
+
+  // Permite que todas las instancias se recalculen cuando aparece otra caja
+  function recomputeAll() {
+    window.dispatchEvent(new Event("calc-recompute"));
+  }
 
   // ===================== Render calculadora ===================
-  // idSuffix: "1" | "2" | "3"
   function createCalculator(container, sistemaName, idSuffix, combinedSelector) {
     container.innerHTML = "";
     container.dataset.systemName = sistemaName;
@@ -25,14 +41,14 @@
     title.textContent = `${sistemaName} — Calculadora`;
     container.appendChild(title);
 
-    // ---------- Formulario (usar <form> para entrar en tus reglas CSS) ----------
+    // ---------- Formulario ----------
     const form = document.createElement("form");
     form.className = "calc-form";
     form.style.display = "grid";
     form.style.gridTemplateColumns = "1fr";
     form.style.gap = "8px";
 
-    // 1) Licencia (Nueva / Renovación / Tradicional)
+    // 1) Licencia (arriba del todo)
     const licenciaLabel = document.createElement("label");
     licenciaLabel.textContent = "Licencia: ";
     const licenciaSel = document.createElement("select");
@@ -43,14 +59,13 @@
       { v: "tradicional", t: "Tradicional" },
     ].forEach(({ v, t }) => {
       const opt = document.createElement("option");
-      opt.value = v;
-      opt.textContent = t;
+      opt.value = v; opt.textContent = t;
       licenciaSel.appendChild(opt);
     });
     licenciaLabel.appendChild(licenciaSel);
     form.appendChild(licenciaLabel);
 
-    // 2) Operación (depende de Licencia)
+    // 2) Operación (según Licencia)
     const opLabel = document.createElement("label");
     opLabel.textContent = "Operación: ";
     const opSel = document.createElement("select");
@@ -66,7 +81,7 @@
     rfcLabel.appendChild(rfcSel);
     form.appendChild(rfcLabel);
 
-    // (Nivel nube — no se usa en este flujo; oculto por compatibilidad)
+    // (compatibilidad: nivel nube oculto)
     const nivelLabel = document.createElement("label");
     nivelLabel.textContent = "Nivel (solo nube): ";
     const nivelSel = document.createElement("select");
@@ -79,14 +94,11 @@
     const userLabel = document.createElement("label");
     userLabel.textContent = "Usuarios: ";
     const userInput = document.createElement("input");
-    userInput.type = "number";
-    userInput.min = "1";
-    userInput.value = "1";
-    userInput.id = `usr${idSuffix}`;
+    userInput.type = "number"; userInput.min = "1"; userInput.value = "1"; userInput.id = `usr${idSuffix}`;
     userLabel.appendChild(userInput);
     form.appendChild(userLabel);
 
-    // ---------- Add-on: Instalación (opcional) ----------
+    // 5) Instalación (opcional) — sin modalidad ni equipos
     const instWrap = document.createElement("div");
     instWrap.className = "inst-wrap";
     instWrap.style.border = "1px dashed #29425e";
@@ -99,20 +111,8 @@
         <input type="checkbox" id="instOn${idSuffix}" checked>
         <label for="instOn${idSuffix}"><strong>Instalación (opcional)</strong></label>
       </div>
-      <div class="inst-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div class="field">
-          <label><strong>Modalidad de instalación</strong></label>
-          <select id="instMode${idSuffix}">
-            <option value="mono">Monousuario / Servidor — $800 + IVA</option>
-            <option value="multi">Multiusuario (por equipo) — $750 c/u + IVA</option>
-          </select>
-          <div style="color:#9fb2cb;font-size:12px">En multiusuario se calcula por equipo. Por defecto: equipos = usuarios.</div>
-        </div>
-        <div class="field">
-          <label><strong>Equipos a instalar</strong></label>
-          <input id="instEq${idSuffix}" type="number" min="1" step="1" value="1">
-          <div style="color:#9fb2cb;font-size:12px">Si eliges “Monousuario/Servidor”, se fija en 1.</div>
-        </div>
+      <div style="color:#9fb2cb;font-size:12px">
+        Servicio ofrecido por <strong>ExpIRI&nbsp;TI</strong> para instalar en tu equipo tu sistema.
       </div>
     `;
     form.appendChild(instWrap);
@@ -131,6 +131,7 @@
         <tr><td>Usuarios adicionales</td><td id="uadd${idSuffix}">$0</td></tr>
         <tr><td>Descuento (sistemas)</td><td id="disc${idSuffix}">0% / $0</td></tr>
         <tr><td>Instalación (opcional)</td><td id="inst${idSuffix}">$0</td></tr>
+        <tr><td>Descuento por primer servicio (instalación 50%)</td><td id="instdisc${idSuffix}">$0</td></tr>
         <tr><td>Subtotal (sistemas)</td><td id="sub${idSuffix}">$0</td></tr>
         <tr><td>IVA (16%)</td><td id="iva${idSuffix}">$0</td></tr>
         <tr><td><strong>Total</strong></td><td id="tot${idSuffix}"><strong>$0</strong></td></tr>
@@ -141,7 +142,7 @@
 
     // -------- Opciones dependientes --------
     function refreshOptions() {
-      const lic = licenciaSel.value; // nueva | renovacion | tradicional
+      const lic = licenciaSel.value;
       opSel.innerHTML = "";
       rfcSel.innerHTML = "";
       rfcLabel.style.display = "inline-block";
@@ -157,8 +158,8 @@
         if (anual.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
         if (anual.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
       } else {
-        opSel.appendChild(new Option("Actualización", "actualizacion"));
-        opSel.appendChild(new Option("Actualización Especial", "especial"));
+        opSel.appendChild(new Option("Actualización (si tienes una versión anterior, p.ej. v15→v18)", "actualizacion"));
+        opSel.appendChild(new Option("Actualización Especial (si tienes la versión inmediata anterior, p.ej. v17→v18)", "especial"));
         opSel.appendChild(new Option("Incremento de usuarios", "crecimiento_usuario"));
         const trad = systemPrices.tradicional || {};
         const hasRFC = trad.actualizacion || trad.especial;
@@ -170,34 +171,19 @@
 
       if (rfcSel.options.length === 0) rfcLabel.style.display = "none";
 
-      syncInstallControls();
       calculateAndRender();
     }
 
-    // ----------------- Instalación (UI) -----------------
+    // ---- lógica instalación (automática por # usuarios) ----
     const $instOn = () => document.getElementById(`instOn${idSuffix}`);
-    const $instMode = () => document.getElementById(`instMode${idSuffix}`);
-    const $instEq = () => document.getElementById(`instEq${idSuffix}`);
 
-    function syncInstallControls() {
-      const on = $instOn(), mode = $instMode(), eq = $instEq();
-      if (!on || !mode || !eq) return;
-      const usuarios = parseInt(userInput.value) || 1;
-      if (!eq.dataset.manual) {
-        if (usuarios > 1) { mode.value = "multi"; eq.value = usuarios; }
-        else { mode.value = "mono"; eq.value = 1; }
-      }
-      if (mode.value === "mono") { eq.value = 1; eq.disabled = true; }
-      else { eq.disabled = false; }
-    }
-
-    function calcInstallationAmount() {
-      const on = $instOn(), mode = $instMode(), eq = $instEq();
-      if (!on || !mode || !eq || !on.checked) return 0;
-      if (mode.value === "mono") return 800; // sin IVA
-      const usuarios = parseInt(userInput.value) || 1;
-      const equipos = Math.max(1, parseInt(eq.value) || usuarios || 1);
-      return 750 * equipos; // sin IVA
+    function calcInstallationGross() {
+      const on = $instOn();
+      if (!on || !on.checked) return 0;
+      const usuarios = Math.max(1, parseInt(userInput.value) || 1);
+      if (usuarios === 1) return 800; // 1 servidor
+      // 1 servidor + (usuarios-1) terminales
+      return 800 + (usuarios - 1) * 750;
     }
 
     // ----------------- Cálculo -----------------
@@ -205,7 +191,7 @@
       const lic = licenciaSel.value;
       const op = opSel.value || "";
       const rfcType = rfcSel.value;
-      const usuarios = parseInt(userInput.value) || 1;
+      const usuarios = Math.max(1, parseInt(userInput.value) || 1);
 
       let base = 0, usuariosAddImporte = 0, usuariosExtras = 0;
 
@@ -214,68 +200,63 @@
         const datosLic = anual[rfcType] || null;
         if (!datosLic) return writeZeros();
 
-        base = Number(
-          lic === "nueva"
-            ? (datosLic.precio_base || 0)
-            : (datosLic.renovacion != null ? datosLic.renovacion : datosLic.precio_base || 0)
-        );
+        base = Number(lic === "nueva" ? (datosLic.precio_base || 0)
+                                      : (datosLic.renovacion ?? datosLic.precio_base || 0));
 
-        const perUser = Number(
-          datosLic.usuario_en_red != null ? datosLic.usuario_en_red : (datosLic.usuario_adicional || 0)
-        );
+        const perUser = Number(datosLic.usuario_en_red ?? datosLic.usuario_adicional ?? 0);
         usuariosExtras = Math.max(usuarios - 1, 0);
         usuariosAddImporte = usuariosExtras * perUser;
       } else {
         const trad = systemPrices.tradicional || {};
         if (op === "crecimiento_usuario") {
           const perUser = Number(trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0;
-          base = 0;
-          usuariosExtras = Math.max(usuarios - 1, 0);
+          base = 0; usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser;
         } else if (op === "actualizacion" || op === "especial") {
           const datos = trad[op] || null;
           if (!datos) return writeZeros();
           base = Number(datos.precio_base || 0);
-          const perUser = Number(
-            datos.usuario_adicional != null ? datos.usuario_adicional :
-            (trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0
-          );
+          const perUser = Number(datos.usuario_adicional ?? (trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0);
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser;
-        } else {
-          return writeZeros();
-        }
+        } else return writeZeros();
       }
 
       const subtotalSistemas = base + usuariosAddImporte;
 
-      // Descuento por paquete (si hay 2 o 3 cajas), excluye “XML en Línea”
+      // —— Descuento por paquete (15%) en ambas cajas desde el inicio ——
       let discountPct = 0;
       const has2 = !!document.getElementById("calc-secondary")?.querySelector("table");
       const has3 = !!document.getElementById("calc-tertiary")?.querySelector("table");
-      const paquete = has2 || has3;
-      if (paquete && !sistemaName.includes("XML en Línea")) discountPct = 0.15;
+      if ((has2 || has3) && !sistemaName.includes("XML en Línea")) discountPct = 0.15;
 
       const discountAmt = subtotalSistemas * discountPct;
       const afterDiscount = subtotalSistemas - discountAmt;
 
-      // Instalación (no descuenta)
-      syncInstallControls();
-      const instAmount = calcInstallationAmount();
+      // —— Instalación con 50% de descuento por primer servicio ——
+      const instGross = calcInstallationGross();
+      const instDiscount = instGross * 0.5; // 50%
+      const instNet = instGross - instDiscount;
 
-      const baseImponible = afterDiscount + instAmount;
+      // Totales (IVA sobre sistemas descontados + instalación neta)
+      const baseImponible = afterDiscount + instNet;
       const iva = baseImponible * 0.16;
       const total = baseImponible + iva;
 
+      // Render
       document.getElementById(`base${idSuffix}`).textContent = fmt(base);
       document.getElementById(`uadd${idSuffix}`).textContent = `${fmt(usuariosAddImporte)} (${usuariosExtras} extras)`;
       document.getElementById(`disc${idSuffix}`).textContent = `${pct(discountPct)} / ${fmt(discountAmt)}`;
-      document.getElementById(`inst${idSuffix}`).textContent = fmt(instAmount);
+      document.getElementById(`inst${idSuffix}`).textContent = fmt(instGross);
+      document.getElementById(`instdisc${idSuffix}`).textContent = `− ${fmt(instDiscount)}`;
       document.getElementById(`sub${idSuffix}`).textContent = fmt(afterDiscount);
       document.getElementById(`iva${idSuffix}`).textContent = fmt(iva);
       document.getElementById(`tot${idSuffix}`).textContent = fmt(total);
 
       updateCombinedSummary(combinedSelector);
+
+      // Notifica a otras instancias para que re-calculen el 15%
+      window.dispatchEvent(new Event("calc-updated"));
     }
 
     function writeZeros() {
@@ -283,6 +264,7 @@
       document.getElementById(`uadd${idSuffix}`).textContent = fmt(0);
       document.getElementById(`disc${idSuffix}`).textContent = `0% / ${fmt(0)}`;
       document.getElementById(`inst${idSuffix}`).textContent = fmt(0);
+      document.getElementById(`instdisc${idSuffix}`).textContent = fmt(0);
       document.getElementById(`sub${idSuffix}`).textContent = fmt(0);
       document.getElementById(`iva${idSuffix}`).textContent = fmt(0);
       document.getElementById(`tot${idSuffix}`).textContent = fmt(0);
@@ -315,32 +297,15 @@
     });
 
     rfcSel.addEventListener("change", calculateAndRender);
+    userInput.addEventListener("change", calculateAndRender);
 
-    userInput.addEventListener("change", () => {
-      const eq = document.getElementById(`instEq${idSuffix}`);
-      if (eq && !eq.dataset.manual) {
-        const u = Math.max(1, parseInt(userInput.value || "1"));
-        if (document.getElementById(`instMode${idSuffix}`)?.value === "multi") eq.value = u;
-        else eq.value = 1;
-      }
-      calculateAndRender();
-    });
-
-    // Eventos de instalación (con null-check)
+    // Instalación toggle
     const chk = document.getElementById(`instOn${idSuffix}`);
-    const mode = document.getElementById(`instMode${idSuffix}`);
-    const eq = document.getElementById(`instEq${idSuffix}`);
-
     if (chk) chk.addEventListener("change", calculateAndRender);
-    if (mode) mode.addEventListener("change", () => {
-      if (eq) eq.dataset.manual = "";
-      syncInstallControls();
-      calculateAndRender();
-    });
-    if (eq) eq.addEventListener("input", (e) => {
-      e.target.dataset.manual = "1";
-      calculateAndRender();
-    });
+
+    // Recalcular cuando otra calculadora cambie o aparezca
+    window.addEventListener("calc-recompute", calculateAndRender);
+    window.addEventListener("calc-updated", calculateAndRender);
 
     // Inicial
     refreshOptions();
@@ -351,7 +316,7 @@
     const combined = document.querySelector(combinedSelector);
     if (!combined) return;
 
-    const getNum = (id) => {
+    const getNum = id => {
       const el = document.getElementById(id);
       if (!el) return 0;
       const n = parseFloat(el.textContent.replace(/[^\d.-]/g, ""));
@@ -377,11 +342,11 @@
     const totales = [];
     let ivaTotal = 0;
 
-    if (e1) { filas.push({ label: `Subtotal ${n1} (después descuento)`, val: getNum("sub1") }); totales.push(getNum("tot1")); ivaTotal += getNum("iva1"); }
-    if (e2) { filas.push({ label: `Subtotal ${n2} (después descuento)`, val: getNum("sub2") }); totales.push(getNum("tot2")); ivaTotal += getNum("iva2"); }
-    if (e3) { filas.push({ label: `Subtotal ${n3} (después descuento)`, val: getNum("sub3") }); totales.push(getNum("tot3")); ivaTotal += getNum("iva3"); }
+    if (e1) { filas.push({label:`Subtotal ${n1} (después descuento)`, val:getNum("sub1")}); totales.push(getNum("tot1")); ivaTotal += getNum("iva1"); }
+    if (e2) { filas.push({label:`Subtotal ${n2} (después descuento)`, val:getNum("sub2")}); totales.push(getNum("tot2")); ivaTotal += getNum("iva2"); }
+    if (e3) { filas.push({label:`Subtotal ${n3} (después descuento)`, val:getNum("sub3")}); totales.push(getNum("tot3")); ivaTotal += getNum("iva3"); }
 
-    const totalCombinado = totales.reduce((a, b) => a + b, 0);
+    const totalCombinado = totales.reduce((a,b)=>a+b,0);
 
     const box = document.createElement("div");
     box.className = "combined-summary";
@@ -394,7 +359,7 @@
       <table class="combined-table">
         <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>
         <tbody>
-          ${filas.map((f) => `<tr><td>${f.label}</td><td>${fmt(f.val)}</td></tr>`).join("")}
+          ${filas.map(f=>`<tr><td>${f.label}</td><td>${fmt(f.val)}</td></tr>`).join("")}
           <tr><td>IVA total (sistemas + instalación)</td><td>${fmt(ivaTotal)}</td></tr>
           <tr><td><strong>Total combinado</strong></td><td><strong>${fmt(totalCombinado)}</strong></td></tr>
         </tbody>
@@ -409,6 +374,8 @@
     const el = document.querySelector(primarySelector);
     if (!el) return console.warn("No existe contenedor primario:", primarySelector);
     createCalculator(el, systemName, "1", combinedSelector);
+    // si luego se agrega otra caja, recalcular 15% en ambas
+    setTimeout(() => recomputeAll(), 0);
   }
 
   function setSecondarySystem(name, opts = {}) {
@@ -416,6 +383,8 @@
     const el = document.querySelector(secondarySelector);
     if (!el) return console.warn("No existe contenedor secundario:", secondarySelector);
     createCalculator(el, name, "2", combinedSelector);
+    // fuerza recálculo del 15% en todas
+    recomputeAll();
   }
 
   function setTertiarySystem(name, opts = {}) {
@@ -423,6 +392,7 @@
     const el = document.querySelector(tertiarySelector);
     if (!el) return console.warn("No existe contenedor terciario:", tertiarySelector);
     createCalculator(el, name, "3", combinedSelector);
+    recomputeAll();
   }
 
   window.CalculadoraContpaqi = { init: initCalculadora, setSecondarySystem, setTertiarySystem, updateCombinedSummary };
