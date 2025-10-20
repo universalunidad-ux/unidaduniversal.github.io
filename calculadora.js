@@ -47,7 +47,7 @@
     licenciaLabel.appendChild(licenciaSel);
     form.appendChild(licenciaLabel);
 
-    // 2) Operación (dependiente de Licencia)
+    // 2) Operación (depende de Licencia)
     const opLabel = document.createElement("label");
     opLabel.textContent = "Operación: ";
     const opSel = document.createElement("select");
@@ -63,7 +63,7 @@
     rfcLabel.appendChild(rfcSel);
     form.appendChild(rfcLabel);
 
-    // (Nivel nube — no aplica en este flujo; lo dejamos oculto por si se usa con otros sistemas)
+    // (Nivel nube — no se usa en este flujo; oculto por compatibilidad)
     const nivelLabel = document.createElement("label");
     nivelLabel.textContent = "Nivel (solo nube): ";
     const nivelSel = document.createElement("select");
@@ -83,7 +83,37 @@
     userLabel.appendChild(userInput);
     form.appendChild(userLabel);
 
-    container.appendChild(form);
+    // ---------- Add-on: Instalación (opcional) ----------
+    const instWrap = document.createElement("div");
+    instWrap.className = "inst-wrap";
+    instWrap.style.border = "1px dashed #29425e";
+    instWrap.style.background = "#0e1724";
+    instWrap.style.borderRadius = "12px";
+    instWrap.style.padding = "10px";
+    instWrap.style.marginTop = "8px";
+
+    instWrap.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <input type="checkbox" id="instOn${idSuffix}" checked>
+        <label for="instOn${idSuffix}"><strong>Instalación (opcional)</strong></label>
+      </div>
+      <div class="inst-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="field">
+          <label><strong>Modalidad de instalación</strong></label>
+          <select id="instMode${idSuffix}">
+            <option value="mono">Monousuario / Servidor — $800 + IVA</option>
+            <option value="multi">Multiusuario (por equipo) — $750 c/u + IVA</option>
+          </select>
+          <div style="color:#9fb2cb;font-size:12px">En multiusuario se calcula por equipo. Por defecto: equipos = usuarios.</div>
+        </div>
+        <div class="field">
+          <label><strong>Equipos a instalar</strong></label>
+          <input id="instEq${idSuffix}" type="number" min="1" step="1" value="1">
+          <div style="color:#9fb2cb;font-size:12px">Si eliges “Monousuario/Servidor”, se fija en 1.</div>
+        </div>
+      </div>
+    `;
+    form.appendChild(instWrap);
 
     // ---------- Resultados ----------
     const results = document.createElement("div");
@@ -95,8 +125,9 @@
       <tbody>
         <tr><td>Precio base</td><td id="base${idSuffix}">$0</td></tr>
         <tr><td>Usuarios adicionales</td><td id="uadd${idSuffix}">$0</td></tr>
-        <tr><td>Descuento</td><td id="disc${idSuffix}">0% / $0</td></tr>
-        <tr><td>Subtotal</td><td id="sub${idSuffix}">$0</td></tr>
+        <tr><td>Descuento (sistemas)</td><td id="disc${idSuffix}">0% / $0</td></tr>
+        <tr><td>Instalación (opcional)</td><td id="inst${idSuffix}">$0</td></tr>
+        <tr><td>Subtotal (sistemas)</td><td id="sub${idSuffix}">$0</td></tr>
         <tr><td>IVA (16%)</td><td id="iva${idSuffix}">$0</td></tr>
         <tr><td><strong>Total</strong></td><td id="tot${idSuffix}"><strong>$0</strong></td></tr>
       </tbody>
@@ -115,29 +146,22 @@
 
       // 2) Operación según Licencia
       if (lic === "nueva") {
-        // Fija a Anual (Nueva)
         opSel.appendChild(new Option("Anual (Nueva)", "nueva_anual"));
-        // RFC: Mono/Multi disponibles en anual (si existen)
         const anual = systemPrices.anual || {};
         if (anual.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
         if (anual.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
       } else if (lic === "renovacion") {
-        // Fija a Renovación Anual
         opSel.appendChild(new Option("Renovación anual", "renovacion_anual"));
-        // RFC: Mono/Multi disponibles en anual (si existen)
         const anual = systemPrices.anual || {};
         if (anual.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
         if (anual.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
       } else {
-        // Tradicional: Actualización / Especial / Incremento de usuarios
         opSel.appendChild(new Option("Actualización", "actualizacion"));
         opSel.appendChild(new Option("Actualización Especial", "especial"));
         opSel.appendChild(new Option("Incremento de usuarios", "crecimiento_usuario"));
 
-        // Para actualizacion/especial mostramos RFC; para crecimiento_usuario lo ocultamos
         const trad = systemPrices.tradicional || {};
-        const hasRFC =
-          trad.actualizacion || trad.especial; // aunque no varíe el precio por Mono/Multi, permitimos elegirlo
+        const hasRFC = trad.actualizacion || trad.especial;
         if (hasRFC) {
           rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
           rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
@@ -149,7 +173,58 @@
         rfcLabel.style.display = "none";
       }
 
+      // Sincroniza controles de instalación con usuarios
+      syncInstallControls();
       calculateAndRender();
+    }
+
+    // ----------------- Instalación (lógica UI) -----------------
+    const $instOn = () => document.getElementById(`instOn${idSuffix}`);
+    const $instMode = () => document.getElementById(`instMode${idSuffix}`);
+    const $instEq = () => document.getElementById(`instEq${idSuffix}`);
+
+    function syncInstallControls() {
+      const on = $instOn();
+      const mode = $instMode();
+      const eq = $instEq();
+      if (!on || !mode || !eq) return;
+
+      // Por defecto: si usuarios > 1, multi; si no, mono
+      const usuarios = parseInt(userInput.value) || 1;
+      if (!eq.dataset.manual) {
+        if (usuarios > 1) {
+          mode.value = "multi";
+          eq.value = usuarios;
+        } else {
+          mode.value = "mono";
+          eq.value = 1;
+        }
+      }
+
+      // Mono fuerza 1 equipo
+      if (mode.value === "mono") {
+        eq.value = 1;
+        eq.disabled = true;
+      } else {
+        eq.disabled = false;
+      }
+    }
+
+    function calcInstallationAmount() {
+      const on = $instOn();
+      const mode = $instMode();
+      const eq = $instEq();
+      if (!on || !mode || !eq || !on.checked) return 0;
+
+      const usuarios = parseInt(userInput.value) || 1;
+
+      if (mode.value === "mono") {
+        return 800; // base sin IVA
+      } else {
+        // multi: por equipo (por defecto equipos = usuarios, pero editable)
+        const equipos = Math.max(1, parseInt(eq.value) || usuarios || 1);
+        return 750 * equipos; // sin IVA
+      }
     }
 
     // ----------------- Cálculo -----------------
@@ -163,20 +238,18 @@
         usuariosAddImporte = 0,
         usuariosExtras = 0;
 
+      // ==== Sistemas ====
       if (lic === "nueva" || lic === "renovacion") {
-        // Siempre se toma bloque ANUAL
+        // ANUAL
         const anual = systemPrices.anual || {};
         const datosLic = anual[rfcType] || null;
         if (!datosLic) return writeZeros();
 
-        // Base: precio_base para NUEVA; renovacion para RENOVACION (si existe, si no, precio_base)
-        if (lic === "nueva") {
-          base = Number(datosLic.precio_base || 0);
-        } else {
-          base = Number(
-            (datosLic.renovacion != null ? datosLic.renovacion : datosLic.precio_base) || 0
-          );
-        }
+        base = Number(
+          lic === "nueva"
+            ? (datosLic.precio_base || 0)
+            : (datosLic.renovacion != null ? datosLic.renovacion : datosLic.precio_base || 0)
+        );
 
         const perUser = Number(
           datosLic.usuario_en_red != null
@@ -189,10 +262,8 @@
         // TRADICIONAL
         const trad = systemPrices.tradicional || {};
         if (op === "crecimiento_usuario") {
-          // Solo usuarios adicionales
-          const perUser = Number(
-            (trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0
-          );
+          const perUser =
+            Number(trad.crecimiento_usuario && trad.crecimiento_usuario.usuario_adicional) || 0;
           base = 0;
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser;
@@ -212,7 +283,7 @@
         }
       }
 
-      const subtotal = base + usuariosAddImporte;
+      const subtotalSistemas = base + usuariosAddImporte;
 
       // Descuento por paquete (si hay 2 o 3 cajas), excluye “XML en Línea”
       let discountPct = 0;
@@ -221,11 +292,19 @@
       const paquete = has2 || has3;
       if (paquete && !sistemaName.includes("XML en Línea")) discountPct = 0.15;
 
-      const discountAmt = subtotal * discountPct;
-      const afterDiscount = subtotal - discountAmt;
-      const iva = afterDiscount * 0.16;
-      const total = afterDiscount + iva;
+      const discountAmt = subtotalSistemas * discountPct;
+      const afterDiscount = subtotalSistemas - discountAmt;
 
+      // ==== Instalación (NO descuenta) ====
+      syncInstallControls();
+      const instAmount = calcInstallationAmount();
+
+      // Totales
+      const baseImponible = afterDiscount + instAmount; // IVA sobre sistemas descontados + instalación
+      const iva = baseImponible * 0.16;
+      const total = baseImponible + iva;
+
+      // Render
       document.getElementById(`base${idSuffix}`).textContent = fmt(base);
       document.getElementById(`uadd${idSuffix}`).textContent = `${fmt(
         usuariosAddImporte
@@ -233,6 +312,7 @@
       document.getElementById(`disc${idSuffix}`).textContent = `${pct(
         discountPct
       )} / ${fmt(discountAmt)}`;
+      document.getElementById(`inst${idSuffix}`).textContent = fmt(instAmount);
       document.getElementById(`sub${idSuffix}`).textContent = fmt(afterDiscount);
       document.getElementById(`iva${idSuffix}`).textContent = fmt(iva);
       document.getElementById(`tot${idSuffix}`).textContent = fmt(total);
@@ -244,13 +324,14 @@
       document.getElementById(`base${idSuffix}`).textContent = fmt(0);
       document.getElementById(`uadd${idSuffix}`).textContent = fmt(0);
       document.getElementById(`disc${idSuffix}`).textContent = `0% / ${fmt(0)}`;
+      document.getElementById(`inst${idSuffix}`).textContent = fmt(0);
       document.getElementById(`sub${idSuffix}`).textContent = fmt(0);
       document.getElementById(`iva${idSuffix}`).textContent = fmt(0);
       document.getElementById(`tot${idSuffix}`).textContent = fmt(0);
       updateCombinedSummary(combinedSelector);
     }
 
-    // Eventos
+    // ===== Eventos =====
     licenciaSel.addEventListener("change", refreshOptions);
     opSel.addEventListener("change", () => {
       // Mostrar/ocultar Tipo (RFC) en tradicional>crecimiento_usuario
@@ -260,7 +341,6 @@
         rfcLabel.style.display = "none";
       } else {
         if (rfcSel.options.length === 0) {
-          // repoblar si cambiaron
           rfcSel.innerHTML = "";
           if (lic === "nueva" || lic === "renovacion") {
             const anual = systemPrices.anual || {};
@@ -276,7 +356,32 @@
       calculateAndRender();
     });
     rfcSel.addEventListener("change", calculateAndRender);
-    userInput.addEventListener("change", calculateAndRender);
+    userInput.addEventListener("change", () => {
+      // Si no fue “manual”, sincroniza equipos con usuarios
+      const eq = document.getElementById(`instEq${idSuffix}`);
+      if (eq && !eq.dataset.manual) {
+        const u = Math.max(1, parseInt(userInput.value || "1"));
+        if (document.getElementById(`instMode${idSuffix}`)?.value === "multi") {
+          eq.value = u;
+        } else {
+          eq.value = 1;
+        }
+      }
+      calculateAndRender();
+    });
+
+    // Eventos de instalación
+    document.getElementById(`instOn${idSuffix}`).addEventListener("change", calculateAndRender);
+    document.getElementById(`instMode${idSuffix}`).addEventListener("change", () => {
+      const eq = document.getElementById(`instEq${idSuffix}`);
+      if (eq) eq.dataset.manual = ""; // al cambiar modo, volvemos a auto
+      syncInstallControls();
+      calculateAndRender();
+    });
+    document.getElementById(`instEq${idSuffix}`).addEventListener("input", (e) => {
+      e.target.dataset.manual = "1";
+      calculateAndRender();
+    });
 
     // Inicial
     refreshOptions();
@@ -346,7 +451,7 @@
         <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>
         <tbody>
           ${filas.map((f) => `<tr><td>${f.label}</td><td>${fmt(f.val)}</td></tr>`).join("")}
-          <tr><td>IVA total (sistemas)</td><td>${fmt(ivaTotal)}</td></tr>
+          <tr><td>IVA total (sistemas + instalación)</td><td>${fmt(ivaTotal)}</td></tr>
           <tr><td><strong>Total combinado</strong></td><td><strong>${fmt(totalCombinado)}</strong></td></tr>
         </tbody>
       </table>
