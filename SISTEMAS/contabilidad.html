@@ -247,31 +247,58 @@
       <div class="card body">
         <div class="grid-2" style="align-items:center">
           <div class="stack" style="align-items:center">
-            <img src="../IMG/contabilidad.webp" alt="CONTPAQi Contabilidad" style="width:220px;margin-bottom:12px;border-radius:12px">
-            <div class="help-wrapper">
-              <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Compra ahora</a>
-              <button class="info-icon" id="buyInfoBtn" aria-describedby="tip-buy">!</button>
-              <div id="tip-buy" role="tooltip" class="tooltip-box">
-                <button class="tooltip-close" id="buyInfoClose">×</button>
-                <p>💳 Pago disponible a <strong>Meses Sin Intereses</strong>.</p>
-              </div>
-            </div>
+  <img src="../IMG/contabilidad.webp" alt="CONTPAQi Contabilidad" style="width:220px;margin-bottom:12px;border-radius:12px">
 
-            <div class="help-wrapper">
-              <a class="btn btn-grad-purple" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
-              <button class="help-icon" id="helpBtn" aria-describedby="tip-trial">?</button>
-              <div id="tip-trial" role="tooltip" class="tooltip-box">
-                <button class="tooltip-close" id="helpClose">×</button>
-                <p><strong>Importante:</strong> El registro se hace con tu <strong>RFC</strong> no usado en otra demo o licencia.</p>
-              </div>
-            </div>
+  <!-- Botones en el orden solicitado -->
+  <div class="help-wrapper" style="flex-wrap:wrap;justify-content:center">
+    <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Compra ahora</a>
+    <button class="info-icon" id="buyInfoBtn" aria-describedby="tip-buy" title="Meses sin intereses">!</button>
+    <div id="tip-buy" role="tooltip" class="tooltip-box">
+      <button class="tooltip-close" id="buyInfoClose">×</button>
+      <p>💳 Pago disponible a <strong>Meses Sin Intereses</strong>.</p>
+    </div>
+  </div>
 
-            <a class="btn btn-grad-blue" href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-              <button class="btn btn-grad-red" data-open="modalFicha">Ver ficha técnica (PDF)</button>
-              <button class="btn btn-grad-red" data-open="modalResumen">Resumen ficha técnica</button>
-            </div>
-          </div>
+  <div class="help-wrapper" style="flex-wrap:wrap;justify-content:center">
+    <a class="btn btn-grad-purple" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
+    <button class="help-icon" id="helpBtn" aria-describedby="tip-trial" title="Ayuda">?</button>
+    <div id="tip-trial" role="tooltip" class="tooltip-box">
+      <button class="tooltip-close" id="helpClose">×</button>
+      <p><strong>Importante:</strong> El registro se hace con tu <strong>RFC</strong> no usado en otra demo o licencia.</p>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+    <button class="btn btn-grad-red" data-open="modalFicha">Ver ficha técnica (PDF)</button>
+    <button class="btn btn-grad-red" data-open="modalResumen">Resumen ficha técnica</button>
+  </div>
+
+  <!-- Sesión guiada ABAJO (ajustado al texto como los otros botones) -->
+  <a class="btn btn-grad-blue" href="#sesion-guiada" style="margin-top:4px">Sesión guiada 45 min por Zoom</a>
+
+  <!-- Bloque PDF entre esta columna y la galería -->
+  <div class="card body" style="width:100%;margin-top:10px">
+    <h4 style="margin:0 0 6px">Test de 10 puntos para elegir un sistema óptimo</h4>
+    <p class="hint" style="margin:0 0 8px">
+      PDF interactivo: al capturar tus valores, calcula una suma final para orientar la elección del sistema contable.
+    </p>
+    <div class="stack" style="gap:8px">
+      <iframe
+        class="pdf-frame"
+        title="Checklist Sistema Contable (interactivo)"
+        src="../PDFS/Checklist%20Sistema%20Contable.pdf#toolbar=1&view=FitH">
+      </iframe>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+        <a class="btn btn-ghost" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
+        <a class="btn btn-ghost" href="../PDFS/Checklist%20Sistema%20Contable.pdf" download>Descargar</a>
+      </div>
+      <small class="hint">
+        Tip: si el navegador de algún usuario no ejecuta cálculos de formularios, que lo abra en su visor de PDF (Adobe/Preview) o lo descargue.
+      </small>
+    </div>
+  </div>
+</div>
+
 
           <!-- Galería -->
           <aside class="card body gallery-wrap">
