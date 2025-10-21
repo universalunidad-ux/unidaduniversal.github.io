@@ -707,87 +707,57 @@
       });
     })();
 
-    // Helper precios
-    function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
+<script>
+  // Helper precios
+  function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
 
-    // Calculadora: 1→2→3 sistemas (panel “¿agregar otro…?” abajo)
-    (function(){
-      const row=document.getElementById('calc-row');
-      const slot2=document.getElementById('calc-slot-2');
-      const slot3=document.getElementById('calc-tertiary');
-      const addMore=document.getElementById('add-more-panel');
-      const pick2=document.getElementById('icons-sec-sys');
-      const pick3=document.getElementById('icons-third-sys');
-      let haveSecondary=false;
+  // Calculadora: 1→2→3 sistemas (panel “¿agregar otro…?” abajo)
+  (function(){
+    const row=document.getElementById('calc-row');
+    const slot2=document.getElementById('calc-slot-2');
+    const slot3=document.getElementById('calc-tertiary');
+    const addMore=document.getElementById('add-more-panel');
+    const pick2=document.getElementById('icons-sec-sys');
+    const pick3=document.getElementById('icons-third-sys');
+    let haveSecondary=false;
 
-      function showAddMoreIfReady(){ addMore.style.display = haveSecondary ? '' : 'none'; }
+    function showAddMoreIfReady(){ addMore.style.display = haveSecondary ? '' : 'none'; }
 
-      pick2?.addEventListener('click', e=>{
-        const btn=e.target.closest('.sys-icon'); if(!btn) return;
-        pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+    pick2?.addEventListener('click', e=>{
+      const btn=e.target.closest('.sys-icon'); if(!btn) return;
+      pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
 
-        // convertir placeholder pequeño en 2ª calculadora
-        slot2.className='calc-container'; slot2.id='calc-secondary';
-        CalculadoraContpaqi.setSecondarySystem(sys, {
-          secondarySelector:'#calc-secondary',
-          combinedSelector:'#combined-wrap'
-        });
-        haveSecondary=true; showAddMoreIfReady();
-        addMore.scrollIntoView({behavior:'smooth',block:'nearest'});
-
-        // Reordenar una sola vez (sin observer)
-        setTimeout(()=>{ reorderCalcControls(document.getElementById('calc-secondary')); }, 80);
+      // convertir placeholder pequeño en 2ª calculadora
+      slot2.className='calc-container'; slot2.id='calc-secondary';
+      CalculadoraContpaqi.setSecondarySystem(sys, {
+        secondarySelector:'#calc-secondary',
+        combinedSelector:'#combined-wrap'
       });
+      haveSecondary=true; showAddMoreIfReady();
+      addMore.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
 
-      pick3?.addEventListener('click', e=>{
-        const btn=e.target.closest('.sys-icon'); if(!btn) return;
-        pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+    pick3?.addEventListener('click', e=>{
+      const btn=e.target.closest('.sys-icon'); if(!btn) return;
+      pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
 
-        slot3.style.display='';
-        CalculadoraContpaqi.setTertiarySystem(sys, {
-          tertiarySelector:'#calc-tertiary',
-          combinedSelector:'#combined-wrap'
-        });
-        addMore.style.display='none';
-        row.classList.add('has-three'); // tres en línea
-        slot3.scrollIntoView({behavior:'smooth',block:'nearest'});
-
-        // Reordenar una sola vez (sin observer)
-        setTimeout(()=>{ reorderCalcControls(document.getElementById('calc-tertiary')); }, 80);
+      slot3.style.display='';
+      CalculadoraContpaqi.setTertiarySystem(sys, {
+        tertiarySelector:'#calc-tertiary',
+        combinedSelector:'#combined-wrap'
       });
-    })();
+      addMore.style.display='none';
+      row.classList.add('has-three'); // tres en línea
+      slot3.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+  })();
+</script>
 
 
-
-      // Si ya existe un wrapper previo, marcamos y salimos
-      if(host.querySelector('.controls-order')){
-        container.dataset.ordered = "1";
-        return;
-      }
-
-      const labels=[...host.querySelectorAll('label')];
-      if(!labels.length) return;
-
-      const desired=['operación','modalidad','tipo','usuarios'];
-
-      const wrapper=document.createElement('div');
-      wrapper.className='controls-order';
-
-      let moved=0;
-      desired.forEach(name=>{
-        const lab=labels.find(l=> (l.textContent||'').trim().toLowerCase().startsWith(name));
-        if(lab){
-          const ctl=lab.nextElementSibling;
-          if(lab.parentElement === wrapper) return;
-          wrapper.appendChild(lab);
-          if(ctl) wrapper.appendChild(ctl);
-          moved++;
-        }
-      });
 
       if(moved){
         host.insertBefore(wrapper, host.firstChild);
