@@ -182,6 +182,18 @@
     .tooltip-close{position:absolute;top:6px;right:6px;background:transparent;border:none;color:#cfe3ff;font-size:16px;cursor:pointer}
 
     .pdf-frame{width:100%;height:70vh;border:0}
+    <script>
+  // Toggle del mapa de sitio (TOC)
+  (function(){
+    const toc=document.getElementById('toc');
+    const openBtn=document.getElementById('tocToggle');
+    const closeBtn=toc?.querySelector('.toc-close');
+    if(!toc || !openBtn || !closeBtn) return;
+    openBtn.addEventListener('click', ()=> toc.classList.toggle('collapsed'));
+    closeBtn.addEventListener('click', ()=> toc.classList.add('collapsed'));
+  })();
+</script>
+
 
     /* Tabla Concepto/Importe (global) centrada y estrecha */
     #combined-wrap{display:flex;justify-content:center;margin-top:12px}
@@ -193,6 +205,11 @@
     #combined-wrap th,#combined-wrap td{border-bottom:1px solid #1e2b3c;padding:12px 14px}
     #combined-wrap tr:last-child td{border-bottom:none}
     #combined-wrap td:last-child{text-align:right}
+    /* Grid para videos en 2 columnas (y 1 en móvil) */
+.yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.yt-grid .yt iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px}
+@media (max-width:980px){ .yt-grid{grid-template-columns:1fr} }
+
   </style>
 </head>
 <body>
