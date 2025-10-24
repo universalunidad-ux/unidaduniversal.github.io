@@ -35,15 +35,19 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1c2c;border:1px solid #203044;color:#cfe3ff;font-size:12px}
 .lock-note{margin:8px 0 0 0;font-size:12px;color:#94a8c6;display:inline-flex;gap:6px;align-items:center}.lock-note::before{content:"⚠️";}
 
-/* ===== CALCULADORA ===== */
+/* ===== CALCULADORA (grid para fijar primaria) ===== */
 .calc-strip{display:flex;flex-direction:column;gap:12px}
-.calc-row{width:100%;display:flex;gap:14px;align-items:stretch;flex-wrap:wrap;overflow:visible}
-.calc-row>*{align-self:stretch}.calc-row.has-three{flex-wrap:nowrap}
-.calc-row.has-three .calc-container{flex:0 0 calc((100% - 28px)/3);min-width:0}
-.calc-container{border:1px solid #1c2533;padding:10px;border-radius:12px;background:#0f1622;min-width:360px;flex:1}
-.placeholder{border:1px dashed #26405f;background:#0e1724;border-radius:12px;min-width:360px;flex:1;display:flex;align-items:center;justify-content:center;padding:14px;min-height:180px}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
+.calc-row.has-three{grid-template-columns:1fr 1fr 1fr}
+.calc-container{border:1px solid #1c2533;padding:10px;border-radius:12px;background:#0f1622}
+.placeholder{border:1px dashed #26405f;background:#0e1724;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:14px;min-height:180px}
 .placeholder .note{text-align:center;color:#b9c8de}
-#calc-primary{order:1}#calc-slot-2{order:2}#calc-tertiary{order:5}#add-more-panel{order:4;flex-basis:100%;}
+/* posiciones fijas */
+#calc-primary{grid-column:1}
+#calc-slot-2,#calc-secondary{grid-column:2}
+#calc-tertiary{grid-column:3;display:none}
+#add-more-panel{grid-column:1 / -1}
+
 .icons-wrap{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 .sys-icon{border:1px solid #243248;background:#0f1622;border-radius:14px;padding:6px;cursor:pointer;display:inline-grid;place-items:center;transition:transform .12s ease, box-shadow .12s ease, border-color .12s}
 .sys-icon img{width:46px;height:46px;border-radius:10px;display:block}
@@ -114,19 +118,13 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .toc a.active{border-color:#2dd4bf;background:rgba(45,212,191,.12);color:#eafffb}
 .toc .toc-close{position:absolute;top:6px;right:8px;background:transparent;border:none;color:#cfe3ff;font-size:18px;cursor:pointer}
 
-footer{padding:24px 0;border-top:1px solid #11182725;color:#aebbd0}
-
-/* Grid de videos */
-.yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.yt-grid .yt iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px}
-@media (max-width:980px){ .yt-grid{grid-template-columns:1fr} }
-
-/* ===== HERO 3 columnas (ajuste tamaños) ===== */
-.hero-3col{display:grid;grid-template-columns:320px 1.45fr 1.2fr;column-gap:10px;align-items:start}
-@media (max-width:1200px){ .hero-3col{grid-template-columns:300px 1.35fr 1.15fr} }
+/* ===== HERO 3 columnas (ajuste márgenes para pegar PDF) ===== */
+.hero-3col{display:grid;grid-template-columns:280px 1.55fr 1.05fr;column-gap:6px;align-items:start}
+@media (max-width:1200px){ .hero-3col{grid-template-columns:270px 1.45fr 1.05fr} }
 @media (max-width:980px){ .hero-3col{grid-template-columns:1fr} }
 .stack-left{display:grid;gap:10px;align-items:start;justify-items:start}
 .stack-left .help-wrapper{justify-content:flex-start}.stack-left .btn{width:auto}
+.pdf-card{margin-left:-8px}
 .pdf-card .pdf-frame{height:68vh}@media (max-width:980px){ .pdf-card .pdf-frame{height:56vh} }
 
 /* Tooltips */
@@ -140,6 +138,21 @@ footer{padding:24px 0;border-top:1px solid #11182725;color:#aebbd0}
 .pdf-frame{width:100%;height:70vh;border:0}
 html{scroll-behavior:smooth}
 
+/* ===== FOOTER (nuevo bloque) ===== */
+footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
+.footer-grid{display:grid;gap:18px;grid-template-columns:1.6fr 1.2fr 1.2fr 1fr}
+.footer-title{font-weight:700;color:#d8e3f6;margin:0 0 10px}
+.contact-list{display:grid;gap:6px;font-size:14px}
+.contact-list .item{display:flex;gap:8px;align-items:flex-start}
+.item .ico{width:22px}
+.payments-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-items:center}
+.payments-grid img{max-height:28px;object-fit:contain;filter:grayscale(1);opacity:.9}
+.brands-col{display:grid;gap:10px}
+.brand-item img{max-height:26px;object-fit:contain;filter:grayscale(.1);background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:6px}
+.ally-col{display:grid;gap:10px;justify-items:end}
+.ally-col img{height:46px;object-fit:contain;background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:8px}
+.footer-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;padding-top:12px;border-top:1px solid #1c2533}
+
 @media (max-width:980px){
   .grid-2{grid-template-columns:1fr}
   .grid-3{grid-template-columns:1fr}
@@ -148,6 +161,7 @@ html{scroll-behavior:smooth}
   .mobile{display:none}.mobile.open{display:block}
   .mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}
   .toc{right:10px;bottom:10px;width:86vw}
+  .footer-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -231,20 +245,20 @@ html{scroll-behavior:smooth}
           </div>
         </div>
 
-        <!-- 2) CENTRO: IMG + PDF (más ancho y pegado) -->
-        <div class="card body pdf-card" style="margin-left:-2px">
+        <!-- 2) CENTRO: IMG + PDF (pegado y pag. 2) -->
+        <div class="card body pdf-card">
           <img src="../IMG/usas.jpeg" alt="USAS" style="width:100%;border-radius:10px;margin-bottom:10px">
           <h4 style="margin:0 0 6px">Test de 10 puntos para elegir un sistema óptimo</h4>
-          <p class="hint" style="margin:0 0 8px">PDF interactivo: al capturar tus valores, calcula una suma final para orientar la elección del sistema contable.</p>
+          <p class="hint" style="margin:0 0 8px">PDF interactivo: al capturar tus valores, calcula una suma final para orientar la elección del sistema.</p>
           <iframe class="pdf-frame" title="Checklist Sistema Contable (interactivo)" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=2&view=FitH"></iframe>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
             <a class="btn btn-ghost" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
             <a class="btn btn-ghost" href="../PDFS/Checklist%20Sistema%20Contable.pdf" download>Descargar</a>
           </div>
-          <small class="hint">Si tu navegador no ejecuta cálculos de formularios, ábrelo en tu visor de PDF o descárgalo.</small>
+          <small class="hint">Si tu navegador no ejecuta cálculos de formularios, ábrelo en un visor de PDF o descárgalo.</small>
         </div>
 
-        <!-- 3) DERECHA: GALERÍA (ancho restaurado) -->
+        <!-- 3) DERECHA: GALERÍA -->
         <aside class="card body gallery-wrap">
           <h4>Galería</h4>
           <div class="carousel" id="carousel1">
@@ -279,21 +293,19 @@ html{scroll-behavior:smooth}
         <button class="pill" data-filter="electronica">Contabilidad electrónica y últimas disposiciones fiscales</button>
       </div>
       <div class="grid-3 feature-grid">
-        <!-- PROCESO -->
+        <!-- (cards igual que antes) -->
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_contabiliza.webp" alt=""><h4>Contabilización</h4></div><p>Automática a partir del XML: cientos de pólizas en minutos.</p></article>
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_analisis.webp" alt=""><h4>Análisis</h4></div><p>Tableros para situación contable y fiscal.</p></article>
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_efos.webp" alt=""><h4>EFOs y EDOs</h4></div><p>Valida RFC de emisor/receptor para evitar riesgos.</p></article>
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_extraccion.webp" alt=""><h4>Extracción de información</h4></div><p>Desde CFDI de pago/REP y Excel®.</p></article>
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_tablero.webp" alt=""><h4>Tablero Fiscal</h4></div><p>Obligaciones y CFDI al día.</p></article>
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_reportes.webp" alt=""><h4>Reportes</h4></div><p>Estados financieros, balanza, resultados y más.</p></article>
-        <!-- IMPUESTOS -->
         <article class="fcard tag-impuestos"><div class="fhead"><img class="ficon" src="../IMG/ic_mejora.webp" alt=""><h4>Mejora en captura</h4></div><p>Desglose de IVA y CFDI por movimiento.</p></article>
         <article class="fcard tag-impuestos"><div class="fhead"><img class="ficon" src="../IMG/ic_diot.webp" alt=""><h4>Proveedores DIOT</h4></div><p>Carga desde Excel® y elige tasas de IVA.</p></article>
         <article class="fcard tag-impuestos"><div class="fhead"><img class="ficon" src="../IMG/ic_periodo.webp" alt=""><h4>Periodo de causación</h4></div><p>Controla periodos y cheques pendientes.</p></article>
         <article class="fcard tag-impuestos"><div class="fhead"><img class="ficon" src="../IMG/ic_txt.webp" alt=""><h4>Archivo TXT DIOT</h4></div><p>Genera archivos para trámites SAT.</p></article>
         <article class="fcard tag-impuestos"><div class="fhead"><img class="ficon" src="../IMG/ic_iva.webp" alt=""><h4>Control del IVA</h4></div><p>Tasas 16%, 0% y exento (CFDI 3.3/4.0).</p></article>
         <article class="fcard tag-impuestos"><div class="fhead"><img class="ficon" src="../IMG/ic_concilia.webp" alt=""><h4>Conciliación</h4></div><p>Cuadra declaraciones con reportes por IVA.</p></article>
-        <!-- ELECTRÓNICA -->
         <article class="fcard tag-electronica"><div class="fhead"><img class="ficon" src="../IMG/ic_ce.webp" alt=""><h4>Contabilidad Electrónica</h4></div><p>Anexo 20 v1.3: listo para revisión.</p></article>
         <article class="fcard tag-electronica"><div class="fhead"><img class="ficon" src="../IMG/ic_5xml.webp" alt=""><h4>5 XML para CE</h4></div><p>Catálogo, balanza, pólizas, auxiliares y folios.</p></article>
         <article class="fcard tag-electronica"><div class="fhead"><img class="ficon" src="../IMG/ic_add.webp" alt=""><h4>Administrador de Documentos</h4></div><p>Recibe y organiza CFDI 3.3/4.0, nómina y REP.</p></article>
@@ -304,7 +316,7 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <!-- Por qué usar (centrado vs reel) -->
+  <!-- Por qué usar -->
   <section id="beneficios" aria-label="Por qué usar">
     <div class="grid-2 align-center">
       <div>
@@ -388,7 +400,7 @@ html{scroll-behavior:smooth}
             </div>
           </div>
         </div>
-        <div id="calc-tertiary" class="calc-container" style="display:none" aria-label="Tercera calculadora"></div>
+        <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora"></div>
         <div id="add-more-panel" class="placeholder" style="display:none">
           <div class="note">
             <strong>¿Quieres agregar otro sistema?</strong><br>
@@ -475,7 +487,43 @@ html{scroll-behavior:smooth}
 </main>
 
 <footer>
-  <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+  <div class="container footer-grid">
+    <!-- Contacto -->
+    <div>
+      <h4 class="footer-title">Contacto</h4>
+      <div class="contact-list">
+        <div class="item"><img class="ico" src="../IMG/ico_phone.svg" alt=""><div><strong>Tel:</strong> 55 6843 7918</div></div>
+        <div class="item"><img class="ico" src="../IMG/ico_mail.svg" alt=""><div><strong>Email:</strong> hola@expiriti.mx</div></div>
+        <div class="item"><img class="ico" src="../IMG/ico_whatsapp.svg" alt=""><div><a href="https://wa.me/5568437918" target="_blank" rel="noopener">WhatsApp directo</a></div></div>
+      </div>
+    </div>
+    <!-- Pago -->
+    <div>
+      <h4 class="footer-title">Pago</h4>
+      <div class="payments-grid">
+        <img src="../IMG/pay_visa.svg" alt="Visa">
+        <img src="../IMG/pay_mastercard.svg" alt="Mastercard">
+        <img src="../IMG/pay_paypal.svg" alt="PayPal">
+        <img src="../IMG/pay_openpay.svg" alt="OpenPay BBVA">
+        <img src="../IMG/pay_msi.svg" alt="Meses sin intereses">
+        <img src="../IMG/pay_mercadopago.svg" alt="Mercado Pago">
+      </div>
+    </div>
+    <!-- Marcas -->
+    <div class="brands-col">
+      <h4 class="footer-title">Marcas</h4>
+      <div class="brand-item"><img src="../IMG/marca_contpaqi.svg" alt="CONTPAQi"></div>
+      <div class="brand-item"><img src="../IMG/marca_expiriti.svg" alt="Expiriti"></div>
+    </div>
+    <!-- Aliados -->
+    <div class="ally-col">
+      <h4 class="footer-title">Aliados</h4>
+      <img src="../IMG/aliado_bbva.svg" alt="BBVA">
+      <img src="../IMG/aliado_sat.svg" alt="SAT">
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
     <div style="display:flex;align-items:center;gap:10px">
       <div class="logo" aria-hidden="true">Ex</div>
       <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
@@ -499,7 +547,7 @@ buyBtn?.addEventListener('click',e=>{e.stopPropagation();tipBuy.classList.toggle
 buyClose?.addEventListener('click',e=>{e.stopPropagation();tipBuy.classList.remove('open');});
 document.addEventListener('click',e=>{if(tipTrial&&!tipTrial.contains(e.target)&&e.target!==helpBtn) tipTrial.classList.remove('open'); if(tipBuy&&!tipBuy.contains(e.target)&&e.target!==buyBtn) tipBuy.classList.remove('open');});
 
-// TOC: abrir/cerrar, scroll suave, cerrar al elegir y al hacer clic fuera
+// TOC
 (function(){
   const toc=document.getElementById('toc'), openBtn=document.getElementById('tocToggle'), closeBtn=toc?.querySelector('.toc-close');
   if(!toc||!openBtn||!closeBtn) return;
@@ -558,26 +606,38 @@ document.addEventListener('click',e=>{if(tipTrial&&!tipTrial.contains(e.target)&
 // Helper precios
 function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
 
-// Calculadora slots: principal fija izquierda
+// Calculadora (grid fijo: primaria no se mueve)
 (function(){
-  const row=document.getElementById('calc-row'), slot2=document.getElementById('calc-slot-2'), slot3=document.getElementById('calc-tertiary'), addMore=document.getElementById('add-more-panel');
-  const pick2=document.getElementById('icons-sec-sys'), pick3=document.getElementById('icons-third-sys'); let haveSecondary=false;
-  function showAddMoreIfReady(){ addMore.style.display = haveSecondary ? '' : 'none'; }
+  const row=document.getElementById('calc-row'),
+        slot2=document.getElementById('calc-slot-2'),
+        slot3=document.getElementById('calc-tertiary'),
+        addMore=document.getElementById('add-more-panel');
+  const pick2=document.getElementById('icons-sec-sys'),
+        pick3=document.getElementById('icons-third-sys');
+  let haveSecondary=false;
+  function showAddMoreIfReady(){ if(addMore) addMore.style.display = haveSecondary ? '' : 'none'; }
+
+  // Secundaria
   pick2?.addEventListener('click', e=>{
     const btn=e.target.closest('.sys-icon'); if(!btn) return;
-    pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+    pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
     const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
-    slot2.className='calc-container'; slot2.id='calc-secondary';
-    // principal permanece como #calc-primary (orden 1)
+    slot2.className='calc-container'; slot2.id='calc-secondary'; // mantiene columna 2 por CSS
     CalculadoraContpaqi.setSecondarySystem(sys,{secondarySelector:'#calc-secondary',combinedSelector:'#combined-wrap'});
-    haveSecondary=true; showAddMoreIfReady(); addMore.scrollIntoView({behavior:'smooth',block:'nearest'});
+    haveSecondary=true; showAddMoreIfReady();
   });
+
+  // Terciaria
   pick3?.addEventListener('click', e=>{
     const btn=e.target.closest('.sys-icon'); if(!btn) return;
-    pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+    pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
     const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
-    slot3.style.display=''; CalculadoraContpaqi.setTertiarySystem(sys,{tertiarySelector:'#calc-tertiary',combinedSelector:'#combined-wrap'});
-    addMore.style.display='none'; row.classList.add('has-three'); slot3.scrollIntoView({behavior:'smooth',block:'nearest'});
+    slot3.style.display=''; // visible en columna 3
+    CalculadoraContpaqi.setTertiarySystem(sys,{tertiarySelector:'#calc-tertiary',combinedSelector:'#combined-wrap'});
+    if(addMore) addMore.style.display='none';
+    row.classList.add('has-three');
   });
 })();
 </script>
