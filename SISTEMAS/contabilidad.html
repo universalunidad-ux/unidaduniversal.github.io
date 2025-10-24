@@ -482,7 +482,7 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <!-- Comparativa -->
+   <!-- Comparativa -->
   <section aria-labelledby="comparativa" id="comparativa">
     <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3>Comparativa con otros sistemas</h3>
@@ -500,34 +500,17 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
-  <!-- Comparativa -->
-  <section aria-labelledby="comparativa" id="comparativa">
-    <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3>Comparativa con otros sistemas</h3>
-    <div class="card body">
-      <table class="table-like">
-        <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Contabilidad</th><th>Aspel COI</th><th>QuickBooks</th><th>Otro ERP</th></tr></thead>
-        <tbody>
-          <tr><td>Actualización fiscal (SAT)</td><td class="highlight">✅ Automática</td><td>⚠️ Parcial</td><td>❌ Limitada</td><td>⚠️ Depende del partner</td></tr>
-          <tr><td>Integración con Nóminas/Bancos/Comercial</td><td class="highlight">✅ Nativa</td><td>❌</td><td>❌</td><td>⚠️ Adicional</td></tr>
-          <tr><td>Licenciamiento</td><td class="highlight">✅ Mono/Multi RFC</td><td>⚠️ Limitado</td><td>❌ Solo nube</td><td>⚠️ Tradicional</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
   <!-- FAQ -->
   <section aria-labelledby="faq" id="faq">
     <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3>Preguntas frecuentes</h3>
     <details class="faq-item">
       <summary>¿Qué diferencia hay entre MonoRFC y MultiRFC?</summary>
-      <p><strong>MonoRFC</strong> permite administrar la contabilidad de una sola empresa o contribuyente.<br>
-         <strong>MultiRFC</strong> permite manejar varias empresas o RFC dentro de la misma licencia, ideal para despachos o contadores con múltiples clientes.</p>
+      <p><strong>MonoRFC</strong> permite administrar la contabilidad de una sola empresa o contribuyente.<br><strong>MultiRFC</strong> permite manejar varias empresas o RFC dentro de la misma licencia, ideal para despachos o contadores con múltiples clientes.</p>
     </details>
     <details class="faq-item">
       <summary>¿Cuál es la diferencia entre licencia anual y tradicional?</summary>
-      <p><strong>Anual:</strong> actualizaciones 12 meses y renovación preferencial.<br>
-         <strong>Tradicional:</strong> pago único; actualizaciones aparte.</p>
+      <p><strong>Anual:</strong> actualizaciones 12 meses y renovación preferencial.<br><strong>Tradicional:</strong> pago único; actualizaciones aparte.</p>
     </details>
     <details class="faq-item">
       <summary>¿Puedo migrar datos desde Excel o Aspel COI?</summary>
@@ -549,16 +532,12 @@ html{scroll-behavior:smooth}
     <h3>¿Listo para empezar?</h3>
     <p>Agenda una sesión con nuestros especialistas o tramita tu prueba sin costo.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-      <a class="btn btn-grad-blue"
-         href="https://wa.me/5568437918?text=Hola%21%20Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%2045%20minutos%20por%20Zoom%2C%20dame%20todo%20completo%20por%20fa"
-         target="_blank" rel="noopener">Agendar sesión guiada (45 min)</a>
-      <a class="btn btn-grad-green"
-         href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad"
-         target="_blank" rel="noopener">Comprar ahora</a>
+      <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%2045%20minutos%20por%20Zoom%2C%20dame%20todo%20completo%20por%20fa" target="_blank" rel="noopener">Agendar sesión guiada (45 min)</a>
+      <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Comprar ahora</a>
     </div>
   </section>
 
-  <!-- TOC flotante (interno) -->
+  <!-- TOC flotante -->
   <aside class="toc collapsed" id="toc" aria-live="polite">
     <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
     <button class="toc-close" aria-label="Cerrar">×</button>
@@ -578,69 +557,65 @@ html{scroll-behavior:smooth}
   <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
     <div style="display:flex;align-items:center;gap:10px">
       <div class="logo" aria-hidden="true">Ex</div>
-      <div>
-        <strong>Expiriti</strong>
-        <div class="hint">© <span id="year"></span> · Todos los derechos reservados</div>
-      </div>
+      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
     </div>
     <div class="hint">Aviso de privacidad · Términos</div>
   </div>
 </footer>
 
-<!-- ========== Parches CSS para lo que pediste ========== -->
-<style>
-  /* 1) Hero asimétrico: PDF más ancho y “pegado”; galería restaurada */
-  .hero-3col{ grid-template-columns: 320px 1.55fr 1.15fr; column-gap:8px; }
-  /* 2) Imagen usas.jpeg y PDF con mismo ancho ya están dentro de .pdf-card */
-  /* 3) Beneficios centrado vertical respecto al reel */
-  #beneficios .grid-2{ align-items:center; }
-  #beneficios .grid-2 > div:first-child{ align-self:center; }
-  /* 4) Botones “Ficha técnica / Resumen” SOLO si los tienes en la columna izquierda del hero */
-  .stack-left .btn-like{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;border:1px solid #1c2533;background:#121a25;font-weight:700}
-  /* 5) Carrusel (galería) alto/restaurado */
-  .gallery-wrap .carousel{ min-height: 420px; }
-</style>
-
-<!-- ========== JS: TOC interno y cierre al hacer clic fuera (confirmado) ========== -->
+<!-- Scripts UI -->
 <script>
-  // Año y menú móvil (si no lo tienes ya)
-  document.getElementById('year').textContent = new Date().getFullYear();
+// Año y menú móvil
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('burger')?.addEventListener('click',()=>{document.getElementById('mobileMenu')?.classList.toggle('open');});
 
-  // TOC: abre/cierra, hace scroll interno y se cierra en click fuera
-  (function(){
-    const toc=document.getElementById('toc');
-    const openBtn=document.getElementById('tocToggle');
-    const closeBtn=toc?.querySelector('.toc-close');
-    if(!toc||!openBtn||!closeBtn) return;
+// Tooltips
+const helpBtn=document.getElementById('helpBtn'), tipTrial=document.getElementById('tip-trial'), helpClose=document.getElementById('helpClose');
+helpBtn?.addEventListener('click',e=>{e.stopPropagation();tipTrial.classList.toggle('open');});
+helpClose?.addEventListener('click',e=>{e.stopPropagation();tipTrial.classList.remove('open');});
+const buyBtn=document.getElementById('buyInfoBtn'), tipBuy=document.getElementById('tip-buy'), buyClose=document.getElementById('buyInfoClose');
+buyBtn?.addEventListener('click',e=>{e.stopPropagation();tipBuy.classList.toggle('open');});
+buyClose?.addEventListener('click',e=>{e.stopPropagation();tipBuy.classList.remove('open');});
+document.addEventListener('click',e=>{
+  if(tipTrial && !tipTrial.contains(e.target) && e.target!==helpBtn) tipTrial.classList.remove('open');
+  if(tipBuy   && !tipBuy.contains(e.target)   && e.target!==buyBtn) tipBuy.classList.remove('open');
+});
 
-    openBtn.addEventListener('click', e=>{ e.stopPropagation(); toc.classList.toggle('collapsed'); });
-    closeBtn.addEventListener('click', ()=> toc.classList.add('collapsed'));
+// TOC: abrir/cerrar, scroll interno y cierre al elegir/click fuera
+(function(){
+  const toc=document.getElementById('toc'), openBtn=document.getElementById('tocToggle'), closeBtn=toc?.querySelector('.toc-close');
+  if(!toc||!openBtn||!closeBtn) return;
+  const links=[...toc.querySelectorAll('a')];
 
-    const links=[...toc.querySelectorAll('a')];
-    links.forEach(a=>{
-      a.addEventListener('click', e=>{
-        e.preventDefault(); // nunca navega fuera
-        const sel=a.getAttribute('href'); // ej. "#beneficios"
-        if(sel && sel.startsWith('#')){
-          document.querySelector(sel)?.scrollIntoView({behavior:'smooth', block:'start'});
-        }
-        toc.classList.add('collapsed');
-      });
+  openBtn.addEventListener('click',e=>{e.stopPropagation();toc.classList.toggle('collapsed');});
+  closeBtn.addEventListener('click',()=>toc.classList.add('collapsed'));
+
+  links.forEach(a=>{
+    a.addEventListener('click',e=>{
+      e.preventDefault();                 // ← no navega fuera
+      const sel=a.getAttribute('href');   // p.ej. "#beneficios"
+      if(sel && sel.startsWith('#')){
+        document.querySelector(sel)?.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+      toc.classList.add('collapsed');     // ← se cierra al elegir
     });
-    document.addEventListener('click', e=>{
-      if(!toc.contains(e.target) && e.target!==openBtn){ toc.classList.add('collapsed'); }
-    });
-  })();
+  });
+
+  document.addEventListener('click',e=>{
+    if(!toc.contains(e.target) && e.target!==openBtn) toc.classList.add('collapsed'); // ← se cierra al hacer clic fuera
+  });
+})();
 </script>
 
-<!-- (Si no están ya cargados al final de tu archivo) -->
+<!-- Calculadora core (se mantiene igual) -->
 <script defer src="../precios-contpaqi.js?v=3"></script>
 <script defer src="../calculadora.js?v=12"></script>
-
-
-
-
-
-```
-
-¿Quieres que también **desactive el autoplay** del carrusel de la galería o que cambie el **VIDEO_ID_REEL** por el que ya tienes?
+<script>
+window.addEventListener('DOMContentLoaded',()=>{
+  if(!window.CalculadoraContpaqi){
+    console.error('❌ calculadora.js NO se cargó. Revisa la ruta del <script src=...>.');
+  }
+});
+</script>
+</body>
+</html>
