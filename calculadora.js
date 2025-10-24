@@ -1,7 +1,7 @@
-/* calculadora.js v12 — Orden: Licencia → Operación → Tipo (RFC) → Usuarios → Instalación */
+
 (function () {
   'use strict';
-  console.log('calculadora.js v12 cargado — Orden: Licencia → Operación → Tipo (RFC) → Usuarios → Instalación');
+  console.log('calculadora.js v12 cargado — MultiRFC default + Operación solo en Tradicional');
 
   // ========================= Helpers =========================
   var money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
@@ -13,7 +13,7 @@
   }
   function recomputeAll(){ window.dispatchEvent(new Event("calc-recompute")); }
 
-  // ===== Parche CSS mínimo para que respete el orden DOM (por si hay estilos externos) =====
+  // ===== Parche CSS mínimo por si hay estilos externos que oculten el form =====
   (function ensureFormVisible() {
     var id = "calc-form-visibility-patch";
     if (!document.getElementById(id)) {
@@ -67,7 +67,7 @@
     licenciaLabel.appendChild(licenciaSel);
     form.appendChild(licenciaLabel);
 
-    // 2) Operación
+    // 2) Operación (se esconderá salvo en Tradicional)
     var opLabel = document.createElement("label");
     opLabel.textContent = "Operación: ";
     var opSel = document.createElement("select");
@@ -132,27 +132,37 @@
     results.appendChild(table);
     container.appendChild(results);
 
-    // -------- Opciones dependientes --------
+    // -------- Opciones dependientes (AQUÍ EL CAMBIO) --------
     function refreshOptions() {
       var lic = licenciaSel.value;
       opSel.innerHTML = "";
       rfcSel.innerHTML = "";
       rfcLabel.style.display = "inline-block";
 
+      // Mostrar/ocultar "Operación" según licencia
+      opLabel.style.display = (lic === "tradicional") ? "" : "none";
+
       if (lic === "nueva") {
+        // Deja una opción interna (quedará oculta)
         opSel.appendChild(new Option("Anual (Nueva)", "nueva_anual"));
+
         var anual = systemPrices.anual || {};
         if (anual.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
         if (anual.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
+
       } else if (lic === "renovacion") {
         opSel.appendChild(new Option("Renovación anual", "renovacion_anual"));
+
         var anual2 = systemPrices.anual || {};
         if (anual2.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
         if (anual2.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
+
       } else {
+        // Tradicional (aquí SÍ mostramos "Operación")
         opSel.appendChild(new Option("Actualización (si tienes una versión anterior, p.ej. v15→v18)", "actualizacion"));
         opSel.appendChild(new Option("Actualización Especial (si tienes la versión inmediata anterior, p.ej. v17→v18)", "especial"));
         opSel.appendChild(new Option("Incremento de usuarios", "crecimiento_usuario"));
+
         var trad = systemPrices.tradicional || {};
         var hasRFC = trad.actualizacion || trad.especial;
         if (hasRFC) {
@@ -161,7 +171,13 @@
         }
       }
 
+      // === Default: MultiRFC si existe ===
+      var multi = Array.from(rfcSel.options).find(function(o){ return /multirfc/i.test(o.text); });
+      if (multi) rfcSel.value = multi.value;
+
+      // Si no hay RFC aplicable, escondemos el control
       if (rfcSel.options.length === 0) rfcLabel.style.display = "none";
+
       calculateAndRender();
     }
 
@@ -171,8 +187,8 @@
       var on = instCheckbox();
       if (!on || !on.checked) return 0;
       var usuarios = Math.max(1, parseInt(userInput.value || "1", 10) || 1);
-      if (usuarios === 1) return 800;                // 1 servidor (+IVA se suma en el total)
-      return 800 + (usuarios - 1) * 750;             // 1 servidor + (usuarios-1) terminales (+IVA en total)
+      if (usuarios === 1) return 800;                // 1 servidor
+      return 800 + (usuarios - 1) * 750;             // 1 servidor + (usuarios-1) terminales
     }
 
     // ----------------- Cálculo -----------------
@@ -198,6 +214,7 @@
         );
         usuariosExtras = Math.max(usuarios - 1, 0);
         usuariosAddImporte = usuariosExtras * perUser;
+
       } else {
         var trad = systemPrices.tradicional || {};
         if (op === "crecimiento_usuario") {
@@ -205,6 +222,7 @@
           base = 0;
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser2;
+
         } else if (op === "actualizacion" || op === "especial") {
           var datos = trad[op] || null;
           if (!datos) return writeZeros();
@@ -215,6 +233,7 @@
           );
           usuariosExtras = Math.max(usuarios - 1, 0);
           usuariosAddImporte = usuariosExtras * perUser3;
+
         } else {
           return writeZeros();
         }
@@ -284,6 +303,8 @@
     opSel.addEventListener("change", function(){
       var lic = licenciaSel.value;
       var op = opSel.value;
+
+      // Si Tradicional + Crecimiento de usuarios, oculta RFC
       if (lic === "tradicional" && op === "crecimiento_usuario") {
         rfcLabel.style.display = "none";
       } else {
@@ -297,6 +318,9 @@
             rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));
             rfcSel.appendChild(new Option("MultiRFC","MultiRFC"));
           }
+          // MultiRFC por defecto si existe
+          var m = Array.from(rfcSel.options).find(function(o){return /multirfc/i.test(o.text);});
+          if (m) rfcSel.value = m.value;
         }
         rfcLabel.style.display = "inline-block";
       }
@@ -334,7 +358,8 @@
     combined.innerHTML = "";
 
     if (!e2 && !e3) {
-      combined.innerHTML = '<p style="margin:0"><strong>Total:</strong> ' + fmt(getNum("tot1")) + '</p>';
+      combined.innerHTML = '<div class="combined-summary"><h4>Resumen combinado</h4><p style="margin:0"><strong>Total:</strong> ' + fmt(getNum("tot1")) + '</p></div>';
+      combined.hidden = false;
       return;
     }
 
@@ -359,7 +384,6 @@
       (e1 ? '<p>'+n1+': '+fmt(getNum("tot1"))+'</p>' : '') +
       (e2 ? '<p>'+n2+': '+fmt(getNum("tot2"))+'</p>' : '') +
       (e3 ? '<p>'+n3+': '+fmt(getNum("tot3"))+'</p>' : '') +
-      '<p><strong>Total combinado:</strong> '+fmt(totalCombinado)+'</p>' +
       '<table class="combined-table">' +
       '  <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>' +
       '  <tbody>' +
@@ -369,6 +393,7 @@
       '  </tbody>' +
       '</table>';
     combined.appendChild(box);
+    combined.hidden = false;
   }
 
   // ====================== API pública =======================
