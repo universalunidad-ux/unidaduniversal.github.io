@@ -7,12 +7,12 @@
 <meta name="description" content="CONTPAQi Contabilidad con Expiriti: implementación, capacitación, compra directa, prueba de 30 días y sesión guiada por Zoom.">
 <base href="./">
 
-<!-- Tipografía (mismo que index) -->
+<!-- Tipografía -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Favicons (mismo que index; rutas relativas desde /SISTEMAS) -->
+<!-- Favicons (rutas relativas desde /SISTEMAS) -->
 <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -22,74 +22,85 @@
 <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
 
 <style>
-:root{--bg:#0b0f14;--card:#111723;--muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)}
-*{box-sizing:border-box}html,body{margin:0;height:100%}
+:root{
+  --bg:#0b0f14;--card:#111723;--muted:#95a2b3;--text:#e8eef6;
+  --brand:#2dd4bf;--brand-2:#60a5fa;
+  --ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
+  --maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
 body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%);color:var(--text)}
-a{color:inherit;text-decoration:none}img,video,iframe{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+img,video,iframe{max-width:100%;display:block}
 .container{max-width:var(--maxw);margin:0 auto;padding:0 34px}
-header{position:sticky;top:0;background:rgba(11,15,20,.7);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid #19202b;z-index:50}
+
+/* Header fijo */
+header{position:sticky;top:0;background:rgba(11,15,20,.7);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid #19202b;z-index:150}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700}.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(145deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#0b0f14;font-weight:900}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.logo{width:38px;height:38px;border-radius:10px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(145deg,var(--brand),var(--brand-2))}
+.logo img{width:100%;height:100%;object-fit:cover;border-radius:10px}
 .brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;margin-top:2px}
-nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}nav a{opacity:.9}nav a:hover{opacity:1}
-.cta{display:flex;gap:10px;align-items:center}.burger{display:none}
+
+nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
+nav a{opacity:.9} nav a:hover{opacity:1}
+
+.cta{display:flex;gap:10px;align-items:center}
+.burger{display:none}
+
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #1c2533;background:#121a25;box-shadow:var(--shadow);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
 .btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#0b0f14;border:none}
 .btn-grad-purple{background:linear-gradient(145deg,#7c3aed,#a855f7);color:#fff;border:none}
 .btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
-.btn-grad-red{background:linear-gradient(145deg,#dc2626,#ef4444);color:#fff;border:none}
 .btn-ghost{background:#121a25;color:#e8eef6}
-.hero{padding:26px 0 0}
-h1{font-size:clamp(28px,3.4vw,42px);line-height:1.1;margin:8px 0 14px}
-h2,h3,h4{margin:0 0 10px}.lead{color:#c6d1e3;font-size:18px;max-width:68ch}.hint{color:#aebbd0;opacity:.9}
-section{padding:26px 0;border-top:1px solid #11182725}
-.card{background:var(--card);border:1px solid #1c2533;border-radius:16px;overflow:hidden}.card .body{padding:12px;color:#c8d3e5}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
-.grid-2.align-center{align-items:center}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.stack{display:grid;gap:12px}
-.badges{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1c2c;border:1px solid #203044;color:#cfe3ff;font-size:12px}
-.lock-note{margin:8px 0 0 0;font-size:12px;color:#94a8c6;display:inline-flex;gap:6px;align-items:center}.lock-note::before{content:"⚠️";}
 
-/* ===== Utilidades de gradiente (homologadas con index) ===== */
-.gradient-word{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.title-gradient{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* títulos con gradiente (homologado index) */
+.gradient-word, .title-gradient{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
 .btn-gradient{border:none;color:#0b0f14;font-weight:700;background:linear-gradient(145deg,var(--brand),var(--brand-2))}
 .btn-outline-gradient{color:#cfe9ff;background:transparent;border:1px solid transparent;position:relative;overflow:hidden}
-.btn-outline-gradient::before{content:"";position:absolute;inset:0;padding:1px;border-radius:12px;background:linear-gradient(145deg,var(--brand),var(--brand-2));-webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.btn-outline-gradient::before{
+  content:"";position:absolute;inset:0;padding:1px;border-radius:12px;
+  background:linear-gradient(145deg,var(--brand),var(--brand-2));
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
 
-/* ===== CALCULADORA (grid para fijar primaria) ===== */
-.calc-strip{display:flex;flex-direction:column;gap:12px}
-.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
-.calc-row.has-three{grid-template-columns:1fr 1fr 1fr}
-.calc-container{border:1px solid #1c2533;padding:10px;border-radius:12px;background:#0f1622}
-.placeholder{border:1px dashed #26405f;background:#0e1724;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:14px;min-height:180px}
-.placeholder .note{text-align:center;color:#b9c8de}
-/* posiciones fijas */
-#calc-primary{grid-column:1}
-#calc-slot-2,#calc-secondary{grid-column:2}
-#calc-tertiary{grid-column:3;display:none}
-#add-more-panel{grid-column:1 / -1}
+/* Hero */
+.hero{padding:26px 0 0}
+h1{font-size:clamp(28px,3.4vw,42px);line-height:1.1;margin:8px 0 14px}
+h2,h3,h4{margin:0 0 10px}
+.lead{color:#c6d1e3;font-size:18px;max-width:68ch}
+.hint{color:#aebbd0;opacity:.9}
 
-.icons-wrap{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
-.sys-icon{border:1px solid #243248;background:#0f1622;border-radius:14px;padding:6px;cursor:pointer;display:inline-grid;place-items:center;transition:transform .12s ease, box-shadow .12s ease, border-color .12s}
-.sys-icon img{width:46px;height:46px;border-radius:10px;display:block}
-.sys-icon:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.35)}
-.sys-icon.active{border-color:transparent;box-shadow:0 0 0 2px rgba(45,212,191,.25) inset, 0 10px 24px rgba(45,212,191,.18)}
-.calc-container table{width:100%;border-collapse:separate;border-spacing:0}
-.calc-container th,.calc-container td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
-.calc-container tr:last-child td{border-bottom:none}
-.calc-container thead th{background:#0e1724;color:#dce8ff;text-align:left}
-.calc-container thead th:last-child,.calc-container td:last-child{text-align:right}
-.calc-container form,.calc-container .controls,.calc-container .toolbar,.calc-container .calc-controls,.calc-container .controls-row{display:grid !important;grid-template-columns:1fr !important;gap:8px !important}
-.calc-container label,.calc-container .control-label{display:block;font-weight:700;color:#cfe3ff}
-.calc-container select,.calc-container input[type="number"]{width:100%!important;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1c2c;border:1px solid #203044;color:#cfe3ff;font-size:12px}
 
-/* ===== COMPARATIVA ===== */
-.table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
-.table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}.table-like tr:last-child td{border-bottom:none}
-.table-like thead th{background:#0e1724;color:#dce8ff;text-align:left}.table-like td.right{text-align:right}.table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
+section{padding:26px 0;border-top:1px solid #11182725}
+.card{background:var(--card);border:1px solid #1c2533;border-radius:16px;overflow:hidden}
+.card .body{padding:12px;color:#c8d3e5}
 
-/* ===== CARRUSEL PORTADA (Galería) ===== */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.grid-2.align-center{align-items:center}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.stack{display:grid;gap:12px}
+
+.lock-note{margin:8px 0 0 0;font-size:12px;color:#94a8c6;display:inline-flex;gap:6px;align-items:center}
+.lock-note::before{content:"⚠️";}
+
+/* VIDEOS horizontales centrados */
+.yt-grid{
+  display:flex;gap:14px;justify-content:center;align-items:stretch;flex-wrap:wrap
+}
+.yt-grid .yt{
+  flex:0 1 520px;display:flex;justify-content:center
+}
+.yt-grid iframe{aspect-ratio:16/9;width:100%;max-width:560px;border:0;border-radius:12px;background:#0e1724}
+
+/* ===== CARRUSEL PORTADA ===== */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:420px}
 .carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
 .carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block}
@@ -123,15 +134,38 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .fcard{background:#0f1622;border:1px solid #1c2533;border-radius:12px;padding:14px}
 .fhead{display:flex;align-items:center;gap:10px;margin-bottom:4px}.ficon{width:28px;height:28px;border-radius:8px;background:#101a2a;object-fit:cover}
 
-/* ===== FAQ ===== */
-#faq .faq-item{border:1px solid #1c2533;border-radius:16px;margin:12px 0;overflow:hidden;background:#0e1724}
-#faq .faq-item>summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:800;font-size:18px}
-#faq .faq-item[open]>summary{background:#0f1c2c}
-#faq .faq-item p{margin:0;padding:14px 20px 18px;font-size:17px}
-#faq .faq-item p strong{font-weight:900}
+/* ===== COMPARATIVA ===== */
+.table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
+.table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}.table-like tr:last-child td{border-bottom:none}
+.table-like thead th{background:#0e1724;color:#dce8ff;text-align:left}.table-like td.right{text-align:right}.table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
+
+/* ===== CALCULADORA ===== */
+.calc-strip{display:flex;flex-direction:column;gap:12px}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
+.calc-row.has-three{grid-template-columns:1fr 1fr 1fr}
+.calc-container{border:1px solid #1c2533;padding:10px;border-radius:12px;background:#0f1622}
+.placeholder{border:1px dashed #26405f;background:#0e1724;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:14px;min-height:180px}
+.placeholder .note{text-align:center;color:#b9c8de}
+#calc-primary{grid-column:1}
+#calc-slot-2,#calc-secondary{grid-column:2}
+#calc-tertiary{grid-column:3;display:none}
+#add-more-panel{grid-column:1 / -1}
+.icons-wrap{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.sys-icon{border:1px solid #243248;background:#0f1622;border-radius:14px;padding:6px;cursor:pointer;display:inline-grid;place-items:center;transition:transform .12s ease, box-shadow .12s ease, border-color .12s}
+.sys-icon img{width:46px;height:46px;border-radius:10px;display:block}
+.sys-icon:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.sys-icon.active{border-color:transparent;box-shadow:0 0 0 2px rgba(45,212,191,.25) inset, 0 10px 24px rgba(45,212,191,.18)}
+.calc-container table{width:100%;border-collapse:separate;border-spacing:0}
+.calc-container th,.calc-container td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
+.calc-container tr:last-child td{border-bottom:none}
+.calc-container thead th{background:#0e1724;color:#dce8ff;text-align:left}
+.calc-container thead th:last-child,.calc-container td:last-child{text-align:right}
+.calc-container form,.calc-container .controls,.calc-container .toolbar,.calc-container .calc-controls,.calc-container .controls-row{display:grid !important;grid-template-columns:1fr !important;gap:8px !important}
+.calc-container label,.calc-container .control-label{display:block;font-weight:700;color:#cfe3ff}
+.calc-container select,.calc-container input[type="number"]{width:100%!important;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
 
 /* ===== TOC flotante ===== */
-.toc{position:fixed;right:16px;bottom:16px;width:240px;max-height:48vh;overflow:auto;background:rgba(15,24,38,.75);border:1px solid #1c2533;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;z-index:60;box-shadow:0 10px 24px rgba(0,0,0,.35);backdrop-filter: blur(6px);transition:all .2s ease}
+.toc{position:fixed;right:16px;bottom:16px;width:240px;max-height:48vh;overflow:auto;background:rgba(15,24,38,.75);border:1px solid #1c2533;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;z-index:160;box-shadow:0 10px 24px rgba(0,0,0,.35);backdrop-filter: blur(6px);transition:all .2s ease}
 .toc.collapsed{width:auto;max-height:none;padding:6px 10px;border-radius:999px;gap:0}
 .toc.collapsed .toc-title,.toc.collapsed a,.toc.collapsed .toc-close{display:none}
 .toc-title{font-weight:800;color:#b9c8de;margin-bottom:6px}
@@ -140,27 +174,10 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .toc a.active{border-color:#2dd4bf;background:rgba(45,212,191,.12);color:#eafffb}
 .toc .toc-close{position:absolute;top:6px;right:8px;background:transparent;border:none;color:#cfe3ff;font-size:18px;cursor:pointer}
 
-/* ===== HERO 3 columnas (ajuste márgenes para pegar PDF) ===== */
-.hero-3col{display:grid;grid-template-columns:280px 1.55fr 1.05fr;column-gap:6px;align-items:start}
-@media (max-width:1200px){ .hero-3col{grid-template-columns:270px 1.45fr 1.05fr} }
-@media (max-width:980px){ .hero-3col{grid-template-columns:1fr} }
-.stack-left{display:grid;gap:10px;align-items:start;justify-items:start}
-.stack-left .help-wrapper{justify-content:flex-start}.stack-left .btn{width:auto}
-.pdf-card{margin-left:-8px}
-.pdf-card .pdf-frame{height:68vh}@media (max-width:980px){ .pdf-card .pdf-frame{height:56vh} }
+/* secciones: compensar header fijo */
+[id]{scroll-margin-top:90px}
 
-/* Tooltips */
-.help-wrapper{position:relative;display:flex;align-items:center;gap:8px}
-.help-icon,.info-icon{width:28px;height:28px;border-radius:50%;border:1px solid #314057;background:#0e1724;color:#fff;cursor:pointer;transition:box-shadow .15s ease, transform .15s ease}
-.help-icon:hover,.help-icon:focus,.info-icon:hover,.info-icon:focus{box-shadow:0 0 0 3px rgba(255,255,255,.15),0 8px 20px rgba(0,0,0,.35);transform:translateY(-1px)}
-.tooltip-box{position:absolute;inset:auto auto 100% 0;transform:translateY(-8px);background:#0e1724;border:1px solid #1c2533;border-radius:10px;padding:10px;display:none;min-width:220px;z-index:5}
-.tooltip-box.open{display:block}.tooltip-close{position:absolute;top:6px;right:6px;background:transparent;border:none;color:#cfe3ff;font-size:16px;cursor:pointer}
-
-/* PDF frame */
-.pdf-frame{width:100%;height:70vh;border:0}
-html{scroll-behavior:smooth}
-
-/* ===== FOOTER (mismo diseño que index) ===== */
+/* FOOTER (index) */
 footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .footer-grid{display:grid;gap:18px;grid-template-columns:1.6fr 1.2fr 1.2fr 1fr}
 .footer-title{font-weight:700;color:#d8e3f6;margin:0 0 10px}
@@ -174,7 +191,10 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .ally-col{display:grid;gap:10px;justify-items:end}
 .ally-col img{height:46px;object-fit:contain;background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:8px}
 .footer-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;padding-top:12px;border-top:1px solid #1c2533}
+.footer-logo{width:38px;height:38px;border-radius:10px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(145deg,var(--brand),var(--brand-2))}
+.footer-logo img{width:100%;height:100%;object-fit:cover;border-radius:10px}
 
+/* Responsive */
 @media (max-width:980px){
   .grid-2{grid-template-columns:1fr}
   .grid-3{grid-template-columns:1fr}
@@ -184,22 +204,27 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   .mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}
   .toc{right:10px;bottom:10px;width:86vw}
   .footer-grid{grid-template-columns:1fr}
+  .ally-col{justify-items:start}
 }
+html{scroll-behavior:smooth}
 </style>
 </head>
 <body>
 <header>
   <div class="container nav">
     <a href="#top" class="brand" aria-label="Inicio Expiriti">
-      <div class="logo" aria-hidden="true">Ex</div>
+      <div class="logo" aria-hidden="true"><img src="../IMG/expiritilogo.webp" alt="Expiriti"></div>
       <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
     </a>
     <nav aria-label="Principal">
       <ul>
-        <li><a href="#beneficios">Por qué usar</a></li>
-        <li><a href="#caracteristicas">Funciones</a></li>
-        <li><a href="#videos">Videos</a></li>
-        <li><a href="#calculadora-section">Calculadora</a></li>
+        <!-- Navegación interna corregida -->
+        <li><a href="#caracteristicas">Por qué CONTPAQi?</a></li>
+        <li><a href="#videos">Vídeos</a></li>
+        <li><a href="#calculadora-section">Precio</a></li>
+        <li><a href="#comparativa">Comparativa</a></li>
+        <li><a href="#faq">Preguntas frecuentes</a></li>
+        <li><a href="#sesion-guiada">Demo</a></li>
       </ul>
     </nav>
     <div class="cta">
@@ -209,18 +234,17 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </div>
   <div class="container mobile" id="mobileMenu">
-    <a href="#beneficios">Por qué usar</a>
-    <a href="#caracteristicas">Funciones</a>
-    <a href="#videos">Videos</a>
-    <a href="#integra">Sistemas</a>
-    <a href="#calculadora-section">Calculadora</a>
+    <a href="#caracteristicas">Por qué CONTPAQi?</a>
+    <a href="#videos">Vídeos</a>
+    <a href="#calculadora-section">Precio</a>
     <a href="#comparativa">Comparativa</a>
-    <a href="#faq">FAQ</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#sesion-guiada">Demo</a>
   </div>
 </header>
 
 <main class="container hero" id="top">
-  <a href="" class="hint">← Volver a productos</a>
+  <a href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" class="hint">← Volver a productos</a>
   <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
   <h1>CONTPAQi Contabilidad <span class="badge">Actualizado 2025</span></h1>
 
@@ -236,9 +260,9 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   <!-- Resumen -->
   <section aria-label="Resumen">
     <div class="card body">
-      <div class="hero-3col">
+      <div class="hero-3col" style="display:grid;grid-template-columns:280px 1.55fr 1.05fr;column-gap:6px;align-items:start">
         <!-- 1) IZQUIERDA: BOTONES -->
-        <div class="stack-left">
+        <div class="stack">
           <img src="../IMG/contabilidad.webp" alt="CONTPAQi Contabilidad" style="width:220px;margin-bottom:12px;border-radius:12px">
           <div class="help-wrapper">
             <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Contabilidad" target="_blank" rel="noopener">Compra ahora</a>
@@ -260,19 +284,18 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 
           <a class="btn btn-grad-blue" href="#sesion-guiada" style="margin-top:4px">Sesión guiada 45 min por Zoom</a>
 
-          <!-- NUEVOS BOTONES -->
           <div class="stack" style="margin-top:6px">
             <a class="btn btn-ghost" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Ficha técnica</a>
             <a class="btn btn-ghost" href="#caracteristicas">Resumen ficha técnica</a>
           </div>
         </div>
 
-        <!-- 2) CENTRO: IMG + PDF (pegado y pag. 2) -->
-        <div class="card body pdf-card">
+        <!-- 2) CENTRO: IMG + PDF -->
+        <div class="card body pdf-card" style="margin-left:-8px">
           <img src="../IMG/usas.jpeg" alt="USAS" style="width:100%;border-radius:10px;margin-bottom:10px">
           <h4 class="title-gradient" style="margin:0 0 6px">Test de 10 puntos para elegir un sistema óptimo</h4>
           <p class="hint" style="margin:0 0 8px">PDF interactivo: al capturar tus valores, calcula una suma final para orientar la elección del sistema.</p>
-          <iframe class="pdf-frame" title="Checklist Sistema Contable (interactivo)" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=2&view=FitH"></iframe>
+          <iframe class="pdf-frame" style="height:68vh" title="Checklist Sistema Contable (interactivo)" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=2&view=FitH"></iframe>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
             <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
             <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" download>Descargar</a>
@@ -308,14 +331,13 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   <section aria-labelledby="caracteristicas" id="caracteristicas">
     <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <div class="card body">
-      <h3 id="caracteristicas" class="title-gradient">Funciones destacadas</h3>
+      <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
       <div class="pillbar" role="tablist" aria-label="Categorías de características">
         <button class="pill active" data-filter="proceso">Integra y controla tu proceso contable, fiscal y financiero</button>
         <button class="pill" data-filter="impuestos">Eficiente en el cálculo de IVA, DyP, DIOT</button>
         <button class="pill" data-filter="electronica">Contabilidad electrónica y últimas disposiciones fiscales</button>
       </div>
       <div class="grid-3 feature-grid">
-        <!-- (cards igual que antes) -->
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_contabiliza.webp" alt=""><h4>Contabilización</h4></div><p>Automática a partir del XML: cientos de pólizas en minutos.</p></article>
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_analisis.webp" alt=""><h4>Análisis</h4></div><p>Tableros para situación contable y fiscal.</p></article>
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_efos.webp" alt=""><h4>EFOs y EDOs</h4></div><p>Valida RFC de emisor/receptor para evitar riesgos.</p></article>
@@ -375,8 +397,12 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     <div class="card body">
       <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
       <div class="yt-grid">
-        <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_1" title="CONTPAQi Contabilidad — Demo 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-        <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_2" title="CONTPAQi Contabilidad — Demo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="yt">
+          <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_1" title="CONTPAQi Contabilidad — Demo 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="yt">
+          <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_2" title="CONTPAQi Contabilidad — Demo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </section>
@@ -384,7 +410,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   <!-- Sistemas integrables -->
   <section aria-labelledby="integra" id="integra">
     <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 id="integra" class="title-gradient">Sistemas que complementan tu Contabilidad</h3>
+    <h3 id="integra-title" class="title-gradient">Sistemas que complementan tu Contabilidad</h3>
     <div class="card body">
       <div class="carouselX" data-step="3" tabindex="0" aria-label="Carrusel de sistemas integrables">
         <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
@@ -497,18 +523,18 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
     <button class="toc-close" aria-label="Cerrar">×</button>
     <strong class="toc-title">Mapa del sitio</strong>
-    <a href="#beneficios">Por qué usar</a>
-    <a href="#caracteristicas">Funciones</a>
-    <a href="#videos">Videos</a>
+    <!-- Mismos destinos internos que el header -->
+    <a href="#caracteristicas">Por qué CONTPAQi?</a>
+    <a href="#videos">Vídeos</a>
     <a href="#integra">Sistemas integrables</a>
-    <a href="#calculadora-section">Calculadora</a>
+    <a href="#calculadora-section">Precio</a>
     <a href="#comparativa">Comparativa</a>
-    <a href="#faq">FAQ</a>
-    <a href="#sesion-guiada">Agendar / Comprar</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#sesion-guiada">Demo</a>
   </aside>
 </main>
 
-<!-- FOOTER (copiado del index y adaptado a rutas ../IMG) -->
+<!-- FOOTER -->
 <footer>
   <div class="container footer-grid">
     <!-- Contacto -->
@@ -530,7 +556,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
       </div>
     </div>
 
-    <!-- Marcas (imagenes, no texto) -->
+    <!-- Marcas -->
     <div>
       <h3 class="footer-title">Marcas</h3>
       <div class="brands-col">
@@ -542,7 +568,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
       </div>
     </div>
 
-    <!-- Aliados (vertical, extremo derecho) -->
+    <!-- Aliados -->
     <div class="ally-col">
       <h3 class="footer-title" style="justify-self:end">Aliados</h3>
       <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
@@ -553,7 +579,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 
   <div class="container footer-bottom">
     <div style="display:flex;align-items:center;gap:10px">
-      <div class="logo" aria-hidden="true">Ex</div>
+      <div class="footer-logo" aria-hidden="true"><img src="../IMG/expiritilogo.webp" alt="Expiriti"></div>
       <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
     </div>
     <div class="hint">Aviso de privacidad · Términos</div>
@@ -563,7 +589,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 <!-- Scripts UI -->
 <script>
 // Año y menú móvil
-document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 document.getElementById('burger')?.addEventListener('click',()=>{document.getElementById('mobileMenu')?.classList.toggle('open');});
 
 // Tooltips
@@ -575,7 +601,7 @@ buyBtn?.addEventListener('click',e=>{e.stopPropagation();tipBuy.classList.toggle
 buyClose?.addEventListener('click',e=>{e.stopPropagation();tipBuy.classList.remove('open');});
 document.addEventListener('click',e=>{if(tipTrial&&!tipTrial.contains(e.target)&&e.target!==helpBtn) tipTrial.classList.remove('open'); if(tipBuy&&!tipBuy.contains(e.target)&&e.target!==buyBtn) tipBuy.classList.remove('open');});
 
-// TOC
+// TOC comportamiento (misma página)
 (function(){
   const toc=document.getElementById('toc'), openBtn=document.getElementById('tocToggle'), closeBtn=toc?.querySelector('.toc-close');
   if(!toc||!openBtn||!closeBtn) return;
@@ -586,13 +612,13 @@ document.addEventListener('click',e=>{if(tipTrial&&!tipTrial.contains(e.target)&
   document.addEventListener('click',e=>{if(!toc.contains(e.target) && e.target!==openBtn) toc.classList.add('collapsed');});
 })();
 
-// GALERÍA portada (sin autoplay)
+// GALERÍA portada
 (function(){
   const root=document.getElementById('carousel1'); if(!root) return;
   const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
   const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
   let idx=0;
-  function setActive(i){idx=(i+dots.length)%dots.length; dots.forEach((d,di)=>d.classList.toggle('active',di===idx)); track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});}  
+  function setActive(i){idx=(i+dots.length)%dots.length; dots.forEach((d,di)=>d.classList.toggle('active',di===idx)); track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});}
   dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
   prev.addEventListener('click',()=>setActive(idx-1));
   next.addEventListener('click',()=>setActive(idx+1));
@@ -614,7 +640,7 @@ document.addEventListener('click',e=>{if(tipTrial&&!tipTrial.contains(e.target)&
     function groupsCount(){return Math.max(1, Math.ceil(track.querySelectorAll('.sys').length/3));}
     function groupW(){return track.clientWidth;}
     function setDot(i){dots.forEach((d,idx)=>d.classList.toggle('active',idx===i));}
-    function goTo(i){track.scrollTo({left:i*groupW(),behavior:'smooth'}); setDot(i);}    
+    function goTo(i){track.scrollTo({left:i*groupW(),behavior:'smooth'}); setDot(i);}
     dotsWrap.innerHTML=''; const dots=Array.from({length:groupsCount()},(_,i)=>{const b=document.createElement('button'); b.className='dot'+(i===0?' active':''); b.addEventListener('click',()=>goTo(i)); dotsWrap.appendChild(b); return b;});
     let idx=0; prev.addEventListener('click',()=>{idx=Math.max(0,idx-1); goTo(idx);}); next.addEventListener('click',()=>{idx=Math.min(dots.length-1,idx+1); goTo(idx);});
     window.addEventListener('resize',()=>goTo(idx));
@@ -626,15 +652,15 @@ document.addEventListener('click',e=>{if(tipTrial&&!tipTrial.contains(e.target)&
   const wrap=document.querySelector('#beneficios .listSlider'); if(!wrap) return;
   const track=wrap.querySelector('.listTrack'), prev=wrap.querySelector('.prev'), next=wrap.querySelector('.next');
   let page=0, total=track.children.length;
-  function go(i){page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'});}  
+  function go(i){page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'});}
   prev.addEventListener('click',()=>go(page-1)); next.addEventListener('click',()=>go(page+1));
   window.addEventListener('resize',()=>go(page));
 })();
 
-// Helper precios
+// ===== CALCULADORA helpers =====
 function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
 
-// Calculadora (grid fijo: primaria no se mueve)
+// 2º sistema
 (function(){
   const row=document.getElementById('calc-row'),
         slot2=document.getElementById('calc-slot-2'),
@@ -651,23 +677,69 @@ function hasPrices(systemName){return !!(window.preciosContpaqi && window.precio
     pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
-    slot2.className='calc-container'; slot2.id='calc-secondary'; // mantiene columna 2 por CSS
+    slot2.className='calc-container'; slot2.id='calc-secondary';
     CalculadoraContpaqi.setSecondarySystem(sys,{secondarySelector:'#calc-secondary',combinedSelector:'#combined-wrap'});
     haveSecondary=true; showAddMoreIfReady();
   });
 
-  // Terciaria
+  // Terciaria (fix: asegurar que aparezca)
   pick3?.addEventListener('click', e=>{
     const btn=e.target.closest('.sys-icon'); if(!btn) return;
     pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
-    slot3.style.display=''; // visible en columna 3
+    slot3.style.display='block'; // <-- antes quedaba oculto; ahora forzamos visible
     CalculadoraContpaqi.setTertiarySystem(sys,{tertiarySelector:'#calc-tertiary',combinedSelector:'#combined-wrap'});
     if(addMore) addMore.style.display='none';
     row.classList.add('has-three');
   });
 })();
+
+// Preferencias de UI de la calculadora:
+//  - RFC por default: Multi RFC
+//  - Campo "Operación" sólo visible cuando Licencia = Tradicional
+(function configureCalc(){
+  function tryConfigure(scope){
+    if(!scope) return;
+    // MultiRFC por default
+    const selects=[...scope.querySelectorAll('select')];
+    const rfcSel = selects.find(s=>[...s.options].some(o=>/mono\s*rfc|multi\s*rfc/i.test(o.textContent||'')));
+    if(rfcSel){
+      const multi = [...rfcSel.options].find(o=>/multi\s*rfc/i.test(o.textContent||''));
+      if(multi){ rfcSel.value = multi.value; rfcSel.dispatchEvent(new Event('change',{bubbles:true})); }
+    }
+    // Mostrar/ocultar "Operación" según Licencia
+    const licenciaSel = selects.find(s=>[...s.options].some(o=>/anual|tradicional/i.test(o.textContent||'')));
+    const operacionWrap = [...scope.querySelectorAll('label, .control-label, .controls-row, .field, .form-group')]
+      .map(n=>n.closest('.form-group, .controls-row, .field, div'))
+      .find(w=>w && /operaci[óo]n/i.test(w.textContent||''));
+    function applyOperacionVisibility(){
+      if(!licenciaSel || !operacionWrap) return;
+      const isTrad = /tradicional/i.test(licenciaSel.options[licenciaSel.selectedIndex]?.textContent || '');
+      operacionWrap.style.display = isTrad ? '' : 'none';
+    }
+    if(licenciaSel && operacionWrap){
+      licenciaSel.addEventListener('change', applyOperacionVisibility);
+      applyOperacionVisibility();
+    }
+  }
+  // cuando la calculadora ya pintó el DOM
+  const primary = document.getElementById('calc-primary');
+  const obs = new MutationObserver(()=> tryConfigure(primary));
+  obs.observe(primary, {childList:true, subtree:true});
+})();
+
+// Scroll interno suave y corrección de destinos del header (asegura anclas locales)
+document.querySelectorAll('header nav a, #mobileMenu a, .toc a').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    const href=a.getAttribute('href');
+    if(href && href.startsWith('#')){
+      e.preventDefault();
+      const el=document.querySelector(href);
+      if(el){ el.scrollIntoView({behavior:'smooth', block:'start'}); }
+    }
+  });
+});
 </script>
 
 <!-- Calculadora core -->
