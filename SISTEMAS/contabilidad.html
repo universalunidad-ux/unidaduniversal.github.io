@@ -135,7 +135,8 @@ section{padding:26px 0;border-top:1px solid #11182725}
 #add-more-panel{grid-column:1 / -1}
 
 .calc-container h4{margin:0 0 8px}
-.calc-container table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:10px;overflow:hidden;background:#0e1724}
+/* Tablas de cada calculadora: centradas y más angostas */
+.calc-container table{width:100%;max-width:640px;margin:0 auto;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:10px;overflow:hidden;background:#0e1724}
 .calc-container thead th{background:#0e1724;color:#dce8ff;text-align:left;border-bottom:1px solid #1e2b3c;font-weight:700}
 .calc-container th,.calc-container td{padding:10px 12px;border-bottom:1px solid #1e2b3c}
 .calc-container tr:last-child td{border-bottom:none}
@@ -143,9 +144,13 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .calc-container label,.calc-container .control-label{display:block;font-weight:700;color:#cfe3ff;margin:4px 0 4px}
 .calc-container select,.calc-container input[type="number"]{width:100%;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
 
-/* Resumen combinado (caja separada con tabla) */
+/* Botones de selección de sistemas (secundaria/terciaria) */
+.icons-wrap .sys-icon{border:none;background:#0e1724;border:1px solid #1e2b3c;border-radius:12px;padding:6px;cursor:pointer}
+.icons-wrap .sys-icon.active{outline:2px solid #2dd4bf}
+
+/* Resumen combinado: centrado y ancho reducido */
 #combined-wrap{margin-top:10px}
-.combined-card{background:#0f1622;border:1px solid #1c2533;border-radius:12px;padding:12px}
+.combined-card{background:#0f1622;border:1px solid #1c2533;border-radius:12px;padding:12px;max-width:720px;margin:10px auto}
 .combined-card h4{margin:0 0 8px}
 .combined-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:10px;overflow:hidden;background:#0e1724}
 .combined-table th,.combined-table td{padding:10px 12px;border-bottom:1px solid #1e2b3c}
@@ -160,6 +165,13 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .fcard{border:1px solid #1e2b3c;border-radius:14px;background:#0f1622;padding:14px}
 .fhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .ficon{width:28px;height:28px;border-radius:8px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
+
+/* ===== Comparativa ===== */
+.table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
+.table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
+.table-like tr:last-child td{border-bottom:none}
+.table-like thead th{background:#0e1724;color:#dce8ff;text-align:left}
+.table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
 
 /* ===== TOC (Mapa) ===== */
 .toc{position:fixed;right:16px;bottom:16px;width:240px;max-height:48vh;overflow:auto;background:rgba(15,24,38,.75);border:1px solid #1c2533;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;z-index:900;box-shadow:0 10px 24px rgba(0,0,0,.35);backdrop-filter: blur(6px);transition:all .2s ease}
@@ -299,8 +311,8 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
-  <!-- Funciones (restaurado del respaldo) -->
-  <section aria-labelledby="caracteristicas" id="caracteristicas">
+  <!-- Funciones (restaurado) -->
+  <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <div class="card body">
       <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
@@ -373,16 +385,33 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
-  <!-- VIDEOS -->
-  <section id="videos" aria-labelledby="videos-title">
-    <div class="card body">
-      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-      <div class="yt-grid">
-        <div class="yt"><iframe src="https://www.youtube.com/watch?v=u-qppRPv_3E" title="A quién sirve CONTPAQi Contabilidad — Reel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-        <div class="yt"><iframe src="https://www.youtube.com/watch?v=i35JwgI9iaQ" title="Qué hace CONTPAQi Contabilidad — Demo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<!-- VIDEOS -->
+<section id="videos" aria-labelledby="videos-title">
+  <div class="card body">
+    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+    <div class="yt-grid">
+      <div class="yt">
+        <iframe 
+          src="https://www.youtube.com/embed/u-qppRPv_3E" 
+          title="A quién sirve CONTPAQi Contabilidad — Reel" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="yt">
+        <iframe 
+          src="https://www.youtube.com/embed/i35JwgI9iaQ" 
+          title="Qué hace CONTPAQi Contabilidad — Demo 2" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- Sistemas integrables -->
   <section id="integra" aria-labelledby="integra-title">
@@ -741,7 +770,6 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(!window.CalculadoraContpaqi){
     console.error('❌ calculadora.js no cargó. Verifica ruta.');
   }else{
-    // Auto-init primaria si está el #app con data-system
     const app=document.getElementById('app');
     const sys=app?.dataset?.system;
     if(sys){ window.CalculadoraContpaqi.init({ systemName: sys, primarySelector:'#calc-primary', combinedSelector:'#combined-wrap' }); }
