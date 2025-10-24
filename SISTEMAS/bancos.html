@@ -1,6 +1,679 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CONTPAQi Bancos | Expiriti</title>
+<meta name="description" content="CONTPAQi Bancos con Expiriti: automatiza tu tesorería, conciliación bancaria, Conecta tu banco, flujo de efectivo y pagos.">
+<base href="./">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
+<link rel="manifest" href="../IMG/site.webmanifest">
+<link rel="icon" href="../IMG/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
+
+<style>
+:root{--bg:#0b0f14;--card:#111723;--muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%);color:var(--text)}
+a{color:inherit;text-decoration:none}img,video,iframe{max-width:100%;display:block}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 34px}
+header{position:sticky;top:0;background:rgba(11,15,20,.7);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid #19202b;z-index:50}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}.logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(145deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:#0b0f14;font-weight:900}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;margin-top:2px}
+nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}nav a{opacity:.9}nav a:hover{opacity:1}
+.cta{display:flex;gap:10px;align-items:center}.burger{display:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #1c2533;background:#121a25;box-shadow:var(--shadow);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#0b0f14;border:none}
+.btn-grad-purple{background:linear-gradient(145deg,#7c3aed,#a855f7);color:#fff;border:none}
+.btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
+.btn-grad-red{background:linear-gradient(145deg,#dc2626,#ef4444);color:#fff;border:none}
+.btn-ghost{background:#121a25;color:#e8eef6}
+.hero{padding:26px 0 0}
+h1{font-size:clamp(28px,3.4vw,42px);line-height:1.1;margin:8px 0 14px}
+h2,h3,h4{margin:0 0 10px}.lead{color:#c6d1e3;font-size:18px;max-width:68ch}.hint{color:#aebbd0;opacity:.9}
+section{padding:26px 0;border-top:1px solid #11182725}
+.card{background:var(--card);border:1px solid #1c2533;border-radius:16px;overflow:hidden}.card .body{padding:12px;color:#c8d3e5}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.grid-2.align-center{align-items:center}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.stack{display:grid;gap:12px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1c2c;border:1px solid #203044;color:#cfe3ff;font-size:12px}
+.lock-note{margin:8px 0 0 0;font-size:12px;color:#94a8c6;display:inline-flex;gap:6px;align-items:center}.lock-note::before{content:"⚠️";}
+
+/* ===== Utilidades de gradiente (homologadas con index) ===== */
+.gradient-word{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.title-gradient{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn-gradient{border:none;color:#0b0f14;font-weight:700;background:linear-gradient(145deg,var(--brand),var(--brand-2))}
+.btn-outline-gradient{color:#cfe9ff;background:transparent;border:1px solid transparent;position:relative;overflow:hidden}
+.btn-outline-gradient::before{content:"";position:absolute;inset:0;padding:1px;border-radius:12px;background:linear-gradient(145deg,var(--brand),var(--brand-2));-webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+
+/* ===== CALCULADORA (grid para fijar primaria) ===== */
+.calc-strip{display:flex;flex-direction:column;gap:12px}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
+.calc-row.has-three{grid-template-columns:1fr 1fr 1fr}
+.calc-container{border:1px solid #1c2533;padding:10px;border-radius:12px;background:#0f1622}
+.placeholder{border:1px dashed #26405f;background:#0e1724;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:14px;min-height:180px}
+.placeholder .note{text-align:center;color:#b9c8de}
+/* posiciones fijas */
+#calc-primary{grid-column:1}
+#calc-slot-2,#calc-secondary{grid-column:2}
+#calc-tertiary{grid-column:3;display:none}
+#add-more-panel{grid-column:1 / -1}
+
+.icons-wrap{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.sys-icon{border:1px solid #243248;background:#0f1622;border-radius:14px;padding:6px;cursor:pointer;display:inline-grid;place-items:center;transition:transform .12s ease, box-shadow .12s ease, border-color .12s}
+.sys-icon img{width:46px;height:46px;border-radius:10px;display:block}
+.sys-icon:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.sys-icon.active{border-color:transparent;box-shadow:0 0 0 2px rgba(45,212,191,.25) inset, 0 10px 24px rgba(45,212,191,.18)}
+.calc-container table{width:100%;border-collapse:separate;border-spacing:0}
+.calc-container th,.calc-container td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
+.calc-container tr:last-child td{border-bottom:none}
+.calc-container thead th{background:#0e1724;color:#dce8ff;text-align:left}
+.calc-container thead th:last-child,.calc-container td:last-child{text-align:right}
+.calc-container form,.calc-container .controls,.calc-container .toolbar,.calc-container .calc-controls,.calc-container .controls-row{display:grid !important;grid-template-columns:1fr !important;gap:8px !important}
+.calc-container label,.calc-container .control-label{display:block;font-weight:700;color:#cfe3ff}
+.calc-container select,.calc-container input[type="number"]{width:100%!important;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
+
+/* ===== COMPARATIVA ===== */
+.table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
+.table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}.table-like tr:last-child td{border-bottom:none}
+.table-like thead th{background:#0e1724;color:#dce8ff;text-align:left}.table-like td.right{text-align:right}.table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
+
+/* ===== CARRUSEL PORTADA (Galería) ===== */
+.carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:420px}
+.carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
+.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block}
+.carousel-nav{display:flex;gap:8px;justify-content:center;padding:10px;background:#0e1724;border-top:1px solid #1c2533}
+.dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;filter:brightness(1.1);opacity:.6}
+.dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
+.arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}.arrowCircle .chev{font-size:24px;line-height:1}
+
+/* ===== SLIDER BENEFICIOS ===== */
+.listSlider{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
+.listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
+.listPage{min-width:100%}
+.listItem{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:center;background:#0f1c2c;border:1px solid #152437;border-radius:18px;margin:14px 6px;padding:16px}
+.listIcon{width:92px;height:92px;border-radius:18px;background:#0f1725;display:grid;place-items:center;overflow:hidden}
+.listIcon img{width:92px;height:92px;object-fit:cover}
+.listTitle{font-weight:800;font-size:26px}.listDesc{color:#c9d3e3}
+
+/* ===== Carrusel de sistemas ===== */
+.carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
+.carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px}
+.carouselX .sys{flex:0 0 calc((100% - 24px)/3);background:#0f1622;border:1px solid #1c2533;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.carouselX .sys img{width:72px;height:72px;border-radius:16px;margin:6px auto 10px;background:#101826;object-fit:cover}
+.group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0 0}
+.group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2))}
+
+/* ===== Píldoras/Cards ===== */
+.pillbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:10px 0 16px}
+.pill{padding:10px 14px;border-radius:999px;border:1px solid #1c2533;background:#0f1622;color:#cfe3ff;cursor:pointer;font-weight:700}
+.pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#05201c;border-color:transparent;box-shadow:0 4px 18px rgba(45,212,191,.25)}
+.fcard{background:#0f1622;border:1px solid #1c2533;border-radius:12px;padding:14px}
+.fhead{display:flex;align-items:center;gap:10px;margin-bottom:4px}.ficon{width:28px;height:28px;border-radius:8px;background:#101a2a;object-fit:cover}
+
+/* ===== FAQ ===== */
+#faq .faq-item{border:1px solid #1c2533;border-radius:16px;margin:12px 0;overflow:hidden;background:#0e1724}
+#faq .faq-item>summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:800;font-size:18px}
+#faq .faq-item[open]>summary{background:#0f1c2c}
+#faq .faq-item p{margin:0;padding:14px 20px 18px;font-size:17px}
+#faq .faq-item p strong{font-weight:900}
+
+/* ===== TOC flotante ===== */
+.toc{position:fixed;right:16px;bottom:16px;width:240px;max-height:48vh;overflow:auto;background:rgba(15,24,38,.75);border:1px solid #1c2533;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;z-index:60;box-shadow:0 10px 24px rgba(0,0,0,.35);backdrop-filter: blur(6px);transition:all .2s ease}
+.toc.collapsed{width:auto;max-height:none;padding:6px 10px;border-radius:999px;gap:0}
+.toc.collapsed .toc-title,.toc.collapsed a,.toc.collapsed .toc-close{display:none}
+.toc-title{font-weight:800;color:#b9c8de;margin-bottom:6px}
+.toc a{padding:6px 8px;border-radius:10px;color:#cfe3ff;border:1px solid transparent}
+.toc a:hover{border-color:#233347;background:#101b2a}
+.toc a.active{border-color:#2dd4bf;background:rgba(45,212,191,.12);color:#eafffb}
+.toc .toc-close{position:absolute;top:6px;right:8px;background:transparent;border:none;color:#cfe3ff;font-size:18px;cursor:pointer}
+
+/* ===== HERO 3 columnas (ajuste márgenes para pegar PDF) ===== */
+.hero-3col{display:grid;grid-template-columns:280px 1.55fr 1.05fr;column-gap:6px;align-items:start}
+@media (max-width:1200px){ .hero-3col{grid-template-columns:270px 1.45fr 1.05fr} }
+@media (max-width:980px){ .hero-3col{grid-template-columns:1fr} }
+.stack-left{display:grid;gap:10px;align-items:start;justify-items:start}
+.stack-left .help-wrapper{justify-content:flex-start}.stack-left .btn{width:auto}
+.pdf-card{margin-left:-8px}
+.pdf-card .pdf-frame{height:68vh}@media (max-width:980px){ .pdf-card .pdf-frame{height:56vh} }
+
+/* Tooltips */
+.help-wrapper{position:relative;display:flex;align-items:center;gap:8px}
+.help-icon,.info-icon{width:28px;height:28px;border-radius:50%;border:1px solid #314057;background:#0e1724;color:#fff;cursor:pointer;transition:box-shadow .15s ease, transform .15s ease}
+.help-icon:hover,.help-icon:focus,.info-icon:hover,.info-icon:focus{box-shadow:0 0 0 3px rgba(255,255,255,.15),0 8px 20px rgba(0,0,0,.35);transform:translateY(-1px)}
+.tooltip-box{position:absolute;inset:auto auto 100% 0;transform:translateY(-8px);background:#0e1724;border:1px solid #1c2533;border-radius:10px;padding:10px;display:none;min-width:220px;z-index:5}
+.tooltip-box.open{display:block}.tooltip-close{position:absolute;top:6px;right:6px;background:transparent;border:none;color:#cfe3ff;font-size:16px;cursor:pointer}
+
+/* PDF frame */
+.pdf-frame{width:100%;height:70vh;border:0}
+html{scroll-behavior:smooth}
+
+/* ===== FOOTER (mismo diseño que index) ===== */
+footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
+.footer-grid{display:grid;gap:18px;grid-template-columns:1.6fr 1.2fr 1.2fr 1fr}
+.footer-title{font-weight:700;color:#d8e3f6;margin:0 0 10px}
+.contact-list{display:grid;gap:6px;font-size:14px}
+.contact-list .item{display:flex;gap:8px;align-items:flex-start}
+.item .ico{width:22px}
+.payments-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-items:center}
+.payments-grid img{max-height:28px;object-fit:contain;filter:grayscale(1);opacity:.9}
+.brands-col{display:grid;gap:10px}
+.brand-item img{max-height:26px;object-fit:contain;filter:grayscale(.1);background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:6px}
+.ally-col{display:grid;gap:10px;justify-items:end}
+.ally-col img{height:46px;object-fit:contain;background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:8px}
+.footer-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;padding-top:12px;border-top:1px solid #1c2533}
+
+@media (max-width:980px){
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  nav ul{display:none}
+  .burger{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;border:1px solid #1c2533;background:#101722}
+  .mobile{display:none}.mobile.open{display:block}
+  .mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}
+  .toc{right:10px;bottom:10px;width:86vw}
+  .footer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a href="#top" class="brand" aria-label="Inicio Expiriti">
+      <div class="logo" aria-hidden="true">Ex</div>
+      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#beneficios">Por qué usar</a></li>
+        <li><a href="#caracteristicas">Funciones</a></li>
+        <li><a href="#videos">Videos</a></li>
+        <li><a href="#calculadora-section">Calculadora</a></li>
+      </ul>
+    </nav>
+    <div class="cta">
+      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
+      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20Bancos" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
+    </div>
+  </div>
+  <div class="container mobile" id="mobileMenu">
+    <a href="#beneficios">Por qué usar</a>
+    <a href="#caracteristicas">Funciones</a>
+    <a href="#videos">Videos</a>
+    <a href="#integra">Sistemas</a>
+    <a href="#calculadora-section">Calculadora</a>
+    <a href="#comparativa">Comparativa</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</header>
+
+<main class="container hero" id="top">
+  <a href="" class="hint">← Volver a productos</a>
+  <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  <h1>CONTPAQi Bancos <span class="badge">Actualizado 2025</span></h1>
+
+  <div class="badges">
+    <span class="badge">Conciliación Bancaria Automática</span>
+    <span class="badge">Función Conecta (Bancos/SAT)</span>
+    <span class="badge">Control de Flujo de Efectivo</span>
+    <span class="badge">Integración con Contabilidad</span>
+    <span class="badge">Soporte y capacitación Expiriti</span>
+  </div>
+  <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+
+  <section aria-label="Resumen">
+    <div class="card body">
+      <div class="hero-3col">
+        <div class="stack-left">
+          <img src="../IMG/bancos.webp" alt="CONTPAQi Bancos" style="width:220px;margin-bottom:12px;border-radius:12px">
+          <div class="help-wrapper">
+            <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Bancos" target="_blank" rel="noopener">Compra ahora</a>
+            <button class="info-icon" id="buyInfoBtn" aria-describedby="tip-buy" title="Meses sin intereses">!</button>
+            <div id="tip-buy" role="tooltip" class="tooltip-box">
+              <button class="tooltip-close" id="buyInfoClose">×</button>
+              <p>💳 Pago disponible a <strong>Meses Sin Intereses</strong>.</p>
+            </div>
+          </div>
+
+          <div class="help-wrapper">
+            <a class="btn btn-grad-purple" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Bancos" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
+            <button class="help-icon" id="helpBtn" aria-describedby="tip-trial" title="Ayuda">?</button>
+            <div id="tip-trial" role="tooltip" class="tooltip-box">
+              <button class="tooltip-close" id="helpClose">×</button>
+              <p><strong>Importante:</strong> El registro se hace con tu <strong>RFC</strong> no usado en otra demo o licencia.</p>
+            </div>
+          </div>
+
+          <a class="btn btn-grad-blue" href="#sesion-guiada" style="margin-top:4px">Sesión guiada 45 min por Zoom</a>
+
+          <div class="stack" style="margin-top:6px">
+            <a class="btn btn-ghost" href="../PDFS/Ficha Tecnica CONTPAQi Bancos.pdf" target="_blank" rel="noopener">Ficha técnica</a>
+            <a class="btn btn-ghost" href="#caracteristicas">Resumen de funciones</a>
+          </div>
+        </div>
+
+        <div class="card body pdf-card">
+          <img src="../IMG/bancos.webp" alt="Conecta tu Banco" style="width:100%;border-radius:10px;margin-bottom:10px">
+          <h4 class="title-gradient" style="margin:0 0 6px">Función Clave: <span class="gradient-word">Conecta tu Banco</span></h4>
+          <p class="hint" style="margin:0 0 8px">Ahorra cientos de horas. "Conecta" se enlaza a tus portales bancarios y al SAT para descargar movimientos y CFDI, automatizando la conciliación.</p>
+          
+          <div class="stack" style="padding: 10px; background: #0f1622; border-radius: 10px; border: 1px solid #1c2533;">
+            <article class="fcard" style="background:transparent; border:none; padding: 4px;">
+                <div class="fhead"><img class="ficon" src="../IMG/ic_descarga_cfdi.webp" alt=""><h4>Descarga Automática</h4></div>
+                <p style="margin:0">Movimientos bancarios y XML del SAT.</p>
+            </article>
+             <article class="fcard" style="background:transparent; border:none; padding: 4px;">
+                <div class="fhead"><img class="ficon" src="../IMG/ic_concilia.webp" alt=""><h4>Pre-Conciliación</h4></div>
+                <p style="margin:0">Identifica depósitos y pagos automáticamente.</p>
+            </article>
+             <article class="fcard" style="background:transparent; border:none; padding: 4px;">
+                <div class="fhead"><img class="ficon" src="../IMG/ic_lock.webp" alt=""><h4>Seguridad</h4></div>
+                <p style="margin:0">Conexión segura que no guarda tus contraseñas bancarias.</p>
+            </article>
+            <p class="hint" style="text-align:center; margin-top: 8px;">Compatible con BBVA, Citibanamex, Santander, Banorte, HSBC y más.</p>
+          </div>
+
+        </div>
+
+        <aside class="card body gallery-wrap">
+          <h4 class="title-gradient">Galería</h4>
+          <div class="carousel" id="carousel1">
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+            <div class="carousel-track" aria-label="Carrusel de capturas">
+              <img class="carousel-slide" src="../IMG/bancos1.webp" alt="Conciliación Bancaria">
+              <img class="carousel-slide" src="../IMG/bancos2.webp" alt="Flujo de Efectivo">
+              <img class="carousel-slide" src="../IMG/bancos3.webp" alt="Reportes de Tesorería">
+              <img class="carousel-slide" src="../IMG/bancos4.webp" alt="Integración Contable">
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <div class="carousel-nav" role="tablist" aria-label="Navegación carrusel">
+              <button class="dot active" aria-label="1"></button>
+              <button class="dot" aria-label="2"></button>
+              <button class="dot" aria-label="3"></button>
+              <button class="dot" aria-label="4"></button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="caracteristicas" id="caracteristicas">
+    <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <div class="card body">
+      <h3 id="caracteristicas" class="title-gradient">Funciones destacadas</h3>
+      <div class="pillbar" role="tablist" aria-label="Categorías de características">
+        <button class="pill active" data-filter="tesoreria">Tesorería y Flujo de Efectivo</button>
+        <button class="pill" data-filter="conciliacion">Conciliación y Pagos</button>
+        <button class="pill" data-filter="integracion">Integración y Reportes</button>
+      </div>
+      <div class="grid-3 feature-grid">
+        <article class="fcard tag-tesoreria"><div class="fhead"><img class="ficon" src="../IMG/ic_analisis.webp" alt=""><h4>Control Flujo de Efectivo</h4></div><p>Conoce tus saldos reales y proyecta ingresos y egresos.</p></article>
+        <article class="fcard tag-tesoreria"><div class="fhead"><img class="ficon" src="../IMG/ic_tablero.webp" alt=""><h4>Proyección de Saldos</h4></div><p>Anticípate a la falta de liquidez o planea inversiones.</p></article>
+        <article class="fcard tag-tesoreria"><div class="fhead"><img class="ficon" src="../IMG/ic_periodo.webp" alt=""><h4>Gestión Multimoneda</h4></div><p>Maneja cuentas en dólares y controla la fluctuación cambiaria.</p></article>
+        <article class="fcard tag-tesoreria"><div class="fhead"><img class="ficon" src="../IMG/ic_reportes.webp" alt=""><h4>Presupuestos</h4></div><p>Define y da seguimiento a tus presupuestos de gastos por cuenta.</p></article>
+        <article class="fcard tag-tesoreria"><div class="fhead"><img class="ficon" src="../IMG/ic_efos.webp" alt=""><h4>Posición Bancaria</h4></div><p>Visibilidad total de todas tus cuentas bancarias en un solo lugar.</p></article>
+        <article class="fcard tag-tesoreria"><div class="fhead"><img class="ficon" src="../IMG/ic_extraccion.webp" alt=""><h4>Saldos Consolidados</h4></div><p>Reportes diarios de tu posición de tesorería global.</p></article>
+        
+        <article class="fcard tag-conciliacion"><div class="fhead"><img class="ficon" src="../IMG/ic_descarga_cfdi.webp" alt=""><h4>Función "Conecta"</h4></div><p>Descarga automática de estados de cuenta y XML del SAT.</p></article>
+        <article class="fcard tag-conciliacion"><div class="fhead"><img class="ficon" src="../IMG/ic_concilia.webp" alt=""><h4>Conciliación Automática</h4></div><p>El sistema identifica y relaciona movimientos por fecha e importe.</p></article>
+        <article class="fcard tag-conciliacion"><div class="fhead"><img class="ficon" src="../IMG/ic_mejora.webp" alt=""><h4>Conciliación Manual</h4></div><p>Herramientas ágiles para conciliar movimientos complejos.</p></article>
+        <article class="fcard tag-conciliacion"><div class="fhead"><img class="ficon" src="../IMG/ic_txt.webp" alt=""><h4>Generación de Pagos</h4></div><p>Crea layouts para la banca electrónica (pagos masivos, SPEI).</p></article>
+        <article class="fcard tag-conciliacion"><div class="fhead"><img class="ficon" src="../IMG/ic_iva.webp" alt=""><h4>Pagos Masivos SPEI</h4></div><p>Prepara pagos a múltiples proveedores en un solo paso.</p></article>
+        <article class="fcard tag-conciliacion"><div class="fhead"><img class="ficon" src="../IMG/ic_diot.webp" alt=""><h4>Control de Cheques</h4></div><p>Administra cheques emitidos, en tránsito y cancelados.</p></article>
+
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_contabiliza.webp" alt=""><h4>Integración Contable</h4></div><p>Se enlaza a CONTPAQi® Contabilidad para generar pólizas.</p></article>
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_xmlpol.webp" alt=""><h4>Generación de Pólizas</h4></div><p>Crea pólizas de ingresos, egresos y diario automáticamente.</p></article>
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_add.webp" alt=""><h4>Asociación de CFDI</h4></div><p>Relaciona tus facturas (CFDI) a cada movimiento bancario.</p></article>
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_reportes.webp" alt=""><h4>Reportes de Tesorería</h4></div><p>Flujo de efectivo, conciliación, saldos, documentos pendientes.</p></article>
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_5xml.webp" alt=""><h4>Base para DIOT</h4></div><p>Facilita la información de pagos a proveedores para la DIOT.</p></article>
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_facilita.webp" alt=""><h4>Control de Caja Chica</h4></div><p>Administra y repone fondos fijos de caja chica.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
+      <div>
+        <h2 class="title-gradient">¿Por qué usar Bancos en tu empresa? <span class="badge">Argumentos clave</span></h2>
+        <p class="lead">Controla cada peso, automatiza la conciliación y toma decisiones financieras con información real y oportuna.</p>
+        <div class="listSlider">
+          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+          <div class="listTrack" id="listTrack">
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_decisiones.webp" alt="Toma el control"></div><div><div class="listTitle">TOMA EL CONTROL DE TU DINERO</div><div class="listDesc">Conoce tu posición bancaria real, no la de ayer.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_analisis.webp" alt="Visibilidad Total"></div><div><div class="listTitle">VISIBILIDAD TOTAL</div><div class="listDesc">Consolida todas tus cuentas (pesos y dólares) en un solo lugar.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_tablero.webp" alt="Proyección de Flujo"></div><div><div class="listTitle">PROYECCIÓN DE FLUJO</div><div class="listDesc">Anticípate a pagos y cobros para evitar sorpresas.</div></div></div>
+            </div>
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_mejora.webp" alt="Ahorra horas"></div><div><div class="listTitle">AHORRA CIENTOS DE HORAS</div><div class="listDesc">La conciliación que te toma días, hazla en minutos.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_concilia.webp" alt="Conciliación automática"></div><div><div class="listTitle">CONCILIACIÓN AUTOMÁTICA</div><div class="listDesc">Con "Conecta", olvídate de descargar estados de cuenta.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_contabiliza.webp" alt="Integra tu operación"></div><div><div class="listTitle">INTEGRA TU OPERACIÓN</div><div class="listDesc">Genera pólizas automáticas en CONTPAQi® Contabilidad.</div></div></div>
+            </div>
+          </div>
+          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="card body">
+          <h4 class="title-gradient" style="margin:0 0 6px">Video (reel)</h4>
+          <iframe class="pdf-frame" title="Video CONTPAQi Bancos (Reel)" src="https://www.youtube-nocookie.com/embed/VIDEO_ID_REEL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="videos" aria-labelledby="videos-title">
+    <div class="card body">
+      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+      <div class="yt-grid">
+        <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_1" title="CONTPAQi Bancos — Demo 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_2" title="CONTPAQi Bancos — Demo 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="integra" id="integra">
+    <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="integra" class="title-gradient">Sistemas que potencian tu Tesorería</h3>
+    <div class="card body">
+      <div class="carouselX" data-step="3" tabindex="0" aria-label="Carrusel de sistemas integrables">
+        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+        <div class="track">
+          <article class="sys"><img src="../IMG/contabilidad.webp" alt="CONTPAQi Contabilidad" /><h4>CONTPAQi Contabilidad</h4><p>La integración #1. Genera pólizas automáticas y cumple al SAT.</p></article>
+          <article class="sys"><img src="../IMG/comercialpremium.webp" alt="Comercial Premium" /><h4>Comercial Premium</h4><p>Concilia pagos de clientes y a proveedores desde la operación.</p></article>
+          <article class="sys"><img src="../IMG/nominas.webp" alt="CONTPAQi Nóminas" /><h4>CONTPAQi Nóminas</h4><p>Registra el pago de la nómina y su dispersión bancaria.</p></article>
+          <article class="sys"><img src="../IMG/xml.webp" alt="XML en Línea+" /><h4>XML en Línea+</h4><p>Descarga y gestiona CFDI del SAT para una conciliación completa.</p></article>
+          <article class="sys"><img src="../IMG/comercialpro.webp" alt="Comercial Pro" /><h4>Comercial Pro</h4><p>Enlaza tus Cuentas por Cobrar y Pagar a tus movimientos bancarios.</p></article>
+          <article class="sys"><img src="../IMG/factura.webp" alt="Factura electrónica" /><h4>Factura electrónica</h4><p>Emite CFDI y registra los cobros directamente en Bancos.</p></article>
+        </div>
+        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        <div class="group-dots" aria-label="Paginación por grupos"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  <section id="calculadora-section" aria-labelledby="calc">
+    <h3 id="calc" class="title-gradient">Conoce el precio de tu licencia</h3>
+    <div class="calc-strip">
+      <div id="app" data-system="CONTPAQi Bancos" hidden></div> <div class="calc-row" id="calc-row">
+        <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
+        <div id="calc-slot-2" class="placeholder">
+          <div class="note">
+            <strong>Integra un sistema adicional y recibe −15% en cada uno.</strong><br>
+            <small>Nota: “XML en Línea” no aplica para descuento.</small>
+            <div class="icons-wrap" id="icons-sec-sys">
+              <button class="sys-icon" data-sys="CONTPAQi Contabilidad" aria-pressed="false" title="Contabilidad"><img src="../IMG/contabilidadh.webp" alt="Contabilidad"></button>
+              <button class="sys-icon" data-sys="CONTPAQi Nóminas" aria-pressed="false" title="Nóminas"><img src="../IMG/nominash.webp" alt="Nóminas"></button>
+              <button class="sys-icon" data-sys="XML en Línea+" aria-pressed="false" title="XML en Línea+"><img src="../IMG/xml.webp" alt="XML en Línea+"></button>
+            </div>
+          </div>
+        </div>
+        <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora"></div>
+        <div id="add-more-panel" class="placeholder" style="display:none">
+          <div class="note">
+            <strong>¿Quieres agregar otro sistema?</strong><br>
+            <small>Monta un tercero (aplica mismo -15% por paquete; “XML en Línea” excluido).</small>
+            <div class="icons-wrap" id="icons-third-sys">
+              <button class="sys-icon" data-sys="CONTPAQi Contabilidad" title="Contabilidad"><img src="../IMG/contabilidadh.webp" alt="Contabilidad"></button>
+              <button class="sys-icon" data-sys="CONTPAQi Nóminas" title="Nóminas"><img src="../IMG/nominash.webp" alt="Nóminas"></button>
+              <button class="sys-icon" data-sys="XML en Línea+" title="XML en Línea+"><img src="../IMG/xml.webp" alt="XML en Línea+"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="combined-wrap"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="comparativa" id="comparativa">
+    <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 class="title-gradient">Comparativa: Bancos vs. Métodos Tradicionales</h3>
+    <div class="card body">
+      <table class="table-like">
+        <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Bancos</th><th>Hojas de Cálculo (Excel)</th><th>Portal Bancario</th></tr></thead>
+        <tbody>
+          <tr><td>Visibilidad (Todas las cuentas)</td><td class="highlight">✅ Consolidado</td><td>❌ Manual</td><td>❌ Solo 1 banco a la vez</td></tr>
+          <tr><td>Conciliación Bancaria</td><td class="highlight">✅ Automática (con Conecta)</td><td>❌ 100% Manual y lento</td><td>❌ No aplica</td></tr>
+          <tr><td>Proyección Flujo de Efectivo</td><td class="highlight">✅ Automatizada</td><td>⚠️ Manual y propenso a error</td><td>❌ No aplica</td></tr>
+          <tr><td>Integración con Contabilidad</td><td class="highlight">✅ Nativa (Genera pólizas)</td><td>❌ Manual (Copiar y pegar)</td><td>❌ No aplica</td></tr>
+          <tr><td>Generación de Pagos (Layouts)</td><td class="highlight">✅ Múltiples bancos</td><td>❌ No aplica</td><td>✅ Solo para ese banco</td></tr>
+          <tr><td>Seguridad y Auditoría</td><td class="highlight">✅ Alta (Bitácoras)</td><td>❌ Baja (Fácil de alterar)</td><td>✅ Alta (Solo en el portal)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="faq" id="faq">
+    <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 class="title-gradient">Preguntas frecuentes</h3>
+    <details class="faq-item">
+      <summary>¿Qué es "Conecta" y con qué bancos funciona?</summary>
+      <p><strong>"Conecta"</strong> es la función estrella de CONTPAQi Bancos. Se enlaza de forma segura a los portales del SAT y de los principales bancos para descargar automáticamente tus movimientos y estados de cuenta. Es compatible con BBVA, Citibanamex, Santander, Banorte, HSBC, Scotiabank, entre otros.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Necesito CONTPAQi Contabilidad para usar Bancos?</summary>
+      <p>No es estrictamente obligatorio, pero es <strong>altamente recomendado</strong>. La verdadera potencia se libera al integrarlos: Bancos controla el dinero y Contabilidad recibe las pólizas de ingresos y egresos automáticamente. Pueden funcionar por separado, pero la integración ahorra muchísimo trabajo.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Este sistema hace los pagos por mí?</summary>
+      <p>No <strong>ejecuta</strong> el pago (por seguridad, eso siempre lo autorizas tú en tu portal bancario), pero sí <strong>prepara</strong> los pagos. El sistema genera los archivos "layout" (SPEI) para pagos masivos a proveedores o nómina, listos para que solo los subas a tu banca electrónica y autorices.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Puedo manejar cuentas en dólares (Multimoneda)?</summary>
+      <p>Sí. CONTPAQi Bancos es multimoneda. Puedes gestionar tus cuentas en dólares (u otras divisas) y el sistema te ayuda a llevar el control de saldos y a calcular automáticamente la utilidad o pérdida por fluctuación cambiaria al momento de conciliar o pagar.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿El sistema me ayuda con la DIOT?</summary>
+      <p>Indirectamente, sí. Al registrar y asociar todos tus pagos a proveedores con sus CFDI, Bancos genera la información base (pagos efectivamente realizados) que CONTPAQi Contabilidad utiliza para armar y presentar la DIOT. Facilita enormemente la recopilación de datos.</p>
+    </details>
+  </section>
+
+  <section class="card body" id="sesion-guiada">
+    <div class="lock-note" role="note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 class="title-gradient">¿Listo para tomar el control de tu tesorería?</h3>
+    <p>Agenda una sesión con nuestros especialistas o tramita tu prueba sin costo.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <a class="btn btn-gradient" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%2045%20minutos%20de%20CONTPAQi%20Bancos" target="_blank" rel="noopener">Agendar sesión guiada (45 min)</a>
+      <a class="btn btn-gradient" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Bancos" target="_blank" rel="noopener">Comprar ahora</a>
+    </div>
+  </section>
+
+  <aside class="toc collapsed" id="toc" aria-live="polite">
+    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
+    <button class="toc-close" aria-label="Cerrar">×</button>
+    <strong class="toc-title">Mapa del sitio</strong>
+    <a href="#beneficios">Por qué usar</a>
+    <a href="#caracteristicas">Funciones</a>
+    <a href="#videos">Videos</a>
+    <a href="#integra">Sistemas integrables</a>
+    <a href="#calculadora-section">Calculadora</a>
+    <a href="#comparativa">Comparativa</a>
+    <a href="#faq">FAQ</a>
+    <a href="#sesion-guiada">Agendar / Comprar</a>
+  </aside>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <h3 class="footer-title">Contacto</h3>
+      <div class="contact-list">
+        <div class="item"><span class="ico">📍</span><span><strong>Nuestra ubicación:</strong> Insurgentes Sur 1188, Tlacoquemecatl Del Valle, CDMX</span></div>
+        <div class="item"><span class="ico">☎️</span><span><strong>Contáctanos:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
+        <div class="item"><span class="ico">🕒</span><span><strong>Horarios:</strong> Lun–Vie 10AM–6PM · <em>Horario ampliado</em> (Pólizas específicas) · Sáb 10AM–2PM</span></div>
+        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="footer-title">Formas de pago</h3>
+      <div class="payments-grid">
+        <img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy">
+      </div>
+    </div>
+
+    <div>
+      <h3 class="footer-title">Marcas</h3>
+      <div class="brands-col">
+        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi" onerror="this.style.display='none'"></div>
+        <div class="brand-item"><img src="../IMG/PC%20Innovation.webp" alt="PC Innovation" onerror="this.style.display='none'"></div>
+        <div class="brand-item"><img src="../IMG/Beeusoft.webp" alt="Beeusoft" onerror="this.style.display='none'"></div>
+        <div class="brand-item"><img src="../IMG/Kaspersky.webp" alt="Kaspersky" onerror="this.style.display='none'"></div>
+        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft" onerror="this.style.display='none'"></div>
+      </div>
+    </div>
+
+    <div class="ally-col">
+      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
+      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
+      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="logo" aria-hidden="true">Ex</div>
+      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
+    </div>
+    <div class="hint">Aviso de privacidad · Términos</div>
+  </div>
+</footer>
+
+<script>
+// Año y menú móvil
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('burger')?.addEventListener('click',()=>{document.getElementById('mobileMenu')?.classList.toggle('open');});
+
+// Tooltips
+const helpBtn=document.getElementById('helpBtn'), tipTrial=document.getElementById('tip-trial'), helpClose=document.getElementById('helpClose');
+helpBtn?.addEventListener('click',e=>{e.stopPropagation();tipTrial.classList.toggle('open');});
+helpClose?.addEventListener('click',e=>{e.stopPropagation();tipTrial.classList.remove('open');});
+const buyBtn=document.getElementById('buyInfoBtn'), tipBuy=document.getElementById('tip-buy'), buyClose=document.getElementById('buyInfoClose');
+buyBtn?.addEventListener('click',e=>{e.stopPropagation();tipBuy.classList.toggle('open');});
+buyClose?.addEventListener('click',e=>{e.stopPropagation();tipBuy.classList.remove('open');});
+document.addEventListener('click',e=>{if(tipTrial&&!tipTrial.contains(e.target)&&e.target!==helpBtn) tipTrial.classList.remove('open'); if(tipBuy&&!tipBuy.contains(e.target)&&e.target!==buyBtn) tipBuy.classList.remove('open');});
+
+// TOC
+(function(){
+  const toc=document.getElementById('toc'), openBtn=document.getElementById('tocToggle'), closeBtn=toc?.querySelector('.toc-close');
+  if(!toc||!openBtn||!closeBtn) return;
+  const links=[...toc.querySelectorAll('a')];
+  openBtn.addEventListener('click',e=>{e.stopPropagation();toc.classList.toggle('collapsed');});
+  closeBtn.addEventListener('click',()=>toc.classList.add('collapsed'));
+  links.forEach(a=>a.addEventListener('click',()=>toc.classList.add('collapsed')));
+  document.addEventListener('click',e=>{if(!toc.contains(e.target) && e.target!==openBtn) toc.classList.add('collapsed');});
+})();
+
+// GALERÍA portada (sin autoplay)
+(function(){
+  const root=document.getElementById('carousel1'); if(!root) return;
+  const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
+  const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
+  let idx=0;
+  function setActive(i){if(!dots.length) return; idx=(i+dots.length)%dots.length; dots.forEach((d,di)=>d.classList.toggle('active',di===idx)); track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});}  
+  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
+  prev.addEventListener('click',()=>setActive(idx-1));
+  next.addEventListener('click',()=>setActive(idx+1));
+  track.addEventListener('scroll',()=>{if(!dots.length) return; const i=Math.round(track.scrollLeft/track.clientWidth); dots.forEach((d,di)=>d.classList.toggle('active',di===i)); idx=i;});
+  window.addEventListener('resize',()=>setActive(idx)); setActive(0);
+})();
+
+// Filtros funciones
+(function(){
+  const pills=[...document.querySelectorAll('.pill')], cards=[...document.querySelectorAll('.feature-grid .fcard')];
+  function apply(filter){pills.forEach(p=>p.classList.toggle('active',p.dataset.filter===filter)); cards.forEach(c=>{c.style.display=c.classList.contains('tag-'+filter)?'':'none';});}
+  pills.forEach(p=>p.addEventListener('click',()=>apply(p.dataset.filter))); 
+  if (pills.length > 0) apply(pills[0].dataset.filter); // Aplica el primer filtro por defecto
+})();
+
+// Carrusel sistemas integrables
+(function(){
+  document.querySelectorAll('.carouselX').forEach(root=>{
+    const track=root.querySelector('.track'), prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next'), dotsWrap=root.querySelector('.group-dots');
+    function groupsCount(){return Math.max(1, Math.ceil(track.querySelectorAll('.sys').length/3));}
+    function groupW(){return track.clientWidth;}
+    function setDot(i){dots.forEach((d,idx)=>d.classList.toggle('active',idx===i));}
+    function goTo(i){track.scrollTo({left:i*groupW(),behavior:'smooth'}); setDot(i);}    
+    dotsWrap.innerHTML=''; const dots=Array.from({length:groupsCount()},(_,i)=>{const b=document.createElement('button'); b.className='dot'+(i===0?' active':''); b.addEventListener('click',()=>goTo(i)); dotsWrap.appendChild(b); return b;});
+    let idx=0; prev.addEventListener('click',()=>{idx=Math.max(0,idx-1); goTo(idx);}); next.addEventListener('click',()=>{idx=Math.min(dots.length-1,idx+1); goTo(idx);});
+    window.addEventListener('resize',()=>goTo(idx));
+  });
+})();
+
+// Slider "Por qué usar"
+(function(){
+  const wrap=document.querySelector('#beneficios .listSlider'); if(!wrap) return;
+  const track=wrap.querySelector('.listTrack'), prev=wrap.querySelector('.prev'), next=wrap.querySelector('.next');
+  let page=0, total=track.children.length;
+  function go(i){page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'});}  
+  prev.addEventListener('click',()=>go(page-1)); next.addEventListener('click',()=>go(page+1));
+  window.addEventListener('resize',()=>go(page));
+})();
+
+// Helper precios
+function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
+
+// Calculadora (grid fijo: primaria no se mueve)
+(function(){
+  const row=document.getElementById('calc-row'),
+        slot2=document.getElementById('calc-slot-2'),
+        slot3=document.getElementById('calc-tertiary'),
+        addMore=document.getElementById('add-more-panel');
+  const pick2=document.getElementById('icons-sec-sys'),
+        pick3=document.getElementById('icons-third-sys');
+  let haveSecondary=false;
+  function showAddMoreIfReady(){ if(addMore) addMore.style.display = haveSecondary ? '' : 'none'; }
+
+  // Secundaria
+  pick2?.addEventListener('click', e=>{
+    const btn=e.target.closest('.sys-icon'); if(!btn) return;
+    pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+    slot2.className='calc-container'; slot2.id='calc-secondary'; // mantiene columna 2 por CSS
+    CalculadoraContpaqi.setSecondarySystem(sys,{secondarySelector:'#calc-secondary',combinedSelector:'#combined-wrap'});
+    haveSecondary=true; showAddMoreIfReady();
+  });
+
+  // Terciaria
+  pick3?.addEventListener('click', e=>{
+    const btn=e.target.closest('.sys-icon'); if(!btn) return;
+    pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+    slot3.style.display=''; // visible en columna 3
+    CalculadoraContpaqi.setTertiarySystem(sys,{tertiarySelector:'#calc-tertiary',combinedSelector:'#combined-wrap'});
+    if(addMore) addMore.style.display='none';
+    row.classList.add('has-three');
+  });
+})();
+</script>
+
+<script defer src="../precios-contpaqi.js?v=3"></script>
+<script defer src="../calculadora.js?v=12"></script>
+<script>
+window.addEventListener('DOMContentLoaded',()=>{if(!window.CalculadoraContpaqi){console.error('❌ calculadora.js NO se cargó. Revisa la ruta del <script src=...>.');}});
+</script>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CONTPAQi Bancos | Expiriti</title>
