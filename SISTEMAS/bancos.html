@@ -258,6 +258,11 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 
 /* Tercera calculadora oculta inicialmente (reafirmado) */
 #calc-tertiary{display:none}
+  /* ===== Videos (horizontales) ===== */
+.yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;justify-items:center}
+.yt{width:100%;max-width:680px}
+.yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
+
 </style>
 </head>
 <body id="top">
@@ -416,6 +421,34 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
       </div>
     </div>
   </section>
+
+  <!-- VIDEOS -->
+<section id="videos" aria-labelledby="videos-title">
+  <div class="card body">
+    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+    <div class="yt-grid">
+      <div class="yt">
+        <iframe 
+          src="https://www.youtube.com/embed/u-qppRPv_3E" 
+          title="A quién sirve CONTPAQi Contabilidad — Reel" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="yt">
+        <iframe 
+          src="https://www.youtube.com/embed/i35JwgI9iaQ" 
+          title="Qué hace CONTPAQi Contabilidad — Demo 2" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
 
   <section id="integra" aria-labelledby="integra-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
