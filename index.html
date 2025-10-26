@@ -744,6 +744,32 @@
     }
     promoBtns.forEach(b=> b.addEventListener('click', ()=> setPromoFilter(b.dataset.filter)));
     setPromoFilter('nuevos');
+    <script>
+// Prefija /SISTEMAS/ a todos los sistemas (y servicios) del sitio
+(function(){
+  const PREFIX = 'SISTEMAS/';
+  const PAGES = new Set([
+    // Sistemas (según tu captura)
+    'analiza.html','bancos.html','colabora.html','comercialpremium.html',
+    'comercialpro.html','comercialstart.html','contabilidad.html',
+    'contabiliza.html','despachos.html','evalua.html','facturaelectronica.html',
+    'nominas.html','personia.html','vende.html','xmlenlinea.html',
+    // Servicios (en tu index original estaban dentro de /SISTEMAS/)
+    'implementacion.html','capacitacion.html','soporte.html'
+  ]);
+
+  document.querySelectorAll('a[href]').forEach(a=>{
+    const href = a.getAttribute('href');
+    if(!href) return;
+    // solo archivos locales .html sin prefijo ya
+    const isLocalHtml = /^[^:/?#]+\.html$/i.test(href);
+    if(isLocalHtml && PAGES.has(href)){
+      a.setAttribute('href', PREFIX + href);
+    }
+  });
+})();
+</script>
+
   </script>
 </body>
 </html>
