@@ -652,7 +652,6 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
 
 // ====== Calculadora helpers ======
 function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
-<script>
 // === Catálogo visual de sistemas a mostrar en los pickers ===
 // Asegúrate que estos nombres coinciden con las llaves en `window.preciosContpaqi`
 const CATALOG_SISTEMAS = [
@@ -759,7 +758,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   renderSistemasPicker("icons-third-sys");
 });
 </script>
-
+\<script>
 // Pinta tabla bonita de “Resumen combinado” si calculadora entrega datos
 function renderCombinedTable(rows){
   const wrap=document.getElementById('combined-wrap');
