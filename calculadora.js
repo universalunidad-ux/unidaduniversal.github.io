@@ -1,7 +1,6 @@
-
 (function () {
   'use strict';
-  console.log('calculadora.js v12 cargado — MultiRFC default + Operación solo en Tradicional');
+  console.log('calculadora.js v12.1 cargado — MultiRFC default + Operación solo en Tradicional');
 
   // ========================= Helpers =========================
   var money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
@@ -67,12 +66,13 @@
     licenciaLabel.appendChild(licenciaSel);
     form.appendChild(licenciaLabel);
 
-    // 2) Operación (se esconderá salvo en Tradicional)
+    // 2) Operación (oculto por defecto; solo visible en Tradicional)
     var opLabel = document.createElement("label");
     opLabel.textContent = "Operación: ";
     var opSel = document.createElement("select");
     opSel.id = "op"+idSuffix;
     opLabel.appendChild(opSel);
+    opLabel.style.display = "none"; // <-- clave: oculto por defecto
     form.appendChild(opLabel);
 
     // 3) Tipo (RFC)
@@ -132,18 +132,18 @@
     results.appendChild(table);
     container.appendChild(results);
 
-    // -------- Opciones dependientes (AQUÍ EL CAMBIO) --------
+    // -------- Opciones dependientes --------
     function refreshOptions() {
       var lic = licenciaSel.value;
       opSel.innerHTML = "";
       rfcSel.innerHTML = "";
       rfcLabel.style.display = "inline-block";
 
-      // Mostrar/ocultar "Operación" según licencia
+      // Mostrar/ocultar "Operación" solo en Tradicional
       opLabel.style.display = (lic === "tradicional") ? "" : "none";
 
       if (lic === "nueva") {
-        // Deja una opción interna (quedará oculta)
+        // Op queda oculto, pero dejamos un valor interno neutro
         opSel.appendChild(new Option("Anual (Nueva)", "nueva_anual"));
 
         var anual = systemPrices.anual || {};
@@ -158,7 +158,7 @@
         if (anual2.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
 
       } else {
-        // Tradicional (aquí SÍ mostramos "Operación")
+        // Tradicional: aquí sí llenamos opciones visibles de Operación
         opSel.appendChild(new Option("Actualización (si tienes una versión anterior, p.ej. v15→v18)", "actualizacion"));
         opSel.appendChild(new Option("Actualización Especial (si tienes la versión inmediata anterior, p.ej. v17→v18)", "especial"));
         opSel.appendChild(new Option("Incremento de usuarios", "crecimiento_usuario"));
