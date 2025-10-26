@@ -19,17 +19,17 @@
 
 <style>
 :root{
-  --bg:#0b0f14;--card:#111723;--muted:#95a2b3;--text:#e8eef6;
-  --brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
-  --maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)
+  --bg:#0b0f14;--card:#111723;--muted:#95a2b3;--text:#e8eef6;
+  --brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
+  --maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 html{scroll-behavior:smooth}
 body{
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%); color:var(--text);
-  scroll-padding-top:84px;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%); color:var(--text);
+  scroll-padding-top:84px;
 }
 a{color:inherit;text-decoration:none}
 img,video,iframe{max-width:100%;display:block}
@@ -37,9 +37,9 @@ img,video,iframe{max-width:100%;display:block}
 
 /* Header fijo */
 header{
-  position:sticky; top:0; z-index:1000; width:100%;
-  background:rgba(11,15,20,.75); backdrop-filter:saturate(140%) blur(8px);
-  border-bottom:1px solid #19202b;
+  position:sticky; top:0; z-index:1000; width:100%;
+  background:rgba(11,15,20,.75); backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid #19202b;
 }
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700}
@@ -87,7 +87,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .pdf-frame{width:100%;height:68vh;border:0}
 @media (max-width:980px){ .pdf-frame{height:56vh} }
 
-/* === Botones Hero (Hover/Iluminador) === */
+/* Botones Hero (hover) */
 .hero-btn {transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease}
 .hero-btn:hover {transform: translateY(-3px); box-shadow: 0 10px 26px rgba(0,0,0,.35)}
 .hero-btn.btn-grad-green:hover {box-shadow: 0 10px 26px rgba(34,197,94,.3)}
@@ -122,7 +122,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .placeholder .note{text-align:center;color:#b9c8de}
 #calc-primary{grid-column:1}
 #calc-slot-2,#calc-secondary{grid-column:2}
-#calc-tertiary{grid-column:3;display:none} /* oculto hasta elegir 3er sistema */
+#calc-tertiary{grid-column:3;display:none}
 #add-more-panel{grid-column:1 / -1}
 
 .calc-container h4{margin:0 0 8px}
@@ -134,24 +134,24 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .calc-container label,.calc-container .control-label{display:block;font-weight:700;color:#cfe3ff;margin:4px 0 4px}
 .calc-container select,.calc-container input[type="number"]{width:100%;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
 
-/* ===== Pickers: grid 3×N y responsive (única definición) ===== */
+/* ===== Pickers: grid 3×N ===== */
 .icons-wrap{
-  display:grid !important;
-  grid-template-columns: repeat(3, minmax(128px, 1fr)) !important;
-  gap:12px !important;
-  justify-items:center !important;
+  display:grid !important;
+  grid-template-columns: repeat(3, minmax(128px, 1fr)) !important;
+  gap:12px !important;
+  justify-items:center !important;
 }
 @media (max-width:980px){
-  .icons-wrap{ grid-template-columns: repeat(3, minmax(120px, 1fr)) !important; }
+  .icons-wrap{ grid-template-columns: repeat(3, minmax(120px, 1fr)) !important; }
 }
 @media (max-width:680px){
-  .icons-wrap{ grid-template-columns: repeat(2, minmax(120px, 1fr)) !important; }
+  .icons-wrap{ grid-template-columns: repeat(2, minmax(120px, 1fr)) !important; }
 }
 .icons-wrap .sys-icon{
-  width:100% !important; padding:10px; border-radius:12px;
-  border:1px solid #1e2b3c; background:#0e1724; cursor:pointer;
-  display:grid; grid-template-rows:auto auto auto; justify-items:center; row-gap:6px;
-  transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease, outline-color .12s ease;
+  width:100% !important; padding:10px; border-radius:12px;
+  border:1px solid #1e2b3c; background:#0e1724; cursor:pointer;
+  display:grid; grid-template-rows:auto auto auto; justify-items:center; row-gap:6px;
+  transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease, outline-color .12s ease;
 }
 .icons-wrap .sys-icon:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.25);border-color:#274061}
 .icons-wrap .sys-icon.active{outline:2px solid var(--brand)}
@@ -160,8 +160,8 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .icons-wrap .sys-icon .sys-price{color:#9fb2cb;font-size:11px}
 .icons-wrap .sys-icon .sin15,
 .icons-wrap .sys-icon .sin-15{
-  font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #1e2b3c;border-radius:999px;
-  background:#0e1724;color:#cfe3ff;justify-self:end
+  font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #1e2b3c;border-radius:999px;
+  background:#0e1724;color:#cfe3ff;justify-self:end
 }
 
 /* ===== Comparativa / FAQ / Footer ===== */
@@ -200,54 +200,43 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 
 /* Responsive generales */
 @media (max-width:980px){
-  .grid-2{grid-template-columns:1fr}
-  .grid-3{grid-template-columns:1fr}
-  nav ul{display:none}
-  .burger{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;border:1px solid #1c2533;background:#101722}
-  .mobile{display:none}.mobile.open{display:block}
-  .mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}
-  .toc{right:10px;bottom:10px;width:86vw}
-  .footer-grid{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  nav ul{display:none}
+  .burger{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;border:1px solid #1c2533;background:#101722}
+  .mobile{display:none}.mobile.open{display:block}
+  .mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}
+  .toc{right:10px;bottom:10px;width:86vw}
+  .footer-grid{grid-template-columns:1fr}
 }
 
-/* ===== Funciones destacadas (moderno y compacto) ===== */
+/* ===== Funciones destacadas ===== */
 .pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
 .pill{
-  padding:8px 12px;border-radius:999px;
-  border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);
-  color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;
-  transition:transform .12s ease, box-shadow .12s ease, background .2s ease
+  padding:8px 12px;border-radius:999px;
+  border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);
+  color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;
+  transition:transform .12s ease, box-shadow .12s ease, background .2s ease
 }
 .pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
 
-/* Grid de features 3 col (con tarjetas compactas) */
+/* Grid features */
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media (max-width:980px){ .feature-grid{grid-template-columns:1fr 1fr} }
 @media (max-width:680px){ .feature-grid{grid-template-columns:1fr} }
-
-.fcard{
-  border:1px solid #1e2b3c;border-radius:14px;background:linear-gradient(180deg,#0f1622,#0f1724);
-  padding:14px;display:grid;gap:8px;transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease
-}
+.fcard{border:1px solid #1e2b3c;border-radius:14px;background:linear-gradient(180deg,#0f1622,#0f1724);padding:14px;display:grid;gap:8px;transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease}
 .fcard:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:#284061}
 .fhead{display:flex;align-items:center;gap:10px}
 .ficon{width:28px;height:28px;border-radius:8px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
 .fcard h4{margin:0;font-size:15px}
 .fcard p{margin:0;color:#bcd0ea;font-size:14px;line-height:1.35}
 
-/* ===== “¿Por qué usar…?” — slider compacto con flechas ===== */
-.listSlider{
-  position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);
-  border:1px solid #1c2533;padding:8px;overflow:hidden
-}
+/* ===== “¿Por qué usar…?” ===== */
+.listSlider{position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);border:1px solid #1c2533;padding:8px;overflow:hidden}
 .listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
 .listPage{min-width:100%;padding:8px}
-.listItem{
-  display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:center;
-  background:#0f1c2c;border:1px solid #152437;border-radius:14px;margin:10px 4px;padding:14px;
-  transition:border-color .15s ease, transform .12s ease
-}
+.listItem{display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:center;background:#0f1c2c;border:1px solid #152437;border-radius:14px;margin:10px 4px;padding:14px;transition:border-color .15s ease, transform .12s ease}
 .listItem:hover{border-color:#254064;transform:translateY(-1px)}
 .listIcon{width:84px;height:84px;border-radius:14px;background:#0f1725;display:grid;place-items:center;overflow:hidden}
 .listIcon img{width:84px;height:84px;object-fit:cover}
@@ -256,337 +245,337 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 #beneficios .arrowCircle{width:40px;height:40px}
 #beneficios .arrowCircle .chev{font-size:22px}
 
-/* Tercera calculadora oculta inicialmente (reafirmado) */
-#calc-tertiary{display:none}
-
- /* ===== Videos (horizontales) ===== */
+/* ===== Videos (horizontales) ===== */
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;justify-items:center}
-@media (max-width:768px){ .yt-grid{grid-template-columns:1fr} } /* Stack videos on smaller screens */
+@media (max-width:768px){ .yt-grid{grid-template-columns:1fr} }
 .yt{width:100%;max-width:680px}
 .yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
 
+/* Tercera calculadora oculta */
+#calc-tertiary{display:none}
 </style>
 </head>
 <body id="top">
 <header>
-  <div class="container nav">
-    <a href="#top" class="brand" aria-label="Inicio Expiriti">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
-      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
-    </a>
-    <nav aria-label="Principal">
-      <ul>
-        <li><a href="#caracteristicas">Por qué CONTPAQi?</a></li>
-        <li><a href="#videos">Vídeos</a></li>
-        <li><a href="#calculadora-section">Precio</a></li>
-        <li><a href="#comparativa">Comparativa</a></li>
-        <li><a href="#faq">Preguntas frecuentes</a></li>
-        <li><a href="#sesion-guiada">Demo</a></li>
-      </ul>
-    </nav>
-    <div class="cta">
-      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
-      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">WhatsApp</a>
-      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
-    </div>
-  </div>
-  <div class="container mobile" id="mobileMenu">
-    <a href="#caracteristicas">Por qué CONTPAQi?</a>
-    <a href="#videos">Vídeos</a>
-    <a href="#calculadora-section">Precio</a>
-    <a href="#comparativa">Comparativa</a>
-    <a href="#faq">Preguntas frecuentes</a>
-    <a href="#sesion-guiada">Demo</a>
-  </div>
+  <div class="container nav">
+    <a href="#top" class="brand" aria-label="Inicio Expiriti">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
+      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#caracteristicas">Por qué CONTPAQi?</a></li>
+        <li><a href="#videos">Vídeos</a></li>
+        <li><a href="#calculadora-section">Precio</a></li>
+        <li><a href="#comparativa">Comparativa</a></li>
+        <li><a href="#faq">Preguntas frecuentes</a></li>
+        <li><a href="#sesion-guiada">Demo</a></li>
+      </ul>
+    </nav>
+    <div class="cta">
+      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
+      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
+    </div>
+  </div>
+  <div class="container mobile" id="mobileMenu">
+    <a href="#caracteristicas">Por qué CONTPAQi?</a>
+    <a href="#videos">Vídeos</a>
+    <a href="#calculadora-section">Precio</a>
+    <a href="#comparativa">Comparativa</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#sesion-guiada">Demo</a>
+  </div>
 </header>
 
 <main class="container hero">
-  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos">← Volver a productos</a>
-  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-  <h1>CONTPAQi Nóminas <span class="badge">Actualizado 2025</span></h1>
+  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos">← Volver a productos</a>
+  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  <h1>CONTPAQi Nóminas <span class="badge">Actualizado 2025</span></h1>
 
-  <div class="badges">
-    <span class="badge">Cálculo y Timbrado CFDI 4.0</span>
-    <span class="badge">Cumplimiento IMSS, INFONAVIT, ISR</span>
-    <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Incluye App CONTPAQi Colabora </span>
-    <span class="badge">Administración RH completa</span>
-  </div>
-  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  <div class="badges">
+    <span class="badge">Cálculo y Timbrado CFDI 4.0</span>
+    <span class="badge">Cumplimiento IMSS, INFONAVIT, ISR</span>
+    <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Incluye App CONTPAQi Colabora</span>
+    <span class="badge">Administración RH completa</span>
+  </div>
+  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-  <section aria-label="Resumen">
-    <div class="card body">
-      <div class="hero-3col">
-        <div class="stack-left">
-          <img src="../IMG/nominas.webp" alt="CONTPAQi Nóminas" style="width:220px;margin-bottom:12px;border-radius:12px">
-          <div class="stack">
-            <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">Compra ahora</a>
-            <a class="btn btn-grad-purple hero-btn" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
-            <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
-            <a class="btn btn-ghost hero-btn" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Ficha técnica (PDF)</a>             <a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>
-          </div>
-        </div>
+  <section aria-label="Resumen">
+    <div class="card body">
+      <div class="hero-3col">
+        <div class="stack-left">
+          <img src="../IMG/nominas.webp" alt="CONTPAQi Nóminas" style="width:220px;margin-bottom:12px;border-radius:12px">
+          <div class="stack">
+            <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">Compra ahora</a>
+            <a class="btn btn-grad-purple hero-btn" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
+            <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
+            <a class="btn btn-ghost hero-btn" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Ficha técnica (PDF)</a>
+            <a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>
+          </div>
+        </div>
 
-        <div class="card body pdf-card">
-          <img src="../IMG/usas.jpeg" alt="USAS" style="width:100%;border-radius:10px;margin-bottom:10px">
-          <h4 class="title-gradient" style="margin:0 0 6px">Test de 10 puntos para elegir un sistema óptimo</h4>
-          <p class="hint" style="margin:0 0 8px">PDF interactivo: al capturar tus valores, calcula una suma final para orientar la elección del sistema.</p>
-          <iframe class="pdf-frame" title="Checklist Sistema Contable (interactivo)" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=2&view=FitH"></iframe>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
-            <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
-            <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" download>Descargar</a>
-          </div>
-          <small class="hint">Si tu navegador no ejecuta formularios, ábrelo en un visor de PDF o descárgalo.</small>
-        </div>
+        <div class="card body pdf-card">
+          <img src="../IMG/usas.jpeg" alt="USAS" style="width:100%;border-radius:10px;margin-bottom:10px">
+          <h4 class="title-gradient" style="margin:0 0 6px">Test de 10 puntos para elegir un sistema óptimo</h4>
+          <p class="hint" style="margin:0 0 8px">PDF interactivo: al capturar tus valores, calcula una suma final para orientar la elección del sistema.</p>
+          <iframe class="pdf-frame" title="Checklist Sistema Contable (interactivo)" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=2&view=FitH"></iframe>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+            <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
+            <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" download>Descargar</a>
+          </div>
+          <small class="hint">Si tu navegador no ejecuta formularios, ábrelo en un visor de PDF o descárgalo.</small>
+        </div>
 
-        <aside class="card body">
-          <h4 class="title-gradient">Galería</h4>
-          <div class="carousel" id="carousel1">
-            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-            <div class="carousel-track">
-                            <img class="carousel-slide" src="../IMG/1nomina_placeholder.webp" alt="Cálculo preciso de nómina">
-              <img class="carousel-slide" src="../IMG/2nomina_placeholder.webp" alt="Cumplimiento fiscal garantizado">
-              <img class="carousel-slide" src="../IMG/3nomina_placeholder.webp" alt="Timbrado CFDI 4.0 ilimitado">
-              <img class="carousel-slide" src="../IMG/4nomina_placeholder.webp" alt="App Colabora para empleados">
-            </div>
-            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-            <div class="carousel-nav"><button class="dot active"></button><button class="dot"></button><button class="dot"></button><button class="dot"></button></div>
-          </div>
-        </aside>
-      </div>
-    </div>
-  </section>
+        <aside class="card body">
+          <h4 class="title-gradient">Galería</h4>
+          <div class="carousel" id="carousel1">
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <img class="carousel-slide" src="../IMG/1nomina_placeholder.webp" alt="Cálculo preciso de nómina">
+              <img class="carousel-slide" src="../IMG/2nomina_placeholder.webp" alt="Cumplimiento fiscal garantizado">
+              <img class="carousel-slide" src="../IMG/3nomina_placeholder.webp" alt="Timbrado CFDI 4.0 ilimitado">
+              <img class="carousel-slide" src="../IMG/4nomina_placeholder.webp" alt="App Colabora para empleados">
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <div class="carousel-nav"><button class="dot active"></button><button class="dot"></button><button class="dot"></button><button class="dot"></button></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
 
-  <section id="caracteristicas" aria-labelledby="caracteristicas-title">
-    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <div class="card body">
-      <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
+  <section id="caracteristicas" aria-labelledby="caracteristicas-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <div class="card body">
+      <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
 
-      <div class="pillbar" role="tablist" aria-label="Categorías de características">
-        <button class="pill active" data-filter="calculo">Cálculo y Timbrado Preciso</button>
-        <button class="pill" data-filter="cumplimiento">Cumplimiento Fiscal y Laboral</button>
-        <button class="pill" data-filter="admin">Administración y RH</button>
-      </div>
+      <div class="pillbar" role="tablist" aria-label="Categorías de características">
+        <button class="pill active" data-filter="calculo">Cálculo y Timbrado Preciso</button>
+        <button class="pill" data-filter="cumplimiento">Cumplimiento Fiscal y Laboral</button>
+        <button class="pill" data-filter="admin">Administración y RH</button>
+      </div>
 
-      <div class="grid-3 feature-grid">
-                <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_calculadora.webp" alt=""><h4>Cálculo Exacto [cite: 1]</h4></div><p>ISR, subsidio, IMSS, INFONAVIT, finiquitos, PTU y más[cite: 1].</p></article>
-        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_cfdi.webp" alt=""><h4>Timbrado CFDI 4.0 [cite: 1]</h4></div><p>Emite recibos de nómina (CFDI 4.0) con timbrado ilimitado[cite: 1].</p></article>
-        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_aguinaldo.webp" alt=""><h4>Cálculos Especiales</h4></div><p>Aguinaldo, finiquitos, PTU y nóminas extraordinarias[cite: 1].</p></article>
-        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_dispersion.webp" alt=""><h4>Dispersión de Pagos [cite: 1]</h4></div><p>Genera layouts para pago electrónico en los principales bancos[cite: 1].</p></article>
-        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_sobrerecibo.webp" alt=""><h4>Simulador de Conceptos</h4></div><p>Calcula ISR, IMSS y subsidio antes de aplicarlos[cite: 1].</p></article>
-        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_periodos.webp" alt=""><h4>Flexibilidad de Periodos</h4></div><p>Maneja periodos semanales, quincenales, mensuales, etc. [cite: 1]</p></article>
+      <div class="grid-3 feature-grid">
+        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_calculadora.webp" alt=""><h4>Cálculo Exacto</h4></div><p>ISR, subsidio, IMSS, INFONAVIT, finiquitos, PTU y más.</p></article>
+        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_cfdi.webp" alt=""><h4>Timbrado CFDI 4.0</h4></div><p>Emite recibos de nómina (CFDI 4.0) con timbrado ilimitado.</p></article>
+        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_aguinaldo.webp" alt=""><h4>Cálculos Especiales</h4></div><p>Aguinaldo, finiquitos, PTU y nóminas extraordinarias.</p></article>
+        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_dispersion.webp" alt=""><h4>Dispersión de Pagos</h4></div><p>Genera layouts para pago electrónico en los principales bancos.</p></article>
+        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_sobrerecibo.webp" alt=""><h4>Simulador de Conceptos</h4></div><p>Calcula ISR, IMSS y subsidio antes de aplicarlos.</p></article>
+        <article class="fcard tag-calculo"><div class="fhead"><img class="ficon" src="../IMG/ic_periodos.webp" alt=""><h4>Flexibilidad de Periodos</h4></div><p>Maneja periodos semanales, quincenales, mensuales, etc.</p></article>
 
-                <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_sat.webp" alt=""><h4>Cumplimiento SAT [cite: 1]</h4></div><p>Siempre actualizado con las últimas disposiciones fiscales y laborales[cite: 1].</p></article>
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_imss.webp" alt=""><h4>IMSS (IDSE) [cite: 1]</h4></div><p>Conexión directa para enviar avisos afiliatorios al IDSE[cite: 1].</p></article>
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_infonavit.webp" alt=""><h4>INFONAVIT [cite: 1]</h4></div><p>Calcula y entera amortizaciones y avisos de retención[cite: 1].</p></article>
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_fonacot.webp" alt=""><h4>FONACOT [cite: 1]</h4></div><p>Controla los créditos y realiza los cálculos correspondientes[cite: 1].</p></article>
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_reportes_fiscales.webp" alt=""><h4>Reportes Fiscales [cite: 1]</h4></div><p>DIM, declaraciones anuales, constancias de retención (forma 37)[cite: 1].</p></article>
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_contabilizacion.webp" alt=""><h4>Contabilización [cite: 1]</h4></div><p>Genera la póliza de nómina para CONTPAQi Contabilidad[cite: 1].</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_sat.webp" alt=""><h4>Cumplimiento SAT</h4></div><p>Siempre actualizado con las últimas disposiciones fiscales y laborales.</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_imss.webp" alt=""><h4>IMSS (IDSE)</h4></div><p>Conexión directa para enviar avisos afiliatorios al IDSE.</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_infonavit.webp" alt=""><h4>INFONAVIT</h4></div><p>Calcula y entera amortizaciones y avisos de retención.</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_fonacot.webp" alt=""><h4>FONACOT</h4></div><p>Controla los créditos y realiza los cálculos correspondientes.</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_reportes_fiscales.webp" alt=""><h4>Reportes Fiscales</h4></div><p>DIM, declaraciones anuales, constancias de retención (forma 37).</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_contabilizacion.webp" alt=""><h4>Contabilización</h4></div><p>Genera la póliza de nómina para CONTPAQi Contabilidad.</p></article>
 
-                <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_empleado.webp" alt=""><h4>Expediente del Empleado</h4></div><p>Control de datos personales, salarios, puestos, vacaciones, etc. [cite: 1]</p></article>
-        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_vacaciones.webp" alt=""><h4>Control de Vacaciones [cite: 1]</h4></div><p>Administra saldos, solicitudes y cálculo de prima vacacional[cite: 1].</p></article>
-        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_incidencias.webp" alt=""><h4>Registro de Incidencias [cite: 1]</h4></div><p>Captura faltas, incapacidades, horas extra, permisos, etc. [cite: 1]</p></article>
-        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_colabora.webp" alt=""><h4>App CONTPAQi Colabora </h4></div><p>Portal web y app móvil **sin costo** para empleados (recibos, vacaciones, etc.).</p></article>
-        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_excel.webp" alt=""><h4>Interfaz con Excel® [cite: 1]</h4></div><p>Importa/exporta catálogos y movimientos desde hojas de cálculo[cite: 1].</p></article>
-        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_reportes_rh.webp" alt=""><h4>Reportes RH [cite: 1]</h4></div><p>Kárdex, organigrama, historial salarial, aniversarios y más[cite: 1].</p></article>
-      </div>
-    </div>
-  </section>
+        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_empleado.webp" alt=""><h4>Expediente del Empleado</h4></div><p>Control de datos personales, salarios, puestos, vacaciones, etc.</p></article>
+        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_vacaciones.webp" alt=""><h4>Control de Vacaciones</h4></div><p>Administra saldos, solicitudes y cálculo de prima vacacional.</p></article>
+        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_incidencias.webp" alt=""><h4>Registro de Incidencias</h4></div><p>Captura faltas, incapacidades, horas extra, permisos, etc.</p></article>
+        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_colabora.webp" alt=""><h4>App CONTPAQi Colabora</h4></div><p>Portal web y app móvil sin costo para empleados (recibos, vacaciones, etc.).</p></article>
+        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_excel.webp" alt=""><h4>Interfaz con Excel®</h4></div><p>Importa/exporta catálogos y movimientos desde hojas de cálculo.</p></article>
+        <article class="fcard tag-admin"><div class="fhead"><img class="ficon" src="../IMG/ic_reportes_rh.webp" alt=""><h4>Reportes RH</h4></div><p>Kárdex, organigrama, historial salarial, aniversarios y más.</p></article>
+      </div>
+    </div>
+  </section>
 
-  <section id="beneficios" aria-label="Por qué usar">
-    <div class="grid-2 align-center">
-      <div>
-        <h2 class="title-gradient">¿Por qué usar Nóminas en tu empresa? <span class="badge">Beneficios clave</span></h2>
-        <p class="lead">Simplifica tu nómina, asegura el cumplimiento fiscal y laboral, y mejora la experiencia de tus empleados con la app Colabora incluida.</p>
-        <div class="listSlider">
-          <button class="arrowCircle prev"><span class="chev">‹</span></button>
-          <div class="listTrack">
-            <div class="listPage">
-              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_check.webp" alt=""></div><div><strong>CUMPLE SIEMPRE [cite: 1]</strong><div>Actualizado con SAT, IMSS, INFONAVIT y reformas laborales[cite: 1].</div></div></div>
-              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_calculadora.webp" alt=""></div><div><strong>CÁLCULO PRECISO [cite: 1]</strong><div>Evita errores y pagos innecesarios en ISR, IMSS y más[cite: 1].</div></div></div>
-              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_cfdi.webp" alt=""></div><div><strong>TIMBRADO ILIMITADO [cite: 1]</strong><div>Emite recibos CFDI 4.0 sin costo adicional por timbre[cite: 1].</div></div></div>
-            </div>
-            <div class="listPage">
-              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_colabora.webp" alt=""></div><div><strong>APP COLABORA ¡GRATIS! </strong><div>Portal para que empleados consulten recibos y soliciten vacaciones.</div></div></div>
-              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_facilita.webp" alt=""></div><div><strong>AHORRA TIEMPO</strong><div>Automatiza cálculos, dispersión y conexión con IDSE[cite: 1].</div></div></div>
-              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_contabilizacion.webp" alt=""></div><div><strong>INTEGRACIÓN TOTAL [cite: 1]</strong><div>Genera pólizas para Contabilidad y conecta con Bancos[cite: 1].</div></div></div>
-            </div>
-          </div>
-          <button class="arrowCircle next"><span class="chev">›</span></button>
-        </div>
-      </div>
-      <div>
-        <div class="card body">
-          <h4 class="title-gradient" style="margin:0 0 6px">Video (reel)</h4>
-                    <iframe class="pdf-frame" title="Reel CONTPAQi Nóminas" src="https://www.youtube-nocookie.com/embed/VIDEO_ID_NOMINAS_REEL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
+      <div>
+        <h2 class="title-gradient">¿Por qué usar Nóminas en tu empresa? <span class="badge">Beneficios clave</span></h2>
+        <p class="lead">Simplifica tu nómina, asegura el cumplimiento fiscal y laboral, y mejora la experiencia de tus empleados con la app Colabora incluida.</p>
+        <div class="listSlider">
+          <button class="arrowCircle prev"><span class="chev">‹</span></button>
+          <div class="listTrack">
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_check.webp" alt=""></div><div><strong>CUMPLE SIEMPRE</strong><div>Actualizado con SAT, IMSS, INFONAVIT y reformas laborales.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_calculadora.webp" alt=""></div><div><strong>CÁLCULO PRECISO</strong><div>Evita errores y pagos innecesarios en ISR, IMSS y más.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_cfdi.webp" alt=""></div><div><strong>TIMBRADO ILIMITADO</strong><div>Emite recibos CFDI 4.0 sin costo adicional por timbre.</div></div></div>
+            </div>
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_colabora.webp" alt=""></div><div><strong>APP COLABORA ¡GRATIS!</strong><div>Portal para que empleados consulten recibos y soliciten vacaciones.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_facilita.webp" alt=""></div><div><strong>AHORRA TIEMPO</strong><div>Automatiza cálculos, dispersión y conexión con IDSE.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_contabilizacion.webp" alt=""></div><div><strong>INTEGRACIÓN TOTAL</strong><div>Genera pólizas para Contabilidad y conecta con Bancos.</div></div></div>
+            </div>
+          </div>
+          <button class="arrowCircle next"><span class="chev">›</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="card body">
+          <h4 class="title-gradient" style="margin:0 0 6px">Video (reel)</h4>
+          <iframe class="pdf-frame" title="Reel CONTPAQi Nóminas" src="https://www.youtube-nocookie.com/embed/VIDEO_ID_NOMINAS_REEL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- VIDEOS horizontales -->
   <section id="videos" aria-labelledby="videos-title">
-  <div class="card body">
-    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-    <div class="yt-grid">
-      <div class="yt">
-                <iframe
-          src="https://www.youtube.com/embed/VIDEO_ID_NOMINAS_1"
-          title="Video Principal CONTPAQi Nóminas"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen>
-        </iframe>
-      </div>
-      <div class="yt">
-                <iframe
-          src="https://www.youtube.com/embed/VIDEO_ID_NOMINAS_2"
-          title="Demo CONTPAQi Nóminas"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen>
-        </iframe>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="card body">
+      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+      <div class="yt-grid">
+        <div class="yt">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID_NOMINAS_1"
+            title="Video Principal CONTPAQi Nóminas"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID_NOMINAS_2"
+            title="Demo CONTPAQi Nóminas"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section id="integra" aria-labelledby="integra-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="integra-title" class="title-gradient">Sistemas que complementan tu Nómina</h3>
+    <div class="card body">
+      <div class="carouselX" data-step="3">
+        <button class="arrowCircle prev"><span class="chev">‹</span></button>
+        <div class="track">
+          <article class="sys"><img src="../IMG/contabilidad.webp" alt="Contabilidad" /><h4>CONTPAQi Contabilidad</h4><p>Genera la póliza de nómina automáticamente.</p></article>
+          <article class="sys"><img src="../IMG/bancos.webp" alt="Bancos" /><h4>CONTPAQi Bancos</h4><p>Realiza la dispersión de pagos electrónicos.</p></article>
+          <article class="sys"><img src="../IMG/xml.webp" alt="XML en Línea" /><h4>XML en Línea+</h4><p>Descarga y gestiona CFDI del SAT.</p></article>
+          <article class="sys"><img src="../IMG/evalua035.webp" alt="Evalúa 035" /><h4>CONTPAQi Evalúa 035</h4><p>Cumple con la NOM-035-STPS.</p></article>
+          <article class="sys"><img src="../IMG/personia.webp" alt="Personia" /><h4>CONTPAQi Personia</h4><p>Gestión avanzada de RH en la nube.</p></article>
+        </div>
+        <button class="arrowCircle next"><span class="chev">›</span></button>
+        <div class="group-dots"></div>
+      </div>
+    </div>
+  </section>
 
-  <section id="integra" aria-labelledby="integra-title">
-    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 id="integra-title" class="title-gradient">Sistemas que complementan tu Nóminas [cite: 1]</h3>
-    <div class="card body">
-      <div class="carouselX" data-step="3">
-        <button class="arrowCircle prev"><span class="chev">‹</span></button>
-        <div class="track">
-          <article class="sys"><img src="../IMG/contabilidad.webp" alt="Contabilidad" /><h4>CONTPAQi Contabilidad [cite: 1]</h4><p>Genera la póliza de nómina automáticamente[cite: 1].</p></article>
-          <article class="sys"><img src="../IMG/bancos.webp" alt="Bancos" /><h4>CONTPAQi Bancos [cite: 1]</h4><p>Realiza la dispersión de pagos electrónicos[cite: 1].</p></article>
-          <article class="sys"><img src="../IMG/xml.webp" alt="XML en Línea" /><h4>XML en Línea+</h4><p>Descarga y gestiona CFDI del SAT.</p></article>
-          <article class="sys"><img src="../IMG/evalua035.webp" alt="Evalúa 035" /><h4>CONTPAQi Evalúa 035</h4><p>Cumple con la NOM-035-STPS.</p></article>           <article class="sys"><img src="../IMG/personia.webp" alt="Personia" /><h4>CONTPAQi Personia</h4><p>Gestión avanzada de RH en la nube.</p></article>         </div>
-        <button class="arrowCircle next"><span class="chev">›</span></button>
-        <div class="group-dots"></div>
-      </div>
-    </div>
-  </section>
+  <section id="calculadora-section" aria-labelledby="calc">
+    <h3 id="calc" class="title-gradient">Conoce el precio de tu licencia</h3>
+    <div class="calc-strip">
+      <div id="app" data-system="CONTPAQi Nóminas" hidden></div>
+      <div class="calc-row" id="calc-row">
+        <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
 
-  <section id="calculadora-section" aria-labelledby="calc">
-    <h3 id="calc" class="title-gradient">Conoce el precio de tu licencia</h3>
-    <div class="calc-strip">
-      <div id="app" data-system="CONTPAQi Nóminas" hidden></div>
-      <div class="calc-row" id="calc-row">
-        <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
+        <div id="calc-slot-2" class="placeholder">
+          <div class="note">
+            <strong>Integra un sistema adicional y recibe −15% en cada uno.</strong><br>
+            <small>“XML en Línea” no aplica para descuento.</small>
+            <div class="icons-wrap" id="icons-sec-sys"></div>
+          </div>
+        </div>
 
-        <div id="calc-slot-2" class="placeholder">
-          <div class="note">
-            <strong>Integra un sistema adicional y recibe −15% en cada uno.</strong><br>
-            <small>“XML en Línea” no aplica para descuento.</small>
-            <div class="icons-wrap" id="icons-sec-sys"></div>
-          </div>
-        </div>
+        <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora"></div>
 
-        <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora"></div>
+        <div id="add-more-panel" class="placeholder" style="display:none">
+          <div class="note">
+            <strong>¿Agregar un tercer sistema?</strong><br>
+            <small>Mismo -15% por paquete (excepto “XML en Línea”).</small>
+            <div class="icons-wrap" id="icons-third-sys"></div>
+          </div>
+        </div>
+      </div>
 
-        <div id="add-more-panel" class="placeholder" style="display:none">
-          <div class="note">
-            <strong>¿Agregar un tercer sistema?</strong><br>
-            <small>Mismo -15% por paquete (excepto “XML en Línea”).</small>
-            <div class="icons-wrap" id="icons-third-sys"></div>
-          </div>
-        </div>
-      </div>
+      <div id="combined-wrap" class="combined-card" hidden>
+        <h4 class="title-gradient">Resumen combinado</h4>
+        <table class="combined-table"><tbody id="combined-table-body"></tbody></table>
+      </div>
+    </div>
+  </section>
 
-      <div id="combined-wrap" class="combined-card" hidden>
-        <h4 class="title-gradient">Resumen combinado</h4>
-        <table class="combined-table"><tbody id="combined-table-body"></tbody></table>
-      </div>
-    </div>
-  </section>
+  <section id="comparativa" aria-labelledby="comparativa-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="comparativa-title" class="title-gradient">Comparativa con otros sistemas</h3>
+    <div class="card body">
+      <table class="table-like">
+        <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Nóminas</th><th>Aspel NOI</th><th>Hacerlo en Excel</th><th>Otro ERP</th></tr></thead>
+        <tbody>
+          <tr><td>Actualización Fiscal/Laboral</td><td class="highlight">✅ Constante</td><td>⚠️ Periódica</td><td>❌ Manual</td><td>⚠️ Depende del partner</td></tr>
+          <tr><td>Timbrado CFDI 4.0</td><td class="highlight">✅ Ilimitado</td><td>⚠️ Costo por timbre</td><td>❌ No aplica</td><td>⚠️ Puede tener costo extra</td></tr>
+          <tr><td>Conexión IDSE</td><td class="highlight">✅ Directa</td><td>⚠️ Manual/Layout</td><td>❌ No aplica</td><td>⚠️ Módulo Adicional</td></tr>
+          <tr><td>App para Empleados</td><td class="highlight">✅ Colabora (Sin costo)</td><td>❌ No/Costo Adicional</td><td>❌ No aplica</td><td>⚠️ Módulo Adicional / Costoso</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-  <section id="comparativa" aria-labelledby="comparativa-title">
-    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 id="comparativa-title" class="title-gradient">Comparativa con otros sistemas</h3>
-    <div class="card body">
-      <table class="table-like">
-        <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Nóminas</th><th>Aspel NOI</th><th>Hacerlo en Excel</th><th>Otro ERP</th></tr></thead>
-        <tbody>
-          <tr><td>Actualización Fiscal/Laboral</td><td class="highlight">✅ Constante [cite: 1]</td><td>⚠️ Periódica</td><td>❌ Manual</td><td>⚠️ Depende del partner</td></tr>
-          <tr><td>Timbrado CFDI 4.0</td><td class="highlight">✅ Ilimitado [cite: 1]</td><td>⚠️ Costo por timbre</td><td>❌ No aplica</td><td>⚠️ Puede tener costo extra</td></tr>
-          <tr><td>Conexión IDSE</td><td class="highlight">✅ Directa [cite: 1]</td><td>⚠️ Manual/Layout</td><td>❌ No aplica</td><td>⚠️ Módulo Adicional</td></tr>
-          <tr><td>App para Empleados</td><td class="highlight">✅ Colabora (Sin costo) </td><td>❌ No/Costo Adicional</td><td>❌ No aplica</td><td>⚠️ Módulo Adicional / Costoso</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+  <section id="faq" aria-labelledby="faq-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
+    <div class="faq-wrap" id="faqWrap">
+      <details class="faq-item"><summary>¿CONTPAQi Nóminas está actualizado para CFDI 4.0?</summary><p>Sí, está totalmente actualizado para emitir recibos de nómina en la versión CFDI 4.0, incluyendo todos los catálogos y validaciones requeridas por el SAT.</p></details>
+      <details class="faq-item"><summary>¿Qué es y cómo funciona CONTPAQi Colabora?</summary><p>Es una aplicación web y móvil incluida sin costo con tu licencia de Nóminas. Permite a tus empleados consultar y descargar sus recibos de nómina, solicitar vacaciones, ver su kárdex y actualizar datos personales, agilizando la comunicación con RH.</p></details>
+      <details class="faq-item"><summary>¿Puedo conectar Nóminas con el IDSE del IMSS?</summary><p>Sí, el sistema tiene conexión directa con el portal IDSE para enviar movimientos afiliatorios (altas, bajas, modificaciones de salario) de forma masiva y segura.</p></details>
+      <details class="faq-item"><summary>¿El timbrado de recibos tiene costo adicional?</summary><p>No, el timbrado de los CFDI de nómina es ilimitado y sin costo adicional con tu licencia vigente.</p></details>
+      <details class="faq-item"><summary>¿Cómo integro Nóminas con mi sistema contable?</summary><p>CONTPAQi Nóminas se integra de forma natural con CONTPAQi Contabilidad, permitiéndote generar la póliza contable de la nómina con un solo clic, asociando los CFDI correspondientes.</p></details>
+    </div>
+  </section>
 
-  <section id="faq" aria-labelledby="faq-title">
-    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
-    <div class="faq-wrap" id="faqWrap">
-      <details class="faq-item"><summary>¿CONTPAQi Nóminas está actualizado para CFDI 4.0?</summary><p>Sí, está totalmente actualizado para emitir recibos de nómina en la versión CFDI 4.0, incluyendo todos los catálogos y validaciones requeridas por el SAT[cite: 1].</p></details>
-      <details class="faq-item"><summary>¿Qué es y cómo funciona CONTPAQi Colabora? </summary><p>Es una aplicación web y móvil **incluida sin costo** con tu licencia de Nóminas. Permite a tus empleados consultar y descargar sus recibos de nómina, solicitar vacaciones, ver su kárdex y actualizar datos personales, agilizando la comunicación con RH.</p></details>
-      <details class="faq-item"><summary>¿Puedo conectar Nóminas con el IDSE del IMSS? [cite: 1]</summary><p>Sí, el sistema tiene conexión directa con el portal IDSE para enviar movimientos afiliatorios (altas, bajas, modificaciones de salario) de forma masiva y segura[cite: 1].</p></details>
-      <details class="faq-item"><summary>¿El timbrado de recibos tiene costo adicional? [cite: 1]</summary><p>No, el timbrado de los CFDI de nómina es **ilimitado y sin costo adicional** con tu licencia vigente[cite: 1].</p></details>
-      <details class="faq-item"><summary>¿Cómo integro Nóminas con mi sistema contable? [cite: 1]</summary><p>CONTPAQi Nóminas se integra de forma natural con CONTPAQi Contabilidad, permitiéndote generar la póliza contable de la nómina con un solo clic, asociando los CFDI correspondientes[cite: 1].</p></details>
-    </div>
-  </section>
+  <section id="sesion-guiada" class="card body">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 class="title-gradient">¿Listo para empezar?</h3>
+    <p>Agenda una sesión con nuestros especialistas o tramita tu prueba sin costo.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%2045%20minutos%20por%20Zoom%20para%20N%C3%B3minas" target="_blank" rel="noopener">Agendar sesión guiada (45 min)</a>
+      <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">Comprar ahora</a>
+    </div>
+  </section>
 
-  <section id="sesion-guiada" class="card body">
-    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 class="title-gradient">¿Listo para empezar?</h3>
-    <p>Agenda una sesión con nuestros especialistas o tramita tu prueba sin costo.</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-      <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%2045%20minutos%20por%20Zoom%20para%20N%C3%B3minas" target="_blank" rel="noopener">Agendar sesión guiada (45 min)</a>
-      <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">Comprar ahora</a>
-    </div>
-  </section>
-
-  <aside class="toc collapsed" id="toc">
-    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
-    <button class="toc-close" aria-label="Cerrar">×</button>
-    <strong class="toc-title">Mapa del sitio</strong>
-    <a href="#caracteristicas">Por qué CONTPAQi?</a>
-    <a href="#videos">Vídeos</a>
-    <a href="#integra">Sistemas integrables</a>
-    <a href="#calculadora-section">Precio</a>
-    <a href="#comparativa">Comparativa</a>
-    <a href="#faq">Preguntas frecuentes</a>
-    <a href="#sesion-guiada">Demo</a>
-  </aside>
+  <aside class="toc collapsed" id="toc">
+    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
+    <button class="toc-close" aria-label="Cerrar">×</button>
+    <strong class="toc-title">Mapa del sitio</strong>
+    <a href="#caracteristicas">Por qué CONTPAQi?</a>
+    <a href="#videos">Vídeos</a>
+    <a href="#integra">Sistemas integrables</a>
+    <a href="#calculadora-section">Precio</a>
+    <a href="#comparativa">Comparativa</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#sesion-guiada">Demo</a>
+  </aside>
 </main>
 
 <footer>
-  <div class="container footer-grid">
-    <div>
-      <h3 class="footer-title">Contacto</h3>
-      <div class="contact-list">
-        <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
-        <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
-        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
-      </div>
-    </div>
-    <div>
-      <h3 class="footer-title">Formas de pago</h3>
-      <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy"></div>
-    </div>
-    <div>
-      <h3 class="footer-title">Marcas</h3>
-      <div class="brands-col">
-        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi"></div>
-        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft"></div>
-      </div>
-    </div>
-    <div class="ally-col">
-      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
-      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
-      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <div style="display:flex;align-items:center;gap:10px">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px">
-      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
-    </div>
-    <div class="hint">Aviso de privacidad · Términos</div>
-  </div>
+  <div class="container footer-grid">
+    <div>
+      <h3 class="footer-title">Contacto</h3>
+      <div class="contact-list">
+        <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
+        <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
+        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer-title">Formas de pago</h3>
+      <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy"></div>
+    </div>
+    <div>
+      <h3 class="footer-title">Marcas</h3>
+      <div class="brands-col">
+        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi"></div>
+        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft"></div>
+      </div>
+    </div>
+    <div class="ally-col">
+      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
+      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
+      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px">
+      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
+    </div>
+    <div class="hint">Aviso de privacidad · Términos</div>
+  </div>
 </footer>
 
 <script>
@@ -596,237 +585,243 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
 
 // TOC (Mapa)
 (function(){
-  const toc=document.getElementById('toc'), openBtn=document.getElementById('tocToggle'), closeBtn=toc?.querySelector('.toc-close');
-  if(!toc||!openBtn||!closeBtn) return;
-  openBtn.addEventListener('click',e=>{e.stopPropagation();toc.classList.toggle('collapsed');});
-  closeBtn.addEventListener('click',()=>toc.classList.add('collapsed'));
-  toc.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toc.classList.add('collapsed')));
-  document.addEventListener('click',e=>{if(!toc.contains(e.target) && e.target!==openBtn) toc.classList.add('collapsed');});
+  const toc=document.getElementById('toc'), openBtn=document.getElementById('tocToggle'), closeBtn=toc?.querySelector('.toc-close');
+  if(!toc||!openBtn||!closeBtn) return;
+  openBtn.addEventListener('click',e=>{e.stopPropagation();toc.classList.toggle('collapsed');});
+  closeBtn.addEventListener('click',()=>toc.classList.add('collapsed'));
+  toc.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toc.classList.add('collapsed')));
+  document.addEventListener('click',e=>{if(!toc.contains(e.target) && e.target!==openBtn) toc.classList.add('collapsed');});
 })();
 
 // Galería portada
 (function(){
-  const root=document.getElementById('carousel1'); if(!root) return;
-  const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
-  const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
-  let idx=0;
-  function setActive(i){idx=(i+dots.length)%dots.length; dots.forEach((d,di)=>d.classList.toggle('active',di===idx)); track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});}  
-  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
-  prev.addEventListener('click',()=>setActive(idx-1));
-  next.addEventListener('click',()=>setActive(idx+1));
-  track.addEventListener('scroll',()=>{const i=Math.round(track.scrollLeft/track.clientWidth); dots.forEach((d,di)=>d.classList.toggle('active',di===i)); idx=i;});
-  window.addEventListener('resize',()=>setActive(idx)); setActive(0);
+  const root=document.getElementById('carousel1'); if(!root) return;
+  const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
+  const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
+  let idx=0;
+  function setActive(i){idx=(i+dots.length)%dots.length; dots.forEach((d,di)=>d.classList.toggle('active',di===idx)); track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});}
+  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
+  prev.addEventListener('click',()=>setActive(idx-1));
+  next.addEventListener('click',()=>setActive(idx+1));
+  track.addEventListener('scroll',()=>{const i=Math.round(track.scrollLeft/track.clientWidth); dots.forEach((d,di)=>d.classList.toggle('active',di===i)); idx=i;});
+  window.addEventListener('resize',()=>setActive(idx)); setActive(0);
 })();
 
 // Slider Por qué usar
 (function(){
-  const wrap=document.querySelector('#beneficios .listSlider'); if(!wrap) return;
-  const track=wrap.querySelector('.listTrack'), prev=wrap.querySelector('.prev'), next=wrap.querySelector('.next');
-  let page=0, total=track.children.length;
-  function go(i){page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'});}  
-  prev.addEventListener('click',()=>go(page-1)); next.addEventListener('click',()=>go(page+1));
-  window.addEventListener('resize',()=>go(page));
+  const wrap=document.querySelector('#beneficios .listSlider'); if(!wrap) return;
+  const track=wrap.querySelector('.listTrack'), prev=wrap.querySelector('.prev'), next=wrap.querySelector('.next');
+  let page=0, total=track.children.length;
+  function go(i){page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'});}
+  prev.addEventListener('click',()=>go(page-1)); next.addEventListener('click',()=>go(page+1));
+  window.addEventListener('resize',()=>go(page));
 })();
 
 // Carrusel sistemas integrables
 (function(){
-  document.querySelectorAll('.carouselX').forEach(root=>{
-    const track=root.querySelector('.track'),
-          prev=root.querySelector('.arrowCircle.prev'),
-          next=root.querySelector('.arrowCircle.next'),
-          dotsWrap=root.querySelector('.group-dots');
-    function groupW(){return track.clientWidth;}
-    function groupsCount(){const n=track.querySelectorAll('.sys').length; return Math.max(1, Math.ceil(n/3));}
-    function setDot(i){dots.forEach((d,idx)=>d.classList.toggle('active',idx===i));}
-    function goTo(i){track.scrollTo({left:i*groupW(),behavior:'smooth'}); setDot(i);}    
-    dotsWrap.innerHTML='';
-    const dots=Array.from({length:groupsCount()},(_,i)=>{
-      const b=document.createElement('button');
-      b.className='dot'+(i===0?' active':'');
-      b.addEventListener('click',()=>goTo(i));
-      dotsWrap.appendChild(b);
-      return b;
-    });
-    let idx=0;
-    prev.addEventListener('click',()=>{idx=Math.max(0,idx-1); goTo(idx);});
-    next.addEventListener('click',()=>{idx=Math.min(dots.length-1,idx+1); goTo(idx);});
-    window.addEventListener('resize',()=>goTo(idx));
-  });
+  document.querySelectorAll('.carouselX').forEach(root=>{
+    const track=root.querySelector('.track'),
+          prev=root.querySelector('.arrowCircle.prev'),
+          next=root.querySelector('.arrowCircle.next'),
+          dotsWrap=root.querySelector('.group-dots');
+    function groupW(){return track.clientWidth;}
+    function groupsCount(){const n=track.querySelectorAll('.sys').length; return Math.max(1, Math.ceil(n/3));}
+    function setDot(i){dots.forEach((d,idx)=>d.classList.toggle('active',idx===i));}
+    function goTo(i){track.scrollTo({left:i*groupW(),behavior:'smooth'}); setDot(i);}
+    dotsWrap.innerHTML='';
+    const dots=Array.from({length:groupsCount()},(_,i)=>{
+      const b=document.createElement('button');
+      b.className='dot'+(i===0?' active':'');
+      b.addEventListener('click',()=>goTo(i));
+      dotsWrap.appendChild(b);
+      return b;
+    });
+    let idx=0;
+    prev.addEventListener('click',()=>{idx=Math.max(0,idx-1); goTo(idx);});
+    next.addEventListener('click',()=>{idx=Math.min(dots.length-1,idx+1); goTo(idx);});
+    window.addEventListener('resize',()=>goTo(idx));
+  });
 })();
 
-// Píldoras (filtros) - Actualizado para Nóminas
+// Píldoras (filtros) - Nóminas
 (function(){
-  const pills=[...document.querySelectorAll('.pill')];
-  const cards=[...document.querySelectorAll('.feature-grid .fcard')];
-  function apply(filter){
-    cards.forEach(c=>{
-      const show =
-        (filter==='calculo' && c.classList.contains('tag-calculo')) ||
-        (filter==='cumplimiento' && c.classList.contains('tag-cumplimiento')) ||
-        (filter==='admin' && c.classList.contains('tag-admin'));
-      c.style.display = show ? '' : 'none';
-    });
-  }
-  pills.forEach(p=>{
-    p.addEventListener('click',()=>{
-      pills.forEach(x=>x.classList.remove('active'));
-      p.classList.add('active');
-      apply(p.dataset.filter);
-    });
-  });
-  apply('calculo'); // Filtro inicial
+  const pills=[...document.querySelectorAll('.pill')];
+  const cards=[...document.querySelectorAll('.feature-grid .fcard')];
+  function apply(filter){
+    cards.forEach(c=>{
+      const show =
+        (filter==='calculo' && c.classList.contains('tag-calculo')) ||
+        (filter==='cumplimiento' && c.classList.contains('tag-cumplimiento')) ||
+        (filter==='admin' && c.classList.contains('tag-admin'));
+      c.style.display = show ? '' : 'none';
+    });
+  }
+  pills.forEach(p=>{
+    p.addEventListener('click',()=>{
+      pills.forEach(x=>x.classList.remove('active'));
+      p.classList.add('active');
+      apply(p.dataset.filter);
+    });
+  });
+  apply('calculo');
 })();
 
 // ====== Calculadora helpers ======
 function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
 
-// Catálogo visual (coincide con precios-contpaqi.js)
-// Actualizado: Se quitó Nóminas
+// Catálogo (excluye Nóminas como secundario/terciario)
 const CATALOG_SISTEMAS = [
-  { name: "CONTPAQi Contabilidad",       img: "../IMG/contabilidad.webp" },
-  { name: "CONTPAQi Bancos",             img: "../IMG/bancos.webp"  },
-  { name: "CONTPAQi XML en Línea",       img: "../IMG/xml.webp",     noDiscount: true },
-  { name: "CONTPAQi Comercial START",    img: "../IMG/comercialstart.webp"  },
-  { name: "CONTPAQi Comercial PRO",      img: "../IMG/comercialpro.webp"    },
-  { name: "CONTPAQi Comercial PREMIUM",  img: "../IMG/comercialpremium.webp"},
-  { name: "CONTPAQi Factura Electrónica",img: "../IMG/factura.webp" }
+  { name: "CONTPAQi Contabilidad",       img: "../IMG/contabilidad.webp" },
+  { name: "CONTPAQi Bancos",             img: "../IMG/bancos.webp"  },
+  { name: "CONTPAQi XML en Línea",       img: "../IMG/xml.webp",     noDiscount: true },
+  { name: "CONTPAQi Comercial START",    img: "../IMG/comercialstart.webp"  },
+  { name: "CONTPAQi Comercial PRO",      img: "../IMG/comercialpro.webp"    },
+  { name: "CONTPAQi Comercial PREMIUM",  img: "../IMG/comercialpremium.webp"},
+  { name: "CONTPAQi Factura Electrónica",img: "../IMG/factura.webp" }
 ];
 
-// Precio “desde”
 function getPrecioDesde(systemName){
-  const db = (window.preciosContpaqi && window.preciosContpaqi[systemName]) || null;
-  if(!db) return null;
-  if (db.anual?.MultiRFC?.precio_base || db.anual?.MultiRFC?.renovacion)
-    return Number(db.anual.MultiRFC.precio_base || db.anual.MultiRFC.renovacion || 0);
-  if (db.anual?.MonoRFC?.precio_base || db.anual?.MonoRFC?.renovacion)
-    return Number(db.anual.MonoRFC.precio_base || db.anual.MonoRFC.renovacion || 0);
-  if (db.tradicional?.actualizacion?.precio_base)
-    return Number(db.tradicional.actualizacion.precio_base);
-  return null;
+  const db = (window.preciosContpaqi && window.preciosContpaqi[systemName]) || null;
+  if(!db) return null;
+  if (db.anual?.MultiRFC?.precio_base || db.anual?.MultiRFC?.renovacion)
+    return Number(db.anual.MultiRFC.precio_base || db.anual.MultiRFC.renovacion || 0);
+  if (db.anual?.MonoRFC?.precio_base || db.anual?.MonoRFC?.renovacion)
+    return Number(db.anual.MonoRFC.precio_base || db.anual.MonoRFC.renovacion || 0);
+  if (db.tradicional?.actualizacion?.precio_base)
+    return Number(db.tradicional.actualizacion.precio_base);
+  return null;
 }
 const moneyMX = new Intl.NumberFormat("es-MX", { style:"currency", currency:"MXN", maximumFractionDigits:0 });
 
-/** ========= Estado de selección para evitar duplicados ========= */
 const selected = { secondary: null, tertiary: null };
 function selectedSet(){ return new Set([selected.secondary, selected.tertiary].filter(Boolean)); }
 
-/** ========= Render dinámico de pickers con exclusiones ========= */
 function renderSistemasPicker(containerId, exclude = new Set(), activeName = null){
-  const wrap = document.getElementById(containerId);
-  if(!wrap) return;
-  wrap.innerHTML = "";
-  const primarySys = document.getElementById('app')?.dataset?.system; // Obtener el sistema primario
-  exclude.add(primarySys); // Asegurarse de excluir el sistema primario
+  const wrap = document.getElementById(containerId);
+  if(!wrap) return;
+  wrap.innerHTML = "";
+  const primarySys = document.getElementById('app')?.dataset?.system;
+  if (primarySys) exclude.add(primarySys); // nunca ofrecer el primario
 
-  CATALOG_SISTEMAS.forEach(item=>{
-    if (exclude.has(item.name)) return;
-    const precio = getPrecioDesde(item.name);
-    const btn = document.createElement("button");
-    btn.className = "sys-icon";
-    btn.type = "button";
-    btn.dataset.sys = item.name;
-    btn.title = item.name;
-    btn.innerHTML = `
-      ${item.noDiscount ? '<small class="sin15">sin -15%</small>' : ''}
-      <img src="${item.img}" alt="${item.name}">
-      <strong>${item.name.replace('CONTPAQi ','')}</strong>
-      <small class="sys-price">${precio != null ? 'desde '+moneyMX.format(precio) : 'precio no disp.'}</small>
-    `;
-    if (activeName && activeName === item.name) btn.classList.add('active');
-    wrap.appendChild(btn);
-  });
+  CATALOG_SISTEMAS.forEach(item=>{
+    if (exclude.has(item.name)) return;
+    const precio = getPrecioDesde(item.name);
+    const btn = document.createElement("button");
+    btn.className = "sys-icon";
+    btn.type = "button";
+    btn.dataset.sys = item.name;
+    btn.title = item.name;
+    btn.innerHTML = `
+      ${item.noDiscount ? '<small class="sin15">sin -15%</small>' : ''}
+      <img src="${item.img}" alt="${item.name}">
+      <strong>${item.name.replace('CONTPAQi ','')}</strong>
+      <small class="sys-price">${precio != null ? 'desde '+moneyMX.format(precio) : 'precio no disp.'}</small>
+    `;
+    if (activeName && activeName === item.name) btn.classList.add('active');
+    wrap.appendChild(btn);
+  });
 }
 
-/** ========= Resumen combinado ========= */
 function renderCombinedTable(rows){
-  const wrap=document.getElementById('combined-wrap');
-  const tbody=document.getElementById('combined-table-body');
-  if(!wrap||!tbody) return;
-  tbody.innerHTML='';
-  rows.forEach(([concepto, importe])=>{
-    const tr=document.createElement('tr');
-    const td1=document.createElement('td'); td1.textContent=concepto;
-    const td2=document.createElement('td'); td2.textContent=importe; td2.style.textAlign='right';
-    tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
-  });
-  wrap.hidden=false;
+  const wrap=document.getElementById('combined-wrap');
+  const tbody=document.getElementById('combined-table-body');
+  if(!wrap||!tbody) return;
+  tbody.innerHTML='';
+  rows.forEach(([concepto, importe])=>{
+    const tr=document.createElement('tr');
+    const td1=document.createElement('td'); td1.textContent=concepto;
+    const td2=document.createElement('td'); td2.textContent=importe; td2.style.textAlign='right';
+    tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
+  });
+  wrap.hidden=false;
 }
 
-/** ========= Inicialización ========= */
 document.addEventListener("DOMContentLoaded", ()=>{
-  const row=document.getElementById('calc-row'),
-        slot2=document.getElementById('calc-slot-2'),
-        slot3=document.getElementById('calc-tertiary'),
-        addMore=document.getElementById('add-more-panel');
-  const pick2=document.getElementById('icons-sec-sys'),
-        pick3=document.getElementById('icons-third-sys');
+  const row=document.getElementById('calc-row'),
+        slot2=document.getElementById('calc-slot-2'),
+        slot3=document.getElementById('calc-tertiary'),
+        addMore=document.getElementById('add-more-panel');
+  const pick2=document.getElementById('icons-sec-sys'),
+        pick3=document.getElementById('icons-third-sys');
 
-  // Render inicial (excluyendo el sistema primario)
-  const primarySystem = document.getElementById('app')?.dataset?.system;
-  const initialExclude = new Set(primarySystem ? [primarySystem] : []);
-  renderSistemasPicker("icons-sec-sys", initialExclude);
-  renderSistemasPicker("icons-third-sys", initialExclude);
+  // Render inicial (excluyendo el sistema primario)
+  const primarySystem = document.getElementById('app')?.dataset?.system;
+  const initialExclude = new Set(primarySystem ? [primarySystem] : []);
+  renderSistemasPicker("icons-sec-sys", initialExclude);
+  renderSistemasPicker("icons-third-sys", initialExclude);
 
+  function refreshPickers(){
+    const ex = selectedSet();
+    if (primarySystem) ex.add(primarySystem);
+    renderSistemasPicker("icons-sec-sys", ex, selected.secondary);
+    renderSistemasPicker("icons-third-sys", ex, selected.tertiary);
+  }
 
-  function refreshPickers(){
-    const ex = selectedSet();
-    ex.add(primarySystem); // Siempre excluir el primario
-    renderSistemasPicker("icons-sec-sys", ex, selected.secondary);
-    renderSistemasPicker("icons-third-sys", ex, selected.tertiary);
-  }
+  function showAddMoreIfReady(){
+    if(addMore) addMore.style.display = selected.secondary ? '' : 'none';
+  }
 
-  function showAddMoreIfReady(){
-    if(addMore) addMore.style.display = selected.secondary ? '' : 'none';
-  }
+  // Secundaria
+  pick2?.addEventListener('click', e=>{
+    const btn=e.target.closest('.sys-icon'); if(!btn) return;
+    const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+    selected.secondary = sys;
+    selected.tertiary  = selected.tertiary === sys ? null : selected.tertiary;
+    slot2.className='calc-container'; slot2.id='calc-secondary';
+    CalculadoraContpaqi.setSecondarySystem(sys,{
+      secondarySelector:'#calc-secondary',
+      combinedSelector:'#combined-wrap',
+      onCombined:renderCombinedTable
+    });
+    refreshPickers();
+    showAddMoreIfReady();
+  });
 
-  // ===== Secundaria =====
-  pick2?.addEventListener('click', e=>{
-    const btn=e.target.closest('.sys-icon'); if(!btn) return;
-    const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
-    selected.secondary = sys;
-    selected.tertiary  = selected.tertiary === sys ? null : selected.tertiary;
-    slot2.className='calc-container'; slot2.id='calc-secondary';
-    CalculadoraContpaqi.setSecondarySystem(sys,{
-      secondarySelector:'#calc-secondary',
-      combinedSelector:'#combined-wrap',
-      onCombined:renderCombinedTable
-    });
-    refreshPickers();
-    showAddMoreIfReady();
-  });
+  // Terciaria
+  pick3?.addEventListener('click', e=>{
+    const btn=e.target.closest('.sys-icon'); if(!btn) return;
+    const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+    if (sys === selected.secondary) return;
+    selected.tertiary = sys;
+    slot3.style.display='block';
+    CalculadoraContpaqi.setTertiarySystem(sys,{
+      tertiarySelector:'#calc-tertiary',
+      combinedSelector:'#combined-wrap',
+      onCombined:renderCombinedTable
+    });
+    if(addMore) addMore.style.display='none';
+    row.classList.add('has-three');
+    refreshPickers();
+  });
 
-  // ===== Terciaria =====
-  pick3?.addEventListener('click', e=>{
-    const btn=e.target.closest('.sys-icon'); if(!btn) return;
-    const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
-    if (sys === selected.secondary) return;
-    selected.tertiary = sys;
-    slot3.style.display='block';
-    CalculadoraContpaqi.setTertiarySystem(sys,{
-      tertiarySelector:'#calc-tertiary',
-      combinedSelector:'#combined-wrap',
-      onCombined:renderCombinedTable
-    });
-    if(addMore) addMore.style.display='none';
-    row.classList.add('has-three');
-    refreshPickers();
-  });
-
-  // Núcleo: primaria
-  if(!window.CalculadoraContpaqi){
-    console.error('❌ calculadora.js no cargó. Verifica ruta.');
-  }else{
-    const app=document.getElementById('app');
-    const sys=app?.dataset?.system;
-    if(sys){
-      window.CalculadoraContpaqi.init({
-        systemName: sys,
-        primarySelector:'#calc-primary',
-        combinedSelector:'#combined-wrap'
-      });
-    }
-  }
+  // Núcleo: primaria
+  if(!window.CalculadoraContpaqi){
+    console.error('❌ calculadora.js no cargó. Verifica ruta.');
+  }else{
+    const app=document.getElementById('app');
+    const sys=app?.dataset?.system;
+    if(sys){
+      window.CalculadoraContpaqi.init({
+        systemName: sys,
+        primarySelector:'#calc-primary',
+        combinedSelector:'#combined-wrap'
+      });
+    }
+  }
 });
+
+// FAQ: comportarse como acordeón (solo una abierta)
+(function(){
+  const wrap=document.getElementById('faqWrap'); if(!wrap) return;
+  const items=[...wrap.querySelectorAll('.faq-item')];
+  items.forEach(d=>{
+    d.addEventListener('toggle', ()=>{
+      if(d.open){
+        items.forEach(o=>{ if(o!==d) o.removeAttribute('open'); });
+      }
+    });
+  });
+})();
 </script>
 
 <script defer src="../precios-contpaqi.js?v=3"></script>
