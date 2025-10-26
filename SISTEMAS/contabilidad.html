@@ -33,7 +33,7 @@ html{scroll-behavior:smooth}
 body{
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%); color:var(--text);
-  scroll-padding-top:84px; /* anclas no queden bajo header fijo */
+  scroll-padding-top:84px;
 }
 a{color:inherit;text-decoration:none}
 img,video,iframe{max-width:100%;display:block}
@@ -82,7 +82,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .stack{display:grid;gap:12px}
 .title-gradient{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
 
-/* ===== HERO 3 columnas (PDF pegado) ===== */
+/* ===== HERO 3 columnas ===== */
 .hero-3col{display:grid;grid-template-columns:280px 1.55fr 1.05fr;column-gap:8px;align-items:start}
 @media (max-width:1200px){ .hero-3col{grid-template-columns:270px 1.45fr 1.05fr} }
 @media (max-width:980px){ .hero-3col{grid-template-columns:1fr} }
@@ -101,19 +101,6 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
 .arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}.arrowCircle .chev{font-size:24px;line-height:1}
 
-/* ===== Por qué usar (slider) ===== */
-.listSlider{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
-.listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
-.listPage{min-width:100%}
-.listItem{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:center;background:#0f1c2c;border:1px solid #152437;border-radius:18px;margin:14px 6px;padding:16px}
-.listIcon{width:92px;height:92px;border-radius:18px;background:#0f1725;display:grid;place-items:center;overflow:hidden}
-.listIcon img{width:92px;height:92px;object-fit:cover}
-
-/* ===== Videos (horizontales) ===== */
-.yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;justify-items:center}
-.yt{width:100%;max-width:680px}
-.yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
-
 /* ===== Carrusel de sistemas ===== */
 .carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
 .carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px}
@@ -122,7 +109,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0 0}
 .group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2))}
 
-/* ===== CALCULADORA (estilo restaurado) ===== */
+/* ===== CALCULADORA ===== */
 .calc-strip{display:flex;flex-direction:column;gap:12px}
 .calc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
 .calc-row.has-three{grid-template-columns:1fr 1fr 1fr}
@@ -131,11 +118,10 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .placeholder .note{text-align:center;color:#b9c8de}
 #calc-primary{grid-column:1}
 #calc-slot-2,#calc-secondary{grid-column:2}
-#calc-tertiary{grid-column:3;display:none}
+#calc-tertiary{grid-column:3;display:none} /* oculto hasta elegir 3er sistema */
 #add-more-panel{grid-column:1 / -1}
 
 .calc-container h4{margin:0 0 8px}
-/* Tablas de cada calculadora: centradas y más angostas */
 .calc-container table{width:100%;max-width:640px;margin:0 auto;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:10px;overflow:hidden;background:#0e1724}
 .calc-container thead th{background:#0e1724;color:#dce8ff;text-align:left;border-bottom:1px solid #1e2b3c;font-weight:700}
 .calc-container th,.calc-container td{padding:10px 12px;border-bottom:1px solid #1e2b3c}
@@ -144,36 +130,35 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .calc-container label,.calc-container .control-label{display:block;font-weight:700;color:#cfe3ff;margin:4px 0 4px}
 .calc-container select,.calc-container input[type="number"]{width:100%;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
 
-/* Botones de selección de sistemas (secundaria/terciaria) */
-.icons-wrap .sys-icon{border:none;background:#0e1724;border:1px solid #1e2b3c;border-radius:12px;padding:6px;cursor:pointer}
+/* ===== Pickers: grid 3×N y responsive ===== */
+.icons-wrap{
+  display:grid !important;
+  grid-template-columns: repeat(3, minmax(128px, 1fr)) !important;
+  gap:12px !important;
+  justify-items:center !important;
+}
+.icons-wrap .sys-icon{
+  width:100% !important;
+  border:none;background:#0e1724;border:1px solid #1e2b3c;border-radius:12px;
+  padding:10px;cursor:pointer;display:grid;grid-template-rows:auto auto auto;row-gap:6px;justify-items:center
+}
+.icons-wrap .sys-icon img{width:56px;height:56px;border-radius:12px}
+.icons-wrap .sys-icon strong{font-size:12px}
+.icons-wrap .sys-icon .sys-price{color:#9fb2cb;font-size:11px}
+.icons-wrap .sys-icon .sin-15, .icons-wrap .sys-icon .sin15{font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #1e2b3c;border-radius:999px;background:#0e1724;color:#cfe3ff}
 .icons-wrap .sys-icon.active{outline:2px solid #2dd4bf}
 
-/* Resumen combinado: centrado y ancho reducido */
-#combined-wrap{margin-top:10px}
-.combined-card{background:#0f1622;border:1px solid #1c2533;border-radius:12px;padding:12px;max-width:720px;margin:10px auto}
-.combined-card h4{margin:0 0 8px}
-.combined-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:10px;overflow:hidden;background:#0e1724}
-.combined-table th,.combined-table td{padding:10px 12px;border-bottom:1px solid #1e2b3c}
-.combined-table tr:last-child td{border-bottom:none}
-.combined-table th{background:#0e1724;text-align:left;color:#dce8ff}
-.combined-table td:last-child,.combined-table th:last-child{text-align:right}
+@media (max-width:680px){
+  .icons-wrap{ grid-template-columns: repeat(2, minmax(120px, 1fr)) !important; }
+}
 
-/* ===== Funciones destacadas (píldoras + tarjetas) ===== */
-.pillbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
-.pill{padding:8px 12px;border-radius:999px;border:1px solid #1e2b3c;background:#0f1c2c;color:#cfe3ff;cursor:pointer;font-weight:700}
-.pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
-.fcard{border:1px solid #1e2b3c;border-radius:14px;background:#0f1622;padding:14px}
-.fhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.ficon{width:28px;height:28px;border-radius:8px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
-
-/* ===== Comparativa ===== */
+/* ===== Comparativa / FAQ / Footer ===== */
 .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
 .table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
 .table-like tr:last-child td{border-bottom:none}
 .table-like thead th{background:#0e1724;color:#dce8ff;text-align:left}
 .table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
 
-/* ===== TOC (Mapa) ===== */
 .toc{position:fixed;right:16px;bottom:16px;width:240px;max-height:48vh;overflow:auto;background:rgba(15,24,38,.75);border:1px solid #1c2533;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;z-index:900;box-shadow:0 10px 24px rgba(0,0,0,.35);backdrop-filter: blur(6px);transition:all .2s ease}
 .toc.collapsed{width:auto;max-height:none;padding:6px 10px;border-radius:999px;gap:0}
 .toc.collapsed .toc-title,.toc.collapsed a,.toc.collapsed .toc-close{display:none}
@@ -181,7 +166,6 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .toc a{padding:6px 8px;border-radius:10px;color:#cfe3ff;border:1px solid transparent}
 .toc a:hover{border-color:#233347;background:#101b2a}
 
-/* ===== FAQ (estilo + acordeón) ===== */
 .faq-wrap{display:grid;gap:10px}
 .faq-item{border:1px solid #1e2b3c;border-radius:12px;background:#0f1622;overflow:hidden}
 .faq-item>summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:700;display:flex;align-items:center;gap:8px}
@@ -189,12 +173,10 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .faq-item[open]>summary{background:#0e1724;border-bottom:1px solid #1e2b3c}
 .faq-item p{padding:12px 14px;margin:0;color:#cfe3ff}
 
-/* ===== Footer ===== */
 footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .footer-grid{display:grid;gap:18px;grid-template-columns:1.6fr 1.2fr 1.2fr 1fr}
 .footer-title{font-weight:700;color:#d8e3f6;margin:0 0 10px}
 .contact-list{display:grid;gap:6px;font-size:14px}
-.contact-list .item{display:flex;gap:8px;align-items:flex-start}
 .item .ico{width:22px}
 .payments-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-items:center}
 .payments-grid img{max-height:28px;object-fit:contain;filter:grayscale(1);opacity:.9}
@@ -204,7 +186,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .ally-col img{height:46px;object-fit:contain;background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:8px}
 .footer-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;padding-top:12px;border-top:1px solid #1c2533}
 
-/* ===== Responsive ===== */
+/* Responsive generales */
 @media (max-width:980px){
   .grid-2{grid-template-columns:1fr}
   .grid-3{grid-template-columns:1fr}
@@ -214,23 +196,6 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   .mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}
   .toc{right:10px;bottom:10px;width:86vw}
   .footer-grid{grid-template-columns:1fr}
-}
-/* Pickers en cuadricula 3x3 con wrap */
-.icons-wrap{
-  display:grid !important;
-  grid-template-columns: repeat(3, minmax(128px, 1fr)) !important;
-  gap:12px !important;
-  justify-items:center !important;
-}
-.icons-wrap .sys-icon{
-  width:100% !important;
-}
-
-/* Responsive: en móviles 2 por fila */
-@media (max-width:680px){
-  .icons-wrap{
-    grid-template-columns: repeat(2, minmax(120px, 1fr)) !important;
-  }
 }
 </style>
 </head>
@@ -328,20 +293,18 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
-  <!-- Funciones (restaurado) -->
+  <!-- Funciones -->
   <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <div class="card body">
       <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
 
-      <!-- Píldoras -->
       <div class="pillbar" role="tablist" aria-label="Categorías de características">
         <button class="pill active" data-filter="proceso">Integra y controla tu proceso contable, fiscal y financiero</button>
         <button class="pill" data-filter="impuestos">Eficiente en el cálculo de IVA, DyP, DIOT</button>
         <button class="pill" data-filter="electronica">Contabilidad electrónica y últimas disposiciones fiscales</button>
       </div>
 
-      <!-- Tarjetas -->
       <div class="grid-3 feature-grid">
         <!-- PROCESO -->
         <article class="fcard tag-proceso"><div class="fhead"><img class="ficon" src="../IMG/ic_contabiliza.webp" alt=""><h4>Contabilización</h4></div><p>Automática a partir del XML: cientos de pólizas en minutos.</p></article>
@@ -402,34 +365,6 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
-<!-- VIDEOS -->
-<section id="videos" aria-labelledby="videos-title">
-  <div class="card body">
-    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-    <div class="yt-grid">
-      <div class="yt">
-        <iframe 
-          src="https://www.youtube.com/embed/u-qppRPv_3E" 
-          title="A quién sirve CONTPAQi Contabilidad — Reel" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          referrerpolicy="strict-origin-when-cross-origin" 
-          allowfullscreen>
-        </iframe>
-      </div>
-      <div class="yt">
-        <iframe 
-          src="https://www.youtube.com/embed/i35JwgI9iaQ" 
-          title="Qué hace CONTPAQi Contabilidad — Demo 2" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          referrerpolicy="strict-origin-when-cross-origin" 
-          allowfullscreen>
-        </iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
-
   <!-- Sistemas integrables -->
   <section id="integra" aria-labelledby="integra-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
@@ -460,37 +395,29 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
       <div class="calc-row" id="calc-row">
         <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
 
-        <!-- Secundaria (selector de sistema con mismas imágenes del carrusel) -->
+        <!-- Secundaria (selector) -->
         <div id="calc-slot-2" class="placeholder">
           <div class="note">
             <strong>Integra un sistema adicional y recibe −15% en cada uno.</strong><br>
             <small>“XML en Línea” no aplica para descuento.</small>
-            <div class="icons-wrap" id="icons-sec-sys" style="display:flex;gap:10px;justify-content:center;margin-top:8px">
-        <div class="icons-wrap" id="icons-sec-sys"></div>
-<div class="icons-wrap" id="icons-third-sys"></div>
-
-
-            </div>
+            <div class="icons-wrap" id="icons-sec-sys"></div>
           </div>
         </div>
 
-        <!-- Terciaria (aparece al elegir 3er sistema) -->
+        <!-- Terciaria (oculta al inicio) -->
         <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora"></div>
 
+        <!-- Panel para elegir 3er sistema -->
         <div id="add-more-panel" class="placeholder" style="display:none">
           <div class="note">
             <strong>¿Agregar un tercer sistema?</strong><br>
             <small>Mismo -15% por paquete (excepto “XML en Línea”).</small>
-            <div class="icons-wrap" id="icons-third-sys" style="display:flex;gap:10px;justify-content:center;margin-top:8px">
-              <button class="sys-icon" data-sys="CONTPAQi Nóminas" title="Nóminas"><img src="../IMG/nominas.webp" alt="Nóminas" style="width:56px;height:56px;border-radius:12px"></button>
-              <button class="sys-icon" data-sys="CONTPAQi Bancos" title="Bancos"><img src="../IMG/bancos.webp" alt="Bancos" style="width:56px;height:56px;border-radius:12px"></button>
-              <button class="sys-icon" data-sys="XML en Línea+" title="XML en Línea"><img src="../IMG/xml.webp" alt="XML en Línea" style="width:56px;height:56px;border-radius:12px"></button>
-            </div>
+            <div class="icons-wrap" id="icons-third-sys"></div>
           </div>
         </div>
       </div>
 
-      <!-- Aquí pintará la calculadora el resumen combinado -->
+      <!-- Resumen combinado -->
       <div id="combined-wrap" class="combined-card" hidden>
         <h4 class="title-gradient">Resumen combinado</h4>
         <table class="combined-table"><tbody id="combined-table-body"></tbody></table>
@@ -597,7 +524,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 document.getElementById('year').textContent=new Date().getFullYear();
 document.getElementById('burger')?.addEventListener('click',()=>{document.getElementById('mobileMenu')?.classList.toggle('open');});
 
-// TOC (Mapa) solo anclas internas
+// TOC (Mapa)
 (function(){
   const toc=document.getElementById('toc'), openBtn=document.getElementById('tocToggle'), closeBtn=toc?.querySelector('.toc-close');
   if(!toc||!openBtn||!closeBtn) return;
@@ -645,7 +572,7 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
   });
 })();
 
-// ===== Funciones (píldoras) =====
+// Píldoras (filtros)
 (function(){
   const pills=[...document.querySelectorAll('.pill')];
   const cards=[...document.querySelectorAll('.feature-grid .fcard')];
@@ -665,14 +592,13 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
       apply(p.dataset.filter);
     });
   });
-  apply('proceso'); // default
+  apply('proceso');
 })();
 
 // ====== Calculadora helpers ======
 function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
 
-// === Catálogo visual de sistemas a mostrar en los pickers ===
-// Asegúrate que estos nombres coinciden con las llaves en `window.preciosContpaqi`
+// Catálogo visual (coincide con precios-contpaqi.js)
 const CATALOG_SISTEMAS = [
   { name: "CONTPAQi Nóminas",              img: "../IMG/nominas.webp" },
   { name: "CONTPAQi Bancos",               img: "../IMG/bancos.webp"  },
@@ -683,57 +609,59 @@ const CATALOG_SISTEMAS = [
   { name: "CONTPAQi Factura Electrónica",  img: "../IMG/factura.webp" }
 ];
 
-// === Precio base ===
+// Precio “desde”
 function getPrecioDesde(systemName){
   const db = (window.preciosContpaqi && window.preciosContpaqi[systemName]) || null;
   if(!db) return null;
-  if (db.anual?.MultiRFC?.precio_base) return db.anual.MultiRFC.precio_base;
-  if (db.anual?.MonoRFC?.precio_base) return db.anual.MonoRFC.precio_base;
-  if (db.tradicional?.actualizacion?.precio_base) return db.tradicional.actualizacion.precio_base;
+  if (db.anual?.MultiRFC?.precio_base || db.anual?.MultiRFC?.renovacion)
+    return Number(db.anual.MultiRFC.precio_base || db.anual.MultiRFC.renovacion || 0);
+  if (db.anual?.MonoRFC?.precio_base || db.anual?.MonoRFC?.renovacion)
+    return Number(db.anual.MonoRFC.precio_base || db.anual.MonoRFC.renovacion || 0);
+  if (db.tradicional?.actualizacion?.precio_base)
+    return Number(db.tradicional.actualizacion.precio_base);
   return null;
 }
-
 const moneyMX = new Intl.NumberFormat("es-MX", { style:"currency", currency:"MXN", maximumFractionDigits:0 });
 
-// === Render dinámico de sistemas ===
-function renderSistemasPicker(containerId){
+/** ========= Estado de selección para evitar duplicados ========= */
+const selected = {
+  secondary: null, // nombre del sistema secundario elegido
+  tertiary:  null  // nombre del sistema terciario elegido
+};
+function selectedSet(){
+  return new Set([selected.secondary, selected.tertiary].filter(Boolean));
+}
+
+/** ========= Render dinámico de pickers con exclusiones =========
+ * @param {string} containerId - id del contenedor
+ * @param {Set<string>} exclude - nombres a excluir
+ * @param {string|null} activeName - nombre para marcar como activo (opcional)
+ */
+function renderSistemasPicker(containerId, exclude = new Set(), activeName = null){
   const wrap = document.getElementById(containerId);
   if(!wrap) return;
-  wrap.innerHTML = ""; // Limpia el contenedor
+  wrap.innerHTML = "";
 
   CATALOG_SISTEMAS.forEach(item=>{
+    if (exclude.has(item.name)) return; // excluye ya elegidos
     const precio = getPrecioDesde(item.name);
     const btn = document.createElement("button");
     btn.className = "sys-icon";
     btn.type = "button";
     btn.dataset.sys = item.name;
     btn.title = item.name;
-
-    // Estructura visual de cada sistema
     btn.innerHTML = `
       ${item.noDiscount ? '<small class="sin15">sin -15%</small>' : ''}
       <img src="${item.img}" alt="${item.name}">
       <strong>${item.name.replace('CONTPAQi ','')}</strong>
-      <small class="sys-price">${precio ? 'desde '+moneyMX.format(precio) : 'precio no disp.'}</small>
+      <small class="sys-price">${precio != null ? 'desde '+moneyMX.format(precio) : 'precio no disp.'}</small>
     `;
+    if (activeName && activeName === item.name) btn.classList.add('active');
     wrap.appendChild(btn);
   });
 }
 
-// === Autoejecución al cargar la página ===
-document.addEventListener("DOMContentLoaded", ()=>{
-  renderSistemasPicker("icons-sec-sys");
-  renderSistemasPicker("icons-third-sys");
-});
-
-// Llama al render para los 2 pickers existentes
-document.addEventListener("DOMContentLoaded", ()=>{
-  renderSistemasPicker("icons-sec-sys");
-  renderSistemasPicker("icons-third-sys");
-});
-</script>
-\<script>
-// Pinta tabla bonita de “Resumen combinado” si calculadora entrega datos
+/** ========= Resumen combinado ========= */
 function renderCombinedTable(rows){
   const wrap=document.getElementById('combined-wrap');
   const tbody=document.getElementById('combined-table-body');
@@ -748,61 +676,59 @@ function renderCombinedTable(rows){
   wrap.hidden=false;
 }
 
-// ====== Calculadora (primaria + secundaria + terciaria) ======
-(function(){
+/** ========= Inicialización ========= */
+document.addEventListener("DOMContentLoaded", ()=>{
   const row=document.getElementById('calc-row'),
         slot2=document.getElementById('calc-slot-2'),
         slot3=document.getElementById('calc-tertiary'),
         addMore=document.getElementById('add-more-panel');
   const pick2=document.getElementById('icons-sec-sys'),
         pick3=document.getElementById('icons-third-sys');
-  let haveSecondary=false;
 
-  function showAddMoreIfReady(){ if(addMore) addMore.style.display = haveSecondary ? '' : 'none'; }
+  // Render inicial (sin exclusiones)
+  renderSistemasPicker("icons-sec-sys");
+  renderSistemasPicker("icons-third-sys");
 
-  // Secundaria
+  function refreshPickers(){
+    const ex = selectedSet();
+    renderSistemasPicker("icons-sec-sys", ex, selected.secondary);
+    renderSistemasPicker("icons-third-sys", ex, selected.tertiary);
+  }
+
+  function showAddMoreIfReady(){
+    if(addMore) addMore.style.display = selected.secondary ? '' : 'none';
+  }
+
+  // ===== Secundaria =====
   pick2?.addEventListener('click', e=>{
     const btn=e.target.closest('.sys-icon'); if(!btn) return;
-    pick2.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
     const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
-    slot2.className='calc-container'; slot2.id='calc-secondary'; // fija en segunda columna por CSS
+    selected.secondary = sys;           // guarda elección
+    selected.tertiary  = selected.tertiary === sys ? null : selected.tertiary; // por si coincide
+    // Monta 2ª calculadora
+    slot2.className='calc-container'; slot2.id='calc-secondary';
     CalculadoraContpaqi.setSecondarySystem(sys,{secondarySelector:'#calc-secondary',combinedSelector:'#combined-wrap',onCombined:renderCombinedTable});
-    haveSecondary=true; showAddMoreIfReady();
+    // Actualiza pickers (ya no mostrar el elegido)
+    refreshPickers();
+    showAddMoreIfReady();
   });
 
-  // Terciaria
+  // ===== Terciaria =====
   pick3?.addEventListener('click', e=>{
     const btn=e.target.closest('.sys-icon'); if(!btn) return;
-    pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
     const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+    if (sys === selected.secondary) return; // seguridad extra
+    selected.tertiary = sys;
+    // Muestra panel 3 y pinta 3ª calculadora
     slot3.style.display='block';
     CalculadoraContpaqi.setTertiarySystem(sys,{tertiarySelector:'#calc-tertiary',combinedSelector:'#combined-wrap',onCombined:renderCombinedTable});
     if(addMore) addMore.style.display='none';
     row.classList.add('has-three');
+    // Actualiza pickers para ocultar ambos elegidos
+    refreshPickers();
   });
-})();
 
-// ===== Ajustes UI requeridos =====
-
-// ===== FAQ: acordeón (cierra el anterior) =====
-(function(){
-  const wrap=document.getElementById('faqWrap'); if(!wrap) return;
-  const items=[...wrap.querySelectorAll('details.faq-item')];
-  items.forEach(d=>{
-    d.addEventListener('toggle',()=>{
-      if(d.open){ items.forEach(o=>{ if(o!==d) o.removeAttribute('open'); }); }
-    });
-  });
-})();
-</script>
-
-<!-- Núcleo de calculadora -->
-<script defer src="../precios-contpaqi.js?v=3"></script>
-<script defer src="../calculadora.js?v=13"></script>
-<script>
-window.addEventListener('DOMContentLoaded',()=>{
+  // Núcleo: primaria
   if(!window.CalculadoraContpaqi){
     console.error('❌ calculadora.js no cargó. Verifica ruta.');
   }else{
@@ -812,5 +738,9 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
 });
 </script>
+
+<!-- Datos de precios y lógica de cálculo -->
+<script defer src="../precios-contpaqi.js?v=3"></script>
+<script defer src="../calculadora.js?v=13"></script>
 </body>
 </html>
