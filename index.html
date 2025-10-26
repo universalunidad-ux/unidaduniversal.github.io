@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head> 
   <meta charset="utf-8" />
@@ -29,6 +29,18 @@
       --maxw:1200px; /* MÁS ANCHO que 1100, pero más estrecho que 1280 */
       --radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)
     }
+
+    /* Paleta específica "Nube" y "Conecta" */
+    :root{
+      --cloud-ink:#0e1724;               /* fondo chip Nube */
+      --cloud-blue:#60a5fa;              /* contorno / énfasis Nube */
+      --cloud-blue-soft:rgba(96,165,250,.15);
+
+      --connect-ink:#0f1c2c;             /* fondo chip Conecta */
+      --connect-green:#22c55e;           /* contorno / énfasis Conecta */
+      --connect-green-soft:rgba(34,197,94,.15);
+    }
+
     *{box-sizing:border-box}
     html,body{margin:0;height:100%}
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%);color:var(--text)}
@@ -36,7 +48,7 @@
     img,video,iframe{max-width:100%;display:block}
     .container{max-width:var(--maxw);margin:0 auto;padding:0 18px}
 
-    /* Header */
+    /* Header (estilo translúcido) */
     header{position:sticky;top:0;background:rgba(11,15,20,.7);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid #19202b;z-index:50}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
     .brand{display:flex;align-items:center;gap:10px;font-weight:700}
@@ -58,11 +70,18 @@
     .badge{border:1px solid #1f2a3a;background:#0e1520;border-radius:999px;padding:8px 12px;color:#c8d3e5;font-size:13px}
     .hero-card{background:radial-gradient(1200px 500px at 30% -20%, rgba(45,212,191,.18), transparent 40%), #0d131d;border:1px solid #1b2535;border-radius:18px;padding:18px}
 
-    /* Sections & cards */
+    /* Chips Nube / Conecta */
+    .tag-nube{background:var(--cloud-ink);border:1px solid #203044;color:#cfe3ff;border-radius:999px;padding:6px 10px;font-size:12px}
+    .tag-conecta{background:var(--connect-ink);border:1px solid #1d2e3f;color:#bfffe5;border-radius:999px;padding:6px 10px;font-size:12px}
+    .badge-nube{background:var(--cloud-blue-soft);border:1px solid var(--cloud-blue);color:#93c5fd}
+    .badge-conecta{background:var(--connect-green-soft);border:1px solid var(--connect-green);color:#86efac}
+
+    /* Sections & cards (estilo moderno de “lighters”) */
     section{padding:42px 0;border-top:1px solid #11182725}
     .section-title{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:18px}
     .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{background:var(--card);border:1px solid #1c2533;border-radius:16px;overflow:hidden}
+    .card{background:var(--card);border:1px solid #1c2533;border-radius:16px;overflow:hidden;transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease}
+    .card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:#284061}
     .card .head{padding:16px;border-bottom:1px solid #1c2533;display:flex;align-items:center;gap:12px}
     .tag{font-size:12px;background:#0e1520;border:1px solid #1f2a3a;padding:6px 10px;border-radius:999px;color:#c8d3e5}
     .card h3{margin:0;font-size:18px}
@@ -74,6 +93,8 @@
     .card .foot{padding:16px;border-top:1px solid #1c2533;display:flex;gap:8px;flex-wrap:wrap}
     .btn-sm{padding:8px 10px;border-radius:10px;border:1px solid #223044;background:#121a25;font-weight:600;font-size:14px}
     .btn-ghost{background:transparent}
+    .btn-whatsapp{background:#25D366;border:none;color:#0b0f14;font-weight:800;display:inline-flex;align-items:center;gap:8px}
+    .btn-whatsapp:hover{filter:brightness(1.05)}
 
     /* Tabs */
     .tablist{display:flex;gap:8px;flex-wrap:wrap;background:#0e1520;border:1px solid #1f2a3a;padding:8px;border-radius:12px;margin-bottom:16px}
@@ -90,24 +111,6 @@
     label{font-size:14px;color:#b8c4d7}
     .hint{font-size:12px;color:#92a0b5}
 
-    /* WhatsApp visible */
-    .btn-whatsapp{
-      background:#25D366;border:none;color:#0b0f14;font-weight:800;
-      display:inline-flex;align-items:center;gap:8px
-    }
-    .btn-whatsapp:hover{filter:brightness(1.05)}
-
-    /* Utilidades (mismo estilo de “venta, cursos y soporte”) */
-    .gradient-word{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .btn-gradient{border:none;color:#0b0f14;font-weight:700;background:linear-gradient(145deg,var(--brand),var(--brand-2))}
-    .btn-outline-gradient{color:#cfe9ff;background:transparent;border:1px solid transparent;position:relative;overflow:hidden}
-    .btn-outline-gradient::before{
-      content:"";position:absolute;inset:0;padding:1px;border-radius:12px;
-      background:linear-gradient(145deg,var(--brand),var(--brand-2));
-      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-    }
-
     /* Videos */
     .videos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
     .videos-grid iframe,.videos-grid video{width:100%;border-radius:12px;border:1px solid #1c2533;background:#0e1520}
@@ -121,22 +124,17 @@
 
     /* Footer */
     footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
-    /* Orden: Contacto | Pago | Marcas | Aliados (extremo derecho) */
     .footer-grid{display:grid;gap:18px;grid-template-columns:1.6fr 1.2fr 1.2fr 1fr}
     .footer-title{font-weight:700;color:#d8e3f6;margin:0 0 10px}
     .contact-list{display:grid;gap:6px;font-size:14px}
     .contact-list .item{display:flex;gap:8px;align-items:flex-start}
     .item .ico{width:22px}
-
     .payments-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-items:center}
     .payments-grid img{max-height:28px;object-fit:contain;filter:grayscale(1);opacity:.9}
-
     .brands-col{display:grid;gap:10px}
     .brand-item img{max-height:26px;object-fit:contain;filter:grayscale(.1);background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:6px}
-
     .ally-col{display:grid;gap:10px;justify-items:end}
     .ally-col img{height:46px;object-fit:contain;background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:8px}
-
     .footer-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;padding-top:12px;border-top:1px solid #1c2533}
 
     /* Responsive */
@@ -195,18 +193,24 @@
         <div class="kicker">Implementación rápida · Soporte cercano</div>
         <h1>
           CONTPAQi para tu empresa:
-          <span class="gradient-word">licencias</span>, <span class="gradient-word">cursos</span>,
-<span class="gradient-word">deassarrollos</span> y <span class="gradient-word">soporte</span> con Expiriti
+          <span class="gradient-word" style="-webkit-background-clip:text;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:transparent">licencias</span>, 
+          <span class="gradient-word" style="-webkit-background-clip:text;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:transparent">cursos</span>,
+          <span class="gradient-word" style="-webkit-background-clip:text;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:transparent">desarrollos</span> y 
+          <span class="gradient-word" style="-webkit-background-clip:text;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:transparent">soporte</span> con Expiriti
         </h1>
         <p class="lead">Te ayudamos a elegir, instalar y aprovechar al máximo <strong>Nóminas</strong>, <strong>Comercial</strong>, <strong>Contabilidad</strong>, <strong>Bancos</strong> y más. Somos tu aliado para que la operación fluya sin complicaciones.</p>
         <div class="badges">
           <span class="badge">Distribuidor autorizado</span>
           <span class="badge">Atención por WhatsApp</span>
           <span class="badge">Capacitación y migraciones</span>
+          <span class="badge badge-conecta">Conecta Contabilidad, Comercial y Nóminas</span>
         </div>
         <div style="display:flex;gap:10px;margin-top:18px">
-          <a class="btn btn-gradient" href="#contacto">Quiero una demo</a>
-          <a class="btn btn-outline-gradient" href="#productos">Ver productos</a>
+          <a class="btn" style="background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none" href="#contacto">Quiero una demo</a>
+          <a class="btn" style="border:1px solid transparent;position:relative;overflow:hidden;color:#cfe9ff" href="#productos">
+            <span style="position:absolute;inset:0;padding:1px;border-radius:12px;background:linear-gradient(145deg,var(--brand),var(--brand-2));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude"></span>
+            <span style="position:relative">Ver productos</span>
+          </a>
         </div>
       </div>
 
@@ -225,11 +229,12 @@
             <option>Comercial Premium</option>
             <option>XML en Línea</option>
             <option>Factura electrónica</option>
+            <option>Analiza (Nube)</option>
             <option>Otro</option>
           </select>
           <label for="mensaje">Mensaje</label>
           <textarea id="mensaje" name="mensaje" rows="3" placeholder="Ej. Necesito migrar mi nómina y capacitar al equipo" required></textarea>
-          <button type="submit" class="btn btn-gradient">Enviar por WhatsApp</button>
+          <button type="submit" class="btn" style="background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none">Enviar por WhatsApp</button>
           <p class="hint">También al teléfono <a href="tel:+525568437918">55 6843 7918</a></p>
         </form>
       </div>
@@ -256,7 +261,7 @@
       <div id="panel-contable" role="tabpanel" aria-labelledby="tab-contable">
         <div class="cards">
           <article class="card" data-category="contable">
-            <a class="card-link" href="SISTEMAS/contabilidad.html" style="display:block">
+            <a class="card-link" href="contabilidad.html" style="display:block">
               <div class="head">
                 <img class="icon" data-key="contabilidad" alt="Icono Contabilidad">
                 <span class="tag">Contabilidad</span><h3>CONTPAQi Contabilidad</h3>
@@ -264,13 +269,13 @@
               <div class="body"><p>Catálogos, pólizas y reportes fiscales listos para cumplir con el SAT. Ideal para despachos y PyMEs.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="SISTEMAS/contabilidad.html">Ver más</a>
+              <a class="btn-sm" href="contabilidad.html">Ver más</a>
               <a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Contabilidad" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="contable">
-            <a class="card-link" href="SISTEMAS/nominas.html" style="display:block">
+            <a class="card-link" href="nominas.html" style="display:block">
               <div class="head">
                 <img class="icon" data-key="nominas" alt="Icono Nóminas">
                 <span class="tag">Nóminas</span><h3>CONTPAQi Nóminas</h3>
@@ -278,13 +283,13 @@
               <div class="body"><p>Cálculo, incidencias y timbrado sin complicaciones. Capacitación y migración incluidas.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="SISTEMAS/nominas.html">Ver más</a>
+              <a class="btn-sm" href="nominas.html">Ver más</a>
               <a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20N%C3%B3minas" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="contable">
-            <a class="card-link" href="SISTEMAS/bancos.html" style="display:block">
+            <a class="card-link" href="bancos.html" style="display:block">
               <div class="head">
                 <img class="icon" data-key="bancos" alt="Icono Bancos">
                 <span class="tag">Bancos</span><h3>CONTPAQi Bancos</h3>
@@ -292,13 +297,13 @@
               <div class="body"><p>Conciliación bancaria ágil, flujos de caja y plantillas para acelerar tu cierre.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="SISTEMAS/bancos.html">Ver más</a>
+              <a class="btn-sm" href="bancos.html">Ver más</a>
               <a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Bancos" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="contable">
-            <a class="card-link" href="SISTEMAS/xmlenlinea.html" style="display:block">
+            <a class="card-link" href="xmlenlinea.html" style="display:block">
               <div class="head">
                 <img class="icon" data-key="xml" alt="Icono XML en línea+">
                 <span class="tag">XML</span><h3>XML en línea+</h3>
@@ -306,8 +311,23 @@
               <div class="body"><p>Descarga y administración de CFDI directamente del SAT para tu contabilidad.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="SISTEMAS/xmlenlinea.html">Ver más</a>
+              <a class="btn-sm" href="xmlenlinea.html">Ver más</a>
               <a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20XML%20en%20l%C3%ADnea%2B" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </article>
+
+          <!-- NUEVO: Analiza también visible en Solución Contable -->
+          <article class="card" data-category="contable">
+            <a class="card-link" href="analiza.html" style="display:block">
+              <div class="head">
+                <img class="icon" data-key="analiza" alt="Icono Analiza">
+                <span class="tag-nube">Nube</span><h3>CONTPAQi Analiza</h3>
+              </div>
+              <div class="body"><p>Dashboards y BI nativo para tus datos de Contabilidad, Comercial y Nóminas.</p></div>
+            </a>
+            <div class="foot">
+              <a class="btn-sm" href="analiza.html">Ver más</a>
+              <a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Analiza" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
         </div>
@@ -317,7 +337,7 @@
       <div id="panel-comercial" class="hidden" role="tabpanel" aria-labelledby="tab-comercial">
         <div class="cards">
           <article class="card" data-category="comercial">
-            <a class="card-link" href="SISTEMAS/comercialstart.html" style="display:block">
+            <a class="card-link" href="comercialstart.html" style="display:block">
               <div class="head">
                 <img class="icon" data-key="comercial-start" alt="Icono Comercial Start">
                 <span class="tag">Comercial</span><h3>CONTPAQi Comercial Start</h3>
@@ -325,13 +345,13 @@
               <div class="body"><p>Entrada ideal para ventas e inventario con lo esencial para arrancar.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="SISTEMAS/comercialstart.html">Ver más</a>
+              <a class="btn-sm" href="comercialstart.html">Ver más</a>
               <a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Comercial%20Start" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="comercial">
-            <a class="card-link" href="SISTEMAS/comercialpremium.html" style="display:block">
+            <a class="card-link" href="comercialpremium.html" style="display:block">
               <div class="head">
                 <img class="icon" data-key="comercial-premium" alt="Icono Comercial Premium">
                 <span class="tag">Comercial</span><h3>CONTPAQi Comercial Premium</h3>
@@ -339,13 +359,13 @@
               <div class="body"><p>Control avanzado de listas de precio, políticas y reportes. Ideal para crecimiento.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="SISTEMAS/comercialpremium.html">Ver más</a>
+              <a class="btn-sm" href="comercialpremium.html">Ver más</a>
               <a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Comercial%20Premium" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
 
           <article class="card" data-category="comercial">
-            <a class="card-link" href="SISTEMAS/comercialpro.html" style="display:block">
+            <a class="card-link" href="comercialpro.html" style="display:block">
               <div class="head">
                 <img class="icon" data-key="comercial-pro" alt="Icono Comercial Pro">
                 <span class="tag">Comercial</span><h3>CONTPAQi Comercial Pro</h3>
@@ -353,8 +373,23 @@
               <div class="body"><p>Para operaciones con alto volumen y resurtidos. Compatible multi-sucursal.</p></div>
             </a>
             <div class="foot">
-              <a class="btn-sm" href="SISTEMAS/comercialpro.html">Ver más</a>
+              <a class="btn-sm" href="comercialpro.html">Ver más</a>
               <a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Comercial%20Pro" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </article>
+
+          <!-- NUEVO: Factura Electrónica en panel Comercial -->
+          <article class="card" data-category="comercial">
+            <a class="card-link" href="facturaelectronica.html" style="display:block">
+              <div class="head">
+                <img class="icon" data-key="facturaelectronica" alt="Icono Factura Electrónica">
+                <span class="tag-nube">Nube</span><h3>Factura Electrónica</h3>
+              </div>
+              <div class="body"><p>Timbrado y facturación rápida desde cualquier lugar. CFDI 4.0 listo.</p></div>
+            </a>
+            <div class="foot">
+              <a class="btn-sm" href="facturaelectronica.html">Ver más</a>
+              <a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Factura%20Electr%C3%B3nica" target="_blank" rel="noopener">WhatsApp</a>
             </div>
           </article>
         </div>
@@ -364,25 +399,72 @@
       <div id="panel-nube" class="hidden" role="tabpanel" aria-labelledby="tab-nube">
         <div class="section-title" style="margin-top:0"><h3 style="margin:0">Contables</h3></div>
         <div class="cards" style="margin-bottom:18px">
-          <article class="card"><div class="head"><img class="icon" data-key="contabiliza" alt=""><span class="tag">Nube</span><h3>Contabiliza</h3></div><div class="body"><p>Contabilidad en la nube.</p></div><div class="foot"><a class="btn-sm" href="#">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Contabiliza" target="_blank">WhatsApp</a></div></article>
-          <article class="card"><div class="head"><img class="icon" data-key="analiza" alt=""><span class="tag">Nube</span><h3>Analiza</h3></div><div class="body"><p>Reportes y analítica fiscal.</p></div><div class="foot"><a class="btn-sm" href="#">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Analiza" target="_blank">WhatsApp</a></div></article>
-          <article class="card"><div class="head"><img class="icon" data-key="personia" alt=""><span class="tag">Nube</span><h3>Personia</h3></div><div class="body"><p>Expedientes de empleados en la nube.</p></div><div class="foot"><a class="btn-sm" href="#">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Personia" target="_blank">WhatsApp</a></div></article>
-          <article class="card"><div class="head"><img class="icon" data-key="despachos" alt=""><span class="tag">Nube</span><h3>Despachos</h3></div><div class="body"><p>Gestión para despachos contables.</p></div><div class="foot"><a class="btn-sm" href="#">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Despachos" target="_blank">WhatsApp</a></div></article>
+          <article class="card">
+            <a class="card-link" href="contabiliza.html" style="display:block">
+              <div class="head"><img class="icon" data-key="contabiliza" alt=""><span class="tag-nube">Nube</span><h3>Contabiliza</h3></div>
+              <div class="body"><p>Contabilidad en la nube.</p></div>
+            </a>
+            <div class="foot"><a class="btn-sm" href="contabiliza.html">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Contabiliza" target="_blank" rel="noopener">WhatsApp</a></div>
+          </article>
+          <article class="card">
+            <a class="card-link" href="analiza.html" style="display:block">
+              <div class="head"><img class="icon" data-key="analiza" alt=""><span class="tag-nube">Nube</span><h3>Analiza</h3></div>
+              <div class="body"><p>Reportes y analítica para tus sistemas CONTPAQi.</p></div>
+            </a>
+            <div class="foot"><a class="btn-sm" href="analiza.html">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Analiza" target="_blank" rel="noopener">WhatsApp</a></div>
+          </article>
+          <article class="card">
+            <a class="card-link" href="personia.html" style="display:block">
+              <div class="head"><img class="icon" data-key="personia" alt=""><span class="tag-nube">Nube</span><h3>Personia</h3></div>
+              <div class="body"><p>Expedientes de empleados en la nube.</p></div>
+            </a>
+            <div class="foot"><a class="btn-sm" href="personia.html">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Personia" target="_blank" rel="noopener">WhatsApp</a></div>
+          </article>
+          <article class="card">
+            <a class="card-link" href="despachos.html" style="display:block">
+              <div class="head"><img class="icon" data-key="despachos" alt=""><span class="tag-nube">Nube</span><h3>Despachos</h3></div>
+              <div class="body"><p>Gestión para despachos contables.</p></div>
+            </a>
+            <div class="foot"><a class="btn-sm" href="despachos.html">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Despachos" target="_blank" rel="noopener">WhatsApp</a></div>
+          </article>
         </div>
 
         <div class="section-title" style="margin-top:0"><h3 style="margin:0">Comercial</h3></div>
         <div class="cards">
-          <article class="card"><div class="head"><img class="icon" data-key="vende" alt=""><span class="tag">Nube</span><h3>Vende</h3></div><div class="body"><p>Punto de venta en la nube.</p></div><div class="foot"><a class="btn-sm" href="#">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Vende" target="_blank">WhatsApp</a></div></article>
-          <article class="card"><div class="head"><img class="icon" data-key="cfdi-facturacion" alt=""><span class="tag">Nube</span><h3>CFDI Facturación en Línea</h3></div><div class="body"><p>Facturación rápida desde cualquier lugar.</p></div><div class="foot"><a class="btn-sm" href="#">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20CFDI" target="_blank">WhatsApp</a></div></article>
+          <article class="card">
+            <a class="card-link" href="vende.html" style="display:block">
+              <div class="head"><img class="icon" data-key="vende" alt=""><span class="tag-nube">Nube</span><h3>Vende</h3></div>
+              <div class="body"><p>Punto de venta en la nube.</p></div>
+            </a>
+            <div class="foot"><a class="btn-sm" href="vende.html">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Vende" target="_blank" rel="noopener">WhatsApp</a></div>
+          </article>
+          <article class="card">
+            <a class="card-link" href="facturaelectronica.html" style="display:block">
+              <div class="head"><img class="icon" data-key="facturaelectronica" alt=""><span class="tag-nube">Nube</span><h3>Factura Electrónica</h3></div>
+              <div class="body"><p>Facturación y timbrado CFDI 4.0.</p></div>
+            </a>
+            <div class="foot"><a class="btn-sm" href="facturaelectronica.html">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Factura%20Electr%C3%B3nica" target="_blank" rel="noopener">WhatsApp</a></div>
+          </article>
         </div>
       </div>
 
       <!-- Panel Productividad -->
       <div id="panel-productividad" class="hidden" role="tabpanel" aria-labelledby="tab-productividad">
         <div class="cards">
-          <article class="card"><div class="head"><img class="icon" data-key="evalua" alt=""><span class="tag">Productividad</span><h3>Evalúa (NOM 035/037)</h3></div><div class="body"><p>Gestiona evaluaciones NOM 035 y 037.</p></div><div class="foot"><a class="btn-sm" href="#">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Eval%C3%BAa" target="_blank">WhatsApp</a></div></article>
-          <article class="card"><div class="head"><img class="icon" data-key="kursa" alt=""><span class="tag">Productividad</span><h3>Kursa</h3></div><div class="body"><p>Capacitación en línea para tu equipo.</p></div><div class="foot"><a class="btn-sm" href="#">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Kursa" target="_blank">WhatsApp</a></div></article>
-          <article class="card"><div class="head"><img class="icon" data-key="colabora" alt=""><span class="tag">Productividad</span><h3>Colabora (¡Gratis!)</h3></div><div class="body"><p>Gestión colaborativa básica sin costo.</p></div><div class="foot"><a class="btn-sm" href="#">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Colabora" target="_blank">WhatsApp</a></div></article>
+          <article class="card">
+            <a class="card-link" href="evalua.html" style="display:block">
+              <div class="head"><img class="icon" data-key="evalua" alt=""><span class="tag">Productividad</span><h3>Evalúa (NOM 035/037)</h3></div>
+              <div class="body"><p>Gestiona evaluaciones NOM 035 y 037.</p></div>
+            </a>
+            <div class="foot"><a class="btn-sm" href="evalua.html">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Eval%C3%BAa" target="_blank" rel="noopener">WhatsApp</a></div>
+          </article>
+          <article class="card">
+            <a class="card-link" href="colabora.html" style="display:block">
+              <div class="head"><img class="icon" data-key="colabora" alt=""><span class="tag">Productividad</span><h3>Colabora (¡Gratis!)</h3></div>
+              <div class="body"><p>Gestión colaborativa básica sin costo.</p></div>
+            </a>
+            <div class="foot"><a class="btn-sm" href="colabora.html">Ver más</a><a class="btn-sm btn-whatsapp" href="https://wa.me/525568437918?text=Info%20Colabora" target="_blank" rel="noopener">WhatsApp</a></div>
+          </article>
         </div>
       </div>
     </div>
@@ -417,7 +499,6 @@
     <div class="container">
       <div class="section-title"><h2 style="margin:0">Videos</h2></div>
       <div class="videos-grid">
-        <!-- Reemplaza por tus videos o iframes -->
         <iframe style="aspect-ratio:16/9" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video 1" frameborder="0" allowfullscreen loading="lazy"></iframe>
         <iframe style="aspect-ratio:16/9" src="https://www.youtube.com/embed/oHg5SJYRHA0" title="Video 2" frameborder="0" allowfullscreen loading="lazy"></iframe>
       </div>
@@ -430,22 +511,22 @@
       <div class="section-title"><h2 style="margin:0">Servicios</h2></div>
       <div class="cards">
         <article class="card" style="padding:16px">
-          <a class="card-link" href="SISTEMAS/implementacion.html" style="display:block">
+          <a class="card-link" href="implementacion.html" style="display:block">
             <h3>Implementación</h3><p class="body">Instalación, configuración inicial y migración de catálogos.</p>
           </a>
-          <div class="foot"><a class="btn-sm" href="SISTEMAS/implementacion.html">Ver más</a></div>
+          <div class="foot"><a class="btn-sm" href="implementacion.html">Ver más</a></div>
         </article>
         <article class="card" style="padding:16px">
-          <a class="card-link" href="SISTEMAS/capacitacion.html" style="display:block">
+          <a class="card-link" href="capacitacion.html" style="display:block">
             <h3>Capacitación</h3><p class="body">Cursos para tu equipo por módulo y rol.</p>
           </a>
-          <div class="foot"><a class="btn-sm" href="SISTEMAS/capacitacion.html">Ver más</a></div>
+          <div class="foot"><a class="btn-sm" href="capacitacion.html">Ver más</a></div>
         </article>
         <article class="card" style="padding:16px">
-          <a class="card-link" href="SISTEMAS/soporte.html" style="display:block">
+          <a class="card-link" href="soporte.html" style="display:block">
             <h3>Soporte</h3><p class="body">Acompañamiento por WhatsApp y sesiones remotas.</p>
           </a>
-          <div class="foot"><a class="btn-sm" href="SISTEMAS/soporte.html">Ver más</a></div>
+          <div class="foot"><a class="btn-sm" href="soporte.html">Ver más</a></div>
         </article>
       </div>
     </div>
@@ -454,7 +535,7 @@
   <!-- Promociones con filtros -->
   <section id="promociones">
     <div class="container">
-      <div class="section-title"><h2 style="margin:0">Promociones</h2></div>
+      <div class="section-title"><h2 style="margin:0)">Promociones</h2></div>
       <div class="promo-filters" role="tablist" aria-label="Filtro de promociones">
         <button class="promo-btn active" data-filter="nuevos">Usuarios nuevos</button>
         <button class="promo-btn" data-filter="renovaciones">Renovaciones</button>
@@ -480,6 +561,7 @@
           <span class="badge">Tel: <a href="tel:+525568437918">55 6843 7918</a></span>
           <span class="badge">WhatsApp: <a href="https://wa.me/525568437918" target="_blank" rel="noopener">5568437918</a></span>
           <span class="badge">Email: <a href="mailto:hola@expiriti.mx">hola@expiriti.mx</a></span>
+          <span class="badge badge-nube">Nube</span>
         </div>
       </div>
       <div class="card" style="padding:16px">
@@ -500,13 +582,14 @@
             <option>Contabilidad</option>
             <option>Bancos</option>
             <option>Factura electrónica</option>
+            <option>Analiza (Nube)</option>
             <option>Implementación / Póliza de soporte</option>
             <option>Desarrollo</option>
             <option>Cursos / Soporte</option>
           </select>
           <label for="detalle">Cuéntanos más</label>
           <textarea id="detalle" name="detalle" rows="4" placeholder="Ej. Migración desde Excel, capacitación, timbrado, licencias, etc." required></textarea>
-          <button class="btn btn-gradient" type="submit">Enviar (abre WhatsApp)</button>
+          <button class="btn" style="background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none" type="submit">Enviar (abre WhatsApp)</button>
           <p class="hint">*Por ahora enviamos la consulta por WhatsApp para respuesta más rápida.</p>
         </form>
       </div>
@@ -535,20 +618,16 @@
         </div>
       </div>
 
-      <!-- Marcas (imagenes, no texto) -->
+      <!-- Marcas -->
       <div>
         <h3 class="footer-title">Marcas</h3>
         <div class="brands-col">
-          <!-- Reemplaza por tus archivos en /IMG -->
           <div class="brand-item"><img src="IMG/CONTPAQi.webp" alt="CONTPAQi" onerror="this.style.display='none'"></div>
-          <div class="brand-item"><img src="IMG/PC%20Innovation.webp" alt="PC Innovation" onerror="this.style.display='none'"></div>
-          <div class="brand-item"><img src="IMG/Beeusoft.webp" alt="Beeusoft" onerror="this.style.display='none'"></div>
-          <div class="brand-item"><img src="IMG/Kaspersky.webp" alt="Kaspersky" onerror="this.style.display='none'"></div>
           <div class="brand-item"><img src="IMG/Microsoft.webp" alt="Microsoft" onerror="this.style.display='none'"></div>
         </div>
       </div>
 
-      <!-- Aliados (vertical, extremo derecho) -->
+      <!-- Aliados (extremo derecho) -->
       <div class="ally-col">
         <h3 class="footer-title" style="justify-self:end">Aliados</h3>
         <img src="IMG/bni.webp" alt="BNI" loading="lazy">
@@ -602,19 +681,30 @@
     const IMG_BASE = 'IMG/';
     const IMG_MAP = {
       // contable y comercial
-      'contabilidad':'contabilidad.webp','nominas':'nominas.webp','bancos':'bancos.webp','xml':'xmlenlinea.webp',
-      'comercial-start':'comercialstart.webp','comercial-premium':'comercialpremium.webp','comercial-pro':'comercialpro.webp',
-      // nube
-      'contabiliza':'contabiliza.webp','analiza':'analiza.webp','personia':'personia.webp','despachos':'despachos.webp',
-      'vende':'vende.webp','cfdi-facturacion':'cfdi.webp',
+      'contabilidad':'contabilidad.webp',
+      'nominas':'nominas.webp',
+      'bancos':'bancos.webp',
+      'xml':'xmlenlinea.webp',
+      'comercial-start':'comercialstart.webp',
+      'comercial-premium':'comercialpremium.webp',
+      'comercial-pro':'comercialpro.webp',
+      // nube / adicionales
+      'contabiliza':'contabiliza.webp',
+      'analiza':'analiza.webp',
+      'personia':'personia.webp',
+      'despachos':'despachos.webp',
+      'vende':'vende.webp',
+      'facturaelectronica':'facturaelectronica.webp',
       // productividad
-      'evalua':'evalua.webp','kursa':'kursa.webp','colabora':'colabora.webp'
+      'evalua':'evalua.webp',
+      'colabora':'colabora.webp'
     };
     document.querySelectorAll('.card .icon').forEach(img=>{
       const key = img.getAttribute('data-key');
       const file = IMG_MAP[key];
       if(!file){ return; }
       img.src = IMG_BASE + encodeURIComponent(file);
+      img.onerror = ()=>{ img.style.display='none'; };
     });
 
     // Tabs
