@@ -131,9 +131,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .placeholder .note{text-align:center;color:#b9c8de}
 #calc-primary{grid-column:1}
 #calc-slot-2,#calc-secondary{grid-column:2}
-#calc-tertiary {
-  display: none;
-}
+#calc-tertiary{grid-column:3;display:none}
 #add-more-panel{grid-column:1 / -1}
 
 .calc-container h4{margin:0 0 8px}
@@ -217,44 +215,23 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   .toc{right:10px;bottom:10px;width:86vw}
   .footer-grid{grid-template-columns:1fr}
 }
-  .icons-wrap {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-  justify-items: center;
-  align-items: start;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 10px 0;
+/* Pickers en cuadricula 3x3 con wrap */
+.icons-wrap{
+  display:grid !important;
+  grid-template-columns: repeat(3, minmax(128px, 1fr)) !important;
+  gap:12px !important;
+  justify-items:center !important;
+}
+.icons-wrap .sys-icon{
+  width:100% !important;
 }
 
-.sys-icon {
-  background: #111723;
-  border: 1px solid #1e2b3c;
-  border-radius: 16px;
-  padding: 12px;
-  display: grid;
-  justify-items: center;
-  row-gap: 8px;
-  width: 100%;
-  max-width: 200px;
-  color: #e8eef6;
-  transition: all .2s ease;
+/* Responsive: en móviles 2 por fila */
+@media (max-width:680px){
+  .icons-wrap{
+    grid-template-columns: repeat(2, minmax(120px, 1fr)) !important;
+  }
 }
-.sys-icon:hover {
-  border-color: #2dd4bf;
-  transform: translateY(-3px);
-}
-.sys-icon img {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-}
-.sys-icon small.sys-price {
-  color: #9fb2cb;
-  font-size: 13px;
-}
-
 </style>
 </head>
 <body id="top">
