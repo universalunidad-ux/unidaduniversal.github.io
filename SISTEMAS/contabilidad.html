@@ -705,50 +705,6 @@ function renderCombinedTable(rows){
 })();
 
 // ===== Ajustes UI requeridos =====
-// 1) MultiRFC por defecto en todas las calculadoras.
-// 2) "Operación" oculto; solo aparece si modalidad = Tradicional.
-(function enforceCalcPrefs(){
-  function forceMultiRFC(root){
-    const allSelects=[...root.querySelectorAll('select')];
-    allSelects.forEach(sel=>{
-      const opts=[...sel.options].map(o=>o.text.trim().toLowerCase());
-      if(opts.includes('monorfc') && opts.includes('multirfc')){
-        const target=[...sel.options].find(o=>o.text.toLowerCase().includes('multirfc'));
-        if(target){ sel.value=target.value; sel.dispatchEvent(new Event('change',{bubbles:true})); }
-      }
-    });
-  }
-  function toggleOperacion(root){
-    const modalidad=[...root.querySelectorAll('select')].find(sel=>{
-      const t=[...sel.options].map(o=>o.text.toLowerCase());
-      return t.includes('anual') && t.some(x=>x.includes('tradicional'));
-    });
-    if(!modalidad) return;
-    const opLabel=[...root.querySelectorAll('label, .control-label, legend')].find(el=>/operaci[oó]n/i.test(el.textContent||''));
-    const opBlock=opLabel ? opLabel.closest('div, fieldset, .controls, .calc-controls') : null;
-    const apply=()=>{
-      const isTrad=(modalidad.value && /tradicional/i.test(modalidad.options[modalidad.selectedIndex]?.text||'')) || /tradicional/i.test(modalidad.value||'');
-      if(opBlock){ opBlock.style.display=isTrad?'':'none'; }
-    };
-    modalidad.addEventListener('change',apply); apply();
-  }
-
-  const targets=['#calc-primary','#calc-secondary','#calc-tertiary'];
-  const applyAll=()=>targets.forEach(sel=>{const el=document.querySelector(sel); if(el){forceMultiRFC(el); toggleOperacion(el);}});
-  applyAll();
-
-  // Observa render dinámico de la calculadora
-  const obs=new MutationObserver(muts=>{
-    muts.forEach(m=>{
-      m.addedNodes.forEach(n=>{
-        if(!(n instanceof HTMLElement)) return;
-        if(n.matches?.('#calc-primary, #calc-secondary, #calc-tertiary')){ forceMultiRFC(n); toggleOperacion(n); }
-        targets.forEach(sel=>{const inner=n.querySelector?.(sel); if(inner){ forceMultiRFC(inner); toggleOperacion(inner); }});
-      });
-    });
-  });
-  obs.observe(document.body,{childList:true,subtree:true});
-})();
 
 // ===== FAQ: acordeón (cierra el anterior) =====
 (function(){
