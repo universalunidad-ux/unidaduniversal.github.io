@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CONTPAQi Evalúa | Expiriti</title>
+<meta name="description" content="CONTPAQi Evalúa con Expiriti: Cumple con la NOM-035 y NOM-037. Mide clima laboral y previene riesgos psicosociales en tu empresa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
+<link rel="manifest" href="../IMG/site.webmanifest">
+<link rel="icon" href="../IMG/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
+
+<style>
+:root{
+  --bg:#0b0f14;--card:#111723;--muted:#95a2b3;--text:#e8eef6;
+  --brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
+  --maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%); color:var(--text);
+  scroll-padding-top:84px;
+}
+a{color:inherit;text-decoration:none}
+img,video,iframe{max-width:100%;display:block}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 34px}
+
+/* Header fijo */
+header{
+  position:sticky; top:0; z-index:1000; width:100%;
+  background:rgba(11,15,20,.75); backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid #19202b;
+}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.brand img{width:38px;height:38px;border-radius:10px;display:block}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;margin-top:2px}
+nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
+nav a{opacity:.9} nav a:hover{opacity:1}
+.cta{display:flex;gap:10px;align-items:center}
+.burger{display:none}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #1c2533;background:#121a25;box-shadow:var(--shadow);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#0b0f14;border:none}
+.btn-grad-purple{background:linear-gradient(145deg,#7c3aed,#a855f7);color:#fff;border:none}
+.btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
+.btn-ghost{background:#121a25;color:#e8eef6}
+.btn-outline-gradient{color:#cfe9ff;background:transparent;border:1px solid transparent;position:relative;overflow:hidden}
+.btn-outline-gradient::before{content:"";position:absolute;inset:0;padding:1px;border-radius:12px;background:linear-gradient(145deg,var(--brand),var(--brand-2));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+
+/* Títulos / badges */
+.hero{padding:26px 0 0}
+h1{font-size:clamp(28px,3.4vw,42px);line-height:1.1;margin:8px 0 14px}
+h2,h3,h4{margin:0 0 10px}
+.lead{color:#c6d1e3;font-size:18px;max-width:68ch}
+.hint{color:#aebbd0;opacity:.9}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1c2c;border:1px solid #203044;color:#cfe3ff;font-size:12px}
+.lock-note{margin:8px 0 0;font-size:12px;color:#94a8c6;display:inline-flex;gap:6px;align-items:center}
+.lock-note::before{content:"⚠️";}
+section{padding:26px 0;border-top:1px solid #11182725}
+.card{background:var(--card);border:1px solid #1c2533;border-radius:16px;overflow:hidden}
+.card .body{padding:12px;color:#c8d3e5}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.grid-2.align-center{align-items:center}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.stack{display:grid;gap:12px}
+.title-gradient{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ===== HERO 3 columnas ===== */
+.hero-3col{display:grid;grid-template-columns:280px 1.55fr 1.05fr;column-gap:8px;align-items:start}
+@media (max-width:1200px){ .hero-3col{grid-template-columns:270px 1.45fr 1.05fr} }
+@media (max-width:980px){ .hero-3col{grid-template-columns:1fr} }
+.stack-left{display:grid;gap:10px;align-items:start;justify-items:start}
+.pdf-card{margin-left:-6px}
+.pdf-frame{width:100%;height:68vh;border:0}
+@media (max-width:980px){ .pdf-frame{height:56vh} }
+
+/* === Botones Hero (hover) === */
+.hero-btn {transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease}
+.hero-btn:hover {transform: translateY(-3px); box-shadow: 0 10px 26px rgba(0,0,0,.35)}
+.hero-btn.btn-grad-green:hover {box-shadow: 0 10px 26px rgba(34,197,94,.3)}
+.hero-btn.btn-grad-purple:hover {box-shadow: 0 10px 26px rgba(168,85,247,.3)}
+.hero-btn.btn-grad-blue:hover {box-shadow: 0 10px 26px rgba(59,130,246,.3)}
+.hero-btn.btn-ghost:hover {background:#192636;border-color:#2a3c52}
+
+/* ===== Galería portada ===== */
+.carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:420px}
+.carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
+.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block}
+.carousel-nav{display:flex;gap:8px;justify-content:center;padding:10px;background:#0e1724;border-top:1px solid #1c2533}
+.dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;opacity:.6}
+.dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
+.arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}.arrowCircle .chev{font-size:24px;line-height:1}
+
+/* ===== Carrusel de sistemas ===== */
+.carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
+.carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px}
+.carouselX .sys{flex:0 0 calc((100% - 24px)/3);background:#0f1622;border:1px solid #1c2533;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.carouselX .sys img{width:72px;height:72px;border-radius:16px;margin:6px auto 10px;background:#101826;object-fit:cover}
+.group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0 0}
+.group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2))}
+
+/* ===== PRECIOS (Nube) ===== */
+/* Oculta la calculadora JS estándar: no se usa en Evalúa */
+#calc-primary, #calc-slot-2, #calc-tertiary, #add-more-panel, #combined-wrap, #app, .icons-wrap { display:none; }
+
+.pricing-table-nube{
+  width:100%;max-width:960px;margin:20px auto;border-collapse:separate;border-spacing:0;
+  border:1px solid #1e2b3c;border-radius:12px;overflow:hidden
+}
+.pricing-table-nube th,.pricing-table-nube td{
+  padding:14px 16px;border-bottom:1px solid #1e2b3c;text-align:left;vertical-align:middle
+}
+.pricing-table-nube thead th{background:#0e1724;color:#dce8ff;font-size:16px}
+.pricing-table-nube tbody tr:last-child td{border-bottom:none}
+.pricing-table-nube td:nth-child(2),.pricing-table-nube td:nth-child(3){text-align:center;color:var(--muted)}
+.pricing-table-nube .price{font-weight:700;font-size:1.1em;color:var(--brand);text-align:right}
+.pricing-table-nube .plan-name{font-weight:700;color:var(--text)}
+.pricing-table-nube .plan-desc{font-size:12px;color:var(--muted)}
+.pricing-table-nube tfoot .note{
+  padding:14px 16px;background:#0f1622;text-align:center;font-size:14px;color:var(--muted);border-bottom:1px solid #1e2b3c
+}
+
+/* ===== Comparativa / FAQ / Footer ===== */
+.table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden;margin-bottom:20px}
+.table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
+.table-like tr:last-child td{border-bottom:none}
+.table-like thead th{background:#0e1724;color:#dce8ff;text-align:left}
+.table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
+
+.toc{position:fixed;right:16px;bottom:16px;width:240px;max-height:48vh;overflow:auto;background:rgba(15,24,38,.75);border:1px solid #1c2533;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;z-index:900;box-shadow:0 10px 24px rgba(0,0,0,.35);backdrop-filter: blur(6px);transition:all .2s ease}
+.toc.collapsed{width:auto;max-height:none;padding:6px 10px;border-radius:999px;gap:0}
+.toc.collapsed .toc-title,.toc.collapsed a,.toc.collapsed .toc-close{display:none}
+.toc-title{font-weight:800;color:#b9c8de;margin-bottom:6px}
+.toc a{padding:6px 8px;border-radius:10px;color:#cfe3ff;border:1px solid transparent}
+.toc a:hover{border-color:#233347;background:#101b2a}
+
+.faq-wrap{display:grid;gap:10px}
+.faq-item{border:1px solid #1e2b3c;border-radius:12px;background:#0f1622;overflow:hidden}
+.faq-item>summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.faq-item>summary::marker{display:none}
+.faq-item[open]>summary{background:#0e1724;border-bottom:1px solid #1e2b3c}
+.faq-item p{padding:12px 14px;margin:0;color:#cfe3ff}
+
+footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
+.footer-grid{display:grid;gap:18px;grid-template-columns:1.6fr 1.2fr 1.2fr 1fr}
+.footer-title{font-weight:700;color:#d8e3f6;margin:0 0 10px}
+.contact-list{display:grid;gap:6px;font-size:14px}
+.item .ico{width:22px}
+.payments-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-items:center}
+.payments-grid img{max-height:28px;object-fit:contain;filter:grayscale(1);opacity:.9}
+.brands-col{display:grid;gap:10px}
+.brand-item img{max-height:26px;object-fit:contain;filter:grayscale(.1);background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:6px}
+.ally-col{display:grid;gap:10px;justify-items:end}
+.ally-col img{height:46px;object-fit:contain;background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:8px}
+.footer-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;padding-top:12px;border-top:1px solid #1c2533}
+
+/* Responsive generales */
+@media (max-width:980px){
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  nav ul{display:none}
+  .burger{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;border:1px solid #1c2533;background:#101722}
+  .mobile{display:none}.mobile.open{display:block}
+  .mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}
+  .toc{right:10px;bottom:10px;width:86vw}
+  .footer-grid{grid-template-columns:1fr}
+}
+
+/* ===== Funciones destacadas ===== */
+.pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+.pill{
+  padding:8px 12px;border-radius:999px;
+  border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);
+  color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;
+  transition:transform .12s ease, box-shadow .12s ease, background .2s ease
+}
+.pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
+
+/* Grid features */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:980px){ .feature-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:680px){ .feature-grid{grid-template-columns:1fr} }
+.fcard{border:1px solid #1e2b3c;border-radius:14px;background:linear-gradient(180deg,#0f1622,#0f1724);padding:14px;display:grid;gap:8px;transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease}
+.fcard:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:#284061}
+.fhead{display:flex;align-items:center;gap:10px}
+.ficon{width:28px;height:28px;border-radius:8px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
+.fcard h4{margin:0;font-size:15px}
+.fcard p{margin:0;color:#bcd0ea;font-size:14px;line-height:1.35}
+
+/* ===== “¿Por qué usar…?” ===== */
+.listSlider{position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);border:1px solid #1c2533;padding:8px;overflow:hidden}
+.listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
+.listPage{min-width:100%;padding:8px}
+.listItem{display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:center;background:#0f1c2c;border:1px solid #152437;border-radius:14px;margin:10px 4px;padding:14px;transition:border-color .15s ease, transform .12s ease}
+.listItem:hover{border-color:#254064;transform:translateY(-1px)}
+.listIcon{width:84px;height:84px;border-radius:14px;background:#0f1725;display:grid;place-items:center;overflow:hidden}
+.listIcon img{width:84px;height:84px;object-fit:cover}
+.listItem strong{display:block;font-size:14px;margin-bottom:2px}
+.listItem div>div{font-size:13px;color:#b9c8de;line-height:1.35}
+#beneficios .arrowCircle{width:40px;height:40px}
+#beneficios .arrowCircle .chev{font-size:22px}
+
+/* ===== Videos (horizontales) ===== */
+.yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;justify-items:center}
+@media (max-width:768px){ .yt-grid{grid-template-columns:1fr} }
+.yt{width:100%;max-width:680px}
+.yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
+</style>
+</head>
+<body id="top">
+<header>
+  <div class="container nav">
+    <a href="#top" class="brand" aria-label="Inicio Expiriti">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
+      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#caracteristicas">Funcionalidades</a></li>
+        <li><a href="#videos">Vídeos</a></li>
+        <li><a href="#calculadora-section">Precio</a></li>
+        <li><a href="#comparativa">Comparativa</a></li>
+        <li><a href="#faq">Preguntas frecuentes</a></li>
+        <li><a href="#sesion-guiada">Demo</a></li>
+      </ul>
+    </nav>
+    <div class="cta">
+      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
+      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20Evalua" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
+    </div>
+  </div>
+  <div class="container mobile" id="mobileMenu">
+    <a href="#caracteristicas">Funcionalidades</a>
+    <a href="#videos">Vídeos</a>
+    <a href="#calculadora-section">Precio</a>
+    <a href="#comparativa">Comparativa</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#sesion-guiada">Demo</a>
+  </div>
+</header>
+
+<main class="container hero">
+  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos">← Volver a productos</a>
+  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  <h1>CONTPAQi Evalúa <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nube</span></h1>
+
+  <div class="badges">
+    <span class="badge" style="background:rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #fcd34d;">Cumplimiento NOM-035</span>
+    <span class="badge">Riesgos Psicosociales</span>
+    <span class="badge">Clima Laboral</span>
+    <span class="badge">NOM-037 Teletrabajo</span>
+  </div>
+  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+
+  <section aria-label="Resumen">
+    <div class="card body">
+      <div class="hero-3col">
+        <div class="stack-left">
+          <img src="../IMG/evalua.webp" alt="CONTPAQi Evalúa" style="width:220px;margin-bottom:12px;border-radius:12px">
+          <div class="stack">
+            <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Evalua" target="_blank" rel="noopener">Comprar Suscripción</a>
+            <a class="btn btn-grad-purple hero-btn" href="https://www.contpaqi.com/evalua" target="_blank" rel="noopener">Probar gratis (20 días)</a>
+            <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
+            <a class="btn btn-ghost hero-btn" href="https://www.contpaqi.com/ficha-producto-evalua" target="_blank" rel="noopener">Ficha técnica (Web)</a>
+            <a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>
+          </div>
+        </div>
+
+        <div class="card body pdf-card">
+          <img src="../IMG/usas.jpeg" alt="Equipo trabajando en la nube" style="width:100%;border-radius:10px;margin-bottom:10px">
+          <h4 class="title-gradient" style="margin:0 0 6px">Cumple con la NOM-035 y mejora tu Clima Laboral</h4>
+          <p class="hint" style="margin:0 0 8px">La solución integral para evaluar, analizar y prevenir riesgos psicosociales en tu empresa.</p>
+          <iframe class="pdf-frame" title="Ficha de CONTPAQi Evalúa" src="../PDFS/Ficha_Producto_CONTPAQi_Evalua.pdf#page=1&view=FitH"></iframe>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+            <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Evalua.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
+            <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Evalua.pdf" download>Descargar</a>
+          </div>
+        </div>
+
+        <aside class="card body">
+          <h4 class="title-gradient">Galería</h4>
+          <div class="carousel" id="carousel1" aria-label="Galería Evalúa">
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <img class="carousel-slide" src="../IMG/1evalua_placeholder.webp" alt="Dashboard de Cumplimiento NOM-035">
+              <img class="carousel-slide" src="../IMG/2evalua_placeholder.webp" alt="Gestión de Encuestas de Clima Laboral">
+              <img class="carousel-slide" src="../IMG/3evalua_placeholder.webp" alt="Reportes de Riesgos Psicosociales">
+              <img class="carousel-slide" src="../IMG/4evalua_placeholder.webp" alt="Integración con Personia">
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de galería">
+              <button class="dot active" aria-label="Ir a la imagen 1"></button>
+              <button class="dot" aria-label="Ir a la imagen 2"></button>
+              <button class="dot" aria-label="Ir a la imagen 3"></button>
+              <button class="dot" aria-label="Ir a la imagen 4"></button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="caracteristicas" aria-labelledby="caracteristicas-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <div class="card body">
+      <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
+
+      <div class="pillbar" role="tablist" aria-label="Categorías de características">
+        <button class="pill active" data-filter="nom035">Cumplimiento NOM-035</button>
+        <button class="pill" data-filter="gestion">Gestión y Análisis</button>
+        <button class="pill" data-filter="integracion">Cultura e Integración</button>
+      </div>
+
+      <div class="grid-3 feature-grid">
+        <!-- NOM-035 -->
+        <article class="fcard tag-nom035"><div class="fhead"><img class="ficon" src="../IMG/ic_sat_imss.webp" alt=""><h4>Guías Oficiales I, II y III</h4></div><p>Accede a las guías de la STPS para evaluar factores psicosociales.</p></article>
+        <article class="fcard tag-nom035"><div class="fhead"><img class="ficon" src="../IMG/ic_prevencion.webp" alt=""><h4>Prevención de Riesgos</h4></div><p>Identifica factores de riesgo y toma medidas correctivas a tiempo.</p></article>
+        <article class="fcard tag-nom035"><div class="fhead"><img class="ficon" src="../IMG/ic_alertas.webp" alt=""><h4>Evita Sanciones</h4></div><p>Cumple con los estándares legales y evita multas laborales.</p></article>
+        <article class="fcard tag-nom035"><div class="fhead"><img class="ficon" src="../IMG/ic_teletrabajo.webp" alt=""><h4>Cumplimiento NOM-037</h4></div><p>Ayuda a gestionar aspectos de teletrabajo y riesgos ergonómicos.</p></article>
+
+        <!-- Gestión -->
+        <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_encuestas.webp" alt=""><h4>Gestión de Encuestas</h4></div><p>Define periodos y aplica encuestas por área, depto. o centro de trabajo.</p></article>
+        <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_monitoreo.webp" alt=""><h4>Monitoreo en Tiempo Real</h4></div><p>Consulta el progreso de las encuestas y accede a resultados parciales.</p></article>
+        <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_reportes_rh.webp" alt=""><h4>Reportes Personalizados</h4></div><p>Genera reportes por categoría, departamento o empleado.</p></article>
+        <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_comparativa.webp" alt=""><h4>Comparativos Históricos</h4></div><p>Evalúa la efectividad de las acciones implementadas a lo largo del tiempo.</p></article>
+
+        <!-- Integración -->
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_clima_laboral.webp" alt=""><h4>Clima Laboral</h4></div><p>Evalúa el entorno organizacional para detectar áreas de mejora.</p></article>
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_contabiliza_con.webp" alt=""><h4>Integra con Personia</h4></div><p>Centraliza la gestión de capital humano y optimiza la administración.</p></article>
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_seguridad_nube.webp" alt=""><h4>Seguridad Avanzada</h4></div><p>Tus datos y los de tus empleados están protegidos en la nube.</p></article>
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_nube_acceso.webp" alt=""><h4>Acceso 24/7</h4></div><p>Administra tus evaluaciones desde cualquier lugar (PC/Mac).</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
+      <div>
+        <h2 class="title-gradient">¿Por qué usar Evalúa? <span class="badge">Beneficios Nube</span></h2>
+        <p class="lead">Asegura el cumplimiento de la NOM-035, identifica riesgos psicosociales y toma decisiones para mejorar el bienestar de tu equipo.</p>
+        <div class="listSlider">
+          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+          <div class="listTrack">
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_cumplimiento_simple.webp" alt=""></div><div><strong>EVITA SANCIONES</strong><div>Cumple fácilmente con las guías I, II y III de la NOM-035.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_mejora_bienestar.webp" alt=""></div><div><strong>MEJORA EL BIENESTAR</strong><div>Identifica factores de riesgo y promueve un entorno saludable.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_decisiones.webp" alt=""></div><div><strong>TOMA DECISIONES INFORMADAS</strong><div>Genera reportes y comparativos para acciones correctivas.</div></div></div>
+            </div>
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_implementa_facil.webp" alt=""></div><div><strong>IMPLEMENTACIÓN FÁCIL</strong><div>Aplica encuestas por centro de trabajo, área o departamento.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_ecosistema_nube.webp" alt=""></div><div><strong>INTEGRACIÓN DE RH</strong><div>Conecta con CONTPAQi Personia para una gestión centralizada.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/ic_ahorro_rh.webp" alt=""></div><div><strong>AHORRA TIEMPO A RH</strong><div>Automatiza la aplicación y análisis de resultados.</div></div></div>
+            </div>
+          </div>
+          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="card body">
+          <h4 class="title-gradient" style="margin:0 0 6px">Video (reel)</h4>
+          <iframe class="pdf-frame" title="Reel CONTPAQi Evalúa" src="https://www.youtube-nocookie.com/embed/VIDEO_ID_EVALUA_REEL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="videos" aria-labelledby="videos-title">
+    <div class="card body">
+      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+      <div class="yt-grid">
+        <div class="yt">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID_EVALUA_1"
+            title="Video Principal CONTPAQi Evalúa"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID_EVALUA_2"
+            title="Demo CONTPAQi Evalúa"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="integra" aria-labelledby="integra-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Evalúa</h3>
+    <div class="card body">
+      <div class="carouselX" data-step="3">
+        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+        <div class="track">
+          <article class="sys"><img src="../IMG/personia.webp" alt="Personia" /><h4>CONTPAQi Personia</h4><p>Se integra nativamente para sincronizar empleados y centralizar la gestión de RH.</p></article>
+          <article class="sys"><img src="../IMG/colabora.webp" alt="Colabora" /><h4>CONTPAQi Colabora</h4><p>Complementa la experiencia del empleado (portal) con la gestión de bienestar.</p></article>
+          <article class="sys"><img src="../IMG/nominas.webp" alt="Nóminas" /><h4>CONTPAQi Nóminas</h4><p>Forma parte del ecosistema de RH, facilitando la administración de personal.</p></article>
+        </div>
+        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        <div class="group-dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calculadora-section" aria-labelledby="calc">
+    <h3 id="calc" class="title-gradient">Planes y Precios (Anuales)</h3>
+    <p class="hint" style="text-align:center">CONTPAQi Evalúa se maneja por suscripción anual basada en el número de empleados.</p>
+    <div class="card body">
+      <table class="pricing-table-nube" aria-describedby="calc">
+        <thead>
+          <tr>
+            <th>Plan</th>
+            <th>Empleados Incluidos</th>
+            <th>Usuarios</th>
+            <th>Precio Base Anual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="plan-name">Inicial</td>
+            <td>25 Empleados</td>
+            <td>Multi-usuario</td>
+            <td class="price">$2,990</td>
+          </tr>
+          <tr>
+            <td class="plan-name">Equipos</td>
+            <td>50 Empleados</td>
+            <td>Multi-usuario</td>
+            <td class="price">$4,990</td>
+          </tr>
+          <tr>
+            <td class="plan-name">Empresarial</td>
+            <td>100 Empleados</td>
+            <td>Multi-usuario</td>
+            <td class="price">$7,990</td>
+          </tr>
+          <tr>
+            <td class="plan-name">Corporativo</td>
+            <td>200 Empleados</td>
+            <td>Multi-usuario</td>
+            <td class="price">$10,990</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="note" colspan="4">
+              <strong>Nota:</strong> Precios de ejemplo. Puedes adquirir paquetes de empleados adicionales.
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <p class="hint" style="text-align:center; margin-top: 15px;">Precios más IVA. Consultar descuentos del mes por compras en paquete (más de 2 sistemas nube)</p>
+    </div>
+  </section>
+
+  <section id="comparativa" aria-labelledby="comparativa-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="comparativa-title" class="title-gradient">Comparativas</h3>
+    <div class="card body">
+      <h4 style="margin-bottom: 15px;">Evalúa vs Encuestas Genéricas (Forms, SurveyMonkey)</h4>
+      <table class="table-like" aria-label="Comparativa Evalúa vs otras herramientas">
+        <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Evalúa</th><th>Google Forms / SurveyMonkey</th><th>Excel / Manual</th></tr></thead>
+        <tbody>
+          <tr><td>Enfoque Principal</td><td class="highlight">✅ Cumplimiento NOM-035</td><td>⚠️ Encuestas genéricas</td><td>❌ Manual</td></tr>
+          <tr><td>Guías STPS (I, II, III)</td><td class="highlight">✅ Incluidas y automatizadas</td><td>❌ Manual (requiere crearlas)</td><td>❌ Manual</td></tr>
+          <tr><td>Reportes de Riesgo</td><td class="highlight">✅ Por categoría y depto.</td><td>⚠️ Solo resultados de preguntas</td><td>❌ Tabulación manual</td></tr>
+          <tr><td>Integración RH</td><td class="highlight">✅ Nativa (Personia)</td><td>❌ Nula</td><td>❌ Nula</td></tr>
+          <tr><td>Confidencialidad</td><td class="highlight">✅ Garantizada por sistema</td><td>⚠️ Depende de configuración</td><td>❌ Difícil de garantizar</td></tr>
+          <tr><td>Evidencia Legal (STPS)</td><td class="highlight">✅ Fácil de generar</td><td>⚠️ Difícil de consolidar</td><td>❌ Difícil de consolidar</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="faq" aria-labelledby="faq-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
+    <div class="faq-wrap" id="faqWrap">
+      <details class="faq-item"><summary>¿Qué es la NOM-035 y por qué debo cumplirla?</summary><p>Es una Norma Oficial Mexicana (NOM) de la STPS que obliga a las empresas a identificar, analizar y prevenir los factores de riesgo psicosocial (como estrés laboral, liderazgo negativo, etc.). Su incumplimiento puede generar multas.</p></details>
+      <details class="faq-item"><summary>¿Evalúa incluye las guías oficiales de la STPS?</summary><p>Sí, CONTPAQi Evalúa incluye las guías de referencia I (acontecimientos traumáticos), II (identificación de riesgos para centros de 16-50 empleados) y III (identificación de riesgos para centros de +50 empleados).</p></details>
+      <details class="faq-item"><summary>¿Se integra con CONTPAQi Personia?</summary><p>Sí, se integra nativamente con CONTPAQi Personia. Esto te permite sincronizar tu catálogo de empleados y centralizar la gestión de tu capital humano, desde la nómina hasta las evaluaciones de bienestar.</p></details>
+      <details class="faq-item"><summary>¿Cómo se maneja el precio de Evalúa?</summary><p>El precio es una suscripción anual. Se basa en el número de empleados activos que necesitas evaluar. Existen diferentes planes (Inicial, Equipos, etc.) que incluyen un número de empleados, y puedes comprar paquetes adicionales si creces.</p></details>
+      <details class="faq-item"><summary>¿Puedo crear mis propias encuestas además de la NOM-035?</summary><p>Sí, además de las guías de la NOM-035, la plataforma te permite crear y gestionar encuestas personalizadas, como las de Clima Laboral, para medir otros aspectos del entorno organizacional.</p></details>
+    </div>
+  </section>
+
+  <section id="sesion-guiada" class="card body">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 class="title-gradient">¿Listo para cumplir con la NOM-035?</h3>
+    <p>Agenda una sesión con nuestros especialistas o tramita tu prueba sin costo.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+      <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%2045%20minutos%20por%20Zoom%20para%20Evalua" target="_blank" rel="noopener">Agendar sesión guiada (45 min)</a>
+      <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Evalua" target="_blank" rel="noopener">Comprar ahora</a>
+    </div>
+  </section>
+
+  <aside class="toc collapsed" id="toc" aria-live="polite">
+    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
+    <button class="toc-close" aria-label="Cerrar">×</button>
+    <strong class="toc-title">Mapa del sitio</strong>
+    <a href="#caracteristicas">Funcionalidades</a>
+    <a href="#videos">Vídeos</a>
+    <a href="#integra">Integraciones</a>
+    <a href="#calculadora-section">Precio</a>
+    <a href="#comparativa">Comparativa</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#sesion-guiada">Demo</a>
+  </aside>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <h3 class="footer-title">Contacto</h3>
+      <div class="contact-list">
+        <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
+        <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
+        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer-title">Formas de pago</h3>
+      <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy"></div>
+    </div>
+    <div>
+      <h3 class="footer-title">Marcas</h3>
+      <div class="brands-col">
+        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi"></div>
+        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft"></div>
+      </div>
+    </div>
+    <div class="ally-col">
+      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
+      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
+      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px">
+      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
+    </div>
+    <div class="hint">Aviso de privacidad · Términos</div>
+  </div>
+</footer>
+
+<script>
+// Año y menú móvil
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('burger')?.addEventListener('click', ()=>{
+  document.getElementById('mobileMenu')?.classList.toggle('open');
+});
+
+// TOC (Mapa)
+(function(){
+  const toc = document.getElementById('toc'),
+        openBtn = document.getElementById('tocToggle'),
+        closeBtn = toc?.querySelector('.toc-close');
+  if(!toc || !openBtn || !closeBtn) return;
+  openBtn.addEventListener('click', e=>{ e.stopPropagation(); toc.classList.toggle('collapsed'); });
+  closeBtn.addEventListener('click', ()=> toc.classList.add('collapsed'));
+  toc.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> toc.classList.add('collapsed')));
+  document.addEventListener('click', e=>{ if(!toc.contains(e.target) && e.target !== openBtn) toc.classList.add('collapsed'); });
+})();
+
+// Galería portada
+(function(){
+  const root=document.getElementById('carousel1'); if(!root) return;
+  const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
+  const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
+  let idx=0;
+  function setActive(i){
+    idx=(i+dots.length)%dots.length;
+    dots.forEach((d,di)=>d.classList.toggle('active',di===idx));
+    track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});
+  }
+  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
+  prev.addEventListener('click',()=>setActive(idx-1));
+  next.addEventListener('click',()=>setActive(idx+1));
+  track.addEventListener('scroll',()=>{
+    const i=Math.round(track.scrollLeft/track.clientWidth);
+    dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+    idx=i;
+  });
+  window.addEventListener('resize',()=>setActive(idx));
+  setActive(0);
+})();
+
+// Slider ¿Por qué usar...?
+(function(){
+  const wrap=document.querySelector('#beneficios .listSlider'); if(!wrap) return;
+  const track=wrap.querySelector('.listTrack'), prev=wrap.querySelector('.prev'), next=wrap.querySelector('.next');
+  let page=0, total=track.children.length;
+  function go(i){ page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'}); }
+  prev.addEventListener('click',()=>go(page-1));
+  next.addEventListener('click',()=>go(page+1));
+  window.addEventListener('resize',()=>go(page));
+})();
+
+// Carrusel integraciones
+(function(){
+  document.querySelectorAll('.carouselX').forEach(root=>{
+    const track=root.querySelector('.track'),
+          prev=root.querySelector('.arrowCircle.prev'),
+          next=root.querySelector('.arrowCircle.next'),
+          dotsWrap=root.querySelector('.group-dots');
+    const items = track.querySelectorAll('.sys');
+    const itemsPerPage = 3;
+
+    function groupsCount(){ return Math.max(1, Math.ceil(items.length / itemsPerPage)); }
+    function groupW(){ return track.clientWidth; }
+
+    const showControls = groupsCount() > 1;
+    if (prev) prev.style.display = showControls ? '' : 'none';
+    if (next) next.style.display = showControls ? '' : 'none';
+    if (dotsWrap) dotsWrap.style.display = showControls ? '' : 'none';
+    if (!showControls) return;
+
+    function setDot(i){ dots.forEach((d,idx)=>d.classList.toggle('active',idx===i)); }
+    function goTo(i){ track.scrollTo({left: i*groupW(), behavior:'smooth'}); setDot(i); }
+
+    dotsWrap.innerHTML='';
+    const dots=Array.from({length:groupsCount()},(_,i)=>{
+      const b=document.createElement('button');
+      b.className='dot'+(i===0?' active':'');
+      b.addEventListener('click',()=>goTo(i));
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    let idx=0;
+    prev.addEventListener('click',()=>{ idx=Math.max(0,idx-1); goTo(idx); });
+    next.addEventListener('click',()=>{ idx=Math.min(dots.length-1,idx+1); goTo(idx); });
+    window.addEventListener('resize',()=>goTo(idx));
+    goTo(0);
+  });
+})();
+
+// Píldoras (filtros) - Evalúa
+(function(){
+  const pills=[...document.querySelectorAll('.pill')];
+  const cards=[...document.querySelectorAll('.feature-grid .fcard')];
+  function apply(filter){
+    cards.forEach(c=>{
+      const show =
+        (filter==='nom035' && c.classList.contains('tag-nom035')) ||
+        (filter==='gestion' && c.classList.contains('tag-gestion')) ||
+        (filter==='integracion' && c.classList.contains('tag-integracion'));
+      c.style.display = show ? '' : 'none';
+    });
+  }
+  pills.forEach(p=>{
+    p.addEventListener('click',()=>{
+      pills.forEach(x=>x.classList.remove('active'));
+      p.classList.add('active');
+      apply(p.dataset.filter);
+    });
+  });
+  apply('nom035'); // Filtro inicial
+})();
+
+// FAQ acordeón (uno abierto a la vez)
+(function(){
+  const wrap=document.getElementById('faqWrap'); if(!wrap) return;
+  const items=[...wrap.querySelectorAll('.faq-item')];
+  items.forEach(d=>{
+    d.addEventListener('toggle', ()=>{
+      if(d.open){ items.forEach(o=>{ if(o!==d) o.removeAttribute('open'); }); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
