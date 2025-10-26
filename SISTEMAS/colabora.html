@@ -87,7 +87,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .pdf-frame{width:100%;height:68vh;border:0}
 @media (max-width:980px){ .pdf-frame{height:56vh} }
 
-/* === Botones Hero hover === */
+/* Botones Hero (hover) */
 .hero-btn {transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease}
 .hero-btn:hover {transform: translateY(-3px); box-shadow: 0 10px 26px rgba(0,0,0,.35)}
 .hero-btn.btn-grad-green:hover {box-shadow: 0 10px 26px rgba(34,197,94,.3)}
@@ -105,13 +105,54 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
 .arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}.arrowCircle .chev{font-size:24px;line-height:1}
 
-/* ===== Carrusel integra ===== */
+/* ===== Carrusel integra (un solo elemento) ===== */
 .carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
 .carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px;justify-content:center}
 .carouselX .sys{flex:0 0 auto;background:#0f1622;border:1px solid #1c2533;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:420px}
 .carouselX .sys img{width:72px;height:72px;border-radius:16px;margin:6px auto 10px;background:#101826;object-fit:cover}
 .group-dots{display:none}
 .carouselX .arrowCircle{display:none}
+
+/* ===== Funciones destacadas (PÍLDORAS/FILTRO) ===== */
+.pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+.pill{
+  padding:8px 12px;border-radius:999px;
+  border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);
+  color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;
+  transition:transform .12s ease, box-shadow .12s ease, background .2s ease
+}
+.pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
+
+/* Grid features */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:980px){ .feature-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:680px){ .feature-grid{grid-template-columns:1fr} }
+.fcard{border:1px solid #1e2b3c;border-radius:14px;background:linear-gradient(180deg,#0f1622,#0f1724);padding:14px;display:grid;gap:8px;transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease}
+.fcard:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:#284061}
+.fhead{display:flex;align-items:center;gap:10px}
+.ficon{width:28px;height:28px;border-radius:8px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
+.fcard h4{margin:0;font-size:15px}
+.fcard p{margin:0;color:#bcd0ea;font-size:14px;line-height:1.35}
+
+/* ===== “¿Por qué usar…?” slider ===== */
+.listSlider{position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);border:1px solid #1c2533;padding:8px;overflow:hidden}
+.listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
+.listPage{min-width:100%;padding:8px}
+.listItem{display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:center;background:#0f1c2c;border:1px solid #152437;border-radius:14px;margin:10px 4px;padding:14px;transition:border-color .15s ease, transform .12s ease}
+.listItem:hover{border-color:#254064;transform:translateY(-1px)}
+.listIcon{width:84px;height:84px;border-radius:14px;background:#0f1725;display:grid;place-items:center;overflow:hidden}
+.listIcon img{width:84px;height:84px;object-fit:cover}
+.listItem strong{display:block;font-size:14px;margin-bottom:2px}
+.listItem div>div{font-size:13px;color:#b9c8de;line-height:1.35}
+#beneficios .arrowCircle{width:40px;height:40px}
+#beneficios .arrowCircle .chev{font-size:22px}
+
+/* ===== Videos (horizontales) ===== */
+.yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;justify-items:center}
+@media (max-width:768px){ .yt-grid{grid-template-columns:1fr} }
+.yt{width:100%;max-width:680px}
+.yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
 
 /* ===== FAQ / Footer ===== */
 .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
@@ -327,8 +368,8 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   <section id="videos" aria-labelledby="videos-title">
     <div class="card body">
       <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-      <div class="yt-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;justify-items:center">
-        <div class="yt" style="width:100%;max-width:680px">
+      <div class="yt-grid">
+        <div class="yt">
           <iframe
             src="https://www.youtube.com/embed/VIDEO_ID_COLABORA_1"
             title="Video principal CONTPAQi Colabora"
@@ -338,7 +379,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
             loading="lazy">
           </iframe>
         </div>
-        <div class="yt" style="width:100%;max-width:680px">
+        <div class="yt">
           <iframe
             src="https://www.youtube.com/embed/VIDEO_ID_COLABORA_2"
             title="Demo CONTPAQi Colabora"
@@ -405,7 +446,6 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     <p>Contacta a nuestros especialistas para resolver tus dudas.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
       <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20CONTPAQi%20N%C3%B3minas%20y%20Colabora" target="_blank" rel="noopener">Solicitar información (WhatsApp)</a>
-      <!-- Reemplaza la URL con la página real de Nóminas -->
       <a class="btn btn-ghost" href="../SISTEMAS/nominas.html">Ver detalles de Nóminas</a>
     </div>
   </section>
@@ -481,7 +521,7 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
   const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
   const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
   let idx=0;
-  function setActive(i){idx=(i+dots.length)%dots.length; dots.forEach((d,di)=>d.classList.toggle('active',di===idx)); track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});}  
+  function setActive(i){idx=(i+dots.length)%dots.length; dots.forEach((d,di)=>d.classList.toggle('active',di===idx)); track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});}
   dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
   prev.addEventListener('click',()=>setActive(idx-1));
   next.addEventListener('click',()=>setActive(idx+1));
@@ -489,14 +529,37 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
   window.addEventListener('resize',()=>setActive(idx)); setActive(0);
 })();
 
-// Slider Por qué usar
+// Slider “¿Por qué usar…?”
 (function(){
   const wrap=document.querySelector('#beneficios .listSlider'); if(!wrap) return;
   const track=wrap.querySelector('.listTrack'), prev=wrap.querySelector('.prev'), next=wrap.querySelector('.next');
   let page=0, total=track.children.length;
-  function go(i){page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'});}  
+  function go(i){page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'});}
   prev.addEventListener('click',()=>go(page-1)); next.addEventListener('click',()=>go(page+1));
   window.addEventListener('resize',()=>go(page));
+})();
+
+// Píldoras (filtros) - Colabora
+(function(){
+  const pills=[...document.querySelectorAll('.pill')];
+  const cards=[...document.querySelectorAll('.feature-grid .fcard')];
+  function apply(filter){
+    cards.forEach(c=>{
+      const show =
+        (filter==='empleado' && c.classList.contains('tag-empleado')) ||
+        (filter==='rh' && c.classList.contains('tag-rh')) ||
+        (filter==='tecnico' && c.classList.contains('tag-tecnico'));
+      c.style.display = show ? '' : 'none';
+    });
+  }
+  pills.forEach(p=>{
+    p.addEventListener('click',()=>{
+      pills.forEach(x=>x.classList.remove('active')); pills.forEach(x=>x.setAttribute('aria-pressed','false'));
+      p.classList.add('active'); p.setAttribute('aria-pressed','true');
+      apply(p.dataset.filter);
+    });
+  });
+  apply('empleado');
 })();
 </script>
 </body>
