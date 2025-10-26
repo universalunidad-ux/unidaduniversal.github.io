@@ -697,7 +697,7 @@ function renderCombinedTable(rows){
     pick3.querySelectorAll('.sys-icon').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
-    slot3.style.display=''; // muestra tercera columna
+    slot3.style.display='block';
     CalculadoraContpaqi.setTertiarySystem(sys,{tertiarySelector:'#calc-tertiary',combinedSelector:'#combined-wrap',onCombined:renderCombinedTable});
     if(addMore) addMore.style.display='none';
     row.classList.add('has-three');
@@ -720,7 +720,7 @@ function renderCombinedTable(rows){
 
 <!-- Núcleo de calculadora -->
 <script defer src="../precios-contpaqi.js?v=3"></script>
-<script defer src="../calculadora.js?v=12"></script>
+<script defer src="../calculadora.js?v=13"></script>
 <script>
 window.addEventListener('DOMContentLoaded',()=>{
   if(!window.CalculadoraContpaqi){
