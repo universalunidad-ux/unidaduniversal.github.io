@@ -451,7 +451,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
             <div class="icons-wrap" id="icons-sec-sys" style="display:flex;gap:10px;justify-content:center;margin-top:8px">
               <button class="sys-icon" data-sys="CONTPAQi Nóminas" title="Nóminas"><img src="../IMG/nominas.webp" alt="Nóminas" style="width:56px;height:56px;border-radius:12px"></button>
               <button class="sys-icon" data-sys="CONTPAQi Bancos" title="Bancos"><img src="../IMG/bancos.webp" alt="Bancos" style="width:56px;height:56px;border-radius:12px"></button>
-              <button class="sys-icon" data-sys="XML en Línea+" title="XML en Línea"><img src="../IMG/xml.webp" alt="XML en Línea" style="width:56px;height:56px;border-radius:12px"></button>
+              <button class="sys-icon" data-sys="XML en Línea" title="XML en Línea"><img src="../IMG/xml.webp" alt="XML en Línea" style="width:56px;height:56px;border-radius:12px"></button>
             </div>
           </div>
         </div>
@@ -655,18 +655,18 @@ function hasPrices(systemName){return !!(window.preciosContpaqi && window.precio
 // === Catálogo visual de sistemas a mostrar en los pickers ===
 // Asegúrate que estos nombres coinciden con las llaves en `window.preciosContpaqi`
 const CATALOG_SISTEMAS = [
-  { name: "CONTPAQi Nóminas",          img: "../IMG/nominas.webp" },
-  { name: "CONTPAQi Bancos",           img: "../IMG/bancos.webp"  },
-  { name: "XML en Línea+",             img: "../IMG/xml.webp",     noDiscount: true },
+  { name: "CONTPAQi Nóminas",              img: "../IMG/nominas.webp" },
+  { name: "CONTPAQi Bancos",               img: "../IMG/bancos.webp"  },
+  { name: "CONTPAQi XML en Línea",         img: "../IMG/xml.webp",     noDiscount: true }, // <- sin "+"
 
-  // Comerciales
-  { name: "CONTPAQi Comercial Start",   img: "../IMG/comercialstart.webp"  },
-  { name: "CONTPAQi Comercial Pro",     img: "../IMG/comercialpro.webp"    },
-  { name: "CONTPAQi Comercial Premium", img: "../IMG/comercialpremium.webp"},
+  // Comerciales (en mayúsculas para que coincidan con las llaves)
+  { name: "CONTPAQi Comercial START",      img: "../IMG/comercialstart.webp"  },
+  { name: "CONTPAQi Comercial PRO",        img: "../IMG/comercialpro.webp"    },
+  { name: "CONTPAQi Comercial PREMIUM",    img: "../IMG/comercialpremium.webp"},
   
-  // Nuevo: Factura Electrónica
-  { name: "CONTPAQi Factura Electrónica", img: "../IMG/factura.webp" }
+  { name: "CONTPAQi Factura Electrónica",  img: "../IMG/factura.webp" }
 ];
+
 
 // Obtiene un precio "desde" para mostrar en la tarjeta del sistema.
 // Lógica: preferimos Anual → MultiRFC → precio_base; si no hay, MonoRFC; si no hay, Tradicional.actualizacion
