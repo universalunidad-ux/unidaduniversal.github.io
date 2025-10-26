@@ -215,6 +215,44 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   .toc{right:10px;bottom:10px;width:86vw}
   .footer-grid{grid-template-columns:1fr}
 }
+  .icons-wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  justify-items: center;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+.sys-icon {
+  background: #111723;
+  border: 1px solid #1e2b3c;
+  border-radius: 16px;
+  padding: 12px;
+  display: grid;
+  justify-items: center;
+  row-gap: 8px;
+  width: 100%;
+  max-width: 200px;
+  color: #e8eef6;
+  transition: all .2s ease;
+}
+.sys-icon:hover {
+  border-color: #2dd4bf;
+  transform: translateY(-3px);
+}
+.sys-icon img {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+}
+.sys-icon small.sys-price {
+  color: #9fb2cb;
+  font-size: 13px;
+}
+
 </style>
 </head>
 <body id="top">
@@ -449,9 +487,8 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
             <strong>Integra un sistema adicional y recibe −15% en cada uno.</strong><br>
             <small>“XML en Línea” no aplica para descuento.</small>
             <div class="icons-wrap" id="icons-sec-sys" style="display:flex;gap:10px;justify-content:center;margin-top:8px">
-              <button class="sys-icon" data-sys="CONTPAQi Nóminas" title="Nóminas"><img src="../IMG/nominas.webp" alt="Nóminas" style="width:56px;height:56px;border-radius:12px"></button>
-              <button class="sys-icon" data-sys="CONTPAQi Bancos" title="Bancos"><img src="../IMG/bancos.webp" alt="Bancos" style="width:56px;height:56px;border-radius:12px"></button>
-              <button class="sys-icon" data-sys="XML en Línea" title="XML en Línea"><img src="../IMG/xml.webp" alt="XML en Línea" style="width:56px;height:56px;border-radius:12px"></button>
+              <div class="icons-wrap" id="icons-sec-sys"></div>
+
             </div>
           </div>
         </div>
@@ -652,105 +689,61 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
 
 // ====== Calculadora helpers ======
 function hasPrices(systemName){return !!(window.preciosContpaqi && window.preciosContpaqi[systemName]);}
+
 // === Catálogo visual de sistemas a mostrar en los pickers ===
 // Asegúrate que estos nombres coinciden con las llaves en `window.preciosContpaqi`
 const CATALOG_SISTEMAS = [
   { name: "CONTPAQi Nóminas",              img: "../IMG/nominas.webp" },
   { name: "CONTPAQi Bancos",               img: "../IMG/bancos.webp"  },
-  { name: "CONTPAQi XML en Línea",         img: "../IMG/xml.webp",     noDiscount: true }, // <- sin "+"
-
-  // Comerciales (en mayúsculas para que coincidan con las llaves)
+  { name: "CONTPAQi XML en Línea",         img: "../IMG/xml.webp",     noDiscount: true },
   { name: "CONTPAQi Comercial START",      img: "../IMG/comercialstart.webp"  },
   { name: "CONTPAQi Comercial PRO",        img: "../IMG/comercialpro.webp"    },
   { name: "CONTPAQi Comercial PREMIUM",    img: "../IMG/comercialpremium.webp"},
-  
   { name: "CONTPAQi Factura Electrónica",  img: "../IMG/factura.webp" }
 ];
 
-
-// Obtiene un precio "desde" para mostrar en la tarjeta del sistema.
-// Lógica: preferimos Anual → MultiRFC → precio_base; si no hay, MonoRFC; si no hay, Tradicional.actualizacion
+// === Precio base ===
 function getPrecioDesde(systemName){
   const db = (window.preciosContpaqi && window.preciosContpaqi[systemName]) || null;
   if(!db) return null;
-
-  // 1) Anual MultiRFC
-  if (db.anual && db.anual.MultiRFC && (db.anual.MultiRFC.precio_base || db.anual.MultiRFC.renovacion)) {
-    return Number(db.anual.MultiRFC.precio_base || db.anual.MultiRFC.renovacion || 0);
-  }
-  // 2) Anual MonoRFC
-  if (db.anual && db.anual.MonoRFC && (db.anual.MonoRFC.precio_base || db.anual.MonoRFC.renovacion)) {
-    return Number(db.anual.MonoRFC.precio_base || db.anual.MonoRFC.renovacion || 0);
-  }
-  // 3) Tradicional (actualización) como fallback
-  if (db.tradicional && db.tradicional.actualizacion && db.tradicional.actualizacion.precio_base){
-    return Number(db.tradicional.actualizacion.precio_base);
-  }
+  if (db.anual?.MultiRFC?.precio_base) return db.anual.MultiRFC.precio_base;
+  if (db.anual?.MonoRFC?.precio_base) return db.anual.MonoRFC.precio_base;
+  if (db.tradicional?.actualizacion?.precio_base) return db.tradicional.actualizacion.precio_base;
   return null;
 }
 
 const moneyMX = new Intl.NumberFormat("es-MX", { style:"currency", currency:"MXN", maximumFractionDigits:0 });
 
-// Renderiza los botones de sistemas (con icono + precio “desde” + etiqueta de descuento si aplica)
+// === Render dinámico de sistemas ===
 function renderSistemasPicker(containerId){
   const wrap = document.getElementById(containerId);
   if(!wrap) return;
-  wrap.innerHTML = ""; // limpiamos lo que hubiera
+  wrap.innerHTML = ""; // Limpia el contenedor
 
   CATALOG_SISTEMAS.forEach(item=>{
-    const price = getPrecioDesde(item.name);
+    const precio = getPrecioDesde(item.name);
     const btn = document.createElement("button");
     btn.className = "sys-icon";
     btn.type = "button";
     btn.dataset.sys = item.name;
     btn.title = item.name;
-    btn.style.display = "grid";
-    btn.style.gridTemplateRows = "auto auto auto";
-    btn.style.justifyItems = "center";
-    btn.style.rowGap = "6px";
-    btn.style.padding = "8px 10px";
-    btn.style.width = "max(128px, 26%)"; // responsivo simple
 
-    const img = document.createElement("img");
-    img.src = item.img;
-    img.alt = item.name;
-    img.style.width = "56px";
-    img.style.height = "56px";
-    img.style.borderRadius = "12px";
-
-    const label = document.createElement("div");
-    label.textContent = item.name.replace("CONTPAQi ",""); // muestra solo la parte “Comercial Pro”, “Bancos”, etc.
-    label.style.fontSize = "12px";
-    label.style.fontWeight = "700";
-    label.style.textAlign = "center";
-
-    const priceEl = document.createElement("small");
-    priceEl.className = "sys-price";
-    priceEl.style.color = "#9fb2cb";
-    priceEl.style.fontSize = "11px";
-    priceEl.textContent = price != null ? `desde ${moneyMX.format(price)}` : "precio no disp.";
-
-    // Badge de descuento (XML no aplica -15%)
-    if (item.noDiscount){
-      const badge = document.createElement("small");
-      badge.textContent = "sin -15%";
-      badge.style.fontSize = "10px";
-      badge.style.fontWeight = "700";
-      badge.style.padding = "2px 6px";
-      badge.style.border = "1px solid #1e2b3c";
-      badge.style.borderRadius = "999px";
-      badge.style.background = "#0e1724";
-      badge.style.color = "#cfe3ff";
-      badge.style.marginTop = "2px";
-      btn.appendChild(badge);
-    }
-
-    btn.appendChild(img);
-    btn.appendChild(label);
-    btn.appendChild(priceEl);
+    // Estructura visual de cada sistema
+    btn.innerHTML = `
+      ${item.noDiscount ? '<small class="sin15">sin -15%</small>' : ''}
+      <img src="${item.img}" alt="${item.name}">
+      <strong>${item.name.replace('CONTPAQi ','')}</strong>
+      <small class="sys-price">${precio ? 'desde '+moneyMX.format(precio) : 'precio no disp.'}</small>
+    `;
     wrap.appendChild(btn);
   });
 }
+
+// === Autoejecución al cargar la página ===
+document.addEventListener("DOMContentLoaded", ()=>{
+  renderSistemasPicker("icons-sec-sys");
+  renderSistemasPicker("icons-third-sys");
+});
 
 // Llama al render para los 2 pickers existentes
 document.addEventListener("DOMContentLoaded", ()=>{
