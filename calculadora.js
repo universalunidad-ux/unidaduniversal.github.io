@@ -1,6 +1,7 @@
+/* calculadora.js v13 — MultiRFC por defecto + “Operación” solo en Tradicional (con !important) */
 (function () {
   'use strict';
-  console.log('calculadora.js v12.1 cargado — MultiRFC default + Operación solo en Tradicional');
+  console.log('calculadora.js v13 cargado — MultiRFC default + Operación solo en Tradicional');
 
   // ========================= Helpers =========================
   var money = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
@@ -12,7 +13,7 @@
   }
   function recomputeAll(){ window.dispatchEvent(new Event("calc-recompute")); }
 
-  // ===== Parche CSS mínimo por si hay estilos externos que oculten el form =====
+  // ===== Parche CSS mínimo para asegurar el form, sin forzar label =====
   (function ensureFormVisible() {
     var id = "calc-form-visibility-patch";
     if (!document.getElementById(id)) {
@@ -20,8 +21,9 @@
       st.id = id;
       st.textContent =
         ".calc-container form{display:grid!important;grid-auto-flow:row!important;grid-template-columns:1fr!important;gap:8px!important}" +
-        ".calc-container label{display:block!important;font-weight:700}" +
-        ".calc-container select,.calc-container input[type='number']{display:block!important;visibility:visible!important;opacity:1!important}";
+        ".calc-container select,.calc-container input[type='number']{display:block!important;visibility:visible!important;opacity:1!important}" +
+        /* Operación oculta por defecto; la mostraremos con JS cuando Licencia=Tradicional */
+        ".calc-container .op-label{display:none!important}";
       document.head.appendChild(st);
     }
   })();
@@ -68,11 +70,11 @@
 
     // 2) Operación (oculto por defecto; solo visible en Tradicional)
     var opLabel = document.createElement("label");
+    opLabel.className = "op-label"; // clase clave para el parche CSS
     opLabel.textContent = "Operación: ";
     var opSel = document.createElement("select");
     opSel.id = "op"+idSuffix;
     opLabel.appendChild(opSel);
-    opLabel.style.display = "none"; // <-- clave: oculto por defecto
     form.appendChild(opLabel);
 
     // 3) Tipo (RFC)
@@ -139,11 +141,11 @@
       rfcSel.innerHTML = "";
       rfcLabel.style.display = "inline-block";
 
-      // Mostrar/ocultar "Operación" solo en Tradicional
-      opLabel.style.display = (lic === "tradicional") ? "" : "none";
+      // Mostrar/ocultar "Operación" solo en Tradicional (con !important)
+      opLabel.style.setProperty('display', (lic === "tradicional") ? 'block' : 'none', 'important');
 
       if (lic === "nueva") {
-        // Op queda oculto, pero dejamos un valor interno neutro
+        // Op queda oculto, dejamos un valor interno neutro para cálculo
         opSel.appendChild(new Option("Anual (Nueva)", "nueva_anual"));
 
         var anual = systemPrices.anual || {};
