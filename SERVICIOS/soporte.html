@@ -1,1 +1,721 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Soporte Técnico CONTPAQi | Expiriti</title>
+<meta name="description" content="Soporte técnico CONTPAQi certificado por Expiriti. Atención remota vía AnyDesk, paquetes de horas prepago y pólizas mensuales. Solución rápida.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
+<link rel="manifest" href="../IMG/site.webmanifest">
+<link rel="icon" href="../IMG/favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
+
+<style>
+:root{
+  --bg:#0b0f14;--card:#111723;--muted:#95a2b3;--text:#e8eef6;
+  --brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
+  --maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%); color:var(--text);
+  scroll-padding-top:84px;
+}
+a{color:inherit;text-decoration:none}
+img,video,iframe{max-width:100%;display:block}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 34px}
+
+/* Header fijo */
+header{
+  position:sticky; top:0; z-index:1000; width:100%;
+  background:rgba(11,15,20,.75); backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid #19202b;
+}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.brand img{width:38px;height:38px;border-radius:10px;display:block}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:12px;margin-top:2px}
+nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
+nav a{opacity:.9} nav a:hover{opacity:1}
+.cta{display:flex;gap:10px;align-items:center}
+.burger{display:none}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #1c2533;background:#121a25;box-shadow:var(--shadow);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
+.btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#0b0f14;border:none}
+.btn-grad-purple{background:linear-gradient(145deg,#7c3aed,#a855f7);color:#fff;border:none}
+.btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
+.btn-ghost{background:#121a25;color:#e8eef6}
+.btn-outline-gradient{color:#cfe9ff;background:transparent;border:1px solid transparent;position:relative;overflow:hidden}
+.btn-outline-gradient::before{content:"";position:absolute;inset:0;padding:1px;border-radius:12px;background:linear-gradient(145deg,var(--brand),var(--brand-2));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+
+/* Títulos / badges */
+.hero{padding:26px 0 0}
+h1{font-size:clamp(28px,3.4vw,42px);line-height:1.1;margin:8px 0 14px}
+h2,h3,h4{margin:0 0 10px}
+.lead{color:#c6d1e3;font-size:18px;max-width:68ch}
+.hint{color:#aebbd0;opacity:.9}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1c2c;border:1px solid #203044;color:#cfe3ff;font-size:12px}
+.lock-note{margin:8px 0 0;font-size:12px;color:#94a8c6;display:inline-flex;gap:6px;align-items:center}
+.lock-note::before{content:"⚠️";}
+section{padding:26px 0;border-top:1px solid #11182725}
+.card{background:var(--card);border:1px solid #1c2533;border-radius:16px;overflow:hidden}
+.card .body{padding:12px;color:#c8d3e5}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.grid-2.align-center{align-items:center}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.stack{display:grid;gap:12px}
+.title-gradient{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ===== HERO 3 columnas ===== */
+.hero-3col{display:grid;grid-template-columns:280px 1.55fr 1.05fr;column-gap:8px;align-items:start}
+@media (max-width:1200px){ .hero-3col{grid-template-columns:270px 1.45fr 1.05fr} }
+@media (max-width:980px){ .hero-3col{grid-template-columns:1fr} }
+.stack-left{display:grid;gap:10px;align-items:start;justify-items:start}
+.pdf-card{margin-left:-6px}
+/* Se ajusta el 'pdf-frame' para que la imagen se vea bien */
+.pdf-frame{width:100%;height:auto;aspect-ratio:16/10;border:0;border-radius:12px;} 
+@media (max-width:980px){ .pdf-frame{height:auto; aspect-ratio:16/9;} }
+
+
+/* === Botones Hero (hover) === */
+.hero-btn {transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease}
+.hero-btn:hover {transform: translateY(-3px); box-shadow: 0 10px 26px rgba(0,0,0,.35)}
+.hero-btn.btn-grad-green:hover {box-shadow: 0 10px 26px rgba(34,197,94,.3)}
+.hero-btn.btn-grad-purple:hover {box-shadow: 0 10px 26px rgba(168,85,247,.3)}
+.hero-btn.btn-grad-blue:hover {box-shadow: 0 10px 26px rgba(59,130,246,.3)}
+.hero-btn.btn-ghost:hover {background:#192636;border-color:#2a3c52}
+
+/* ===== Galería portada ===== */
+.carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:420px}
+.carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
+.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block}
+.carousel-nav{display:flex;gap:8px;justify-content:center;padding:10px;background:#0e1724;border-top:1px solid #1c2533}
+.dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;opacity:.6}
+.dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
+.arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}.arrowCircle .chev{font-size:24px;line-height:1}
+
+/* ===== Carrusel de sistemas ===== */
+.carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
+.carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px}
+.carouselX .sys{flex:0 0 calc((100% - 24px)/3);background:#0f1622;border:1px solid #1c2533;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.carouselX .sys img{width:72px;height:72px;border-radius:16px;margin:6px auto 10px;background:#101826;object-fit:cover}
+.group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0 0}
+.group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2))}
+
+/* ===== PRECIOS (Nube) ===== */
+/* Oculta la calculadora JS estándar */
+#calc-primary, #calc-slot-2, #calc-tertiary, #add-more-panel, #combined-wrap, #app, .icons-wrap { display:none; }
+
+.pricing-table-nube{
+  width:100%;max-width:960px;margin:20px auto;border-collapse:separate;border-spacing:0;
+  border:1px solid #1e2b3c;border-radius:12px;overflow:hidden
+}
+.pricing-table-nube th,.pricing-table-nube td{
+  padding:14px 16px;border-bottom:1px solid #1e2b3c;text-align:left;vertical-align:middle
+}
+.pricing-table-nube thead th{background:#0e1724;color:#dce8ff;font-size:16px}
+.pricing-table-nube tbody tr:last-child td{border-bottom:none}
+.pricing-table-nube td:nth-child(2),.pricing-table-nube td:nth-child(3){text-align:left;color:var(--muted)}
+.pricing-table-nube .price{font-weight:700;font-size:1.1em;color:var(--brand);text-align:right}
+.pricing-table-nube .plan-name{font-weight:700;color:var(--text)}
+.pricing-table-nube .plan-desc{font-size:12px;color:var(--muted)}
+.pricing-table-nube tfoot .note{
+  padding:14px 16px;background:#0f1622;text-align:center;font-size:14px;color:var(--muted);border-bottom:1px solid #1e2b3c
+}
+
+/* ===== Comparativa / FAQ / Footer ===== */
+.table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden;margin-bottom:20px}
+.table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
+.table-like tr:last-child td{border-bottom:none}
+.table-like thead th{background:#0e1724;color:#dce8ff;text-align:left}
+.table-like .highlight{background:rgba(45,212,191,.08);font-weight:700}
+
+.toc{position:fixed;right:16px;bottom:16px;width:240px;max-height:48vh;overflow:auto;background:rgba(15,24,38,.75);border:1px solid #1c2533;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;z-index:900;box-shadow:0 10px 24px rgba(0,0,0,.35);backdrop-filter: blur(6px);transition:all .2s ease}
+.toc.collapsed{width:auto;max-height:none;padding:6px 10px;border-radius:999px;gap:0}
+.toc.collapsed .toc-title,.toc.collapsed a,.toc.collapsed .toc-close{display:none}
+.toc-title{font-weight:800;color:#b9c8de;margin-bottom:6px}
+.toc a{padding:6px 8px;border-radius:10px;color:#cfe3ff;border:1px solid transparent}
+.toc a:hover{border-color:#233347;background:#101b2a}
+
+.faq-wrap{display:grid;gap:10px}
+.faq-item{border:1px solid #1e2b3c;border-radius:12px;background:#0f1622;overflow:hidden}
+.faq-item>summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.faq-item>summary::marker{display:none}
+.faq-item[open]>summary{background:#0e1724;border-bottom:1px solid #1e2b3c}
+.faq-item p{padding:12px 14px;margin:0;color:#cfe3ff}
+
+footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
+.footer-grid{display:grid;gap:18px;grid-template-columns:1.6fr 1.2fr 1.2fr 1fr}
+.footer-title{font-weight:700;color:#d8e3f6;margin:0 0 10px}
+.contact-list{display:grid;gap:6px;font-size:14px}
+.item .ico{width:22px}
+.payments-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-items:center}
+.payments-grid img{max-height:28px;object-fit:contain;filter:grayscale(1);opacity:.9}
+.brands-col{display:grid;gap:10px}
+.brand-item img{max-height:26px;object-fit:contain;filter:grayscale(.1);background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:6px}
+.ally-col{display:grid;gap:10px;justify-items:end}
+.ally-col img{height:46px;object-fit:contain;background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:8px}
+.footer-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;padding-top:12px;border-top:1px solid #1c2533}
+
+/* Responsive generales */
+@media (max-width:980px){
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  nav ul{display:none}
+  .burger{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;border:1px solid #1c2533;background:#101722}
+  .mobile{display:none}.mobile.open{display:block}
+  .mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}
+  .toc{right:10px;bottom:10px;width:86vw}
+  .footer-grid{grid-template-columns:1fr}
+}
+
+/* ===== Funciones destacadas ===== */
+.pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+.pill{
+  padding:8px 12px;border-radius:999px;
+  border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);
+  color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;
+  transition:transform .12s ease, box-shadow .12s ease, background .2s ease
+}
+.pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
+
+/* Grid features */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:980px){ .feature-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:680px){ .feature-grid{grid-template-columns:1fr} }
+.fcard{border:1px solid #1e2b3c;border-radius:14px;background:linear-gradient(180deg,#0f1622,#0f1724);padding:14px;display:grid;gap:8px;transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease}
+.fcard:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:#284061}
+.fhead{display:flex;align-items:center;gap:10px}
+.ficon{width:28px;height:28px;border-radius:8px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
+.fcard h4{margin:0;font-size:15px}
+.fcard p{margin:0;color:#bcd0ea;font-size:14px;line-height:1.35}
+
+/* ===== “¿Por qué usar…?” ===== */
+.listSlider{position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);border:1px solid #1c2533;padding:8px;overflow:hidden}
+.listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
+.listPage{min-width:100%;padding:8px}
+.listItem{display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:center;background:#0f1c2c;border:1px solid #152437;border-radius:14px;margin:10px 4px;padding:14px;transition:border-color .15s ease, transform .12s ease}
+.listItem:hover{border-color:#254064;transform:translateY(-1px)}
+.listIcon{width:84px;height:84px;border-radius:14px;background:#0f1725;display:grid;place-items:center;overflow:hidden}
+.listIcon img{width:84px;height:84px;object-fit:cover}
+.listItem strong{display:block;font-size:14px;margin-bottom:2px}
+.listItem div>div{font-size:13px;color:#b9c8de;line-height:1.35}
+#beneficios .arrowCircle{width:40px;height:40px}
+#beneficios .arrowCircle .chev{font-size:22px}
+
+/* ===== Videos (horizontales) ===== */
+.yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;justify-items:center}
+@media (max-width:768px){ .yt-grid{grid-template-columns:1fr} }
+.yt{width:100%;max-width:680px}
+.yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
+</style>
+</head>
+<body id="top">
+<header>
+  <div class="container nav">
+    <a href="#top" class="brand" aria-label="Inicio Expiriti">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
+      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
+    </a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#caracteristicas">Servicios</a></li>
+        <li><a href="#videos">Cómo Funciona</a></li>
+        <li><a href="#calculadora-section">Precios</a></li>
+        <li><a href="#sistemas-soportados">Sistemas</a></li>
+        <li><a href="#faq">Preguntas frecuentes</a></li>
+        <li><a href="#sesion-guiada">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="cta">
+      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
+      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20necesito%20soporte%20t%C3%A9cnico%20CONTPAQi" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
+    </div>
+  </div>
+  <div class="container mobile" id="mobileMenu">
+    <a href="#caracteristicas">Servicios</a>
+    <a href="#videos">Cómo Funciona</a>
+    <a href="#calculadora-section">Precios</a>
+    <a href="#sistemas-soportados">Sistemas</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#sesion-guiada">Contacto</a>
+  </div>
+</header>
+
+<main class="container hero">
+  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#servicios">← Volver a servicios</a>
+  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  <h1>Soporte Técnico CONTPAQi <span class="badge" style="background:rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #fcd34d;">Servicio</span></h1>
+
+  <div class="badges">
+    <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #86efac;">Certificados por CONTPAQi</span>
+    <span class="badge">Asistencia Remota (AnyDesk)</span>
+    <span class="badge">Paquetes de Horas y Pólizas</span>
+    <span class="badge">Atención Inmediata</span>
+  </div>
+  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+
+  <section aria-label="Resumen">
+    <div class="card body">
+      <div class="hero-3col">
+        <div class="stack-left">
+          <img src="../IMG/soporte.webp" alt="Soporte Técnico CONTPAQi" style="width:220px;margin-bottom:12px;border-radius:12px">
+          <div class="stack">
+            <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20necesito%20soporte%20urgente" target="_blank" rel="noopener">Contactar por WhatsApp</a>
+            <a class="btn btn-grad-blue hero-btn" href="tel:+525568437918">Llamar ahora (55 6843 7918)</a>
+            <a class="btn btn-grad-purple hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20me%20interesa%20una%20P%C3%B3liza%20Mensual%20de%20Soporte" target="_blank" rel="noopener">Cotizar Póliza Mensual</a>
+            <a class="btn btn-ghost hero-btn" href="#calculadora-section">Ver Precios y Paquetes</a>
+            <a class="btn btn-ghost hero-btn" href="#sistemas-soportados">Sistemas que Soportamos</a>
+          </div>
+        </div>
+
+        <div class="card body pdf-card">
+          <img src="../IMG/soporte_promo.webp" alt="Técnico dando soporte remoto vía AnyDesk" class="pdf-frame">
+          <h4 class="title-gradient" style="margin:12px 0 6px">Tu Aliado Certificado en Sistemas CONTPAQi</h4>
+          <p class="hint" style="margin:0 0 8px">Resolvemos tus dudas, errores y problemas operativos para que tu empresa no se detenga. Soporte rápido y eficaz vía remota (AnyDesk).</p>
+        </div>
+
+        <aside class="card body">
+          <h4 class="title-gradient">Galería</h4>
+          <div class="carousel" id="carousel1" aria-label="Galería Soporte">
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+          	<div class="carousel-track">
+          	  <img class="carousel-slide" src="../IMG/1soporte_anydesk.webp" alt="Soporte remoto vía AnyDesk">
+          	  <img class="carousel-slide" src="../IMG/2soporte_certificado.webp" alt="Técnico certificado por CONTPAQi">
+          	  <img class="carousel-slide" src="../IMG/3soporte_whatsapp.webp" alt="Atención inmediata por WhatsApp">
+    ar     	  <img class="carousel-slide" src="../IMG/4soporte_poliza.webp" alt="Pólizas de servicio integral">
+          	</div>
+          	<button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+          	<div class="carousel-nav" aria-label="Paginación de galería">
+          	  <button class="dot active" aria-label="Ir a la imagen 1"></button>
+          	  <button class="dot" aria-label="Ir a la imagen 2"></button>
+          	  <button class="dot" aria-label="Ir a la imagen 3"></button>
+          	  <button class="dot" aria-label="Ir a la imagen 4"></button>
+          	</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="caracteristicas" aria-labelledby="caracteristicas-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  	<div class="card body">
+  	  <h3 id="caracteristicas-title" class="title-gradient">Nuestros Servicios de Soporte</h3>
+
+  	  <div class="pillbar" role="tablist" aria-label="Categorías de servicios">
+  	    <button class="pill active" data-filter="hora">Soporte por Hora</button>
+  	    <button class="pill" data-filter="poliza">Pólizas Mensuales</button>
+  	    <button class="pill" data-filter="garantia">Nuestra Garantía</button>
+  	  </div>
+
+  	  <div class="grid-3 feature-grid">
+  	      	    <article class="fcard tag-hora"><div class="fhead"><img class="ficon" src="../IMG/ic_anydesk.webp" alt=""><h4>Asistencia Remota</h4></div><p>Atención segura e inmediata vía AnyDesk para resolver tu problema.</p></article>
+  	    <article class="fcard tag-hora"><div class="fhead"><img class="ficon" src="../IMG/ic_hora.webp" alt=""><h4>Paquetes Prepago</h4></div><p>Compra un banco de horas y úsalas conforme las necesites.</p></article>
+  	    <article class="fcard tag-hora"><div class="fhead"><img class="ficon" src="../IMG/ic_whatsapp.webp" alt=""><h4>Soporte Inmediato</h4></div><p>Contáctanos por WhatsApp o Teléfono (55 6843 7918) para urgencias.</p></article>
+
+  	      	    <article class="fcard tag-poliza"><div class="fhead"><img class="ficon" src="../IMG/ic_contrato.webp" alt=""><h4>Soporte Ilimitado</h4></div><p>Bajo contrato mensual, olvídate de los cargos por hora. (Sujeto a póliza)</p></article>
+  	    <article class="fcard tag-poliza"><div class="fhead"><img class="ficon" src="../IMG/ic_capacitacion.webp" alt=""><h4>Cursos Incluidos</h4></div><p>Nuestras pólizas incluyen capacitación continua para tu personal.</p></article>
+  	    <article class="fcard tag-poliza"><div class="fhead"><img class="ficon" src="../IMG/ic_web.webp" alt=""><h4>Desarrollos Web</h4></div><p>Las pólizas integrales pueden incluir desarrollos y ajustes web.</p></article>
+
+  	      	    <article class="fcard tag-garantia"><div class="fhead"><img class="ficon" src="../IMG/ic_certificado.webp" alt=""><h4>Equipo Certificado</h4></div><p>Técnicos avalados por CONTPAQi para dar soporte experto.</p></article>
+  	    <article class="fcard tag-garantia"><div class="fhead"><img class="ficon" src="../IMG/ic_15min.webp" alt=""><h4>Garantía 15 Min</h4></div><p>No cobramos por dudas rápidas o errores con solución en menos de 15 min.</p></article>
+  	    <article class="fcard tag-garantia"><div class="fhead"><img class="ficon" src="../IMG/ic_ecosistema_nube.webp" alt=""><h4>Soporte Ecosistema</h4></div><p>Conocemos la integración de todos los sistemas CONTPAQi (Nube y Escritorio).</p></article>
+  	  </div>
+  	</div>
+  </section>
+
+  <section id="beneficios" aria-label="Por qué elegirnos">
+  	<div class="grid-2 align-center">
+  	  <div>
+  	    <h2 class="title-gradient">¿Por qué elegir nuestro Soporte?</h2>
+  	    <p class="lead">Somos Distribuidores certificados por CONTPAQi. No solo vendemos el software, lo entendemos a fondo y garantizamos su correcta operación fiscal y técnica.</p>
+  	    <div class="listSlider">
+  	      <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+  	      <div class="listTrack">
+  	        <div class="listPage">
+  	          <div class="listItem"><div class="listIcon"><img src="../IMG/ic_certificado_full.webp" alt=""></div><div><strong>CERTIFICADOS POR CONTPAQi</strong><div>Nuestros técnicos están avalados para diagnósticos precisos.</div></div></div>
+  	          <div class="listItem"><div class="listIcon"><img src="../IMG/ic_anydesk_full.webp" alt=""></div><div><strong>ATENCIÓN VÍA ANYDESK</strong><div>Rápido, seguro y sin necesidad de visitas físicas costosas.</div></div></div>
+  	          <div class="listItem"><div class="listIcon"><img src="../IMG/ic_no_preocupaciones.webp" alt=""></div><div><strong>NO MÁS PREOCUPACIONES</strong><div>Delega tus problemas técnicos y enfócate en tu negocio.</div></div></div>
+  	        </div>
+  	        <div class="listPage">
+  	          <div class="listItem"><div class="listIcon"><img src="../IMG/ic_garantia_15min.webp" alt=""></div><div><strong>GARANTÍA 15 MIN</strong><div>Dudas rápidas y errores menores se resuelven sin costo.</div></div></div>
+  	          <div class="listItem"><div class="listIcon"><img src="../IMG/ic_flexibilidad.webp" alt=""></div><div><strong>MODELOS FLEXIBLES</strong><div>Desde 1 hora prepagada hasta pólizas mensuales ilimitadas.</div></div></div>
+  	          <div class="listItem"><div class="listIcon"><img src="../IMG/ic_servicio_integral.webp" alt=""></div><div><strong>SERVICIO INTEGRAL</strong><div>No solo "reparamos", capacitamos y prevenimos problemas futuros.</div></div></div>
+  	        </div>
+  	      </div>
+  	      <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+  	    </div>
+  	  </div>
+  	  <div>
+  	    <div class="card body">
+  	      <h4 class="title-gradient" style="margin:0 0 6px">Video: ¿Cómo funciona?</h4>
+  	      <iframe class="pdf-frame" title="Reel Soporte Técnico" src="https://www.youtube-nocookie.com/embed/VIDEO_ID_SOPORTE_REEL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  	    </div>
+  	  </div>
+  	</div>
+  </section>
+
+  <section id="videos" aria-labelledby="videos-title">
+  	<div class="card body">
+  	  <h3 id="videos-title" class="title-gradient">Cómo Funciona Nuestro Soporte</h3>
+  	  <div class="yt-grid">
+  	    <div class="yt">
+  	      <iframe
+  	        src="https://www.youtube.com/embed/VIDEO_ID_SOPORTE_1"
+  	        title="Cómo funciona nuestro Soporte Remoto vía AnyDesk"
+  	        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  	        referrerpolicy="strict-origin-when-cross-origin"
+  	        allowfullscreen></iframe>
+  	    </div>
+  	    <div class="yt">
+  	      <iframe
+  	        src="https://www.youtube.com/embed/VIDEO_ID_SOPORTE_2"
+  	        title="Testimonio de Cliente de Soporte"
+  	        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  	        referrerpolicy="strict-origin-when-cross-origin"
+  	        allowfullscreen></iframe>
+  	    </div>
+  	  </div>
+  	</div>
+  </section>
+
+  <section id="sistemas-soportados" aria-labelledby="sistemas-title">
+  	<div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  	<h3 id="sistemas-title" class="title-gradient">Sistemas que Soportamos</h3>
+  	<div class="card body">
+  	  <div class="carouselX" data-step="3">
+  	    <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+  	    <div class="track">
+  	      <article class="sys"><img src="../IMG/contabilidad.webp" alt="Contabilidad" /><h4>CONTPAQi Contabilidad</h4><p>Errores, pólizas, timbrado, DIOT, Cierre de Ejercicio, etc.</p></article>
+  	      <article class="sys"><img src="../IMG/nominas.webp" alt="Nóminas" /><h4>CONTPAQi Nóminas</h4><p>Cálculo, timbrado, finiquitos, aguinaldo, conexión IDSE, etc.</p></article>
+  	      <article class="sys"><img src="../IMG/comercial.webp" alt="Comercial" /><h4>CONTPAQi Comercial</h4><p>Facturación 4.0, Addendas, inventarios, reportes, vistas, etc.</p></article>
+  	      <article class="sys"><img src="../IMG/bancos.webp" alt="Bancos" /><h4>CONTPAQi Bancos</h4><p>Conciliaciones, flujo de efectivo, conexión contable, etc.</p></article>
+  	      <article class="sys"><img src="../IMG/contabiliza.webp" alt="Contabiliza" /><h4>CONTPAQi Contabiliza</h4><p>Configuración inicial, carga de XML, reportes en la nube, etc.</p></article>
+  	      <article class="sys"><img src="../IMG/personia.webp" alt="Personia" /><h4>CONTPAQi Personia</h4><p>Cálculo de nómina nube, portal Colabora, incidencias, etc.</p></article>
+  	      <article class="sys"><img src="../IMG/vende.webp" alt="Vende" /><h4>CONTPAQi Vende</h4><p>Configuración de POS, facturación, inventarios nube, etc.</p></article>
+  	      <article class="sys"><img src="../IMG/analiza.webp" alt="Analiza" /><h4>CONTPAQi Analiza</h4><p>Configuración de conectores, creación de dashboards, KPIs.</p></article>
+  	      <article class="sys"><img src="../IMG/despachos.webp" alt="Despachos" /><h4>CONTPAQi Despachos</h4><p>Gestión de clientes, obligaciones, conexión con contabilidad.</p></article>
+  	    </div>
+  	    <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+  	    <div class="group-dots"></div>
+  	  </div>
+  	</div>
+  </section>
+
+  <section id="calculadora-section" aria-labelledby="calc">
+  	<h3 id="calc" class="title-gradient">Planes y Precios</h3>
+  	<p class="hint" style="text-align:center">Elige el plan que mejor se adapte a tu operación.</p>
+  	<div class="card body">
+  	  <table class="pricing-table-nube" aria-describedby="calc">
+  	    <thead>
+  	      <tr>
+  	        <th>Servicio</th>
+  	        <th>Descripción</th>
+  	        <th style="text-align:right">Precio</th>
+  	      </tr>
+  	    </thead>
+  	    <tbody>
+  	      <tr>
+  	        <td class="plan-name">Hora de Soporte (Remoto)</td>
+  	        <td>Atención vía AnyDesk. Facturable por hora.</td>
+  	        <td class="price">$800 + IVA</td>
+  	      </tr>
+  	      <tr style="background:#0f1622">
+  	        <td class="plan-name">Paquete Prepago (5 Horas)</td>
+  	        <td>Ahorra comprando horas por adelantado. (Consulta paquetes)</td>
+  	        <td class="price">Desde $3,750 + IVA</td>
+  	      </tr>
+  	      <tr>
+  	        <td class="plan-name">Duda Rápida</td>
+  	        <td>Resolución de errores menores o dudas (menos de 15 min).</td>
+  	        <td class="price" style="color:var(--ok)">Sin Costo</td>
+  	      </tr>
+  	      <tr style="background:#0f1622">
+  	        <td class="plan-name">Póliza de Soporte Mensual</td>
+  	        <td>Soporte ilimitado, cursos, desarrollos y más, bajo contrato.</td>
+  	        <td class="price" style="color:var(--brand-2);">Solicitar Cotización</td>
+  	      </tr>
+  	    </tbody>
+  	    <tfoot>
+  	        <tr>
+  	            <td class="note" colspan="3" style="text-align:center;">
+  	                <a class="btn btn-grad-blue hero-btn" href="polizas-de-soporte.html" style="margin-top:10px;">Conocer más de Pólizas de Soporte</a>
+  	            </td>
+  	        </tr>
+  	    </tfoot>
+  	  </table>
+  	    	  <p class="hint" style="text-align:center; margin-top: 15px;">Precios más IVA. Consultar descuentos del mes por compras en paquete (más de 2 sistemas nube)</p>
+  	</div>
+  </section>
+
+  <section id="comparativa" aria-labelledby="comparativa-title">
+  	<div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  	<h3 id="comparativa-title" class="title-gradient">Comparativa de Servicio</h3>
+  	<div class="card body">
+
+  	  <h4 style="margin-bottom: 15px;">Expiriti vs Soporte Genérico (TI)</h4>
+  	  <table class="table-like" aria-label="Comparativa Expiriti vs otros soportes">
+  	    <thead><tr><th>Característica</th><th class="highlight">Expiriti (Certificado)</th><th>Soporte TI Genérico</th><th>Soporte directo (Fabricante)</th></tr></thead>
+  	    <tbody>
+  	      <tr><td>Especialización CONTPAQi</td><td class="highlight">✅ Totalmente Especializado</td><td>❌ Nulo (Formatean equipos)</td><td>✅ Especializado</td></tr>
+  	      <tr><td>Entendimiento Fiscal/Contable</td><td class="highlight">✅ Alto (Contadores en equipo)</td><td>❌ Nulo</td><td>✅ Alto</td></tr>
+  	      <tr><td>Tiempo de Respuesta</td><td class="highlight">✅ Inmediato (WhatsApp/Tel)</td><td>⚠️ Lento (Tickets)</td><td>⚠️ Lento (Tickets / Línea espera)</td></tr>
+  	      <tr><td>Garantía < 15 min</td><td class="highlight">✅ Sí (Sin costo)</td><td>❌ No (Cobran por evento)</td><td>❌ No (Soporte por ticket)</td></tr>
+  	      <tr><td>Flexibilidad</td><td class="highlight">✅ Horas, Paquetes, Pólizas</td><td>⚠️ Solo por evento o póliza de TI</td><td>❌ Solo Pólizas Anuales</td></tr>
+  	    </tbody>
+  	  </table>
+
+  	</div>
+  </section>
+
+  <section id="faq" aria-labelledby="faq-title">
+  	<div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  	<h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
+  	<div class="faq-wrap" id="faqWrap">
+  	  <details class="faq-item"><summary>¿Qué es AnyDesk y por qué lo usan?</summary><p>AnyDesk es un software de conexión remota, similar a TeamViewer. Lo usamos porque es muy ligero, rápido y seguro. Nos permite ver tu pantalla (con tu permiso) y tomar control de tu mouse y teclado para solucionar el problema como si estuviéramos sentados frente a tu computadora.</p></details>
+  	  <details class="faq-item"><summary>Estoy "atorado" con un error, ¿me van a cobrar solo por ver?</summary><p>No. Nuestra política es clara: <strong>no cobramos por dudas rápidas o errores cuya solución tome menos de 15 minutos</strong>. Queremos ser tus aliados, no un obstáculo. Si es algo rápido, te ayudamos sin costo.</p></details>
+  	  <details class="faq-item"><summary>¿Qué significa que están "Certificados por CONTPAQi"?</summary><p>Significa que nuestro personal ha tomado y aprobado los cursos y exámenes oficiales de CONTPAQi. Esta certificación avala que tenemos el conocimiento técnico y fiscal para instalar, configurar y solucionar problemas en todo el ecosistema de sistemas CONTPAQi, garantizando un servicio de calidad.</p></details>
+  	  <details class="faq-item"><summary>¿Qué pasa si se consumen mis horas de un paquete prepago?</summary><p>Te notificaremos cuando tu saldo de horas esté por agotarse. En ese momento, puedes decidir si comprar otra hora individual ($800 + IVA) o adquirir un nuevo paquete prepagado para seguir gozando de un precio preferencial.</p></details>
+  	  <details class="faq-item"><summary>¿Qué incluye la "Póliza de Soporte Mensual Ilimitada"?</summary><p>Es nuestro servicio más completo, firmado por contrato. Incluye soporte técnico remoto ilimitado, capacitación y cursos para tu personal, y dependiendo del plan, puede incluir horas de desarrollo web, consultoría fiscal y más. Es ideal para empresas cuya operación es crítica y no puede detenerse. <a href="polizas-de-soporte.html">Ver más aquí</a>.</p></details>
+  	</div>
+  </section>
+
+  <section id="sesion-guiada" class="card body">
+  	<div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  	<h3 class="title-gradient">¿Tu sistema CONTPAQi está fallando?</h3>
+  	<p>No dejes que un error detenga tu facturación o tu nómina. Contáctanos ahora mismo.</p>
+  	<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+  	  <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20necesito%20soporte%20t%C3%A9cnico%20URGENTE." target="_blank" rel="noopener">Enviar WhatsApp (Urgente)</a>
+  	  <a class="btn btn-grad-blue" href="tel:+525568437918" target="_blank" rel="noopener">Llamar (55 6843 7918)</a>
+  	</div>
+  </section>
+
+  <aside class="toc collapsed" id="toc" aria-live="polite">
+  	<button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
+  	<button class="toc-close" aria-label="Cerrar">×</button>
+  	<strong class="toc-title">Mapa del sitio</strong>
+  	<a href="#caracteristicas">Servicios</a>
+  	<a href="#videos">Cómo Funciona</a>
+  	<a href="#calculadora-section">Precios</a>
+  	<a href="#sistemas-soportados">Sistemas</a>
+  	<a href="#comparativa">Comparativa</a>
+  	<a href="#faq">Preguntas frecuentes</a>
+  	<a href="#sesion-guiada">Contacto</a>
+  </aside>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+  	<div>
+  	  <h3 class="footer-title">Contacto</h3>
+  	  <div class="contact-list">
+  	    <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
+  	    <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
+  	    <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
+  	  </div>
+  	</div>
+  	<div>
+  	  <h3 class="footer-title">Formas de pago</h3>
+  	  <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy"></div>
+  	</div>
+  	<div>
+  	  <h3 class="footer-title">Marcas</h3>
+  	  <div class="brands-col">
+  	    <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi"></div>
+  	    <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft"></div>
+  	  </div>
+  	</div>
+  	<div class="ally-col">
+  	  <h3 class="footer-title" style="justify-self:end">Aliados</h3>
+  	  <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
+  	  <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
+  	  <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
+  	</div>
+  </div>
+  <div class="container footer-bottom">
+  	<div style="display:flex;align-items:center;gap:10px">
+  	  <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px">
+  	  <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
+  	</div>
+  	<div class="hint">Aviso de privacidad · Términos</div>
+  </div>
+</footer>
+
+<script>
+// Año y menú móvil
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('burger')?.addEventListener('click', ()=>{
+  document.getElementById('mobileMenu')?.classList.toggle('open');
+});
+
+// TOC (Mapa)
+(function(){
+  const toc = document.getElementById('toc'),
+  	  openBtn = document.getElementById('tocToggle'),
+  	  closeBtn = toc?.querySelector('.toc-close');
+  if(!toc || !openBtn || !closeBtn) return;
+  openBtn.addEventListener('click', e=>{ e.stopPropagation(); toc.classList.toggle('collapsed'); });
+s closeBtn.addEventListener('click', ()=> toc.classList.add('collapsed'));
+  toc.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> toc.classList.add('collapsed')));
+  document.addEventListener('click', e=>{ if(!toc.contains(e.target) && e.target !== openBtn) toc.classList.add('collapsed'); });
+})();
+
+// Galería portada
+(function(){
+  const root=document.getElementById('carousel1'); if(!root) return;
+  const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
+  const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
+  let idx=0;
+  function setActive(i){
+  	idx=(i+dots.length)%dots.length;
+  	dots.forEach((d,di)=>d.classList.toggle('active',di===idx));
+  	track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});
+  }
+  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
+  prev.addEventListener('click',()=>setActive(idx-1));
+  next.addEventListener('click',()=>setActive(idx+1));
+  track.addEventListener('scroll',()=>{
+  	const i=Math.round(track.scrollLeft/track.clientWidth);
+  	dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+  	idx=i;
+  });
+  window.addEventListener('resize',()=>setActive(idx));
+  setActive(0);
+})();
+
+// Slider ¿Por qué usar...?
+(function(){
+  const wrap=document.querySelector('#beneficios .listSlider'); if(!wrap) return;
+  const track=wrap.querySelector('.listTrack'), prev=wrap.querySelector('.prev'), next=wrap.querySelector('.next');
+  let page=0, total=track.children.length;
+  function go(i){ page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'}); }
+  prev.addEventListener('click',()=>go(page-1));
+  next.addEventListener('click',()=>go(page+1));
+  window.addEventListener('resize',()=>go(page));
+})();
+
+// Carrusel integraciones
+(function(){
+D document.querySelectorAll('.carouselX').forEach(root=>{
+  	const track=root.querySelector('.track'),
+  		  prev=root.querySelector('.arrowCircle.prev'),
+  		  next=root.querySelector('.arrowCircle.next'),
+  		  dotsWrap=root.querySelector('.group-dots');
+  	const items = track.querySelectorAll('.sys');
+  	
+  	let itemsPerPage = 3;
+  	const updateItemsPerPage = () => {
+  	    if (window.innerWidth <= 680) itemsPerPage = 1;
+  	    else if (window.innerWidth <= 980) itemsPerPage = 2;
+  	    else itemsPerPage = 3;
+  	};
+  	updateItemsPerPage();
+
+  	function groupsCount(){ return Math.max(1, Math.ceil(items.length / itemsPerPage)); }
+  	function groupW(){ return track.clientWidth / itemsPerPage * Math.min(items.length, itemsPerPage); }
+
+  	// Ajuste para el scroll en pantallas pequeñas
+  	function getScrollAmount(i) {
+  	    if (itemsPerPage === 1) {
+  	        return items[i].offsetLeft - (track.clientWidth - items[i].clientWidth) / 2;
+  	    }
+  	    return i * groupW();
+  	}
+  	
+  	function updateCarouselStyles() {
+  	    items.forEach(item => {
+  	        item.style.flexBasis = `calc((100% - ${12 * (itemsPerPage - 1)}px) / ${itemsPerPage})`;
+  	    });
+  	}
+  	updateCarouselStyles();
+
+  	const showControls = groupsCount() > 1;
+  	if (prev) prev.style.display = showControls ? '' : 'none';
+  	if (next) next.style.display = showControls ? '' : 'none';
+  	if (dotsWrap) dotsWrap.style.display = showControls ? '' : 'none';
+  	if (!showControls) return;
+
+  	function setDot(i){ dots.forEach((d,idx)=>d.classList.toggle('active',idx===i)); }
+  	function goTo(i){ 
+  	    track.scrollTo({left: getScrollAmount(i), behavior:'smooth'}); 
+  	    setDot(i); 
+  	}
+
+  	dotsWrap.innerHTML='';
+  	const dots=Array.from({length:groupsCount()},(_,i)=>{
+  	  const b=document.createElement('button');
+  	  b.className='dot'+(i===0?' active':'');
+  	  b.addEventListener('click',()=>goTo(i));
+  	  dotsWrap.appendChild(b);
+  	  return b;
+  	});
+
+  	let idx=0;
+  	prev.addEventListener('click',()=>{ idx=Math.max(0,idx-1); goTo(idx); });
+  	next.addEventListener('click',()=>{ idx=Math.min(dots.length-1,idx+1); goTo(idx); });
+  	
+  	window.addEventListener('resize',()=>{
+  	    updateItemsPerPage();
+  	    updateCarouselStyles();
+  	    // Recalcular dots si es necesario
+  	    goTo(idx); 
+  	});
+  	
+  	goTo(0);
+  });
+})();
+
+
+// Píldoras (filtros) - Soporte
+(function(){
+  const pills=[...document.querySelectorAll('.pill')];
+  const cards=[...document.querySelectorAll('.feature-grid .fcard')];
+  function apply(filter){
+  	cards.forEach(c=>{
+  	  const show =
+  		(filter==='hora' && c.classList.contains('tag-hora')) ||
+  		(filter==='poliza' && c.classList.contains('tag-poliza')) ||
+  		(filter==='garantia' && c.classList.contains('tag-garantia'));
+  	  c.style.display = show ? '' : 'none';
+  	});
+  }
+  pills.forEach(p=>{
+  	p.addEventListener('click',()=>{
+  	  pills.forEach(x=>x.classList.remove('active'));
+s 	  p.classList.add('active');
+  	  apply(p.dataset.filter);
+  	});
+  });
+  apply('hora'); // Filtro inicial
+})();
+
+// FAQ acordeón (uno abierto a la vez)
+(function(){
+S const wrap=document.getElementById('faqWrap'); if(!wrap) return;
+  const items=[...wrap.querySelectorAll('.faq-item')];
+  items.forEach(d=>{
+  	d.addEventListener('toggle', ()=>{
+  	  if(d.open){ items.forEach(o=>{ if(o!==d) o.removeAttribute('open'); }); }
+i 	});
+  });
+})();
+</script>
+</body>
+</html>
