@@ -154,6 +154,15 @@
       .ally-col{justify-items:start}
     }
     html{scroll-behavior:smooth}
+    .gradient-word{
+  background: linear-gradient(90deg,var(--brand),var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;                 /* Firefox */
+  -webkit-text-fill-color: transparent; /* Chrome/Safari: evita los bloques */
+  display: inline;                    /* por si el navegador fuerza block */
+}
+
   </style>
 </head>
 <body>
@@ -177,12 +186,6 @@
         <a class="btn btn-brand" id="btn-wsp" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi" target="_blank" rel="noopener">WhatsApp</a>
         <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
       </div>
-    </div>
-    <div class="container mobile" id="mobileMenu">
-      <a href="#productos">Productos</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#promociones">Promociones</a>
-      <a href="#contacto">Contacto</a>
     </div>
   </header>
 
