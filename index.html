@@ -745,26 +745,43 @@
     }
     promoBtns.forEach(b=> b.addEventListener('click', ()=> setPromoFilter(b.dataset.filter)));
     setPromoFilter('nuevos');
-// Prefija /SISTEMAS/ a todos los sistemas (y servicios) del sitio
+// Prefija carpetas /SISTEMAS/ y /SERVICIOS/ a los enlaces correspondientes
 (function(){
-  const PREFIX = 'SISTEMAS/';
-  const PAGES = new Set([
-    // Sistemas (según tu captura)
+  const SYSTEMS_PREFIX = 'SISTEMAS/';
+  const SERVICES_PREFIX = 'SERVICIOS/';
+
+  const SYSTEM_PAGES = new Set([
+    // Lista de tus páginas de sistemas
     'analiza.html','bancos.html','colabora.html','comercialpremium.html',
     'comercialpro.html','comercialstart.html','contabilidad.html',
     'contabiliza.html','despachos.html','evalua.html','facturaelectronica.html',
-    'nominas.html','personia.html','vende.html','xmlenlinea.html',
-    // Servicios (en tu index original estaban dentro de /SISTEMAS/)
-    'implementacion.html','capacitacion.html','soporte.html'
+    'nominas.html','personia.html','vende.html','xmlenlinea.html'
+    // Añade más páginas de sistemas si es necesario
   ]);
 
-  document.querySelectorAll('a[href]').forEach(a=>{
+  const SERVICE_PAGES = new Set([
+    // Lista de tus páginas de servicios
+    'soporte.html',
+    'desarrollos.html',
+    'implementacion.html', // Si la moviste a SERVICIOS
+    'capacitacion.html'   // Si la moviste a SERVICIOS
+    // Añade más páginas de servicios si es necesario
+  ]);
+
+  document.querySelectorAll('a[href]').forEach(a => {
     const href = a.getAttribute('href');
-    if(!href) return;
-    // solo archivos locales .html sin prefijo ya
+    if (!href) return;
+
+    // Solo aplica a archivos .html locales sin prefijo existente
     const isLocalHtml = /^[^:/?#]+\.html$/i.test(href);
-    if(isLocalHtml && PAGES.has(href)){
-      a.setAttribute('href', PREFIX + href);
+
+    if (isLocalHtml) {
+      if (SERVICE_PAGES.has(href)) {
+        a.setAttribute('href', SERVICES_PREFIX + href);
+      } else if (SYSTEM_PAGES.has(href)) {
+        a.setAttribute('href', SYSTEMS_PREFIX + href);
+      }
+      // Si no está en ninguna lista, no se le añade prefijo
     }
   });
 })();
