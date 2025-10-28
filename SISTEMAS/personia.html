@@ -98,7 +98,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 /* ===== Galería portada ===== */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:420px}
 .carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
-.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block}
+.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block;flex-shrink:0}
 .carousel-nav{display:flex;gap:8px;justify-content:center;padding:10px;background:#0e1724;border-top:1px solid #1c2533}
 .dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;opacity:.6}
 .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
@@ -220,6 +220,10 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 @media (max-width:768px){ .yt-grid{grid-template-columns:1fr} }
 .yt{width:100%;max-width:680px}
 .yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
+
+/* Estilo para los títulos de los reels */
+.reel-title {margin-bottom:8px;text-align:center;color:#fff;font-weight:700;display:none}
+.reel-title.active {display:block}
 </style>
 </head>
 <body id="top">
@@ -256,7 +260,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 </header>
 
 <main class="container hero">
-  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos">← Volver a productos</a>
+  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" rel="noopener">← Volver a productos</a>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
   <h1>CONTPAQi Personia <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nube</span></h1>
 
@@ -271,6 +275,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   <section aria-label="Resumen">
     <div class="card body">
       <div class="hero-3col">
+        <!-- Col 1 -->
         <div class="stack-left">
           <img src="../IMG/personia.webp" alt="CONTPAQi Personia" style="width:220px;margin-bottom:12px;border-radius:12px">
           <div class="stack">
@@ -282,17 +287,19 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
           </div>
         </div>
 
+        <!-- Col 2 -->
         <div class="card body pdf-card">
           <img src="../IMG/usas.jpeg" alt="Equipo trabajando en la nube" style="width:100%;border-radius:10px;margin-bottom:10px">
           <h4 class="title-gradient" style="margin:0 0 6px">Tu Nómina y RH 24/7 desde cualquier lugar</h4>
           <p class="hint" style="margin:0 0 8px">Accede a tu información, calcula tu nómina y administra a tu personal en tiempo real, de forma fácil y segura.</p>
-          <iframe class="pdf-frame" title="Ficha de CONTPAQi Personia" src="../PDFS/Ficha_Producto_CONTPAQi_Personia.pdf#page=1&view=FitH"></iframe>
+          <iframe class="pdf-frame" title="Ficha de CONTPAQi Personia" src="../PDFS/Ficha_Producto_CONTPAQi_Personia.pdf#page=2&view=FitH"></iframe>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Personia.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Personia.pdf" download>Descargar</a>
           </div>
         </div>
 
+        <!-- Col 3 -->
         <aside class="card body">
           <h4 class="title-gradient">Galería</h4>
           <div class="carousel" id="carousel1" aria-label="Galería Personia">
@@ -316,6 +323,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
+  <!-- ===== FUNCIONES ===== -->
   <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <div class="card body">
@@ -355,6 +363,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
+  <!-- ===== BENEFICIOS + REELS ===== -->
   <section id="beneficios" aria-label="Por qué usar">
     <div class="grid-2 align-center">
       <div>
@@ -378,38 +387,85 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
         </div>
       </div>
       <div>
-        <div class="card body">
-          <h4 class="title-gradient" style="margin:0 0 6px">Video (reel)</h4>
-          <iframe class="pdf-frame" title="Reel CONTPAQi Personia" src="https://www.youtube-nocookie.com/embed/VIDEO_ID_PERSONIA_REEL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
+        <aside class="card body">
+          <!-- Título del bloque -->
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Personia</h4>
+
+          <!-- Títulos sincronizados con el carrusel -->
+          <h4 class="reel-title active">Reel Principal Personia</h4>
+          <h4 class="reel-title">Otro Reel de Personia</h4>
+
+          <div class="carousel" id="carouselReels" aria-label="Reels Personia">
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <iframe width="100%" height="500"
+                  src="https://www.youtube-nocookie.com/embed/PLACEHOLDER_REEL_ID_PERSONIA_1?rel=0&modestbranding=1&controls=1&fs=1"
+                  title="Reel CONTPAQi Personia 1 (Placeholder)"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  style="border-radius:12px;display:block;margin:auto;max-width:300px;">
+                </iframe>
+              </div>
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <iframe width="100%" height="500"
+                  src="https://www.youtube-nocookie.com/embed/PLACEHOLDER_REEL_ID_PERSONIA_2?rel=0&modestbranding=1&controls=1&fs=1"
+                  title="Reel CONTPAQi Personia 2 (Placeholder)"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  style="border-radius:12px;display:block;margin:auto;max-width:300px;">
+                </iframe>
+              </div>
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1"></button>
+              <button class="dot" aria-label="Ir al reel 2"></button>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
 
+  <!-- ===== VIDEOS ===== -->
   <section id="videos" aria-labelledby="videos-title">
     <div class="card body">
       <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
       <div class="yt-grid">
         <div class="yt">
-          <iframe
-            src="https://www.youtube.com/embed/VIDEO_ID_PERSONIA_1"
-            title="Video Principal CONTPAQi Personia"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
+          <h4 style="margin-bottom:8px;text-align:center;">Video Principal CONTPAQi Personia</h4>
+          <div style="text-align:center;">
+            <iframe width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/VIDEO_ID_PERSONIA_1?rel=0&modestbranding=1&controls=1&fs=1"
+              title="Video Principal CONTPAQi Personia (para accesibilidad)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="border-radius:12px;max-width:100%;display:block;margin:auto;"
+              loading="lazy"></iframe>
+          </div>
         </div>
         <div class="yt">
-          <iframe
-            src="https://www.youtube.com/embed/VIDEO_ID_PERSONIA_2"
-            title="Demo CONTPAQi Personia"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
+          <h4 style="margin-bottom:8px;text-align:center;">Demo CONTPAQi Personia</h4>
+          <div style="text-align:center;">
+            <iframe width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/VIDEO_ID_PERSONIA_2?rel=0&modestbranding=1&controls=1&fs=1"
+              title="Demo CONTPAQi Personia (para accesibilidad)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="border-radius:12px;max-width:100%;display:block;margin:auto;"
+              loading="lazy"></iframe>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ===== INTEGRACIONES ===== -->
   <section id="integra" aria-labelledby="integra-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Personia</h3>
@@ -427,6 +483,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
+  <!-- ===== PRECIOS ===== -->
   <section id="calculadora-section" aria-labelledby="calc">
     <h3 id="calc" class="title-gradient">Planes y Precios (Anuales)</h3>
     <p class="hint" style="text-align:center">CONTPAQi Personia se maneja por suscripción anual basada en el número de empleados.</p>
@@ -474,16 +531,17 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
           </tr>
         </tfoot>
       </table>
-      <p class="hint" style="text-align:center; margin-top: 15px;">Precios tomados de tu archivo <code>precios-contpaqi.js</code>. Precios más IVA.</p>
+      <p class="hint" style="text-align:center;margin-top:15px;">Precios tomados de tu archivo <code>precios-contpaqi.js</code>. Precios más IVA.</p>
     </div>
   </section>
 
+  <!-- ===== COMPARATIVAS ===== -->
   <section id="comparativa" aria-labelledby="comparativa-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="comparativa-title" class="title-gradient">Comparativas</h3>
     <div class="card body">
 
-      <h4 style="margin-bottom: 15px;">Personia vs Otras Marcas (Nube RH)</h4>
+      <h4 style="margin-bottom:15px;">Personia vs Otras Marcas (Nube RH)</h4>
       <table class="table-like" aria-label="Comparativa Personia vs otras marcas">
         <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Personia</th><th>Runa</th><th>Worky / Buk</th><th>Excel / Manual</th></tr></thead>
         <tbody>
@@ -496,7 +554,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
         </tbody>
       </table>
 
-      <h4 style="margin-top: 25px; margin-bottom: 15px;">Personia (Nube) vs Nóminas (Escritorio)</h4>
+      <h4 style="margin-top:25px;margin-bottom:15px;">Personia (Nube) vs Nóminas (Escritorio)</h4>
       <table class="table-like" aria-label="Comparativa Personia vs Nóminas de escritorio">
         <thead><tr><th>Característica</th><th class="highlight">Personia (Nube)</th><th>Nóminas (Escritorio)</th></tr></thead>
         <tbody>
@@ -511,6 +569,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
+  <!-- ===== FAQ ===== -->
   <section id="faq" aria-labelledby="faq-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
@@ -523,6 +582,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
+  <!-- ===== CTA ===== -->
   <section id="sesion-guiada" class="card body">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 class="title-gradient">¿Listo para llevar tu Nómina a la Nube?</h3>
@@ -533,6 +593,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
+  <!-- ===== TOC flotante ===== -->
   <aside class="toc collapsed" id="toc" aria-live="polite">
     <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
     <button class="toc-close" aria-label="Cerrar">×</button>
@@ -621,6 +682,39 @@ document.getElementById('burger')?.addEventListener('click', ()=>{
     const i=Math.round(track.scrollLeft/track.clientWidth);
     dots.forEach((d,di)=>d.classList.toggle('active',di===i));
     idx=i;
+  });
+  window.addEventListener('resize',()=>setActive(idx));
+  setActive(0);
+})();
+
+// Carrusel Reels (sincroniza puntos y títulos)
+(function(){
+  const root=document.getElementById('carouselReels'); if(!root) return;
+  const aside = root.closest('aside') || document;
+  const track=root.querySelector('.carousel-track'),
+        dots=[...root.querySelectorAll('.carousel-nav .dot')],
+        titles=[...aside.querySelectorAll('.reel-title')],
+        prev=root.querySelector('.arrowCircle.prev'),
+        next=root.querySelector('.arrowCircle.next');
+  let idx=0;
+
+  function setActive(i){
+    if(!dots.length) return;
+    idx=(i+dots.length)%dots.length;
+    dots.forEach((d,di)=>d.classList.toggle('active',di===idx));
+    track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});
+    titles.forEach((t,ti)=>t.classList.toggle('active',ti===idx));
+  }
+  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
+  prev.addEventListener('click',()=>setActive(idx-1));
+  next.addEventListener('click',()=>setActive(idx+1));
+  track.addEventListener('scroll',()=>{
+    const i=Math.round(track.scrollLeft/track.clientWidth);
+    if(i!==idx){
+      dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+      titles.forEach((t,ti)=>t.classList.toggle('active',ti===i));
+      idx=i;
+    }
   });
   window.addEventListener('resize',()=>setActive(idx));
   setActive(0);
