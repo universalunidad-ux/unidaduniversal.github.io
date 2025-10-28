@@ -98,7 +98,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 /* ===== Galería portada ===== */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:420px}
 .carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
-.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block}
+.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block;flex-shrink:0}
 .carousel-nav{display:flex;gap:8px;justify-content:center;padding:10px;background:#0e1724;border-top:1px solid #1c2533}
 .dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;opacity:.6}
 .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
@@ -220,6 +220,10 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 @media (max-width:768px){ .yt-grid{grid-template-columns:1fr} }
 .yt{width:100%;max-width:680px}
 .yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
+
+/* Estilo para los títulos de los reels */
+.reel-title { margin-bottom: 8px; text-align: center; color:#fff; font-weight:700; display:none }
+.reel-title.active { display:block }
 </style>
 </head>
 <body id="top">
@@ -328,19 +332,16 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
       </div>
 
       <div class="grid-3 feature-grid">
-        <!-- NOM-035 -->
         <article class="fcard tag-nom035"><div class="fhead"><img class="ficon" src="../IMG/ic_sat_imss.webp" alt=""><h4>Guías Oficiales I, II y III</h4></div><p>Accede a las guías de la STPS para evaluar factores psicosociales.</p></article>
         <article class="fcard tag-nom035"><div class="fhead"><img class="ficon" src="../IMG/ic_prevencion.webp" alt=""><h4>Prevención de Riesgos</h4></div><p>Identifica factores de riesgo y toma medidas correctivas a tiempo.</p></article>
         <article class="fcard tag-nom035"><div class="fhead"><img class="ficon" src="../IMG/ic_alertas.webp" alt=""><h4>Evita Sanciones</h4></div><p>Cumple con los estándares legales y evita multas laborales.</p></article>
         <article class="fcard tag-nom035"><div class="fhead"><img class="ficon" src="../IMG/ic_teletrabajo.webp" alt=""><h4>Cumplimiento NOM-037</h4></div><p>Ayuda a gestionar aspectos de teletrabajo y riesgos ergonómicos.</p></article>
 
-        <!-- Gestión -->
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_encuestas.webp" alt=""><h4>Gestión de Encuestas</h4></div><p>Define periodos y aplica encuestas por área, depto. o centro de trabajo.</p></article>
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_monitoreo.webp" alt=""><h4>Monitoreo en Tiempo Real</h4></div><p>Consulta el progreso de las encuestas y accede a resultados parciales.</p></article>
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_reportes_rh.webp" alt=""><h4>Reportes Personalizados</h4></div><p>Genera reportes por categoría, departamento o empleado.</p></article>
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_comparativa.webp" alt=""><h4>Comparativos Históricos</h4></div><p>Evalúa la efectividad de las acciones implementadas a lo largo del tiempo.</p></article>
 
-        <!-- Integración -->
         <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_clima_laboral.webp" alt=""><h4>Clima Laboral</h4></div><p>Evalúa el entorno organizacional para detectar áreas de mejora.</p></article>
         <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_contabiliza_con.webp" alt=""><h4>Integra con Personia</h4></div><p>Centraliza la gestión de capital humano y optimiza la administración.</p></article>
         <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/ic_seguridad_nube.webp" alt=""><h4>Seguridad Avanzada</h4></div><p>Tus datos y los de tus empleados están protegidos en la nube.</p></article>
@@ -372,10 +373,40 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
         </div>
       </div>
       <div>
-        <div class="card body">
-          <h4 class="title-gradient" style="margin:0 0 6px">Video (reel)</h4>
-          <iframe class="pdf-frame" title="Reel CONTPAQi Evalúa" src="https://www.youtube-nocookie.com/embed/VIDEO_ID_EVALUA_REEL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
+        <aside class="card body">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Evalúa</h4>
+          <h4 class="reel-title active">Cumple con la NOM-035</h4>
+          <h4 class="reel-title">Mejora el Clima Laboral</h4>
+
+          <div class="carousel" id="carouselReels">
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <iframe width="100%" height="500"
+                  src="https://www.youtube-nocookie.com/embed/PLACEHOLDER_REEL_ID_EVALUA_1?rel=0&modestbranding=1&controls=1&fs=1"
+                  title="Reel CONTPAQi Evalúa 1 (Placeholder)"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  style="border-radius:12px;display:block;margin:auto;max-width:300px;"></iframe>
+              </div>
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <iframe width="100%" height="500"
+                  src="https://www.youtube-nocookie.com/embed/PLACEHOLDER_REEL_ID_EVALUA_2?rel=0&modestbranding=1&controls=1&fs=1"
+                  title="Reel CONTPAQi Evalúa 2 (Placeholder)"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  style="border-radius:12px;display:block;margin:auto;max-width:300px;"></iframe>
+              </div>
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de galería">
+              <button class="dot active" aria-label="Ir al reel 1"></button>
+              <button class="dot" aria-label="Ir al reel 2"></button>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
@@ -385,131 +416,135 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
       <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
       <div class="yt-grid">
         <div class="yt">
-          <iframe
-            src="https://www.youtube.com/watch?v=Im5t0qxDx_I"
-            title="Presentación CONTPAQi Evalúa"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
+          <h4 style="margin-bottom:8px;text-align:center;">Presentación CONTPAQi Evalúa</h4>
+          <div style="text-align:center;">
+            <iframe width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/Im5t0qxDx_I?rel=0&modestbranding=1&controls=1&fs=1"
+              title="Presentación CONTPAQi Evalúa (para accesibilidad)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="border-radius:12px;max-width:100%;display:block;margin:auto;"
+              loading="lazy"></iframe>
+          </div>
         </div>
         <div class="yt">
-          <iframe
-            src="https://www.youtube.com/embed/VIDEO_ID_EVALUA_2"
-            title="Demo CONTPAQi Evalúa"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
+          <h4 style="margin-bottom:8px;text-align:center;">Demo CONTPAQi Evalúa</h4>
+          <div style="text-align:center;">
+            <iframe width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/VIDEO_ID_EVALUA_2?rel=0&modestbranding=1&controls=1&fs=1"
+              title="Demo CONTPAQi Evalúa (para accesibilidad)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="border-radius:12px;max-width:100%;display:block;margin:auto;"
+              loading="lazy"></iframe>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Integraciones -->
   <section id="integra" aria-labelledby="integra-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Evalúa</h3>
+    <h3 id="integra-title" class="title-gradient">Integraciones recomendadas</h3>
     <div class="card body">
       <div class="carouselX" data-step="3">
         <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
         <div class="track">
-          <article class="sys"><img src="../IMG/personia.webp" alt="Personia" /><h4>CONTPAQi Personia</h4><p>Se integra nativamente para sincronizar empleados y centralizar la gestión de RH.</p></article>
-          <article class="sys"><img src="../IMG/colabora.webp" alt="Colabora" /><h4>CONTPAQi Colabora</h4><p>Complementa la experiencia del empleado (portal) con la gestión de bienestar.</p></article>
-          <article class="sys"><img src="../IMG/nominas.webp" alt="Nóminas" /><h4>CONTPAQi Nóminas</h4><p>Forma parte del ecosistema de RH, facilitando la administración de personal.</p></article>
+          <article class="sys"><img src="../IMG/personia.webp" alt="Personia" /><h4>CONTPAQi Personia</h4><p>Centraliza procesos de RH en la nube.</p></article>
+          <article class="sys"><img src="../IMG/nominas.webp" alt="Nóminas" /><h4>CONTPAQi Nóminas</h4><p>Relaciona resultados con acciones de RH.</p></article>
+          <article class="sys"><img src="../IMG/contabilidad.webp" alt="Contabilidad" /><h4>CONTPAQi Contabilidad</h4><p>Integra tu ecosistema administrativo.</p></article>
+          <article class="sys"><img src="../IMG/bancos.webp" alt="Bancos" /><h4>CONTPAQi Bancos</h4><p>Pagos y dispersión ligados a iniciativas.</p></article>
         </div>
         <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-        <div class="group-dots"></div>
+        <div class="group-dots" aria-label="Paginación"></div>
       </div>
     </div>
   </section>
 
-  <section id="calculadora-section" aria-labelledby="calc">
-    <h3 id="calc" class="title-gradient">Planes y Precios (Anuales)</h3>
-    <p class="hint" style="text-align:center">CONTPAQi Evalúa se maneja por suscripción anual basada en el número de empleados.</p>
+  <!-- Precio -->
+  <section id="calculadora-section" aria-labelledby="calc-title">
+    <h3 id="calc-title" class="title-gradient">Planes y precio (Nube)</h3>
     <div class="card body">
-      <table class="pricing-table-nube" aria-describedby="calc">
+      <table class="pricing-table-nube">
         <thead>
           <tr>
             <th>Plan</th>
-            <th>Empleados Incluidos</th>
-            <th>Usuarios</th>
-            <th>Precio Base Anual</th>
+            <th>Incluye</th>
+            <th>Ideal para</th>
+            <th style="text-align:right">Precio</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="plan-name">Inicial</td>
-            <td>25 Empleados</td>
-            <td>Multi-usuario</td>
-            <td class="price">$2,990</td>
+            <td>
+              <div class="plan-name">Evalúa Esencial</div>
+              <div class="plan-desc">NOM-035 (Guías I, II, III), reportes base</div>
+            </td>
+            <td>Encuestas + Reportes PDF + Monitoreo progreso</td>
+            <td>Empresas pequeñas y medianas</td>
+            <td class="price"><a class="btn btn-outline-gradient" href="https://wa.me/5568437918?text=Quiero%20cotizar%20Eval%C3%BAa%20Esencial" target="_blank" rel="noopener">Cotizar</a></td>
           </tr>
           <tr>
-            <td class="plan-name">Equipos</td>
-            <td>50 Empleados</td>
-            <td>Multi-usuario</td>
-            <td class="price">$4,990</td>
-          </tr>
-          <tr>
-            <td class="plan-name">Empresarial</td>
-            <td>100 Empleados</td>
-            <td>Multi-usuario</td>
-            <td class="price">$7,990</td>
-          </tr>
-          <tr>
-            <td class="plan-name">Corporativo</td>
-            <td>200 Empleados</td>
-            <td>Multi-usuario</td>
-            <td class="price">$10,990</td>
+            <td>
+              <div class="plan-name">Evalúa Avanzado</div>
+              <div class="plan-desc">Todo Esencial + Comparativos históricos + NOM-037</div>
+            </td>
+            <td>Comparativas + Exportación Excel + Usuarios adicionales</td>
+            <td>Empresas con múltiples centros</td>
+            <td class="price"><a class="btn btn-outline-gradient" href="https://wa.me/5568437918?text=Quiero%20cotizar%20Eval%C3%BAa%20Avanzado" target="_blank" rel="noopener">Cotizar</a></td>
           </tr>
         </tbody>
         <tfoot>
-          <tr>
-            <td class="note" colspan="4">
-              <strong>Nota:</strong> Precios de ejemplo. Puedes adquirir paquetes de empleados adicionales.
-            </td>
-          </tr>
+          <tr><td colspan="4" class="note">Precios en MXN + IVA. Facturación 100% deducible. Soporte de Expiriti incluido.</td></tr>
         </tfoot>
       </table>
-      <p class="hint" style="text-align:center; margin-top: 15px;">Precios más IVA. Consultar descuentos del mes por compras en paquete (más de 2 sistemas nube)</p>
     </div>
   </section>
 
+  <!-- Comparativa -->
   <section id="comparativa" aria-labelledby="comparativa-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 id="comparativa-title" class="title-gradient">Comparativas</h3>
+    <h3 id="comparativa-title" class="title-gradient">Comparativa con alternativas</h3>
     <div class="card body">
-      <h4 style="margin-bottom: 15px;">Evalúa vs Encuestas Genéricas (Forms, SurveyMonkey)</h4>
-      <table class="table-like" aria-label="Comparativa Evalúa vs otras herramientas">
-        <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Evalúa</th><th>Google Forms / SurveyMonkey</th><th>Excel / Manual</th></tr></thead>
+      <table class="table-like">
+        <thead>
+          <tr><th>Característica</th><th class="highlight">CONTPAQi Evalúa</th><th>Encuestas Gratis</th><th>Hacerlo en Excel</th><th>Consultoría</th></tr>
+        </thead>
         <tbody>
-          <tr><td>Enfoque Principal</td><td class="highlight">✅ Cumplimiento NOM-035</td><td>⚠️ Encuestas genéricas</td><td>❌ Manual</td></tr>
-          <tr><td>Guías STPS (I, II, III)</td><td class="highlight">✅ Incluidas y automatizadas</td><td>❌ Manual (requiere crearlas)</td><td>❌ Manual</td></tr>
-          <tr><td>Reportes de Riesgo</td><td class="highlight">✅ Por categoría y depto.</td><td>⚠️ Solo resultados de preguntas</td><td>❌ Tabulación manual</td></tr>
-          <tr><td>Integración RH</td><td class="highlight">✅ Nativa (Personia)</td><td>❌ Nula</td><td>❌ Nula</td></tr>
-          <tr><td>Confidencialidad</td><td class="highlight">✅ Garantizada por sistema</td><td>⚠️ Depende de configuración</td><td>❌ Difícil de garantizar</td></tr>
-          <tr><td>Evidencia Legal (STPS)</td><td class="highlight">✅ Fácil de generar</td><td>⚠️ Difícil de consolidar</td><td>❌ Difícil de consolidar</td></tr>
+          <tr><td>Cumplimiento NOM-035</td><td class="highlight">✅ Guías I, II, III</td><td>⚠️ Parcial</td><td>❌ Manual</td><td>✅ Depende del consultor</td></tr>
+          <tr><td>NOM-037 Teletrabajo</td><td class="highlight">✅ Considerado</td><td>❌ No</td><td>❌ No</td><td>⚠️ Puede ser extra</td></tr>
+          <tr><td>Reportes y Comparativos</td><td class="highlight">✅ Integrados</td><td>⚠️ Limitados</td><td>❌ Manuales</td><td>✅ Bajo demanda</td></tr>
+          <tr><td>Monitoreo en tiempo real</td><td class="highlight">✅ Sí</td><td>⚠️ Limitado</td><td>❌ No</td><td>⚠️ No siempre</td></tr>
+          <tr><td>Integración con RH (Personia)</td><td class="highlight">✅ Nativa</td><td>❌ No</td><td>❌ No</td><td>⚠️ Variable</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
+  <!-- FAQ -->
   <section id="faq" aria-labelledby="faq-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
     <div class="faq-wrap" id="faqWrap">
-      <details class="faq-item"><summary>¿Qué es la NOM-035 y por qué debo cumplirla?</summary><p>Es una Norma Oficial Mexicana (NOM) de la STPS que obliga a las empresas a identificar, analizar y prevenir los factores de riesgo psicosocial (como estrés laboral, liderazgo negativo, etc.). Su incumplimiento puede generar multas.</p></details>
-      <details class="faq-item"><summary>¿Evalúa incluye las guías oficiales de la STPS?</summary><p>Sí, CONTPAQi Evalúa incluye las guías de referencia I (acontecimientos traumáticos), II (identificación de riesgos para centros de 16-50 empleados) y III (identificación de riesgos para centros de +50 empleados).</p></details>
-      <details class="faq-item"><summary>¿Se integra con CONTPAQi Personia?</summary><p>Sí, se integra nativamente con CONTPAQi Personia. Esto te permite sincronizar tu catálogo de empleados y centralizar la gestión de tu capital humano, desde la nómina hasta las evaluaciones de bienestar.</p></details>
-      <details class="faq-item"><summary>¿Cómo se maneja el precio de Evalúa?</summary><p>El precio es una suscripción anual. Se basa en el número de empleados activos que necesitas evaluar. Existen diferentes planes (Inicial, Equipos, etc.) que incluyen un número de empleados, y puedes comprar paquetes adicionales si creces.</p></details>
-      <details class="faq-item"><summary>¿Puedo crear mis propias encuestas además de la NOM-035?</summary><p>Sí, además de las guías de la NOM-035, la plataforma te permite crear y gestionar encuestas personalizadas, como las de Clima Laboral, para medir otros aspectos del entorno organizacional.</p></details>
+      <details class="faq-item"><summary>¿Evalúa me ayuda a cumplir la NOM-035?</summary><p>Sí. Incluye las Guías I, II y III, reportes e indicadores para evidenciar cumplimiento ante inspecciones.</p></details>
+      <details class="faq-item"><summary>¿Puedo evaluar varios centros de trabajo?</summary><p>Sí. Puedes segmentar por centro, área o departamento y comparar resultados históricos.</p></details>
+      <details class="faq-item"><summary>¿Incluye teletrabajo (NOM-037)?</summary><p>El plan Avanzado contempla aspectos de teletrabajo y ergonomía vinculados a NOM-037.</p></details>
+      <details class="faq-item"><summary>¿Cómo se integra con Personia?</summary><p>Los resultados pueden conectarse con Personia para dar seguimiento a acciones de RH y programas de bienestar.</p></details>
+      <details class="faq-item"><summary>¿Hay prueba gratis?</summary><p>Sí. Puedes solicitar una prueba de 20 días desde el botón “Probar gratis”.</p></details>
     </div>
   </section>
 
+  <!-- Sesión guiada -->
   <section id="sesion-guiada" class="card body">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 class="title-gradient">¿Listo para cumplir con la NOM-035?</h3>
-    <p>Agenda una sesión con nuestros especialistas o tramita tu prueba sin costo.</p>
+    <h3 class="title-gradient">¿Listo para empezar?</h3>
+    <p>Agenda una sesión con nuestros especialistas o solicita la prueba sin costo.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-      <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%2045%20minutos%20por%20Zoom%20para%20Evalua" target="_blank" rel="noopener">Agendar sesión guiada (45 min)</a>
-      <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Evalua" target="_blank" rel="noopener">Comprar ahora</a>
+      <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%2045%20minutos%20por%20Zoom%20para%20Eval%C3%BAa" target="_blank" rel="noopener">Agendar sesión guiada (45 min)</a>
+      <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Eval%C3%BAa" target="_blank" rel="noopener">Comprar suscripción</a>
     </div>
   </section>
 
@@ -586,10 +621,13 @@ document.getElementById('burger')?.addEventListener('click', ()=>{
 // Galería portada
 (function(){
   const root=document.getElementById('carousel1'); if(!root) return;
-  const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
-  const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
+  const track=root.querySelector('.carousel-track'),
+        dots=[...root.querySelectorAll('.carousel-nav .dot')],
+        prev=root.querySelector('.arrowCircle.prev'),
+        next=root.querySelector('.arrowCircle.next');
   let idx=0;
   function setActive(i){
+    if(dots.length===0) return;
     idx=(i+dots.length)%dots.length;
     dots.forEach((d,di)=>d.classList.toggle('active',di===idx));
     track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});
@@ -599,8 +637,41 @@ document.getElementById('burger')?.addEventListener('click', ()=>{
   next.addEventListener('click',()=>setActive(idx+1));
   track.addEventListener('scroll',()=>{
     const i=Math.round(track.scrollLeft/track.clientWidth);
-    dots.forEach((d,di)=>d.classList.toggle('active',di===i));
-    idx=i;
+    if(dots.length>0 && i!==idx && i<dots.length){
+      dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+      idx=i;
+    }
+  });
+  window.addEventListener('resize',()=>setActive(idx));
+  setActive(0);
+})();
+
+// Carrusel Reels
+(function(){
+  const root=document.getElementById('carouselReels'); if(!root) return;
+  const track=root.querySelector('.carousel-track'),
+        dots=[...root.querySelectorAll('.carousel-nav .dot')],
+        reelTitles=[...root.parentElement.querySelectorAll('.reel-title')],
+        prev=root.querySelector('.arrowCircle.prev'),
+        next=root.querySelector('.arrowCircle.next');
+  let idx=0;
+  function setActive(i){
+    if(dots.length===0) return;
+    idx=(i+dots.length)%dots.length;
+    dots.forEach((d,di)=>d.classList.toggle('active',di===idx));
+    track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});
+    reelTitles.forEach((t,ti)=>t.classList.toggle('active',ti===idx));
+  }
+  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
+  prev.addEventListener('click',()=>setActive(idx-1));
+  next.addEventListener('click',()=>setActive(idx+1));
+  track.addEventListener('scroll',()=>{
+    const i=Math.round(track.scrollLeft/track.clientWidth);
+    if(dots.length>0 && i!==idx && i<dots.length){
+      dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+      reelTitles.forEach((t,ti)=>t.classList.toggle('active',ti===i));
+      idx=i;
+    }
   });
   window.addEventListener('resize',()=>setActive(idx));
   setActive(0);
