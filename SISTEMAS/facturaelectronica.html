@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
@@ -95,12 +95,12 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .hero-btn.btn-grad-blue:hover {box-shadow: 0 10px 26px rgba(59,130,246,.3)}
 .hero-btn.btn-ghost:hover {background:#192636;border-color:#2a3c52}
 
-/* ===== Galería portada ===== */
+/* ===== Galería portada / Reels ===== */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:420px}
 .carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
-.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block}
+.carousel-slide{min-width:100%;width:100%;height:100%;display:block;flex-shrink:0}
 .carousel-nav{display:flex;gap:8px;justify-content:center;padding:10px;background:#0e1724;border-top:1px solid #1c2533}
-.dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;opacity:.6}
+.dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;opacity:.6;cursor:pointer}
 .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
 .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
 .arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}.arrowCircle .chev{font-size:24px;line-height:1}
@@ -320,7 +320,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
           <img src="../IMG/usas.jpeg" alt="Equipo usando el sistema" style="width:100%;border-radius:10px;margin-bottom:10px">
           <h4 class="title-gradient" style="margin:0 0 6px">Factura fácil y siempre al día con el SAT</h4>
           <p class="hint" style="margin:0 0 8px">Emite facturas, REP 2.0 y complementos (incl. Carta Porte 3.1) de forma intuitiva.</p>
-          <iframe class="pdf-frame" title="Ficha técnica CONTPAQi Factura Electrónica" src="../PDFS/Ficha_Factura_Electronica.pdf#page=1&view=FitH"></iframe>
+          <iframe class="pdf-frame" title="Ficha técnica CONTPAQi Factura Electrónica" src="../PDFS/Ficha_Factura_Electronica.pdf#page=2&view=FitH"></iframe>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Factura_Electronica.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Factura_Electronica.pdf" download>Descargar</a>
@@ -338,7 +338,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
               <img class="carousel-slide" src="../IMG/4factura_placeholder.webp" alt="Captura asistida para Carta Porte">
             </div>
             <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-            <div class="carousel-nav"><button class="dot active"></button><button class="dot"></button><button class="dot"></button><button class="dot"></button></div>
+            <div class="carousel-nav" aria-label="Paginación de galería"><button class="dot active" aria-label="Ir a la imagen 1"></button><button class="dot" aria-label="Ir a la imagen 2"></button><button class="dot" aria-label="Ir a la imagen 3"></button><button class="dot" aria-label="Ir a la imagen 4"></button></div>
           </div>
         </aside>
       </div>
@@ -357,7 +357,6 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
       </div>
 
       <div class="grid-3 feature-grid">
-        <!-- Emisión -->
         <article class="fcard tag-emision"><div class="fhead"><img class="ficon" src="../IMG/ic_cfdi_40.webp" alt=""><h4>Facturas CFDI 4.0</h4></div><p>Cumple todos los requisitos del SAT.</p></article>
         <article class="fcard tag-emision"><div class="fhead"><img class="ficon" src="../IMG/ic_rep.webp" alt=""><h4>Complemento de Pago (REP 2.0)</h4></div><p>Registra cobros parciales o diferidos.</p></article>
         <article class="fcard tag-emision"><div class="fhead"><img class="ficon" src="../IMG/ic_recibos.webp" alt=""><h4>Otros Comprobantes</h4></div><p>Honorarios, arrendamiento, notas de crédito, donativos, etc.</p></article>
@@ -365,7 +364,6 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
         <article class="fcard tag-emision"><div class="fhead"><img class="ficon" src="../IMG/ic_cancelacion_cfdi.webp" alt=""><h4>Cancelación CFDI</h4></div><p>Con o sin aceptación, según reglas del SAT.</p></article>
         <article class="fcard tag-emision"><div class="fhead"><img class="ficon" src="../IMG/ic_envio_mail.webp" alt=""><h4>Envío por Email</h4></div><p>PDF y XML al timbrar.</p></article>
 
-        <!-- Gestión -->
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_facil_uso.webp" alt=""><h4>Fácil de Usar</h4></div><p>Interfaz intuitiva con asistentes.</p></article>
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_multi_rfc.webp" alt=""><h4>Multi RFC</h4></div><p>Administra varios contribuyentes.</p></article>
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_clientes.webp" alt=""><h4>Clientes</h4></div><p>Datos fiscales y comerciales centralizados.</p></article>
@@ -373,7 +371,6 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_plantillas.webp" alt=""><h4>Plantillas PDF</h4></div><p>Representación impresa personalizable.</p></article>
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/ic_add.webp" alt=""><h4>Almacén Digital (ADD)</h4></div><p>Resguarda y consulta tus CFDI.</p></article>
 
-        <!-- Cumplimiento -->
         <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_carta_porte.webp" alt=""><h4>Carta Porte 3.1</h4></div><p>Asistentes y catálogos para emisión ágil.</p></article>
         <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_complementos.webp" alt=""><h4>Complementos</h4></div><p>INE, Notarios, Donatarias, Comercio Exterior, etc.</p></article>
         <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/ic_addenda.webp" alt=""><h4>Addendas</h4></div><p>Soporte a cadenas comerciales específicas.</p></article>
@@ -390,7 +387,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
         <h2 class="title-gradient">¿Por qué usar Factura Electrónica? <span class="badge">Beneficios clave</span></h2>
         <p class="lead">Emite todo tipo de CFDI, cumple con el SAT (incl. Carta Porte 3.1) y administra tu facturación con timbrado ilimitado.</p>
         <div class="listSlider">
-          <button class="arrowCircle prev"><span class="chev">‹</span></button>
+          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
           <div class="listTrack">
             <div class="listPage">
               <div class="listItem"><div class="listIcon"><img src="../IMG/ic_facil_rapido.webp" alt=""></div><div><strong>EMITE FÁCIL Y RÁPIDO</strong><div>Interfaz clara para facturar en minutos.</div></div></div>
@@ -403,41 +400,40 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
               <div class="listItem"><div class="listIcon"><img src="../IMG/ic_conecta_contpaqi.webp" alt=""></div><div><strong>INTEGRACIÓN</strong><div>Con Contabilidad y Bancos.</div></div></div>
             </div>
           </div>
-          <button class="arrowCircle next"><span class="chev">›</span></button>
+          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
         </div>
       </div>
       <div>
-<aside class="card body">
-          <h4 class="title-gradient" style="margin-bottom: 8px;">Reels Destacados: Factura Electrónica</h4>
-          <div class="carousel" id="carouselReels"> {/**/}
+        <aside class="card body">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Factura Electrónica</h4>
+          <div class="carousel" id="carouselReels">
             <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
             <div class="carousel-track">
-              <div class="carousel-slide" style="padding: 10px; box-sizing: border-box;"> {/**/}
-                 <iframe width="100%" height="100%"
-                   src="https://www.youtube-nocookie.com/embed/nMEgM_BvxTs?rel=0&modestbranding=1&controls=1&fs=1"
-                   title="Reel CONTPAQi Factura Electrónica 1 (para accesibilidad)"
-                   frameborder="0"
-                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                   allowfullscreen
-                   style="border-radius:12px; display:block; margin:auto; aspect-ratio: 9 / 16; max-height: 100%;"> {/**/}
-                 </iframe>
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/nMEgM_BvxTs?rel=0&modestbranding=1&controls=1&fs=1"
+                  title="Reel CONTPAQi Factura Electrónica 1 (para accesibilidad)"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  style="border-radius:12px;display:block;margin:auto;max-width:250px;height:315px;">
+                </iframe>
               </div>
-              <div class="carousel-slide" style="padding: 10px; box-sizing: border-box;"> {/**/}
-                 <iframe width="100%" height="100%"
-                   src="https://www.youtube-nocookie.com/embed/2uBSGZHLsGs?rel=0&modestbranding=1&controls=1&fs=1"
-                   title="Reel CONTPAQi Factura Electrónica 2 (para accesibilidad)"
-                   frameborder="0"
-                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                   allowfullscreen
-                   style="border-radius:12px; display:block; margin:auto; aspect-ratio: 9 / 16; max-height: 100%;"> {/**/}
-                 </iframe>
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/2uBSGZHLsGs?rel=0&modestbranding=1&controls=1&fs=1"
+                  title="Reel CONTPAQi Factura Electrónica 2 (para accesibilidad)"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  style="border-radius:12px;display:block;margin:auto;max-width:250px;height:315px;">
+                </iframe>
               </div>
-              </div>
+            </div>
             <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
             <div class="carousel-nav" aria-label="Paginación de galería">
               <button class="dot active" aria-label="Ir al reel 1"></button>
               <button class="dot" aria-label="Ir al reel 2"></button>
-              {/**/}
             </div>
           </div>
         </aside>
@@ -445,38 +441,35 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
-  <!-- VIDEOS horizontales -->
-<section id="videos" aria-labelledby="videos-title">
+  <section id="videos" aria-labelledby="videos-title">
     <div class="card body">
       <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
       <div class="yt-grid">
         <div class="yt">
           <h4 style="margin-bottom: 8px; text-align: center;">Presentación CONTPAQi Factura Electrónica</h4>
           <div style="text-align:center;">
-             <iframe width="560" height="315"
-               src="https://www.youtube-nocookie.com/embed/wIWOlIGMtcc?rel=0&modestbranding=1&controls=1&fs=1"
-               title="Presentación CONTPAQi Factura Electrónica (para accesibilidad)"
-               frameborder="0"
-               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-               allowfullscreen
-               style="border-radius:12px; max-width:100%; display:block; margin:auto;"
-               loading="lazy">
-             </iframe>
-           </div>
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/wIWOlIGMtcc?rel=0&modestbranding=1&controls=1&fs=1"
+              title="Presentación CONTPAQi Factura Electrónica (para accesibilidad)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="border-radius:12px; max-width:100%; display:block; margin:auto;"
+              loading="lazy"></iframe>
+          </div>
         </div>
         <div class="yt">
           <h4 style="margin-bottom: 8px; text-align: center;">¿Qué hace CONTPAQi Factura Electrónica?</h4>
           <div style="text-align:center;">
-             <iframe width="560" height="315"
-               src="https://www.youtube-nocookie.com/embed/SidN_z5r2Xc?rel=0&modestbranding=1&controls=1&fs=1"
-               title="Qué hace CONTPAQi Factura Electrónica (para accesibilidad)"
-               frameborder="0"
-               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-               allowfullscreen
-               style="border-radius:12px; max-width:100%; display:block; margin:auto;"
-               loading="lazy">
-             </iframe>
-           </div>
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/SidN_z5r2Xc?rel=0&modestbranding=1&controls=1&fs=1"
+              title="Qué hace CONTPAQi Factura Electrónica (para accesibilidad)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="border-radius:12px; max-width:100%; display:block; margin:auto;"
+              loading="lazy"></iframe>
+          </div>
         </div>
       </div>
     </div>
@@ -487,7 +480,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     <h3 id="integra-title" class="title-gradient">Sistemas que complementan tu Factura</h3>
     <div class="card body">
       <div class="carouselX" data-step="3">
-        <button class="arrowCircle prev"><span class="chev">‹</span></button>
+        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
         <div class="track">
           <article class="sys"><img src="../IMG/contabilidad.webp" alt="Contabilidad" /><h4>CONTPAQi Contabilidad</h4><p>Genera pólizas de ingresos y asocia CFDI.</p></article>
           <article class="sys"><img src="../IMG/bancos.webp" alt="Bancos" /><h4>CONTPAQi Bancos</h4><p>Concilia cobros y genera pólizas.</p></article>
@@ -495,8 +488,8 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
           <article class="sys"><img src="../IMG/comercialstart.webp" alt="Comercial Start" /><h4>Comercial Start</h4><p>Inventarios y CxC básicos.</p></article>
           <article class="sys"><img src="../IMG/cobra.webp" alt="Cobra" /><h4>CONTPAQi Cobra</h4><p>Automatiza recordatorios y seguimiento de cobranza.</p></article>
         </div>
-        <button class="arrowCircle next"><span class="chev">›</span></button>
-        <div class="group-dots"></div>
+        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        <div class="group-dots" aria-label="Paginación"></div>
       </div>
     </div>
   </section>
@@ -655,6 +648,20 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
   window.addEventListener('resize',()=>setActive(idx)); setActive(0);
 })();
 
+// Carrusel Reels
+(function(){
+  const root=document.getElementById('carouselReels'); if(!root) return;
+  const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
+  const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
+  let idx=0;
+  function setActive(i){idx=(i+dots.length)%dots.length; dots.forEach((d,di)=>d.classList.toggle('active',di===idx)); track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});}
+  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
+  prev.addEventListener('click',()=>setActive(idx-1));
+  next.addEventListener('click',()=>setActive(idx+1));
+  track.addEventListener('scroll',()=>{const i=Math.round(track.scrollLeft/track.clientWidth); dots.forEach((d,di)=>d.classList.toggle('active',di===i)); idx=i;});
+  window.addEventListener('resize',()=>setActive(idx)); setActive(0);
+})();
+
 // Slider Por qué usar
 (function(){
   const wrap=document.querySelector('#beneficios .listSlider'); if(!wrap) return;
@@ -675,7 +682,6 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
     function groupW(){return track.clientWidth;}
     function groupsCount(){const n=track.querySelectorAll('.sys').length; return Math.max(1, Math.ceil(n/3));}
 
-    // Si no hay paginación, oculta controles
     const paginate = groupsCount() > 1;
     if (!paginate){
       prev.style.display='none'; next.style.display='none'; dotsWrap.style.display='none';
@@ -867,7 +873,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
 });
 
-// FAQ modo acordeón (opcional)
+// FAQ modo acordeón
 (function(){
   const wrap=document.getElementById('faqWrap'); if(!wrap) return;
   const items=[...wrap.querySelectorAll('.faq-item')];
