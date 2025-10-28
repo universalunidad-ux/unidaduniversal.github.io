@@ -87,7 +87,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .pdf-frame{width:100%;height:68vh;border:0}
 @media (max-width:980px){ .pdf-frame{height:56vh} }
 
-/* === Botones Hero (Hover) === */
+/* Botones Hero (hover) */
 .hero-btn {transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease}
 .hero-btn:hover {transform: translateY(-3px); box-shadow: 0 10px 26px rgba(0,0,0,.35)}
 .hero-btn.btn-grad-green:hover {box-shadow: 0 10px 26px rgba(34,197,94,.3)}
@@ -98,7 +98,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 /* ===== Galería portada ===== */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:420px}
 .carousel-track{display:flex;scroll-snap-type:x mandatory;overflow-x:auto;scroll-behavior:smooth;height:calc(100% - 38px)}
-.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block}
+.carousel-slide{min-width:100%;width:100%;height:100%;object-fit:cover;display:block;flex-shrink:0}
 .carousel-nav{display:flex;gap:8px;justify-content:center;padding:10px;background:#0e1724;border-top:1px solid #1c2533}
 .dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;opacity:.6}
 .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
@@ -122,7 +122,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .placeholder .note{text-align:center;color:#b9c8de}
 #calc-primary{grid-column:1}
 #calc-slot-2,#calc-secondary{grid-column:2}
-#calc-tertiary{grid-column:3;display:none} /* oculto hasta elegir 3er sistema */
+#calc-tertiary{grid-column:3;display:none}
 #add-more-panel{grid-column:1 / -1}
 
 .calc-container h4{margin:0 0 8px}
@@ -134,7 +134,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .calc-container label,.calc-container .control-label{display:block;font-weight:700;color:#cfe3ff;margin:4px 0 4px}
 .calc-container select,.calc-container input[type="number"]{width:100%;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
 
-/* ===== Pickers: grid 3×N y responsive ===== */
+/* ===== Pickers: grid 3×N ===== */
 .icons-wrap{
   display:grid !important;
   grid-template-columns: repeat(3, minmax(128px, 1fr)) !important;
@@ -158,14 +158,10 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .icons-wrap .sys-icon img{width:56px;height:56px;border-radius:12px}
 .icons-wrap .sys-icon strong{font-size:12px;text-align:center}
 .icons-wrap .sys-icon .sys-price{color:#9fb2cb;font-size:11px}
-.icons-wrap .sys-icon .sin15,
-.icons-wrap .sys-icon .sin-15{
-  font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #1e2b3c;border-radius:999px;
-  background:#0e1724;color:#cfe3ff;justify-self:end
-}
+.icons-wrap .sys-icon .sin15{font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #1e2b3c;border-radius:999px;background:#0e1724;color:#cfe3ff;justify-self:end}
 
 /* ===== Comparativa / FAQ / Footer ===== */
-.table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden;margin-bottom:20px}
+.table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
 .table-like th,.table-like td{padding:12px 14px;border-bottom:1px solid #1e2b3c}
 .table-like tr:last-child td{border-bottom:none}
 .table-like thead th{background:#0e1724;color:#dce8ff;text-align:left}
@@ -256,14 +252,9 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 #beneficios .arrowCircle{width:40px;height:40px}
 #beneficios .arrowCircle .chev{font-size:22px}
 
-/* Tercera calculadora oculta inicialmente */
-#calc-tertiary{display:none}
-
-/* Videos */
-.yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;justify-items:center}
-@media (max-width:768px){ .yt-grid{grid-template-columns:1fr} }
-.yt{width:100%;max-width:680px}
-.yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
+/* Reels */
+.reel-title{margin-bottom:8px;text-align:center;color:#fff;font-weight:bold;display:none}
+.reel-title.active{display:block}
 </style>
 </head>
 <body id="top">
@@ -349,7 +340,12 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
               <img class="carousel-slide" src="../IMG/4pro_placeholder.webp" alt="Reportes avanzados de utilidad" loading="lazy">
             </div>
             <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-            <div class="carousel-nav" aria-label="Paginación galería"><button class="dot active" aria-label="Slide 1"></button><button class="dot" aria-label="Slide 2"></button><button class="dot" aria-label="Slide 3"></button><button class="dot" aria-label="Slide 4"></button></div>
+            <div class="carousel-nav" aria-label="Paginación galería">
+              <button class="dot active" aria-label="Slide 1"></button>
+              <button class="dot" aria-label="Slide 2"></button>
+              <button class="dot" aria-label="Slide 3"></button>
+              <button class="dot" aria-label="Slide 4"></button>
+            </div>
           </div>
         </aside>
       </div>
@@ -376,7 +372,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
         <article class="fcard tag-inventarios"><div class="fhead"><img class="ficon" src="../IMG/ic_inventario_fisico.webp" alt="" loading="lazy"><h4>Inventario Físico</h4></div><p>Facilita la toma de inventario físico y ajustes.</p></article>
         <article class="fcard tag-inventarios"><div class="fhead"><img class="ficon" src="../IMG/ic_unidades.webp" alt="" loading="lazy"><h4>Unidades de Medida</h4></div><p>Maneja diferentes unidades de compra y venta (caja, pieza, kg).</p></article>
 
-        <!-- Compras/Ventas -->
+        <!-- Compras y Ventas -->
         <article class="fcard tag-compras_ventas"><div class="fhead"><img class="ficon" src="../IMG/ic_ciclo_compra.webp" alt="" loading="lazy"><h4>Ciclo de Compra</h4></div><p>Desde requisición hasta recepción y pago a proveedores.</p></article>
         <article class="fcard tag-compras_ventas"><div class="fhead"><img class="ficon" src="../IMG/ic_ciclo_venta.webp" alt="" loading="lazy"><h4>Ciclo de Venta</h4></div><p>Cotizaciones, pedidos, remisiones, facturas y cobranza.</p></article>
         <article class="fcard tag-compras_ventas"><div class="fhead"><img class="ficon" src="../IMG/ic_cfdi_40.webp" alt="" loading="lazy"><h4>Facturación CFDI 4.0</h4></div><p>Emite facturas, REP, notas de crédito, carta porte, etc.</p></article>
@@ -417,15 +413,47 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
           <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
         </div>
       </div>
+
       <div>
-        <div class="card body">
-          <h4 class="title-gradient" style="margin:0 0 6px">Video (reel)</h4>
-          <iframe class="pdf-frame" title="Reel CONTPAQi Comercial Pro" src="https://www.youtube-nocookie.com/embed/VIDEO_ID_PRO_REEL" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
-        </div>
+        <aside class="card body">
+          <h4 class="title-gradient" style="margin-bottom: 8px;">Reels Destacados: Comercial Pro</h4>
+          <h4 class="reel-title active">Trazabilidad con Lotes</h4>
+          <h4 class="reel-title">Control Multi-Almacén</h4>
+
+          <div class="carousel" id="carouselReels">
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <div class="carousel-slide" style="padding: 10px; box-sizing: border-box;">
+                <iframe width="100%" height="500"
+                  src="https://www.youtube-nocookie.com/embed/PLACEHOLDER_REEL_ID_PRO_1?rel=0&modestbranding=1&controls=1&fs=1"
+                  title="Reel CONTPAQi Comercial Pro 1 (Placeholder)"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  style="border-radius:12px; display:block; margin:auto; max-width: 300px;">
+                </iframe>
+              </div>
+              <div class="carousel-slide" style="padding: 10px; box-sizing: border-box;">
+                <iframe width="100%" height="500"
+                  src="https://www.youtube-nocookie.com/embed/PLACEHOLDER_REEL_ID_PRO_2?rel=0&modestbranding=1&controls=1&fs=1"
+                  title="Reel CONTPAQi Comercial Pro 2 (Placeholder)"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  style="border-radius:12px; display:block; margin:auto; max-width: 300px;">
+                </iframe>
+              </div>
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de galería">
+              <button class="dot active" aria-label="Ir al reel 1"></button>
+              <button class="dot" aria-label="Ir al reel 2"></button>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
-
 
   <section id="videos" aria-labelledby="videos-title">
     <div class="card body">
@@ -434,34 +462,35 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
         <div class="yt">
           <h4 style="margin-bottom: 8px; text-align: center;">Presentación CONTPAQi Comercial Pro</h4>
           <div style="text-align:center;">
-             <iframe width="560" height="315"
-src="https://www.youtube-nocookie.com/embed/-SJq6t2SM7c?rel=0&modestbranding=1&controls=1&fs=1"
-               title="Presentación CONTPAQi Comercial Pro (para accesibilidad)"
-               frameborder="0"
-               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-               allowfullscreen
-               style="border-radius:12px; max-width:100%; display:block; margin:auto;"
-               loading="lazy">
-             </iframe>
-           </div>
+            <iframe width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/-SJq6t2SM7c?rel=0&modestbranding=1&controls=1&fs=1"
+              title="Presentación CONTPAQi Comercial Pro (para accesibilidad)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="border-radius:12px; max-width:100%; display:block; margin:auto;"
+              loading="lazy">
+            </iframe>
+          </div>
         </div>
         <div class="yt">
           <h4 style="margin-bottom: 8px; text-align: center;">¿Qué hace CONTPAQi Comercial Pro?</h4>
           <div style="text-align:center;">
-             <iframe width="560" height="315"
-               src="https://www.youtube-nocookie.com/embed/rEYzPXOX1_Y?rel=0&modestbranding=1&controls=1&fs=1"
-               title="Qué hace CONTPAQi Comercial Pro (para accesibilidad)"
-               frameborder="0"
-               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-               allowfullscreen
-               style="border-radius:12px; max-width:100%; display:block; margin:auto;"
-               loading="lazy">
-             </iframe>
-           </div>
+            <iframe width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/rEYzPXOX1_Y?rel=0&modestbranding=1&controls=1&fs=1"
+              title="Qué hace CONTPAQi Comercial Pro (para accesibilidad)"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              style="border-radius:12px; max-width:100%; display:block; margin:auto;"
+              loading="lazy">
+            </iframe>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
   <section id="integra" aria-labelledby="integra-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="integra-title" class="title-gradient">Sistemas que complementan tu Comercial Pro</h3>
@@ -573,7 +602,7 @@ src="https://www.youtube-nocookie.com/embed/-SJq6t2SM7c?rel=0&modestbranding=1&c
     </div>
   </section>
 
-  <aside class="toc collapsed" id="toc">
+  <aside class="toc collapsed" id="toc" aria-label="Mapa del sitio">
     <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
     <button class="toc-close" aria-label="Cerrar">×</button>
     <strong class="toc-title">Mapa del sitio</strong>
@@ -642,15 +671,60 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
 // Galería portada
 (function(){
   const root=document.getElementById('carousel1'); if(!root) return;
-  const track=root.querySelector('.carousel-track'), dots=[...root.querySelectorAll('.dot')];
-  const prev=root.querySelector('.arrowCircle.prev'), next=root.querySelector('.arrowCircle.next');
+  const track=root.querySelector('.carousel-track'),
+        dots=[...root.querySelectorAll('.carousel-nav .dot')],
+        prev=root.querySelector('.arrowCircle.prev'),
+        next=root.querySelector('.arrowCircle.next');
   let idx=0;
-  function setActive(i){idx=(i+dots.length)%dots.length; dots.forEach((d,di)=>d.classList.toggle('active',di===idx)); track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});}
+  function setActive(i){
+    if(dots.length===0) return;
+    idx=(i+dots.length)%dots.length;
+    dots.forEach((d,di)=>d.classList.toggle('active',di===idx));
+    track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});
+  }
   dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
   prev.addEventListener('click',()=>setActive(idx-1));
   next.addEventListener('click',()=>setActive(idx+1));
-  track.addEventListener('scroll',()=>{const i=Math.round(track.scrollLeft/track.clientWidth); dots.forEach((d,di)=>d.classList.toggle('active',di===i)); idx=i;});
-  window.addEventListener('resize',()=>setActive(idx)); setActive(0);
+  track.addEventListener('scroll',()=>{
+    const i=Math.round(track.scrollLeft/track.clientWidth);
+    if(dots.length>0 && i!==idx && i<dots.length){
+      dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+      idx=i;
+    }
+  });
+  window.addEventListener('resize',()=>setActive(idx));
+  setActive(0);
+})();
+
+// Carrusel Reels
+(function(){
+  const root=document.getElementById('carouselReels'); if(!root) return;
+  const track=root.querySelector('.carousel-track'),
+        dots=[...root.querySelectorAll('#carouselReels .carousel-nav .dot')],
+        reelTitles=[...document.querySelectorAll('.reel-title')];
+  const prev=root.querySelector('#carouselReels .arrowCircle.prev'),
+        next=root.querySelector('#carouselReels .arrowCircle.next');
+  let idx=0;
+  function setActive(i){
+    if(dots.length===0) return;
+    idx=(i+dots.length)%dots.length;
+    dots.forEach((d,di)=>d.classList.toggle('active',di===idx));
+    track.scrollTo({left: track.clientWidth*idx, behavior:'smooth'});
+    reelTitles.forEach((t,ti)=>t.classList.toggle('active',ti===idx));
+  }
+  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
+  prev.addEventListener('click',()=>setActive(idx-1));
+  next.addEventListener('click',()=>setActive(idx+1));
+  track.addEventListener('scroll',()=>{
+    const i=Math.round(track.scrollLeft/track.clientWidth);
+    if(dots.length>0 && i!==idx && i<dots.length){
+      dots.forEach((d,di)=>d.classList.toggle('active',di===i));
+      reelTitles.forEach((t,ti)=>t.classList.toggle('active',ti===i));
+      idx=i;
+    }
+  });
+  window.addEventListener('resize',()=>setActive(idx));
+  setActive(0);
 })();
 
 // Slider Por qué usar
@@ -663,7 +737,7 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
   window.addEventListener('resize',()=>go(page));
 })();
 
-// Carrusel sistemas integrables
+// Carrusel sistemas integrables (agrupado por 3)
 (function(){
   document.querySelectorAll('.carouselX').forEach(root=>{
     const track=root.querySelector('.track'),
@@ -676,11 +750,9 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
     function goTo(i){track.scrollTo({left:i*groupW(),behavior:'smooth'}); setDot(i);}
     dotsWrap.innerHTML='';
     const dots=Array.from({length:groupsCount()},(_,i)=>{
-      const b=document.createElement('button');
-      b.className='dot'+(i===0?' active':'');
+      const b=document.createElement('button'); b.className='dot'+(i===0?' active':'');
       b.addEventListener('click',()=>goTo(i));
-      dotsWrap.appendChild(b);
-      return b;
+      dotsWrap.appendChild(b); return b;
     });
     let idx=0;
     prev.addEventListener('click',()=>{idx=Math.max(0,idx-1); goTo(idx);});
@@ -717,13 +789,13 @@ function hasPrices(systemName){return !!(window.preciosContpaqi && window.precio
 
 // Catálogo visual (coincide con precios-contpaqi.js)
 const CATALOG_SISTEMAS = [
-  { name: "CONTPAQi Contabilidad",       img: "../IMG/contabilidad.webp" },
-  { name: "CONTPAQi Bancos",             img: "../IMG/bancos.webp"  },
-  { name: "CONTPAQi Nóminas",            img: "../IMG/nominas.webp" },
-  { name: "CONTPAQi XML en Línea",       img: "../IMG/xml.webp",     noDiscount: true },
-  { name: "CONTPAQi Comercial START",    img: "../IMG/comercialstart.webp"  },
-  { name: "CONTPAQi Comercial PREMIUM",  img: "../IMG/comercialpremium.webp"},
-  { name: "CONTPAQi Factura Electrónica",img: "../IMG/factura.webp" }
+  { name: "CONTPAQi Contabilidad", img: "../IMG/contabilidad.webp" },
+  { name: "CONTPAQi Bancos",       img: "../IMG/bancos.webp" },
+  { name: "CONTPAQi Nóminas",      img: "../IMG/nominas.webp" },
+  { name: "CONTPAQi XML en Línea", img: "../IMG/xml.webp", noDiscount: true },
+  { name: "CONTPAQi Comercial START",  img: "../IMG/comercialstart.webp" },
+  { name: "CONTPAQi Comercial PREMIUM",img: "../IMG/comercialpremium.webp"},
+  { name: "CONTPAQi Factura Electrónica", img: "../IMG/factura.webp" }
 ];
 
 // Precio “desde”
@@ -740,17 +812,17 @@ function getPrecioDesde(systemName){
 }
 const moneyMX = new Intl.NumberFormat("es-MX", { style:"currency", currency:"MXN", maximumFractionDigits:0 });
 
-// Estado de selección para evitar duplicados
+// Estado selección
 const selected = { secondary: null, tertiary: null };
 function selectedSet(){ return new Set([selected.secondary, selected.tertiary].filter(Boolean)); }
 
-// Render dinámico de pickers con exclusiones
+// Render pickers con exclusiones
 function renderSistemasPicker(containerId, exclude = new Set(), activeName = null){
   const wrap = document.getElementById(containerId);
   if(!wrap) return;
   wrap.innerHTML = "";
   const primarySys = document.getElementById('app')?.dataset?.system;
-  exclude.add(primarySys);
+  if(primarySys) exclude.add(primarySys);
 
   CATALOG_SISTEMAS.forEach(item=>{
     if (exclude.has(item.name)) return;
@@ -786,7 +858,7 @@ function renderCombinedTable(rows){
   wrap.hidden=false;
 }
 
-// Inicialización
+// Inicialización calculadoras
 document.addEventListener("DOMContentLoaded", ()=>{
   const row=document.getElementById('calc-row'),
         slot2=document.getElementById('calc-slot-2'),
@@ -796,14 +868,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
         pick3=document.getElementById('icons-third-sys');
   const primarySystem = document.getElementById('app')?.dataset?.system;
 
-  // Render inicial
+  // Render inicial de pickers
   const initialExclude = new Set(primarySystem ? [primarySystem] : []);
   renderSistemasPicker("icons-sec-sys", initialExclude);
   renderSistemasPicker("icons-third-sys", initialExclude);
 
   function refreshPickers(){
     const ex = selectedSet();
-    ex.add(primarySystem);
+    if(primarySystem) ex.add(primarySystem);
     renderSistemasPicker("icons-sec-sys", ex, selected.secondary);
     renderSistemasPicker("icons-third-sys", ex, selected.tertiary);
   }
