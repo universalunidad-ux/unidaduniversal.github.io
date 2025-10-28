@@ -407,17 +407,40 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
         </div>
       </div>
       <div>
-<div class="card body">
-          <h4 class="title-gradient" style="margin:0 0 6px">Reel: Presentación Factura Electrónica</h4>
-          <iframe class="pdf-frame"
-            title="Reel CONTPAQi Factura Electrónica (para accesibilidad)"
-            src="https://www.youtube-nocookie.com/embed/nMEgM_BvxTs?rel=0&modestbranding=1&controls=1&fs=1"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-            style="border-radius:12px;">
-          </iframe>
-        </div>
+<aside class="card body">
+          <h4 class="title-gradient" style="margin-bottom: 8px;">Reels Destacados: Factura Electrónica</h4>
+          <div class="carousel" id="carouselReels"> {/**/}
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <div class="carousel-slide" style="padding: 10px; box-sizing: border-box;"> {/**/}
+                 <iframe width="100%" height="100%"
+                   src="https://www.youtube-nocookie.com/embed/nMEgM_BvxTs?rel=0&modestbranding=1&controls=1&fs=1"
+                   title="Reel CONTPAQi Factura Electrónica 1 (para accesibilidad)"
+                   frameborder="0"
+                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                   allowfullscreen
+                   style="border-radius:12px; display:block; margin:auto; aspect-ratio: 9 / 16; max-height: 100%;"> {/**/}
+                 </iframe>
+              </div>
+              <div class="carousel-slide" style="padding: 10px; box-sizing: border-box;"> {/**/}
+                 <iframe width="100%" height="100%"
+                   src="https://www.youtube-nocookie.com/embed/2uBSGZHLsGs?rel=0&modestbranding=1&controls=1&fs=1"
+                   title="Reel CONTPAQi Factura Electrónica 2 (para accesibilidad)"
+                   frameborder="0"
+                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                   allowfullscreen
+                   style="border-radius:12px; display:block; margin:auto; aspect-ratio: 9 / 16; max-height: 100%;"> {/**/}
+                 </iframe>
+              </div>
+              </div>
+            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de galería">
+              <button class="dot active" aria-label="Ir al reel 1"></button>
+              <button class="dot" aria-label="Ir al reel 2"></button>
+              {/**/}
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
