@@ -1,0 +1,50 @@
+/* ===== Carruseles (galería y reels): sin barra, solo flechas/puntos ===== */
+#carousel1 .carousel-track,
+#carouselReels .carousel-track,
+#beneficios .listTrack { 
+  overflow: hidden !important;
+  -ms-overflow-style: none; scrollbar-width: none;
+}
+#carousel1 .carousel-track::-webkit-scrollbar,
+#carouselReels .carousel-track::-webkit-scrollbar,
+#beneficios .listTrack::-webkit-scrollbar { display: none !important; }
+
+/* Puntos activos más claros */
+.carousel-nav .dot,
+.group-dots .dot {
+  width: 10px; height: 10px; border-radius: 9999px;
+  border: 0; opacity: .5; background: var(--muted, #9aa6b2);
+}
+.carousel-nav .dot.active,
+.group-dots .dot.active { opacity: 1; background: var(--brand, #2dd4bf); }
+
+/* ===== Carrusel “Sistemas que complementan” ===== */
+.carouselX .track { overflow: hidden !important; }
+.carouselX .sys { cursor: pointer; }
+
+/* ===== Videos “horizontales” (cuando sean verticales de origen) ===== */
+.yt iframe { aspect-ratio: 16/9; width: 100%; }
+
+/* ===== Calculadora: menos blanco, mantiene presencia ===== */
+.calc-strip { gap: 10px; }
+.calc-container { padding: 10px; }
+.calc-container table { max-width: 600px; }
+#combined-wrap { margin-top: 8px; }
+
+/* ===== FAQs: “flashear” y “no cerrar” según tu lista ===== */
+.faq-item.flash {
+  animation: faqFlash 1.1s ease-in-out 2;
+  outline: 2px solid var(--brand-2, #60a5fa); border-radius: 12px;
+}
+@keyframes faqFlash {
+  50% { box-shadow: 0 0 0 6px rgba(96,165,250,.25); }
+}
+details.faq-lock > summary { cursor: not-allowed; }
+
+/* ===== Footer/header/iconos homogéneos (sutil) ===== */
+header { backdrop-filter: saturate(1.2) blur(6px); }
+.badge { font-weight: 700; }
+
+/* Reels: que el título activo se muestre sin salto visual */
+.reel-title { display: none; }
+.reel-title.active { display: block; }
