@@ -915,7 +915,59 @@ document.addEventListener("DOMContentLoaded", ()=>{
       if(d.open){ items.forEach(o=>{ if(o!==d) o.removeAttribute('open'); }); }
     });
   });
+
+(function(){
+  const wrap = document.getElementById('faqWrap');
+  if (!wrap) return;
+
+  const items = [...wrap.querySelectorAll('.faq-item')];
+  const HEADER_OFFSET = 92; // ajusta a la altura real de tu header
+  const html = document.documentElement;
+
+  function stabilizeOpen(current){
+    const sum = current.querySelector('summary');
+    if (!sum) return;
+
+    // Posición del summary respecto a la página ANTES de cerrar hermanas
+    const targetTop = sum.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+
+    // Desactiva smooth solo durante el reflow
+    html.classList.add('no-smooth');
+
+    // Cierra las demás sin animaciones/efectos
+    items.forEach(it => { if (it !== current) it.open = false; });
+
+    // Reposiciona a la misma coordenada para que no se note salto
+    requestAnimationFrame(()=>{
+      window.scrollTo(0, targetTop);
+      // Rehabilita smooth para el resto del sitio
+      html.classList.remove('no-smooth');
+    });
+  }
+
+  // Hook: cuando un details se abre, estabilizamos
+  items.forEach(d => {
+    d.addEventListener('toggle', () => {
+      if (d.open) stabilizeOpen(d);
+    });
+
+    // Evita que el focus/outline dispare re-layouts raros en algunos navegadores
+    const s = d.querySelector('summary');
+    if (s){
+      s.addEventListener('mousedown', () => { s.style.outline = 'none'; }, { passive: true });
+      s.addEventListener('keydown', (e) => {
+        // Enter/Espacio también abren; lo manejamos igual sin smooth
+        if (e.key === 'Enter' || e.key === ' ') {
+          html.classList.add('no-smooth');
+          setTimeout(()=> html.classList.remove('no-smooth'), 120);
+        }
+      });
+    }
+  });
+
+
 })();
+  
 </script>
 
 <!-- Cargas diferidas para no bloquear -->
