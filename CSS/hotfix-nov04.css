@@ -48,3 +48,21 @@ header { backdrop-filter: saturate(1.2) blur(6px); }
 /* Reels: que el título activo se muestre sin salto visual */
 .reel-title { display: none; }
 .reel-title.active { display: block; }
+
+/* Evita transiciones/animaciones en FAQs para que no “parpadeen” */
+#faq .faq-item, 
+#faq .faq-item * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Cuando el script activa esta clase, deshabilita smooth scroll temporalmente */
+html.no-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* Asegura que al enfocarse el summary no se “coma” el header fijo */
+#faq .faq-item > summary { 
+  scroll-margin-top: 92px; /* ajusta si tu header mide distinto */
+}
+
