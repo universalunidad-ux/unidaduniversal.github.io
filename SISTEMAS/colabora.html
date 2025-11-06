@@ -105,13 +105,9 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
 .arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}.arrowCircle .chev{font-size:24px;line-height:1}
 
-/* ===== Carrusel integra (un solo elemento) ===== */
-.carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
-.carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px;justify-content:center}
-.carouselX .sys{flex:0 0 auto;background:#0f1622;border:1px solid #1c2533;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:420px}
-.carouselX .sys img{width:72px;height:72px;border-radius:16px;margin:6px auto 10px;background:#101826;object-fit:cover}
-.group-dots{display:none}
-.carouselX .arrowCircle{display:none}
+/* ===== Carrusel integra (nóminas y personia  ===== */
+.carouselX{--gap:12px;--per:2;position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}.carouselX .track{display:flex;gap:var(--gap);overflow:hidden;padding:4px;scroll-behavior:smooth;min-height:220px}.carouselX .sys{flex:0 0 calc((100% - (var(--per) - 1)*var(--gap))/var(--per));background:#0f1622;border:1px solid #1c2533;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;transition:transform .12s ease,box-shadow .12s ease,border-color .15s ease;cursor:pointer;outline:none}.carouselX .sys:focus{outline:2px solid var(--brand)}.carouselX .sys:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:#284061}.carouselX .sys img{width:72px;height:72px;border-radius:16px;margin:6px auto 10px;background:#101826;object-fit:cover}.carouselX .sys h4{margin:4px 0 6px;color:#e3ecf9;font-size:15px}.carouselX .sys p{margin:0;color:#bcd0ea;font-size:14px;line-height:1.35}.carouselX .group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0 0}.carouselX .dot{width:10px;height:10px;border-radius:999px;background:#223044;border:none;opacity:.6;cursor:pointer}.carouselX .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}.carouselX .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}.carouselX .arrowCircle.prev{left:8px}.carouselX .arrowCircle.next{right:8px}.carouselX .arrowCircle .chev{font-size:24px;line-height:1}@media(max-width:980px){.carouselX{--per:1}}
+
 
 /* ===== Funciones destacadas (moderno y compacto) ===== */
 .pillbar{
@@ -454,23 +450,37 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     </div>
   </section>
 
-  <section id="integra" aria-labelledby="integra-title">
-    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 id="integra-title" class="title-gradient">CONTPAQi Colabora funciona con:</h3>
-    <div class="card body">
-      <div class="carouselX" data-step="1">
-        <div class="track">
-          <article class="sys">
-            <img src="../IMG/nominas.webp" alt="Ícono de CONTPAQi Nóminas" loading="lazy" />
-            <h4>CONTPAQi Nóminas</h4>
-            <p>Sincroniza la información de empleados, recibos y vacaciones.</p>
-          </article>
-        </div>
-        <!-- Flechas y dots ocultos por CSS al ser un único elemento -->
-        <div class="group-dots" aria-hidden="true"></div>
+<section id="integra" aria-labelledby="integra-title">
+  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+  <h3 id="integra-title" class="title-gradient">CONTPAQi Colabora funciona con:</h3>
+
+  <div class="card body">
+    <!-- data-per controla cuántas tarjetas se muestran por “grupo” en desktop -->
+    <div class="carouselX" data-per="2">
+      <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+
+      <div class="track" role="list">
+        <article class="sys" role="listitem" tabindex="0"
+                 data-href="../SISTEMAS/nominas.html">
+          <img src="../IMG/nominas.webp" alt="CONTPAQi Nóminas" />
+          <h4>CONTPAQi Nóminas</h4>
+          <p>Sincroniza empleados, recibos y vacaciones.</p>
+        </article>
+
+        <article class="sys" role="listitem" tabindex="0"
+                 data-href="../SISTEMAS/personia.html">
+          <img src="../IMG/personia.webp" alt="CONTPAQi Personia" />
+          <h4>CONTPAQi Personia</h4>
+          <p>Gestión de expedientes y documentos laborales.</p>
+        </article>
       </div>
+
+      <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+      <div class="group-dots" aria-label="Paginación"></div>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <section id="comparativa" aria-labelledby="comparativa-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
@@ -598,6 +608,123 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
   function go(i){page=(i+total)%total; track.scrollTo({left: wrap.clientWidth*page, behavior:'smooth'});}
   prev.addEventListener('click',()=>go(page-1)); next.addEventListener('click',()=>go(page+1));
   window.addEventListener('resize',()=>go(page));
+})();
+/* === Motor carruselX (idéntico a Contabilidad; soporta data-per y oculta flechas/dots si no se necesitan) === */
+(function(){
+  document.querySelectorAll('.carouselX').forEach(root=>{
+    const track = root.querySelector('.track');
+    const prev  = root.querySelector('.arrowCircle.prev');
+    const next  = root.querySelector('.arrowCircle.next');
+    const dotsWrap = root.querySelector('.group-dots');
+    const cards = [...track.querySelectorAll('.sys')];
+
+    if (!track || cards.length === 0) return;
+
+    // Lee per-desktop desde data-per, cae a 2 si no existe; media query lo reduce a 1 en móvil
+    const perDesktop = parseInt(root.dataset.per || '2', 10);
+
+    // Refleja --per (CSS) para cálculos al redimensionar
+    function currentPer(){
+      const s = getComputedStyle(root).getPropertyValue('--per').trim();
+      const n = Number(s);
+      return Number.isFinite(n) && n>0 ? n : perDesktop;
+    }
+
+    function groupsCount(){
+      const per = currentPer();
+      return Math.max(1, Math.ceil(cards.length / per));
+    }
+
+    // Construye dots y navegación
+    function buildDots(){
+      dotsWrap.innerHTML = '';
+      const n = groupsCount();
+      const dots = Array.from({length:n}, (_,i)=>{
+        const b = document.createElement('button');
+        b.className = 'dot' + (i===0?' active':'');
+        b.setAttribute('aria-label', 'Ir al grupo ' + (i+1));
+        b.addEventListener('click', ()=>goTo(i));
+        dotsWrap.appendChild(b);
+        return b;
+      });
+      return dots;
+    }
+
+    function groupWidth(){
+      return track.clientWidth; // usamos scroll por “página” completa
+    }
+
+    let idx = 0;
+    let dots = buildDots();
+
+    function setDot(i){
+      dots.forEach((d,k)=>d.classList.toggle('active', k===i));
+    }
+
+    function goTo(i){
+      const n = groupsCount();
+      idx = Math.max(0, Math.min(n-1, i));
+      track.scrollTo({ left: idx * groupWidth(), behavior: 'smooth' });
+      setDot(idx);
+      updateArrows();
+    }
+
+    function updateArrows(){
+      const n = groupsCount();
+      const needNav = n > 1;
+      if (prev) prev.style.display = needNav ? '' : 'none';
+      if (next) next.style.display = needNav ? '' : 'none';
+      if (dotsWrap) dotsWrap.style.display = needNav ? 'flex' : 'none';
+    }
+
+    // Click tarjetas → abre data-href
+    track.addEventListener('click', (e)=>{
+      const card = e.target.closest('.sys');
+      if (!card) return;
+      const url = card.dataset.href;
+      if (url) window.open(url, '_blank', 'noopener');
+    });
+
+    // Teclado accesible (Enter/Espacio sobre la tarjeta)
+    track.addEventListener('keydown', (e)=>{
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('sys')){
+        e.preventDefault();
+        const url = e.target.dataset.href;
+        if (url) window.open(url, '_blank', 'noopener');
+      }
+    });
+
+    // Flechas
+    prev?.addEventListener('click', ()=>goTo(idx-1));
+    next?.addEventListener('click', ()=>goTo(idx+1));
+
+    // Sync al hacer scroll manual (por si el usuario arrastra con trackpad)
+    track.addEventListener('scroll', ()=>{
+      const i = Math.round(track.scrollLeft / groupWidth());
+      if (i !== idx){ idx = i; setDot(idx); updateArrows(); }
+    });
+
+    // Recalcular en resize / cambio de per responsive
+    let rAF = null;
+    function onResize(){
+      if (rAF) cancelAnimationFrame(rAF);
+      rAF = requestAnimationFrame(()=>{
+        const oldCount = dots.length;
+        dots = buildDots();
+        // Mantener idx dentro de rango nuevo
+        const n = groupsCount();
+        if (idx >= n) idx = n-1;
+        goTo(idx);
+        updateArrows();
+      });
+    }
+    window.addEventListener('resize', onResize);
+
+    // Inicializa per (sincroniza --per con data-per en desktop)
+    root.style.setProperty('--per', String(perDesktop));
+    updateArrows();
+    goTo(0);
+  });
 })();
 
 // Píldoras (filtros) - Colabora
