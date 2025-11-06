@@ -134,27 +134,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .calc-container label,.calc-container .control-label{display:block;font-weight:700;color:#cfe3ff;margin:4px 0 4px}
 .calc-container select,.calc-container input[type="number"]{width:100%;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
 
-/* ===== Pickers ===== */
-.icons-wrap{
-  display:grid !important;
-  grid-template-columns: repeat(3, minmax(128px, 1fr)) !important;
-  gap:12px !important;
-  justify-items:center !important;
-}
-@media (max-width:980px){ .icons-wrap{ grid-template-columns: repeat(3, minmax(120px, 1fr)) !important; } }
-@media (max-width:680px){ .icons-wrap{ grid-template-columns: repeat(2, minmax(120px, 1fr)) !important; } }
-.icons-wrap .sys-icon{
-  width:100% !important; padding:10px; border-radius:12px;
-  border:1px solid #1e2b3c; background:#0e1724; cursor:pointer;
-  display:grid; grid-template-rows:auto auto auto; justify-items:center; row-gap:6px;
-  transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease, outline-color .12s ease;
-}
-.icons-wrap .sys-icon:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.25);border-color:#274061}
-.icons-wrap .sys-icon.active{outline:2px solid var(--brand)}
-.icons-wrap .sys-icon img{width:56px;height:56px;border-radius:12px}
-.icons-wrap .sys-icon strong{font-size:12px;text-align:center}
-.icons-wrap .sys-icon .sys-price{color:#9fb2cb;font-size:11px}
-.icons-wrap .sys-icon .sin15{font-size:10px;font-weight:700;padding:2px 6px;border:1px solid #1e2b3c;border-radius:999px;background:#0e1724;color:#cfe3ff;justify-self:end}
+/* ===== Funciones destacadas (moderno y compacto) ===== */.pillbar{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 10px}.pill{padding:6px 10px;border-radius:999px;border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);color:#cfe3ff;cursor:pointer;font-weight:700;font-size:12px;transition:transform .12s ease,box-shadow .12s ease,background .2s ease}.pill:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.22)}.pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:980px){.feature-grid{grid-template-columns:1fr 1fr}}@media(max-width:680px){.feature-grid{grid-template-columns:1fr}}.fcard{border:1px solid #1e2b3c;border-radius:12px;background:linear-gradient(180deg,#0f1622,#0f1724);padding:12px;display:grid;gap:6px;transition:transform .12s ease,box-shadow .12s ease,border-color .15s ease}.fcard:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.22);border-color:#284061}.fhead{display:flex;align-items:center;gap:8px}.ficon{width:56px;height:56px;border-radius:10px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}.fcard h4{margin:0;font-size:14px;color:#e3ecf9}.fcard p{margin:0;color:#bcd0ea;font-size:13px;line-height:1.3}
 
 /* ===== Comparativa / FAQ / Footer ===== */
 .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
