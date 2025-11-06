@@ -292,23 +292,6 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   line-height:1.35;
 }
 
-
-
-/* Grid de features 3 col (con tarjetas compactas) */
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media (max-width:980px){ .feature-grid{grid-template-columns:1fr 1fr} }
-@media (max-width:680px){ .feature-grid{grid-template-columns:1fr} }
-
-.fcard{
-  border:1px solid #1e2b3c;border-radius:14px;background:linear-gradient(180deg,#0f1622,#0f1724);
-  padding:14px;display:grid;gap:8px;transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease
-}
-.fcard:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:#284061}
-.fhead{display:flex;align-items:center;gap:10px}
-.ficon{width:28px;height:28px;border-radius:8px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
-.fcard h4{margin:0;font-size:15px}
-.fcard p{margin:0;color:#bcd0ea;font-size:14px;line-height:1.35}
-
 /* ===== “¿Por qué usar…?” — slider compacto con flechas ===== */
 .listSlider{
   position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);
