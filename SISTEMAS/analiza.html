@@ -180,16 +180,36 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
   .footer-grid{grid-template-columns:1fr}
 }
 
-/* ===== Funciones destacadas ===== */
-.pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
-.pill{
-  padding:8px 12px;border-radius:999px;
-  border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);
-  color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;
-  transition:transform .12s ease, box-shadow .12s ease, background .2s ease
+/* Funciones destacadas — versión compacta (−1/3 del tamaño) */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:980px){ .feature-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:680px){ .feature-grid{grid-template-columns:1fr} }
+
+.fcard{
+  border:1px solid #1e2b3c;
+  border-radius:14px;
+  background:linear-gradient(180deg,#0f1622,#0f1724);
+  padding:14px;
+  display:grid;
+  gap:8px;                 /* antes 10px */
+  transition:transform .12s ease, box-shadow .12s ease, border-color .15s ease;
 }
-.pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
-.pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
+.fcard:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.25);border-color:#284061}
+
+.fhead{display:flex;align-items:center;gap:10px} /* antes 14px */
+
+.ficon{
+  width:56px;             /* antes 84px */
+  height:56px;            /* antes 84px */
+  border-radius:10px;     /* antes 12px */
+  background:#0e1724;
+  border:1px solid #1e2b3c;
+  object-fit:cover;
+}
+
+.fcard h4{margin:0;font-size:15px}  /* sutil ajuste para balance */
+.fcard p{margin:0;color:#bcd0ea;font-size:14px;line-height:1.35}
+
 
 /* Grid features */
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
