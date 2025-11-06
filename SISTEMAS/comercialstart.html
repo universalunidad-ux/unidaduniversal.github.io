@@ -106,12 +106,8 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}.arrowCircle .chev{font-size:24px;line-height:1}
 
 /* ===== Carrusel de sistemas ===== */
-.carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
-.carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px}
-.carouselX .sys{flex:0 0 calc((100% - 24px)/3);background:#0f1622;border:1px solid #1c2533;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center}
-.carouselX .sys img{width:72px;height:72px;border-radius:16px;margin:6px auto 10px;background:#101826;object-fit:cover}
-.group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0 0}
-.group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2))}
+.carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}.carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px}.carouselX .sys{flex:0 0 calc((100% - 24px)/3);background:#0f1622;border:1px solid #1c2533;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;transition:background .18s ease,transform .18s ease,border-color .18s ease;cursor:pointer}.carouselX .sys:hover{background:#0f1c2c;border-color:#274061;transform:translateY(-2px)}.carouselX .sys img{width:80px;height:80px;border-radius:16px;margin:6px auto 10px;background:#101826;object-fit:cover}.carouselX .sys .hoverMore{position:absolute;inset:0;display:grid;place-items:center;border-radius:inherit;background:rgba(10,16,26,.58);opacity:0;transition:opacity .18s ease;font-weight:800;letter-spacing:.2px}.carouselX .sys .hoverMore .chip{border:1px solid #2a415f;background:#0e1724;border-radius:999px;padding:6px 10px}.carouselX .sys:hover .hoverMore{opacity:1}.group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0}.group-dots .dot{width:8px;height:8px;border-radius:999px;border:1px solid #2a415f;background:#0e1724;opacity:.9;transition:transform .15s ease,opacity .15s ease}.group-dots .dot:hover{transform:scale(1.1);opacity:1}.group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2))}@media(max-width:980px){.carouselX .sys{flex:0 0 calc((100% - 12px)/2)}}
+
 
 /* ===== CALCULADORA ===== */
 .calc-strip{display:flex;flex-direction:column;gap:12px}
@@ -446,13 +442,28 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     <div class="card body">
       <div class="carouselX" data-step="3">
         <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-        <div class="track">
-          <article class="sys"><img src="../IMG/contabilidad.webp" alt="Contabilidad" /><h4>CONTPAQi Contabilidad</h4><p>Genera pólizas de ventas y cobranza automáticamente.</p></article>
-          <article class="sys"><img src="../IMG/bancos.webp" alt="Bancos" /><h4>CONTPAQi Bancos</h4><p>Concilia los pagos recibidos de clientes.</p></article>
-          <article class="sys"><img src="../IMG/xml.webp" alt="XML en Línea" /><h4>CONTPAQi XML en Línea</h4><p>Descarga y valida CFDI de proveedores.</p></article>
-          <article class="sys"><img src="../IMG/vende.webp" alt="Vende" /><h4>CONTPAQi Vende</h4><p>Punto de venta en la nube para agilizar cobros.</p></article>
-          <article class="sys"><img src="../IMG/cobra.webp" alt="Cobra" /><h4>CONTPAQi Cobra</h4><p>Automatiza el seguimiento y recuperación de cartera.</p></article>
-        </div>
+       <div class="track">
+  <article class="sys" data-href="../SISTEMAS/contabilidad.html">
+    <img src="../IMG/contabilidad.webp" alt="Contabilidad" />
+    <h4>CONTPAQi Contabilidad</h4>
+    <p>Genera pólizas de ventas y cobranza automáticamente.</p>
+    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+  </article>
+
+  <article class="sys" data-href="../SISTEMAS/bancos.html">
+    <img src="../IMG/bancos.webp" alt="Bancos" />
+    <h4>CONTPAQi Bancos</h4>
+    <p>Concilia los pagos recibidos de clientes.</p>
+    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+  </article>
+
+  <article class="sys" data-href="../SISTEMAS/xml.html">
+    <img src="../IMG/xml.webp" alt="XML en Línea" />
+    <h4>CONTPAQi XML en Línea</h4>
+    <p>Descarga y valida CFDI de proveedores.</p>
+    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+  </article>
+
         <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
         <div class="group-dots"></div>
       </div>
@@ -672,28 +683,7 @@ document.getElementById('burger')?.addEventListener('click',()=>{document.getEle
 })();
 
 // Carrusel sistemas integrables
-(function(){
-  document.querySelectorAll('.carouselX').forEach(root=>{
-    const track=root.querySelector('.track'),
-          prev=root.querySelector('.arrowCircle.prev'),
-          next=root.querySelector('.arrowCircle.next'),
-          dotsWrap=root.querySelector('.group-dots');
-    function groupW(){return track.clientWidth;}
-    function groupsCount(){const n=track.querySelectorAll('.sys').length; return Math.max(1, Math.ceil(n/3));}
-    function setDot(i){dots.forEach((d,idx)=>d.classList.toggle('active',idx===i));}
-    function goTo(i){track.scrollTo({left:i*groupW(),behavior:'smooth'}); setDot(i);}
-    dotsWrap.innerHTML='';
-    const dots=Array.from({length:groupsCount()},(_,i)=>{
-      const b=document.createElement('button'); b.className='dot'+(i===0?' active':'');
-      b.addEventListener('click',()=>goTo(i));
-      dotsWrap.appendChild(b); return b;
-    });
-    let idx=0;
-    prev.addEventListener('click',()=>{idx=Math.max(0,idx-1); goTo(idx);});
-    next.addEventListener('click',()=>{idx=Math.min(dots.length-1,idx+1); goTo(idx);});
-    window.addEventListener('resize',()=>goTo(idx));
-  });
-})();
+(function(){document.querySelectorAll(".carouselX").forEach(function(o){var t=o.querySelector(".track"),e=o.querySelector(".arrowCircle.prev"),r=o.querySelector(".arrowCircle.next"),n=o.querySelector(".group-dots"),c=[].slice.call(t.querySelectorAll(".sys"));if(!c.length)return;function i(){return window.innerWidth<=980?2:3}function a(){return Math.max(1,Math.ceil(c.length/i()))}function l(){return t.clientWidth}function s(){n.innerHTML="";return Array.from({length:a()},function(o,t){var e=document.createElement("button");return e.className="dot"+(0===t?" active":""),e.addEventListener("click",function(){d(t)}),n.appendChild(e),e})}var u=s(),p=0;function f(o){u.forEach(function(t,e){t.classList.toggle("active",e===o)})}function m(){var o=a()>1;e&&(e.style.display=o?"":"none");r&&(r.style.display=o?"":"none");n&&(n.style.display=o?"":"none")}function d(o){var e=a();p=(o%e+e)%e,t.scrollTo({left:p*l(),behavior:"smooth"}),f(p)}e&&e.addEventListener("click",function(){return d(p-1)});r&&r.addEventListener("click",function(){return d(p+1)});t.addEventListener("scroll",function(){var o=Math.round(t.scrollLeft/l());o!==p&&(p=o,f(p))});t.addEventListener("click",function(o){var t=o.target.closest(".sys");t&&t.dataset.href&&(location.href=t.dataset.href)});window.addEventListener("resize",function(){var o=u.length,e=a();o!==e&&(u=s()),m(),d(p)});m(),d(0)})})();
 
 // Píldoras (filtros)
 (function(){
