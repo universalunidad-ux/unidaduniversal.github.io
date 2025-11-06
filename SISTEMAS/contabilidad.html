@@ -107,6 +107,18 @@ section{padding:26px 0;border-top:1px solid #11182725}
 
 /* ===== Carrusel de sistemas ===== */
 .carouselX .sys{position:relative;cursor:pointer;transition:background .18s ease,transform .18s ease,border-color .18s ease}.carouselX .sys:hover{background:#0f1c2c;border-color:#274061;transform:translateY(-2px)}.carouselX .sys .hoverMore{position:absolute;inset:0;display:grid;place-items:center;border-radius:inherit;background:rgba(10,16,26,.58);opacity:0;transition:opacity .18s ease;font-weight:800;letter-spacing:.2px}.carouselX .sys .hoverMore .chip{border:1px solid #2a415f;background:#0e1724;border-radius:999px;padding:6px 10px}.carouselX .sys:hover .hoverMore{opacity:1}
+.carouselX{position:relative;border-radius:16px;background:#0e1826;border:1px solid #1c2533;padding:8px}
+.carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px;scroll-behavior:smooth}
+.carouselX .sys{flex:0 0 calc((100% - 24px)/3);background:#0f1622;border:1px solid #1c2533;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;cursor:pointer;transition:background .18s ease,transform .18s ease,border-color .18s ease}
+.carouselX .sys:hover{background:#0f1c2c;border-color:#274061;transform:translateY(-2px)}
+.carouselX .sys img{width:64px;height:64px;border-radius:14px;margin:6px auto 10px;background:#101826;object-fit:cover}
+.carouselX .sys h4{margin:6px 0 4px;font-size:16px}
+.carouselX .sys p{margin:0;color:#b9c8de;font-size:14px;line-height:1.35}
+.carouselX .sys .hoverMore{position:absolute;inset:0;display:grid;place-items:center;border-radius:inherit;background:rgba(10,16,26,.58);opacity:0;transition:opacity .18s ease;font-weight:800;letter-spacing:.2px}
+.carouselX .sys .hoverMore .chip{border:1px solid #2a415f;background:#0e1724;border-radius:999px;padding:6px 10px}
+.carouselX .sys:hover .hoverMore{opacity:1}
+.group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0}
+@media (max-width:980px){ .carouselX .sys{flex:0 0 100%} }
 
 /* ===== CALCULADORA ===== */
 .calc-strip{display:flex;flex-direction:column;gap:12px}
@@ -449,21 +461,22 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="integra-title" class="title-gradient">Sistemas que complementan tu Contabilidad</h3>
     <div class="card body">
-      <div class="carouselX" data-step="3">
-        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-        <div class="track">
-<article class="sys" data-href="../SISTEMAS/bancos.html"><img src="../IMG/bancos.webp" alt="Bancos"><h4>CONTPAQi Bancos</h4><p>Conciliación y pólizas automáticas.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
-<article class="sys" data-href="../SISTEMAS/nominas.html"><img src="../IMG/nominas.webp" alt="Nóminas"><h4>CONTPAQi Nóminas</h4><p>Contabiliza el pago de nómina.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
-<article class="sys" data-href="../SISTEMAS/xmlenlinea.html"><img src="../IMG/xml.webp" alt="XML en Línea"><h4>XML en Línea+</h4><p>Descarga y gestiona CFDI del SAT.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
-<article class="sys" data-href="../SISTEMAS/facturaelectronica.html"><img src="../IMG/factura.webp" alt="Factura electrónica"><h4>Factura electrónica</h4><p>Emisión y timbrado CFDI.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
-<article class="sys" data-href="../SISTEMAS/comercialstart.html"><img src="../IMG/comercialstart.webp" alt="Comercial Start"><h4>Comercial Start</h4><p>Ventas y facturación básica.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
-<article class="sys" data-href="../SISTEMAS/comercialpro.html"><img src="../IMG/comercialpro.webp" alt="Comercial Pro"><h4>Comercial Pro</h4><p>Compras, ventas e inventarios.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
-<article class="sys" data-href="../SISTEMAS/comercialpremium.html"><img src="../IMG/comercialpremium.webp" alt="Comercial Premium"><h4>Comercial Premium</h4><p>Operación avanzada.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
-<article class="sys" data-href="../SISTEMAS/despachos.html"><img src="../IMG/despachos.webp" alt="Despachos"><h4>CONTPAQi Despachos</h4><p>Gestión integral para despachos contables.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
-        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-        <div class="group-dots" aria-label="Paginación"></div>
-      </div>
-    </div>
+<div class="carouselX" data-step="3">
+  <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+  <div class="track">
+    <article class="sys" data-href="../SISTEMAS/bancos.html"><img src="../IMG/bancos.webp" alt="Bancos"><h4>CONTPAQi Bancos</h4><p>Conciliación y pólizas automáticas.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+    <article class="sys" data-href="../SISTEMAS/nominas.html"><img src="../IMG/nominas.webp" alt="Nóminas"><h4>CONTPAQi Nóminas</h4><p>Contabiliza el pago de nómina.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+    <article class="sys" data-href="../SISTEMAS/xmlenlinea.html"><img src="../IMG/xml.webp" alt="XML en Línea"><h4>XML en Línea+</h4><p>Descarga y gestiona CFDI del SAT.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+    <article class="sys" data-href="../SISTEMAS/facturaelectronica.html"><img src="../IMG/factura.webp" alt="Factura electrónica"><h4>Factura electrónica</h4><p>Emisión y timbrado CFDI.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+    <article class="sys" data-href="../SISTEMAS/comercialstart.html"><img src="../IMG/comercialstart.webp" alt="Comercial Start"><h4>Comercial Start</h4><p>Ventas y facturación básica.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+    <article class="sys" data-href="../SISTEMAS/comercialpro.html"><img src="../IMG/comercialpro.webp" alt="Comercial Pro"><h4>Comercial Pro</h4><p>Compras, ventas e inventarios.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+    <article class="sys" data-href="../SISTEMAS/comercialpremium.html"><img src="../IMG/comercialpremium.webp" alt="Comercial Premium"><h4>Comercial Premium</h4><p>Operación avanzada.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+    <article class="sys" data-href="../SISTEMAS/despachos.html"><img src="../IMG/despachos.webp" alt="Despachos"><h4>CONTPAQi Despachos</h4><p>Gestión integral para despachos contables.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+  </div>
+  <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+  <div class="group-dots" aria-label="Paginación"></div>
+</div>
+
   </section>
 
   <!-- Calculadora -->
