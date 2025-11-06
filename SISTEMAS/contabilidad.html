@@ -452,14 +452,14 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
       <div class="carouselX" data-step="3">
         <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
         <div class="track">
-          <article class="sys"><img src="../IMG/bancos.webp" alt="Bancos"><h4>CONTPAQi Bancos</h4><p>Conciliación y pólizas automáticas.</p></article>
-          <article class="sys"><img src="../IMG/nominas.webp" alt="Nóminas"><h4>CONTPAQi Nóminas</h4><p>Contabiliza el pago de nómina.</p></article>
-          <article class="sys"><img src="../IMG/xml.webp" alt="XML en Línea"><h4>XML en Línea+</h4><p>Descarga y gestiona CFDI del SAT.</p></article>
-          <article class="sys"><img src="../IMG/factura.webp" alt="Factura electrónica"><h4>Factura electrónica</h4><p>Emisión y timbrado CFDI.</p></article>
-          <article class="sys"><img src="../IMG/comercialstart.webp" alt="Comercial Start"><h4>Comercial Start</h4><p>Ventas y facturación básica.</p></article>
-          <article class="sys"><img src="../IMG/comercialpro.webp" alt="Comercial Pro"><h4>Comercial Pro</h4><p>Compras, ventas e inventarios.</p></article>
-          <article class="sys"><img src="../IMG/comercialpremium.webp" alt="Comercial Premium"><h4>Comercial Premium</h4><p>Operación avanzada.</p></article>
-        </div>
+<article class="sys" data-href="../SISTEMAS/bancos.html"><img src="../IMG/bancos.webp" alt="Bancos"><h4>CONTPAQi Bancos</h4><p>Conciliación y pólizas automáticas.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+<article class="sys" data-href="../SISTEMAS/nominas.html"><img src="../IMG/nominas.webp" alt="Nóminas"><h4>CONTPAQi Nóminas</h4><p>Contabiliza el pago de nómina.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+<article class="sys" data-href="../SISTEMAS/xmlenlinea.html"><img src="../IMG/xml.webp" alt="XML en Línea"><h4>XML en Línea+</h4><p>Descarga y gestiona CFDI del SAT.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+<article class="sys" data-href="../SISTEMAS/facturaelectronica.html"><img src="../IMG/factura.webp" alt="Factura electrónica"><h4>Factura electrónica</h4><p>Emisión y timbrado CFDI.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+<article class="sys" data-href="../SISTEMAS/comercialstart.html"><img src="../IMG/comercialstart.webp" alt="Comercial Start"><h4>Comercial Start</h4><p>Ventas y facturación básica.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+<article class="sys" data-href="../SISTEMAS/comercialpro.html"><img src="../IMG/comercialpro.webp" alt="Comercial Pro"><h4>Comercial Pro</h4><p>Compras, ventas e inventarios.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+<article class="sys" data-href="../SISTEMAS/comercialpremium.html"><img src="../IMG/comercialpremium.webp" alt="Comercial Premium"><h4>Comercial Premium</h4><p>Operación avanzada.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
+<article class="sys" data-href="../SISTEMAS/despachos.html"><img src="../IMG/despachos.webp" alt="Despachos"><h4>CONTPAQi Despachos</h4><p>Gestión integral para despachos contables.</p><div class="hoverMore"><span class="chip">Ver más →</span></div></article>
         <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
         <div class="group-dots" aria-label="Paginación"></div>
       </div>
@@ -684,36 +684,68 @@ document.getElementById('burger')?.addEventListener('click', ()=>{
           prev=root.querySelector('.arrowCircle.prev'),
           next=root.querySelector('.arrowCircle.next'),
           dotsWrap=root.querySelector('.group-dots');
-    const items = track.querySelectorAll('.sys');
-    const perPage = 3;
-    const groupsCount = Math.max(1, Math.ceil(items.length / perPage));
-    const showControls = groupsCount > 1;
 
-    if (prev) prev.style.display = showControls ? '' : 'none';
-    if (next) next.style.display = showControls ? '' : 'none';
-    if (dotsWrap) dotsWrap.style.display = showControls ? '' : 'none';
-    if (!showControls) return;
+    const items = [...track.querySelectorAll('.sys')];
 
-    function groupW(){ return track.clientWidth; }
-    function setDot(i){ dots.forEach((d,idx)=>d.classList.toggle('active', idx===i)); }
-    function goTo(i){ track.scrollTo({left: i*groupW(), behavior:'smooth'}); setDot(i); }
-
-    dotsWrap.innerHTML='';
-    const dots=Array.from({length:groupsCount},(_,i)=>{
-      const b=document.createElement('button');
-      b.className='dot'+(i===0?' active':'');
-      b.addEventListener('click',()=>goTo(i));
-      dotsWrap.appendChild(b);
-      return b;
+    // Accesibilidad y click para abrir en nueva pestaña
+    items.forEach(card=>{
+      card.setAttribute('role','link');
+      card.setAttribute('tabindex','0');
+      const open = ()=>{ const href=card.dataset.href; if(href) window.open(href,'_blank','noopener'); };
+      card.addEventListener('click', open);
+      card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
     });
 
+    // Cuántas tarjetas por vista (3 desktop, 1 en móviles)
+    const perPage = ()=> (window.innerWidth<=980 ? 1 : 3);
+    const groupsCount = ()=> Math.max(1, Math.ceil(items.length / perPage()));
+
+    function groupW(){ return track.clientWidth; }
+
+    // Dots dinámicos
+    function renderDots(){
+      dotsWrap.innerHTML='';
+      const d = Array.from({length:groupsCount()},(_,i)=>{
+        const b=document.createElement('button');
+        b.className='dot'+(i===0?' active':'');
+        b.addEventListener('click',()=>goTo(i));
+        dotsWrap.appendChild(b);
+        return b;
+      });
+      return d;
+    }
+    let dots = renderDots();
+
+    function setDot(i){ dots.forEach((d,idx)=>d.classList.toggle('active', idx===i)); }
+    function goTo(i){ idx=((i%groupsCount())+groupsCount())%groupsCount(); track.scrollTo({left: idx*groupW(), behavior:'smooth'}); setDot(idx); }
+
+    // Loop infinito con flechas
     let idx=0;
-    prev.addEventListener('click',()=>{ idx=Math.max(0, idx-1); goTo(idx); });
-    next.addEventListener('click',()=>{ idx=Math.min(dots.length-1, idx+1); goTo(idx); });
-    window.addEventListener('resize',()=>goTo(idx));
+    prev?.addEventListener('click',()=>{ goTo(idx-1); });
+    next?.addEventListener('click',()=>{ goTo(idx+1); });
+
+    // Recalcular al redimensionar (cambia perPage -> cambia groups)
+    window.addEventListener('resize',()=>{
+      const oldCount = dots.length;
+      const newCount = groupsCount();
+      if(oldCount!==newCount){ dots = renderDots(); }
+      goTo(idx);
+    });
+
+    // Mostrar/ocultar controles si no hay más de un grupo
+    function toggleControls(){
+      const show = groupsCount()>1;
+      if(prev) prev.style.display = show ? '' : 'none';
+      if(next) next.style.display = show ? '' : 'none';
+      if(dotsWrap) dotsWrap.style.display = show ? '' : 'none';
+    }
+    window.addEventListener('resize', toggleControls);
+    toggleControls();
+
     goTo(0);
   });
 })();
+
 
 // Píldoras (filtros)
 (function(){
