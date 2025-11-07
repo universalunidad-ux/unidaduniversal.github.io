@@ -285,40 +285,46 @@
     </div>
   </section>
 
-  <!-- Calculadora -->
   <section id="calculadora-section" aria-labelledby="calc">
-    <h3 id="calc" class="title-gradient">Conoce el precio de tu licencia</h3>
-    <div class="calc-strip">
-      <div id="app" data-system="CONTPAQi Bancos" hidden></div>
+  <h3 id="calc" class="title-gradient">Conoce el precio de tu licencia</h3>
+  <div class="calc-strip">
+    <!-- Nombre EXACTO del sistema como en precios-contpaqi.js -->
+    <div id="app" data-system="CONTPAQi Bancos" hidden></div>
 
-      <div class="calc-row" id="calc-row">
-        <!-- 1) Calculadora principal -->
-        <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
+    <div class="calc-row" id="calc-row">
+      <!-- 1) Calculadora primaria -->
+      <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
 
- <!-- 2) Calculadora secundaria (compatibilidad con JS que usa #calc-slot-2) -->
-<div id="calc-secondary" class="calc-container" aria-label="Segunda calculadora"></div>
-<div id="calc-slot-2" class="calc-container" aria-label="Segunda calculadora (alias)"></div>
-
-        <!-- Panel informativo opcional -->
-        <div id="add-more-panel" class="placeholder">
-          <div class="note">
-            <strong>Integra un sistema adicional y recibe −15% en cada uno.</strong><br>
-            <small>“XML en Línea” no aplica para descuento.</small>
-            <div class="icons-wrap" id="icons-sec-sys"></div>
-          </div>
+      <!-- 2) Placeholder secundaria + íconos para elegir -->
+      <div id="calc-slot-2" class="placeholder" aria-label="Segunda calculadora">
+        <div class="note">
+          <strong>Integra un sistema adicional y recibe −15% en cada uno.</strong><br>
+          <small>“XML en Línea” no aplica para descuento.</small>
+          <div class="icons-wrap" id="icons-sec-sys"></div>
         </div>
-
-        <!-- 3) Calculadora terciaria -->
-        <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora"></div>
       </div>
 
-      <!-- Resumen combinado -->
-      <div id="combined-wrap" class="combined-card" hidden>
-        <h4 class="title-gradient">Resumen combinado</h4>
-        <table class="combined-table"><tbody id="combined-table-body"></tbody></table>
+      <!-- 3) Calculadora terciaria (se muestra al elegir 3er sistema) -->
+      <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora" style="display:none"></div>
+
+      <!-- Panel aparece tras elegir 2º sistema → picker del 3º -->
+      <div id="add-more-panel" class="placeholder" style="display:none">
+        <div class="note">
+          <strong>¿Agregar un tercer sistema?</strong><br>
+          <small>Mismo -15% por paquete (excepto “XML en Línea”).</small>
+          <div class="icons-wrap" id="icons-third-sys"></div>
+        </div>
       </div>
     </div>
-  </section>
+
+    <!-- Resumen combinado -->
+    <div id="combined-wrap" class="combined-card" hidden>
+      <h4 class="title-gradient">Resumen combinado</h4>
+      <table class="combined-table"><tbody id="combined-table-body"></tbody></table>
+    </div>
+  </div>
+</section>
+
 
   <!-- Comparativa -->
   <section id="comparativa" aria-labelledby="comparativa-title">
@@ -413,11 +419,12 @@
   </div>
 </footer>
 
-<!-- 1) Tabla de precios (debe existir la clave del sistema) -->
-<script src="../precios-contpaqi.js"></script>
-<!-- 2) Adaptador + calculadora NUBE/legado (auto-detector) -->
-<script src="../main.js" defer></script>
-<!-- 3) Motor calculadora ESCRITORIO (v13) -->
+<!-- 1) Tabla de precios -->
+<script src="../precios-contpaqi.js" defer></script>
+<!-- 2) Motor calculadora ESCRITORIO -->
 <script src="../calculadora.js" defer></script>
+<!-- 3) Adaptador + switch + pickers -->
+<script src="../main.js" defer></script>
+
 </body>
 </html>
