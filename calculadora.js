@@ -1,3 +1,13 @@
+// === GUARD GLOBAL PARA NUBE ===
+// Si la página está en modo Nube, NO ejecutar nada del legacy v13.
+// También exponemos stubs para evitar errores de referencias desde otros scripts.
+if (document?.body?.getAttribute('data-calc') === 'nube' || window.__EXPIRITI_FORCE_NUBE__ === true) {
+  console.log('calculadora.js v13: saltado COMPLETO (modo Nube activo)');
+  window.CalculadoraContpaqi = window.CalculadoraContpaqi || {
+    init(){}, setSecondarySystem(){}, setTertiarySystem(){}, updateCombinedSummary(){}
+  };
+} else {
+
 /* calculadora.js v13 — MultiRFC por defecto + “Operación” solo en Tradicional (con !important) */
 (function () {
   'use strict';
@@ -436,6 +446,11 @@
 
   // Auto-init si existe #app con data-system y #calc-primary
   function autoInit() {
+    // Si el sitio indicó Nube, NO inicializar v13
+    if (window.__EXPIRITI_FORCE_NUBE__ === true || document.body.getAttribute('data-calc') === 'nube') {
+      console.log('v13: cancelado autoInit porque hay calculadora NUBE');
+      return;
+    }
     var app = document.getElementById("app");
     var sys = app && app.dataset ? app.dataset.system : null;
     if (sys && document.querySelector("#calc-primary")) {
@@ -444,21 +459,7 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoInit);
   else autoInit();
-})();
 
-// Auto-init si existe #app con data-system y #calc-primary
-function autoInit() {
-  // Si el sitio indicó Nube, NO inicializar v13
-  if (window.__EXPIRITI_FORCE_NUBE__ === true || document.body.getAttribute('data-calc') === 'nube') {
-    console.log('v13: cancelado autoInit porque hay calculadora NUBE');
-    return;
-  }
-  var app = document.getElementById("app");
-  var sys = app && app.dataset ? app.dataset.system : null;
-  if (sys && document.querySelector("#calc-primary")) {
-    window.CalculadoraContpaqi.init({ systemName: sys });
-  }
-}
-if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoInit);
-else autoInit();
+})(); // ← cierra IIFE principal
 
+} // ← cierra GUARD GLOBAL PARA NUBE
