@@ -430,3 +430,57 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
    ========================================================= */
 .reel-title{margin-bottom:8px;text-align:center;color:#fff;font-weight:700;display:none}
 .reel-title.active{display:block}
+
+/* === FIX: Icons horizontal y grandes, sin que "row"/"grid" los rompan === */
+.icons-wrap,
+.calc-container .icons-wrap,
+.icons-wrap.row,
+.icons-wrap.grid{
+  display:flex !important;
+  flex-direction:row !important;
+  flex-wrap:nowrap !important;     /* una sola fila */
+  align-items:flex-start;
+  justify-content:flex-start;
+  gap:18px;
+  overflow-x:auto;
+  padding:10px 0;
+  scroll-behavior:smooth;
+  grid-template-columns:unset !important; /* anula grid si lo heredó */
+}
+
+/* Scrollbar discreta */
+.icons-wrap::-webkit-scrollbar{height:8px}
+.icons-wrap::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
+
+/* Cada icono en “tarjeta” más grande y fijo en fila */
+.sys-icon{
+  position:relative;
+  flex:0 0 200px !important;  /* ancho fijo por ítem */
+  max-width:200px;
+  display:grid;
+  grid-template-rows:auto auto auto;
+  gap:8px;
+  align-items:center;
+  justify-items:center;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid #1e2b3c;
+  background:#0f1622;
+  cursor:pointer;
+  transition:transform .15s ease,border-color .15s ease;
+}
+.sys-icon img{
+  width:90px;height:90px;     /* más grande */
+  border-radius:12px;
+  object-fit:cover;
+  background:#0e1724;
+  border:1px solid #1e2b3c;
+}
+.sys-icon strong{font-size:13px;color:#e3ecf9;text-align:center}
+.sys-icon .sys-price{font-size:12px;color:#aebbd0}
+.sys-icon:hover{border-color:#284061;transform:translateY(-2px)}
+.sys-icon.active{outline:2px solid rgba(96,165,250,.4);border-color:#38649a}
+
+/* Si por error van dentro de un grid padre, que ocupen toda la fila del grid */
+.icons-wrap{grid-column:1 / -1 !important}
+
