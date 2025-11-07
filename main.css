@@ -514,4 +514,68 @@ es
   }
 }
 
+/* === Calculadora – layout exacto de controles === */
+.calc-container form{
+  display:grid !important;
+  grid-template-columns:1fr 1fr;
+  grid-auto-rows:auto;
+  gap:12px;
+}
+
+/* Fila 1: Licencia | Tipo (RFC) */
+.calc-container form > label:has(> select[id^="lic"]) { grid-column:1; }
+.calc-container form > label:has(> select[id^="rfc"]) { grid-column:2; }
+
+/* Si aparece "Operación" (Tradicional), que ocupe fila completa debajo de la fila 1 */
+.calc-container form > label.op-label{ grid-column:1 / -1 !important; }
+
+/* Fila 2: Usuarios | Instalación (checkbox + texto unidos) */
+.calc-container form > label:has(> input[id^="usr"]) { grid-column:1; }
+.calc-container .inst-wrap { grid-column:2; }
+
+/* Píldora de instalación compacta en una sola línea */
+.calc-container .inst-wrap{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; border-radius:10px;
+  border:1px dashed #2a3b55; background:rgba(14,23,36,.35);
+}
+.calc-container .inst-wrap label{ margin:0; display:flex; align-items:center; gap:10px; }
+.calc-container .inst-wrap input[type="checkbox"]{ inline-size:auto; block-size:auto; }
+.calc-container .inst-wrap .inst-hint{
+  margin:0; line-height:1.25; color:#aebbd0;
+}
+
+/* Mobile: todo en una sola columna, en este orden natural */
+@media (max-width:768px){
+  .calc-container form{ grid-template-columns:1fr; }
+  .calc-container form > *{ grid-column:1 !important; }
+}
+
+/* === Carrusel “Integra” – asegurar que muestre todos === */
+.carouselX{ position:relative; border-radius:16px; background:var(--card); border:1px solid #1c2533; padding:10px; }
+.carouselX .track{
+  display:flex; gap:14px; overflow-x:auto; overflow-y:hidden;
+  padding:6px; min-height:240px; scroll-behavior:smooth; -webkit-overflow-scrolling:touch;
+}
+.carouselX .sys{
+  flex:0 0 calc((100% - 28px)/3); /* 3 por vista en desktop */
+  background:#0f1622; border:1px solid #1c2533; border-radius:16px;
+  padding:18px; display:flex; flex-direction:column; align-items:center; text-align:center;
+  transition:background .18s,border-color .18s,transform .18s;
+}
+.carouselX .sys:hover{ background:#0f1c2c; border-color:#274061; transform:translateY(-2px); }
+.carouselX .sys img{ width:72px; height:72px; border-radius:14px; margin:8px auto 12px; object-fit:cover; background:#101826; }
+.carouselX .arrowCircle{ position:absolute; top:50%; transform:translateY(-50%); width:46px; height:46px; }
+.carouselX .arrowCircle.prev{ left:8px; }
+.carouselX .arrowCircle.next{ right:8px; }
+.group-dots{ display:flex; gap:8px; justify-content:center; margin-top:10px; }
+.group-dots .dot{ width:11px; height:11px; border-radius:999px; background:#223044; border:none; opacity:.6; cursor:pointer; }
+.group-dots .dot.active{ background:linear-gradient(145deg,var(--brand),var(--brand-2)); opacity:1; }
+
+/* 1 por vista en móvil */
+@media (max-width:980px){
+  .carouselX .sys{ flex:0 0 100%; }
+}
+
+
 
