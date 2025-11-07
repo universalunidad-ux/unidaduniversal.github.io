@@ -1,4 +1,4 @@
-<script>
+
 /* =========================================================
    Expiriti - main.js (Personia) — Complemento a calculadora.js v13
    ========================================================= */
@@ -485,4 +485,4 @@ const CalculadoraNube = (function(){
     if (root) root.innerHTML = `<p class="hint">No hay tabla de Nube ni de Escritorio definida para “${sys}”.</p>`;
   });
 })();
-</script>
+
