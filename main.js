@@ -1,5 +1,5 @@
 /* =========================================================
-   Expiriti - main.js (Personia) — Complemento a calculadora.js v13
+   Expiriti - main.js (Personia) — Unificado Nube + Escritorio + Fixes
    ========================================================= */
 
 /* ---------- Utils ---------- */
@@ -22,10 +22,10 @@
 (function(){
   function initCarousel(root, onChange){
     const track = root.querySelector(".carousel-track");
-    const dots  = [...root.querySelectorAll(".carousel-nav .dot")];
     const prev  = root.querySelector(".arrowCircle.prev");
     const next  = root.querySelector(".arrowCircle.next");
-    let i=0, len=dots.length || (track?.children?.length||0);
+    let dots  = [...root.querySelectorAll(".carousel-nav .dot")];
+    let i=0, len = dots.length || (track?.children?.length||0);
 
     function set(n){
       if(!track||!len) return;
@@ -100,28 +100,52 @@
   });
 })();
 
-/* ---------- Carrusel de sistemas (.carouselX) ---------- */
+/* ---------- Carrusel de sistemas (.carouselX) — Auto-crea flechas y dots si faltan ---------- */
 (function(){
+  function ensureUI(root){
+    // Flechas
+    let prev = root.querySelector(".arrowCircle.prev");
+    let next = root.querySelector(".arrowCircle.next");
+    if(!prev){
+      prev = document.createElement("button");
+      prev.className = "arrowCircle prev"; prev.setAttribute("aria-label","Anterior");
+      prev.innerHTML = '<span class="chev">‹</span>';
+      root.appendChild(prev);
+    }
+    if(!next){
+      next = document.createElement("button");
+      next.className = "arrowCircle next"; next.setAttribute("aria-label","Siguiente");
+      next.innerHTML = '<span class="chev">›</span>';
+      root.appendChild(next);
+    }
+    // Dots
+    let dotsWrap = root.querySelector(".group-dots");
+    if(!dotsWrap){
+      dotsWrap = document.createElement("div");
+      dotsWrap.className = "group-dots";
+      root.appendChild(dotsWrap);
+    }
+    return { prev, next, dotsWrap };
+  }
+
   document.querySelectorAll(".carouselX").forEach(root=>{
     const track=root.querySelector(".track");
-    const prev=root.querySelector(".arrowCircle.prev");
-    const next=root.querySelector(".arrowCircle.next");
-    const dotsWrap=root.querySelector(".group-dots");
-    const items=[...root.querySelectorAll(".sys")];
-    if(!track||!prev||!next||!dotsWrap||!items.length) return;
+    if(!track) return;
 
-    // Accesibilidad + teclado
+    // Accesibilidad + click en tarjetas
+    const items=[...root.querySelectorAll(".sys")];
     items.forEach(it=>{
-      it.setAttribute("role","link");
-      it.setAttribute("tabindex","0");
+      it.setAttribute("role","link"); it.setAttribute("tabindex","0");
       const go=()=>{const href=it.getAttribute("data-href"); if(href) window.open(href,"_blank","noopener")};
       it.addEventListener("click",go);
       it.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
     });
 
-    const perView=()=> (window.innerWidth<=980 ? 1 : 3);
-    const pages = ()=> Math.max(1, Math.ceil(items.length / perView()));
-    const viewportW = ()=> track.clientWidth;
+    const { prev, next, dotsWrap } = ensureUI(root);
+
+    const perView = () => (window.innerWidth<=980 ? 1 : 3);
+    const pages   = () => Math.max(1, Math.ceil(items.length / perView()));
+    const viewportW = () => track.clientWidth || root.clientWidth || 1;
 
     function buildDots(){
       dotsWrap.innerHTML="";
@@ -142,7 +166,8 @@
       const total=pages();
       idx=((j%total)+total)%total;
       track.scrollTo({left:viewportW()*idx,behavior:"smooth"});
-      paint(idx); toggleUI();
+      paint(idx);
+      toggleUI();
     }
     function toggleUI(){
       const multi=pages()>1;
@@ -150,26 +175,36 @@
       next.style.display = multi ? "" : "none";
       dotsWrap.style.display = multi ? "" : "none";
     }
+
     prev.addEventListener("click",()=>go(idx-1));
     next.addEventListener("click",()=>go(idx+1));
-    window.addEventListener("resize",()=>{
-      const need=dots.length, now=pages();
-      if(need!==now){ dots=buildDots(); }
-      go(idx);
+    track.addEventListener("scroll",()=>{
+      const i = Math.round(track.scrollLeft / viewportW());
+      if(i !== idx){ idx=i; paint(idx); }
     });
-    toggleUI(); go(0);
-     setTimeout(()=>{ track.scrollTo({ left: 0, behavior: 'auto' }); }, 50);
+    window.addEventListener("resize",()=>{
+      const old = dots.length, now = pages();
+      if(old!==now){ dots=buildDots(); }
+      // Corrige clipping al cambiar ancho
+      setTimeout(()=>go(idx), 0);
+    });
 
+    // Asegura que **TODOS** los íconos sean alcanzables por scroll
+    track.style.overflowX = "auto";
+    track.style.scrollBehavior = "smooth";
+
+    toggleUI(); go(0);
+    setTimeout(()=> track.scrollTo({ left: 0, behavior: "auto" }), 50);
   });
 })();
 
-/* ---------- Reels (scoped) + pausa global de YouTube ---------- */
+/* ---------- Reels (scoped) + pausa global de YouTube (encadenada) ---------- */
 (function(){
   const root = document.getElementById('carouselReels');
   if(root){
     const scope = root.closest('aside') || root;
     const track = root.querySelector('.carousel-track');
-    const slides = [...track.querySelectorAll('.carousel-slide')];
+    const slides = [...(track?.querySelectorAll('.carousel-slide')||[])];
     const dots = [...root.querySelectorAll('.carousel-nav .dot')];
     const prev = root.querySelector('.arrowCircle.prev');
     const next = root.querySelector('.arrowCircle.next');
@@ -186,7 +221,7 @@
     dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
     prev?.addEventListener('click',()=>setActive(idx-1));
     next?.addEventListener('click',()=>setActive(idx+1));
-    track.addEventListener('scroll',()=>{
+    track?.addEventListener('scroll',()=>{
       const w = track.clientWidth || 1;
       const i = Math.round(track.scrollLeft / w);
       if(i !== idx && i >= 0 && i < dots.length){
@@ -199,14 +234,16 @@
     setActive(0);
   }
 
-  // pausa global
+  // Pausa global YouTube — encadena si ya existe handler
   if(!window.YT){
     const tag=document.createElement('script');
     tag.src="https://www.youtube.com/iframe_api";
     document.head.appendChild(tag);
   }
   let players=[];
+  const prevReady = window.onYouTubeIframeAPIReady;
   window.onYouTubeIframeAPIReady = function(){
+    if (typeof prevReady === 'function') { try{ prevReady(); }catch(_){} }
     document.querySelectorAll('iframe[src*="youtube"]').forEach((el)=>{
       try{
         const p=new YT.Player(el,{
@@ -215,7 +252,7 @@
           }}
         });
         players.push(p);
-      }catch(err){}
+      }catch(_){}
     });
   };
 })();
@@ -446,6 +483,7 @@ const CalculadoraNube = (function(){
 
   return { init };
 })();
+
 /* =========================================================
    Complementos calculadora ESCRITORIO:
    - Picker de 2º y 3º sistema
@@ -453,21 +491,17 @@ const CalculadoraNube = (function(){
    Requiere: calculadora.js v13 (CalculadoraContpaqi.*)
    ========================================================= */
 (function(){
-  // Solo aplica a “Escritorio”
   document.addEventListener('DOMContentLoaded', function(){
     if (document.body.getAttribute('data-calc') !== 'escritorio') return;
 
-    // Sistema primario (debe venir en #app[data-system])
     const app = document.getElementById('app');
     const PRIMARY = app?.dataset?.system?.trim();
     if (!PRIMARY) return;
 
-    // Helpers seguros
     const moneyMX = new Intl.NumberFormat("es-MX", { style:"currency", currency:"MXN", maximumFractionDigits:0 });
     const fmt = v => moneyMX.format(Math.round(Number(v||0)));
     const hasPrices = name => !!(window.preciosContpaqi && window.preciosContpaqi[name]);
 
-    // Catálogo visual (solo crea si no existe)
     window.CATALOG_SISTEMAS = window.CATALOG_SISTEMAS || [
       { name: "CONTPAQi Contabilidad",       img: "../IMG/contabilidad.webp" },
       { name: "CONTPAQi Bancos",             img: "../IMG/bancos.webp" },
@@ -529,14 +563,12 @@ const CalculadoraNube = (function(){
       wrap.hidden=false;
     }
 
-    // ----- Wiring DOM (IDs esperados por tu HTML) -----
     const row   = document.getElementById('calc-row');
     const slot2 = document.getElementById('calc-slot-2') || document.getElementById('calc-secondary');
     const slot3 = document.getElementById('calc-tertiary');
     const addMore = document.getElementById('add-more-panel');
     const pick2 = document.getElementById('icons-sec-sys');
     const pick3 = document.getElementById('icons-third-sys');
-
     if(!row) return;
 
     const selected = { secondary: null, tertiary: null };
@@ -564,7 +596,6 @@ const CalculadoraNube = (function(){
       selected.secondary = sys;
       selected.tertiary  = selected.tertiary === sys ? null : selected.tertiary;
 
-      // Si el hueco es placeholder, cámbialo a contenedor
       if (slot2 && slot2.id === 'calc-slot-2') { slot2.className='calc-container'; slot2.id='calc-secondary'; }
 
       if (window.CalculadoraContpaqi?.setSecondarySystem){
@@ -598,9 +629,7 @@ const CalculadoraNube = (function(){
       refreshPickers();
     });
 
-    // Primaria ya la monta AutoCalcSwitcher → solo aseguramos resumen combinado activo
     if (window.CalculadoraContpaqi?.onCombinedSet){
-      // (si tu motor expone un setter opcional)
       window.CalculadoraContpaqi.onCombinedSet(renderCombinedTable);
     }
   });
@@ -645,11 +674,9 @@ const CalculadoraNube = (function(){
         wrap.hidden=false;
       }
     });
-     
-    // Render inmediato
+
     render();
 
-    // Si alguien inyecta legacy en el mismo host, re-render Nube
     const host = document.querySelector(mount);
     if (!host) return;
     const obs = new MutationObserver(()=>{
@@ -671,10 +698,8 @@ const CalculadoraNube = (function(){
     const hasDesk = !!(S.escritorio || S.anual || S.tradicional);
 
     if (hasNube){
-      mountNube(sys);
-      return;
+      mountNube(sys); return;
     }
-
     if (hasDesk){
       const mount = '#calc-primary';
       const deskInit = (window.CalculadoraContpaqi && window.CalculadoraContpaqi.init)
@@ -682,11 +707,7 @@ const CalculadoraNube = (function(){
         : (function(){ console.warn('Fallback CalculadoraContpaqi.init no disponible'); return ()=>{}; })();
 
       document.body.setAttribute('data-calc','escritorio');
-      deskInit({
-        systemName: sys,
-        primarySelector: mount,
-        combinedSelector: '#combined-wrap'
-      });
+      deskInit({ systemName: sys, primarySelector: mount, combinedSelector: '#combined-wrap' });
       return;
     }
 
@@ -695,86 +716,134 @@ const CalculadoraNube = (function(){
   });
 })();
 
+/* =========================================================
+   Compactador + Unión “Instalación + Servicios (opcional)”
+   ========================================================= */
 (function () {
-  // Intenta compactar cuando la calculadora ya pintó sus controles
+  function pickByLabel(container, regex){
+    // busca label cuyo texto haga match, devuelve su bloque contenedor
+    const labels = [...container.querySelectorAll('label')];
+    const lb = labels.find(l => regex.test(l.textContent.trim().toLowerCase()));
+    if (!lb) return null;
+    return lb.closest('.field') || lb.closest('.row') || lb.closest('.instalacion-box') || lb.closest('.inst-wrap') || lb.parentElement;
+  }
+  function pickSelect(container, selectorList){
+    for(const sel of selectorList){
+      const el = container.querySelector(sel);
+      if (el) return el;
+    }
+    return null;
+  }
+
   function compactar(container){
     if (!container) return;
+    // Si ya se armó, no repetir
+    if (container.querySelector('.controls-grid')) {
+      // pero aseguremos unión instalación+servicios
+      unirInstalacionServicios(container);
+      return;
+    }
 
-    // Busca bloques por etiqueta
-    const labels = [...container.querySelectorAll('label')];
+    const bLic = pickByLabel(container, /^licencia/);
+    const bTipo= pickByLabel(container, /^tipo/);
+    const bUsu = pickByLabel(container, /^usuarios?/);
 
-    // Helpers para localizar el "bloque" de cada control (label + input/select)
-    const pickBlock = (text) => {
-      const lb = labels.find(l => l.textContent.trim().toLowerCase().startsWith(text));
-      if (!lb) return null;
-      // sube al contenedor inmediato del campo
-      return lb.closest('.field') || lb.closest('.row') || lb.parentElement;
-    };
+    let bInst = container.querySelector('.inst-wrap') || pickByLabel(container, /instalaci/);
+    if (!bInst) {
+      const anyChk = container.querySelector('input[type="checkbox"]');
+      bInst = anyChk ? (anyChk.closest('.instalacion-box') || anyChk.closest('.field') || anyChk.parentElement) : null;
+    }
 
-    const bLic = pickBlock('licencia');
-    const bTipo = pickBlock('tipo');               // "Tipo (RFC)"
-    const bUsu  = pickBlock('usuarios');
-// instalación puede venir como contenedor .inst-wrap (checkbox + hint) o solo checkbox
-let bInst = null;
+    const bloques = [bLic, bTipo, bUsu, bInst].filter(Boolean);
+    bloques.forEach(b => b.classList?.add('field'));
 
-// 1) Preferimos mover TODO el contenedor .inst-wrap para que no se separen "Instalación" y el texto de servicio
-const instWrap = container.querySelector('.inst-wrap');
-if (instWrap) {
-  bInst = instWrap; // mueve el bloque completo
-} else {
-  // 2) Fallbacks cuando no hay .inst-wrap
-  const instLabel = labels.find(l => /instalaci/i.test(l.textContent));
-  if (instLabel){
-    bInst = instLabel.closest('.instalacion-box') || instLabel.closest('.field') || instLabel.parentElement;
-  } else {
-    const chk = container.querySelector('input[type="checkbox"]');
-    bInst = chk ? (chk.closest('.instalacion-box') || chk.closest('.field') || chk.parentElement) : null;
-  }
-}
+    // Si falta alguno clave, no forzar (evita errores)
+    if (!bLic || !bTipo || !bUsu || !bInst) return;
 
-// marca visual si no la trae (pero no toques .inst-wrap)
-if (bInst && !bInst.classList.contains('instalacion-box') && !bInst.classList.contains('inst-wrap')){
-  bInst.classList.add('instalacion-box');
-}
-
-
-    // Evita duplicar si ya existe el grid
-    if (container.querySelector('.controls-grid')) return;
-
-    // Crea el grid y mete los bloques en orden
     const grid = document.createElement('div');
     grid.className = 'controls-grid';
+    grid.append(bLic, bTipo, bUsu, bInst);
+    container.insertBefore(grid, container.firstElementChild);
 
-    // Asegura clase .field a cada bloque para consistencia
-    [bLic,bTipo,bUsu].forEach(b => b.classList.add('field'));
+    // Asegura unión instalación + servicios
+    unirInstalacionServicios(container);
+  }
 
-    grid.append(bLic);
-    grid.append(bTipo);
-    grid.append(bUsu);
-    grid.append(bInst);
+  function unirInstalacionServicios(container){
+    if (!container) return;
 
-    // Inserta el grid al inicio del contenedor
-    const first = container.firstElementChild;
-    container.insertBefore(grid, first);
+    // Evita re-empaques si ya están unidos
+    if (container.querySelector('.inst-wrap .instalacion-box')) return;
+
+    // Selecciona instalación
+    const selInst = pickSelect(container, [
+      'select#instalacion',
+      'select[name*="instal"]',
+      'select[data-field*="instal"]'
+    ]);
+    // Selecciona servicios (acepta #servicios o typo #ervicios)
+    const selServ = pickSelect(container, [
+      'select#servicios', 'select#ervicios',
+      'select[name*="servi"]',
+      'select[data-field*="servi"]'
+    ]);
+
+    if (!selInst || !selServ) return; // no hacer nada si falta alguno
+
+    if (selInst.closest('.instalacion-box') || selServ.closest('.instalacion-box')) return; // ya unidos
+
+    // Crea envolturas
+    let wrap = container.querySelector('.inst-wrap');
+    if (!wrap) {
+      wrap = document.createElement('div');
+      wrap.className = 'inst-wrap';
+      const form = selInst.closest('form') || container.querySelector('form') || container;
+      form.appendChild(wrap);
+    }
+    const box = document.createElement('div');
+    box.className = 'instalacion-box';
+
+    // Intenta conservar labels si existen
+    const instLbl = (selInst.labels && selInst.labels[0]) ? selInst.labels[0] : null;
+    const servLbl = (selServ.labels && selServ.labels[0]) ? selServ.labels[0] : null;
+
+    if (instLbl) box.appendChild(instLbl);
+    box.appendChild(selInst);
+    if (servLbl) box.appendChild(servLbl);
+    box.appendChild(selServ);
+
+    wrap.appendChild(box);
+
+    if (!wrap.querySelector('.inst-hint')) {
+      const hint = document.createElement('small');
+      hint.className = 'inst-hint';
+      hint.textContent = 'Selecciona instalación y servicios en un solo paso.';
+      wrap.appendChild(hint);
+    }
   }
 
   // Observa el render inicial (calculadora.js inyecta async)
   const target = document.getElementById('calc-primary');
   if (!target) return;
 
-  const tryCompact = () => compactar(target);
+  const tryCompact = () => {
+    const container = document.querySelector('.calc-container') || target;
+    compactar(container);
+  };
 
-  // 1) Intento inmediato + 2) en el siguiente frame
+  // 1) Intento inmediato + siguiente frame
   tryCompact();
   requestAnimationFrame(tryCompact);
 
-  // 3) Observa cambios por si la UI se vuelve a re-renderizar
+  // 2) Observa cambios por si la UI se re-renderiza
   const mo = new MutationObserver(() => tryCompact());
   mo.observe(target, { childList:true, subtree:true });
 
-  // 4) Si tu calculadora emite eventos, reaplica
+  // 3) Si tu calculadora emite eventos, reaplica
   window.addEventListener('calc-recompute', tryCompact);
   window.addEventListener('calc-render', tryCompact);
+
+  // 4) Reintento tardío por si los selects aparecen después
+  setTimeout(tryCompact, 500);
+  setTimeout(tryCompact, 1200);
 })();
-
-
