@@ -484,7 +484,167 @@ const CalculadoraNube = (function(){
         wrap.hidden=false;
       }
     });
+/* =========================================================
+   Complementos calculadora ESCRITORIO:
+   - Picker de 2º y 3º sistema
+   - Resumen combinado
+   Requiere: calculadora.js v13 (CalculadoraContpaqi.*)
+   ========================================================= */
+(function(){
+  // Solo aplica a “Escritorio”
+  document.addEventListener('DOMContentLoaded', function(){
+    if (document.body.getAttribute('data-calc') !== 'escritorio') return;
 
+    // Sistema primario (debe venir en #app[data-system])
+    const app = document.getElementById('app');
+    const PRIMARY = app?.dataset?.system?.trim();
+    if (!PRIMARY) return;
+
+    // Helpers seguros
+    const moneyMX = new Intl.NumberFormat("es-MX", { style:"currency", currency:"MXN", maximumFractionDigits:0 });
+    const fmt = v => moneyMX.format(Math.round(Number(v||0)));
+    const hasPrices = name => !!(window.preciosContpaqi && window.preciosContpaqi[name]);
+
+    // Catálogo visual (solo crea si no existe)
+    window.CATALOG_SISTEMAS = window.CATALOG_SISTEMAS || [
+      { name: "CONTPAQi Contabilidad",       img: "../IMG/contabilidad.webp" },
+      { name: "CONTPAQi Bancos",             img: "../IMG/bancos.webp" },
+      { name: "CONTPAQi Nóminas",            img: "../IMG/nominas.webp" },
+      { name: "CONTPAQi XML en Línea",       img: "../IMG/xml.webp",  noDiscount: true },
+      { name: "CONTPAQi Comercial PRO",      img: "../IMG/comercialpro.webp" },
+      { name: "CONTPAQi Comercial PREMIUM",  img: "../IMG/comercialpremium.webp" },
+      { name: "CONTPAQi Factura Electrónica",img: "../IMG/factura.webp" }
+    ];
+
+    function getPrecioDesde(systemName){
+      const db = (window.preciosContpaqi && window.preciosContpaqi[systemName]) || null;
+      if(!db) return null;
+      if (db.anual?.MultiRFC?.precio_base || db.anual?.MultiRFC?.renovacion)
+        return Number(db.anual.MultiRFC.precio_base || db.anual.MultiRFC.renovacion || 0);
+      if (db.anual?.MonoRFC?.precio_base || db.anual?.MonoRFC?.renovacion)
+        return Number(db.anual.MonoRFC.precio_base || db.anual.MonoRFC.renovacion || 0);
+      if (db.tradicional?.actualizacion?.precio_base)
+        return Number(db.tradicional.actualizacion.precio_base);
+      return null;
+    }
+
+    function renderSistemasPicker(containerId, exclude = new Set(), activeName = null){
+      const wrap = document.getElementById(containerId);
+      if(!wrap) return;
+      wrap.innerHTML = "";
+      if (PRIMARY) exclude.add(PRIMARY);
+
+      window.CATALOG_SISTEMAS.forEach(item=>{
+        if (exclude.has(item.name)) return;
+        const precio = getPrecioDesde(item.name);
+        const btn = document.createElement("button");
+        btn.className = "sys-icon";
+        btn.type = "button";
+        btn.dataset.sys = item.name;
+        btn.title = item.name;
+        btn.innerHTML = `
+          ${item.noDiscount ? '<small class="sin15">sin -15%</small>' : ''}
+          <img src="${item.img}" alt="${item.name}">
+          <strong>${item.name.replace('CONTPAQi ','')}</strong>
+          <small class="sys-price">${precio != null ? 'desde '+fmt(precio) : 'precio no disp.'}</small>
+        `;
+        if (activeName && activeName === item.name) btn.classList.add('active');
+        wrap.appendChild(btn);
+      });
+    }
+
+    function renderCombinedTable(rows){
+      const wrap=document.getElementById('combined-wrap');
+      const tbody=document.getElementById('combined-table-body');
+      if(!wrap||!tbody) return;
+      tbody.innerHTML='';
+      rows.forEach(([concepto, importe])=>{
+        const tr=document.createElement('tr');
+        const td1=document.createElement('td'); td1.textContent=concepto;
+        const td2=document.createElement('td'); td2.textContent=importe; td2.style.textAlign='right';
+        tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
+      });
+      wrap.hidden=false;
+    }
+
+    // ----- Wiring DOM (IDs esperados por tu HTML) -----
+    const row   = document.getElementById('calc-row');
+    const slot2 = document.getElementById('calc-slot-2') || document.getElementById('calc-secondary');
+    const slot3 = document.getElementById('calc-tertiary');
+    const addMore = document.getElementById('add-more-panel');
+    const pick2 = document.getElementById('icons-sec-sys');
+    const pick3 = document.getElementById('icons-third-sys');
+
+    if(!row) return;
+
+    const selected = { secondary: null, tertiary: null };
+    const selectedSet = ()=> new Set([selected.secondary, selected.tertiary].filter(Boolean));
+
+    // Render inicial pickers
+    const initialExclude = new Set(PRIMARY ? [PRIMARY] : []);
+    renderSistemasPicker("icons-sec-sys", initialExclude);
+    renderSistemasPicker("icons-third-sys", initialExclude);
+
+    function refreshPickers(){
+      const ex = selectedSet();
+      if(PRIMARY) ex.add(PRIMARY);
+      renderSistemasPicker("icons-sec-sys", ex, selected.secondary);
+      renderSistemasPicker("icons-third-sys", ex, selected.tertiary);
+    }
+    function showAddMoreIfReady(){
+      if(addMore) addMore.style.display = selected.secondary ? '' : 'none';
+    }
+
+    // Secundaria
+    pick2?.addEventListener('click', e=>{
+      const btn=e.target.closest('.sys-icon'); if(!btn) return;
+      const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+      selected.secondary = sys;
+      selected.tertiary  = selected.tertiary === sys ? null : selected.tertiary;
+
+      // Si el hueco es placeholder, cámbialo a contenedor
+      if (slot2 && slot2.id === 'calc-slot-2') { slot2.className='calc-container'; slot2.id='calc-secondary'; }
+
+      if (window.CalculadoraContpaqi?.setSecondarySystem){
+        window.CalculadoraContpaqi.setSecondarySystem(sys,{
+          secondarySelector:'#calc-secondary',
+          combinedSelector:'#combined-wrap',
+          onCombined:renderCombinedTable
+        });
+      }
+      refreshPickers();
+      showAddMoreIfReady();
+    });
+
+    // Terciaria
+    pick3?.addEventListener('click', e=>{
+      const btn=e.target.closest('.sys-icon'); if(!btn) return;
+      const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+      if (sys === selected.secondary) return;
+      selected.tertiary = sys;
+      if (slot3) slot3.style.display='block';
+
+      if (window.CalculadoraContpaqi?.setTertiarySystem){
+        window.CalculadoraContpaqi.setTertiarySystem(sys,{
+          tertiarySelector:'#calc-tertiary',
+          combinedSelector:'#combined-wrap',
+          onCombined:renderCombinedTable
+        });
+      }
+      if(addMore) addMore.style.display='none';
+      row.classList.add('has-three');
+      refreshPickers();
+    });
+
+    // Primaria ya la monta AutoCalcSwitcher → solo aseguramos resumen combinado activo
+    if (window.CalculadoraContpaqi?.onCombinedSet){
+      // (si tu motor expone un setter opcional)
+      window.CalculadoraContpaqi.onCombinedSet(renderCombinedTable);
+    }
+  });
+})();
+
+     
     // Render inmediato
     render();
 
