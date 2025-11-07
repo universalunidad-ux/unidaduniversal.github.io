@@ -445,3 +445,20 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoInit);
   else autoInit();
 })();
+
+// Auto-init si existe #app con data-system y #calc-primary
+function autoInit() {
+  // Si el sitio indicó Nube, NO inicializar v13
+  if (window.__EXPIRITI_FORCE_NUBE__ === true || document.body.getAttribute('data-calc') === 'nube') {
+    console.log('v13: cancelado autoInit porque hay calculadora NUBE');
+    return;
+  }
+  var app = document.getElementById("app");
+  var sys = app && app.dataset ? app.dataset.system : null;
+  if (sys && document.querySelector("#calc-primary")) {
+    window.CalculadoraContpaqi.init({ systemName: sys });
+  }
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoInit);
+else autoInit();
+
