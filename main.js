@@ -714,22 +714,29 @@ const CalculadoraNube = (function(){
     const bLic = pickBlock('licencia');
     const bTipo = pickBlock('tipo');               // "Tipo (RFC)"
     const bUsu  = pickBlock('usuarios');
-    // instalación puede venir como checkbox con texto variable
-    let bInst = null;
-    const instLabel = labels.find(l => /instalaci/i.test(l.textContent));
-    if (instLabel){
-      bInst = instLabel.closest('.instalacion-box') || instLabel.closest('.field') || instLabel.parentElement;
-      // marca para estilos
-      if (bInst && !bInst.classList.contains('instalacion-box')) bInst.classList.add('instalacion-box');
-    } else {
-      // algunos builds lo ponen como div con checkbox sin label formal
-      const chk = container.querySelector('input[type="checkbox"]');
-      if (chk) bInst = chk.closest('.instalacion-box') || chk.closest('.field') || chk.parentElement;
-      if (bInst && !bInst.classList.contains('instalacion-box')) bInst.classList.add('instalacion-box');
-    }
+// instalación puede venir como contenedor .inst-wrap (checkbox + hint) o solo checkbox
+let bInst = null;
 
-    // Si no hay todos los bloques clave, sal
-    if (!(bLic && bTipo && bUsu && bInst)) return;
+// 1) Preferimos mover TODO el contenedor .inst-wrap para que no se separen "Instalación" y el texto de servicio
+const instWrap = container.querySelector('.inst-wrap');
+if (instWrap) {
+  bInst = instWrap; // mueve el bloque completo
+} else {
+  // 2) Fallbacks cuando no hay .inst-wrap
+  const instLabel = labels.find(l => /instalaci/i.test(l.textContent));
+  if (instLabel){
+    bInst = instLabel.closest('.instalacion-box') || instLabel.closest('.field') || instLabel.parentElement;
+  } else {
+    const chk = container.querySelector('input[type="checkbox"]');
+    bInst = chk ? (chk.closest('.instalacion-box') || chk.closest('.field') || chk.parentElement) : null;
+  }
+}
+
+// marca visual si no la trae (pero no toques .inst-wrap)
+if (bInst && !bInst.classList.contains('instalacion-box') && !bInst.classList.contains('inst-wrap')){
+  bInst.classList.add('instalacion-box');
+}
+
 
     // Evita duplicar si ya existe el grid
     if (container.querySelector('.controls-grid')) return;
