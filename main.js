@@ -158,6 +158,8 @@
       go(idx);
     });
     toggleUI(); go(0);
+     setTimeout(()=>{ track.scrollTo({ left: 0, behavior: 'auto' }); }, 50);
+
   });
 })();
 
