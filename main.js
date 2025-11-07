@@ -692,3 +692,80 @@ const CalculadoraNube = (function(){
     if (root) root.innerHTML = `<p class="hint">No hay tabla de Nube ni de Escritorio definida para “${sys}”.</p>`;
   });
 })();
+
+(function () {
+  // Intenta compactar cuando la calculadora ya pintó sus controles
+  function compactar(container){
+    if (!container) return;
+
+    // Busca bloques por etiqueta
+    const labels = [...container.querySelectorAll('label')];
+
+    // Helpers para localizar el "bloque" de cada control (label + input/select)
+    const pickBlock = (text) => {
+      const lb = labels.find(l => l.textContent.trim().toLowerCase().startsWith(text));
+      if (!lb) return null;
+      // sube al contenedor inmediato del campo
+      return lb.closest('.field') || lb.closest('.row') || lb.parentElement;
+    };
+
+    const bLic = pickBlock('licencia');
+    const bTipo = pickBlock('tipo');               // "Tipo (RFC)"
+    const bUsu  = pickBlock('usuarios');
+    // instalación puede venir como checkbox con texto variable
+    let bInst = null;
+    const instLabel = labels.find(l => /instalaci/i.test(l.textContent));
+    if (instLabel){
+      bInst = instLabel.closest('.instalacion-box') || instLabel.closest('.field') || instLabel.parentElement;
+      // marca para estilos
+      if (bInst && !bInst.classList.contains('instalacion-box')) bInst.classList.add('instalacion-box');
+    } else {
+      // algunos builds lo ponen como div con checkbox sin label formal
+      const chk = container.querySelector('input[type="checkbox"]');
+      if (chk) bInst = chk.closest('.instalacion-box') || chk.closest('.field') || chk.parentElement;
+      if (bInst && !bInst.classList.contains('instalacion-box')) bInst.classList.add('instalacion-box');
+    }
+
+    // Si no hay todos los bloques clave, sal
+    if (!(bLic && bTipo && bUsu && bInst)) return;
+
+    // Evita duplicar si ya existe el grid
+    if (container.querySelector('.controls-grid')) return;
+
+    // Crea el grid y mete los bloques en orden
+    const grid = document.createElement('div');
+    grid.className = 'controls-grid';
+
+    // Asegura clase .field a cada bloque para consistencia
+    [bLic,bTipo,bUsu].forEach(b => b.classList.add('field'));
+
+    grid.append(bLic);
+    grid.append(bTipo);
+    grid.append(bUsu);
+    grid.append(bInst);
+
+    // Inserta el grid al inicio del contenedor
+    const first = container.firstElementChild;
+    container.insertBefore(grid, first);
+  }
+
+  // Observa el render inicial (calculadora.js inyecta async)
+  const target = document.getElementById('calc-primary');
+  if (!target) return;
+
+  const tryCompact = () => compactar(target);
+
+  // 1) Intento inmediato + 2) en el siguiente frame
+  tryCompact();
+  requestAnimationFrame(tryCompact);
+
+  // 3) Observa cambios por si la UI se vuelve a re-renderizar
+  const mo = new MutationObserver(() => tryCompact());
+  mo.observe(target, { childList:true, subtree:true });
+
+  // 4) Si tu calculadora emite eventos, reaplica
+  window.addEventListener('calc-recompute', tryCompact);
+  window.addEventListener('calc-render', tryCompact);
+})();
+
+
