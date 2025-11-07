@@ -305,40 +305,31 @@
   </section>
 
   <!-- PRECIOS -->
-  <section id="calculadora-section" aria-labelledby="calc">
-    <h3 id="calc" class="title-gradient">Planes y Precios (Anuales)</h3>
-    <p class="hint center">CONTPAQi Personia se maneja por suscripción anual basada en el número de empleados.</p>
-    <div class="card body">
-      <table class="pricing-table-nube" aria-describedby="calc">
-        <thead>
-          <tr>
-            <th>Plan</th>
-            <th>Empleados Incluidos</th>
-            <th>Usuarios</th>
-            <th>Precio Base Anual</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="plan-name">Inicial</td><td>10 Empleados</td><td>Multi-usuario</td><td class="price">$3,090</td></tr>
-          <tr><td class="plan-name">Equipos</td><td>20 Empleados</td><td>Multi-usuario</td><td class="price">$4,590</td></tr>
-          <tr><td class="plan-name">Empresarial</td><td>50 Empleados</td><td>Multi-usuario</td><td class="price">$6,090</td></tr>
-          <tr><td class="plan-name">Corporativo</td><td>100 Empleados</td><td>Multi-usuario</td><td class="price">$8,090</td></tr>
-        </tbody>
-        <tfoot>
-          <tr><td class="note" colspan="4"><strong>Empleado Adicional:</strong> Desde $45 hasta $180 anual (dependiendo del plan).</td></tr>
-        </tfoot>
-      </table>
-      <p class="hint center" style="margin-top:15px;">Precios tomados de tu archivo <code>precios-contpaqi.js</code>. Precios más IVA.</p>
-    </div>
-  </section>
-  <!-- Calculadora Nube -->
+<!-- ========= PRECIOS / CALCULADORA ========= -->
 <section id="calculadora-section" aria-labelledby="calc">
-  <h3 id="calc" class="title-gradient">Calcula tu suscripción</h3>
-  <div id="calc-nube"
-       class="cloud-calc"
-       data-system="CONTPAQi Personia">
+  <h3 id="calc" class="title-gradient">Planes y Precios</h3>
+  <p class="hint center">Calcula tu plan según tu suscripción/licencia.</p>
+
+  <!-- Punto de montaje universal (Nube o Escritorio) -->
+  <div id="calc-primary"></div>
+
+  <!-- (Opcional) Resumen combinado si usas multi-sistema -->
+  <div id="combined-wrap" hidden>
+    <table class="calc-nube-table" style="margin-top:12px">
+      <thead><tr><th>Concepto</th><th style="text-align:right">Importe</th></tr></thead>
+      <tbody id="combined-table-body"></tbody>
+      <tfoot><tr><td><strong>Total</strong></td><td id="combined-total" style="text-align:right;font-weight:700"></td></tr></tfoot>
+    </table>
+  </div>
+
+  <!-- Identidad del sistema (SOLO Cambia el nombre) -->
+  <div id="app"
+       data-system="CONTPAQi Personia"   <!-- ← Pon aquí el sistema de esta página -->
+       data-calc-mount="#calc-primary">  <!-- ← (opcional) otro selector si no quieres #calc-primary -->
   </div>
 </section>
+
+
 
 
   <!-- COMPARATIVAS -->
@@ -436,7 +427,14 @@
   </div>
 </footer>
 
-<!-- JS global del sitio -->
+<!-- 1) Tabla de precios (debe existir la clave del sistema) -->
+<script src="../precios-contpaqi.js"></script>
+
+<!-- 2) Motor calculadora ESCRITORIO (tu calculadora.js clásica) -->
+<script src="../calculadora.js" defer></script>
+
+<!-- 3) Adaptador + calculadora NUBE (tu main.js con el auto-detector) -->
 <script src="../main.js" defer></script>
+
 </body>
 </html>
