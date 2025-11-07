@@ -30,7 +30,8 @@
     set(0);
   }
 
-  document.querySelectorAll(".carousel").forEach(car=>{
+document.querySelectorAll(".carousel:not(#carouselReels)").forEach(car=>{
+
     // Títulos: usa data-titles=".reel-title" si está; si no, intenta buscarlos cerca
     const sel=car.getAttribute("data-titles");
     let titles=null;
@@ -169,4 +170,52 @@
   closeBtn.addEventListener("click",()=>toc.classList.add("collapsed"));
   toc.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>toc.classList.add("collapsed")));
   document.addEventListener("click",e=>{ if(!toc.contains(e.target) && e.target!==trigger) toc.classList.add("collapsed"); });
+})();
+
+// Carrusel Reels (scoped)
+(function(){
+  const root = document.getElementById('carouselReels');
+  if(!root) return;
+
+  const scope = root.closest('aside') || root; // títulos solo de este bloque
+  const track = root.querySelector('.carousel-track');
+  const slides = [...track.querySelectorAll('.carousel-slide')];
+  const dots = [...root.querySelectorAll('.carousel-nav .dot')];
+  const prev = root.querySelector('.arrowCircle.prev');
+  const next = root.querySelector('.arrowCircle.next');
+  const reelTitles = [...scope.querySelectorAll('.reel-title')];
+
+  let idx = 0;
+
+  function setActive(i){
+    if(!dots.length || !slides.length) return;
+    idx = (i + dots.length) % dots.length;
+
+    dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
+    reelTitles.forEach((t,ti)=>t.classList.toggle('active', ti===idx));
+
+    // cada slide mide el ancho visible del track
+    const slideWidth = track.clientWidth;
+    track.scrollTo({ left: slideWidth * idx, behavior: 'smooth' });
+  }
+
+  dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
+  prev?.addEventListener('click',()=>setActive(idx-1));
+  next?.addEventListener('click',()=>setActive(idx+1));
+
+  // Mantén títulos y dots sincronizados al hacer scroll manual
+  track.addEventListener('scroll',()=>{
+    const w = track.clientWidth || 1;
+    const i = Math.round(track.scrollLeft / w);
+    if(i !== idx && i >= 0 && i < dots.length){
+      idx = i;
+      dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
+      reelTitles.forEach((t,ti)=>t.classList.toggle('active', ti===idx));
+    }
+  });
+
+  // Recalcula posición al cambiar el ancho (móvil/desktop)
+  window.addEventListener('resize',()=>setActive(idx));
+
+  setActive(0);
 })();
