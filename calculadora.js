@@ -113,16 +113,16 @@ if (document?.body?.getAttribute('data-calc') === 'nube' || window.__EXPIRITI_FO
     form.appendChild(userLabel);
 
  // 5) Instalación (opcional)
-var instWrap = document.createElement("div");
-instWrap.className = "inst-wrap";
-instWrap.style.cssText = "padding:0;margin:0;border:0;background:transparent";
 instWrap.innerHTML = `
-  <label class="instalacion-box">
-    <input type="checkbox" id="instOn${idSuffix}" checked>
-    <span><strong>Instalación (opcional)</strong></span>
-  </label>
-  <small class="inst-hint">Servicio ofrecido por <strong>ExpIRITI</strong> para instalar en tu equipo tu sistema.</small>
+  <div class="instalacion-box">
+    <label style="display:flex;align-items:center;gap:10px;margin:0;">
+      <input type="checkbox" id="instOn${idSuffix}" checked>
+      <span><strong>Instalación (opcional)</strong></span>
+    </label>
+    <small class="inst-hint">Servicio ofrecido por <strong>ExpIRITI</strong> para instalar en tu equipo tu sistema.</small>
+  </div>
 `;
+
 form.appendChild(instWrap);
 
 
