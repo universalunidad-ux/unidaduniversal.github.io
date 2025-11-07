@@ -219,3 +219,34 @@ document.querySelectorAll(".carousel:not(#carouselReels)").forEach(car=>{
 
   setActive(0);
 })();
+
+// 🎬 Control global: pausa otros videos al reproducir uno
+(function(){
+  // Carga la API de YouTube solo una vez
+  if(!window.YT){
+    const tag=document.createElement('script');
+    tag.src="https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  }
+
+  let players=[];
+
+  // Cuando la API esté lista
+  window.onYouTubeIframeAPIReady = function(){
+    document.querySelectorAll('iframe[src*="youtube"]').forEach((el)=>{
+      try{
+        const p=new YT.Player(el,{
+          events:{
+            'onStateChange':(e)=>{
+              if(e.data===1){ // 1 = PLAYING
+                // pausa todos los demás
+                players.forEach(pl=>{ if(pl!==p) pl.pauseVideo(); });
+              }
+            }
+          }
+        });
+        players.push(p);
+      }catch(err){}
+    });
+  };
+})();
