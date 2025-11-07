@@ -444,46 +444,6 @@ const CalculadoraNube = (function(){
 
   return { init };
 })();
-
-/* =========================================================
-   AutoCalcSwitcher — decide Nube vs deja a Escritorio (legacy)
-   ========================================================= */
-(function(){
-  function detectSystemName(){
-    const node = document.querySelector('[data-system]');
-    if (node?.dataset?.system) return node.dataset.system.trim();
-    const app = document.getElementById('app');
-    if (app?.dataset?.system) return app.dataset.system.trim();
-    const h1 = document.querySelector('h1');
-    if (h1?.textContent && /CONTPAQi\s+/i.test(h1.textContent)) return h1.textContent.trim();
-    const t = document.title || '';
-    const m = t.match(/CONTPAQi\s+[^\|]+/i);
-    if (m) return m[0].trim();
-    return null;
-  }
-
-  function mountNube(sys){
-    document.body.setAttribute('data-calc','nube');
-    const mount = '#calc-primary';
-
-    const render = ()=>CalculadoraNube.init({
-      systemName: sys,
-      mountSelector: mount,
-      combinedSelector: '#combined-wrap',
-      onCombined(rows){
-        const wrap = document.querySelector('#combined-wrap');
-        const tbody = document.querySelector('#combined-table-body');
-        if(!wrap || !tbody) return;
-        tbody.innerHTML='';
-        rows.forEach(([c,v])=>{
-          const tr=document.createElement('tr');
-          const td1=document.createElement('td'); td1.textContent=c;
-          const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
-          tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
-        });
-        wrap.hidden=false;
-      }
-    });
 /* =========================================================
    Complementos calculadora ESCRITORIO:
    - Picker de 2º y 3º sistema
@@ -644,6 +604,45 @@ const CalculadoraNube = (function(){
   });
 })();
 
+/* =========================================================
+   AutoCalcSwitcher — decide Nube vs deja a Escritorio (legacy)
+   ========================================================= */
+(function(){
+  function detectSystemName(){
+    const node = document.querySelector('[data-system]');
+    if (node?.dataset?.system) return node.dataset.system.trim();
+    const app = document.getElementById('app');
+    if (app?.dataset?.system) return app.dataset.system.trim();
+    const h1 = document.querySelector('h1');
+    if (h1?.textContent && /CONTPAQi\s+/i.test(h1.textContent)) return h1.textContent.trim();
+    const t = document.title || '';
+    const m = t.match(/CONTPAQi\s+[^\|]+/i);
+    if (m) return m[0].trim();
+    return null;
+  }
+
+  function mountNube(sys){
+    document.body.setAttribute('data-calc','nube');
+    const mount = '#calc-primary';
+
+    const render = ()=>CalculadoraNube.init({
+      systemName: sys,
+      mountSelector: mount,
+      combinedSelector: '#combined-wrap',
+      onCombined(rows){
+        const wrap = document.querySelector('#combined-wrap');
+        const tbody = document.querySelector('#combined-table-body');
+        if(!wrap || !tbody) return;
+        tbody.innerHTML='';
+        rows.forEach(([c,v])=>{
+          const tr=document.createElement('tr');
+          const td1=document.createElement('td'); td1.textContent=c;
+          const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
+          tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
+        });
+        wrap.hidden=false;
+      }
+    });
      
     // Render inmediato
     render();
