@@ -53,7 +53,7 @@
       const scope = car.closest(".card,.body,aside,section,div")||document;
       titles = [...scope.querySelectorAll(".reel-title")];
     }
-    if(!titles.length) titles=null;
+    if(!titles?.length) titles=null;
     initCarousel(car, idx=>{ if(titles){ titles.forEach((t,i)=>t.classList.toggle("active",i===idx)); } });
   });
 })();
@@ -465,13 +465,15 @@ const CalculadoraNube = (function(){
   function mountNube(sys){
     document.body.setAttribute('data-calc','nube');
     const mount = '#calc-primary';
+
     const render = ()=>CalculadoraNube.init({
       systemName: sys,
       mountSelector: mount,
       combinedSelector: '#combined-wrap',
       onCombined(rows){
-        const wrap=$('#combined-wrap'), tbody=$('#combined-table-body');
-        if(!wrap||!tbody) return;
+        const wrap = document.querySelector('#combined-wrap');
+        const tbody = document.querySelector('#combined-table-body');
+        if(!wrap || !tbody) return;
         tbody.innerHTML='';
         rows.forEach(([c,v])=>{
           const tr=document.createElement('tr');
@@ -483,10 +485,10 @@ const CalculadoraNube = (function(){
       }
     });
 
-    // 1) Render inmediato
+    // Render inmediato
     render();
 
-    // 2) Guard contra “auto-init” de escritorio: si apareciera legacy, re-render Nube
+    // Si alguien inyecta legacy en el mismo host, re-render Nube
     const host = document.querySelector(mount);
     if (!host) return;
     const obs = new MutationObserver(()=>{
