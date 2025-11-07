@@ -3,7 +3,7 @@
    Expiriti - main.js (Personia) — Complemento a calculadora.js v13
    ========================================================= */
 
-/* ---------- Utils ---------- */
+/* ---------- Utils ---------- */ 
 (function(){
   const money = new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
   window.$$fmt = v => money.format(Math.round(Number(v||0)));
