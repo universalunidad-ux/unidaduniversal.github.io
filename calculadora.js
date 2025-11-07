@@ -112,21 +112,19 @@ if (document?.body?.getAttribute('data-calc') === 'nube' || window.__EXPIRITI_FO
     userLabel.appendChild(userInput);
     form.appendChild(userLabel);
 
-    // 5) Instalación (opcional)
-    var instWrap = document.createElement("div");
-    instWrap.className = "inst-wrap";
-    instWrap.style.border = "1px dashed #29425e";
-    instWrap.style.background = "#0e1724";
-    instWrap.style.borderRadius = "12px";
-    instWrap.style.padding = "10px";
-    instWrap.style.marginTop = "8px";
-    instWrap.innerHTML =
-      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
-      '  <input type="checkbox" id="instOn'+idSuffix+'" checked>' +
-      '  <label for="instOn'+idSuffix+'"><strong>Instalación (opcional)</strong></label>' +
-      '</div>' +
-      '<div style="color:#9fb2cb;font-size:12px">Servicio ofrecido por <strong>ExpIRITI</strong> para instalar en tu equipo tu sistema.</div>';
-    form.appendChild(instWrap);
+ // 5) Instalación (opcional)
+var instWrap = document.createElement("div");
+instWrap.className = "inst-wrap";
+instWrap.style.cssText = "padding:0;margin:0;border:0;background:transparent";
+instWrap.innerHTML = `
+  <label class="instalacion-box">
+    <input type="checkbox" id="instOn${idSuffix}" checked>
+    <span><strong>Instalación (opcional)</strong></span>
+  </label>
+  <small class="inst-hint">Servicio ofrecido por <strong>ExpIRITI</strong> para instalar en tu equipo tu sistema.</small>
+`;
+form.appendChild(instWrap);
+
 
     // Blindaje: aseguramos Licencia en primer lugar
     form.insertBefore(licenciaLabel, form.firstChild);
