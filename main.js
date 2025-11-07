@@ -1,52 +1,11 @@
-<!-- Asegúrate de cargar primero tu tabla de precios -->
-<script>
-/* ====== EJEMPLOS DE ESTRUCTURA (solo guía, puedes borrar este bloque si ya lo tienes) ======
-window.preciosContpaqi = {
-  "CONTPAQi Personia": {
-    nube: {
-      // extras globales opcionales
-      usuario_adicional: 199,             // $/usuario extra para planes con usuarios_incluidos numérico
-      espacio_adicional: { "50 GB": 99, "100 GB": 149 }, // opcional
-      // cada plan como objeto:
-      "Básico":  { precio_base: 699,  usuarios_incluidos: 1,   empleados_incluidos: 50,  empleado_adicional: 3 },
-      "Pro":     { precio_base: 1199, usuarios_incluidos: 3,   empleados_incluidos: 200, empleado_adicional: 2 },
-      "Multi":   { precio_base: 1999, usuarios_incluidos: "multi" } // “multi” oculta el input de usuarios
-    }
-  },
-  "CONTPAQi Contabilidad": {
-    escritorio: {
-      // Estructura flexible: el motor intenta adaptarse
-      // Opción A: planes “anual” y/o “tradicional”
-      anual: {
-        base: 9990,                        // precio base
-        rfc: { MonoRFC: 0, MultiRFC: 3500 }, // sobreprecio por tipo RFC (opcional)
-        usuarios_incluidos: 1,             // opcional (si hay usuarios)
-        usuario_adicional: 2500,           // opcional
-        paquetes_usuarios: [1, 2, 3, 5, 10]// opcional (si prefieres select en vez de number)
-      },
-      tradicional: {
-        base: 15990,
-        rfc: { MonoRFC: 0, MultiRFC: 3500 },
-        usuarios_incluidos: 1,
-        usuario_adicional: 2500,
-        paquetes_usuarios: [1, 2, 3, 5, 10]
-      }
-      // Opción B: si además manejas “operación” (actualización/especial, etc) añade:
-      // operaciones: { "nueva": 0, "actualización": -3000, "especial": -2000 }
-    }
-  }
-};
-*/
-</script>
-
 <script>
 /* =========================================================
-   Expiriti - main.js (Personia)
+   Expiriti - main.js (Personia) — Complemento a calculadora.js v13
    ========================================================= */
 
-/* ---------- Utilidades ---------- */
+/* ---------- Utils ---------- */
 (function(){
-  const money = new Intl.NumberFormat("es-MX", { style:"currency", currency:"MXN", maximumFractionDigits:0 });
+  const money = new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
   window.$$fmt = v => money.format(Math.round(Number(v||0)));
   window.$$ = (sel, ctx=document) => ctx.querySelector(sel);
   window.$all = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
@@ -261,7 +220,7 @@ window.preciosContpaqi = {
 })();
 
 /* =========================================================
-   Calculadora NUBE
+   Calculadora NUBE (independiente del legacy de escritorio)
    ========================================================= */
 const CalculadoraNube = (function(){
   function init({ systemName, mountSelector = '#calc-primary', onCombined = null, combinedSelector = null }){
@@ -413,323 +372,84 @@ const CalculadoraNube = (function(){
 })();
 
 /* =========================================================
-   Calculadora ESCRITORIO (genérica y tolerante a esquema)
-   ========================================================= */
-const CalculadoraContpaqi = (function(){
-
-  // ——— Lectores tolerantes de esquema ———
-  function getDeskDB(sysName){
-    return window.preciosContpaqi?.[sysName]?.escritorio || null;
-  }
-  function listLicencias(db){
-    // soporta “anual”, “tradicional” u otras claves-objeto
-    return Object.keys(db).filter(k => typeof db[k]==='object' && k!=='operaciones');
-  }
-  function getOperaciones(db){
-    // opcional: descuentos/sobrecargos por tipo de operación
-    return db.operaciones || null; // p.ej. { nueva:0, actualización:-3000, especial:-2000 }
-  }
-  function licenciaInfo(db, lic){ return db?.[lic] || {}; }
-  function hasRFC(info){ return info?.rfc && typeof info.rfc==='object'; }
-  function rfcTipos(info){ return hasRFC(info) ? Object.keys(info.rfc) : []; }
-  function rfcAjuste(info, tipo){ return hasRFC(info) ? Number(info.rfc[tipo]||0) : 0; }
-  function basePrecio(info){ return Number(info.base || info.precio_base || 0); }
-  function usuariosIncluidos(info){ return Number.isFinite(info.usuarios_incluidos) ? Number(info.usuarios_incluidos) : null; }
-  function usuarioAdicional(info){ return Number(info.usuario_adicional || 0); }
-  function paquetesUsuarios(info){ return Array.isArray(info.paquetes_usuarios) ? info.paquetes_usuarios : null; }
-
-  // ——— UI ———
-  function buildUI(root){
-    root.innerHTML = `
-      <h4 style="margin:0 0 8px">Calcula tu licencia de escritorio</h4>
-      <div class="grid-nube" style="grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:10px">
-        <div>
-          <label class="control-label">Licencia</label>
-          <select id="desk-lic"></select>
-        </div>
-        <div id="desk-op-wrap" style="display:none">
-          <label class="control-label">Operación</label>
-          <select id="desk-op"></select>
-        </div>
-        <div id="desk-rfc-wrap" style="display:none">
-          <label class="control-label">Tipo RFC</label>
-          <select id="desk-rfc"></select>
-        </div>
-        <div id="desk-users-wrap" style="display:none">
-          <label class="control-label">Usuarios</label>
-          <span id="desk-users-slot"></span>
-          <small class="hint" id="desk-users-hint"></small>
-        </div>
-      </div>
-
-      <table class="calc-nube-table" id="desk-table">
-        <thead><tr><th>Concepto</th><th style="text-align:right">Importe</th></tr></thead>
-        <tbody id="desk-tbody"></tbody>
-        <tfoot><tr><td style="font-weight:700">Total</td><td id="desk-total" style="text-align:right;font-weight:700"></td></tr></tfoot>
-      </table>
-    `;
-  }
-
-  function init({ systemName, primarySelector = '#calc-primary', combinedSelector = null }){
-    const root = document.querySelector(primarySelector);
-    if(!root) { console.warn('calc-escritorio: no mount target'); return; }
-
-    const db = getDeskDB(systemName);
-    if(!db){ root.innerHTML='<p class="hint">No hay tabla de escritorio para este sistema.</p>'; return; }
-
-    buildUI(root);
-    const $ = (sel, ctx=root)=> (ctx||root).querySelector(sel);
-    const mxn = window.$$fmt;
-
-    const selLic  = $('#desk-lic');
-    const opWrap  = $('#desk-op-wrap');
-    const selOp   = $('#desk-op');
-    const rfcWrap = $('#desk-rfc-wrap');
-    const selRFC  = $('#desk-rfc');
-    const usersWrap = $('#desk-users-wrap');
-    const usersSlot = $('#desk-users-slot');
-    const usersHint = $('#desk-users-hint');
-
-    const ops = getOperaciones(db);
-    const licencias = listLicencias(db);
-
-    // Estado
-    const state = { lic: licencias[0]||null, op: null, rfc: null, usuarios: null };
-
-    // Poblar licencias
-    licencias.forEach(l=>{
-      const o=document.createElement('option');
-      o.value=l; o.textContent = l[0].toUpperCase()+l.slice(1);
-      selLic.appendChild(o);
-    });
-    state.lic = selLic.value;
-
-    // Poblar operaciones (opcional)
-    if (ops && Object.keys(ops).length){
-      opWrap.style.display='';
-      Object.keys(ops).forEach(k=>{
-        const o=document.createElement('option');
-        o.value=k; o.textContent=k[0].toUpperCase()+k.slice(1);
-        selOp.appendChild(o);
-      });
-      state.op = selOp.value;
-    } else {
-      opWrap.style.display='none';
-      state.op = null;
-    }
-
-    function syncRFCandUsers(){
-      // RFC
-      const info = licenciaInfo(db, state.lic);
-      const tipos = rfcTipos(info);
-      selRFC.innerHTML='';
-      if (tipos.length){
-        rfcWrap.style.display='';
-        tipos.forEach(t=>{
-          const o=document.createElement('option');
-          o.value=t; o.textContent=t;
-          selRFC.appendChild(o);
-        });
-        if (!tipos.includes(state.rfc)) state.rfc = selRFC.value;
-      } else {
-        rfcWrap.style.display='none';
-        state.rfc = null;
-      }
-
-      // Usuarios
-      usersSlot.innerHTML='';
-      const inc = usuariosIncluidos(info);
-      const extra = usuarioAdicional(info);
-      const packs = paquetesUsuarios(info);
-
-      if (inc!=null || packs){
-        usersWrap.style.display='';
-        if (packs && packs.length){
-          const sel = document.createElement('select');
-          packs.forEach(n=>{
-            const o=document.createElement('option');
-            o.value=String(n); o.textContent=String(n);
-            sel.appendChild(o);
-          });
-          // default al incluído si existe, sino al primero
-          const def = inc!=null && packs.includes(inc) ? inc : packs[0];
-          sel.value = String(def);
-          state.usuarios = def;
-          sel.addEventListener('change',()=>{ state.usuarios = parseInt(sel.value,10)||def; recalc(); });
-          usersSlot.appendChild(sel);
-          usersHint.textContent = inc!=null
-            ? `Incluye ${inc}. Usuario adicional: ${extra? mxn(extra):'–'}.`
-            : `Paquetes disponibles. Usuario adicional: ${extra? mxn(extra):'–'}.`;
-        } else {
-          // number input
-          const inp=document.createElement('input');
-          inp.type='number'; inp.min='1'; inp.step='1';
-          const def = inc!=null ? inc : 1;
-          state.usuarios = def;
-          inp.value = String(def);
-          inp.addEventListener('input',()=>{ const v=parseInt(inp.value||0,10); state.usuarios=Math.max(1,v||1); recalc(); });
-          usersSlot.appendChild(inp);
-          usersHint.textContent = inc!=null
-            ? `Incluye ${inc}. Usuario adicional: ${extra? mxn(extra):'–'}.`
-            : `Define el número de usuarios. Usuario adicional: ${extra? mxn(extra):'–'}.`;
-        }
-      } else {
-        usersWrap.style.display='none';
-        state.usuarios = null;
-      }
-    }
-
-    const tbody = $('#desk-tbody');
-    const totalEl = $('#desk-total');
-
-    function recalc(){
-      const info = licenciaInfo(db, state.lic);
-      const rows = [];
-      let total = 0;
-
-      // base
-      const base = basePrecio(info);
-      rows.push([`Licencia ${state.lic}`, mxn(base)]);
-      total += base;
-
-      // operación (descuento/sobrecargo)
-      if (state.op && ops && (state.op in ops)){
-        const adj = Number(ops[state.op]||0);
-        if (adj!==0){
-          rows.push([`Operación: ${state.op}`, (adj>0? '+':'')+mxn(adj)]);
-          total += adj;
-        }
-      }
-
-      // RFC
-      if (state.rfc){
-        const rfcAdj = rfcAjuste(info, state.rfc);
-        if (rfcAdj!==0){
-          rows.push([`Tipo RFC: ${state.rfc}`, (rfcAdj>0? '+':'') + mxn(rfcAdj)]);
-          total += rfcAdj;
-        } else {
-          rows.push([`Tipo RFC: ${state.rfc}`, mxn(0)]);
-        }
-      }
-
-      // Usuarios extra
-      const inc = usuariosIncluidos(info);
-      const uAd = usuarioAdicional(info);
-      if (inc!=null && state.usuarios!=null && uAd>0){
-        const extra = Math.max(0, Number(state.usuarios) - inc);
-        if (extra>0){
-          rows.push([`Usuarios adicionales (${extra})`, mxn(extra*uAd)]);
-          total += extra*uAd;
-        }
-      }
-
-      // Pintar
-      tbody.innerHTML='';
-      rows.forEach(([c,v])=>{
-        const tr=document.createElement('tr');
-        const td1=document.createElement('td'); td1.textContent=c;
-        const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
-        tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
-      });
-      totalEl.textContent = mxn(total);
-
-      // combinado (si lo usas)
-      if (combinedSelector){
-        const wrap = document.querySelector(combinedSelector);
-        const tbd  = document.getElementById('combined-table-body');
-        if (wrap && tbd){
-          tbd.innerHTML='';
-          const tr=document.createElement('tr');
-          const td1=document.createElement('td'); td1.textContent = `${systemName} — ${state.lic}${state.rfc? ' ('+state.rfc+')':''}`;
-          const td2=document.createElement('td'); td2.textContent = mxn(total); td2.style.textAlign='right';
-          tr.appendChild(td1); tr.appendChild(td2); tbd.appendChild(tr);
-          wrap.hidden=false;
-        }
-      }
-    }
-
-    // eventos
-    selLic.addEventListener('change', ()=>{ state.lic = selLic.value; syncRFCandUsers(); recalc(); });
-    selOp?.addEventListener('change', ()=>{ state.op = selOp.value; recalc(); });
-    selRFC?.addEventListener('change', ()=>{ state.rfc = selRFC.value; recalc(); });
-
-    syncRFCandUsers();
-    recalc();
-
-    return { recalc };
-  }
-
-  return { init };
-})();
-
-/* =========================================================
-   AutoCalcSwitcher: detecta sistema y decide Nube vs Escritorio
+   AutoCalcSwitcher — decide Nube vs deja a Escritorio (legacy)
    ========================================================= */
 (function(){
   function detectSystemName(){
-    // a) cualquier nodo con data-system
     const node = document.querySelector('[data-system]');
     if (node?.dataset?.system) return node.dataset.system.trim();
-
-    // b) #app con data-system
     const app = document.getElementById('app');
     if (app?.dataset?.system) return app.dataset.system.trim();
-
-    // c) h1 “CONTPAQi …”
     const h1 = document.querySelector('h1');
     if (h1?.textContent && /CONTPAQi\s+/i.test(h1.textContent)) return h1.textContent.trim();
-
-    // d) title
     const t = document.title || '';
     const m = t.match(/CONTPAQi\s+[^\|]+/i);
     if (m) return m[0].trim();
-
     return null;
+  }
+
+  function mountNube(sys){
+    document.body.setAttribute('data-calc','nube');
+    const mount = '#calc-primary';
+    const render = ()=>CalculadoraNube.init({
+      systemName: sys,
+      mountSelector: mount,
+      combinedSelector: '#combined-wrap',
+      onCombined(rows){
+        const wrap=$('#combined-wrap'), tbody=$('#combined-table-body');
+        if(!wrap||!tbody) return;
+        tbody.innerHTML='';
+        rows.forEach(([c,v])=>{
+          const tr=document.createElement('tr');
+          const td1=document.createElement('td'); td1.textContent=c;
+          const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
+          tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
+        });
+        wrap.hidden=false;
+      }
+    });
+
+    // 1) Render inmediato
+    render();
+
+    // 2) Guard contra “auto-init” del legacy: si detectamos que alguien
+    //    inyecta una tabla/form de escritorio en #calc-primary en páginas Nube,
+    //    volvemos a renderizar Nube.
+    const host = document.querySelector(mount);
+    if (!host) return;
+    const obs = new MutationObserver(()=>{
+      const legacyBits = host.querySelector('.calc-table, .calc-form, table.calc-table');
+      const nubeReady  = host.querySelector('.calc-nube');
+      if (legacyBits && !nubeReady){
+        render();
+      }
+    });
+    obs.observe(host, { childList:true, subtree:true });
   }
 
   document.addEventListener('DOMContentLoaded', ()=>{
     const sys = detectSystemName();
     if(!sys){ console.warn('AutoCalcSwitcher: no pude detectar el sistema.'); return; }
-
-    const hasNube = !!window.preciosContpaqi?.[sys]?.nube;
-    const hasDesk = !!window.preciosContpaqi?.[sys]?.escritorio;
-
-    // Señal al CSS para mostrar/ocultar bloques si quieres
-    document.body.setAttribute('data-calc', hasNube ? 'nube' : 'escritorio');
-
-    const mount = '#calc-primary';
+    const S = window.preciosContpaqi?.[sys] || {};
+    const hasNube = !!S.nube;
+    const hasDesk = !!(S.escritorio || S.anual || S.tradicional);
 
     if (hasNube){
-      CalculadoraNube.init({
-        systemName: sys,
-        mountSelector: mount,
-        combinedSelector: '#combined-wrap',
-        onCombined(rows){
-          const wrap=$('#combined-wrap'), tbody=$('#combined-table-body');
-          if(!wrap||!tbody) return;
-          tbody.innerHTML='';
-          rows.forEach(([c,v])=>{
-            const tr=document.createElement('tr');
-            const td1=document.createElement('td'); td1.textContent=c;
-            const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
-            tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
-          });
-          wrap.hidden=false;
-        }
-      });
+      mountNube(sys);              // Nube la manejamos aquí
       return;
     }
-    if (hasDesk){
-      CalculadoraContpaqi.init({
-        systemName: sys,
-        primarySelector: mount,
-        combinedSelector: '#combined-wrap'
-      });
-      return;
-    }
-
-    // Si no hay nada:
-    const root = document.querySelector(mount);
+if (hasDesk){
+  const deskInit = (window.CalculadoraContpaqi && window.CalculadoraContpaqi.init)
+    ? window.CalculadoraContpaqi.init           // v13 existente
+    : CalculadoraContpaqi.init;                  // fallback local
+  deskInit({
+    systemName: sys,
+    primarySelector: mount,
+    combinedSelector: '#combined-wrap'
+  });
+  return;
+}
+    const root = document.querySelector('#calc-primary');
     if (root) root.innerHTML = `<p class="hint">No hay tabla de Nube ni de Escritorio definida para “${sys}”.</p>`;
   });
 })();
