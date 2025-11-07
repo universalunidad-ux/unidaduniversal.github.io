@@ -3,7 +3,7 @@
    Expiriti - main.js (Personia) — Complemento a calculadora.js v13
    ========================================================= */
 
-/* ---------- Utils ---------- */ 
+/* ---------- Utils ---------- */
 (function(){
   const money = new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
   window.$$fmt = v => money.format(Math.round(Number(v||0)));
@@ -271,7 +271,10 @@ const CalculadoraNube = (function(){
       <table class="calc-nube-table">
         <thead><tr><th>Concepto</th><th style="text-align:right">Importe</th></tr></thead>
         <tbody id="nube-tbody"></tbody>
-        <tfoot><tr><td style="font-weight:700">Total</td><td id="nube-total" style="text-align:right;font-weight:700"></td></tr></tfoot>
+        <tfoot>
+          <tr><td>IVA 16%</td><td id="nube-iva16" style="text-align:right"></td></tr>
+          <tr><td style="font-weight:700">Total</td><td id="nube-total" style="text-align:right;font-weight:700"></td></tr>
+        </tfoot>
       </table>
     `;
 
@@ -313,38 +316,44 @@ const CalculadoraNube = (function(){
     }
 
     const tbody = $('#nube-tbody');
+    const ivaEl = $('#nube-iva16');
     const totalEl = $('#nube-total');
 
     function recalc(){
       const p = planInfo();
       const rows = [];
-      let total = 0;
+      let subtotal = 0;
 
+      // 1) Plan (siempre primero)
       const base = Number(p.precio_base || 0);
       rows.push(['Plan '+state.plan, mxn(base)]);
-      total += base;
+      subtotal += base;
 
+      // 2) Usuarios adicionales (si el plan incluye número finito)
       if (typeof incUsers()==='number'){
         const inc = incUsers();
         const want = Math.max(inc, Number(state.usuarios||inc));
         const extra = Math.max(0, want - inc);
         const uAd = usuarioAdic();
-        if (extra>0 && uAd>0){ rows.push([`Usuarios adicionales (${extra})`, mxn(extra*uAd)]); total += extra*uAd; }
+        if (extra>0 && uAd>0){ rows.push([`Usuarios adicionales (${extra})`, mxn(extra*uAd)]); subtotal += extra*uAd; }
       }
 
+      // 3) Empleados adicionales (solo si aplica al plan)
       if (typeof incEmpl()==='number'){
         const inc = incEmpl();
         const want = Math.max(inc, Number(state.empleados||inc));
         const extra = Math.max(0, want - inc);
-        const eAd = empleadoAdic();
-        if (extra>0 && eAd>0){ rows.push([`Empleados adicionales (${extra})`, mxn(extra*eAd)]); total += extra*eAd; }
+        const eAd = Number(p.empleado_adicional || 0);
+        if (extra>0 && eAd>0){ rows.push([`Empleados adicionales (${extra})`, mxn(extra*eAd)]); subtotal += extra*eAd; }
       }
 
+      // 4) Espacio adicional (si fue elegido)
       if (selEspacio && selEspacio.value){
         const precioEsp = Number((db.espacio_adicional||{})[selEspacio.value]||0);
-        if (precioEsp>0){ rows.push([`Espacio adicional (${selEspacio.value})`, mxn(precioEsp)]); total += precioEsp; }
+        if (precioEsp>0){ rows.push([`Espacio adicional (${selEspacio.value})`, mxn(precioEsp)]); subtotal += precioEsp; }
       }
 
+      // Pintar cuerpo: Concepto (Plan primero), luego extras
       tbody.innerHTML='';
       rows.forEach(([c,v])=>{
         const tr=document.createElement('tr');
@@ -352,14 +361,22 @@ const CalculadoraNube = (function(){
         const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
         tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
       });
-      totalEl.textContent = mxn(total);
 
+      // IVA 16% y Total (en ese orden)
+      const iva = subtotal * 0.16;
+      const total = subtotal + iva;
+      if (ivaEl)   ivaEl.textContent   = mxn(iva);
+      if (totalEl) totalEl.textContent = mxn(total);
+
+      // Combinado (si lo usas)
       if (onCombined && combinedSelector){
         onCombined([ [`${systemName} — ${state.plan}`, mxn(total)] ]);
       }
     }
 
-    selPlan.addEventListener('change', ()=>{ state.plan = selPlan.value; state.usuarios=null; state.empleados=null; syncInputs(); recalc(); });
+    const selPlanChange = ()=>{ state.plan = selPlan.value; state.usuarios=null; state.empleados=null; syncInputs(); recalc(); };
+
+    selPlan.addEventListener('change', selPlanChange);
     $('#nube-usuarios')?.addEventListener('input', e=>{ const v=parseInt(e.target.value||0,10); state.usuarios=Math.max(1,v||1); recalc(); });
     $('#nube-empleados')?.addEventListener('input', e=>{ const v=parseInt(e.target.value||0,10); state.empleados=Math.max(0,v||0); recalc(); });
     selEspacio?.addEventListener('change', ()=>recalc());
@@ -372,32 +389,7 @@ const CalculadoraNube = (function(){
 })();
 
 /* =========================================================
-   Preferencia temprana por NUBE (evita auto-init de v13)
-   ========================================================= */
-(function earlyPreferNube(){
-  function detectSystemNameSync(){
-    const node = document.querySelector('[data-system]');
-    if (node?.dataset?.system) return node.dataset.system.trim();
-    const app = document.getElementById('app');
-    if (app?.dataset?.system) return app.dataset.system.trim();
-    const h1 = document.querySelector('h1');
-    if (h1?.textContent && /CONTPAQi\s+/i.test(h1.textContent)) return h1.textContent.trim();
-    const t = document.title || '';
-    const m = t.match(/CONTPAQi\s+[^\|]+/i);
-    if (m) return m[0].trim();
-    return null;
-  }
-  const sys = detectSystemNameSync();
-  if (!sys) return;
-  const S = (window.preciosContpaqi||{})[sys] || {};
-  if (S.nube){
-    window.__EXPIRITI_FORCE_NUBE__ = true;           // bandera global para que v13 NO auto-inicialice
-    document.body?.setAttribute('data-calc','nube'); // útil si tu CSS lo usa
-  }
-})();
-
-/* =========================================================
-   AutoCalcSwitcher — decide Nube vs (deja) Escritorio (v13)
+   AutoCalcSwitcher — decide Nube vs deja a Escritorio (legacy)
    ========================================================= */
 (function(){
   function detectSystemName(){
@@ -416,7 +408,6 @@ const CalculadoraNube = (function(){
   function mountNube(sys){
     document.body.setAttribute('data-calc','nube');
     const mount = '#calc-primary';
-
     const render = ()=>CalculadoraNube.init({
       systemName: sys,
       mountSelector: mount,
@@ -435,10 +426,10 @@ const CalculadoraNube = (function(){
       }
     });
 
-    // Render inmediato
+    // 1) Render inmediato
     render();
 
-    // Guard contra “inject” del legacy: si aparece una tabla/form de escritorio en #calc-primary, reponemos Nube
+    // 2) Guard contra “auto-init” de escritorio: si apareciera legacy, re-render Nube
     const host = document.querySelector(mount);
     if (!host) return;
     const obs = new MutationObserver(()=>{
@@ -459,30 +450,27 @@ const CalculadoraNube = (function(){
     const hasNube = !!S.nube;
     const hasDesk = !!(S.escritorio || S.anual || S.tradicional);
 
-    // Punto de montaje para ambos caminos
-    const mount = '#calc-primary';
-
     if (hasNube){
       mountNube(sys);
       return;
     }
 
     if (hasDesk){
-      // Delegamos en v13 existente
-      if (window.CalculadoraContpaqi && typeof window.CalculadoraContpaqi.init === 'function'){
-        window.CalculadoraContpaqi.init({
-          systemName: sys,
-          primarySelector: mount,
-          combinedSelector: '#combined-wrap'
-        });
-      } else {
-        console.warn('AutoCalcSwitcher: no encontré CalculadoraContpaqi.init (v13).');
-      }
+      const mount = '#calc-primary'; // asegura que exista en este scope
+      const deskInit = (window.CalculadoraContpaqi && window.CalculadoraContpaqi.init)
+        ? window.CalculadoraContpaqi.init           // v13 existente
+        : (function(){ console.warn('Fallback CalculadoraContpaqi.init no disponible'); return ()=>{}; })();
+
+      document.body.setAttribute('data-calc','escritorio');
+      deskInit({
+        systemName: sys,
+        primarySelector: mount,
+        combinedSelector: '#combined-wrap'
+      });
       return;
     }
 
-    const root = document.querySelector(mount);
+    const root = document.querySelector('#calc-primary');
     if (root) root.innerHTML = `<p class="hint">No hay tabla de Nube ni de Escritorio definida para “${sys}”.</p>`;
   });
 })();
-
