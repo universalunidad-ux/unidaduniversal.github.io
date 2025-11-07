@@ -250,3 +250,292 @@ document.querySelectorAll(".carousel:not(#carouselReels)").forEach(car=>{
     });
   };
 })();
+/* ===== Adaptador de calculadoras (Escritorio vs Nube) ===== */
+
+(function(){
+  if (!window.preciosContpaqi) return;
+
+  // Detecta si un sistema es de NUBE (true) o ESCRITORIO (false)
+  function isNubeSystem(sysName){
+    const db = window.preciosContpaqi[sysName];
+    return !!(db && db.nube);
+  }
+
+  // === Calculadora Nube (ligera y extensible)
+  //   - Lee planes desde preciosContpaqi[sys].nube
+  //   - Maneja extras: usuario_adicional, empleado_adicional (si aplica), espacio_adicional (select si existe)
+  //   - Emite un resumen simple para integrar a tu "combined"
+  const CalculadoraNube = {
+    init({ systemName, mountSelector = '#calc-primary', onCombined = null, combinedSelector = null }){
+      const root = document.querySelector(mountSelector);
+      if(!root) return console.warn('calc-nube: no mount target');
+
+      const db = (window.preciosContpaqi[systemName] || {}).nube || null;
+      if(!db) return console.warn('calc-nube: no price table for', systemName);
+
+      // Armar lista de planes (excluye llaves de add-ons globales)
+      const addOnGlobalKeys = new Set(['usuario_adicional', 'xml_historicos', 'espacio_adicional']);
+      const PLANES = Object.keys(db).filter(k => typeof db[k] === 'object' && !addOnGlobalKeys.has(k));
+
+      // Estado
+      const state = {
+        plan: PLANES[0] || null,
+        usuarios: null,       // si el plan incluye número: default a incluidos; si "multi" => oculto
+        empleados: null,      // si el plan define empleados_incluidos
+        espacioExtra: null    // si existe espacio_adicional (p.ej. Despachos)
+      };
+
+      // Helpers
+      const mxn = new Intl.NumberFormat("es-MX",{ style:"currency", currency:"MXN", maximumFractionDigits:0 });
+      const $ = (sel, ctx=root)=> (ctx||root).querySelector(sel);
+
+      function planInfo(){
+        return db[state.plan] || {};
+      }
+      function includedUsers(){
+        return planInfo().usuarios_incluidos;
+      }
+      function includedEmployees(){
+        return planInfo().empleados_incluidos;
+      }
+      function empleadoAdic(){
+        // puede variar por plan (Evalúa / Personia tienen precio por plan)
+        return Number(planInfo().empleado_adicional || 0);
+      }
+      function usuarioAdic(){
+        // suele venir como root (Despachos/Contabiliza/Vende)
+        return Number(db.usuario_adicional || 0);
+      }
+
+      // UI
+      root.classList.add('calc-container','calc-nube');
+      root.innerHTML = `
+        <h4 style="margin:0 0 8px">Calcula tu plan en la nube</h4>
+
+        <div class="grid-nube">
+          <div>
+            <label class="control-label">Plan</label>
+            <select id="nube-plan"></select>
+          </div>
+
+          <div id="nube-usuarios-wrap" style="display:none">
+            <label class="control-label">Usuarios</label>
+            <input id="nube-usuarios" type="number" min="1" step="1" value="1">
+            <small class="hint" id="nube-usuarios-hint"></small>
+          </div>
+
+          <div id="nube-empleados-wrap" style="display:none">
+            <label class="control-label">Empleados</label>
+            <input id="nube-empleados" type="number" min="0" step="1" value="0">
+            <small class="hint" id="nube-empleados-hint"></small>
+          </div>
+
+          <div id="nube-espacio-wrap" style="display:none">
+            <label class="control-label">Espacio adicional</label>
+            <select id="nube-espacio"></select>
+            <small class="hint">Costo único mensual según tamaño.</small>
+          </div>
+        </div>
+
+        <table class="calc-nube-table">
+          <thead><tr><th>Concepto</th><th style="text-align:right">Importe</th></tr></thead>
+          <tbody id="nube-tbody"></tbody>
+          <tfoot><tr><td style="font-weight:700">Total</td><td id="nube-total" style="text-align:right;font-weight:700"></td></tr></tfoot>
+        </table>
+      `;
+
+      // Poblado de selects
+      const selPlan = $('#nube-plan');
+      PLANES.forEach(p=>{
+        const opt=document.createElement('option');
+        opt.value=p; opt.textContent=p;
+        selPlan.appendChild(opt);
+      });
+      state.plan = selPlan.value;
+
+      // Espacio adicional (si existe)
+      const espacioWrap = $('#nube-espacio-wrap');
+      const selEspacio = $('#nube-espacio');
+      if (db.espacio_adicional && typeof db.espacio_adicional === 'object'){
+        espacioWrap.style.display = '';
+        selEspacio.innerHTML = `<option value="">Sin extra</option>`;
+        Object.keys(db.espacio_adicional).forEach(k=>{
+          const opt=document.createElement('option');
+          opt.value=k; opt.textContent = `${k} (+${mxn.format(db.espacio_adicional[k])})`;
+          selEspacio.appendChild(opt);
+        });
+      }
+
+      // Mostrar/ocultar inputs según plan
+      function syncInputs(){
+        const incU = includedUsers();
+        const incE = includedEmployees();
+
+        // Usuarios
+        const $uwrap = $('#nube-usuarios-wrap'), $u = $('#nube-usuarios'), $uh = $('#nube-usuarios-hint');
+        if (typeof incU === 'number'){
+          $uwrap.style.display = '';
+          if (state.usuarios == null) state.usuarios = incU;
+          $u.value = state.usuarios;
+          $uh.textContent = `Incluye ${incU} usuario(s). Usuario adicional: ${usuarioAdic() ? mxn.format(usuarioAdic()) : '–'}.`;
+        } else {
+          // "multi" u omitido
+          $uwrap.style.display = 'none';
+          state.usuarios = null;
+        }
+
+        // Empleados
+        const $ewrap = $('#nube-empleados-wrap'), $e = $('#nube-empleados'), $eh = $('#nube-empleados-hint');
+        if (typeof incE === 'number'){
+          $ewrap.style.display = '';
+          if (state.empleados == null || state.empleados < incE) state.empleados = incE;
+          $e.value = state.empleados;
+          const ea = empleadoAdic();
+          $eh.textContent = `Incluye ${incE} empleados. Empleado adicional: ${ea? mxn.format(ea): '–'}.`;
+        } else {
+          $ewrap.style.display = 'none';
+          state.empleados = null;
+        }
+      }
+
+      // Cálculo
+      const tbody = $('#nube-tbody');
+      const totalEl = $('#nube-total');
+
+      function recalc(){
+        const p = planInfo();
+        const rows = [];
+        let total = 0;
+
+        // Base del plan
+        const base = Number(p.precio_base || 0);
+        rows.push(['Plan '+state.plan, mxn.format(base)]);
+        total += base;
+
+        // Usuarios adicionales (si aplica)
+        if (typeof includedUsers() === 'number'){
+          const inc = includedUsers();
+          const want = Math.max(inc, Number(state.usuarios || inc));
+          const extra = Math.max(0, want - inc);
+          const uAdic = usuarioAdic();
+          if (extra > 0 && uAdic > 0){
+            rows.push([`Usuarios adicionales (${extra})`, mxn.format(extra * uAdic)]);
+            total += extra * uAdic;
+          }
+        }
+
+        // Empleados adicionales (si aplica)
+        if (typeof includedEmployees() === 'number'){
+          const inc = includedEmployees();
+          const want = Math.max(inc, Number(state.empleados || inc));
+          const extra = Math.max(0, want - inc);
+          const eAdic = empleadoAdic();
+          if (extra > 0 && eAdic > 0){
+            rows.push([`Empleados adicionales (${extra})`, mxn.format(extra * eAdic)]);
+            total += extra * eAdic;
+          }
+        }
+
+        // Espacio adicional (si aplica)
+        if (selEspacio && selEspacio.value){
+          const precioEsp = Number((db.espacio_adicional||{})[selEspacio.value] || 0);
+          if (precioEsp > 0){
+            rows.push([`Espacio adicional (${selEspacio.value})`, mxn.format(precioEsp)]);
+            total += precioEsp;
+          }
+        }
+
+        // Pintar tabla
+        tbody.innerHTML = '';
+        rows.forEach(([c, v])=>{
+          const tr=document.createElement('tr');
+          const td1=document.createElement('td'); td1.textContent=c;
+          const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
+          tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
+        });
+        totalEl.textContent = mxn.format(total);
+
+        // Hook al combinado (si lo usas)
+        if (onCombined && combinedSelector){
+          onCombined([
+            [`${systemName} — ${state.plan}`, mxn.format(total)]
+          ]);
+        }
+      }
+
+      // Eventos
+      selPlan.addEventListener('change', ()=>{
+        state.plan = selPlan.value;
+        // reset inputs para nuevo plan
+        state.usuarios = null;
+        state.empleados = null;
+        syncInputs(); recalc();
+      });
+
+      $('#nube-usuarios')?.addEventListener('input', e=>{
+        const v = parseInt(e.target.value||0,10);
+        state.usuarios = Math.max(1, v||1);
+        recalc();
+      });
+      $('#nube-empleados')?.addEventListener('input', e=>{
+        const v = parseInt(e.target.value||0,10);
+        state.empleados = Math.max(0, v||0);
+        recalc();
+      });
+      selEspacio?.addEventListener('change', ()=>{ recalc(); });
+
+      // boot
+      syncInputs(); recalc();
+
+      // Exponer por si quieres usarla fuera
+      return { recalc };
+    }
+  };
+
+  // === Inicializador automático (en tu HTML ya usas #app + data-system)
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const app = document.getElementById('app');
+    if(!app) return;
+    const sys = app.dataset.system;
+    if(!sys) return;
+    const isNube = isNubeSystem(sys);
+
+    // Nota: en Personia tienes ocultos los contenedores de la calc de escritorio.
+    // Para nube, montamos en #calc-primary igualmente (no está oculto por las reglas nube que agregaremos).
+    if (isNube){
+      CalculadoraNube.init({
+        systemName: sys,
+        mountSelector: '#calc-primary',
+        combinedSelector: '#combined-wrap',
+        onCombined: (rows)=>{ // opcional: render en tu resumen
+          const tbody=document.getElementById('combined-table-body');
+          const wrap=document.getElementById('combined-wrap');
+          if(!tbody||!wrap) return;
+          tbody.innerHTML='';
+          rows.forEach(([c, v])=>{
+            const tr=document.createElement('tr');
+            const td1=document.createElement('td'); td1.textContent=c;
+            const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
+            tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
+          });
+          wrap.hidden=false;
+        }
+      });
+    } else {
+      // Escritorio: usa tu motor existente
+      if(!window.CalculadoraContpaqi){
+        console.error('❌ calculadora.js (escritorio) no cargó.');
+        return;
+      }
+      window.CalculadoraContpaqi.init({
+        systemName: sys,
+        primarySelector:'#calc-primary',
+        combinedSelector:'#combined-wrap'
+      });
+    }
+  });
+
+  // Exponer por si lo requieres manualmente
+  window.CalculadoraNube = CalculadoraNube;
+})();
+
