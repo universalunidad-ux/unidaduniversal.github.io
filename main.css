@@ -468,3 +468,50 @@ es
   .inst-wrap{ grid-column:1; }
 }
 
+/* === Unificar "Instalación" + "Servicios" como una sola píldora === */
+.inst-wrap{
+  grid-column:2;
+  display:grid;
+  gap:6px;
+  padding:0;
+  background:transparent;
+  margin-top:2px;
+}
+.calc-container .instalacion-box{
+  display:flex; align-items:center; gap:0;
+  border:1px dashed #2a3b55; border-radius:12px;
+  background:rgba(14,23,36,.35);
+  padding:8px; overflow:hidden;
+}
+.calc-container .instalacion-box label{
+  display:none; /* ocultamos etiquetas para que parezca 1 solo control */
+}
+
+/* Selects pegados como una sola píldora */
+.calc-container .instalacion-box select{
+  appearance:none;
+  background:#0e1724; color:#e8eef6; border:1px solid #243248;
+  padding:10px 12px; height:40px; line-height:40px;
+  outline:none; margin:0; flex:1 1 50%;
+}
+.calc-container .instalacion-box select:first-child{
+  border-right-color:transparent; border-top-left-radius:10px; border-bottom-left-radius:10px;
+}
+.calc-container .instalacion-box select:last-child{
+  border-left-color:transparent; border-top-right-radius:10px; border-bottom-right-radius:10px;
+}
+
+/* Hint debajo */
+.calc-container .inst-hint{
+  color:#aebbd0; margin-top:6px; font-size:12px;
+}
+
+/* Responsive */
+@media (max-width:560px){
+  .calc-container .instalacion-box{flex-direction:column; gap:8px; padding:10px}
+  .calc-container .instalacion-box select{
+    width:100%; border-radius:10px !important; border-color:#243248 !important;
+  }
+}
+
+
