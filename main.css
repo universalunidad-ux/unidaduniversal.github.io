@@ -4,26 +4,10 @@
 
 /* ---------- Tema / Variables ---------- */
 :root{
-  --bg:#0b0f14;
-  --bg-2:#0d1219;
-  --card:#111723;
-  --muted:#95a2b3;
-  --text:#e8eef6;
-  --brand:#2dd4bf;
-  --brand-2:#60a5fa;
-  --ok:#22c55e;
-  --warn:#f59e0b;
-  --err:#ef4444;
-
-  --maxw:1200px;
-  --radius:14px;
-  --shadow:0 10px 30px rgba(0,0,0,.25);
-
-  --gap:14px;
-  --bp-lg:1200px;
-  --bp-md:980px;
-  --bp-sm:768px;
-  --bp-xs:520px;
+  --bg:#0b0f14; --bg-2:#0d1219; --card:#111723; --muted:#95a2b3; --text:#e8eef6;
+  --brand:#2dd4bf; --brand-2:#60a5fa; --ok:#22c55e; --warn:#f59e0b; --err:#ef4444;
+  --maxw:1200px; --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.25);
+  --gap:14px; --bp-lg:1200px; --bp-md:980px; --bp-sm:768px; --bp-xs:520px;
 }
 
 /* ---------- Base ---------- */
@@ -33,8 +17,7 @@ html{scroll-behavior:smooth}
 body{
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   background:linear-gradient(180deg,var(--bg) 0%, var(--bg-2) 100%);
-  color:var(--text);
-  scroll-padding-top:84px;
+  color:var(--text); scroll-padding-top:84px;
 }
 img,video,iframe{max-width:100%;display:block;height:auto}
 a{color:inherit;text-decoration:none}
@@ -140,9 +123,19 @@ nav a:hover{opacity:1}
 .arrowCircle .chev{font-size:24px;line-height:1}
 
 /* ---------- Carrusel de sistemas ---------- */
-.carouselX{position:relative;border-radius:16px;background:var(--card,#0e1826);border:1px solid #1c2533;padding:10px}
-.carouselX .track{display:flex;gap:14px;overflow:hidden;padding:6px;min-height:240px;scroll-behavior:smooth}
-.carouselX .sys{flex:0 0 calc((100% - 28px)/3);background:#0f1622;border:1px solid #1c2533;border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;cursor:pointer;transition:background .18s ease,transform .18s ease,border-color .18s ease}
+.carouselX{
+  position:relative;border-radius:16px;background:var(--card,#0e1826);
+  border:1px solid #1c2533;padding:10px
+}
+.carouselX .track{
+  display:flex;gap:14px;overflow-x:auto; /* ← scroll visible desde el inicio */
+  padding:6px;min-height:240px;scroll-behavior:smooth
+}
+.carouselX .sys{
+  flex:0 0 calc((100% - 28px)/3);background:#0f1622;border:1px solid #1c2533;
+  border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;
+  text-align:center;position:relative;cursor:pointer;transition:background .18s ease,transform .18s ease,border-color .18s ease
+}
 .carouselX .sys:hover{background:#0f1c2c;border-color:#274061;transform:translateY(-2px)}
 .carouselX .sys img{width:72px;height:72px;border-radius:14px;margin:8px auto 12px;background:#101826;object-fit:cover}
 .carouselX .sys h4{margin:8px 0 6px;font-size:17px}
@@ -268,8 +261,6 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 #calc-primary{display:block!important}
 .nube-only{display:none}
 .desk-only{display:none}
-
-/* Página NUBE */
 body[data-calc="nube"] .nube-only{display:initial}
 body[data-calc="nube"] .desk-only{display:none!important}
 body[data-calc="nube"] .pricing-table-nube{display:table}
@@ -279,8 +270,6 @@ body[data-calc="nube"] #calc-tertiary,
 body[data-calc="nube"] #add-more-panel,
 body[data-calc="nube"] #combined-wrap,
 body[data-calc="nube"] .icons-wrap{display:none!important}
-
-/* Página ESCRITORIO */
 body[data-calc="escritorio"] .nube-only{display:none!important}
 body[data-calc="escritorio"] .desk-only{display:initial}
 body[data-calc="escritorio"] .pricing-table-nube{display:none!important}
@@ -298,12 +287,10 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
 /* Cinta general */
 .calc-strip{display:grid;gap:14px}
 
-/* Fila de calculadoras (2 por defecto; 3 cuando .has-three) */
+/* Fila calculadoras (2 por defecto; 3 con .has-three) */
 .calc-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  align-items:stretch; /* MISMA ALTURA entre calculadora y placeholder */
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+  align-items:stretch;
 }
 .calc-row.has-three{grid-template-columns:1fr 1fr 1fr}
 @media (max-width:1200px){ .calc-row{grid-template-columns:1fr 1fr} }
@@ -311,90 +298,45 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
 
 /* Contenedor de cada calculadora */
 .calc-container{
-  background:var(--card);
-  border:1px solid #1c2533;
-  border-radius:16px;
-  padding:14px;
-  min-height:220px;
-  box-shadow:var(--shadow);
-  position:relative;
+  background:var(--card); border:1px solid #1c2533; border-radius:16px;
+  padding:14px; min-height:220px; box-shadow:var(--shadow); position:relative;
 }
 
-/* Placeholder / panel informativo */
+/* Placeholder informativo */
 .placeholder{
-  background:linear-gradient(180deg,#0e1826,#0f1622);
-  border:1px solid #1c2533;
-  border-radius:16px;
-  padding:14px;
-  display:flex;
-  align-items:center;          /* centra vertical */
-  justify-content:center;      /* centra horizontal */
-  color:#cfe3ff;
-  text-align:center;
-  min-height:180px;
-  height:100%;                 /* iguala altura a la calculadora */
+  background:linear-gradient(180deg,#0e1826,#0f1622); border:1px solid #1c2533;
+  border-radius:16px; padding:14px; display:flex; align-items:center; justify-content:center;
+  color:#cfe3ff; text-align:center; min-height:180px; height:100%;
 }
 .placeholder .note{max-width:50ch}
 
-/* ========= Íconos de sistemas: horizontales + grandes (1 fila con scroll) ========= */
+/* Íconos de sistemas (una fila con scroll) */
 .icons-wrap,
 .calc-container .icons-wrap{
-  display:flex !important;
-  flex-direction:row !important;
-  flex-wrap:nowrap !important;   /* una sola fila */
-  align-items:center;
-  justify-content:center;
-  gap:18px;
-  overflow-x:auto;
-  padding:10px 0;
-  scroll-behavior:smooth;
-  grid-template-columns:unset !important;
+  display:flex !important; flex-direction:row !important; flex-wrap:nowrap !important;
+  align-items:center; justify-content:center; gap:18px; overflow-x:auto; padding:10px 0;
+  scroll-behavior:smooth; grid-template-columns:unset !important;
 }
 .icons-wrap::-webkit-scrollbar{height:8px}
 .icons-wrap::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
 
 /* Tarjetas de icono */
 .sys-icon{
-  position:relative;
-  flex:0 0 200px;               /* ancho fijo por ítem */
-  max-width:200px;
-  min-height:200px;
-  display:grid;
-  grid-template-rows:auto auto auto;
-  gap:8px;
-  align-items:center;
-  justify-items:center;
-  padding:14px;
-  border-radius:16px;
-  border:1px solid #1e2b3c;
-  background:#0f1622;
-  cursor:pointer;
+  position:relative; flex:0 0 200px; max-width:200px; min-height:200px;
+  display:grid; grid-template-rows:auto auto auto; gap:8px; align-items:center; justify-items:center;
+  padding:14px; border-radius:16px; border:1px solid #1e2b3c; background:#0f1622; cursor:pointer;
   transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;
 }
 .sys-icon:hover{border-color:#284061;transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.22)}
 .sys-icon.active{outline:2px solid rgba(96,165,250,.4);border-color:#38649a}
-.sys-icon img{
-  width:90px;height:90px;
-  border-radius:12px;
-  object-fit:cover;
-  background:#0e1724;
-  border:1px solid #1e2b3c;
-}
+.sys-icon img{width:90px;height:90px;border-radius:12px;object-fit:cover;background:#0e1724;border:1px solid #1e2b3c}
 .sys-icon strong{font-size:13px;color:#e3ecf9;text-align:center}
 .sys-icon .sys-price{font-size:12px;color:#aebbd0}
-.sys-icon .sin15{
-  position:absolute;top:6px;right:6px;
-  background:#301a1a;border:1px solid #5c2a2a;color:#ffb4b4;
-  border-radius:999px;padding:3px 8px;font-size:10px
-}
+.sys-icon .sin15{position:absolute;top:6px;right:6px;background:#301a1a;border:1px solid #5c2a2a;color:#ffb4b4;border-radius:999px;padding:3px 8px;font-size:10px}
 
 /* Resumen combinado */
 .combined-card{background:#0f1622;border:1px solid #1c2533;border-radius:16px;padding:14px;margin-top:12px}
-.combined-table{
-  width:100%;
-  border-collapse:separate;border-spacing:0;
-  border:1px solid #1e2b3c;border-radius:10px;overflow:hidden;background:#0e1724
-}
+.combined-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:10px;overflow:hidden;background:#0e1724}
 .combined-table td,.combined-table th{padding:10px 12px;border-bottom:1px solid #1e2b3c}
 .combined-table tr:last-child td{border-bottom:none}
 
@@ -402,114 +344,54 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
 .calc-container select,
 .calc-container input[type="number"],
 .calc-container input[type="text"]{
-  width:100%;
-  padding:8px 10px;
-  border-radius:10px;
-  border:1px solid #243248;
-  background:#0e1724;
-  color:#e8eef6;
-  margin:6px 0;
+  width:100%; padding:8px 10px; border-radius:10px; border:1px solid #243248;
+  background:#0e1724; color:#e8eef6; margin:6px 0;
 }
 .calc-container label{display:block;margin-top:6px;color:#cfe3ff;font-weight:600;font-size:13px}
 
-/* ===== Grid compacto de controles (pares por fila) ===== */
-/* Estructura: dentro de cada calc, crea un div.controls-grid y mete:
-   - Licencia
-   - Tipo (RFC)
-   - Usuarios
-   - Instalación (opcional) */
+/* ===== Grid compacto de controles ===== */
 .calc-container .controls-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr; /* Licencia|Tipo  /  Usuarios|Instalación */
-  gap:12px;
-  margin-bottom:8px;
+  display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:8px;
 }
-@media (max-width:768px){
-  .calc-container .controls-grid{ grid-template-columns:1fr; } /* apila en móvil */
-}
+@media (max-width:768px){ .calc-container .controls-grid{ grid-template-columns:1fr; } }
 
-/* Caja del check de instalación en formato “chip” */
+/* Bloque de instalación como “chip” */
+.inst-wrap{
+  display:grid; gap:6px; grid-column:2;
+  padding:0; margin:0; border:0; background:transparent;
+}
 .calc-container .instalacion-box{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 12px;
-  border-radius:10px;
-  border:1px dashed #2a3b55;
-  background:rgba(14,23,36,.35);
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; border-radius:10px;
+  border:1px dashed #2a3b55; background:rgba(14,23,36,.35);
 }
+.calc-container .inst-hint{display:block;margin-top:-6px;color:#aebbd0}
 
-/* Tablas/subtotales dentro de la calc: ancho completo bajo el grid */
+/* Tablas/subtotales bajo el grid */
 .calc-container table{width:100%;max-width:640px;margin:10px auto 0;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden;background:#0e1724}
 .calc-container thead th{background:#0e1724;color:#dce8ff;text-align:left;border-bottom:1px solid #1e2b3c;padding:12px 14px;font-weight:700}
 .calc-container td,.calc-container th{padding:10px 12px;border-bottom:1px solid #1e2b3c}
 .calc-container tr:last-child td{border-bottom:none}
 .calc-container .price,.calc-container .total,.calc-container .monto{font-weight:800;color:var(--brand);text-align:right}
 
-/* ---------- Ajustes responsive específicos ---------- */
-@media (max-width:980px){
-  .calc-container,
-  .placeholder{height:auto}
-}
-/* ====== Compactar formulario de la calculadora en 2 columnas ====== */
-.calc-container form{
-  display:grid !important;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
+/* Responsive específicos */
+@media (max-width:980px){ .calc-container,.placeholder{height:auto} }
 
-/* Orden típico que pinta calculadora.js:
-   1) Licencia  2) Tipo (RFC)  3) Usuarios  4) Instalación (check)
-   5) (a veces) texto de ayuda de instalación  6+) tablas/totales       */
+/* Compactar el <form> original cuando exista */
+.calc-container form{display:grid !important;grid-template-columns:1fr 1fr;gap:12px}
 .calc-container form > *:nth-child(1){grid-column:1} /* Licencia   */
 .calc-container form > *:nth-child(2){grid-column:2} /* Tipo (RFC) */
 .calc-container form > *:nth-child(3){grid-column:1} /* Usuarios   */
 .calc-container form > *:nth-child(4){grid-column:2} /* Instalación */
-
-/* Si el texto de ayuda viene como un bloque extra, colócalo bajo el check */
-.calc-container form > *:nth-child(5){
-  grid-column:2;
-  margin-top:-6px;
-}
-
-/* Estética del bloque de instalación (check + ayuda) */
-.calc-container .instalacion-box{
-  display:flex; align-items:center; gap:10px;
-  padding:10px 12px; border-radius:10px;
-  border:1px dashed #2a3b55; background:rgba(14,23,36,.35);
-}
-/* Si el texto de ayuda se imprime como otro .instalacion-box consecutivo,
-   conviértelo en texto plano (sin tarjeta) pegado al check */
-.calc-container .instalacion-box + .instalacion-box{
-  border:none; background:transparent; padding:0; margin-top:-6px;
-  color:#aebbd0;
-}
-
-/* Las tablas/resúmenes deben ocupar el ancho completo bajo el grid de controles */
-.calc-container table,
-.calc-container .totales,
-.calc-container .resumen,
-.calc-container h3,
-.calc-container h4{ grid-column:1 / -1; }
-
 @media (max-width:768px){
   .calc-container form{ grid-template-columns:1fr; }
   .calc-container form > *{ grid-column:1 !important; }
 }
 
-/* ====== Placeholder “Integra un sistema adicional”: centrado sin llenar toda la altura ====== */
-.calc-row{ align-items:center; }          /* alinea verticalmente la fila */
+/* ===== Placeholder “Integra un sistema adicional”: a media altura ===== */
+.calc-row{ align-items:center; }
 #calc-slot-2.placeholder{
-  height:auto !important;                 /* que NO se estire */
-  min-height:200px;                       /* altura cómoda */
-  align-self:center;                      /* queda centrado respecto a la calc */
+  height:auto !important; min-height:200px; align-self:center;
 }
-#calc-slot-2 .note{
-  margin:0; display:flex; flex-direction:column; gap:10px; text-align:center;
-}
-
-/* ====== Íconos: ya horizontales; limita su alto visual sin forzar tarjeta ====== */
-.icons-wrap{ align-items:center; }
-/* No estirar el placeholder del slot secundario */
-#calc-slot-2.placeholder{height:auto !important; align-self:center}
-.calc-row{align-items:center} /* centra verticalmente las columnas */
+#calc-slot-2 .note{margin:0; display:flex; flex-direction:column; gap:10px; text-align:center}
+es
