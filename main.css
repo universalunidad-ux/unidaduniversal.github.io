@@ -179,25 +179,24 @@ nav a:hover{opacity:1}
 }
 .embed-16x9 iframe{position:absolute;inset:0;width:100%;height:100%;border:0;aspect-ratio:16/9}
 
-/* ---------- REELS VERTICALES (9:16) GRANDES ---------- */
+/* ---------- REELS VERTICALES (9:16) ---------- */
 .reel-embed{
-  position: relative;
-  width: clamp(240px, 36vw, 380px); /* tamaño equilibrado */
-  aspect-ratio: 9 / 16;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #1c2533;
-  background: #0e1724;
-  margin: 0 auto;
+  position:relative;
+  width:min(380px,100%) !important;   /* límite de tamaño en desktop */
+  max-width:380px !important;
+  aspect-ratio:9/16;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid #1c2533;
+  background:#0e1724;
+  margin:0 auto;
+  flex:0 0 auto;           /* evita que flex lo estire */
+  justify-self:center;     /* evita que grid lo estire */
 }
 .reel-embed iframe{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
+  position:absolute; inset:0;
+  width:100%; height:100%; border:0;
 }
-
 
 /* ---------- VIDEOS 16:9 GRANDES (YouTube) ---------- */
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;justify-items:center}
