@@ -328,7 +328,56 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   color:#cfe3ff;text-align:center;min-height:180px
 }
 .placeholder .note{max-width:50ch}
-.icons-wrap{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px}
+
+/* ======= Iconos de sistemas (horizontal + grandes + scroll) ======= */
+.icons-wrap{
+  display:flex;
+  flex-wrap:nowrap;          /* una sola fila */
+  gap:18px;
+  justify-content:center;
+  align-items:flex-start;
+  overflow-x:auto;           /* scroll lateral si son muchos */
+  padding:10px 0;
+  scroll-behavior:smooth;
+}
+.icons-wrap::-webkit-scrollbar{ height:8px; }
+.icons-wrap::-webkit-scrollbar-thumb{
+  background:#1e2b3c;
+  border-radius:999px;
+}
+
+/* Tarjeta del icono */
+.sys-icon{
+  position:relative;
+  flex:0 0 180px;            /* ancho mayor */
+  display:grid;
+  grid-template-rows:auto auto auto;
+  gap:8px;
+  align-items:center;
+  justify-items:center;
+  padding:14px;
+  border-radius:16px;
+  border:1px solid #1e2b3c;
+  background:#0f1622;
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.sys-icon:hover{ border-color:#284061; transform:translateY(-2px); }
+.sys-icon.active{ outline:2px solid rgba(96,165,250,.4); border-color:#38649a; }
+.sys-icon img{
+  width:82px; height:82px;   /* más grande */
+  border-radius:12px;
+  object-fit:cover;
+  background:#0e1724;
+  border:1px solid #1e2b3c;
+}
+.sys-icon strong{ font-size:13px; color:#e3ecf9; text-align:center }
+.sys-icon .sys-price{ font-size:12px; color:#aebbd0 }
+.sys-icon .sin15{
+  position:absolute; top:6px; right:6px;
+  background:#301a1a; border:1px solid #5c2a2a; color:#ffb4b4;
+  border-radius:999px; padding:3px 8px; font-size:10px;
+}
 
 /* Resumen combinado */
 .combined-card{background:#0f1622;border:1px solid #1c2533;border-radius:16px;padding:14px;margin-top:12px}
@@ -376,17 +425,8 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   font-weight:800;color:var(--brand);text-align:right
 }
 
-/* Iconos de selección de segundo/tercer sistema (si aplica) */
-.sys-icon{
-  display:grid;grid-template-rows:auto auto auto;gap:6px;align-items:center;justify-items:center;
-  min-width:140px;padding:10px;border-radius:12px;border:1px solid #1e2b3c;background:#0f1622;cursor:pointer
-}
-.sys-icon:hover{border-color:#284061;transform:translateY(-1px);transition:.12s}
-.sys-icon.active{outline:2px solid rgba(96,165,250,.35);border-color:#38649a}
-.sys-icon img{width:64px;height:64px;border-radius:10px;object-fit:cover;background:#0e1724;border:1px solid #1e2b3c}
-.sys-icon strong{font-size:12px;color:#e3ecf9;text-align:center}
-.sys-icon .sys-price{font-size:11px;color:#aebbd0}
-.sys-icon .sin15{
-  position:absolute;transform:translateY(-6px);background:#301a1a;border:1px solid #5c2a2a;
-  color:#ffb4b4;border-radius:999px;padding:2px 6px;font-size:10px
-}
+/* =========================================================
+   Ajustes menores
+   ========================================================= */
+.reel-title{margin-bottom:8px;text-align:center;color:#fff;font-weight:700;display:none}
+.reel-title.active{display:block}
