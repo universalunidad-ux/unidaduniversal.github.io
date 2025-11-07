@@ -451,3 +451,62 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   .calc-container,
   .placeholder{height:auto}
 }
+/* ====== Compactar formulario de la calculadora en 2 columnas ====== */
+.calc-container form{
+  display:grid !important;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+/* Orden típico que pinta calculadora.js:
+   1) Licencia  2) Tipo (RFC)  3) Usuarios  4) Instalación (check)
+   5) (a veces) texto de ayuda de instalación  6+) tablas/totales       */
+.calc-container form > *:nth-child(1){grid-column:1} /* Licencia   */
+.calc-container form > *:nth-child(2){grid-column:2} /* Tipo (RFC) */
+.calc-container form > *:nth-child(3){grid-column:1} /* Usuarios   */
+.calc-container form > *:nth-child(4){grid-column:2} /* Instalación */
+
+/* Si el texto de ayuda viene como un bloque extra, colócalo bajo el check */
+.calc-container form > *:nth-child(5){
+  grid-column:2;
+  margin-top:-6px;
+}
+
+/* Estética del bloque de instalación (check + ayuda) */
+.calc-container .instalacion-box{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; border-radius:10px;
+  border:1px dashed #2a3b55; background:rgba(14,23,36,.35);
+}
+/* Si el texto de ayuda se imprime como otro .instalacion-box consecutivo,
+   conviértelo en texto plano (sin tarjeta) pegado al check */
+.calc-container .instalacion-box + .instalacion-box{
+  border:none; background:transparent; padding:0; margin-top:-6px;
+  color:#aebbd0;
+}
+
+/* Las tablas/resúmenes deben ocupar el ancho completo bajo el grid de controles */
+.calc-container table,
+.calc-container .totales,
+.calc-container .resumen,
+.calc-container h3,
+.calc-container h4{ grid-column:1 / -1; }
+
+@media (max-width:768px){
+  .calc-container form{ grid-template-columns:1fr; }
+  .calc-container form > *{ grid-column:1 !important; }
+}
+
+/* ====== Placeholder “Integra un sistema adicional”: centrado sin llenar toda la altura ====== */
+.calc-row{ align-items:center; }          /* alinea verticalmente la fila */
+#calc-slot-2.placeholder{
+  height:auto !important;                 /* que NO se estire */
+  min-height:200px;                       /* altura cómoda */
+  align-self:center;                      /* queda centrado respecto a la calc */
+}
+#calc-slot-2 .note{
+  margin:0; display:flex; flex-direction:column; gap:10px; text-align:center;
+}
+
+/* ====== Íconos: ya horizontales; limita su alto visual sin forzar tarjeta ====== */
+.icons-wrap{ align-items:center; }
