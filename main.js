@@ -372,7 +372,32 @@ const CalculadoraNube = (function(){
 })();
 
 /* =========================================================
-   AutoCalcSwitcher — decide Nube vs deja a Escritorio (legacy)
+   Preferencia temprana por NUBE (evita auto-init de v13)
+   ========================================================= */
+(function earlyPreferNube(){
+  function detectSystemNameSync(){
+    const node = document.querySelector('[data-system]');
+    if (node?.dataset?.system) return node.dataset.system.trim();
+    const app = document.getElementById('app');
+    if (app?.dataset?.system) return app.dataset.system.trim();
+    const h1 = document.querySelector('h1');
+    if (h1?.textContent && /CONTPAQi\s+/i.test(h1.textContent)) return h1.textContent.trim();
+    const t = document.title || '';
+    const m = t.match(/CONTPAQi\s+[^\|]+/i);
+    if (m) return m[0].trim();
+    return null;
+  }
+  const sys = detectSystemNameSync();
+  if (!sys) return;
+  const S = (window.preciosContpaqi||{})[sys] || {};
+  if (S.nube){
+    window.__EXPIRITI_FORCE_NUBE__ = true;           // bandera global para que v13 NO auto-inicialice
+    document.body?.setAttribute('data-calc','nube'); // útil si tu CSS lo usa
+  }
+})();
+
+/* =========================================================
+   AutoCalcSwitcher — decide Nube vs (deja) Escritorio (v13)
    ========================================================= */
 (function(){
   function detectSystemName(){
@@ -391,6 +416,7 @@ const CalculadoraNube = (function(){
   function mountNube(sys){
     document.body.setAttribute('data-calc','nube');
     const mount = '#calc-primary';
+
     const render = ()=>CalculadoraNube.init({
       systemName: sys,
       mountSelector: mount,
@@ -409,12 +435,10 @@ const CalculadoraNube = (function(){
       }
     });
 
-    // 1) Render inmediato
+    // Render inmediato
     render();
 
-    // 2) Guard contra “auto-init” del legacy: si detectamos que alguien
-    //    inyecta una tabla/form de escritorio en #calc-primary en páginas Nube,
-    //    volvemos a renderizar Nube.
+    // Guard contra “inject” del legacy: si aparece una tabla/form de escritorio en #calc-primary, reponemos Nube
     const host = document.querySelector(mount);
     if (!host) return;
     const obs = new MutationObserver(()=>{
@@ -430,26 +454,34 @@ const CalculadoraNube = (function(){
   document.addEventListener('DOMContentLoaded', ()=>{
     const sys = detectSystemName();
     if(!sys){ console.warn('AutoCalcSwitcher: no pude detectar el sistema.'); return; }
+
     const S = window.preciosContpaqi?.[sys] || {};
     const hasNube = !!S.nube;
     const hasDesk = !!(S.escritorio || S.anual || S.tradicional);
 
+    // Punto de montaje para ambos caminos
+    const mount = '#calc-primary';
+
     if (hasNube){
-      mountNube(sys);              // Nube la manejamos aquí
+      mountNube(sys);
       return;
     }
-if (hasDesk){
-  const deskInit = (window.CalculadoraContpaqi && window.CalculadoraContpaqi.init)
-    ? window.CalculadoraContpaqi.init           // v13 existente
-    : CalculadoraContpaqi.init;                  // fallback local
-  deskInit({
-    systemName: sys,
-    primarySelector: mount,
-    combinedSelector: '#combined-wrap'
-  });
-  return;
-}
-    const root = document.querySelector('#calc-primary');
+
+    if (hasDesk){
+      // Delegamos en v13 existente
+      if (window.CalculadoraContpaqi && typeof window.CalculadoraContpaqi.init === 'function'){
+        window.CalculadoraContpaqi.init({
+          systemName: sys,
+          primarySelector: mount,
+          combinedSelector: '#combined-wrap'
+        });
+      } else {
+        console.warn('AutoCalcSwitcher: no encontré CalculadoraContpaqi.init (v13).');
+      }
+      return;
+    }
+
+    const root = document.querySelector(mount);
     if (root) root.innerHTML = `<p class="hint">No hay tabla de Nube ni de Escritorio definida para “${sys}”.</p>`;
   });
 })();
