@@ -1,4 +1,3 @@
-
 /* =========================================================
    Expiriti - main.js (Personia) — Complemento a calculadora.js v13
    ========================================================= */
@@ -7,7 +6,7 @@
 (function(){
   const money = new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
   window.$$fmt = v => money.format(Math.round(Number(v||0)));
-  window.$$ = (sel, ctx=document) => ctx.querySelector(sel);
+  window.$$  = (sel, ctx=document) => ctx.querySelector(sel);
   window.$all = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
 })();
 
@@ -220,14 +219,15 @@
 })();
 
 /* =========================================================
-   Calculadora NUBE (independiente del legacy de escritorio)
+   Calculadora NUBE (refinada: usuarios/empleados extra, IVA y orden)
    ========================================================= */
 const CalculadoraNube = (function(){
   function init({ systemName, mountSelector = '#calc-primary', onCombined = null, combinedSelector = null }){
     const root = document.querySelector(mountSelector);
     if(!root) return console.warn('calc-nube: no mount target');
 
-    const db = (window.preciosContpaqi?.[systemName] || {}).nube || null;
+    const PROD = (window.preciosContpaqi?.[systemName] || {});
+    const db = PROD.nube || null;
     if(!db) return console.warn('calc-nube: no price table for', systemName);
 
     const addOnGlobalKeys = new Set(['usuario_adicional','xml_historicos','espacio_adicional']);
@@ -236,14 +236,23 @@ const CalculadoraNube = (function(){
     const state = { plan: PLANES[0]||null, usuarios:null, empleados:null };
 
     const $ = (sel, ctx=root)=> (ctx||root).querySelector(sel);
-    const mxn = window.$$fmt;
+    const mxn = window.$$fmt || (v=>v);
+    const getPlan = ()=> db[state.plan] || {};
 
-    function planInfo(){ return db[state.plan] || {}; }
-    function incUsers(){ return planInfo().usuarios_incluidos; }
-    function incEmpl(){ return planInfo().empleados_incluidos; }
-    const usuarioAdic = ()=> Number(db.usuario_adicional || 0);
-    const empleadoAdic = ()=> Number(planInfo().empleado_adicional || 0);
+    const precioUsuarioAdic = ()=>{
+      const p = getPlan();
+      const planUA = Number(p.usuario_adicional ?? NaN);
+      if (!Number.isNaN(planUA) && planUA>0) return planUA;
+      const prodUA = Number(db.usuario_adicional ?? NaN);
+      return (!Number.isNaN(prodUA) && prodUA>0) ? prodUA : 0;
+    };
+    const precioEmpleadoAdic = ()=>{
+      const p = getPlan();
+      const planEA = Number(p.empleado_adicional ?? NaN);
+      return (!Number.isNaN(planEA) && planEA>0) ? planEA : 0;
+    };
 
+    // UI
     root.classList.add('calc-container','calc-nube');
     root.innerHTML = `
       <h4 style="margin:0 0 8px">Calcula tu plan en la nube</h4>
@@ -272,16 +281,18 @@ const CalculadoraNube = (function(){
         <thead><tr><th>Concepto</th><th style="text-align:right">Importe</th></tr></thead>
         <tbody id="nube-tbody"></tbody>
         <tfoot>
-          <tr><td>IVA 16%</td><td id="nube-iva16" style="text-align:right"></td></tr>
+          <tr><td>IVA (16%)</td><td id="nube-iva" style="text-align:right"></td></tr>
           <tr><td style="font-weight:700">Total</td><td id="nube-total" style="text-align:right;font-weight:700"></td></tr>
         </tfoot>
       </table>
     `;
 
+    // plan selector
     const selPlan = $('#nube-plan');
     PLANES.forEach(p=>{ const opt=document.createElement('option'); opt.value=p; opt.textContent=p; selPlan.appendChild(opt); });
     state.plan = selPlan.value;
 
+    // espacio adicional (opcional)
     const espacioWrap = $('#nube-espacio-wrap');
     const selEspacio  = $('#nube-espacio');
     if (db.espacio_adicional && typeof db.espacio_adicional === 'object'){
@@ -294,66 +305,94 @@ const CalculadoraNube = (function(){
       });
     }
 
+    // inputs dinámicos
     function syncInputs(){
-      const incU = incUsers();
-      const incE = incEmpl();
+      const p = getPlan();
 
+      // Usuarios
       const $uwrap = $('#nube-usuarios-wrap'), $u = $('#nube-usuarios'), $uh = $('#nube-usuarios-hint');
-      if (typeof incU === 'number'){
+      const incU = p.usuarios_incluidos;
+      if (incU === 'multi' || incU === 'Multi' || incU === 'MULTI'){
+        $uwrap.style.display='none';
+        state.usuarios = null;
+      } else if (Number.isFinite(Number(incU))){
+        const inc = Number(incU)||0;
         $uwrap.style.display='';
-        if (state.usuarios == null) state.usuarios = incU;
+        if (state.usuarios==null || state.usuarios < inc) state.usuarios = inc;
         $u.value = state.usuarios;
-        $uh.textContent = `Incluye ${incU}. Usuario adicional: ${usuarioAdic()? mxn(usuarioAdic()): '–'}.`;
-      } else { $uwrap.style.display='none'; state.usuarios=null; }
+        const uAd = precioUsuarioAdic();
+        $uh.textContent = `Incluye ${inc}. Usuario adicional: ${uAd? mxn(uAd) : '–'}.`;
+        $u.min = String(Math.max(1, inc));
+      } else {
+        $uwrap.style.display='none';
+        state.usuarios = null;
+      }
 
+      // Empleados
       const $ewrap = $('#nube-empleados-wrap'), $e = $('#nube-empleados'), $eh = $('#nube-empleados-hint');
-      if (typeof incE === 'number'){
+      const incE = Number(p.empleados_incluidos ?? NaN);
+      if (!Number.isNaN(incE)){
         $ewrap.style.display='';
-        if (state.empleados == null || state.empleados < incE) state.empleados = incE;
+        if (state.empleados==null || state.empleados < incE) state.empleados = incE;
         $e.value = state.empleados;
-        $eh.textContent = `Incluye ${incE}. Empleado adicional: ${empleadoAdic()? mxn(empleadoAdic()): '–'}.`;
-      } else { $ewrap.style.display='none'; state.empleados=null; }
+        const eAd = precioEmpleadoAdic();
+        $eh.textContent = `Incluye ${incE}. Empleado adicional: ${eAd? mxn(eAd) : '–'}.`;
+        $e.min = String(Math.max(0, incE));
+      } else {
+        $ewrap.style.display='none';
+        state.empleados = null;
+      }
     }
 
-    const tbody = $('#nube-tbody');
-    const ivaEl = $('#nube-iva16');
-    const totalEl = $('#nube-total');
+    const tbody  = $('#nube-tbody');
+    const ivaEl  = $('#nube-iva');
+    const totalEl= $('#nube-total');
 
     function recalc(){
-      const p = planInfo();
+      const p = getPlan();
       const rows = [];
       let subtotal = 0;
 
-      // 1) Plan (siempre primero)
+      // 1) Plan base
       const base = Number(p.precio_base || 0);
-      rows.push(['Plan '+state.plan, mxn(base)]);
+      rows.push([`Plan ${state.plan}`, mxn(base)]);
       subtotal += base;
 
-      // 2) Usuarios adicionales (si el plan incluye número finito)
-      if (typeof incUsers()==='number'){
-        const inc = incUsers();
-        const want = Math.max(inc, Number(state.usuarios||inc));
+      // 2) Usuarios adicionales (si aplica)
+      const incU = p.usuarios_incluidos;
+      if (Number.isFinite(Number(incU)) && state.usuarios!=null){
+        const inc = Number(incU)||0;
+        const want = Math.max(inc, Number(state.usuarios)||inc);
         const extra = Math.max(0, want - inc);
-        const uAd = usuarioAdic();
-        if (extra>0 && uAd>0){ rows.push([`Usuarios adicionales (${extra})`, mxn(extra*uAd)]); subtotal += extra*uAd; }
+        const uAd = precioUsuarioAdic();
+        if (extra>0 && uAd>0){
+          rows.push([`Usuarios adicionales (${extra})`, mxn(extra*uAd)]);
+          subtotal += extra*uAd;
+        }
       }
 
-      // 3) Empleados adicionales (solo si aplica al plan)
-      if (typeof incEmpl()==='number'){
-        const inc = incEmpl();
-        const want = Math.max(inc, Number(state.empleados||inc));
-        const extra = Math.max(0, want - inc);
-        const eAd = Number(p.empleado_adicional || 0);
-        if (extra>0 && eAd>0){ rows.push([`Empleados adicionales (${extra})`, mxn(extra*eAd)]); subtotal += extra*eAd; }
+      // 3) Empleados adicionales (si aplica)
+      const incE = Number(p.empleados_incluidos ?? NaN);
+      if (!Number.isNaN(incE) && state.empleados!=null){
+        const want = Math.max(incE, Number(state.empleados)||incE);
+        const extra = Math.max(0, want - incE);
+        const eAd = precioEmpleadoAdic();
+        if (extra>0 && eAd>0){
+          rows.push([`Empleados adicionales (${extra})`, mxn(extra*eAd)]);
+          subtotal += extra*eAd;
+        }
       }
 
-      // 4) Espacio adicional (si fue elegido)
+      // 4) Espacio adicional (si aplica)
       if (selEspacio && selEspacio.value){
         const precioEsp = Number((db.espacio_adicional||{})[selEspacio.value]||0);
-        if (precioEsp>0){ rows.push([`Espacio adicional (${selEspacio.value})`, mxn(precioEsp)]); subtotal += precioEsp; }
+        if (precioEsp>0){
+          rows.push([`Espacio adicional (${selEspacio.value})`, mxn(precioEsp)]);
+          subtotal += precioEsp;
+        }
       }
 
-      // Pintar cuerpo: Concepto (Plan primero), luego extras
+      // Pintar cuerpo
       tbody.innerHTML='';
       rows.forEach(([c,v])=>{
         const tr=document.createElement('tr');
@@ -362,25 +401,43 @@ const CalculadoraNube = (function(){
         tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
       });
 
-      // IVA 16% y Total (en ese orden)
+      // IVA y Total
       const iva = subtotal * 0.16;
       const total = subtotal + iva;
-      if (ivaEl)   ivaEl.textContent   = mxn(iva);
-      if (totalEl) totalEl.textContent = mxn(total);
+      ivaEl.textContent   = mxn(iva);
+      totalEl.textContent = mxn(total);
 
-      // Combinado (si lo usas)
+      // combinado (si lo usas)
       if (onCombined && combinedSelector){
         onCombined([ [`${systemName} — ${state.plan}`, mxn(total)] ]);
       }
     }
 
-    const selPlanChange = ()=>{ state.plan = selPlan.value; state.usuarios=null; state.empleados=null; syncInputs(); recalc(); };
-
-    selPlan.addEventListener('change', selPlanChange);
-    $('#nube-usuarios')?.addEventListener('input', e=>{ const v=parseInt(e.target.value||0,10); state.usuarios=Math.max(1,v||1); recalc(); });
-    $('#nube-empleados')?.addEventListener('input', e=>{ const v=parseInt(e.target.value||0,10); state.empleados=Math.max(0,v||0); recalc(); });
+    // eventos
+    selPlan.addEventListener('change', ()=>{
+      state.plan = selPlan.value;
+      state.usuarios = null;
+      state.empleados = null;
+      syncInputs();
+      recalc();
+    });
+    $('#nube-usuarios')?.addEventListener('input', e=>{
+      const inc = Number(getPlan().usuarios_incluidos||0) || 0;
+      const v = Math.max(inc, parseInt(e.target.value||0,10) || inc);
+      e.target.value = String(v);
+      state.usuarios = v;
+      recalc();
+    });
+    $('#nube-empleados')?.addEventListener('input', e=>{
+      const inc = Number(getPlan().empleados_incluidos||0) || 0;
+      const v = Math.max(inc, parseInt(e.target.value||0,10) || inc);
+      e.target.value = String(v);
+      state.empleados = v;
+      recalc();
+    });
     selEspacio?.addEventListener('change', ()=>recalc());
 
+    // init
     syncInputs(); recalc();
     return { recalc };
   }
@@ -456,9 +513,9 @@ const CalculadoraNube = (function(){
     }
 
     if (hasDesk){
-      const mount = '#calc-primary'; // asegura que exista en este scope
+      const mount = '#calc-primary';
       const deskInit = (window.CalculadoraContpaqi && window.CalculadoraContpaqi.init)
-        ? window.CalculadoraContpaqi.init           // v13 existente
+        ? window.CalculadoraContpaqi.init
         : (function(){ console.warn('Fallback CalculadoraContpaqi.init no disponible'); return ()=>{}; })();
 
       document.body.setAttribute('data-calc','escritorio');
