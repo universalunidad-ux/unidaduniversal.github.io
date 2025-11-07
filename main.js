@@ -108,7 +108,7 @@
     items.forEach(it=>{
       it.setAttribute("role","link");
       it.setAttribute("tabindex","0");
-      const go=()=>{const href=it.getAttribute("data-href"); if(href) window.location.href=href;};
+      const go=()=>{const href=it.getAttribute("data-href"); if(href) window.open(href,"_blank","noopener")};
       it.addEventListener("click",go);
       it.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
     });
