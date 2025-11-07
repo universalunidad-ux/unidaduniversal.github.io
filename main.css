@@ -173,20 +173,56 @@ nav a:hover{opacity:1}
 .carouselX .arrowCircle.next{right:8px}
 .carouselX .arrowCircle .chev{font-size:24px;line-height:1}
 
-/* ---------- Embeds responsivos ---------- */
+/* ---------- Embeds responsivos (base) ---------- */
 .embed-16x9{
   position:relative;width:100%;border-radius:12px;overflow:hidden;border:1px solid #1c2533;background:#0e1724;margin:0 auto
 }
 .embed-16x9 iframe{position:absolute;inset:0;width:100%;height:100%;border:0;aspect-ratio:16/9}
-.reel-embed{position:relative;width:100%;max-width:320px;border-radius:12px;overflow:hidden;border:1px solid #1c2533;background:#0e1724;margin:0 auto}
-.reel-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;aspect-ratio:9/16}
+
+/* ---------- REELS VERTICALES (9:16) GRANDES ---------- */
+.reel-embed{
+  position: relative;
+  width: min(480px, 100%);   /* antes 320px */
+  aspect-ratio: 9 / 16;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #1c2533;
+  background: #0e1724;
+  margin: 0 auto;
+}
+.reel-embed iframe{
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+}
+
+/* Carrusel de Reels: centra y da altura suficiente */
+#carouselReels { min-height: 560px; }
+#carouselReels .carousel-track { align-items: center; }
+
 /* fuerza 100% width en iframes con atributos fijos */
 iframe[width]{width:100%!important}
 iframe[height]{height:auto!important}
 
-/* ---------- Bloque “Videos del sistema” ---------- */
+/* ---------- VIDEOS 16:9 GRANDES (YouTube) ---------- */
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;justify-items:center}
+@media(max-width:900px){.yt-grid{grid-template-columns:1fr}}
+
 .yt{width:100%}
+.yt-title{margin-bottom:8px;text-align:center}
+
+/* Contenedor fluido con borde y radios */
+.yt-wrap{
+  position: relative;
+  width: min(960px, 100%);   /* ancho cómodo en desktop */
+  margin: 0 auto;
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid #1c2533; background:#0e1724;
+}
+.yt-wrap iframe{
+  width: 100%;
+  aspect-ratio: 16/9;   /* altura automática */
+  height: auto;         /* importante para que crezca */
+  display: block;
+}
 
 /* ---------- “¿Por qué usar…?” (listSlider) ---------- */
 .listSlider{
