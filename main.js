@@ -272,8 +272,9 @@
   };
 })();
 
+
 /* =========================================================
-   Calculadora NUBE (usuarios/empleados extra, IVA y orden)
+   Calculadora NUBE (usuarios/empleados extra, IVA y orden) — FIX selEspacio duplicado
    ========================================================= */
 const CalculadoraNube = (function(){
   function init({ systemName, mountSelector = '#calc-primary', onCombined = null, combinedSelector = null }){
@@ -348,7 +349,7 @@ const CalculadoraNube = (function(){
 
     // espacio adicional (opcional)
     const espacioWrap = $('#nube-espacio-wrap');
-    const selEspacio  = $('#nube-espacio');
+    const selEspacio  = $('#nube-espacio'); // ← se define aquí una sola vez
     if (db.espacio_adicional && typeof db.espacio_adicional === 'object'){
       espacioWrap.style.display='';
       selEspacio.innerHTML = `<option value="">Sin extra</option>`;
@@ -467,8 +468,7 @@ const CalculadoraNube = (function(){
       }
     }
 
-    // eventos
-    const selEspacio  = $('#nube-espacio');
+    // eventos (reutilizamos la MISMA referencia selEspacio)
     selPlan.addEventListener('change', ()=>{
       state.plan = selPlan.value;
       state.usuarios = null;
