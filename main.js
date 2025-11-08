@@ -136,7 +136,7 @@
     const items=[...root.querySelectorAll(".sys")];
     items.forEach(it=>{
       it.setAttribute("role","link"); it.setAttribute("tabindex","0");
-      const go=()=>{const href=it.getAttribute("data-href"); if(href) window.open(href,"_blank","noopener")};
+      const go=()=>{const href=it.getAttribute("data-href"); if(href) window.open(href,"_blank","noopener");};
       it.addEventListener("click",go);
       it.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
     });
@@ -468,6 +468,7 @@ const CalculadoraNube = (function(){
     }
 
     // eventos
+    const selEspacio  = $('#nube-espacio');
     selPlan.addEventListener('change', ()=>{
       state.plan = selPlan.value;
       state.usuarios = null;
