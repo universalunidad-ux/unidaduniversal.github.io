@@ -170,6 +170,19 @@ nav a:hover{opacity:1}
 
 @media(max-width:980px){
   .carouselX .sys{flex:0 0 100%}
+   /* Desactivar snap SOLO en el carrusel de sistemas */
+.carouselX .track{ scroll-snap-type:none; }
+.carouselX .sys{ scroll-snap-align:none; }
+
+/* Normalizar por si algún estilo empuja la banda a la derecha */
+.carouselX .track{
+  padding-left:0;
+  margin-left:0;
+  transform:none;
+  justify-content:flex-start;
+}
+.carouselX .sys:first-child{ margin-left:0; }
+
 }
 
 /* ---------- Reels ---------- */
