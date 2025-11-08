@@ -645,3 +645,28 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   .calc-container .instalacion-box{ flex-wrap:wrap; }  /* ← envuelve en pantallas chicas */
 }
 
+/* ===== FIX: Instalación en la MISMA línea que el checkbox ===== */
+.calc-container .instalacion-box > label{
+  display:flex !important;          /* anula el display:block global */
+  align-items:center;
+  gap:10px;
+  margin:0;
+  flex-wrap:nowrap;                 /* misma línea en escritorio */
+}
+.calc-container .instalacion-box input[type="checkbox"]{
+  margin:0;                         /* evita salto accidental */
+}
+.calc-container .instalacion-box .inst-hint,
+.calc-container .instalacion-box span{
+  display:inline;                   /* asegura inline */
+  margin-left:6px;
+}
+
+/* Mantener responsive: en móvil sí puede envolver */
+@media (max-width:768px){
+  .calc-container .instalacion-box > label{
+    flex-wrap:wrap !important;      /* permite que baje el texto en pantallas chicas */
+  }
+}
+
+
