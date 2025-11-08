@@ -66,6 +66,26 @@
   });
 })();
 
+/* ---------- Hard reset de scroll para .carouselX (evita “salto” al 3º) ---------- */
+(function(){
+  const tracks = document.querySelectorAll('.carouselX .track');
+  if(!tracks.length) return;
+
+  function forceStart(track){
+    if(!track) return;
+    const prev = track.style.scrollBehavior;
+    track.style.scrollBehavior = 'auto';
+    track.scrollLeft = 0;
+    requestAnimationFrame(()=>{ track.scrollLeft = 0; });
+    setTimeout(()=>{ track.scrollLeft = 0; track.style.scrollBehavior = prev || ''; }, 80);
+  }
+
+  tracks.forEach(forceStart);
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(_){}
+  window.addEventListener('pageshow', (e)=>{ if (e.persisted) tracks.forEach(forceStart); });
+  window.addEventListener('resize', ()=> tracks.forEach(forceStart));
+})();
+
 /* ---------- List slider (“¿Por qué usar…?”) ---------- */
 (function(){
   document.querySelectorAll(".listSlider").forEach(w=>{
@@ -181,10 +201,14 @@
       // Calcula el primer ítem visible de esa página y alinea por offsetLeft
       const startIdx = Math.min(idx * perView(), items.length - 1);
       const first    = items[startIdx];
-      const baseLeft = first ? first.offsetLeft - (track.firstElementChild?.offsetLeft || 0) : idx * viewportW();
+
+      // Si es la primera página, ancla a 0 para evitar offsets residuales
+      let baseLeft = (idx === 0)
+        ? 0
+        : (first ? first.offsetLeft - (track.firstElementChild?.offsetLeft || 0) : idx * viewportW());
 
       const maxLeft = Math.max(0, track.scrollWidth - viewportW());
-      const left    = Math.min(baseLeft, maxLeft);
+      const left    = Math.min(Math.max(0, baseLeft), maxLeft);
 
       track.scrollTo({left, behavior:"smooth"});
       paint(idx);
@@ -293,7 +317,7 @@
 })();
 
 /* =========================================================
-   Calculadora NUBE (usuarios/empleados extra, IVA y orden) — FIX selEspacio duplicado
+   Calculadora NUBE (usuarios/empleados extra, IVA y orden)
    ========================================================= */
 const CalculadoraNube = (function(){
   function init({ systemName, mountSelector = '#calc-primary', onCombined = null, combinedSelector = null }){
