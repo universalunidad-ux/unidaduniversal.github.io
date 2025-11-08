@@ -878,22 +878,30 @@ const CalculadoraNube = (function(){
   const target = document.getElementById('calc-primary');
   if (!target) return;
 
-  const tryCompact = () => {
-    const container = document.querySelector('.calc-container') || target;
-    compactar(container);
-  };
-
+// ——— compactador: ejecutar y observar ———
 const tryCompact = () => {
   const container = document.querySelector('.calc-container') || target;
   if (!container) return;
-
-  // ⛔️ No tocar si es la calculadora v13
+  // ⛔️ no tocar la v13 moderna
   if (container.querySelector('form.calc-form')) return;
-
   compactar(container);
 };
 
-})();
+// 1) primer tiro
+tryCompact();
+requestAnimationFrame(tryCompact);
+
+// 2) observar mutaciones dentro de #calc-primary
+const mo = new MutationObserver(() => tryCompact());
+mo.observe(target, { childList: true, subtree: true });
+
+// 3) hooks de recálculo/render
+window.addEventListener('calc-recompute', tryCompact);
+window.addEventListener('calc-render', tryCompact);
+
+// 4) pequeños retries por cargas tardías
+setTimeout(tryCompact, 500);
+setTimeout(tryCompact, 1200);
 
 /* =========================================================
    🧭 Expiriti – AutoDiag Carruseles / Listas Horizontales
