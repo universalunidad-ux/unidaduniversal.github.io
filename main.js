@@ -885,3 +885,51 @@ const CalculadoraNube = (function(){
   setTimeout(tryCompact, 500);
   setTimeout(tryCompact, 1200);
 })();
+
+
+/* Carrusel de sistemas — forzar inicio en la tarjeta 1 y listeners “pasivos” */
+(function(){
+  const root = document.querySelector('#integra .carouselX');
+  if(!root) return;
+
+  const track = root.querySelector('.track');
+  const cards = [...root.querySelectorAll('.sys')];
+  if(!track || !cards.length) return;
+
+  // Asegura que el carrusel arranque en el principio real (nunca oculto bajo la flecha)
+  function forceStart(){
+    const prev = track.style.scrollBehavior;
+    track.style.scrollBehavior = 'auto';
+    track.scrollLeft = 0;
+    requestAnimationFrame(()=>{ track.scrollLeft = 0; });
+    setTimeout(()=>{ track.scrollLeft = 0; track.style.scrollBehavior = prev || ''; }, 120);
+  }
+
+  // Navegación con flechas
+  function cardWidth(){ return cards[0].getBoundingClientRect().width + 14 /*gap*/; }
+  function scrollByCards(n){
+    track.scrollBy({ left: n * cardWidth(), behavior: 'smooth' });
+  }
+  const prev = root.querySelector('.arrowCircle.prev');
+  const next = root.querySelector('.arrowCircle.next');
+  prev && prev.addEventListener('click', () => scrollByCards(-1), {passive:true});
+  next && next.addEventListener('click', () => scrollByCards(+1), {passive:true});
+
+  // Listeners “pasivos” para evitar el warning de Chrome
+  track.addEventListener('touchstart', ()=>{}, {passive:true});
+  track.addEventListener('touchmove',  ()=>{}, {passive:true});
+
+  // Si tus tarjetas tienen data-href, permite click para abrir
+  track.addEventListener('click', (e)=>{
+    const art = e.target.closest('.sys');
+    const href = art && art.getAttribute('data-href');
+    if(href){ window.location.href = href; }
+  }, {passive:true});
+
+  // Re-alinear al montar, al volver desde historial y al redimensionar
+  forceStart();
+  addEventListener('pageshow', e => { if (e.persisted) forceStart(); }, {passive:true});
+  addEventListener('resize', forceStart, {passive:true});
+})();
+
+
