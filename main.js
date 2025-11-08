@@ -18,33 +18,41 @@
   if (b && m) b.addEventListener("click", () => m.classList.toggle("open"));
 })();
 
-/* ---------- Carrusel genérico ---------- */
+/* ---------- Carrusel genérico (.carousel con .carousel-track y .carousel-nav .dot) ---------- */
 (function(){
   function initCarousel(root, onChange){
     const track = root.querySelector(".carousel-track");
     const prev  = root.querySelector(".arrowCircle.prev");
     const next  = root.querySelector(".arrowCircle.next");
-    let dots  = [...root.querySelectorAll(".carousel-nav .dot")];
+    let dots    = [...root.querySelectorAll(".carousel-nav .dot")];
     let i=0, len = dots.length || (track?.children?.length||0);
 
+    function paint(idx){
+      if (!dots.length) return;
+      dots.forEach((d,di)=>d.classList.toggle("active",di===idx));
+    }
     function set(n){
       if(!track||!len) return;
       i=(n+len)%len;
-      if (dots.length) dots.forEach((d,idx)=>d.classList.toggle("active",idx===i));
+      paint(i);
       track.scrollTo({left:track.clientWidth*i,behavior:"smooth"});
       onChange && onChange(i);
     }
+
     dots.forEach((d,idx)=>d.addEventListener("click",()=>set(idx)));
     prev && prev.addEventListener("click",()=>set(i-1));
     next && next.addEventListener("click",()=>set(i+1));
+
     track && track.addEventListener("scroll",()=>{
       const n = Math.round(track.scrollLeft/track.clientWidth);
-      if(n!==i){ i=n; dots.forEach((d,idx)=>d.classList.toggle("active",idx===i)); onChange&&onChange(i); }
+      if(n!==i){ i=n; paint(i); onChange&&onChange(i); }
     });
+
     window.addEventListener("resize",()=>set(i));
     set(0);
   }
 
+  // Vincula títulos .reel-title si existen en el mismo "scope"
   document.querySelectorAll(".carousel:not(#carouselReels)").forEach(car=>{
     const sel = car.getAttribute("data-titles");
     let titles = null;
@@ -100,7 +108,7 @@
   });
 })();
 
-/* ---------- Carrusel de sistemas (.carouselX) — Auto UI + FIX de páginas ---------- */
+/* ---------- Carrusel de sistemas (.carouselX) — Auto UI + FIX de inicio en página 0 ---------- */
 (function(){
   function ensureUI(root){
     // Flechas
@@ -146,7 +154,7 @@
     const perView   = () => (window.innerWidth<=980 ? 1 : 3);
     const viewportW = () => track.clientWidth || root.clientWidth || 1;
 
-    // Total de páginas basado en ancho scrolleable real (incluye gap/bordes/padding)
+    // Total de páginas basado en ancho scrolleable real
     const pageCount = () => Math.max(1, Math.ceil((track.scrollWidth - 1) / viewportW()));
 
     function buildDots(){
@@ -203,6 +211,18 @@
       if(dots.length !== now) dots = buildDots();
       setTimeout(()=>go(idx), 0); // re-alinea tras cambio de ancho
     });
+
+    // Fuerza inicio en la primera página (corrige restauración de scroll del navegador y reflows)
+    function resetStart(){
+      track.scrollLeft = 0;     // sin animación
+      idx = 0;
+      paint(0);
+      toggleUI();
+    }
+    requestAnimationFrame(resetStart);
+    window.addEventListener('load', ()=> setTimeout(resetStart, 0));
+    window.addEventListener('pageshow', resetStart);
+    setTimeout(resetStart, 350); // por si imágenes/fuentes alteran el ancho
 
     // Asegura que todos los ítems sean alcanzables
     track.style.overflowX = "auto";
@@ -271,7 +291,6 @@
     });
   };
 })();
-
 
 /* =========================================================
    Calculadora NUBE (usuarios/empleados extra, IVA y orden) — FIX selEspacio duplicado
@@ -347,9 +366,9 @@ const CalculadoraNube = (function(){
     PLANES.forEach(p=>{ const opt=document.createElement('option'); opt.value=p; opt.textContent=p; selPlan.appendChild(opt); });
     state.plan = selPlan.value;
 
-    // espacio adicional (opcional)
+    // espacio adicional (opcional) — una sola referencia
     const espacioWrap = $('#nube-espacio-wrap');
-    const selEspacio  = $('#nube-espacio'); // ← se define aquí una sola vez
+    const selEspacio  = $('#nube-espacio');
     if (db.espacio_adicional && typeof db.espacio_adicional === 'object'){
       espacioWrap.style.display='';
       selEspacio.innerHTML = `<option value="">Sin extra</option>`;
@@ -468,7 +487,7 @@ const CalculadoraNube = (function(){
       }
     }
 
-    // eventos (reutilizamos la MISMA referencia selEspacio)
+    // eventos
     selPlan.addEventListener('change', ()=>{
       state.plan = selPlan.value;
       state.usuarios = null;
@@ -735,7 +754,7 @@ const CalculadoraNube = (function(){
 (function () {
   function pickByLabel(container, regex){
     const labels = [...container.querySelectorAll('label')];
-    const lb = labels.find(l => regex.test(l.textContent.trim().toLowerCase()));
+    const lb = labels.find(l => regex.test((l.textContent||'').trim().toLowerCase()));
     if (!lb) return null;
     return lb.closest('.field') || lb.closest('.row') || lb.closest('.instalacion-box') || lb.closest('.inst-wrap') || lb.parentElement;
   }
@@ -765,7 +784,7 @@ const CalculadoraNube = (function(){
     }
 
     const bloques = [bLic, bTipo, bUsu, bInst].filter(Boolean);
-    bloques.forEach(b => b.classList?.add('field'));
+    bloques.forEach(b => b?.classList?.add('field'));
     if (!bLic || !bTipo || !bUsu || !bInst) return;
 
     const grid = document.createElement('div');
