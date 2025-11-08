@@ -886,5 +886,57 @@ const CalculadoraNube = (function(){
   setTimeout(tryCompact, 1200);
 })();
 
+/* =========================================================
+   🧭 Expiriti – AutoDiag Carruseles / Listas Horizontales
+   ========================================================= */
+(function(){
+  console.log("%c🧭 Expiriti AutoDiag iniciado", "color:#2dd4bf;font-weight:700");
+
+  const selectors = [".carouselX .track", ".icons-wrap"];
+  const found = selectors.flatMap(sel => Array.from(document.querySelectorAll(sel)));
+
+  found.forEach((el, i) => {
+    const cs = getComputedStyle(el);
+    const name = el.className || el.id || `track#${i}`;
+    const warn = (msg, val) => console.warn(`⚠️ [${name}] ${msg}`, val);
+
+    // 1️⃣ Scroll y dimensiones
+    if (el.scrollWidth <= el.clientWidth + 2)
+      warn("No tiene scroll real (scrollWidth ≈ clientWidth)", {scrollWidth: el.scrollWidth, clientWidth: el.clientWidth});
+
+    // 2️⃣ Snap activo
+    if ((cs.scrollSnapType && cs.scrollSnapType !== "none") || el.style.scrollSnapType)
+      warn("scroll-snap-type activo → puede bloquear el primer item", cs.scrollSnapType);
+
+    // 3️⃣ Centrados
+    if (cs.justifyContent.includes("center"))
+      warn("justify-content:center detectado → puede impedir scroll hacia la izquierda", cs.justifyContent);
+
+    // 4️⃣ Dirección RTL
+    if (cs.direction === "rtl")
+      warn("direction:rtl detectado → puede invertir o romper scrollLeft", cs.direction);
+
+    // 5️⃣ Overlay o borde bloqueado
+    const rect = el.getBoundingClientRect();
+    const probe = document.elementsFromPoint(rect.left + 10, rect.top + rect.height/2);
+    const blocker = probe.find(n => n !== el && !el.contains(n) && getComputedStyle(n).pointerEvents !== "none");
+    if (blocker)
+      warn("Elemento sobre la orilla izquierda (posible overlay con z-index alto)", blocker);
+
+    // 6️⃣ Scroll inicial distinto de 0
+    if (el.scrollLeft > 5)
+      warn("scrollLeft inicial ≠ 0", el.scrollLeft);
+
+    // 7️⃣ Helpers de acción rápida (solo consola)
+    el._diagFix = {
+      noSnap: () => { el.style.scrollSnapType="none"; el.querySelectorAll("*").forEach(n=>n.style.scrollSnapAlign="none"); console.log(`✅ Snap desactivado en ${name}`); },
+      flexStart: () => { el.style.justifyContent="flex-start"; console.log(`✅ justify-content:flex-start aplicado en ${name}`); },
+      forceLTR: () => { el.style.direction="ltr"; console.log(`✅ direction:ltr aplicado en ${name}`); },
+      resetScroll: () => { el.scrollTo({left:0,behavior:"auto"}); console.log(`✅ scrollLeft restablecido en ${name}`); }
+    };
+  });
+
+  console.log("%c🧩 Usa el objeto _diagFix en cada elemento para aplicar fixes desde consola (ej: document.querySelector('.icons-wrap')._diagFix.flexStart())","color:#60a5fa");
+})();
 
 
