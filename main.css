@@ -452,3 +452,83 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   .calc-container form{ grid-template-columns:1fr; }
   .calc-container form > *{ grid-column:1 !important; }
 }
+
+/* =========================================================
+   Calculadora: orden y píldora de Instalación (fallback cross-browser)
+   ========================================================= */
+
+/* Grid base de los controles */
+.calc-container form{
+  display:grid !important;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+/* Fila 1 → Licencia (col 1) | Tipo RFC (col 2) 
+   Usamos nth-of-type para contar SOLO labels, sin depender de nodos extra */
+.calc-container form > label:nth-of-type(1){ /* Licencia */
+  grid-column:1 !important;
+}
+.calc-container form > label:nth-of-type(3){ /* Tipo (RFC) */
+  grid-column:2 !important;
+}
+
+/* “Operación” (cuando Licencia = Tradicional) ocupa toda la fila */
+.calc-container form > label.op-label{
+  grid-column:1 / -1 !important;
+}
+
+/* Fila 2 → Usuarios (col 1) | Instalación (col 2) */
+.calc-container form > label:nth-of-type(4){ /* Usuarios */
+  grid-column:1 !important;
+}
+
+/* El contenedor que inyecta el JS para instalación */
+.calc-container .inst-wrap{
+  grid-column:2 !important;
+  margin:0; padding:0; border:0; background:transparent;
+}
+
+/* Píldora con borde punteado + checkbox y textos en la MISMA línea */
+.calc-container .instalacion-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;              /* por si el texto es largo, que haga wrap elegante */
+  padding:10px 12px;
+  border:1px dashed #2a3b55;   /* línea punteada visible */
+  border-radius:10px;
+  background:rgba(14,23,36,.35);
+}
+
+/* Alinea checkbox + “Instalación (opcional)” en línea */
+.calc-container .instalacion-box > label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0;
+}
+
+/* Hint a la derecha del título (y envuelve si no cabe) */
+.calc-container .instalacion-box .inst-hint{
+  display:inline;              /* clave para que quede en la misma línea */
+  margin:0 0 0 6px;
+  color:#aebbd0;
+  line-height:1.25;
+}
+
+/* Inputs/Selects apariencia consistente dentro de la píldora (si algún día los unes) */
+.calc-container .instalacion-box select,
+.calc-container .instalacion-box input[type="checkbox"]{
+  accent-color: var(--brand-2);
+}
+
+/* Tablas/otros elementos siguen igual… */
+
+/* Mobile: una sola columna */
+@media (max-width:768px){
+  .calc-container form{ grid-template-columns:1fr; }
+  .calc-container form > *{ grid-column:1 !important; }
+  .calc-container .inst-wrap{ grid-column:1 !important; }
+  .calc-container .instalacion-box{ gap:8px; }
+}
