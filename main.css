@@ -409,3 +409,54 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   .calc-container .inst-wrap{ grid-column:1 !important; }
   .calc-container .instalacion-box{ flex-wrap:wrap; }  /* en móvil puede envolver */
 }
+
+/* Calculadora 2×2 fija (50/50) */
+.calc-container form{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:12px !important;
+  align-items:start;
+}
+.calc-container form > *{ min-width:0; }
+
+/* Fila 1 */
+.calc-container .field.lic{ grid-column:1 !important; }  /* Licencia */
+.calc-container .field.rfc{ grid-column:2 !important; }  /* Tipo (RFC) */
+
+/* Si aparece Operación (Tradicional), ocupa fila completa debajo */
+.calc-container .op-label{ grid-column:1 / -1 !important; }
+
+/* Fila 2 */
+.calc-container .field.usr{ grid-column:1 !important; }  /* Usuarios */
+.calc-container .inst-wrap{ grid-column:2 !important; }  /* Instalación */
+
+/* Checkbox + texto en una sola línea (píldora) */
+.calc-container .instalacion-box{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  padding:10px 12px;
+  border:1px dashed #2a3b55;
+  border-radius:10px;
+  background:rgba(14,23,36,.35);
+  flex-wrap:nowrap;  /* una línea en escritorio */
+}
+.calc-container .instalacion-box > label{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  margin:0 !important;
+}
+.calc-container .instalacion-box input[type="checkbox"]{ margin:0 !important; }
+
+/* En móvil, una columna y el chip puede envolver si falta ancho */
+@media (max-width:768px){
+  .calc-container form{ grid-template-columns:1fr !important; }
+  .calc-container .field.lic,
+  .calc-container .field.rfc,
+  .calc-container .field.usr,
+  .calc-container .op-label,
+  .calc-container .inst-wrap{ grid-column:1 !important; }
+  .calc-container .instalacion-box{ flex-wrap:wrap; }
+}
+
