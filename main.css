@@ -121,27 +121,23 @@ nav a:hover{opacity:1}
 .arrowCircle.prev{left:8px}
 .arrowCircle.next{right:8px}
 .arrowCircle .chev{font-size:24px;line-height:1}
-/* Flechas (sin cambios) */
-.arrowCircle.prev{left:8px}
-.arrowCircle.next{right:8px}
-.arrowCircle .chev{font-size:24px;line-height:1}
 
-/* Carrusel de sistemas */
+/* ---------- Carrusel de sistemas ---------- */
+.carouselX{ position:relative; } /* para posicionar flechas */
 .carouselX .track{
   display:flex;
   gap:14px;
   overflow-x:auto;
   overflow-y:hidden;
-  padding:6px;
+  padding:6px 0;                 /* ← evita padding lateral que desalineaba páginas */
   min-height:240px;
   scroll-behavior:smooth;
   -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory; /* ✅ ahora sí aplica */
+  scroll-snap-type:x mandatory;
 }
-
 .carouselX .sys{
-  flex:0 0 calc((100% - 28px)/3);  /* 3 por vista en desktop */
-  scroll-snap-align:start;         /* ✅ fuera del bloque, válido */
+  flex:0 0 calc((100% - 28px)/3); /* 3 por vista en desktop (restando dos gaps) */
+  scroll-snap-align:start;
   background:#0f1622;
   border:1px solid #1c2533;
   border-radius:16px;
@@ -154,7 +150,6 @@ nav a:hover{opacity:1}
   cursor:pointer;
   transition:background .18s ease,transform .18s ease,border-color .18s ease;
 }
-
 .carouselX .sys:hover{background:#0f1c2c;border-color:#274061;transform:translateY(-2px)}
 .carouselX .sys img{width:72px;height:72px;border-radius:14px;margin:8px auto 12px;background:#101826;object-fit:cover}
 .carouselX .sys h4{margin:8px 0 6px;font-size:17px}
@@ -315,7 +310,7 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
 
 /* Fila calculadoras (2 por defecto; 3 con .has-three) */
 .calc-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:stretch; }
-.calc-row.has-three{grid-template-columns:1fr 1fr 1fr}
+.calc-row.has-three{grid-template-columns:1fr 1fr 1f r}
 @media (max-width:1200px){ .calc-row{grid-template-columns:1fr 1fr} }
 @media (max-width:980px){  .calc-row{grid-template-columns:1fr} }
 
@@ -510,9 +505,9 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   display:flex;
   align-items:center;
   gap:10px;
-  flex-wrap:wrap;              /* por si el texto es largo, que haga wrap elegante */
+  flex-wrap:wrap;
   padding:10px 12px;
-  border:1px dashed #2a3b55;   /* línea punteada visible */
+  border:1px dashed #2a3b55;
   border-radius:10px;
   background:rgba(14,23,36,.35);
 }
@@ -527,19 +522,17 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
 
 /* Hint a la derecha del título (y envuelve si no cabe) */
 .calc-container .instalacion-box .inst-hint{
-  display:inline;              /* clave para que quede en la misma línea */
+  display:inline;
   margin:0 0 0 6px;
   color:#aebbd0;
   line-height:1.25;
 }
 
-/* Inputs/Selects apariencia consistente dentro de la píldora (si algún día los unes) */
+/* Inputs/Selects apariencia consistente dentro de la píldora */
 .calc-container .instalacion-box select,
 .calc-container .instalacion-box input[type="checkbox"]{
   accent-color: var(--brand-2);
 }
-
-/* Tablas/otros elementos siguen igual… */
 
 /* Mobile: una sola columna */
 @media (max-width:768px){
@@ -548,6 +541,3 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   .calc-container .inst-wrap{ grid-column:1 !important; }
   .calc-container .instalacion-box{ gap:8px; }
 }
-/* FALTABA: posicionar el contenedor para ubicar flechas absolutas */
-.carouselX{ position: relative; }
-
