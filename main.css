@@ -488,4 +488,16 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
     padding-inline: 16px;
   }
 }
+/* Centrar verticalmente el picker (.icons-wrap) dentro de su .calc-container */
+.calc-container.center-icons{
+  display:flex;                 /* no afecta a formularios, solo a los que marquemos */
+  align-items:center;
+  justify-content:center;
+  min-height:220px;             /* ajusta si lo quieres más compacto */
+  padding-block:18px;
+}
+.calc-container.center-icons > .icons-wrap{
+  margin:0;
+  padding-inline:16px;          /* conserva tu padding lateral */
+}
 
