@@ -571,3 +571,27 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   .calc-container .inst-wrap{ grid-column:1 !important; }
   .calc-container .instalacion-box{ gap:8px; }
 }
+
+/* ===== FIX: Picker de sistemas (scroll real hacia ambos lados) ===== */
+/* Pega al final del archivo para que tenga prioridad */
+.icons-wrap,
+.calc-container .icons-wrap{
+  display:flex !important;
+  flex-direction:row !important;
+  flex-wrap:nowrap !important;
+  align-items:center;
+  justify-content:flex-start;     /* ← antes: center */
+  gap:18px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:10px 16px;              /* ← agrega margen lateral útil */
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;  /* evita rebotes raros */
+  scroll-snap-type:none;          /* sin “brincos” */
+}
+
+/* estética del scroll (opcional) */
+.icons-wrap::-webkit-scrollbar{height:8px}
+.icons-wrap::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
+
