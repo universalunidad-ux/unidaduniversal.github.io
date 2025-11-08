@@ -600,3 +600,48 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
 /* estética del scroll (opcional) */
 .icons-wrap::-webkit-scrollbar{height:8px}
 .icons-wrap::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
+
+
+/* ===== Calculadora: Grid 50/50 ordenado por clases ===== */
+.calc-container form{
+  display:grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+}
+
+/* Fila 1 */
+.calc-container .field.lic { grid-column:1 !important; }   /* Licencia */
+.calc-container .field.rfc { grid-column:2 !important; }   /* Tipo (RFC) */
+
+/* Operación (si aparece en Tradicional) ocupa la fila completa debajo */
+.calc-container .op-label { grid-column:1 / -1 !important; }
+
+/* Fila 2 */
+.calc-container .field.usr { grid-column:1 !important; }   /* Usuarios */
+.calc-container .inst-wrap { grid-column:2 !important; }   /* Instalación */
+
+/* Píldora de instalación: checkbox + texto en UNA línea (desktop) */
+.calc-container .instalacion-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:nowrap;                  /* ← en desktop: MISMA línea */
+  padding:10px 12px;
+  border:1px dashed #2a3b55;
+  border-radius:10px;
+  background:rgba(14,23,36,.35);
+}
+.calc-container .instalacion-box > label{
+  display:flex; align-items:center; gap:10px; margin:0;
+}
+.calc-container .instalacion-box .inst-hint{
+  margin:0 0 0 6px; color:#aebbd0; line-height:1.25;
+}
+
+/* Mobile: una sola columna y sí permite envolver */
+@media (max-width:768px){
+  .calc-container form{ grid-template-columns:1fr; }
+  .calc-container form > *{ grid-column:1 !important; }
+  .calc-container .instalacion-box{ flex-wrap:wrap; }  /* ← envuelve en pantallas chicas */
+}
+
