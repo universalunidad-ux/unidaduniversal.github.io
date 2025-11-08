@@ -122,22 +122,30 @@ nav a:hover{opacity:1}
 .arrowCircle.next{right:8px}
 .arrowCircle .chev{font-size:24px;line-height:1}
 
-/* ---------- Carrusel de sistemas ---------- */
-.carouselX{ position:relative; } /* para posicionar flechas */
+/* ---------- Carrusel de sistemas (FIX) ---------- */
+.carouselX{ position:relative; }
+
 .carouselX .track{
   display:flex;
   gap:14px;
   overflow-x:auto;
   overflow-y:hidden;
-  padding:6px 0;                 /* ← evita padding lateral que desalineaba páginas */
+  /* GUTTERS LATERALES para que la flecha no tape la primera tarjeta */
+  padding:6px 36px;                    /* ← si tu flecha es 44–46px, 36px va bien */
   min-height:240px;
   scroll-behavior:smooth;
   -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory;
+
+  /* SIN SNAP para evitar “brincos” y cortes del primer ítem */
+  scroll-snap-type:none !important;
+
+  /* Fuerza LTR por si algún contenedor hereda otra dirección */
+  direction:ltr !important;
 }
+
 .carouselX .sys{
-  flex:0 0 calc((100% - 28px)/3); /* 3 por vista en desktop (restando dos gaps) */
-  scroll-snap-align:start;
+  flex:0 0 calc((100% - 28px)/3);      /* 3 por vista en desktop */
+  scroll-snap-align:none !important;   /* snap desactivado */
   background:#0f1622;
   border:1px solid #1c2533;
   border-radius:16px;
@@ -160,30 +168,28 @@ nav a:hover{opacity:1}
 }
 .carouselX .sys .hoverMore .chip{border:1px solid #2a415f;background:#0e1724;border-radius:999px;padding:7px 11px;color:#cfe3ff}
 .carouselX .sys:hover .hoverMore{opacity:1}
-.group-dots{display:flex;gap:8px;justify-content:center;margin:10px 0 0}
-.group-dots .dot{width:11px;height:11px;border-radius:999px;background:#223044;border:none;opacity:.6;cursor:pointer}
-.group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
-.carouselX .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px}
+
+/* Flechas arriba del track */
+.carouselX .arrowCircle{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:46px;height:46px;border-radius:999px;border:1px solid #2b3c56;
+  background:linear-gradient(145deg,#0f1a2a,#0f1c2c);
+  display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)
+}
 .carouselX .arrowCircle.prev{left:8px}
 .carouselX .arrowCircle.next{right:8px}
 .carouselX .arrowCircle .chev{font-size:24px;line-height:1}
 
+/* Dots */
+.group-dots{display:flex;gap:8px;justify-content:center;margin:10px 0 0}
+.group-dots .dot{width:11px;height:11px;border-radius:999px;background:#223044;border:none;opacity:.6;cursor:pointer}
+.group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
+
+/* Mobile: 1 por vista, sin snap (ya viene sin snap) */
 @media(max-width:980px){
   .carouselX .sys{flex:0 0 100%}
-   /* Desactivar snap SOLO en el carrusel de sistemas */
-.carouselX .track{ scroll-snap-type:none; }
-.carouselX .sys{ scroll-snap-align:none; }
-
-/* Normalizar por si algún estilo empuja la banda a la derecha */
-.carouselX .track{
-  padding-left:0;
-  margin-left:0;
-  transform:none;
-  justify-content:flex-start;
 }
-.carouselX .sys:first-child{ margin-left:0; }
 
-}
 
 /* ---------- Reels ---------- */
 .reel-embed{position:relative;width:min(380px,100%) !important;max-width:380px !important;aspect-ratio:9/16;border-radius:12px;overflow:hidden;border:1px solid #1c2533;background:#0e1724;margin:0 auto;flex:0 0 auto;justify-self:center}
