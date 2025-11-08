@@ -1,6 +1,4 @@
 // === GUARD GLOBAL PARA NUBE ===
-// Si la página está en modo Nube, NO ejecutar nada del legacy v13.
-// También exponemos stubs para evitar errores de referencias desde otros scripts.
 if (document?.body?.getAttribute('data-calc') === 'nube' || window.__EXPIRITI_FORCE_NUBE__ === true) {
   console.log('calculadora.js v13: saltado COMPLETO (modo Nube activo)');
   window.CalculadoraContpaqi = window.CalculadoraContpaqi || {
@@ -8,7 +6,7 @@ if (document?.body?.getAttribute('data-calc') === 'nube' || window.__EXPIRITI_FO
   };
 } else {
 
-/* calculadora.js v13 — MultiRFC por defecto + “Operación” solo en Tradicional (con !important) */
+/* calculadora.js v13 — MultiRFC por defecto + Operación solo en Tradicional */
 (function () {
   'use strict';
   console.log('calculadora.js v13 cargado — MultiRFC default + Operación solo en Tradicional');
@@ -23,29 +21,20 @@ if (document?.body?.getAttribute('data-calc') === 'nube' || window.__EXPIRITI_FO
   }
   function recomputeAll(){ window.dispatchEvent(new Event("calc-recompute")); }
 
-// ===== Parche CSS mínimo para asegurar el form, sin forzar label =====
-(function ensureFormVisible() {
-  var id = "calc-form-visibility-patch";
-  if (!document.getElementById(id)) {
-    var st = document.createElement("style");
-    st.id = id;
-    st.textContent = `
-      .calc-container form{
-        display:grid!important;
-        grid-auto-flow:row!important;
-        grid-template-columns:1fr 1fr!important;
-        gap:12px!important;
-      }
-      @media (max-width:768px){
-        .calc-container form{ grid-template-columns:1fr!important; }
-      }
-      /* Operación oculta por defecto; la mostraremos con JS cuando Licencia=Tradicional */
-      .calc-container .op-label{ display:none!important; }
-    `;
-    document.head.appendChild(st);
-  }
-})();
-
+  // ===== Parche CSS mínimo para asegurar el form
+  (function ensureFormVisible() {
+    var id = "calc-form-visibility-patch";
+    if (!document.getElementById(id)) {
+      var st = document.createElement("style");
+      st.id = id;
+      st.textContent = `
+        .calc-container form{ display:grid!important; grid-template-columns:1fr 1fr!important; gap:12px!important; }
+        @media (max-width:768px){ .calc-container form{ grid-template-columns:1fr!important; } }
+        .calc-container .op-label{ display:none!important; }
+      `;
+      document.head.appendChild(st);
+    }
+  })();
 
   // ===================== Render calculadora ===================
   function createCalculator(container, sistemaName, idSuffix, combinedSelector) {
@@ -64,59 +53,66 @@ if (document?.body?.getAttribute('data-calc') === 'nube' || window.__EXPIRITI_FO
     title.textContent = sistemaName + " — Calculadora";
     container.appendChild(title);
 
-    // ---------- Formulario (orden solicitado) ----------
+    // ---------- Formulario ----------
     var form = document.createElement("form");
     form.className = "calc-form";
-    form.style.display = "grid";
-    form.style.gridAutoFlow = "row";
-    form.style.gridTemplateColumns = "1fr";
-    form.style.gap = "8px";
 
-// 1) Licencia
-var licenciaLabel = document.createElement("label");
-licenciaLabel.classList.add('field','lic');          // ← AÑADIDO
-licenciaLabel.textContent = "Licencia: ";
-...
-form.appendChild(licenciaLabel);
+    // ===== 1) Licencia
+    var licenciaLabel = document.createElement("label");
+    licenciaLabel.classList.add('field','lic');
+    licenciaLabel.textContent = "Licencia:";
+    var licenciaSel = document.createElement("select");
+    licenciaSel.id = "lic" + idSuffix;
+    licenciaSel.innerHTML = `
+      <option value="nueva">Nueva</option>
+      <option value="renovacion">Renovación</option>
+      <option value="tradicional">Tradicional</option>
+    `;
+    licenciaLabel.appendChild(licenciaSel);
+    form.appendChild(licenciaLabel);
 
-// 2) Operación
-var opLabel = document.createElement("label");
-opLabel.className = "op-label";                      // ya estaba
-...
+    // ===== 2) Operación (solo visible en Tradicional)
+    var opLabel = document.createElement("label");
+    opLabel.className = "op-label";           // se oculta por CSS y se muestra con JS según Licencia
+    opLabel.textContent = "Operación:";
+    var opSel = document.createElement("select");
+    opSel.id = "op" + idSuffix;
+    opLabel.appendChild(opSel);
+    form.appendChild(opLabel);
 
-// 3) Tipo (RFC)
-var rfcLabel = document.createElement("label");
-rfcLabel.classList.add('field','rfc');               // ← AÑADIDO
-rfcLabel.textContent = "Tipo (RFC): ";
-...
-form.appendChild(rfcLabel);
+    // ===== 3) Tipo (RFC)
+    var rfcLabel = document.createElement("label");
+    rfcLabel.classList.add('field','rfc');
+    rfcLabel.textContent = "Tipo (RFC):";
+    var rfcSel = document.createElement("select");
+    rfcSel.id = "rfc" + idSuffix;
+    rfcLabel.appendChild(rfcSel);
+    form.appendChild(rfcLabel);
 
-// 4) Usuarios
-var userLabel = document.createElement("label");
-userLabel.classList.add('field','usr');              // ← AÑADIDO
-userLabel.textContent = "Usuarios: ";
-...
-form.appendChild(userLabel);
+    // ===== 4) Usuarios
+    var userLabel = document.createElement("label");
+    userLabel.classList.add('field','usr');
+    userLabel.textContent = "Usuarios:";
+    var userInput = document.createElement("input");
+    userInput.type = "number";
+    userInput.id = "usr" + idSuffix;
+    userInput.min = "1";
+    userInput.value = "1";
+    userLabel.appendChild(userInput);
+    form.appendChild(userLabel);
 
-// 5) Instalación (opcional)
-var instWrap = document.createElement("div");
-instWrap.className = "inst-wrap";                    // ya lo tienes así, perfecto
-instWrap.innerHTML = `
-  <div class="instalacion-box">
-    <label style="display:flex;align-items:center;gap:10px;margin:0;flex-wrap:wrap">
-      <input type="checkbox" id="instOn${idSuffix}" checked>
-      <span>
-        <strong>Instalación (opcional)</strong> — Servicio ofrecido por <strong>Expiriti</strong> para instalar en tu equipo tu sistema.
-      </span>
-    </label>
-  </div>
-`;
-form.appendChild(instWrap);
-
-
-
-    // Blindaje: aseguramos Licencia en primer lugar
-    form.insertBefore(licenciaLabel, form.firstChild);
+    // ===== 5) Instalación (opcional)
+    var instWrap = document.createElement("div");
+    instWrap.className = "inst-wrap";
+    instWrap.innerHTML = `
+      <div class="instalacion-box">
+        <label>
+          <input type="checkbox" id="instOn${idSuffix}" checked>
+          <span><strong>Instalación (opcional)</strong> — Servicio ofrecido por <strong>Expiriti</strong> para instalar en tu equipo tu sistema.</span>
+        </label>
+      </div>
+    `;
+    form.appendChild(instWrap);
 
     container.appendChild(form);
 
@@ -143,32 +139,31 @@ form.appendChild(instWrap);
     // -------- Opciones dependientes --------
     function refreshOptions() {
       var lic = licenciaSel.value;
+
+      // limpiar selects dependientes
       opSel.innerHTML = "";
       rfcSel.innerHTML = "";
       rfcLabel.style.display = "inline-block";
 
-      // Mostrar/ocultar "Operación" solo en Tradicional (con !important)
+      // Mostrar/ocultar "Operación" solo en Tradicional
       opLabel.style.setProperty('display', (lic === "tradicional") ? 'block' : 'none', 'important');
 
       if (lic === "nueva") {
-        // Op queda oculto, dejamos un valor interno neutro para cálculo
         opSel.appendChild(new Option("Anual (Nueva)", "nueva_anual"));
-
         var anual = systemPrices.anual || {};
         if (anual.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
         if (anual.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
 
       } else if (lic === "renovacion") {
         opSel.appendChild(new Option("Renovación anual", "renovacion_anual"));
-
         var anual2 = systemPrices.anual || {};
         if (anual2.MonoRFC) rfcSel.appendChild(new Option("MonoRFC", "MonoRFC"));
         if (anual2.MultiRFC) rfcSel.appendChild(new Option("MultiRFC", "MultiRFC"));
 
       } else {
-        // Tradicional: aquí sí llenamos opciones visibles de Operación
-        opSel.appendChild(new Option("Actualización (si tienes una versión anterior, p.ej. v15→v18)", "actualizacion"));
-        opSel.appendChild(new Option("Actualización Especial (si tienes la versión inmediata anterior, p.ej. v17→v18)", "especial"));
+        // Tradicional
+        opSel.appendChild(new Option("Actualización (versiones anteriores)", "actualizacion"));
+        opSel.appendChild(new Option("Actualización especial (inmediata anterior)", "especial"));
         opSel.appendChild(new Option("Incremento de usuarios", "crecimiento_usuario"));
 
         var trad = systemPrices.tradicional || {};
@@ -179,24 +174,24 @@ form.appendChild(instWrap);
         }
       }
 
-      // === Default: MultiRFC si existe ===
+      // Default a MultiRFC si existe
       var multi = Array.from(rfcSel.options).find(function(o){ return /multirfc/i.test(o.text); });
       if (multi) rfcSel.value = multi.value;
 
-      // Si no hay RFC aplicable, escondemos el control
+      // Si no hay RFC aplicable, ocultar el control
       if (rfcSel.options.length === 0) rfcLabel.style.display = "none";
 
       calculateAndRender();
     }
 
-    // ---- instalación automática (800 servidor + 750 por usuario extra) ----
+    // ---- instalación automática
     function instCheckbox(){ return document.getElementById("instOn"+idSuffix); }
     function calcInstallationGross(){
       var on = instCheckbox();
       if (!on || !on.checked) return 0;
       var usuarios = Math.max(1, parseInt(userInput.value || "1", 10) || 1);
       if (usuarios === 1) return 800;                // 1 servidor
-      return 800 + (usuarios - 1) * 750;             // 1 servidor + (usuarios-1) terminales
+      return 800 + (usuarios - 1) * 750;             // 1 servidor + terminales
     }
 
     // ----------------- Cálculo -----------------
@@ -249,7 +244,7 @@ form.appendChild(instWrap);
 
       var subtotalSistemas = base + usuariosAddImporte;
 
-      // -15% por paquete (si hay 2 o 3 cajas); excluye “XML en Línea”
+      // -15% por paquete (2 o 3 cajas); excluye “XML en Línea”
       var discountPct = 0;
       if ((safeHasTable("calc-secondary") || safeHasTable("calc-tertiary")) && sistemaName.indexOf("XML en Línea") === -1) {
         discountPct = 0.15;
@@ -257,17 +252,17 @@ form.appendChild(instWrap);
       var discountAmt = subtotalSistemas * discountPct;
       var afterDiscount = subtotalSistemas - discountAmt;
 
-      // instalación con 50% descuento (se suma IVA al final)
+      // instalación con 50% descuento
       var instGross = calcInstallationGross();
       var instDiscount = instGross * 0.5;
       var instNet = instGross - instDiscount;
 
-      // IVA sobre (sistemas con descuento + instalación neta)
+      // IVA
       var baseImponible = afterDiscount + instNet;
       var iva = baseImponible * 0.16;
       var total = baseImponible + iva;
 
-      // Render números
+      // Render
       document.getElementById("base"+idSuffix).textContent = fmt(base);
       document.getElementById("uadd"+idSuffix).textContent = fmt(usuariosAddImporte) + (usuariosExtras>0?(" ("+usuariosExtras+" extras)"):"");
       document.getElementById("disc"+idSuffix).textContent = pct(discountPct) + " / " + fmt(discountAmt);
@@ -277,7 +272,7 @@ form.appendChild(instWrap);
       document.getElementById("iva"+idSuffix).textContent = fmt(iva);
       document.getElementById("tot"+idSuffix).textContent = fmt(total);
 
-      // Mostrar/ocultar filas condicionales
+      // Mostrar/ocultar filas
       document.getElementById("tr-uadd"+idSuffix).style.display = (usuariosExtras > 0) ? "" : "none";
       document.getElementById("tr-disc"+idSuffix).style.display = (discountPct > 0) ? "" : "none";
       var instOn = instCheckbox();
@@ -326,7 +321,6 @@ form.appendChild(instWrap);
             rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));
             rfcSel.appendChild(new Option("MultiRFC","MultiRFC"));
           }
-          // MultiRFC por defecto si existe
           var m = Array.from(rfcSel.options).find(function(o){return /multirfc/i.test(o.text);});
           if (m) rfcSel.value = m.value;
         }
@@ -339,7 +333,7 @@ form.appendChild(instWrap);
     var chk = document.getElementById("instOn"+idSuffix);
     if (chk) chk.addEventListener("change", calculateAndRender);
 
-    // Recalcular cuando aparezca otra caja (sin bucles)
+    // Recalcular cuando aparezca otra caja
     window.addEventListener("calc-recompute", calculateAndRender);
 
     // Inicial
@@ -442,7 +436,6 @@ form.appendChild(instWrap);
 
   // Auto-init si existe #app con data-system y #calc-primary
   function autoInit() {
-    // Si el sitio indicó Nube, NO inicializar v13
     if (window.__EXPIRITI_FORCE_NUBE__ === true || document.body.getAttribute('data-calc') === 'nube') {
       console.log('v13: cancelado autoInit porque hay calculadora NUBE');
       return;
@@ -456,6 +449,6 @@ form.appendChild(instWrap);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", autoInit);
   else autoInit();
 
-})(); // ← cierra IIFE principal
+})(); // IIFE principal
 
-} // ← cierra GUARD GLOBAL PARA NUBE
+} // GUARD GLOBAL
