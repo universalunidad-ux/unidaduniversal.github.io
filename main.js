@@ -100,7 +100,7 @@
   });
 })();
 
-/* ---------- Carrusel de sistemas (.carouselX) — Auto-crea flechas y dots si faltan ---------- */
+/* ---------- Carrusel de sistemas (.carouselX) — Auto UI + FIX de páginas ---------- */
 (function(){
   function ensureUI(root){
     // Flechas
@@ -132,7 +132,7 @@
     const track=root.querySelector(".track");
     if(!track) return;
 
-    // Accesibilidad + click en tarjetas
+    // Click en tarjetas
     const items=[...root.querySelectorAll(".sys")];
     items.forEach(it=>{
       it.setAttribute("role","link"); it.setAttribute("tabindex","0");
@@ -143,13 +143,16 @@
 
     const { prev, next, dotsWrap } = ensureUI(root);
 
-    const perView = () => (window.innerWidth<=980 ? 1 : 3);
-    const pages   = () => Math.max(1, Math.ceil(items.length / perView()));
+    const perView   = () => (window.innerWidth<=980 ? 1 : 3);
     const viewportW = () => track.clientWidth || root.clientWidth || 1;
+
+    // Total de páginas basado en ancho scrolleable real (incluye gap/bordes/padding)
+    const pageCount = () => Math.max(1, Math.ceil((track.scrollWidth - 1) / viewportW()));
 
     function buildDots(){
       dotsWrap.innerHTML="";
-      const arr=[...Array(pages())].map((_,j)=>{
+      const total = pageCount();
+      const arr=[...Array(total)].map((_,j)=>{
         const b=document.createElement("button");
         b.className="dot"+(j===0?" active":"");
         b.setAttribute("aria-label","Ir a página "+(j+1));
@@ -162,15 +165,26 @@
 
     let dots=buildDots(), idx=0;
     function paint(j){ dots.forEach((d,i)=>d.classList.toggle("active",i===j)); }
+
     function go(j){
-      const total=pages();
-      idx=((j%total)+total)%total;
-      track.scrollTo({left:viewportW()*idx,behavior:"smooth"});
+      const total = pageCount();
+      idx = ((j % total) + total) % total;
+
+      // Calcula el primer ítem visible de esa página y alinea por offsetLeft
+      const startIdx = Math.min(idx * perView(), items.length - 1);
+      const first    = items[startIdx];
+      const baseLeft = first ? first.offsetLeft - (track.firstElementChild?.offsetLeft || 0) : idx * viewportW();
+
+      const maxLeft = Math.max(0, track.scrollWidth - viewportW());
+      const left    = Math.min(baseLeft, maxLeft);
+
+      track.scrollTo({left, behavior:"smooth"});
       paint(idx);
       toggleUI();
     }
+
     function toggleUI(){
-      const multi=pages()>1;
+      const multi=pageCount()>1;
       prev.style.display = multi ? "" : "none";
       next.style.display = multi ? "" : "none";
       dotsWrap.style.display = multi ? "" : "none";
@@ -178,18 +192,19 @@
 
     prev.addEventListener("click",()=>go(idx-1));
     next.addEventListener("click",()=>go(idx+1));
+
     track.addEventListener("scroll",()=>{
       const i = Math.round(track.scrollLeft / viewportW());
       if(i !== idx){ idx=i; paint(idx); }
     });
+
     window.addEventListener("resize",()=>{
-      const old = dots.length, now = pages();
-      if(old!==now){ dots=buildDots(); }
-      // Corrige clipping al cambiar ancho
-      setTimeout(()=>go(idx), 0);
+      const now = pageCount();
+      if(dots.length !== now) dots = buildDots();
+      setTimeout(()=>go(idx), 0); // re-alinea tras cambio de ancho
     });
 
-    // Asegura que **TODOS** los íconos sean alcanzables por scroll
+    // Asegura que todos los ítems sean alcanzables
     track.style.overflowX = "auto";
     track.style.scrollBehavior = "smooth";
 
@@ -258,7 +273,7 @@
 })();
 
 /* =========================================================
-   Calculadora NUBE (refinada: usuarios/empleados extra, IVA y orden)
+   Calculadora NUBE (usuarios/empleados extra, IVA y orden)
    ========================================================= */
 const CalculadoraNube = (function(){
   function init({ systemName, mountSelector = '#calc-primary', onCombined = null, combinedSelector = null }){
@@ -485,10 +500,7 @@ const CalculadoraNube = (function(){
 })();
 
 /* =========================================================
-   Complementos calculadora ESCRITORIO:
-   - Picker de 2º y 3º sistema
-   - Resumen combinado
-   Requiere: calculadora.js v13 (CalculadoraContpaqi.*)
+   Complementos calculadora ESCRITORIO: 2º/3º sistema + resumen
    ========================================================= */
 (function(){
   document.addEventListener('DOMContentLoaded', function(){
@@ -636,7 +648,7 @@ const CalculadoraNube = (function(){
 })();
 
 /* =========================================================
-   AutoCalcSwitcher — decide Nube vs deja a Escritorio (legacy)
+   AutoCalcSwitcher — decide Nube vs Escritorio (legacy)
    ========================================================= */
 (function(){
   function detectSystemName(){
@@ -721,7 +733,6 @@ const CalculadoraNube = (function(){
    ========================================================= */
 (function () {
   function pickByLabel(container, regex){
-    // busca label cuyo texto haga match, devuelve su bloque contenedor
     const labels = [...container.querySelectorAll('label')];
     const lb = labels.find(l => regex.test(l.textContent.trim().toLowerCase()));
     if (!lb) return null;
@@ -737,9 +748,7 @@ const CalculadoraNube = (function(){
 
   function compactar(container){
     if (!container) return;
-    // Si ya se armó, no repetir
     if (container.querySelector('.controls-grid')) {
-      // pero aseguremos unión instalación+servicios
       unirInstalacionServicios(container);
       return;
     }
@@ -756,8 +765,6 @@ const CalculadoraNube = (function(){
 
     const bloques = [bLic, bTipo, bUsu, bInst].filter(Boolean);
     bloques.forEach(b => b.classList?.add('field'));
-
-    // Si falta alguno clave, no forzar (evita errores)
     if (!bLic || !bTipo || !bUsu || !bInst) return;
 
     const grid = document.createElement('div');
@@ -765,34 +772,27 @@ const CalculadoraNube = (function(){
     grid.append(bLic, bTipo, bUsu, bInst);
     container.insertBefore(grid, container.firstElementChild);
 
-    // Asegura unión instalación + servicios
     unirInstalacionServicios(container);
   }
 
   function unirInstalacionServicios(container){
     if (!container) return;
-
-    // Evita re-empaques si ya están unidos
     if (container.querySelector('.inst-wrap .instalacion-box')) return;
 
-    // Selecciona instalación
     const selInst = pickSelect(container, [
       'select#instalacion',
       'select[name*="instal"]',
       'select[data-field*="instal"]'
     ]);
-    // Selecciona servicios (acepta #servicios o typo #ervicios)
     const selServ = pickSelect(container, [
       'select#servicios', 'select#ervicios',
       'select[name*="servi"]',
       'select[data-field*="servi"]'
     ]);
 
-    if (!selInst || !selServ) return; // no hacer nada si falta alguno
+    if (!selInst || !selServ) return;
+    if (selInst.closest('.instalacion-box') || selServ.closest('.instalacion-box')) return;
 
-    if (selInst.closest('.instalacion-box') || selServ.closest('.instalacion-box')) return; // ya unidos
-
-    // Crea envolturas
     let wrap = container.querySelector('.inst-wrap');
     if (!wrap) {
       wrap = document.createElement('div');
@@ -803,7 +803,6 @@ const CalculadoraNube = (function(){
     const box = document.createElement('div');
     box.className = 'instalacion-box';
 
-    // Intenta conservar labels si existen
     const instLbl = (selInst.labels && selInst.labels[0]) ? selInst.labels[0] : null;
     const servLbl = (selServ.labels && selServ.labels[0]) ? selServ.labels[0] : null;
 
@@ -822,7 +821,6 @@ const CalculadoraNube = (function(){
     }
   }
 
-  // Observa el render inicial (calculadora.js inyecta async)
   const target = document.getElementById('calc-primary');
   if (!target) return;
 
@@ -831,19 +829,15 @@ const CalculadoraNube = (function(){
     compactar(container);
   };
 
-  // 1) Intento inmediato + siguiente frame
   tryCompact();
   requestAnimationFrame(tryCompact);
 
-  // 2) Observa cambios por si la UI se re-renderiza
   const mo = new MutationObserver(() => tryCompact());
   mo.observe(target, { childList:true, subtree:true });
 
-  // 3) Si tu calculadora emite eventos, reaplica
   window.addEventListener('calc-recompute', tryCompact);
   window.addEventListener('calc-render', tryCompact);
 
-  // 4) Reintento tardío por si los selects aparecen después
   setTimeout(tryCompact, 500);
   setTimeout(tryCompact, 1200);
 })();
