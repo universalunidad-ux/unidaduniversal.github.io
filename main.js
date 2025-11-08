@@ -790,34 +790,44 @@ const CalculadoraNube = (function(){
     return null;
   }
 
-  function compactar(container){
-    if (!container) return;
-    if (container.querySelector('.controls-grid')) {
-      unirInstalacionServicios(container);
-      return;
-    }
+ function compactar(container){
+  if (!container) return;
 
-    const bLic = pickByLabel(container, /^licencia/);
-    const bTipo= pickByLabel(container, /^tipo/);
-    const bUsu = pickByLabel(container, /^usuarios?/);
-
-    let bInst = container.querySelector('.inst-wrap') || pickByLabel(container, /instalaci/);
-    if (!bInst) {
-      const anyChk = container.querySelector('input[type="checkbox"]');
-      bInst = anyChk ? (anyChk.closest('.instalacion-box') || anyChk.closest('.field') || anyChk.parentElement) : null;
-    }
-
-    const bloques = [bLic, bTipo, bUsu, bInst].filter(Boolean);
-    bloques.forEach(b => b?.classList?.add('field'));
-    if (!bLic || !bTipo || !bUsu || !bInst) return;
-
-    const grid = document.createElement('div');
-    grid.className = 'controls-grid';
-    grid.append(bLic, bTipo, bUsu, bInst);
-    container.insertBefore(grid, container.firstElementChild);
-
-    unirInstalacionServicios(container);
+  // ⛔️ Si es la calculadora moderna v13, no reordenamos nada.
+  // Señales: existe <form class="calc-form"> dentro del contenedor.
+  if (container.querySelector('form.calc-form')) {
+    return; // ← respeta la grilla 2×2 que define tu CSS
   }
+
+  // Si ya existe la grilla compactada previa, solo une instalación+servicios y sal.
+  if (container.querySelector('.controls-grid')) {
+    unirInstalacionServicios(container);
+    return;
+  }
+
+  // ==== (lo que ya tenías) detectar bloques por label ====
+  const bLic = pickByLabel(container, /^licencia/);
+  const bTipo= pickByLabel(container, /^tipo/);
+  const bUsu = pickByLabel(container, /^usuarios?/);
+
+  let bInst = container.querySelector('.inst-wrap') || pickByLabel(container, /instalaci/);
+  if (!bInst) {
+    const anyChk = container.querySelector('input[type="checkbox"]');
+    bInst = anyChk ? (anyChk.closest('.instalacion-box') || anyChk.closest('.field') || anyChk.parentElement) : null;
+  }
+
+  const bloques = [bLic, bTipo, bUsu, bInst].filter(Boolean);
+  bloques.forEach(b => b?.classList?.add('field'));
+  if (!bLic || !bTipo || !bUsu || !bInst) return;
+
+  const grid = document.createElement('div');
+  grid.className = 'controls-grid';
+  grid.append(bLic, bTipo, bUsu, bInst);
+  container.insertBefore(grid, container.firstElementChild);
+
+  // Une instalación + servicios si aplica
+  unirInstalacionServicios(container);
+}
 
   function unirInstalacionServicios(container){
     if (!container) return;
@@ -873,17 +883,16 @@ const CalculadoraNube = (function(){
     compactar(container);
   };
 
-  tryCompact();
-  requestAnimationFrame(tryCompact);
+const tryCompact = () => {
+  const container = document.querySelector('.calc-container') || target;
+  if (!container) return;
 
-  const mo = new MutationObserver(() => tryCompact());
-  mo.observe(target, { childList:true, subtree:true });
+  // ⛔️ No tocar si es la calculadora v13
+  if (container.querySelector('form.calc-form')) return;
 
-  window.addEventListener('calc-recompute', tryCompact);
-  window.addEventListener('calc-render', tryCompact);
+  compactar(container);
+};
 
-  setTimeout(tryCompact, 500);
-  setTimeout(tryCompact, 1200);
 })();
 
 /* =========================================================
