@@ -390,7 +390,7 @@ const CalculadoraNube = (function(){
     PLANES.forEach(p=>{ const opt=document.createElement('option'); opt.value=p; opt.textContent=p; selPlan.appendChild(opt); });
     state.plan = selPlan.value;
 
-    // espacio adicional (opcional) — una sola referencia
+    // espacio adicional (opcional)
     const espacioWrap = $('#nube-espacio-wrap');
     const selEspacio  = $('#nube-espacio');
     if (db.espacio_adicional && typeof db.espacio_adicional === 'object'){
@@ -456,7 +456,7 @@ const CalculadoraNube = (function(){
       rows.push([`Plan ${state.plan}`, mxn(base)]);
       subtotal += base;
 
-      // 2) Usuarios adicionales (si aplica)
+      // 2) Usuarios adicionales
       const incU = p.usuarios_incluidos;
       if (Number.isFinite(Number(incU)) && state.usuarios!=null){
         const inc = Number(incU)||0;
@@ -469,7 +469,7 @@ const CalculadoraNube = (function(){
         }
       }
 
-      // 3) Empleados adicionales (si aplica)
+      // 3) Empleados adicionales
       const incE = Number(p.empleados_incluidos ?? NaN);
       if (!Number.isNaN(incE) && state.empleados!=null){
         const want = Math.max(incE, Number(state.empleados)||incE);
@@ -481,7 +481,7 @@ const CalculadoraNube = (function(){
         }
       }
 
-      // 4) Espacio adicional (si aplica)
+      // 4) Espacio adicional
       if (selEspacio && selEspacio.value){
         const precioEsp = Number((db.espacio_adicional||{})[selEspacio.value]||0);
         if (precioEsp>0){
@@ -490,7 +490,7 @@ const CalculadoraNube = (function(){
         }
       }
 
-      // Pintar cuerpo
+      // Pintar
       tbody.innerHTML='';
       rows.forEach(([c,v])=>{
         const tr=document.createElement('tr');
@@ -790,44 +790,41 @@ const CalculadoraNube = (function(){
     return null;
   }
 
- function compactar(container){
-  if (!container) return;
+  function compactar(container){
+    if (!container) return;
 
-  // ⛔️ Si es la calculadora moderna v13, no reordenamos nada.
-  // Señales: existe <form class="calc-form"> dentro del contenedor.
-  if (container.querySelector('form.calc-form')) {
-    return; // ← respeta la grilla 2×2 que define tu CSS
-  }
+    // ⛔️ Si es la calculadora moderna v13, no reordenamos nada.
+    if (container.querySelector('form.calc-form')) return;
 
-  // Si ya existe la grilla compactada previa, solo une instalación+servicios y sal.
-  if (container.querySelector('.controls-grid')) {
+    // Si ya existe la grilla compactada previa, solo une instalación+servicios y sal.
+    if (container.querySelector('.controls-grid')) {
+      unirInstalacionServicios(container);
+      return;
+    }
+
+    // detectar bloques por label
+    const bLic = pickByLabel(container, /^licencia/);
+    const bTipo= pickByLabel(container, /^tipo/);
+    const bUsu = pickByLabel(container, /^usuarios?/);
+
+    let bInst = container.querySelector('.inst-wrap') || pickByLabel(container, /instalaci/);
+    if (!bInst) {
+      const anyChk = container.querySelector('input[type="checkbox"]');
+      bInst = anyChk ? (anyChk.closest('.instalacion-box') || anyChk.closest('.field') || anyChk.parentElement) : null;
+    }
+
+    const bloques = [bLic, bTipo, bUsu, bInst].filter(Boolean);
+    bloques.forEach(b => b?.classList?.add('field'));
+    if (!bLic || !bTipo || !bUsu || !bInst) return;
+
+    const grid = document.createElement('div');
+    grid.className = 'controls-grid';
+    grid.append(bLic, bTipo, bUsu, bInst);
+    container.insertBefore(grid, container.firstElementChild);
+
+    // Une instalación + servicios si aplica
     unirInstalacionServicios(container);
-    return;
   }
-
-  // ==== (lo que ya tenías) detectar bloques por label ====
-  const bLic = pickByLabel(container, /^licencia/);
-  const bTipo= pickByLabel(container, /^tipo/);
-  const bUsu = pickByLabel(container, /^usuarios?/);
-
-  let bInst = container.querySelector('.inst-wrap') || pickByLabel(container, /instalaci/);
-  if (!bInst) {
-    const anyChk = container.querySelector('input[type="checkbox"]');
-    bInst = anyChk ? (anyChk.closest('.instalacion-box') || anyChk.closest('.field') || anyChk.parentElement) : null;
-  }
-
-  const bloques = [bLic, bTipo, bUsu, bInst].filter(Boolean);
-  bloques.forEach(b => b?.classList?.add('field'));
-  if (!bLic || !bTipo || !bUsu || !bInst) return;
-
-  const grid = document.createElement('div');
-  grid.className = 'controls-grid';
-  grid.append(bLic, bTipo, bUsu, bInst);
-  container.insertBefore(grid, container.firstElementChild);
-
-  // Une instalación + servicios si aplica
-  unirInstalacionServicios(container);
-}
 
   function unirInstalacionServicios(container){
     if (!container) return;
@@ -878,30 +875,30 @@ const CalculadoraNube = (function(){
   const target = document.getElementById('calc-primary');
   if (!target) return;
 
-// ——— compactador: ejecutar y observar ———
-const tryCompact = () => {
-  const container = document.querySelector('.calc-container') || target;
-  if (!container) return;
-  // ⛔️ no tocar la v13 moderna
-  if (container.querySelector('form.calc-form')) return;
-  compactar(container);
-};
+  // ——— compactador: ejecutar y observar ———
+  const tryCompact = () => {
+    const container = document.querySelector('.calc-container') || target;
+    if (!container) return;
+    if (container.querySelector('form.calc-form')) return; // v13: no tocar
+    compactar(container);
+  };
 
-// 1) primer tiro
-tryCompact();
-requestAnimationFrame(tryCompact);
+  // 1) primer tiro
+  tryCompact();
+  requestAnimationFrame(tryCompact);
 
-// 2) observar mutaciones dentro de #calc-primary
-const mo = new MutationObserver(() => tryCompact());
-mo.observe(target, { childList: true, subtree: true });
+  // 2) observar mutaciones dentro de #calc-primary
+  const mo = new MutationObserver(() => tryCompact());
+  mo.observe(target, { childList: true, subtree: true });
 
-// 3) hooks de recálculo/render
-window.addEventListener('calc-recompute', tryCompact);
-window.addEventListener('calc-render', tryCompact);
+  // 3) hooks de recálculo/render
+  window.addEventListener('calc-recompute', tryCompact);
+  window.addEventListener('calc-render', tryCompact);
 
-// 4) pequeños retries por cargas tardías
-setTimeout(tryCompact, 500);
-setTimeout(tryCompact, 1200);
+  // 4) pequeños retries por cargas tardías
+  setTimeout(tryCompact, 500);
+  setTimeout(tryCompact, 1200);
+})();  // ← **Cierre del IIFE del compactador** ✅
 
 /* =========================================================
    🧭 Expiriti – AutoDiag Carruseles / Listas Horizontales
@@ -955,5 +952,3 @@ setTimeout(tryCompact, 1200);
 
   console.log("%c🧩 Usa el objeto _diagFix en cada elemento para aplicar fixes desde consola (ej: document.querySelector('.icons-wrap')._diagFix.flexStart())","color:#60a5fa");
 })();
-
-
