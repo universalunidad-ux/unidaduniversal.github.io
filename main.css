@@ -460,3 +460,32 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   .calc-container .instalacion-box{ flex-wrap:wrap; }
 }
 
+/* ===== Centrado vertical del picker de sistemas dentro de la calculadora ===== */
+
+/* Navegadores con :has */
+.calc-container:has(> .icons-wrap){
+  display: grid;                 /* centra el contenido del contenedor */
+  place-items: center;           /* centra horizontal y vertical */
+  padding-block: 18px;           /* un poco de aire */
+  min-height: 220px;             /* mantiene altura agradable */
+}
+.calc-container:has(> .icons-wrap) .icons-wrap{
+  margin: 0;                     /* evita empujes extra */
+  padding-inline: 16px;          /* conserva tu padding lateral */
+}
+
+/* Fallback sin :has (Firefox antiguo, etc.) */
+@supports not (selector(:has(*))) {
+  #calc-secondary, #calc-tertiary {
+    display: grid;
+    place-items: center;
+    padding-block: 18px;
+    min-height: 220px;
+  }
+  #calc-secondary .icons-wrap,
+  #calc-tertiary .icons-wrap{
+    margin: 0;
+    padding-inline: 16px;
+  }
+}
+
