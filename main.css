@@ -668,5 +668,66 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
     flex-wrap:wrap !important;      /* permite que baje el texto en pantallas chicas */
   }
 }
+/* ======== Fix calculadora: grid y píldora de Instalación en la MISMA fila ======== */
+.calc-container form{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
+  gap:12px !important;
+}
+
+/* Orden explícito por clases que inyecta el JS */
+.calc-container .field.lic{ grid-column:1 !important; }  /* Licencia */
+.calc-container .field.rfc{ grid-column:2 !important; }  /* Tipo (RFC) */
+.calc-container .op-label{ grid-column:1 / -1 !important; } /* Operación ocupa fila completa cuando aparece */
+.calc-container .field.usr{ grid-column:1 !important; }  /* Usuarios */
+.calc-container .inst-wrap{ grid-column:2 !important; }  /* Instalación */
+
+/* Píldora de instalación: checkbox y texto alineados en una sola línea (desktop) */
+.calc-container .instalacion-box{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  padding:10px 12px !important;
+  border:1px dashed #2a3b55 !important;
+  border-radius:10px !important;
+  background:rgba(14,23,36,.35) !important;
+  flex-wrap:nowrap !important;
+}
+.calc-container .instalacion-box > label{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  margin:0 !important;
+  white-space:normal !important; /* permite que el texto fluya sin romper línea del checkbox */
+}
+.calc-container .instalacion-box input[type="checkbox"]{ margin:0 !important; }
+.calc-container .instalacion-box .inst-hint,
+.calc-container .instalacion-box span{ display:inline !important; margin-left:6px !important; }
+
+/* Evita que algún estilo previo fuerce a una sola columna en desktop */
+@media (min-width: 769px){
+  .calc-container form > *{ grid-column:auto !important; }
+}
+
+/* En móvil sí bajan a una columna (y la píldora puede envolver) */
+@media (max-width:768px){
+  .calc-container form{ grid-template-columns:1fr !important; }
+  .calc-container .inst-wrap{ grid-column:1 !important; }
+  .calc-container .instalacion-box{ flex-wrap:wrap !important; }
+}
+
+/* Quita cualquier regla vieja con placeholders que haya quedado en tu hoja */
+.calc-container select,
+.calc-container input[type="number"],
+.calc-container input[type="text"]{
+  width:100% !important;
+  padding:8px 10px !important;
+  border-radius:10px !important;
+  border:1px solid #243248 !important;
+  background:#0e1724 !important;
+  color:#e8eef6 !important;
+  margin:6px 0 !important;
+}
+.calc-container label{ display:block; margin-top:6px; color:#cfe3ff; font-weight:600; font-size:13px; }
 
 
