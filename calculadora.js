@@ -72,50 +72,35 @@ if (document?.body?.getAttribute('data-calc') === 'nube' || window.__EXPIRITI_FO
     form.style.gridTemplateColumns = "1fr";
     form.style.gap = "8px";
 
-    // 1) Licencia
-    var licenciaLabel = document.createElement("label");
-    licenciaLabel.textContent = "Licencia: ";
-    var licenciaSel = document.createElement("select");
-    licenciaSel.id = "lic"+idSuffix;
-    [
-      { v: "nueva", t: "Nueva" },
-      { v: "renovacion", t: "Renovación" },
-      { v: "tradicional", t: "Tradicional" }
-    ].forEach(function(o){
-      var opt=document.createElement("option"); opt.value=o.v; opt.textContent=o.t; licenciaSel.appendChild(opt);
-    });
-    licenciaLabel.appendChild(licenciaSel);
-    form.appendChild(licenciaLabel);
+// 1) Licencia
+var licenciaLabel = document.createElement("label");
+licenciaLabel.classList.add('field','lic');          // ← AÑADIDO
+licenciaLabel.textContent = "Licencia: ";
+...
+form.appendChild(licenciaLabel);
 
-    // 2) Operación (oculto por defecto; solo visible en Tradicional)
-    var opLabel = document.createElement("label");
-    opLabel.className = "op-label"; // clase clave para el parche CSS
-    opLabel.textContent = "Operación: ";
-    var opSel = document.createElement("select");
-    opSel.id = "op"+idSuffix;
-    opLabel.appendChild(opSel);
-    form.appendChild(opLabel);
+// 2) Operación
+var opLabel = document.createElement("label");
+opLabel.className = "op-label";                      // ya estaba
+...
 
-    // 3) Tipo (RFC)
-    var rfcLabel = document.createElement("label");
-    rfcLabel.textContent = "Tipo (RFC): ";
-    var rfcSel = document.createElement("select");
-    rfcSel.id = "rfc"+idSuffix;
-    rfcLabel.appendChild(rfcSel);
-    form.appendChild(rfcLabel);
+// 3) Tipo (RFC)
+var rfcLabel = document.createElement("label");
+rfcLabel.classList.add('field','rfc');               // ← AÑADIDO
+rfcLabel.textContent = "Tipo (RFC): ";
+...
+form.appendChild(rfcLabel);
 
-    // 4) Usuarios
-    var userLabel = document.createElement("label");
-    userLabel.textContent = "Usuarios: ";
-    var userInput = document.createElement("input");
-    userInput.type = "number"; userInput.min = "1"; userInput.value = "1"; userInput.id = "usr"+idSuffix;
-    userLabel.appendChild(userInput);
-    form.appendChild(userLabel);
+// 4) Usuarios
+var userLabel = document.createElement("label");
+userLabel.classList.add('field','usr');              // ← AÑADIDO
+userLabel.textContent = "Usuarios: ";
+...
+form.appendChild(userLabel);
 
- // 5) Instalación (opcional)
+// 5) Instalación (opcional)
 var instWrap = document.createElement("div");
-instWrap.className = "inst-wrap";
-instWrap.style.cssText = "padding:0;margin:0;border:0;background:transparent";
+instWrap.className = "inst-wrap";                    // ya lo tienes así, perfecto
 instWrap.innerHTML = `
   <div class="instalacion-box">
     <label style="display:flex;align-items:center;gap:10px;margin:0;flex-wrap:wrap">
@@ -127,6 +112,7 @@ instWrap.innerHTML = `
   </div>
 `;
 form.appendChild(instWrap);
+
 
 
     // Blindaje: aseguramos Licencia en primer lugar
