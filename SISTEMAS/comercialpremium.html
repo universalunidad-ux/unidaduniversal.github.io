@@ -150,14 +150,15 @@
     </div>
   </section>
 
-  <!-- ✅ REELS + VIDEOS (Comercial Premium) -->
+ <!-- ✅ REELS + VIDEOS (Comercial Premium) -->
 <section id="beneficios" aria-label="Por qué usar">
   <div class="grid-2 align-center">
     <div>
       <h2 class="title-gradient">¿Por qué usar Comercial Premium? <span class="badge">Beneficios clave</span></h2>
       <p class="lead">La solución más robusta para empresas que requieren control total, desde la compra hasta la producción, servicio postventa y análisis financiero.</p>
+
       <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
         <div class="listTrack" role="region" aria-label="Beneficios">
           <div class="listPage">
             <div class="listItem"><div class="listIcon"><img src="../IMG/126-solicitud.webp" alt="" loading="lazy"></div><div><strong>CONTROL TOTAL 360°</strong><div>Integra todas las áreas operativas y administrativas.</div></div></div>
@@ -170,55 +171,36 @@
             <div class="listItem"><div class="listIcon"><img src="../IMG/073-mejor.webp" alt="" loading="lazy"></div><div><strong>FLEXIBILIDAD Y PODER</strong><div>Se adapta a procesos complejos y escala contigo.</div></div></div>
           </div>
         </div>
-        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
       </div>
     </div>
 
-    <!-- 🎥 REELS destacados: 2 piezas -->
+    <!-- 🎥 REELS destacados (sincroniza títulos y pausa otros iframes) -->
     <div>
       <aside class="card body">
         <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Comercial Premium</h4>
         <h4 class="reel-title active">Comercial Premium — Reel principal</h4>
         <h4 class="reel-title">Comercial Premium — Reel complementario</h4>
 
-        <div class="carousel" id="carouselReelsComercialPremium" aria-label="Reels Comercial Premium">
-          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+        <div class="carousel" id="carouselReels" aria-label="Reels Comercial Premium">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
 
           <div class="carousel-track">
-            <!-- Reel 1 (tu shorts ⇒ embed nocookie) -->
+            <!-- Reel 1 -->
             <div class="carousel-slide">
-              <div class="reel-embed">
-                <iframe
-                  src="https://www.youtube-nocookie.com/embed/_Krv5nTyFuY?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-                  title="Reel CONTPAQi Comercial Premium 1"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  loading="lazy">
-                </iframe>
-              </div>
+              <div class="reel-embed" data-ytid="_Krv5nTyFuY" data-title="Reel CONTPAQi Comercial Premium 1"></div>
             </div>
-
-            <!-- Reel 2 (TEMP; reemplaza el ID cuando tengas el definitivo) -->
+            <!-- Reel 2 (TEMP) -->
             <div class="carousel-slide">
-              <div class="reel-embed">
-                <iframe
-                  src="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-                  title="Reel CONTPAQi Comercial Premium 2 (TEMP)"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  loading="lazy">
-                </iframe>
-              </div>
+              <div class="reel-embed" data-ytid="M7lc1UVf-VE" data-title="Reel CONTPAQi Comercial Premium 2 (TEMP)"></div>
             </div>
           </div>
 
-          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+          <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
 
           <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1"></button>
-            <button class="dot" aria-label="Ir al reel 2"></button>
+            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
           </div>
         </div>
       </aside>
@@ -226,41 +208,23 @@
   </div>
 </section>
 
-<!-- 🎬 VIDEOS del sistema: 2 piezas (mantengo tus IDs) -->
+<!-- 🎬 VIDEOS del sistema -->
 <section id="videos" aria-labelledby="videos-title">
   <div class="card body">
     <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
     <div class="yt-grid">
       <div class="yt">
         <h4 class="yt-title">Presentación CONTPAQi Comercial Premium</h4>
-        <div class="yt-wrap">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/GjrAZGlF-L0?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-            title="Presentación CONTPAQi Comercial Premium"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            loading="lazy">
-          </iframe>
-        </div>
+        <div class="yt-wrap" data-ytid="GjrAZGlF-L0" data-title="Presentación CONTPAQi Comercial Premium"></div>
       </div>
-
       <div class="yt">
         <h4 class="yt-title">¿Qué hace CONTPAQi Comercial Premium?</h4>
-        <div class="yt-wrap">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/5DbmFwNkLRE?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-            title="Qué hace CONTPAQi Comercial Premium"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            loading="lazy">
-          </iframe>
-        </div>
+        <div class="yt-wrap" data-ytid="5DbmFwNkLRE" data-title="Qué hace CONTPAQi Comercial Premium"></div>
       </div>
     </div>
   </div>
 </section>
+
 
   
 <section id="integra" aria-labelledby="integra-title">
