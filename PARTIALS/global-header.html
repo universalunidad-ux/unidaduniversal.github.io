@@ -27,12 +27,15 @@
     .gh-subhead svg{width:16px;height:16px;opacity:.9}
     .gh-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
     .gh-col a.gh-link{
-      display:flex;gap:8px;align-items:center;
+      display:flex;gap:10px;align-items:center;
       padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--text);
       border:1px solid transparent
     }
     .gh-col a.gh-link:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.10);transform:translateY(-1px)}
     .gh-col .k{font-size:11px;color:var(--muted)}
+    .gh-ico32{width:28px;height:28px;border-radius:6px;object-fit:cover;flex:0 0 28px}
+    .gh-link .txt{display:flex;flex-direction:column;line-height:1.15}
+    .gh-link .sub{font-size:11px;color:var(--muted);margin-top:2px}
 
     /* Servicios list */
     .gh-list{display:flex;flex-direction:column;gap:6px;min-width:280px}
@@ -97,10 +100,30 @@
                   <span class="k">Desktop</span>
                 </div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html">CONTPAQi Contabilidad®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html">CONTPAQi Nóminas®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html">CONTPAQi Bancos®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html">CONTPAQi XML en Línea+®</a></li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/contabilidad.webp" alt="">
+                      <span class="txt"><strong>CONTPAQi Contabilidad®</strong><span class="sub">Pólizas, IVA, DIOT</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/nominas.webp" alt="">
+                      <span class="txt"><strong>CONTPAQi Nóminas®</strong><span class="sub">Cálculo y timbrado</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/bancos.webp" alt="">
+                      <span class="txt"><strong>CONTPAQi Bancos®</strong><span class="sub">Conciliación y tesorería</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/xmllinea.webp" alt="">
+                      <span class="txt"><strong>XML en Línea+®</strong><span class="sub">Descarga/validación CFDI</span></span>
+                    </a>
+                  </li>
                 </ul>
 
                 <div class="gh-subhead" style="margin-top:10px">
@@ -108,10 +131,30 @@
                   <span class="k">Nube</span>
                 </div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html">CONTPAQi Contabiliza®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html">CONTPAQi Analiza®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html">CONTPAQi Personia®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html">CONTPAQi Despachos®</a></li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/contabiliza.webp" alt="">
+                      <span class="txt"><strong>Contabiliza®</strong><span class="sub">Contabilidad en la nube</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/analiza.webp" alt="">
+                      <span class="txt"><strong>Analiza®</strong><span class="sub">Dashboards y BI</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/personia.webp" alt="">
+                      <span class="txt"><strong>Personia®</strong><span class="sub">Nómina en la nube</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/despachos.webp" alt="">
+                      <span class="txt"><strong>Despachos®</strong><span class="sub">Gestión de despachos</span></span>
+                    </a>
+                  </li>
                 </ul>
               </div>
 
@@ -124,10 +167,30 @@
                   <span class="k">Desktop</span>
                 </div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html">CONTPAQi Comercial Premium®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html">CONTPAQi Comercial Pro®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html">CONTPAQi Comercial Start®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html">CONTPAQi Factura Electrónica®</a></li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/comercialpremium.webp" alt="">
+                      <span class="txt"><strong>Comercial Premium®</strong><span class="sub">Inventario avanzado</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/comercialpro.webp" alt="">
+                      <span class="txt"><strong>Comercial Pro®</strong><span class="sub">Operaciones de volumen</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/comercialstart.webp" alt="">
+                      <span class="txt"><strong>Comercial Start®</strong><span class="sub">Lo esencial para arrancar</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/facturaelectronica.webp" alt="">
+                      <span class="txt"><strong>Factura Electrónica®</strong><span class="sub">CFDI 4.0</span></span>
+                    </a>
+                  </li>
                 </ul>
 
                 <div class="gh-subhead" style="margin-top:10px">
@@ -135,8 +198,18 @@
                   <span class="k">Nube</span>
                 </div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html">CONTPAQi Vende®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html">CONTPAQi CFDI Facturación en Línea®</a></li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/vende.webp" alt="">
+                      <span class="txt"><strong>Vende®</strong><span class="sub">Punto de venta nube</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/facturaelectronica.webp" alt="">
+                      <span class="txt"><strong>CFDI en Línea®</strong><span class="sub">Facturación/Timbre</span></span>
+                    </a>
+                  </li>
                 </ul>
               </div>
 
@@ -149,9 +222,24 @@
                   <span class="k">Nube</span>
                 </div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/kursa.html">CONTPAQi Kursa®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html">CONTPAQi Evalúa®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html">CONTPAQi Colabora®</a></li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/kursa.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/kursa.webp" alt="">
+                      <span class="txt"><strong>Kursa®</strong><span class="sub">Capacitación</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/evalua.webp" alt="">
+                      <span class="txt"><strong>Evalúa®</strong><span class="sub">NOM 035/037</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/colabora.webp" alt="">
+                      <span class="txt"><strong>Colabora®</strong><span class="sub">Autoservicio empleados</span></span>
+                    </a>
+                  </li>
                 </ul>
 
                 <div class="gh-subhead" style="margin-top:10px">
@@ -159,7 +247,12 @@
                   <span class="k">Promociones del mes</span>
                 </div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="promociones.html">Ver promociones vigentes</a></li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="promociones.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/promo.webp" alt="">
+                      <span class="txt"><strong>Ver promociones</strong><span class="sub">Descuentos vigentes</span></span>
+                    </a>
+                  </li>
                 </ul>
               </div>
 
@@ -172,9 +265,24 @@
                   <span class="k">Nube</span>
                 </div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/respaldo.html">CONTPAQi Respaldos®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/escritorio-virtual.html">CONTPAQi Escritorio Virtual®</a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/timbra.html">CONTPAQi Timbra®</a></li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/respaldo.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/respaldos.webp" alt="">
+                      <span class="txt"><strong>Respaldos®</strong><span class="sub">Backups administrados</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/escritorio-virtual.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/escritorio-virtual.webp" alt="">
+                      <span class="txt"><strong>Escritorio Virtual®</strong><span class="sub">Apps en la nube</span></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="gh-link js-abs-href" data-href="SISTEMAS/timbra.html">
+                      <img class="gh-ico32 js-abs-src" data-src="IMG/timbra.webp" alt="">
+                      <span class="txt"><strong>Timbra®</strong><span class="sub">Servicio de timbrado</span></span>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
