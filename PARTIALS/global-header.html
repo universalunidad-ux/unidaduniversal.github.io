@@ -194,29 +194,62 @@
       const $ = (s,ctx=document)=>ctx.querySelector(s);
       const $$ = (s,ctx=document)=>Array.from(ctx.querySelectorAll(s));
 
+      /* ===== Resolver rutas (repoBase-aware) ===== */
+      const isGh = location.hostname.endsWith("github.io");
+      const firstSeg = location.pathname.split("/")[1] || "";
+      const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
+      const makeAbs = (p) => {
+        if (!p) return "#";
+        if (/^https?:\/\//i.test(p)) return p;          // externo
+        if (p.startsWith("#")) return p;                // ancla
+        if (p.startsWith("/")) return (repoBase + p).replace(/\/+/g,"/");
+        return (repoBase + "/" + p).replace(/\/+/g,"/"); // relativo al repo
+      };
+
+      // <a class="js-abs-href" data-href="...">
+      $$('.js-abs-href[data-href]').forEach(a=>{
+        const p = a.getAttribute('data-href');
+        // Permite hashes tipo "index.html#productos"
+        const [base, hash] = (p||"").split('#');
+        a.href = makeAbs(base) + (hash ? ('#'+hash) : '');
+      });
+
+      // <img class="js-abs-src" data-src="...">
+      $$('.js-abs-src[data-src]').forEach(img=>{
+        img.src = makeAbs(img.getAttribute('data-src'));
+      });
+
       /* Burger */
       const burger = $('#gh-burger');
       const drawer = $('#gh-mobile');
       const closeBtn = $('#gh-mclose');
       const toggle = (open)=> {
         drawer.classList.toggle('open', open);
-        drawer.setAttribute('aria-hidden', !open);
+        drawer.setAttribute('aria-hidden', (!open).toString());
         document.body.style.overflow = open ? 'hidden' : '';
       };
       burger?.addEventListener('click', ()=>toggle(true));
       closeBtn?.addEventListener('click', ()=>toggle(false));
       drawer?.addEventListener('click', (e)=>{ if(e.target===drawer) toggle(false); });
 
-      /* Activo por ruta */
-      const path = location.pathname.replace(/\/index\.html?$/,'/'); 
+      /* Activo por ruta (comparando pathname normalizado) */
+      const norm = (u) => {
+        try{
+          const url = new URL(u, location.origin);
+          // quita /index.html y normaliza doble slash
+          return url.pathname.replace(/\/index\.html?$/,'/').replace(/\/+/g,'/');
+        }catch{ return u; }
+      };
+      const here = norm(location.pathname);
+
+      // asegúrate de correr esto DESPUÉS de fijar hrefs
       $$('.gh-nav a, .gh-mnav a').forEach(a=>{
         const href = a.getAttribute('href');
-        if(!href) return;
-        const abs = new URL(href, location.origin).pathname;
-        if(abs === path) a.style.background = 'rgba(255,255,255,.08)';
+        if(!href || href.startsWith('http')) return;
+        if (norm(href) === here) a.style.background = 'rgba(255,255,255,.08)';
       });
 
-      /* Subnav contextual */
+      /* Subnav contextual (solo si existen las secciones en la página actual) */
       const sub = $('#gh-subnav'); const inner = $('#gh-subinner');
       const anchors = [
         ['#caracteristicas','Funcionalidades'],
@@ -232,31 +265,12 @@
         inner.innerHTML = anchors.map(([id,txt])=>`<a href="${id}">${txt}</a>`).join('');
       }
 
-      /* Accesibilidad */
+      /* Accesibilidad: bajar al primer item del dropdown con ArrowDown */
       $$('.gh-has-dd > a').forEach(trigger=>{
         const dd = trigger.parentElement.querySelector('.gh-dd');
         trigger.addEventListener('keydown', (e)=>{
           if(e.key==='ArrowDown'){ e.preventDefault(); dd?.querySelector('a,button,summary')?.focus(); }
         });
-      });
-
-      /* ===== Resolver rutas (repoBase-aware) ===== */
-      const isGh = location.hostname.endsWith("github.io");
-      const firstSeg = location.pathname.split("/")[1] || "";
-      const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
-      const abs = (p) => (repoBase + "/" + p).replace(/\/+/g,"/");
-
-      // <a class="js-abs-href" data-href="...">
-      $$('.js-abs-href[data-href]').forEach(a=>{
-        const p = a.getAttribute('data-href');
-        // Permite hashes tipo "index.html#productos"
-        const [base, hash] = p.split('#');
-        a.href = abs(base) + (hash ? ('#'+hash) : '');
-      });
-
-      // <img class="js-abs-src" data-src="...">
-      $$('.js-abs-src[data-src]').forEach(img=>{
-        img.src = abs(img.getAttribute('data-src'));
       });
     })();
   </script>
