@@ -310,6 +310,17 @@
 })();
 </script>
 
+<script>
+Promise.all([
+  fetch("PARTIALS/global-header.html").then(r=>r.text()),
+  fetch("PARTIALS/global-footer.html").then(r=>r.text())
+]).then(([header, footer])=>{
+  const hp = document.getElementById("header-placeholder");
+  const fp = document.getElementById("footer-placeholder");
+  if (hp) hp.outerHTML = header;
+  if (fp) fp.outerHTML = footer;
+}).catch(e=>console.error("No se pudo cargar header/footer:", e));
+</script>
 
   <!-- 1) Tabla de precios (debe existir la clave del sistema) -->
   <script src="../precios-contpaqi.js"></script>
