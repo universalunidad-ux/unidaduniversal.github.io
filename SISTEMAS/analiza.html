@@ -143,15 +143,15 @@
       </div>
     </div>
   </section>
-
- <!-- ✅ REELS + VIDEOS (Analiza) -->
+<!-- ✅ REELS + VIDEOS (Analiza) -->
 <section id="beneficios" aria-label="Por qué usar">
   <div class="grid-2 align-center">
     <div>
       <h2 class="title-gradient">¿Por qué usar Analiza? <span class="badge">Beneficios Nube</span></h2>
       <p class="lead">Deja de perder tiempo en Excel. Unifica la información de tus sistemas CONTPAQi y obtén reportes en segundos para tomar mejores decisiones.</p>
+
       <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
         <div class="listTrack">
           <div class="listPage">
             <div class="listItem"><div class="listIcon"><img src="../IMG/estadisticas%20(1).webp" alt=""></div><div><strong>VISIBILIDAD 360</strong><div>Conecta y centraliza datos de todas tus áreas (finanzas, ventas, RH).</div></div></div>
@@ -164,55 +164,36 @@
             <div class="listItem"><div class="listIcon"><img src="../IMG/red-en-la-nube.webp" alt=""></div><div><strong>ECOSISTEMA CONECTADO</strong><div>El BI diseñado para tus sistemas CONTPAQi.</div></div></div>
           </div>
         </div>
-        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
       </div>
     </div>
 
-    <!-- 🎥 REELS destacados: 2 piezas -->
+    <!-- 🎥 REELS destacados -->
     <div>
       <aside class="card body">
         <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Analiza</h4>
+        <!-- Títulos sincronizados con el carrusel (orden 1:1) -->
         <h4 class="reel-title active">Analiza — Reel principal</h4>
         <h4 class="reel-title">Analiza — Reel complementario</h4>
 
-        <div class="carousel" id="carouselReelsAnaliza" aria-label="Reels Analiza">
-          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+        <div class="carousel" id="carouselReels" aria-label="Reels Analiza">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
 
           <div class="carousel-track">
-            <!-- Reel 1 (respetando tu link /shorts ⇒ convertido a embed nocookie) -->
+            <!-- Reel 1 -->
             <div class="carousel-slide">
-              <div class="reel-embed">
-                <iframe
-                  src="https://www.youtube-nocookie.com/embed/gAIGxMHaCLQ?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-                  title="Reel CONTPAQi Analiza 1"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  loading="lazy">
-                </iframe>
-              </div>
+              <div class="reel-embed" data-ytid="gAIGxMHaCLQ" data-title="Reel CONTPAQi Analiza 1"></div>
             </div>
-
-            <!-- Reel 2 (temporal; TODO: reemplazar ID por el definitivo de Analiza) -->
+            <!-- Reel 2 (TEMP: reemplazar cuando tengas el definitivo) -->
             <div class="carousel-slide">
-              <div class="reel-embed">
-                <iframe
-                  src="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-                  title="Reel CONTPAQi Analiza 2 (TEMP)"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  loading="lazy">
-                </iframe>
-              </div>
+              <div class="reel-embed" data-ytid="M7lc1UVf-VE" data-title="Reel CONTPAQi Analiza 2 (TEMP)"></div>
             </div>
           </div>
 
-          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-
+          <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
           <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1"></button>
-            <button class="dot" aria-label="Ir al reel 2"></button>
+            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
           </div>
         </div>
       </aside>
@@ -220,39 +201,18 @@
   </div>
 </section>
 
-<!-- 🎬 VIDEOS del sistema: 2 piezas -->
+<!-- 🎬 VIDEOS del sistema -->
 <section id="videos" aria-labelledby="videos-title">
   <div class="card body">
     <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
     <div class="yt-grid">
-      <!-- Video 1 (TEMP si no tienes aún el ID) -->
       <div class="yt">
         <h4 class="yt-title">Video Principal CONTPAQi Analiza</h4>
-        <div class="yt-wrap">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/gAIGxMHaCLQ?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-            title="Video Principal CONTPAQi Analiza (TEMP)"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            loading="lazy">
-          </iframe>
-        </div>
+        <div class="yt-wrap" data-ytid="gAIGxMHaCLQ" data-title="Video Principal CONTPAQi Analiza (TEMP)"></div>
       </div>
-
-      <!-- Video 2 (TEMP; TODO: reemplazar ID por demo/larga de Analiza) -->
       <div class="yt">
         <h4 class="yt-title">Demo CONTPAQi Analiza</h4>
-        <div class="yt-wrap">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-            title="Demo CONTPAQi Analiza (TEMP)"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            loading="lazy">
-          </iframe>
-        </div>
+        <div class="yt-wrap" data-ytid="M7lc1UVf-VE" data-title="Demo CONTPAQi Analiza (TEMP)"></div>
       </div>
     </div>
   </div>
