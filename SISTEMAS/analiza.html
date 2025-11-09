@@ -288,6 +288,12 @@
   })
   .catch(e => console.error("No se pudo cargar header/footer:", e));
 </script>
+  
+<script>
+  fetch("../PARTIALS/global-head.html")
+    .then(r=>r.text())
+    .then(h=>document.head.innerHTML = h + document.head.innerHTML);
+</script>
 
 
   <!-- 1) Tabla de precios (debe existir la clave del sistema) -->
