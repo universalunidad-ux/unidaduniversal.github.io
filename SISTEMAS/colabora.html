@@ -152,15 +152,15 @@
       </div>
     </div>
   </section>
-
-  <!-- ✅ REELS + VIDEOS (Colabora) -->
+<!-- ✅ REELS + VIDEOS (Colabora) -->
 <section id="beneficios" aria-label="Por qué usar">
   <div class="grid-2 align-center">
     <div>
       <h2 class="title-gradient">¿Por qué usar Colabora? <span class="badge">Beneficios clave</span></h2>
       <p class="lead">Empodera a tus empleados dándoles acceso a su información y libera tiempo valioso del equipo de Recursos Humanos.</p>
+
       <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
         <div class="listTrack" role="region" aria-label="Beneficios">
           <div class="listPage">
             <div class="listItem"><div class="listIcon"><img src="../IMG/207-entregado-2.webp" alt="" loading="lazy"></div><div><strong>EMPLEADOS INFORMADOS</strong><div>Autoservicio para consultas de recibos y saldos.</div></div></div>
@@ -173,55 +173,34 @@
             <div class="listItem"><div class="listIcon"><img src="../IMG/161-marcador.webp" alt="" loading="lazy"></div><div><strong>VALOR AGREGADO</strong><div>Mejora la experiencia del empleado sin costo extra.</div></div></div>
           </div>
         </div>
-        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
       </div>
     </div>
 
-    <!-- 🎥 REELS destacados: 2 piezas -->
+    <!-- 🎥 REELS destacados (sincroniza .reel-title y pausa otros players) -->
     <div>
       <aside class="card body">
         <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Colabora</h4>
         <h4 class="reel-title active">Colabora — Reel principal</h4>
         <h4 class="reel-title">Colabora — Reel complementario</h4>
 
-        <div class="carousel" id="carouselReelsColabora" aria-label="Reels Colabora">
-          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+        <div class="carousel" id="carouselReels" aria-label="Reels Colabora">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
 
           <div class="carousel-track">
-            <!-- Reel 1 (respeta tu link shorts ⇒ embed nocookie) -->
             <div class="carousel-slide">
-              <div class="reel-embed">
-                <iframe
-                  src="https://www.youtube-nocookie.com/embed/gae67GDse30?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-                  title="Reel CONTPAQi Colabora 1"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  loading="lazy">
-                </iframe>
-              </div>
+              <div class="reel-embed" data-ytid="gae67GDse30" data-title="Reel CONTPAQi Colabora 1"></div>
             </div>
-
-            <!-- Reel 2 (TEMP; reemplaza el ID cuando tengas el definitivo) -->
             <div class="carousel-slide">
-              <div class="reel-embed">
-                <iframe
-                  src="https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-                  title="Reel CONTPAQi Colabora 2 (TEMP)"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  loading="lazy">
-                </iframe>
-              </div>
+              <div class="reel-embed" data-ytid="aqz-KE-bpKQ" data-title="Reel CONTPAQi Colabora 2 (TEMP)"></div>
             </div>
           </div>
 
-          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+          <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
 
           <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1"></button>
-            <button class="dot" aria-label="Ir al reel 2"></button>
+            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
           </div>
         </div>
       </aside>
@@ -229,45 +208,25 @@
   </div>
 </section>
 
-<!-- 🎬 VIDEOS del sistema: 2 piezas -->
+<!-- 🎬 VIDEOS del sistema -->
 <section id="videos" aria-labelledby="videos-title">
   <div class="card body">
     <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
     <div class="yt-grid">
-      <!-- Video 1 (no tenías ID; agrego TEMP) -->
       <div class="yt">
         <h4 class="yt-title">Video principal CONTPAQi Colabora</h4>
-        <div class="yt-wrap">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-            title="Video principal CONTPAQi Colabora (TEMP)"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            loading="lazy">
-          </iframe>
-        </div>
+        <div class="yt-wrap" data-ytid="M7lc1UVf-VE" data-title="Video principal CONTPAQi Colabora (TEMP)"></div>
       </div>
-
-      <!-- Video 2 (no tenías ID; agrego TEMP) -->
       <div class="yt">
         <h4 class="yt-title">Demo CONTPAQi Colabora</h4>
-        <div class="yt-wrap">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ?enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1"
-            title="Demo CONTPAQi Colabora (TEMP)"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            loading="lazy">
-          </iframe>
-        </div>
+        <div class="yt-wrap" data-ytid="aqz-KE-bpKQ" data-title="Demo CONTPAQi Colabora (TEMP)"></div>
       </div>
     </div>
   </div>
 </section>
 
-
+  
+  
 <section id="integra" aria-labelledby="integra-title">
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
   <h3 id="integra-title" class="title-gradient">CONTPAQi Colabora funciona con:</h3>
