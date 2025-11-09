@@ -907,6 +907,7 @@ const CalculadoraNube = (function(){
   console.log("%c🧭 Expiriti AutoDiag iniciado", "color:#2dd4bf;font-weight:700");
 
   const selectors = [".carouselX .track", ".icons-wrap"];
+
   const found = selectors.flatMap(sel => Array.from(document.querySelectorAll(sel)));
 
   found.forEach((el, i) => {
@@ -952,3 +953,38 @@ const CalculadoraNube = (function(){
 
   console.log("%c🧩 Usa el objeto _diagFix en cada elemento para aplicar fixes desde consola (ej: document.querySelector('.icons-wrap')._diagFix.flexStart())","color:#60a5fa");
 })();
+
+/* Centrar verticalmente el bloque (título + icons) en contenedores de picker */
+.calc-container:has(> .icons-wrap):not(:has(form, .calc-nube)),
+.calc-container:has(> h4 + .icons-wrap):not(:has(form, .calc-nube)){
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;    /* centra vertical */
+  /* opcional: alinéalo horizontalmente si lo quieres centrado */
+  /* align-items: center; */
+  min-height: 220px;
+  padding-block: 18px;
+}
+
+/* Ajustes al carril para que no “empuje” */
+.calc-container:has(> .icons-wrap) > .icons-wrap{
+  margin: 0;
+  padding-inline: 16px;
+}
+
+/* Fallback sin :has (Firefox antiguo): aplica a secundarios/terciarios */
+@supports not (selector(:has(*))) {
+  #calc-secondary, #calc-tertiary{
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 220px;
+    padding-block: 18px;
+  }
+  #calc-secondary .icons-wrap,
+  #calc-tertiary  .icons-wrap{
+    margin: 0;
+    padding-inline: 16px;
+  }
+}
+
