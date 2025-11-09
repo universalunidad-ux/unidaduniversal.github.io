@@ -1,0 +1,113 @@
+<!-- /PARTIALS/global-footer.html -->
+<footer class="gf" role="contentinfo">
+  <style>
+    /* ====== GLOBAL FOOTER (scoped) ====== */
+    .gf{margin-top:40px;background:var(--bg,#0b0f14);border-top:1px solid rgba(255,255,255,.06);color:var(--text,#e8eef6)}
+    .gf-container{max-width:var(--maxw,1200px);margin:0 auto;padding:22px 16px}
+    .gf-grid{display:grid;grid-template-columns:2fr 1.3fr 1.3fr 1.7fr;gap:18px}
+    .gf h3.gf-title{margin:0 0 8px;font-size:16px;color:var(--text)}
+    .gf .gf-hint{color:var(--muted,#95a2b3);font-size:13px}
+    /* Contacto */
+    .gf-contact{display:flex;flex-direction:column;gap:8px}
+    .gf-row{display:flex;gap:8px;align-items:flex-start}
+    .gf-ico{width:18px;height:18px;opacity:.95;flex:0 0 18px}
+    .gf a{color:var(--text);text-decoration:none}
+    .gf a:hover{text-decoration:underline}
+    /* Pagos / Marcas / Aliados */
+    .gf-payments img{max-width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,.08)}
+    .gf-brands{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .gf-brand{background:var(--card,#111723);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:8px;display:flex;align-items:center;justify-content:center}
+    .gf-brand img{width:92px;height:auto}
+    .gf-allies{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+    .gf-allies img{height:34px;width:auto;border-radius:8px;background:var(--card,#111723);border:1px solid rgba(255,255,255,.06);padding:6px}
+    /* Bottom bar */
+    .gf-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;margin-top:16px}
+    .gf-brandmini{display:flex;align-items:center;gap:10px}
+    .gf-brandmini img{width:34px;height:34px;border-radius:8px}
+    /* Responsive */
+    @media (max-width: 980px){
+      .gf-grid{grid-template-columns:1fr 1fr}
+      .gf-allies{justify-content:flex-start}
+    }
+    @media (max-width: 640px){
+      .gf-grid{grid-template-columns:1fr}
+      .gf-bottom{flex-direction:column;gap:8px;align-items:flex-start}
+    }
+  </style>
+
+  <div class="gf-container">
+    <div class="gf-grid" aria-label="Información de pie de página">
+      <!-- Columna: Contacto -->
+      <section aria-labelledby="gf-contacto">
+        <h3 id="gf-contacto" class="gf-title">Contacto</h3>
+        <div class="gf-contact">
+          <div class="gf-row">
+            <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l7 7v11H5V9l7-7z" stroke="currentColor" stroke-width="2"/></svg>
+            <div><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</div>
+          </div>
+          <div class="gf-row">
+            <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92V21a1 1 0 0 1-1.09 1A19.86 19.86 0 0 1 3 5.09 1 1 0 0 1 4 4h4.09A1 1 0 0 1 9 4.91a12.66 12.66 0 0 0 7.05 7.05 1 1 0 0 1 .91.91V18a1 1 0 0 1-1 1h-.09" stroke="currentColor" stroke-width="2"/></svg>
+            <div><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></div>
+          </div>
+          <div class="gf-row">
+            <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h16v16H4z M22 6l-10 7L2 6" stroke="currentColor" stroke-width="2"/></svg>
+            <div><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></div>
+          </div>
+          <div class="gf-row">
+            <img class="gf-ico" src="/IMG/whatsapp.svg" alt="" aria-hidden="true">
+            <div><a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quisiera%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp directo</a></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Columna: Formas de pago -->
+      <section aria-labelledby="gf-pagos">
+        <h3 id="gf-pagos" class="gf-title">Formas de pago</h3>
+        <div class="gf-payments">
+          <img src="/IMG/pasarela-2.webp" alt="Métodos de pago aceptados" loading="lazy">
+        </div>
+      </section>
+
+      <!-- Columna: Marcas -->
+      <section aria-labelledby="gf-marcas">
+        <h3 id="gf-marcas" class="gf-title">Marcas</h3>
+        <div class="gf-brands">
+          <div class="gf-brand"><img src="/IMG/CONTPAQi.webp" alt="CONTPAQi" loading="lazy"></div>
+          <div class="gf-brand"><img src="/IMG/Microsoft.webp" alt="Microsoft" loading="lazy"></div>
+        </div>
+      </section>
+
+      <!-- Columna: Aliados -->
+      <section aria-labelledby="gf-aliados" class="gf-ally">
+        <h3 id="gf-aliados" class="gf-title" style="text-align:right">Aliados</h3>
+        <div class="gf-allies" aria-label="Aliados">
+          <img src="/IMG/bni.webp" alt="BNI" loading="lazy">
+          <img src="/IMG/fucam.webp" alt="FUCAM" loading="lazy">
+          <img src="/IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
+        </div>
+      </section>
+    </div>
+
+    <div class="gf-bottom" aria-label="Información legal">
+      <div class="gf-brandmini">
+        <img src="/IMG/expiritilogo.webp" alt="Expiriti">
+        <div>
+          <strong>Expiriti</strong>
+          <div class="gf-hint">© <span id="gf-year"></span> · Todos los derechos reservados</div>
+        </div>
+      </div>
+      <div class="gf-hint">
+        <a href="/aviso-de-privacidad.html">Aviso de privacidad</a> ·
+        <a href="/terminos-y-condiciones.html">Términos</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Año automático
+    (function(){ 
+      var y=document.getElementById('gf-year'); 
+      if(y) y.textContent=new Date().getFullYear(); 
+    })();
+  </script>
+</footer>
