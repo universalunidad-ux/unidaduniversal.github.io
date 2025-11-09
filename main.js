@@ -257,37 +257,58 @@
   });
 })();
 
-/* ---------- Reels (scoped) + pausa global de YouTube (encadenada) ---------- */
+/* ---------- Reels (scoped) + pausa global de YouTube (con títulos dinámicos) ---------- */
 (function(){
   const root = document.getElementById('carouselReels');
   if(root){
-    const scope = root.closest('aside') || root;
-    const track = root.querySelector('.carousel-track');
+    const scope  = root.closest('aside') || root;
+    const track  = root.querySelector('.carousel-track');
     const slides = [...(track?.querySelectorAll('.carousel-slide')||[])];
-    const dots = [...root.querySelectorAll('.carousel-nav .dot')];
-    const prev = root.querySelector('.arrowCircle.prev');
-    const next = root.querySelector('.arrowCircle.next');
+    const dots   = [...root.querySelectorAll('.carousel-nav .dot')];
+    const prev   = root.querySelector('.arrowCircle.prev');
+    const next   = root.querySelector('.arrowCircle.next');
     const reelTitles = [...scope.querySelectorAll('.reel-title')];
     let idx = 0;
+
+    // ← NUEVO: calcula títulos desde data-title (o fallback al title del iframe)
+    const titles = slides.map(sl=>{
+      const wrap = sl.querySelector('.reel-embed');
+      const dt   = wrap?.dataset?.title || sl.dataset?.title || '';
+      if (dt) return dt;
+      const ifr = sl.querySelector('iframe');
+      return ifr?.getAttribute('title') || '';
+    });
+
+    function paintUI(){
+      dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
+      reelTitles.forEach((t)=>t.classList.remove('active'));
+      // Texto dinámico:
+      if (reelTitles.length === 1){
+        reelTitles[0].textContent = titles[idx] || reelTitles[0].textContent;
+        reelTitles[0].classList.add('active');
+      } else if (reelTitles.length >= 2){
+        const nextIdx = (idx + 1) % titles.length;
+        reelTitles[0].textContent = titles[idx]     || reelTitles[0].textContent;
+        reelTitles[1].textContent = titles[nextIdx] || reelTitles[1].textContent;
+        reelTitles[0].classList.add('active');
+      }
+    }
+
     function setActive(i){
       if(!dots.length || !slides.length) return;
       idx = (i + dots.length) % dots.length;
-      dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
-      reelTitles.forEach((t,ti)=>t.classList.toggle('active', ti===idx));
-      const slideWidth = track.clientWidth;
+      const slideWidth = track.clientWidth || root.clientWidth || 1;
       track.scrollTo({ left: slideWidth * idx, behavior: 'smooth' });
+      paintUI();
     }
+
     dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
     prev?.addEventListener('click',()=>setActive(idx-1));
     next?.addEventListener('click',()=>setActive(idx+1));
     track?.addEventListener('scroll',()=>{
       const w = track.clientWidth || 1;
       const i = Math.round(track.scrollLeft / w);
-      if(i !== idx && i >= 0 && i < dots.length){
-        idx = i;
-        dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
-        reelTitles.forEach((t,ti)=>t.classList.toggle('active', ti===idx));
-      }
+      if(i !== idx && i >= 0 && i < dots.length){ idx = i; paintUI(); }
     });
     window.addEventListener('resize',()=>setActive(idx));
     setActive(0);
@@ -315,6 +336,7 @@
     });
   };
 })();
+
 
 /* =========================================================
    Calculadora NUBE (usuarios/empleados extra, IVA y orden)
