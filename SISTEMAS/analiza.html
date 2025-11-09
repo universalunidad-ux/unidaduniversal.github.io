@@ -291,6 +291,19 @@
       const fp = document.getElementById("footer-placeholder");
       if (hp) hp.outerHTML = header;   // reemplaza el placeholder completo
       if (fp) fp.outerHTML = footer;
+
+      // ⚙️ Ajuste de rutas *después* de inyectar el footer
+      (function fixFooterPaths(){
+        const depth = location.pathname.includes('/SISTEMAS/') ? '../' : '';
+        document.querySelectorAll('.js-img').forEach(img=>{
+          if (img.dataset.src) img.src = depth + img.dataset.src;
+        });
+        document.querySelectorAll('.js-link').forEach(a=>{
+          if (a.dataset.href) a.href = depth + a.dataset.href;
+        });
+        const y = document.getElementById('gf-year');
+        if (y) y.textContent = new Date().getFullYear();
+      })();
     })();
   </script>
 
