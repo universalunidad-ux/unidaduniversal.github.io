@@ -954,4 +954,130 @@ const CalculadoraNube = (function(){
   console.log("%c🧩 Usa el objeto _diagFix en cada elemento para aplicar fixes desde consola (ej: document.querySelector('.icons-wrap')._diagFix.flexStart())","color:#60a5fa");
 })();
 
+/* === YouTube Embeds: normalizador + lazy (nocookie) ===================== */
+(function(){
+  const YT_PARAMS = "enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1";
+  const selWrappers = [".reel-embed", ".yt-wrap"]; // 9:16 y 16:9 ya los tienes en CSS
+
+  // Util: arma URL nocookie con params, desde id o desde src existente
+  function toNoCookie(urlOrId){
+    if (!urlOrId) return null;
+    // Si es un ID simple
+    if (!/^(http|\/\/)/i.test(urlOrId)) return `https://www.youtube-nocookie.com/embed/${urlOrId}?${YT_PARAMS}`;
+    // Si es URL, extrae ID y reconstruye
+    try{
+      const u = new URL(urlOrId, location.href);
+      // Soporta youtu.be, /shorts/, watch?v=, embed/...
+      let id = u.searchParams.get("v");
+      if (!id) {
+        const m = u.pathname.match(/\/(embed|shorts)\/([^\/\?\&]+)/) || u.hostname==="youtu.be" && u.pathname.match(/^\/([^\/\?\&]+)/);
+        id = m && m[2] || m && m[1] || null;
+      }
+      return id ? `https://www.youtube-nocookie.com/embed/${id}?${YT_PARAMS}` : null;
+    }catch(e){ return null; }
+  }
+
+  // Normaliza iframes existentes (agrega nocookie + params si faltan)
+  function normalizeExistingIframes(scope=document){
+    scope.querySelectorAll("iframe[src*='youtube'], iframe[src*='youtu.be']").forEach(ifr=>{
+      const newSrc = toNoCookie(ifr.getAttribute("src"));
+      if (newSrc) ifr.src = newSrc;
+      ifr.setAttribute("loading","lazy");
+      ifr.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+      ifr.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
+      ifr.allowFullscreen = true;
+      // Evita tamaños inline que peleen con CSS
+      ifr.removeAttribute("width"); ifr.removeAttribute("height"); ifr.style.width=""; ifr.style.height="";
+    });
+  }
+
+  // Crea tarjeta clickable (thumbnail + botón) y reemplaza por iframe al hacer click o al entrar a viewport
+  function mountLazyEmbed(wrapper){
+    if (wrapper.dataset.ytMounted) return;
+    const ytid = wrapper.getAttribute("data-ytid");
+    if (!ytid) return;
+    wrapper.dataset.ytMounted = "1";
+
+    // Thumbnail
+    const thumb = new Image();
+    thumb.src = `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`;
+    thumb.alt = "Video thumbnail";
+    thumb.style.display="block";
+    thumb.style.width="100%";
+    thumb.style.height="100%";
+    thumb.style.objectFit="cover";
+
+    // Botón play minimal
+    const play = document.createElement("button");
+    play.type="button";
+    play.setAttribute("aria-label","Reproducir video");
+    Object.assign(play.style,{
+      position:"absolute", inset:"0", margin:"auto", width:"64px", height:"64px",
+      borderRadius:"50%", border:"0", cursor:"pointer", background:"rgba(0,0,0,.55)"
+    });
+    const tri = document.createElement("div");
+    Object.assign(tri.style,{
+      margin:"auto", width:0, height:0, borderTop:"12px solid transparent",
+      borderBottom:"12px solid transparent", borderLeft:"20px solid white",
+      transform:"translateX(4px)"
+    });
+    play.appendChild(tri);
+
+    // Contenedor relativo para superponer el botón
+    const ph = document.createElement("div");
+    Object.assign(ph.style,{position:"relative", width:"100%", height:"100%", borderRadius:"12px", overflow:"hidden"});
+    ph.appendChild(thumb); ph.appendChild(play);
+    wrapper.appendChild(ph);
+
+    // Reemplaza por iframe
+    function loadIframe(){
+      if (wrapper.querySelector("iframe")) return;
+      const iframe = document.createElement("iframe");
+      iframe.src = toNoCookie(ytid);
+      iframe.title = wrapper.getAttribute("data-title") || "YouTube video";
+      iframe.setAttribute("frameborder","0");
+      iframe.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+      iframe.setAttribute("loading","lazy");
+      iframe.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
+      iframe.allowFullscreen = true;
+      Object.assign(iframe.style,{position:"absolute", inset:"0", width:"100%", height:"100%"});
+      wrapper.innerHTML=""; // limpia placeholder
+      wrapper.appendChild(iframe);
+    }
+
+    // Click para cargar
+    play.addEventListener("click", loadIframe, {once:true});
+
+    // Lazy por viewport
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if (e.isIntersecting) { loadIframe(); io.disconnect(); } });
+    }, {root:null, rootMargin:"200px", threshold:0.01});
+    io.observe(wrapper);
+  }
+
+  // Inicializa: a) normaliza iframes ya presentes; b) monta lazy en wrappers con data-ytid
+  function initYouTubeEmbeds(scope=document){
+    normalizeExistingIframes(scope);
+    selWrappers.forEach(sel=>{
+      scope.querySelectorAll(`${sel}[data-ytid]`).forEach(mountLazyEmbed);
+    });
+  }
+
+  // API para pausar todos (útil en carruseles al cambiar de slide)
+  function postToYT(iframe, cmd){ try{ iframe.contentWindow.postMessage(JSON.stringify(cmd), "*"); }catch(e){} }
+  function pauseAllYTIframes(scope=document){
+    scope.querySelectorAll("iframe[src*='youtube-nocookie.com/embed/']").forEach(ifr=>{
+      postToYT(ifr, {event:"command", func:"pauseVideo", args:""});
+    });
+  }
+
+  // Exponer APIs
+  window.initYouTubeEmbeds = initYouTubeEmbeds;
+  window.pauseAllYTIframes = pauseAllYTIframes;
+
+  // Auto-init
+  document.addEventListener("DOMContentLoaded", ()=> initYouTubeEmbeds());
+})();
+
+
 
