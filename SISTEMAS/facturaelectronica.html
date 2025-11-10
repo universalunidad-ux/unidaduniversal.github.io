@@ -6,10 +6,14 @@
 <title>CONTPAQi Factura Electrónica | Expiriti</title>
 <meta name="description" content="CONTPAQi Factura Electrónica con Expiriti: Emite CFDI 4.0 (facturas, REP, Carta Porte 3.1) fácil y rápido. Timbrado ilimitado. Ideal para PyMEs y personas físicas.">
 
+<!-- Preconnects -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="preconnect" href="https://i.ytimg.com">
 
+<!-- Fuente + CSS global -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -17,42 +21,12 @@
 <link rel="icon" href="../IMG/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
-
-<!-- CSS global -->
 <link rel="stylesheet" href="../main.css">
 </head>
-<body id="top">
-<header>
-  <div class="container nav">
-    <a href="#top" class="brand" aria-label="Inicio Expiriti">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
-      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
-    </a>
-    <nav aria-label="Principal">
-      <ul>
-        <li><a href="#caracteristicas">Funcionalidades</a></li>
-        <li><a href="#videos">Vídeos</a></li>
-        <li><a href="#calculadora-section">Precio</a></li>
-        <li><a href="#comparativa">Comparativa</a></li>
-        <li><a href="#faq">Preguntas frecuentes</a></li>
-        <li><a href="#sesion-guiada">Demo</a></li>
-      </ul>
-    </nav>
-    <div class="cta">
-      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
-      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20Factura%20Electr%C3%B3nica" target="_blank" rel="noopener">WhatsApp</a>
-      <button class="burger" id="burger" aria-label="Abrir menú" type="button">≡</button>
-    </div>
-  </div>
-  <div class="container mobile" id="mobileMenu">
-    <a href="#caracteristicas">Funcionalidades</a>
-    <a href="#videos">Vídeos</a>
-    <a href="#calculadora-section">Precio</a>
-    <a href="#comparativa">Comparativa</a>
-    <a href="#faq">Preguntas frecuentes</a>
-    <a href="#sesion-guiada">Demo</a>
-  </div>
-</header>
+
+<body id="top" data-calc="escritorio">
+  <!-- Header dinámico -->
+  <div id="header-placeholder"></div>
 
 <main class="container hero">
   <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos">← Volver a productos</a>
@@ -157,7 +131,7 @@
     </div>
   </section>
 
-  <!-- ===== Por qué usar + REELS (data-ytid) ===== -->
+  <!-- ===== Por qué usar + REELS ===== -->
   <section id="beneficios" aria-label="Por qué usar">
     <div class="grid-2 align-center">
       <div>
@@ -181,6 +155,7 @@
         </div>
       </div>
 
+      <!-- REELS -->
       <div>
         <aside class="card body">
           <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Factura Electrónica</h4>
@@ -208,7 +183,7 @@
     </div>
   </section>
 
-  <!-- ===== Videos (data-ytid) ===== -->
+  <!-- ===== Videos ===== -->
   <section id="videos" aria-labelledby="videos-title">
     <div class="card body">
       <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
@@ -274,7 +249,7 @@
     </div>
   </section>
 
-  <!-- ===== Calculadora ===== -->
+  <!-- ===== Calculadora (misma estructura que Bancos) ===== -->
   <section id="calculadora-section" aria-labelledby="calc">
     <h3 id="calc" class="title-gradient">Conoce el precio de tu licencia</h3>
     <p class="hint" style="text-align:center">CONTPAQi Factura Electrónica puede tener condiciones especiales por paquete.</p>
@@ -284,10 +259,10 @@
       <div class="calc-row" id="calc-row">
         <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
 
-        <div id="calc-slot-2" class="placeholder">
+        <div id="calc-slot-2" class="placeholder" aria-label="Segunda calculadora">
           <div class="note">
-            <strong>Integra Factura Electrónica con otros sistemas CONTPAQi.</strong><br>
-            <small>Selecciona un sistema para ver precios combinados.</small>
+            <strong>Integra un sistema adicional y recibe −15% en cada uno.</strong><br>
+            <small>“XML en Línea” no aplica para descuento.</small>
             <div class="icons-wrap" id="icons-sec-sys"></div>
           </div>
         </div>
@@ -297,7 +272,7 @@
         <div id="add-more-panel" class="placeholder" style="display:none">
           <div class="note">
             <strong>¿Agregar un tercer sistema?</strong><br>
-            <small>Calcula el precio total de tu paquete.</small>
+            <small>Mismo -15% por paquete (excepto “XML en Línea”).</small>
             <div class="icons-wrap" id="icons-third-sys"></div>
           </div>
         </div>
@@ -307,25 +282,6 @@
         <h4 class="title-gradient">Resumen combinado</h4>
         <table class="combined-table"><tbody id="combined-table-body"></tbody></table>
       </div>
-    </div>
-  </section>
-
-  <!-- ===== Comparativa ===== -->
-  <section id="comparativa" aria-labelledby="comparativa-title">
-    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 id="comparativa-title" class="title-gradient">Comparativa con otras opciones</h3>
-    <div class="card body">
-      <table class="table-like">
-        <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Factura E.</th><th>Portal SAT</th><th>Otras herramientas</th><th>Módulo ERP</th></tr></thead>
-        <tbody>
-          <tr><td>Timbrado</td><td class="highlight">✅ Ilimitado</td><td>✅ Incluido</td><td>⚠️ Puede tener costo</td><td>✅ Generalmente incluido</td></tr>
-          <tr><td>Facilidad</td><td class="highlight">✅ Muy alta</td><td>⚠️ Media / Lenta</td><td>⚠️ Variable</td><td>⚠️ Puede ser complejo</td></tr>
-          <tr><td>Carta Porte 3.1</td><td class="highlight">✅ Simplificado</td><td>⚠️ Complejo</td><td>⚠️ Variable / Extra</td><td>⚠️ Variable / Extra</td></tr>
-          <tr><td>Multi RFC</td><td class="highlight">✅ Soportado</td><td>❌ No práctico</td><td>⚠️ Costo por RFC</td><td>⚠️ Costo por empresa</td></tr>
-          <tr><td>Addendas/Compl.</td><td class="highlight">✅ Amplia cobertura</td><td>❌ Limitado</td><td>⚠️ Variable / Extra</td><td>✅ Suele cubrir</td></tr>
-          <tr><td>Integración contable</td><td class="highlight">✅ Nativa (CONTPAQi)</td><td>❌ No aplica</td><td>❌ No / Layouts</td><td>✅ Integrado</td></tr>
-        </tbody>
-      </table>
     </div>
   </section>
 
@@ -368,42 +324,70 @@
   </aside>
 </main>
 
-<footer>
-  <div class="container footer-grid">
-    <div>
-      <h3 class="footer-title">Contacto</h3>
-      <div class="contact-list">
-        <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
-        <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
-        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
-      </div>
-    </div>
-    <div>
-      <h3 class="footer-title">Formas de pago</h3>
-      <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy"></div>
-    </div>
-    <div>
-      <h3 class="footer-title">Marcas</h3>
-      <div class="brands-col">
-        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi" loading="lazy"></div>
-        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft" loading="lazy"></div>
-      </div>
-    </div>
-    <div class="ally-col">
-      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
-      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
-      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <div style="display:flex;align-items:center;gap:10px">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px" loading="lazy">
-      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
-    </div>
-    <div class="hint">Aviso de privacidad · Términos</div>
-  </div>
-</footer>
+<!-- Footer dinámico -->
+<div id="footer-placeholder"></div>
+
+<!-- ====== Loader ÚNICO de header/footer + resolución de rutas ====== -->
+<script>
+(async () => {
+  const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
+  const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
+
+  const isGh = location.hostname.endsWith("github.io");
+  const firstSeg = location.pathname.split("/")[1] || "";
+  const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
+  const inSistemas = location.pathname.includes("/SISTEMAS/");
+
+  function prefix(p){
+    if (!p || /^https?:\/\//i.test(p)) return p;
+    if (isGh) return (repoBase + "/" + p).replace(/\/+/g,"/");
+    const depth = inSistemas ? "../" : "";
+    return (depth + p).replace(/\/+/g,"/");
+  }
+
+  const headerURL = await pickFirst([
+    "../PARTIALS/global-header.html",
+    "./PARTIALS/global-header.html",
+    `${repoBase}/PARTIALS/global-header.html`,
+    "/PARTIALS/global-header.html"
+  ]);
+  const footerURL = await pickFirst([
+    "../PARTIALS/global-footer.html",
+    "./PARTIALS/global-footer.html",
+    `${repoBase}/PARTIALS/global-footer.html`,
+    "/PARTIALS/global-footer.html"
+  ]);
+
+  const [headerHTML, footerHTML] = await Promise.all([
+    fetch(headerURL).then(r=>r.text()),
+    fetch(footerURL).then(r=>r.text())
+  ]);
+
+  const hp = document.getElementById("header-placeholder");
+  const fp = document.getElementById("footer-placeholder");
+  if (hp) hp.outerHTML = headerHTML;
+  if (fp) fp.outerHTML = footerHTML;
+
+  // Normaliza rutas relativas de elementos marcados
+  document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+    img.src = prefix(img.getAttribute("data-src"));
+  });
+  document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+    const p = a.getAttribute("data-href"); if (!p) return;
+    const [path, hash] = p.split("#");
+    a.href = prefix(path) + (hash ? ("#"+hash) : "");
+  });
+  document.querySelectorAll(".js-img[data-src]").forEach(img=>{
+    img.src = prefix(img.getAttribute("data-src"));
+  });
+  document.querySelectorAll(".js-link[data-href]").forEach(a=>{
+    a.href = prefix(a.getAttribute("data-href"));
+  });
+
+  const y = document.getElementById("gf-year");
+  if (y) y.textContent = new Date().getFullYear();
+})();
+</script>
 
 <!-- Data y lógica -->
 <script defer src="../precios-contpaqi.js?v=3"></script>
