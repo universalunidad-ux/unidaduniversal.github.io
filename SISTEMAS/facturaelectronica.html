@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CONTPAQi Factura Electrónica | Expiriti</title>
 <meta name="description" content="CONTPAQi Factura Electrónica con Expiriti: Emite CFDI 4.0 (facturas, REP, Carta Porte 3.1) fácil y rápido. Timbrado ilimitado. Ideal para PyMEs y personas físicas.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,15 +17,15 @@
 <link rel="icon" href="../IMG/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
-<!-- ⚙️ CSS global (carrusel) -->
-<link rel="stylesheet" href="../main.css">
 
+<!-- CSS global -->
+<link rel="stylesheet" href="../main.css">
 </head>
 <body id="top">
 <header>
   <div class="container nav">
     <a href="#top" class="brand" aria-label="Inicio Expiriti">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
       <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
     </a>
     <nav aria-label="Principal">
@@ -58,20 +59,22 @@
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
   <h1>CONTPAQi Factura Electrónica <span class="badge">Actualizado 2025</span></h1>
 
-  <div class="badges">
-    <span class="badge">Emisión CFDI 4.0 (Factura, REP, Notas)</span>
-    <span class="badge" style="background:rgba(245,158,11,.15);border-color:#f59e0b;color:#fbbf24;">Carta Porte 3.1</span>
-    <span class="badge">Timbrado ilimitado</span>
-    <span class="badge">Multi RFC</span>
-    <span class="badge">Fácil de usar</span>
+  <div class="badges" role="list" aria-label="Highlights">
+    <span class="badge" role="listitem">Emisión CFDI 4.0 (Factura, REP, Notas)</span>
+    <span class="badge" role="listitem" style="background:rgba(245,158,11,.15);border-color:#f59e0b;color:#fbbf24;">Carta Porte 3.1</span>
+    <span class="badge" role="listitem">Timbrado ilimitado</span>
+    <span class="badge" role="listitem">Multi RFC</span>
+    <span class="badge" role="listitem">Fácil de usar</span>
   </div>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
+  <!-- ===== Resumen ===== -->
   <section aria-label="Resumen">
     <div class="card body">
       <div class="hero-3col">
+        <!-- Col 1 -->
         <div class="stack-left">
-          <img src="../IMG/factura.webp" alt="CONTPAQi Factura Electrónica" style="width:220px;margin-bottom:12px;border-radius:12px">
+          <img src="../IMG/factura.webp" alt="CONTPAQi Factura Electrónica" style="width:220px;margin-bottom:12px;border-radius:12px" loading="lazy">
           <div class="stack">
             <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Factura%20Electr%C3%B3nica" target="_blank" rel="noopener">Compra ahora</a>
             <a class="btn btn-grad-purple hero-btn" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Factura%20Electr%C3%B3nica" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
@@ -81,26 +84,28 @@
           </div>
         </div>
 
+        <!-- Col 2: PDF -->
         <div class="card body pdf-card">
-          <img src="../IMG/usas.jpeg" alt="Equipo usando el sistema" style="width:100%;border-radius:10px;margin-bottom:10px">
+          <img src="../IMG/usas.jpeg" alt="Equipo usando el sistema" style="width:100%;border-radius:10px;margin-bottom:10px" loading="lazy">
           <h4 class="title-gradient" style="margin:0 0 6px">Factura fácil y siempre al día con el SAT</h4>
           <p class="hint" style="margin:0 0 8px">Emite facturas, REP 2.0 y complementos (incl. Carta Porte 3.1) de forma intuitiva.</p>
-          <iframe class="pdf-frame" title="Ficha técnica CONTPAQi Factura Electrónica" src="../PDFS/Ficha_Factura_Electronica.pdf#page=2&view=FitH"></iframe>
+          <iframe class="pdf-frame" title="Ficha técnica CONTPAQi Factura Electrónica" src="../PDFS/Ficha_Factura_Electronica.pdf#page=2&view=FitH" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Factura_Electronica.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Factura_Electronica.pdf" download>Descargar</a>
           </div>
         </div>
 
+        <!-- Col 3: Galería -->
         <aside class="card body">
           <h4 class="title-gradient">Galería</h4>
           <div class="carousel" id="carousel1">
             <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-            <div class="carousel-track">
-              <img class="carousel-slide" src="../IMG/1factura_placeholder.webp" alt="Emisión rápida de facturas CFDI 4.0">
-              <img class="carousel-slide" src="../IMG/2factura_placeholder.webp" alt="Generación de Complemento de Pago (REP)">
-              <img class="carousel-slide" src="../IMG/3factura_placeholder.webp" alt="Catálogos de clientes y productos">
-              <img class="carousel-slide" src="../IMG/4factura_placeholder.webp" alt="Captura asistida para Carta Porte">
+            <div class="carousel-track" role="region" aria-label="Galería de imágenes">
+              <img class="carousel-slide" src="../IMG/1factura_placeholder.webp" alt="Emisión rápida de facturas CFDI 4.0" loading="lazy">
+              <img class="carousel-slide" src="../IMG/2factura_placeholder.webp" alt="Generación de Complemento de Pago (REP)" loading="lazy">
+              <img class="carousel-slide" src="../IMG/3factura_placeholder.webp" alt="Catálogos de clientes y productos" loading="lazy">
+              <img class="carousel-slide" src="../IMG/4factura_placeholder.webp" alt="Captura asistida para Carta Porte" loading="lazy">
             </div>
             <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
             <div class="carousel-nav" aria-label="Paginación de galería">
@@ -115,6 +120,7 @@
     </div>
   </section>
 
+  <!-- ===== Funciones ===== -->
   <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <div class="card body">
@@ -151,142 +157,130 @@
     </div>
   </section>
 
-<!-- ===== Por qué usar + Reels (wrappers con data-ytid) ===== -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Factura Electrónica? <span class="badge">Beneficios clave</span></h2>
-      <p class="lead">Emite todo tipo de CFDI, cumple con el SAT (incl. Carta Porte 3.1) y administra tu facturación con timbrado ilimitado.</p>
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-        <div class="listTrack">
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/194-tiempo-de-trabajo.webp" alt=""></div><div><strong>EMITE FÁCIL Y RÁPIDO</strong><div>Interfaz clara para facturar en minutos.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/206-certificado.webp" alt=""></div><div><strong>CUMPLE SIEMPRE</strong><div>CFDI 4.0, REP 2.0 y complementos vigentes.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/045-seguimiento.webp" alt=""></div><div><strong>CARTA PORTE 3.1</strong><div>Asistentes que simplifican el proceso.</div></div></div>
-          </div>
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/032-banco.webp" alt=""></div><div><strong>TIMBRADO ILIMITADO</strong><div>Sin pagar por CFDI adicional.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/163-trabajo-colaborativo.webp" alt=""></div><div><strong>IDEAL MULTI-EMPRESA</strong><div>Varios RFCs en una licencia.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/contpaqi.webp" alt=""></div><div><strong>INTEGRACIÓN</strong><div>Con Contabilidad y Bancos.</div></div></div>
-          </div>
-        </div>
-        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-      </div>
-    </div>
-
-    <div>
-      <aside class="card body">
-        <!-- Reels Destacados -->
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Factura Electrónica</h4>
-        <h4 class="reel-title active">Presentación Factura Electrónica</h4>
-        <h4 class="reel-title">Factura Rápido en la Nube</h4>
-
-        <div class="carousel" id="carouselReelsFactura" aria-label="Reels Factura Electrónica">
+  <!-- ===== Por qué usar + REELS (data-ytid) ===== -->
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
+      <div>
+        <h2 class="title-gradient">¿Por qué usar Factura Electrónica? <span class="badge">Beneficios clave</span></h2>
+        <p class="lead">Emite todo tipo de CFDI, cumple con el SAT (incl. Carta Porte 3.1) y administra tu facturación con timbrado ilimitado.</p>
+        <div class="listSlider">
           <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-          <div class="carousel-track">
-            <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-              <div class="reel-embed"
-                   data-ytid="nMEgM_BvxTs"
-                   data-title="Reel CONTPAQi Factura Electrónica 1">
-              </div>
+          <div class="listTrack" role="region" aria-label="Beneficios">
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/194-tiempo-de-trabajo.webp" alt=""></div><div><strong>EMITE FÁCIL Y RÁPIDO</strong><div>Interfaz clara para facturar en minutos.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/206-certificado.webp" alt=""></div><div><strong>CUMPLE SIEMPRE</strong><div>CFDI 4.0, REP 2.0 y complementos vigentes.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/045-seguimiento.webp" alt=""></div><div><strong>CARTA PORTE 3.1</strong><div>Asistentes que simplifican el proceso.</div></div></div>
             </div>
-            <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-              <div class="reel-embed"
-                   data-ytid="2uBSGZHLsGs"
-                   data-title="Reel CONTPAQi Factura Electrónica 2">
-              </div>
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/032-banco.webp" alt=""></div><div><strong>TIMBRADO ILIMITADO</strong><div>Sin pagar por CFDI adicional.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/163-trabajo-colaborativo.webp" alt=""></div><div><strong>IDEAL MULTI-EMPRESA</strong><div>Varios RFCs en una licencia.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/contpaqi.webp" alt=""></div><div><strong>INTEGRACIÓN</strong><div>Con Contabilidad y Bancos.</div></div></div>
             </div>
           </div>
           <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-          <div class="carousel-nav" aria-label="Paginación de galería">
-            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+        </div>
+      </div>
+
+      <div>
+        <aside class="card body">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Factura Electrónica</h4>
+          <h4 class="reel-title active">Presentación Factura Electrónica</h4>
+          <h4 class="reel-title">Factura Rápido en la Nube</h4>
+
+          <div class="carousel" id="carouselReelsFactura" aria-label="Reels Factura Electrónica">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <div class="reel-embed" data-ytid="nMEgM_BvxTs" data-title="Reel CONTPAQi Factura Electrónica 1"></div>
+              </div>
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <div class="reel-embed" data-ytid="2uBSGZHLsGs" data-title="Reel CONTPAQi Factura Electrónica 2"></div>
+              </div>
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+            </div>
           </div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Videos (wrappers con data-ytid) ===== -->
-<section id="videos" aria-labelledby="videos-title">
-  <div class="card body">
-    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-    <div class="yt-grid">
-      <div class="yt">
-        <h4 class="yt-title">Presentación CONTPAQi Factura Electrónica</h4>
-        <div class="yt-wrap"
-             data-ytid="wIWOlIGMtcc"
-             data-title="Presentación CONTPAQi Factura Electrónica">
-        </div>
+        </aside>
       </div>
-      <div class="yt">
-        <h4 class="yt-title">¿Qué hace CONTPAQi Factura Electrónica?</h4>
-        <div class="yt-wrap"
-             data-ytid="SidN_z5r2Xc"
-             data-title="Qué hace CONTPAQi Factura Electrónica">
+    </div>
+  </section>
+
+  <!-- ===== Videos (data-ytid) ===== -->
+  <section id="videos" aria-labelledby="videos-title">
+    <div class="card body">
+      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+      <div class="yt-grid">
+        <div class="yt">
+          <h4 class="yt-title">Presentación CONTPAQi Factura Electrónica</h4>
+          <div class="yt-wrap" data-ytid="wIWOlIGMtcc" data-title="Presentación CONTPAQi Factura Electrónica"></div>
+        </div>
+        <div class="yt">
+          <h4 class="yt-title">¿Qué hace CONTPAQi Factura Electrónica?</h4>
+          <div class="yt-wrap" data-ytid="SidN_z5r2Xc" data-title="Qué hace CONTPAQi Factura Electrónica"></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- ===== Integraciones ===== -->
+  <section id="integra" aria-labelledby="integra-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="integra-title" class="title-gradient">Sistemas que complementan tu Factura</h3>
+    <div class="card body">
+      <div class="carouselX" data-step="3">
+        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+        <div class="track">
+          <article class="sys" data-href="../SISTEMAS/contabilidad.html">
+            <img src="../IMG/contabilidad.webp" alt="Contabilidad" loading="lazy">
+            <h4>CONTPAQi Contabilidad</h4>
+            <p>Genera pólizas de ingresos y asocia CFDI.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
 
-<section id="integra" aria-labelledby="integra-title">
-  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-  <h3 id="integra-title" class="title-gradient">Sistemas que complementan tu Factura</h3>
-  <div class="card body">
-    <div class="carouselX" data-step="3">
-      <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-      <div class="track">
-        <article class="sys" data-href="../SISTEMAS/contabilidad.html">
-          <img src="../IMG/contabilidad.webp" alt="Contabilidad">
-          <h4>CONTPAQi Contabilidad</h4>
-          <p>Genera pólizas de ingresos y asocia CFDI.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+          <article class="sys" data-href="../SISTEMAS/bancos.html">
+            <img src="../IMG/bancos.webp" alt="Bancos" loading="lazy">
+            <h4>CONTPAQi Bancos</h4>
+            <p>Concilia cobros y genera pólizas.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
 
-        <article class="sys" data-href="../SISTEMAS/bancos.html">
-          <img src="../IMG/bancos.webp" alt="Bancos">
-          <h4>CONTPAQi Bancos</h4>
-          <p>Concilia cobros y genera pólizas.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+          <article class="sys" data-href="../SISTEMAS/xmlenlinea.html">
+            <img src="../IMG/xml.webp" alt="XML en Línea+" loading="lazy">
+            <h4>XML en Línea+</h4>
+            <p>Descarga y administra CFDI del SAT.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
 
-        <article class="sys" data-href="../SISTEMAS/xmlenlinea.html">
-          <img src="../IMG/xml.webp" alt="XML en Línea+">
-          <h4>XML en Línea+</h4>
-          <p>Descarga y administra CFDI del SAT.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+          <article class="sys" data-href="../SISTEMAS/comercialstart.html">
+            <img src="../IMG/comercialstart.webp" alt="Comercial Start" loading="lazy">
+            <h4>Comercial Start</h4>
+            <p>Inventarios y CxC básicos.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
 
-        <article class="sys" data-href="../SISTEMAS/comercialstart.html">
-          <img src="../IMG/comercialstart.webp" alt="Comercial Start">
-          <h4>Comercial Start</h4>
-          <p>Inventarios y CxC básicos.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
-
-        <article class="sys" data-href="../SISTEMAS/cobra.html">
-          <img src="../IMG/cobra.webp" alt="Cobra">
-          <h4>CONTPAQi Cobra</h4>
-          <p>Automatiza recordatorios y seguimiento de cobranza.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+          <article class="sys" data-href="../SISTEMAS/cobra.html">
+            <img src="../IMG/cobra.webp" alt="Cobra" loading="lazy">
+            <h4>CONTPAQi Cobra</h4>
+            <p>Automatiza recordatorios y seguimiento de cobranza.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
+        </div>
+        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+        <div class="group-dots" aria-label="Paginación"></div>
       </div>
-      <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-      <div class="group-dots" aria-label="Paginación"></div>
     </div>
-  </div>
-</section>
+  </section>
 
-
+  <!-- ===== Calculadora ===== -->
   <section id="calculadora-section" aria-labelledby="calc">
     <h3 id="calc" class="title-gradient">Conoce el precio de tu licencia</h3>
     <p class="hint" style="text-align:center">CONTPAQi Factura Electrónica puede tener condiciones especiales por paquete.</p>
     <div class="calc-strip">
       <div id="app" data-system="CONTPAQi Factura Electrónica" hidden></div>
+
       <div class="calc-row" id="calc-row">
         <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
 
@@ -298,7 +292,7 @@
           </div>
         </div>
 
-        <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora"></div>
+        <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora" style="display:none"></div>
 
         <div id="add-more-panel" class="placeholder" style="display:none">
           <div class="note">
@@ -316,6 +310,7 @@
     </div>
   </section>
 
+  <!-- ===== Comparativa ===== -->
   <section id="comparativa" aria-labelledby="comparativa-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="comparativa-title" class="title-gradient">Comparativa con otras opciones</h3>
@@ -334,6 +329,7 @@
     </div>
   </section>
 
+  <!-- ===== FAQ ===== -->
   <section id="faq" aria-labelledby="faq-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
@@ -346,6 +342,7 @@
     </div>
   </section>
 
+  <!-- ===== CTA ===== -->
   <section id="sesion-guiada" class="card body">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 class="title-gradient">¿Listo para empezar?</h3>
@@ -356,7 +353,8 @@
     </div>
   </section>
 
-  <aside class="toc collapsed" id="toc">
+  <!-- ===== TOC ===== -->
+  <aside class="toc collapsed" id="toc" aria-label="Mapa del sitio">
     <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa" type="button">🗺️ Mapa</button>
     <button class="toc-close" aria-label="Cerrar" type="button">×</button>
     <strong class="toc-title">Mapa del sitio</strong>
@@ -387,8 +385,8 @@
     <div>
       <h3 class="footer-title">Marcas</h3>
       <div class="brands-col">
-        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi"></div>
-        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft"></div>
+        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi" loading="lazy"></div>
+        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft" loading="lazy"></div>
       </div>
     </div>
     <div class="ally-col">
@@ -400,16 +398,16 @@
   </div>
   <div class="container footer-bottom">
     <div style="display:flex;align-items:center;gap:10px">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px">
+      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px" loading="lazy">
       <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
     </div>
     <div class="hint">Aviso de privacidad · Términos</div>
   </div>
 </footer>
 
+<!-- Data y lógica -->
 <script defer src="../precios-contpaqi.js?v=3"></script>
+<script defer src="../main.js"></script>
 <script defer src="../calculadora.js?v=13"></script>
-  <!-- ⚙️ JS global (carrusel) -->
-<script src="../main.js" defer></script>
 </body>
 </html>
