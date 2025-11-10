@@ -129,6 +129,51 @@ window.preciosContpaqi = {
     }
   },
 
+  // === CONTPAQi Analiza (Nube) ===
+  "CONTPAQi Analiza": {
+    "nube": {
+      "Trial": {
+        "precio_base": 0,
+        "usuarios_incluidos": 1,
+        "rfc_incluidos": 1,
+        "carga_xml": 1500,
+        "duracion_dias": 20
+      },
+      "Inicial": {
+        "precio_base": 4190,
+        "usuarios_incluidos": 1,
+        "rfc_incluidos": 1,
+        "carga_xml": "ilimitado"
+      },
+      "Equipos": {
+        "precio_base": 5790,
+        "usuarios_incluidos": 2,
+        "rfc_incluidos": 3,
+        "carga_xml": "ilimitado"
+      },
+      "Empresarial": {
+        "precio_base": 10790,
+        "usuarios_incluidos": 5,
+        "rfc_incluidos": 10,
+        "carga_xml": "ilimitado"
+      },
+      "Corporativo": {
+        "precio_base": 16990,
+        "usuarios_incluidos": 10,
+        "rfc_incluidos": 20,
+        "carga_xml": "ilimitado"
+      },
+      "usuario_adicional": 1690,
+      "rfc_adicional": {
+        "Inicial": 1190,
+        "Equipos": 990,
+        "Empresarial": 890,
+        "Corporativo": 490
+      },
+      "licenciamiento_dias": 365
+    }
+  },
+
   "CONTPAQi Vende": {
     "nube": {
       "LIGHT":       { "precio_base": 504,  "usuarios_incluidos": 1 },
