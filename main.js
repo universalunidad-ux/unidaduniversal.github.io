@@ -1,5 +1,5 @@
 /* =========================================================
-   Expiriti - main.js (Personia) — Unificado Nube + Escritorio + Fixes
+   Expiriti - main.js — Escritorio + Carruseles + Reels (YouTube pause)
    ========================================================= */
 
 /* ---------- Utils ---------- */
@@ -39,9 +39,18 @@
       onChange && onChange(i);
     }
 
-    dots.forEach((d,idx)=>d.addEventListener("click",()=>set(idx)));
-    prev && prev.addEventListener("click",()=>set(i-1));
-    next && next.addEventListener("click",()=>set(i+1));
+    dots.forEach((d,idx)=>d.addEventListener("click",()=>{
+      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+      set(idx);
+    }));
+    prev && prev.addEventListener("click",()=>{
+      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+      set(i-1);
+    });
+    next && next.addEventListener("click",()=>{
+      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+      set(i+1);
+    });
 
     track && track.addEventListener("scroll",()=>{
       const n = Math.round(track.scrollLeft/track.clientWidth);
@@ -52,8 +61,8 @@
     set(0);
   }
 
-  // Vincula títulos .reel-title si existen en el mismo "scope"
-  document.querySelectorAll(".carousel:not(#carouselReels)").forEach(car=>{
+  // Vincula títulos .reel-title si existen en el mismo "scope" (para carouseles de imágenes/videos excepto reels)
+  document.querySelectorAll(".carousel:not([id^='carouselReels'])").forEach(car=>{
     const sel = car.getAttribute("data-titles");
     let titles = null;
     if (sel) titles = [...document.querySelectorAll(sel)];
@@ -66,7 +75,7 @@
   });
 })();
 
-/* ---------- Hard reset de scroll para .carouselX (evita “salto” al 3º) ---------- */
+/* ---------- Hard reset de scroll para .carouselX (evita “salto”) ---------- */
 (function(){
   const tracks = document.querySelectorAll('.carouselX .track');
   if(!tracks.length) return;
@@ -94,7 +103,10 @@
     const next=w.querySelector(".arrowCircle.next");
     if(!track||!prev||!next) return;
     let i=0, len=track.children.length;
-    function go(n){ i=(n+len)%len; track.scrollTo({left:w.clientWidth*i,behavior:"smooth"}); }
+    function go(n){
+      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+      i=(n+len)%len; track.scrollTo({left:w.clientWidth*i,behavior:"smooth"});
+    }
     prev.addEventListener("click",()=>go(i-1));
     next.addEventListener("click",()=>go(i+1));
     window.addEventListener("resize",()=>go(i));
@@ -128,7 +140,7 @@
   });
 })();
 
-/* ---------- Carrusel de sistemas (.carouselX) — Auto UI + FIX de inicio en página 0 ---------- */
+/* ---------- Carrusel de sistemas (.carouselX) — Auto UI + FIX ---------- */
 (function(){
   function ensureUI(root){
     // Flechas
@@ -184,7 +196,10 @@
         const b=document.createElement("button");
         b.className="dot"+(j===0?" active":"");
         b.setAttribute("aria-label","Ir a página "+(j+1));
-        b.addEventListener("click",()=>go(j));
+        b.addEventListener("click",()=>{
+          if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+          go(j);
+        });
         dotsWrap.appendChild(b);
         return b;
       });
@@ -222,8 +237,8 @@
       dotsWrap.style.display = multi ? "" : "none";
     }
 
-    prev.addEventListener("click",()=>go(idx-1));
-    next.addEventListener("click",()=>go(idx+1));
+    prev.addEventListener("click",()=>{ if (window.pauseAllYTIframes) window.pauseAllYTIframes(); go(idx-1); });
+    next.addEventListener("click",()=>{ if (window.pauseAllYTIframes) window.pauseAllYTIframes(); go(idx+1); });
 
     track.addEventListener("scroll",()=>{
       const i = Math.round(track.scrollLeft / viewportW());
@@ -236,9 +251,9 @@
       setTimeout(()=>go(idx), 0); // re-alinea tras cambio de ancho
     });
 
-    // Fuerza inicio en la primera página (corrige restauración de scroll del navegador y reflows)
+    // Fuerza inicio en la primera página
     function resetStart(){
-      track.scrollLeft = 0;     // sin animación
+      track.scrollLeft = 0;
       idx = 0;
       paint(0);
       toggleUI();
@@ -246,9 +261,8 @@
     requestAnimationFrame(resetStart);
     window.addEventListener('load', ()=> setTimeout(resetStart, 0));
     window.addEventListener('pageshow', resetStart);
-    setTimeout(resetStart, 350); // por si imágenes/fuentes alteran el ancho
+    setTimeout(resetStart, 350);
 
-    // Asegura que todos los ítems sean alcanzables
     track.style.overflowX = "auto";
     track.style.scrollBehavior = "smooth";
 
@@ -257,10 +271,9 @@
   });
 })();
 
-/* ---------- Reels (scoped) + pausa global de YouTube (con títulos dinámicos) ---------- */
+/* ---------- Reels (id^="carouselReels*") + pausa global de YouTube ---------- */
 (function(){
-  const root = document.getElementById('carouselReels');
-  if(root){
+  document.querySelectorAll('.carousel[id^="carouselReels"]').forEach(root=>{
     const scope  = root.closest('aside') || root;
     const track  = root.querySelector('.carousel-track');
     const slides = [...(track?.querySelectorAll('.carousel-slide')||[])];
@@ -270,7 +283,6 @@
     const reelTitles = [...scope.querySelectorAll('.reel-title')];
     let idx = 0;
 
-    // ← NUEVO: calcula títulos desde data-title (o fallback al title del iframe)
     const titles = slides.map(sl=>{
       const wrap = sl.querySelector('.reel-embed');
       const dt   = wrap?.dataset?.title || sl.dataset?.title || '';
@@ -282,7 +294,6 @@
     function paintUI(){
       dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
       reelTitles.forEach((t)=>t.classList.remove('active'));
-      // Texto dinámico:
       if (reelTitles.length === 1){
         reelTitles[0].textContent = titles[idx] || reelTitles[0].textContent;
         reelTitles[0].classList.add('active');
@@ -295,6 +306,7 @@
     }
 
     function setActive(i){
+      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
       if(!dots.length || !slides.length) return;
       idx = (i + dots.length) % dots.length;
       const slideWidth = track.clientWidth || root.clientWidth || 1;
@@ -312,9 +324,9 @@
     });
     window.addEventListener('resize',()=>setActive(idx));
     setActive(0);
-  }
+  });
 
-  // Pausa global YouTube — encadena si ya existe handler
+  // Carga API YouTube si hace falta (para compatibilidad)
   if(!window.YT){
     const tag=document.createElement('script');
     tag.src="https://www.youtube.com/iframe_api";
@@ -337,232 +349,113 @@
   };
 })();
 
+/* === YouTube Embeds: normalizador + lazy (nocookie) ===================== */
+(function(){
+  const YT_PARAMS = "enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1";
+  const selWrappers = [".reel-embed", ".yt-wrap"]; // 9:16 y 16:9 ya los tienes en CSS
 
-/* =========================================================
-   Calculadora NUBE (usuarios/empleados extra, IVA y orden)
-   ========================================================= */
-const CalculadoraNube = (function(){
-  function init({ systemName, mountSelector = '#calc-primary', onCombined = null, combinedSelector = null }){
-    const root = document.querySelector(mountSelector);
-    if(!root) return console.warn('calc-nube: no mount target');
-
-    const PROD = (window.preciosContpaqi?.[systemName] || {});
-    const db = PROD.nube || null;
-    if(!db) return console.warn('calc-nube: no price table for', systemName);
-
-    const addOnGlobalKeys = new Set(['usuario_adicional','xml_historicos','espacio_adicional']);
-    const PLANES = Object.keys(db).filter(k => typeof db[k] === 'object' && !addOnGlobalKeys.has(k));
-
-    const state = { plan: PLANES[0]||null, usuarios:null, empleados:null };
-
-    const $ = (sel, ctx=root)=> (ctx||root).querySelector(sel);
-    const mxn = window.$$fmt || (v=>v);
-    const getPlan = ()=> db[state.plan] || {};
-
-    const precioUsuarioAdic = ()=>{
-      const p = getPlan();
-      const planUA = Number(p.usuario_adicional ?? NaN);
-      if (!Number.isNaN(planUA) && planUA>0) return planUA;
-      const prodUA = Number(db.usuario_adicional ?? NaN);
-      return (!Number.isNaN(prodUA) && prodUA>0) ? prodUA : 0;
-    };
-    const precioEmpleadoAdic = ()=>{
-      const p = getPlan();
-      const planEA = Number(p.empleado_adicional ?? NaN);
-      return (!Number.isNaN(planEA) && planEA>0) ? planEA : 0;
-    };
-
-    // UI
-    root.classList.add('calc-container','calc-nube');
-    root.innerHTML = `
-      <h4 style="margin:0 0 8px">Calcula tu plan en la nube</h4>
-      <div class="grid-nube">
-        <div>
-          <label class="control-label">Plan</label>
-          <select id="nube-plan"></select>
-        </div>
-        <div id="nube-usuarios-wrap" style="display:none">
-          <label class="control-label">Usuarios</label>
-          <input id="nube-usuarios" type="number" min="1" step="1" value="1">
-          <small class="hint" id="nube-usuarios-hint"></small>
-        </div>
-        <div id="nube-empleados-wrap" style="display:none">
-          <label class="control-label">Empleados</label>
-          <input id="nube-empleados" type="number" min="0" step="1" value="0">
-          <small class="hint" id="nube-empleados-hint"></small>
-        </div>
-        <div id="nube-espacio-wrap" style="display:none">
-          <label class="control-label">Espacio adicional</label>
-          <select id="nube-espacio"></select>
-          <small class="hint">Costo mensual según tamaño.</small>
-        </div>
-      </div>
-      <table class="calc-nube-table">
-        <thead><tr><th>Concepto</th><th style="text-align:right">Importe</th></tr></thead>
-        <tbody id="nube-tbody"></tbody>
-        <tfoot>
-          <tr><td>IVA (16%)</td><td id="nube-iva" style="text-align:right"></td></tr>
-          <tr><td style="font-weight:700">Total</td><td id="nube-total" style="text-align:right;font-weight:700"></td></tr>
-        </tfoot>
-      </table>
-    `;
-
-    // plan selector
-    const selPlan = $('#nube-plan');
-    PLANES.forEach(p=>{ const opt=document.createElement('option'); opt.value=p; opt.textContent=p; selPlan.appendChild(opt); });
-    state.plan = selPlan.value;
-
-    // espacio adicional (opcional)
-    const espacioWrap = $('#nube-espacio-wrap');
-    const selEspacio  = $('#nube-espacio');
-    if (db.espacio_adicional && typeof db.espacio_adicional === 'object'){
-      espacioWrap.style.display='';
-      selEspacio.innerHTML = `<option value="">Sin extra</option>`;
-      Object.keys(db.espacio_adicional).forEach(k=>{
-        const opt=document.createElement('option');
-        opt.value=k; opt.textContent = `${k} (+${mxn(db.espacio_adicional[k])})`;
-        selEspacio.appendChild(opt);
-      });
-    }
-
-    // inputs dinámicos
-    function syncInputs(){
-      const p = getPlan();
-
-      // Usuarios
-      const $uwrap = $('#nube-usuarios-wrap'), $u = $('#nube-usuarios'), $uh = $('#nube-usuarios-hint');
-      const incU = p.usuarios_incluidos;
-      if (incU === 'multi' || incU === 'Multi' || incU === 'MULTI'){
-        $uwrap.style.display='none';
-        state.usuarios = null;
-      } else if (Number.isFinite(Number(incU))){
-        const inc = Number(incU)||0;
-        $uwrap.style.display='';
-        if (state.usuarios==null || state.usuarios < inc) state.usuarios = inc;
-        $u.value = state.usuarios;
-        const uAd = precioUsuarioAdic();
-        $uh.textContent = `Incluye ${inc}. Usuario adicional: ${uAd? mxn(uAd) : '–'}.`;
-        $u.min = String(Math.max(1, inc));
-      } else {
-        $uwrap.style.display='none';
-        state.usuarios = null;
+  function toNoCookie(urlOrId){
+    if (!urlOrId) return null;
+    if (!/^(http|\/\/)/i.test(urlOrId)) return `https://www.youtube-nocookie.com/embed/${urlOrId}?${YT_PARAMS}`;
+    try{
+      const u = new URL(urlOrId, location.href);
+      let id = u.searchParams.get("v");
+      if (!id) {
+        const m = u.pathname.match(/\/(embed|shorts)\/([^\/\?\&]+)/) || (u.hostname==="youtu.be" && u.pathname.match(/^\/([^\/\?\&]+)/));
+        id = m && m[2] || m && m[1] || null;
       }
-
-      // Empleados
-      const $ewrap = $('#nube-empleados-wrap'), $e = $('#nube-empleados'), $eh = $('#nube-empleados-hint');
-      const incE = Number(p.empleados_incluidos ?? NaN);
-      if (!Number.isNaN(incE)){
-        $ewrap.style.display='';
-        if (state.empleados==null || state.empleados < incE) state.empleados = incE;
-        $e.value = state.empleados;
-        const eAd = precioEmpleadoAdic();
-        $eh.textContent = `Incluye ${incE}. Empleado adicional: ${eAd? mxn(eAd) : '–'}.`;
-        $e.min = String(Math.max(0, incE));
-      } else {
-        $ewrap.style.display='none';
-        state.empleados = null;
-      }
-    }
-
-    const tbody  = $('#nube-tbody');
-    const ivaEl  = $('#nube-iva');
-    const totalEl= $('#nube-total');
-
-    function recalc(){
-      const p = getPlan();
-      const rows = [];
-      let subtotal = 0;
-
-      // 1) Plan base
-      const base = Number(p.precio_base || 0);
-      rows.push([`Plan ${state.plan}`, mxn(base)]);
-      subtotal += base;
-
-      // 2) Usuarios adicionales
-      const incU = p.usuarios_incluidos;
-      if (Number.isFinite(Number(incU)) && state.usuarios!=null){
-        const inc = Number(incU)||0;
-        const want = Math.max(inc, Number(state.usuarios)||inc);
-        const extra = Math.max(0, want - inc);
-        const uAd = precioUsuarioAdic();
-        if (extra>0 && uAd>0){
-          rows.push([`Usuarios adicionales (${extra})`, mxn(extra*uAd)]);
-          subtotal += extra*uAd;
-        }
-      }
-
-      // 3) Empleados adicionales
-      const incE = Number(p.empleados_incluidos ?? NaN);
-      if (!Number.isNaN(incE) && state.empleados!=null){
-        const want = Math.max(incE, Number(state.empleados)||incE);
-        const extra = Math.max(0, want - incE);
-        const eAd = precioEmpleadoAdic();
-        if (extra>0 && eAd>0){
-          rows.push([`Empleados adicionales (${extra})`, mxn(extra*eAd)]);
-          subtotal += extra*eAd;
-        }
-      }
-
-      // 4) Espacio adicional
-      if (selEspacio && selEspacio.value){
-        const precioEsp = Number((db.espacio_adicional||{})[selEspacio.value]||0);
-        if (precioEsp>0){
-          rows.push([`Espacio adicional (${selEspacio.value})`, mxn(precioEsp)]);
-          subtotal += precioEsp;
-        }
-      }
-
-      // Pintar
-      tbody.innerHTML='';
-      rows.forEach(([c,v])=>{
-        const tr=document.createElement('tr');
-        const td1=document.createElement('td'); td1.textContent=c;
-        const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
-        tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
-      });
-
-      // IVA y Total
-      const iva = subtotal * 0.16;
-      const total = subtotal + iva;
-      ivaEl.textContent   = mxn(iva);
-      totalEl.textContent = mxn(total);
-
-      // combinado (si lo usas)
-      if (onCombined && combinedSelector){
-        onCombined([ [`${systemName} — ${state.plan}`, mxn(total)] ]);
-      }
-    }
-
-    // eventos
-    selPlan.addEventListener('change', ()=>{
-      state.plan = selPlan.value;
-      state.usuarios = null;
-      state.empleados = null;
-      syncInputs();
-      recalc();
-    });
-    $('#nube-usuarios')?.addEventListener('input', e=>{
-      const inc = Number(getPlan().usuarios_incluidos||0) || 0;
-      const v = Math.max(inc, parseInt(e.target.value||0,10) || inc);
-      e.target.value = String(v);
-      state.usuarios = v;
-      recalc();
-    });
-    $('#nube-empleados')?.addEventListener('input', e=>{
-      const inc = Number(getPlan().empleados_incluidos||0) || 0;
-      const v = Math.max(inc, parseInt(e.target.value||0,10) || inc);
-      e.target.value = String(v);
-      state.empleados = v;
-      recalc();
-    });
-    selEspacio?.addEventListener('change', ()=>recalc());
-
-    // init
-    syncInputs(); recalc();
-    return { recalc };
+      return id ? `https://www.youtube-nocookie.com/embed/${id}?${YT_PARAMS}` : null;
+    }catch(e){ return null; }
   }
 
-  return { init };
+  function normalizeExistingIframes(scope=document){
+    scope.querySelectorAll("iframe[src*='youtube'], iframe[src*='youtu.be']").forEach(ifr=>{
+      const newSrc = toNoCookie(ifr.getAttribute("src"));
+      if (newSrc) ifr.src = newSrc;
+      ifr.setAttribute("loading","lazy");
+      ifr.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+      ifr.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
+      ifr.allowFullscreen = true;
+      ifr.removeAttribute("width"); ifr.removeAttribute("height"); ifr.style.width=""; ifr.style.height="";
+    });
+  }
+
+  function mountLazyEmbed(wrapper){
+    if (wrapper.dataset.ytMounted) return;
+    const ytid = wrapper.getAttribute("data-ytid");
+    if (!ytid) return;
+    wrapper.dataset.ytMounted = "1";
+
+    const thumb = new Image();
+    thumb.src = `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`;
+    thumb.alt = "Video thumbnail";
+    thumb.style.display="block";
+    thumb.style.width="100%";
+    thumb.style.height="100%";
+    thumb.style.objectFit="cover";
+
+    const play = document.createElement("button");
+    play.type="button";
+    play.setAttribute("aria-label","Reproducir video");
+    Object.assign(play.style,{
+      position:"absolute", inset:"0", margin:"auto", width:"64px", height:"64px",
+      borderRadius:"50%", border:"0", cursor:"pointer", background:"rgba(0,0,0,.55)"
+    });
+    const tri = document.createElement("div");
+    Object.assign(tri.style,{
+      margin:"auto", width:0, height:0, borderTop:"12px solid transparent",
+      borderBottom:"12px solid transparent", borderLeft:"20px solid white",
+      transform:"translateX(4px)"
+    });
+    play.appendChild(tri);
+
+    const ph = document.createElement("div");
+    Object.assign(ph.style,{position:"relative", width:"100%", height:"100%", borderRadius:"12px", overflow:"hidden"});
+    ph.appendChild(thumb); ph.appendChild(play);
+    wrapper.appendChild(ph);
+
+    function loadIframe(){
+      if (window.pauseAllYTIframes) window.pauseAllYTIframes(); // 👈 pausa lo anterior
+      if (wrapper.querySelector("iframe")) return;
+      const iframe = document.createElement("iframe");
+      iframe.src = toNoCookie(ytid);
+      iframe.title = wrapper.getAttribute("data-title") || "YouTube video";
+      iframe.setAttribute("frameborder","0");
+      iframe.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+      iframe.setAttribute("loading","lazy");
+      iframe.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
+      iframe.allowFullscreen = true;
+      Object.assign(iframe.style,{position:"absolute", inset:"0", width:"100%", height:"100%"});
+      wrapper.innerHTML="";
+      wrapper.appendChild(iframe);
+    }
+
+    play.addEventListener("click", loadIframe, {once:true});
+
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if (e.isIntersecting) { loadIframe(); io.disconnect(); } });
+    }, {root:null, rootMargin:"200px", threshold:0.01});
+    io.observe(wrapper);
+  }
+
+  function initYouTubeEmbeds(scope=document){
+    normalizeExistingIframes(scope);
+    selWrappers.forEach(sel=>{
+      scope.querySelectorAll(`${sel}[data-ytid]`).forEach(mountLazyEmbed);
+    });
+  }
+
+  function postToYT(iframe, cmd){ try{ iframe.contentWindow.postMessage(JSON.stringify(cmd), "*"); }catch(e){} }
+  function pauseAllYTIframes(scope=document){
+    scope.querySelectorAll("iframe[src*='youtube-nocookie.com/embed/']").forEach(ifr=>{
+      postToYT(ifr, {event:"command", func:"pauseVideo", args:""});
+    });
+  }
+
+  window.initYouTubeEmbeds = initYouTubeEmbeds;
+  window.pauseAllYTIframes = pauseAllYTIframes;
+
+  document.addEventListener("DOMContentLoaded", ()=> initYouTubeEmbeds());
 })();
 
 /* =========================================================
@@ -570,8 +463,7 @@ const CalculadoraNube = (function(){
    ========================================================= */
 (function(){
   document.addEventListener('DOMContentLoaded', function(){
-    if (document.body.getAttribute('data-calc') !== 'escritorio') return;
-
+    // Solo para ESCRITORIO
     const app = document.getElementById('app');
     const PRIMARY = app?.dataset?.system?.trim();
     if (!PRIMARY) return;
@@ -580,6 +472,7 @@ const CalculadoraNube = (function(){
     const fmt = v => moneyMX.format(Math.round(Number(v||0)));
     const hasPrices = name => !!(window.preciosContpaqi && window.preciosContpaqi[name]);
 
+    // Catálogo de sistemas para el picker (ajusta rutas si hace falta)
     window.CATALOG_SISTEMAS = window.CATALOG_SISTEMAS || [
       { name: "CONTPAQi Contabilidad",       img: "../IMG/contabilidad.webp" },
       { name: "CONTPAQi Bancos",             img: "../IMG/bancos.webp" },
@@ -710,92 +603,24 @@ const CalculadoraNube = (function(){
     if (window.CalculadoraContpaqi?.onCombinedSet){
       window.CalculadoraContpaqi.onCombinedSet(renderCombinedTable);
     }
-  });
-})();
 
-/* =========================================================
-   AutoCalcSwitcher — decide Nube vs Escritorio (legacy)
-   ========================================================= */
-(function(){
-  function detectSystemName(){
-    const node = document.querySelector('[data-system]');
-    if (node?.dataset?.system) return node.dataset.system.trim();
-    const app = document.getElementById('app');
-    if (app?.dataset?.system) return app.dataset.system.trim();
-    const h1 = document.querySelector('h1');
-    if (h1?.textContent && /CONTPAQi\s+/i.test(h1.textContent)) return h1.textContent.trim();
-    const t = document.title || '';
-    const m = t.match(/CONTPAQi\s+[^\|]+/i);
-    if (m) return m[0].trim();
-    return null;
-  }
-
-  function mountNube(sys){
-    document.body.setAttribute('data-calc','nube');
-    const mount = '#calc-primary';
-
-    const render = ()=>CalculadoraNube.init({
-      systemName: sys,
-      mountSelector: mount,
-      combinedSelector: '#combined-wrap',
-      onCombined(rows){
-        const wrap = document.querySelector('#combined-wrap');
-        const tbody = document.querySelector('#combined-table-body');
-        if(!wrap || !tbody) return;
-        tbody.innerHTML='';
-        rows.forEach(([c,v])=>{
-          const tr=document.createElement('tr');
-          const td1=document.createElement('td'); td1.textContent=c;
-          const td2=document.createElement('td'); td2.textContent=v; td2.style.textAlign='right';
-          tr.appendChild(td1); tr.appendChild(td2); tbody.appendChild(tr);
-        });
-        wrap.hidden=false;
-      }
-    });
-
-    render();
-
-    const host = document.querySelector(mount);
-    if (!host) return;
-    const obs = new MutationObserver(()=>{
-      const legacyBits = host.querySelector('.calc-table, .calc-form, table.calc-table');
-      const nubeReady  = host.querySelector('.calc-nube');
-      if (legacyBits && !nubeReady){
-        render();
-      }
-    });
-    obs.observe(host, { childList:true, subtree:true });
-  }
-
-  document.addEventListener('DOMContentLoaded', ()=>{
-    const sys = detectSystemName();
-    if(!sys){ console.warn('AutoCalcSwitcher: no pude detectar el sistema.'); return; }
-
-    const S = window.preciosContpaqi?.[sys] || {};
-    const hasNube = !!S.nube;
-    const hasDesk = !!(S.escritorio || S.anual || S.tradicional);
-
-    if (hasNube){
-      mountNube(sys); return;
-    }
-    if (hasDesk){
-      const mount = '#calc-primary';
-      const deskInit = (window.CalculadoraContpaqi && window.CalculadoraContpaqi.init)
-        ? window.CalculadoraContpaqi.init
-        : (function(){ console.warn('Fallback CalculadoraContpaqi.init no disponible'); return ()=>{}; })();
-
+    // Inicializa la calculadora ESCRITORIO principal
+    if (window.CalculadoraContpaqi?.init){
       document.body.setAttribute('data-calc','escritorio');
-      deskInit({ systemName: sys, primarySelector: mount, combinedSelector: '#combined-wrap' });
-      return;
+      window.CalculadoraContpaqi.init({
+        systemName: PRIMARY,
+        primarySelector: '#calc-primary',
+        combinedSelector:'#combined-wrap'
+      });
+    } else {
+      console.warn('CalculadoraContpaqi.init no disponible (asegura calculadora.js?v=13)');
     }
-
-    const root = document.querySelector('#calc-primary');
-    if (root) root.innerHTML = `<p class="hint">No hay tabla de Nube ni de Escritorio definida para “${sys}”.</p>`;
   });
 })();
 
 /* =========================================================
    Compactador + Unión “Instalación + Servicios (opcional)”
+   (No altera la v13 moderna, solo legacy si aparece)
    ========================================================= */
 (function () {
   function pickByLabel(container, regex){
@@ -897,7 +722,6 @@ const CalculadoraNube = (function(){
   const target = document.getElementById('calc-primary');
   if (!target) return;
 
-  // ——— compactador: ejecutar y observar ———
   const tryCompact = () => {
     const container = document.querySelector('.calc-container') || target;
     if (!container) return;
@@ -905,31 +729,24 @@ const CalculadoraNube = (function(){
     compactar(container);
   };
 
-  // 1) primer tiro
   tryCompact();
   requestAnimationFrame(tryCompact);
 
-  // 2) observar mutaciones dentro de #calc-primary
   const mo = new MutationObserver(() => tryCompact());
   mo.observe(target, { childList: true, subtree: true });
 
-  // 3) hooks de recálculo/render
   window.addEventListener('calc-recompute', tryCompact);
   window.addEventListener('calc-render', tryCompact);
 
-  // 4) pequeños retries por cargas tardías
   setTimeout(tryCompact, 500);
   setTimeout(tryCompact, 1200);
-})();  // ← **Cierre del IIFE del compactador** ✅
+})();
 
 /* =========================================================
    🧭 Expiriti – AutoDiag Carruseles / Listas Horizontales
    ========================================================= */
 (function(){
-  console.log("%c🧭 Expiriti AutoDiag iniciado", "color:#2dd4bf;font-weight:700");
-
   const selectors = [".carouselX .track", ".icons-wrap"];
-
   const found = selectors.flatMap(sel => Array.from(document.querySelectorAll(sel)));
 
   found.forEach((el, i) => {
@@ -937,34 +754,27 @@ const CalculadoraNube = (function(){
     const name = el.className || el.id || `track#${i}`;
     const warn = (msg, val) => console.warn(`⚠️ [${name}] ${msg}`, val);
 
-    // 1️⃣ Scroll y dimensiones
     if (el.scrollWidth <= el.clientWidth + 2)
       warn("No tiene scroll real (scrollWidth ≈ clientWidth)", {scrollWidth: el.scrollWidth, clientWidth: el.clientWidth});
 
-    // 2️⃣ Snap activo
     if ((cs.scrollSnapType && cs.scrollSnapType !== "none") || el.style.scrollSnapType)
       warn("scroll-snap-type activo → puede bloquear el primer item", cs.scrollSnapType);
 
-    // 3️⃣ Centrados
     if (cs.justifyContent.includes("center"))
       warn("justify-content:center detectado → puede impedir scroll hacia la izquierda", cs.justifyContent);
 
-    // 4️⃣ Dirección RTL
     if (cs.direction === "rtl")
       warn("direction:rtl detectado → puede invertir o romper scrollLeft", cs.direction);
 
-    // 5️⃣ Overlay o borde bloqueado
     const rect = el.getBoundingClientRect();
     const probe = document.elementsFromPoint(rect.left + 10, rect.top + rect.height/2);
     const blocker = probe.find(n => n !== el && !el.contains(n) && getComputedStyle(n).pointerEvents !== "none");
     if (blocker)
       warn("Elemento sobre la orilla izquierda (posible overlay con z-index alto)", blocker);
 
-    // 6️⃣ Scroll inicial distinto de 0
     if (el.scrollLeft > 5)
       warn("scrollLeft inicial ≠ 0", el.scrollLeft);
 
-    // 7️⃣ Helpers de acción rápida (solo consola)
     el._diagFix = {
       noSnap: () => { el.style.scrollSnapType="none"; el.querySelectorAll("*").forEach(n=>n.style.scrollSnapAlign="none"); console.log(`✅ Snap desactivado en ${name}`); },
       flexStart: () => { el.style.justifyContent="flex-start"; console.log(`✅ justify-content:flex-start aplicado en ${name}`); },
@@ -972,134 +782,4 @@ const CalculadoraNube = (function(){
       resetScroll: () => { el.scrollTo({left:0,behavior:"auto"}); console.log(`✅ scrollLeft restablecido en ${name}`); }
     };
   });
-
-  console.log("%c🧩 Usa el objeto _diagFix en cada elemento para aplicar fixes desde consola (ej: document.querySelector('.icons-wrap')._diagFix.flexStart())","color:#60a5fa");
 })();
-
-/* === YouTube Embeds: normalizador + lazy (nocookie) ===================== */
-(function(){
-  const YT_PARAMS = "enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1";
-  const selWrappers = [".reel-embed", ".yt-wrap"]; // 9:16 y 16:9 ya los tienes en CSS
-
-  // Util: arma URL nocookie con params, desde id o desde src existente
-  function toNoCookie(urlOrId){
-    if (!urlOrId) return null;
-    // Si es un ID simple
-    if (!/^(http|\/\/)/i.test(urlOrId)) return `https://www.youtube-nocookie.com/embed/${urlOrId}?${YT_PARAMS}`;
-    // Si es URL, extrae ID y reconstruye
-    try{
-      const u = new URL(urlOrId, location.href);
-      // Soporta youtu.be, /shorts/, watch?v=, embed/...
-      let id = u.searchParams.get("v");
-      if (!id) {
-        const m = u.pathname.match(/\/(embed|shorts)\/([^\/\?\&]+)/) || u.hostname==="youtu.be" && u.pathname.match(/^\/([^\/\?\&]+)/);
-        id = m && m[2] || m && m[1] || null;
-      }
-      return id ? `https://www.youtube-nocookie.com/embed/${id}?${YT_PARAMS}` : null;
-    }catch(e){ return null; }
-  }
-
-  // Normaliza iframes existentes (agrega nocookie + params si faltan)
-  function normalizeExistingIframes(scope=document){
-    scope.querySelectorAll("iframe[src*='youtube'], iframe[src*='youtu.be']").forEach(ifr=>{
-      const newSrc = toNoCookie(ifr.getAttribute("src"));
-      if (newSrc) ifr.src = newSrc;
-      ifr.setAttribute("loading","lazy");
-      ifr.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-      ifr.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
-      ifr.allowFullscreen = true;
-      // Evita tamaños inline que peleen con CSS
-      ifr.removeAttribute("width"); ifr.removeAttribute("height"); ifr.style.width=""; ifr.style.height="";
-    });
-  }
-
-  // Crea tarjeta clickable (thumbnail + botón) y reemplaza por iframe al hacer click o al entrar a viewport
-  function mountLazyEmbed(wrapper){
-    if (wrapper.dataset.ytMounted) return;
-    const ytid = wrapper.getAttribute("data-ytid");
-    if (!ytid) return;
-    wrapper.dataset.ytMounted = "1";
-
-    // Thumbnail
-    const thumb = new Image();
-    thumb.src = `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`;
-    thumb.alt = "Video thumbnail";
-    thumb.style.display="block";
-    thumb.style.width="100%";
-    thumb.style.height="100%";
-    thumb.style.objectFit="cover";
-
-    // Botón play minimal
-    const play = document.createElement("button");
-    play.type="button";
-    play.setAttribute("aria-label","Reproducir video");
-    Object.assign(play.style,{
-      position:"absolute", inset:"0", margin:"auto", width:"64px", height:"64px",
-      borderRadius:"50%", border:"0", cursor:"pointer", background:"rgba(0,0,0,.55)"
-    });
-    const tri = document.createElement("div");
-    Object.assign(tri.style,{
-      margin:"auto", width:0, height:0, borderTop:"12px solid transparent",
-      borderBottom:"12px solid transparent", borderLeft:"20px solid white",
-      transform:"translateX(4px)"
-    });
-    play.appendChild(tri);
-
-    // Contenedor relativo para superponer el botón
-    const ph = document.createElement("div");
-    Object.assign(ph.style,{position:"relative", width:"100%", height:"100%", borderRadius:"12px", overflow:"hidden"});
-    ph.appendChild(thumb); ph.appendChild(play);
-    wrapper.appendChild(ph);
-
-    // Reemplaza por iframe
-    function loadIframe(){
-      if (wrapper.querySelector("iframe")) return;
-      const iframe = document.createElement("iframe");
-      iframe.src = toNoCookie(ytid);
-      iframe.title = wrapper.getAttribute("data-title") || "YouTube video";
-      iframe.setAttribute("frameborder","0");
-      iframe.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-      iframe.setAttribute("loading","lazy");
-      iframe.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
-      iframe.allowFullscreen = true;
-      Object.assign(iframe.style,{position:"absolute", inset:"0", width:"100%", height:"100%"});
-      wrapper.innerHTML=""; // limpia placeholder
-      wrapper.appendChild(iframe);
-    }
-
-    // Click para cargar
-    play.addEventListener("click", loadIframe, {once:true});
-
-    // Lazy por viewport
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if (e.isIntersecting) { loadIframe(); io.disconnect(); } });
-    }, {root:null, rootMargin:"200px", threshold:0.01});
-    io.observe(wrapper);
-  }
-
-  // Inicializa: a) normaliza iframes ya presentes; b) monta lazy en wrappers con data-ytid
-  function initYouTubeEmbeds(scope=document){
-    normalizeExistingIframes(scope);
-    selWrappers.forEach(sel=>{
-      scope.querySelectorAll(`${sel}[data-ytid]`).forEach(mountLazyEmbed);
-    });
-  }
-
-  // API para pausar todos (útil en carruseles al cambiar de slide)
-  function postToYT(iframe, cmd){ try{ iframe.contentWindow.postMessage(JSON.stringify(cmd), "*"); }catch(e){} }
-  function pauseAllYTIframes(scope=document){
-    scope.querySelectorAll("iframe[src*='youtube-nocookie.com/embed/']").forEach(ifr=>{
-      postToYT(ifr, {event:"command", func:"pauseVideo", args:""});
-    });
-  }
-
-  // Exponer APIs
-  window.initYouTubeEmbeds = initYouTubeEmbeds;
-  window.pauseAllYTIframes = pauseAllYTIframes;
-
-  // Auto-init
-  document.addEventListener("DOMContentLoaded", ()=> initYouTubeEmbeds());
-})();
-
-
-
