@@ -5,10 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CONTPAQi Contabiliza | Expiriti</title>
 <meta name="description" content="CONTPAQi Contabiliza con Expiriti: Contabilidad en la nube, pólizas automáticas desde XML, tableros de indicadores (KPIs) y cumplimiento SAT (DIOT, ISR, IVA).">
+
+<!-- Preconnects -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="preconnect" href="https://i.ytimg.com">
 
+<!-- Fuente + Favicon + CSS global -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -16,61 +21,33 @@
 <link rel="icon" href="../IMG/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
-<!-- ⚙️ CSS global (carrusel) -->
 <link rel="stylesheet" href="../main.css">
-
 </head>
+
 <body id="top">
-<header>
-  <div class="container nav">
-    <a href="#top" class="brand" aria-label="Inicio Expiriti">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
-      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
-    </a>
-    <nav aria-label="Principal">
-      <ul>
-        <li><a href="#caracteristicas">Funcionalidades</a></li>
-        <li><a href="#videos">Vídeos</a></li>
-        <li><a href="#calculadora-section">Precio</a></li>
-        <li><a href="#comparativa">Comparativa</a></li>
-        <li><a href="#faq">Preguntas frecuentes</a></li>
-        <li><a href="#sesion-guiada">Demo</a></li>
-      </ul>
-    </nav>
-    <div class="cta">
-      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
-      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20Contabiliza" target="_blank" rel="noopener">WhatsApp</a>
-      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
-    </div>
-  </div>
-  <div class="container mobile" id="mobileMenu">
-    <a href="#caracteristicas">Funcionalidades</a>
-    <a href="#videos">Vídeos</a>
-    <a href="#calculadora-section">Precio</a>
-    <a href="#comparativa">Comparativa</a>
-    <a href="#faq">Preguntas frecuentes</a>
-    <a href="#sesion-guiada">Demo</a>
-  </div>
-</header>
+<!-- Header dinámico -->
+<div id="header-placeholder"></div>
 
 <main class="container hero">
-  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos">← Volver a productos</a>
+  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" rel="noopener">← Volver a productos</a>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
   <h1>CONTPAQi Contabiliza <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nube</span></h1>
 
-  <div class="badges">
-    <span class="badge">Contabilidad en la Nube 24/7</span>
-    <span class="badge">Pólizas automáticas desde XML</span>
-    <span class="badge">Tableros de Indicadores (KPIs)</span>
-    <span class="badge">Cumplimiento DIOT, ISR, IVA</span>
+  <div class="badges" role="list">
+    <span class="badge" role="listitem">Contabilidad en la Nube 24/7</span>
+    <span class="badge" role="listitem">Pólizas automáticas desde XML</span>
+    <span class="badge" role="listitem">Tableros de Indicadores (KPIs)</span>
+    <span class="badge" role="listitem">Cumplimiento DIOT, ISR, IVA</span>
   </div>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
+  <!-- ===== Resumen ===== -->
   <section aria-label="Resumen">
     <div class="card body">
       <div class="hero-3col">
+        <!-- Col 1 -->
         <div class="stack-left">
-          <img src="../IMG/contabiliza.webp" alt="CONTPAQi Contabiliza" style="width:220px;margin-bottom:12px;border-radius:12px">
+          <img src="../IMG/contabiliza.webp" alt="CONTPAQi Contabiliza" style="width:220px;margin-bottom:12px;border-radius:12px" loading="lazy">
           <div class="stack">
             <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Contabiliza" target="_blank" rel="noopener">Comprar ahora</a>
             <a class="btn btn-grad-purple hero-btn" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20gratis%20de%20CONTPAQi%20Contabiliza" target="_blank" rel="noopener">Probar gratis</a>
@@ -80,11 +57,12 @@
           </div>
         </div>
 
+        <!-- Col 2 -->
         <div class="card body pdf-card">
-          <img src="../IMG/usas.jpeg" alt="Equipo trabajando en la nube" style="width:100%;border-radius:10px;margin-bottom:10px">
+          <img src="../IMG/usas.jpeg" alt="Equipo trabajando en la nube" style="width:100%;border-radius:10px;margin-bottom:10px" loading="lazy">
           <h4 class="title-gradient" style="margin:0 0 6px">Tu Contabilidad 24/7 desde cualquier lugar</h4>
           <p class="hint" style="margin:0 0 8px">Accede a tu información contable en tiempo real, automatiza pólizas y toma decisiones con tableros inteligentes.</p>
-          <iframe class="pdf-frame" title="Checklist sistema contable" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=1&view=FitH"></iframe>
+          <iframe class="pdf-frame" title="Checklist sistema contable" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=1&view=FitH" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
             <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
             <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" download>Descargar</a>
@@ -92,22 +70,23 @@
           <small class="hint">Placeholder: Considera añadir PDF sobre beneficios de la nube.</small>
         </div>
 
+        <!-- Col 3: Galería -->
         <aside class="card body">
           <h4 class="title-gradient">Galería</h4>
           <div class="carousel" id="carousel1" aria-label="Galería Contabiliza">
-            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-            <div class="carousel-track">
-              <img class="carousel-slide" src="../IMG/1contabiliza_placeholder.webp" alt="Tableros de indicadores (KPIs)">
-              <img class="carousel-slide" src="../IMG/2contabiliza_placeholder.webp" alt="Pólizas automáticas desde XML">
-              <img class="carousel-slide" src="../IMG/3contabiliza_placeholder.webp" alt="Acceso desde cualquier dispositivo">
-              <img class="carousel-slide" src="../IMG/4contabiliza_placeholder.webp" alt="Cumplimiento fiscal DIOT e ISR">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <div class="carousel-track" role="region" aria-label="Imágenes">
+              <img class="carousel-slide" src="../IMG/1contabiliza_placeholder.webp" alt="Tableros de indicadores (KPIs)" loading="lazy">
+              <img class="carousel-slide" src="../IMG/2contabiliza_placeholder.webp" alt="Pólizas automáticas desde XML" loading="lazy">
+              <img class="carousel-slide" src="../IMG/3contabiliza_placeholder.webp" alt="Acceso desde cualquier dispositivo" loading="lazy">
+              <img class="carousel-slide" src="../IMG/4contabiliza_placeholder.webp" alt="Cumplimiento fiscal DIOT e ISR" loading="lazy">
             </div>
-            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
             <div class="carousel-nav" aria-label="Paginación de galería">
-              <button class="dot active" aria-label="Ir a la imagen 1"></button>
-              <button class="dot" aria-label="Ir a la imagen 2"></button>
-              <button class="dot" aria-label="Ir a la imagen 3"></button>
-              <button class="dot" aria-label="Ir a la imagen 4"></button>
+              <button class="dot active" aria-label="Ir a la imagen 1" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 2" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 3" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 4" type="button"></button>
             </div>
           </div>
         </aside>
@@ -115,15 +94,16 @@
     </div>
   </section>
 
+  <!-- ===== Funcionalidades ===== -->
   <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <div class="card body">
       <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
 
       <div class="pillbar" role="tablist" aria-label="Categorías de características">
-        <button class="pill active" data-filter="nube">Contabilidad en la Nube</button>
-        <button class="pill" data-filter="automatizacion">Automatización (Pólizas)</button>
-        <button class="pill" data-filter="cumplimiento">Cumplimiento y Reportes</button>
+        <button class="pill active" data-filter="nube" type="button">Contabilidad en la Nube</button>
+        <button class="pill" data-filter="automatizacion" type="button">Automatización (Pólizas)</button>
+        <button class="pill" data-filter="cumplimiento" type="button">Cumplimiento y Reportes</button>
       </div>
 
       <div class="grid-3 feature-grid">
@@ -151,142 +131,128 @@
     </div>
   </section>
 
-<!-- ===== Por qué usar + Reels (wrappers con data-ytid) ===== -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Contabiliza? <span class="badge">Beneficios Nube</span></h2>
-      <p class="lead">La contabilidad en la nube que te da movilidad, automatiza tus pólizas y te ofrece KPIs en tiempo real para tomar mejores decisiones.</p>
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-        <div class="listTrack">
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/118-buscador.webp" alt=""></div><div><strong>MOVILIDAD TOTAL</strong><div>Accede a tu contabilidad 24/7 desde cualquier PC o Mac.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/137-estructura-3.webp" alt=""></div><div><strong>AUTOMATIZACIÓN</strong><div>Genera pólizas automáticamente a partir de tus XML.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/011-aplicacion-de-presentacion-de-diapositivas.webp" alt=""></div><div><strong>DECISIONES RÁPIDAS</strong><div>Visualiza KPIs y reportes financieros al instante.</div></div></div>
-          </div>
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/pago-en-linea.webp" alt=""></div><div><strong>CUMPLE SIN ESTRÉS</strong><div>Genera DIOT, ISR, IVA y reportes SAT fácilmente.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/contpaqi.webp" alt=""></div><div><strong>ECOSISTEMA NUBE</strong><div>Conecta con Vende, Personia y otras apps.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/100-mision-2.webp" alt=""></div><div><strong>SIEMPRE ACTUALIZADO</strong><div>Actualizaciones fiscales automáticas y sin costo.</div></div></div>
-          </div>
-        </div>
-        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-      </div>
-    </div>
-
-    <div>
-      <aside class="card body" aria-label="Reels destacados">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Contabiliza</h4>
-        <h4 class="reel-title active">Contabilidad en la Nube</h4>
-        <h4 class="reel-title">Pólizas Automáticas</h4>
-
-        <div class="carousel" id="carouselReelsContabiliza" aria-label="Reels Contabiliza">
-          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-          <div class="carousel-track">
-            <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-              <div class="reel-embed"
-                   data-ytid="M7lc1UVf-VE"
-                   data-title="Reel CONTPAQi Contabiliza 1 (TEMP)">
-              </div>
+  <!-- ===== Por qué usar + REELS ===== -->
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
+      <div>
+        <h2 class="title-gradient">¿Por qué usar Contabiliza? <span class="badge">Beneficios Nube</span></h2>
+        <p class="lead">La contabilidad en la nube que te da movilidad, automatiza tus pólizas y te ofrece KPIs en tiempo real para tomar mejores decisiones.</p>
+        <div class="listSlider">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+          <div class="listTrack" role="region" aria-label="Beneficios">
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/118-buscador.webp" alt="" loading="lazy"></div><div><strong>MOVILIDAD TOTAL</strong><div>Accede a tu contabilidad 24/7 desde cualquier PC o Mac.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/137-estructura-3.webp" alt="" loading="lazy"></div><div><strong>AUTOMATIZACIÓN</strong><div>Genera pólizas automáticamente a partir de tus XML.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/011-aplicacion-de-presentacion-de-diapositivas.webp" alt="" loading="lazy"></div><div><strong>DECISIONES RÁPIDAS</strong><div>Visualiza KPIs y reportes financieros al instante.</div></div></div>
             </div>
-            <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-              <div class="reel-embed"
-                   data-ytid="aqz-KE-bpKQ"
-                   data-title="Reel CONTPAQi Contabiliza 2 (TEMP)">
-              </div>
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/pago-en-linea.webp" alt="" loading="lazy"></div><div><strong>CUMPLE SIN ESTRÉS</strong><div>Genera DIOT, ISR, IVA y reportes SAT fácilmente.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/contpaqi.webp" alt="" loading="lazy"></div><div><strong>ECOSISTEMA NUBE</strong><div>Conecta con Vende, Personia y otras apps.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/100-mision-2.webp" alt="" loading="lazy"></div><div><strong>SIEMPRE ACTUALIZADO</strong><div>Actualizaciones fiscales automáticas y sin costo.</div></div></div>
             </div>
           </div>
-          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-          <div class="carousel-nav" aria-label="Paginación de galería">
-            <button class="dot active" aria-label="Ir al reel 1"></button>
-            <button class="dot" aria-label="Ir al reel 2"></button>
+          <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+        </div>
+      </div>
+
+      <!-- REELS -->
+      <div>
+        <aside class="card body" aria-label="Reels destacados">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Contabiliza</h4>
+          <h4 class="reel-title active">Contabilidad en la Nube</h4>
+          <h4 class="reel-title">Pólizas Automáticas</h4>
+
+          <div class="carousel" id="carouselReelsContabiliza" aria-label="Reels Contabiliza">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <div class="reel-embed" data-ytid="M7lc1UVf-VE" data-title="Reel CONTPAQi Contabiliza 1 (TEMP)"></div>
+              </div>
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <div class="reel-embed" data-ytid="aqz-KE-bpKQ" data-title="Reel CONTPAQi Contabiliza 2 (TEMP)"></div>
+              </div>
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+            </div>
           </div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Videos (wrappers con data-ytid) ===== -->
-<section id="videos" aria-labelledby="videos-title">
-  <div class="card body">
-    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-    <div class="yt-grid">
-      <div class="yt">
-        <h4 class="yt-title">Video Principal CONTPAQi Contabiliza</h4>
-        <div class="yt-wrap"
-             data-ytid="M7lc1UVf-VE"
-             data-title="Video Principal CONTPAQi Contabiliza (TEMP)">
-        </div>
+        </aside>
       </div>
-      <div class="yt">
-        <h4 class="yt-title">Demo CONTPAQi Contabiliza</h4>
-        <div class="yt-wrap"
-             data-ytid="aqz-KE-bpKQ"
-             data-title="Demo CONTPAQi Contabiliza (TEMP)">
+    </div>
+  </section>
+
+  <!-- ===== Videos ===== -->
+  <section id="videos" aria-labelledby="videos-title">
+    <div class="card body">
+      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+      <div class="yt-grid">
+        <div class="yt">
+          <h4 class="yt-title">Video Principal CONTPAQi Contabiliza</h4>
+          <div class="yt-wrap" data-ytid="M7lc1UVf-VE" data-title="Video Principal CONTPAQi Contabiliza (TEMP)"></div>
+        </div>
+        <div class="yt">
+          <h4 class="yt-title">Demo CONTPAQi Contabiliza</h4>
+          <div class="yt-wrap" data-ytid="aqz-KE-bpKQ" data-title="Demo CONTPAQi Contabiliza (TEMP)"></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-  
-<section id="integra" aria-labelledby="integra-title">
-  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-  <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Contabiliza</h3>
+  <!-- ===== Integraciones ===== -->
+  <section id="integra" aria-labelledby="integra-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Contabiliza</h3>
 
-  <div class="card body">
-    <div class="carouselX" data-step="3">
-      <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+    <div class="card body">
+      <div class="carouselX" data-step="3" aria-label="Sistemas integrables">
+        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
 
-      <div class="track">
+        <div class="track">
+          <article class="sys" data-href="../SISTEMAS/vende.html">
+            <img src="../IMG/vende.webp" alt="Vende" loading="lazy">
+            <h4>CONTPAQi Vende</h4>
+            <p>Genera pólizas de ventas automáticamente.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
 
-        <article class="sys" data-href="../SISTEMAS/vende.html">
-          <img src="../IMG/vende.webp" alt="Vende" loading="lazy">
-          <h4>CONTPAQi Vende</h4>
-          <p>Genera pólizas de ventas automáticamente.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+          <article class="sys" data-href="../SISTEMAS/personia.html">
+            <img src="../IMG/personia.webp" alt="Personia" loading="lazy">
+            <h4>CONTPAQi Personia</h4>
+            <p>Genera la póliza de nómina desde la nube.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
 
-        <article class="sys" data-href="../SISTEMAS/personia.html">
-          <img src="../IMG/personia.webp" alt="Personia" loading="lazy">
-          <h4>CONTPAQi Personia</h4>
-          <p>Genera la póliza de nómina desde la nube.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+          <article class="sys" data-href="../SISTEMAS/bancos.html">
+            <img src="../IMG/bancos.webp" alt="Bancos" loading="lazy">
+            <h4>CONTPAQi Bancos</h4>
+            <p>Integra movimientos bancarios (próximamente).</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
 
-        <article class="sys" data-href="../SISTEMAS/bancos.html">
-          <img src="../IMG/bancos.webp" alt="Bancos" loading="lazy">
-          <h4>CONTPAQi Bancos</h4>
-          <p>Integra movimientos bancarios (próximamente).</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+          <article class="sys" data-href="../SISTEMAS/nominas.html">
+            <img src="../IMG/nominas.webp" alt="Nóminas" loading="lazy">
+            <h4>CONTPAQi Nóminas</h4>
+            <p>Carga la póliza de nómina desde el sistema de escritorio.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
 
-        <article class="sys" data-href="../SISTEMAS/nominas.html">
-          <img src="../IMG/nominas.webp" alt="Nóminas" loading="lazy">
-          <h4>CONTPAQi Nóminas</h4>
-          <p>Carga la póliza de nómina desde el sistema de escritorio.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+          <article class="sys" data-href="../SISTEMAS/xmlenlinea.html">
+            <img src="../IMG/xml.webp" alt="XML en Línea" loading="lazy">
+            <h4>CONTPAQi XML en Línea</h4>
+            <p>Descarga y carga masiva de CFDI al ADD Nube.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
+        </div>
 
-        <article class="sys" data-href="../SISTEMAS/xmlenlinea.html">
-          <img src="../IMG/xml.webp" alt="XML en Línea" loading="lazy">
-          <h4>CONTPAQi XML en Línea</h4>
-          <p>Descarga y carga masiva de CFDI al ADD Nube.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
-
+        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+        <div class="group-dots" aria-label="Paginación carrusel"></div>
       </div>
-
-      <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-      <div class="group-dots" aria-label="Paginación carrusel"></div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-
+  <!-- ===== PRECIOS (SECCIÓN RESPETADA TAL CUAL) ===== -->
   <section id="calculadora-section" aria-labelledby="calc">
     <h3 id="calc" class="title-gradient">Planes y Precios (Anuales)</h3>
     <p class="hint" style="text-align:center">CONTPAQi Contabiliza se maneja por suscripción anual basada en planes.</p>
@@ -315,6 +281,7 @@
     </div>
   </section>
 
+  <!-- ===== Comparativa ===== -->
   <section id="comparativa" aria-labelledby="comparativa-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="comparativa-title" class="title-gradient">Comparativa: Nube vs Escritorio</h3>
@@ -333,6 +300,7 @@
     </div>
   </section>
 
+  <!-- ===== FAQ ===== -->
   <section id="faq" aria-labelledby="faq-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
@@ -345,6 +313,7 @@
     </div>
   </section>
 
+  <!-- ===== CTA ===== -->
   <section id="sesion-guiada" class="card body">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 class="title-gradient">¿Listo para empezar en la Nube?</h3>
@@ -355,9 +324,10 @@
     </div>
   </section>
 
-  <aside class="toc collapsed" id="toc" aria-live="polite">
-    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
-    <button class="toc-close" aria-label="Cerrar">×</button>
+  <!-- ===== TOC ===== -->
+  <aside class="toc collapsed" id="toc" aria-label="Mapa del sitio">
+    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa" type="button">🗺️ Mapa</button>
+    <button class="toc-close" aria-label="Cerrar" type="button">×</button>
     <strong class="toc-title">Mapa del sitio</strong>
     <a href="#caracteristicas">Funcionalidades</a>
     <a href="#videos">Vídeos</a>
@@ -369,48 +339,73 @@
   </aside>
 </main>
 
-<footer>
-  <div class="container footer-grid">
-    <div>
-      <h3 class="footer-title">Contacto</h3>
-      <div class="contact-list">
-        <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
-        <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
-        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
-      </div>
-    </div>
-    <div>
-      <h3 class="footer-title">Formas de pago</h3>
-      <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy"></div>
-    </div>
-    <div>
-      <h3 class="footer-title">Marcas</h3>
-      <div class="brands-col">
-        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi"></div>
-        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft"></div>
-      </div>
-    </div>
-    <div class="ally-col">
-      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
-      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
-      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <div style="display:flex;align-items:center;gap:10px">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px">
-      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
-    </div>
-    <div class="hint">Aviso de privacidad · Términos</div>
-  </div>
-</footer>
-<!-- 1) Tabla de precios (debe existir la clave del sistema) -->
-<script src="../precios-contpaqi.js"></script>
+<!-- Footer dinámico -->
+<div id="footer-placeholder"></div>
 
-  <!-- 2) Adaptador + calculadora NUBE (tu main.js con el auto-detector) -->
-<script src="../main.js" defer></script>
-<!-- 3 Motor calculadora ESCRITORIO (tu calculadora.js clásica) -->
-<script src="../calculadora.js" defer></script>
+<!-- ===== Loader de header/footer + normalizador de rutas ===== -->
+<script>
+(async () => {
+  const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
+  const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
+
+  const isGh = location.hostname.endsWith("github.io");
+  const firstSeg = location.pathname.split("/")[1] || "";
+  const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
+  const inSistemas = location.pathname.includes("/SISTEMAS/");
+
+  function prefix(p){
+    if (!p || /^https?:\/\//i.test(p)) return p;
+    if (isGh) return (repoBase + "/" + p).replace(/\/+/g,"/");
+    const depth = inSistemas ? "../" : "";
+    return (depth + p).replace(/\/+/g,"/");
+  }
+
+  const headerURL = await pickFirst([
+    "../PARTIALS/global-header.html",
+    "./PARTIALS/global-header.html",
+    `${repoBase}/PARTIALS/global-header.html`,
+    "/PARTIALS/global-header.html"
+  ]);
+  const footerURL = await pickFirst([
+    "../PARTIALS/global-footer.html",
+    "./PARTIALS/global-footer.html",
+    `${repoBase}/PARTIALS/global-footer.html`,
+    "/PARTIALS/global-footer.html"
+  ]);
+
+  const [headerHTML, footerHTML] = await Promise.all([
+    fetch(headerURL).then(r=>r.text()),
+    fetch(footerURL).then(r=>r.text())
+  ]);
+
+  const hp = document.getElementById("header-placeholder");
+  const fp = document.getElementById("footer-placeholder");
+  if (hp) hp.outerHTML = headerHTML;
+  if (fp) fp.outerHTML = footerHTML;
+
+  // Normaliza rutas para elementos marcados
+  document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+    img.src = prefix(img.getAttribute("data-src"));
+  });
+  document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+    const p = a.getAttribute("data-href"); if (!p) return;
+    const [path, hash] = p.split("#");
+    a.href = prefix(path) + (hash ? ("#"+hash) : "");
+  });
+  document.querySelectorAll(".js-img[data-src]").forEach(img=>{
+    img.src = prefix(img.getAttribute("data-src"));
+  });
+  document.querySelectorAll(".js-link[data-href]").forEach(a=>{
+    a.href = prefix(a.getAttribute("data-href"));
+  });
+
+  // Año en footer parcial
+  const y = document.getElementById("gf-year");
+  if (y) y.textContent = new Date().getFullYear();
+})();
+</script>
+
+<!-- Lógica global (carruseles, reels, YouTube wrappers, TOC, etc.) -->
+<script defer src="../main.js"></script>
 </body>
 </html>
