@@ -5,10 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CONTPAQi Despachos | Expiriti</title>
 <meta name="description" content="CONTPAQi Despachos con Expiriti: Gestión de clientes y obligaciones en la nube. Automatiza, controla y optimiza tu despacho contable.">
+
+<!-- Preconnects -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="preconnect" href="https://i.ytimg.com">
 
+<!-- Fuente + Favicon + CSS global -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -16,61 +21,33 @@
 <link rel="icon" href="../IMG/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
-<!-- ⚙️ CSS global (carrusel) -->
 <link rel="stylesheet" href="../main.css">
-
 </head>
+
 <body id="top">
-<header>
-  <div class="container nav">
-    <a href="#top" class="brand" aria-label="Inicio Expiriti">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
-      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
-    </a>
-    <nav aria-label="Principal">
-      <ul>
-        <li><a href="#caracteristicas">Funcionalidades</a></li>
-        <li><a href="#videos">Vídeos</a></li>
-        <li><a href="#calculadora-section">Precio</a></li>
-        <li><a href="#comparativa">Comparativa</a></li>
-        <li><a href="#faq">Preguntas frecuentes</a></li>
-        <li><a href="#sesion-guiada">Demo</a></li>
-      </ul>
-    </nav>
-    <div class="cta">
-      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
-      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20Despachos" target="_blank" rel="noopener">WhatsApp</a>
-      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
-    </div>
-  </div>
-  <div class="container mobile" id="mobileMenu">
-    <a href="#caracteristicas">Funcionalidades</a>
-    <a href="#videos">Vídeos</a>
-    <a href="#calculadora-section">Precio</a>
-    <a href="#comparativa">Comparativa</a>
-    <a href="#faq">Preguntas frecuentes</a>
-    <a href="#sesion-guiada">Demo</a>
-  </div>
-</header>
+<!-- Header dinámico (partial) -->
+<div id="header-placeholder"></div>
 
 <main class="container hero">
-  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos">← Volver a productos</a>
+  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" rel="noopener">← Volver a productos</a>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
   <h1>CONTPAQi Despachos <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nube</span></h1>
 
-  <div class="badges">
-    <span class="badge">Gestión de Despachos</span>
-    <span class="badge">Control de Clientes Ilimitados</span>
-    <span class="badge">Obligaciones Fiscales y Alertas</span>
-    <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #86efac;">Integración Contabilidad/Bancos</span>
+  <div class="badges" role="list" aria-label="Características destacadas">
+    <span class="badge" role="listitem">Gestión de Despachos</span>
+    <span class="badge" role="listitem">Control de Clientes Ilimitados</span>
+    <span class="badge" role="listitem">Obligaciones Fiscales y Alertas</span>
+    <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #86efac;">Integración Contabilidad/Bancos</span>
   </div>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
+  <!-- ===== Resumen ===== -->
   <section aria-label="Resumen">
     <div class="card body">
       <div class="hero-3col">
+        <!-- Col 1 -->
         <div class="stack-left">
-          <img src="../IMG/despachos.webp" alt="CONTPAQi Despachos" style="width:220px;margin-bottom:12px;border-radius:12px">
+          <img src="../IMG/despachos.webp" alt="CONTPAQi Despachos" style="width:220px;margin-bottom:12px;border-radius:12px" loading="lazy">
           <div class="stack">
             <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Despachos" target="_blank" rel="noopener">Comprar Suscripción</a>
             <a class="btn btn-grad-purple hero-btn" href="https://www.contpaqi.com/despachos" target="_blank" rel="noopener">Probar gratis</a>
@@ -80,33 +57,35 @@
           </div>
         </div>
 
+        <!-- Col 2 -->
         <div class="card body pdf-card">
-          <img src="../IMG/usas.jpeg" alt="Equipo trabajando en la nube" style="width:100%;border-radius:10px;margin-bottom:10px">
+          <img src="../IMG/usas.jpeg" alt="Equipo trabajando en la nube" style="width:100%;border-radius:10px;margin-bottom:10px" loading="lazy">
           <h4 class="title-gradient" style="margin:0 0 6px">Tu Despacho Contable en la Nube</h4>
           <p class="hint" style="margin:0 0 8px">Automatiza, controla y optimiza la gestión de tus clientes desde una plataforma centralizada.</p>
-          <iframe class="pdf-frame" title="Ficha de CONTPAQi Despachos" src="../PDFS/Ficha_Producto_CONTPAQi_Despachos.pdf#page=1&view=FitH"></iframe>
+          <iframe class="pdf-frame" title="Ficha de CONTPAQi Despachos" src="../PDFS/Ficha_Producto_CONTPAQi_Despachos.pdf#page=1&view=FitH" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Despachos.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Despachos.pdf" download>Descargar</a>
           </div>
         </div>
 
+        <!-- Col 3: Galería -->
         <aside class="card body">
           <h4 class="title-gradient">Galería</h4>
           <div class="carousel" id="carousel1" aria-label="Galería Despachos">
-            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-            <div class="carousel-track">
-              <img class="carousel-slide" src="../IMG/1despachos_placeholder.webp" alt="Dashboard de Despachos">
-              <img class="carousel-slide" src="../IMG/2despachos_placeholder.webp" alt="Gestión de Clientes y Obligaciones">
-              <img class="carousel-slide" src="../IMG/3despachos_placeholder.webp" alt="Control de Documentos Digitales">
-              <img class="carousel-slide" src="../IMG/4despachos_placeholder.webp" alt="Integración con Contabilidad">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <div class="carousel-track" role="region" aria-label="Imágenes">
+              <img class="carousel-slide" src="../IMG/1despachos_placeholder.webp" alt="Dashboard de Despachos" loading="lazy">
+              <img class="carousel-slide" src="../IMG/2despachos_placeholder.webp" alt="Gestión de Clientes y Obligaciones" loading="lazy">
+              <img class="carousel-slide" src="../IMG/3despachos_placeholder.webp" alt="Control de Documentos Digitales" loading="lazy">
+              <img class="carousel-slide" src="../IMG/4despachos_placeholder.webp" alt="Integración con Contabilidad" loading="lazy">
             </div>
-            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
             <div class="carousel-nav" aria-label="Paginación de galería">
-              <button class="dot active" aria-label="Ir a la imagen 1"></button>
-              <button class="dot" aria-label="Ir a la imagen 2"></button>
-              <button class="dot" aria-label="Ir a la imagen 3"></button>
-              <button class="dot" aria-label="Ir a la imagen 4"></button>
+              <button class="dot active" aria-label="Ir a la imagen 1" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 2" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 3" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 4" type="button"></button>
             </div>
           </div>
         </aside>
@@ -114,15 +93,16 @@
     </div>
   </section>
 
+  <!-- ===== Funcionalidades ===== -->
   <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <div class="card body">
       <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
 
       <div class="pillbar" role="tablist" aria-label="Categorías de características">
-        <button class="pill active" data-filter="gestion">Gestión de Clientes y Equipo</button>
-        <button class="pill" data-filter="control">Control y Obligaciones</button>
-        <button class="pill" data-filter="integracion">Integración y Análisis</button>
+        <button class="pill active" data-filter="gestion" type="button">Gestión de Clientes y Equipo</button>
+        <button class="pill" data-filter="control" type="button">Control y Obligaciones</button>
+        <button class="pill" data-filter="integracion" type="button">Integración y Análisis</button>
       </div>
 
       <div class="grid-3 feature-grid">
@@ -130,130 +110,120 @@
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/119-conexion.webp" alt=""><h4>Asignación de Ejecutivos</h4></div><p>Gestiona a tus contadores y auxiliares, asignando carteras.</p></article>
         <article class="fcard tag-gestion"><div class="fhead"><img class="ficon" src="../IMG/028-estado-de-la-mision-1.webp" alt=""><h4>Perfiles y Especialización</h4></div><p>Captura el perfil y especialización de tu equipo de trabajo.</p></article>
 
-        <article class="fcard tag-control"><div class="fhead"><img class="ficon" src="../IMG/194-tiempo-de-trabajo.webp" alt=""><h4>Control de Obligaciones</h4></div><p>Define y monitorea obligaciones fiscales (iniciadas, en proceso, finalizadas).</p></article>
-        <article class="fcard tag-control"><div class="fhead"><img class="ficon" src="../IMG/207-entregado-2.webp" alt=""><h4>Alertas Preventivas</h4></div><p>Recibe notificaciones para prevenir incumplimientos y sanciones.</p></article>
+        <article class="fcard tag-control"><div class="fhead"><img class="ficon" src="../IMG/194-tiempo-de-trabajo.webp" alt=""><h4>Control de Obligaciones</h4></div><p>Define y monitorea obligaciones (iniciadas, en proceso, finalizadas).</p></article>
+        <article class="fcard tag-control"><div class="fhead"><img class="ficon" src="../IMG/207-entregado-2.webp" alt=""><h4>Alertas Preventivas</h4></div><p>Notificaciones para prevenir incumplimientos y sanciones.</p></article>
         <article class="fcard tag-control"><div class="fhead"><img class="ficon" src="../IMG/052-documentos.webp" alt=""><h4>Almacenamiento Digital</h4></div><p>Carga y consolida papeles de trabajo, acuses y formularios.</p></article>
 
         <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/contabilidad.webp" alt=""><h4>Integra con Contabilidad</h4></div><p>Conecta con Contabilidad/Bancos para enviar CFDI (Ingresos/Egresos).</p></article>
-        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/125-portapapeles.webp" alt=""><h4>Dashboards de Desempeño</h4></div><p>Consulta el estatus de obligaciones y la carga de trabajo por ejecutivo.</p></article>
+        <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/125-portapapeles.webp" alt=""><h4>Dashboards de Desempeño</h4></div><p>Estatus de obligaciones y carga de trabajo por ejecutivo.</p></article>
         <article class="fcard tag-integracion"><div class="fhead"><img class="ficon" src="../IMG/156-cargas-en-la-nube.webp" alt=""><h4>Seguridad Avanzada</h4></div><p>Tus datos y los de tus clientes están protegidos en la nube.</p></article>
       </div>
     </div>
   </section>
 
-<!-- ===== Por qué usar + Reels (wrappers con data-ytid) ===== -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Despachos? <span class="badge">Beneficios Nube</span></h2>
-      <p class="lead">La plataforma en la nube que centraliza la gestión de tus clientes, automatiza el seguimiento de obligaciones y se conecta con tus sistemas contables.</p>
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-        <div class="listTrack">
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/163-trabajo-colaborativo.webp" alt=""></div><div><strong>CENTRALIZA TUS CLIENTES</strong><div>Administra clientes ilimitados y sus regímenes fiscales.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/135-fluir.webp" alt=""></div><div><strong>CONTROL DE OBLIGACIONES</strong><div>Monitorea el cumplimiento y recibe alertas preventivas.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/178-perfil-1.webp" alt=""></div><div><strong>GESTIÓN DE EQUIPO</strong><div>Asigna carteras de clientes a tus ejecutivos y mide su carga.</div></div></div>
-          </div>
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/149-caja-fuerte.webp" alt=""></div><div><strong>EXPEDIENTE DIGITAL SEGURO</strong><div>Almacena papeles de trabajo y acuses en la nube.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/contpaqi.webp" alt=""></div><div><strong>INTEGRACIÓN CONTABLE</strong><div>Conecta con Contabilidad y Bancos para enviar CFDI.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/032-grafico-de-barras-1.webp" alt=""></div><div><strong>VISIBILIDAD TOTAL</strong><div>Toma decisiones con dashboards de desempeño.</div></div></div>
-          </div>
-        </div>
-        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-      </div>
-    </div>
-
-    <div>
-      <aside class="card body" aria-label="Reels destacados">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Despachos</h4>
-        <h4 class="reel-title active">Gestión de Despachos en la Nube</h4>
-        <h4 class="reel-title">Control de Obligaciones</h4>
-
-        <div class="carousel" id="carouselReelsDespachos" aria-label="Reels Despachos">
-          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-          <div class="carousel-track">
-            <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-              <div class="reel-embed"
-                   data-ytid="KBEOTwnFXQ4"
-                   data-title="Reel CONTPAQi Despachos 1">
-              </div>
+  <!-- ===== Por qué usar + REELS ===== -->
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
+      <div>
+        <h2 class="title-gradient">¿Por qué usar Despachos? <span class="badge">Beneficios Nube</span></h2>
+        <p class="lead">Centraliza la gestión de clientes, automatiza obligaciones y conéctalo con tus sistemas contables.</p>
+        <div class="listSlider">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+          <div class="listTrack" role="region" aria-label="Beneficios">
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/163-trabajo-colaborativo.webp" alt="" loading="lazy"></div><div><strong>CENTRALIZA TUS CLIENTES</strong><div>Administra clientes ilimitados y sus regímenes fiscales.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/135-fluir.webp" alt="" loading="lazy"></div><div><strong>CONTROL DE OBLIGACIONES</strong><div>Monitorea el cumplimiento y recibe alertas preventivas.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/178-perfil-1.webp" alt="" loading="lazy"></div><div><strong>GESTIÓN DE EQUIPO</strong><div>Asigna carteras y mide la carga por ejecutivo.</div></div></div>
             </div>
-            <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-              <div class="reel-embed"
-                   data-ytid="aqz-KE-bpKQ"
-                   data-title="Reel CONTPAQi Despachos 2 (TEMP)">
-              </div>
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/149-caja-fuerte.webp" alt="" loading="lazy"></div><div><strong>EXPEDIENTE DIGITAL SEGURO</strong><div>Documentos y acuses en la nube.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/contpaqi.webp" alt="" loading="lazy"></div><div><strong>INTEGRACIÓN CONTABLE</strong><div>Conecta con Contabilidad y Bancos para enviar CFDI.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/032-grafico-de-barras-1.webp" alt="" loading="lazy"></div><div><strong>VISIBILIDAD TOTAL</strong><div>Dashboards y métricas de desempeño.</div></div></div>
             </div>
           </div>
-          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-          <div class="carousel-nav" aria-label="Paginación de galería">
-            <button class="dot active" aria-label="Ir al reel 1"></button>
-            <button class="dot" aria-label="Ir al reel 2"></button>
+          <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+        </div>
+      </div>
+
+      <!-- REELS -->
+      <div>
+        <aside class="card body" aria-label="Reels destacados">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Despachos</h4>
+          <h4 class="reel-title active">Gestión de Despachos en la Nube</h4>
+          <h4 class="reel-title">Control de Obligaciones</h4>
+
+          <div class="carousel" id="carouselReelsDespachos" aria-label="Reels Despachos">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <div class="reel-embed" data-ytid="KBEOTwnFXQ4" data-title="Reel CONTPAQi Despachos 1"></div>
+              </div>
+              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
+                <div class="reel-embed" data-ytid="aqz-KE-bpKQ" data-title="Reel CONTPAQi Despachos 2 (TEMP)"></div>
+              </div>
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+            </div>
           </div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ===== Videos (wrappers con data-ytid) ===== -->
-<section id="videos" aria-labelledby="videos-title">
-  <div class="card body">
-    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-    <div class="yt-grid">
-      <div class="yt">
-        <h4 class="yt-title">Video Principal CONTPAQi Despachos</h4>
-        <div class="yt-wrap"
-             data-ytid="M7lc1UVf-VE"
-             data-title="Video Principal CONTPAQi Despachos (TEMP)">
-        </div>
+        </aside>
       </div>
-      <div class="yt">
-        <h4 class="yt-title">Demo CONTPAQi Despachos</h4>
-        <div class="yt-wrap"
-             data-ytid="aqz-KE-bpKQ"
-             data-title="Demo CONTPAQi Despachos (TEMP)">
+    </div>
+  </section>
+
+  <!-- ===== Videos ===== -->
+  <section id="videos" aria-labelledby="videos-title">
+    <div class="card body">
+      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+      <div class="yt-grid">
+        <div class="yt">
+          <h4 class="yt-title">Video Principal CONTPAQi Despachos</h4>
+          <div class="yt-wrap" data-ytid="M7lc1UVf-VE" data-title="Video Principal CONTPAQi Despachos (TEMP)"></div>
+        </div>
+        <div class="yt">
+          <h4 class="yt-title">Demo CONTPAQi Despachos</h4>
+          <div class="yt-wrap" data-ytid="aqz-KE-bpKQ" data-title="Demo CONTPAQi Despachos (TEMP)"></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="integra" aria-labelledby="integra-title">
-  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-  <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Despachos</h3>
-  <div class="card body">
-    <div class="carouselX" data-step="3">
-      <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-      <div class="track">
-        <article class="sys" data-href="../SISTEMAS/contabilidad.html">
-          <img src="../IMG/contabilidad.webp" alt="Contabilidad">
-          <h4>CONTPAQi Contabilidad</h4>
-          <p>Envía CFDI (Ingresos/Egresos) para el control de obligaciones.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
-        <article class="sys" data-href="../SISTEMAS/bancos.html">
-          <img src="../IMG/bancos.webp" alt="Bancos">
-          <h4>CONTPAQi Bancos</h4>
-          <p>Conecta los CFDI de pago y egresos con la gestión del despacho.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
-        <article class="sys" data-href="../SISTEMAS/analiza.html">
-          <img src="../IMG/analiza.webp" alt="Analiza">
-          <h4>CONTPAQi Analiza</h4>
-          <p>Complementa la gestión con dashboards financieros de tus clientes.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+  <!-- ===== Integraciones ===== -->
+  <section id="integra" aria-labelledby="integra-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Despachos</h3>
+    <div class="card body">
+      <div class="carouselX" data-step="3" aria-label="Sistemas integrables">
+        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+        <div class="track">
+          <article class="sys" data-href="../SISTEMAS/contabilidad.html">
+            <img src="../IMG/contabilidad.webp" alt="Contabilidad" loading="lazy">
+            <h4>CONTPAQi Contabilidad</h4>
+            <p>Envía CFDI (Ingresos/Egresos) para el control de obligaciones.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
+          <article class="sys" data-href="../SISTEMAS/bancos.html">
+            <img src="../IMG/bancos.webp" alt="Bancos" loading="lazy">
+            <h4>CONTPAQi Bancos</h4>
+            <p>Conecta los CFDI de pago y egresos con la gestión del despacho.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
+          <article class="sys" data-href="../SISTEMAS/analiza.html">
+            <img src="../IMG/analiza.webp" alt="Analiza" loading="lazy">
+            <h4>CONTPAQi Analiza</h4>
+            <p>Complementa con dashboards financieros de tus clientes.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
+        </div>
+        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+        <div class="group-dots" aria-label="Paginación"></div>
       </div>
-      <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-      <div class="group-dots" aria-label="Paginación"></div>
     </div>
-  </div>
-</section>
+  </section>
 
-
+  <!-- ===== PRECIOS (SECCIÓN RESPETADA TAL CUAL) ===== -->
   <section id="calculadora-section" aria-labelledby="calc">
     <h3 id="calc" class="title-gradient">Planes y Precios (Anuales)</h3>
     <p class="hint" style="text-align:center">CONTPAQi Despachos se maneja por suscripción anual. Clientes ilimitados en todos los planes.</p>
@@ -267,52 +237,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="plan-name">Inicial</td>
-            <td>3 Usuarios</td>
-            <td class="price">$4,990</td>
-          </tr>
-          <tr>
-            <td class="plan-name">Equipos</td>
-            <td>5 Usuarios</td>
-            <td class="price">$7,390</td>
-          </tr>
-          <tr>
-            <td class="plan-name">Empresarial</td>
-            <td>(Más usuarios)</td>
-            <td class="price">$11,190</td>
-          </tr>
-          <tr>
-            <td class="plan-name">Corporativo</td>
-            <td>(Máxima capacidad)</td>
-            <td class="price">$18,990</td>
-          </tr>
-          <tr style="background:#0f1622">
-            <td class="plan-name">Usuario Adicional</td>
-            <td>Añade 1 usuario</td>
-            <td class="price">$1,690</td>
-          </tr>
-          <tr style="background:#0f1622">
-            <td class="plan-name">Espacio Adicional (2GB)</td>
-            <td>Almacenamiento extra</td>
-            <td class="price">$1,490</td>
-          </tr>
-          <tr style="background:#0f1622">
-            <td class="plan-name">Espacio Adicional (5GB)</td>
-            <td>Almacenamiento extra</td>
-            <td class="price">$1,990</td>
-          </tr>
-          <tr style="background:#0f1622">
-            <td class="plan-name">Espacio Adicional (10GB)</td>
-            <td>Almacenamiento extra</td>
-            <td class="price">$2,490</td>
-          </tr>
+          <tr><td class="plan-name">Inicial</td><td>3 Usuarios</td><td class="price">$4,990</td></tr>
+          <tr><td class="plan-name">Equipos</td><td>5 Usuarios</td><td class="price">$7,390</td></tr>
+          <tr><td class="plan-name">Empresarial</td><td>(Más usuarios)</td><td class="price">$11,190</td></tr>
+          <tr><td class="plan-name">Corporativo</td><td>(Máxima capacidad)</td><td class="price">$18,990</td></tr>
+          <tr style="background:#0f1622"><td class="plan-name">Usuario Adicional</td><td>Añade 1 usuario</td><td class="price">$1,690</td></tr>
+          <tr style="background:#0f1622"><td class="plan-name">Espacio Adicional (2GB)</td><td>Almacenamiento extra</td><td class="price">$1,490</td></tr>
+          <tr style="background:#0f1622"><td class="plan-name">Espacio Adicional (5GB)</td><td>Almacenamiento extra</td><td class="price">$1,990</td></tr>
+          <tr style="background:#0f1622"><td class="plan-name">Espacio Adicional (10GB)</td><td>Almacenamiento extra</td><td class="price">$2,490</td></tr>
         </tbody>
       </table>
       <p class="hint" style="text-align:center;margin-top:15px;">Precios más IVA. Consultar descuentos del mes por compras en paquete (más de 2 sistemas nube)</p>
     </div>
   </section>
 
+  <!-- ===== Comparativa ===== -->
   <section id="comparativa" aria-labelledby="comparativa-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="comparativa-title" class="title-gradient">Comparativas</h3>
@@ -332,18 +271,20 @@
     </div>
   </section>
 
+  <!-- ===== FAQ ===== -->
   <section id="faq" aria-labelledby="faq-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
     <div class="faq-wrap" id="faqWrap">
-      <details class="faq-item"><summary>¿Qué es exactamente CONTPAQi Despachos?</summary><p>Es una plataforma en la nube diseñada para que contadores y despachos administren su cartera de clientes, asignen tareas a sus ejecutivos, controlen el cumplimiento de obligaciones fiscales y almacenen documentos digitales de forma segura.</p></details>
-      <details class="faq-item"><summary>¿Esto reemplaza a CONTPAQi Contabilidad?</summary><p>No, son complementarios. <strong>Contabilidad</strong> procesa las pólizas y cálculos. <strong>Despachos</strong> gestiona al cliente, sus obligaciones y al equipo que lo atiende. Despachos se alimenta de la información de CFDI de Contabilidad y Bancos.</p></details>
-      <details class="faq-item"><summary>¿Cuántos clientes puedo dar de alta?</summary><p>Puedes dar de alta <strong>clientes ilimitados</strong> en todos los planes de CONTPAQi Despachos. El precio se basa en el número de usuarios (tu personal) que acceden a la plataforma.</p></details>
-      <details class="faq-item"><summary>¿Cómo funciona la integración con Contabilidad y Bancos?</summary><p>Desde tu sistema CONTPAQi Contabilidad-Bancos (versión 18.4.1 en adelante), puedes configurar la conexión para <strong>enviar la información de los CFDI (Ingresos y Egresos)</strong> a CONTPAQi Despachos. Esto ayuda a monitorear la actividad y el cumplimiento.</p></details>
-      <details class="faq-item"><summary>¿Puedo usar Despachos en una Mac?</summary><p>Sí. Al ser un sistema 100% en la nube, solo necesitas un navegador web (como Safari, Chrome o Firefox) para acceder desde cualquier computadora, sea Mac o Windows.</p></details>
+      <details class="faq-item"><summary>¿Qué es exactamente CONTPAQi Despachos?</summary><p>Plataforma en la nube para administrar cartera de clientes, asignar tareas a tu equipo, controlar el cumplimiento fiscal y almacenar documentos.</p></details>
+      <details class="faq-item"><summary>¿Esto reemplaza a CONTPAQi Contabilidad?</summary><p>No. <strong>Contabilidad</strong> procesa pólizas y cálculos. <strong>Despachos</strong> gestiona clientes, obligaciones y equipo, alimentándose de CFDI de Contabilidad/Bancos.</p></details>
+      <details class="faq-item"><summary>¿Cuántos clientes puedo dar de alta?</summary><p><strong>Ilimitados</strong> en todos los planes. El precio se basa en los usuarios (tu personal) que acceden a la plataforma.</p></details>
+      <details class="faq-item"><summary>¿Cómo funciona la integración con Contabilidad y Bancos?</summary><p>Desde Contabilidad-Bancos (v18.4.1+) configuras la conexión para <strong>enviar CFDI de Ingresos/Egresos</strong> a Despachos y monitorear cumplimiento.</p></details>
+      <details class="faq-item"><summary>¿Puedo usar Despachos en una Mac?</summary><p>Sí, es 100% nube: accede con Safari, Chrome o Firefox desde Mac o Windows.</p></details>
     </div>
   </section>
 
+  <!-- ===== CTA ===== -->
   <section id="sesion-guiada" class="card body">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 class="title-gradient">¿Listo para optimizar tu Despacho?</h3>
@@ -354,9 +295,10 @@
     </div>
   </section>
 
-  <aside class="toc collapsed" id="toc" aria-live="polite">
-    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
-    <button class="toc-close" aria-label="Cerrar">×</button>
+  <!-- ===== TOC ===== -->
+  <aside class="toc collapsed" id="toc" aria-label="Mapa del sitio">
+    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa" type="button">🗺️ Mapa</button>
+    <button class="toc-close" aria-label="Cerrar" type="button">×</button>
     <strong class="toc-title">Mapa del sitio</strong>
     <a href="#caracteristicas">Funcionalidades</a>
     <a href="#videos">Vídeos</a>
@@ -368,48 +310,71 @@
   </aside>
 </main>
 
-<footer>
-  <div class="container footer-grid">
-    <div>
-      <h3 class="footer-title">Contacto</h3>
-      <div class="contact-list">
-        <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
-        <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
-        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
-      </div>
-    </div>
-    <div>
-      <h3 class="footer-title">Formas de pago</h3>
-      <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy"></div>
-    </div>
-    <div>
-      <h3 class="footer-title">Marcas</h3>
-      <div class="brands-col">
-        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi"></div>
-        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft"></div>
-      </div>
-    </div>
-    <div class="ally-col">
-      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
-      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
-      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <div style="display:flex;align-items:center;gap:10px">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px">
-      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
-    </div>
-    <div class="hint">Aviso de privacidad · Términos</div>
-  </div>
-</footer>
-<!-- 1) Tabla de precios (debe existir la clave del sistema) -->
-<script src="../precios-contpaqi.js"></script>
+<!-- Footer dinámico (partial) -->
+<div id="footer-placeholder"></div>
 
-  <!-- 2) Adaptador + calculadora NUBE (tu main.js con el auto-detector) -->
+<!-- ===== Loader de header/footer + normalizador de rutas ===== -->
+<script>
+(async () => {
+  const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
+  const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
+
+  const isGh = location.hostname.endsWith("github.io");
+  const firstSeg = location.pathname.split("/")[1] || "";
+  const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
+  const inSistemas = location.pathname.includes("/SISTEMAS/");
+
+  function prefix(p){
+    if (!p || /^https?:\/\//i.test(p)) return p;
+    if (isGh) return (repoBase + "/" + p).replace(/\/+/g,"/");
+    const depth = inSistemas ? "../" : "";
+    return (depth + p).replace(/\/+/g,"/");
+  }
+
+  const headerURL = await pickFirst([
+    "../PARTIALS/global-header.html",
+    "./PARTIALS/global-header.html",
+    `${repoBase}/PARTIALS/global-header.html`,
+    "/PARTIALS/global-header.html"
+  ]);
+  const footerURL = await pickFirst([
+    "../PARTIALS/global-footer.html",
+    "./PARTIALS/global-footer.html",
+    `${repoBase}/PARTIALS/global-footer.html`,
+    "/PARTIALS/global-footer.html"
+  ]);
+
+  const [headerHTML, footerHTML] = await Promise.all([
+    fetch(headerURL).then(r=>r.text()),
+    fetch(footerURL).then(r=>r.text())
+  ]);
+
+  const hp = document.getElementById("header-placeholder");
+  const fp = document.getElementById("footer-placeholder");
+  if (hp) hp.outerHTML = headerHTML;
+  if (fp) fp.outerHTML = footerHTML;
+
+  // Normaliza rutas en elementos marcados
+  document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+    img.src = prefix(img.getAttribute("data-src"));
+  });
+  document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+    const p = a.getAttribute("data-href"); if (!p) return;
+    const [path, hash] = p.split("#");
+    a.href = prefix(path) + (hash ? ("#"+hash) : "");
+  });
+
+  // Año en footer parcial
+  const y = document.getElementById("gf-year");
+  if (y) y.textContent = new Date().getFullYear();
+})();
+</script>
+
+<!-- Lógica global (carruseles, reels, YouTube wrappers, TOC, etc.) -->
 <script src="../main.js" defer></script>
-<!-- 3 Motor calculadora ESCRITORIO (tu calculadora.js clásica) -->
+
+<!-- (Opcionales según tu stack) -->
+<script src="../precios-contpaqi.js"></script>
 <script src="../calculadora.js" defer></script>
 </body>
 </html>
