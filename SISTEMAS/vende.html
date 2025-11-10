@@ -5,10 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CONTPAQi Vende | Expiriti</title>
 <meta name="description" content="CONTPAQi Vende con Expiriti: Facturación y cobranza en la nube. Emite CFDI 4.0 ilimitados, cotiza, controla pedidos y gestiona tus cuentas por cobrar.">
+
+<!-- Preconnects -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="preconnect" href="https://i.ytimg.com">
 
+<!-- Fuentes + Favicons + CSS global -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -16,54 +21,23 @@
 <link rel="icon" href="../IMG/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
-
-<!-- ⚙️ CSS global (carrusel) -->
 <link rel="stylesheet" href="../main.css">
-
 </head>
+
 <body id="top">
-<header>
-  <div class="container nav">
-    <a href="#top" class="brand" aria-label="Inicio Expiriti">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
-      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
-    </a>
-    <nav aria-label="Principal">
-      <ul>
-        <li><a href="#caracteristicas">Funcionalidades</a></li>
-        <li><a href="#videos">Vídeos</a></li>
-        <li><a href="#calculadora-section">Precio</a></li>
-        <li><a href="#comparativa">Comparativa</a></li>
-        <li><a href="#faq">Preguntas frecuentes</a></li>
-        <li><a href="#sesion-guiada">Demo</a></li>
-      </ul>
-    </nav>
-    <div class="cta">
-      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
-      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20Vende" target="_blank" rel="noopener">WhatsApp</a>
-      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
-    </div>
-  </div>
-  <div class="container mobile" id="mobileMenu">
-    <a href="#caracteristicas">Funcionalidades</a>
-    <a href="#videos">Vídeos</a>
-    <a href="#calculadora-section">Precio</a>
-    <a href="#comparativa">Comparativa</a>
-    <a href="#faq">Preguntas frecuentes</a>
-    <a href="#sesion-guiada">Demo</a>
-  </div>
-</header>
+<!-- Header dinámico (partial) -->
+<div id="header-placeholder"></div>
 
 <main class="container hero">
-  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos">← Volver a productos</a>
+  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" rel="noopener">← Volver a productos</a>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
   <h1>CONTPAQi Vende <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nube</span></h1>
 
-  <div class="badges">
-    <span class="badge">Facturación y Cobranza en la Nube</span>
-    <span class="badge">CFDI 4.0 Ilimitados</span>
-    <span class="badge">Control de Ventas y Pedidos</span>
-    <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #86efac;">Cuentas por Cobrar Claras</span>
+  <div class="badges" role="list" aria-label="Características destacadas">
+    <span class="badge" role="listitem">Facturación y Cobranza en la Nube</span>
+    <span class="badge" role="listitem">CFDI 4.0 Ilimitados</span>
+    <span class="badge" role="listitem">Control de Ventas y Pedidos</span>
+    <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">Cuentas por Cobrar Claras</span>
   </div>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
@@ -73,7 +47,7 @@
       <div class="hero-3col">
         <!-- Col 1: Logo + CTAs -->
         <div class="stack-left">
-          <img src="../IMG/vende.webp" alt="CONTPAQi Vende" style="width:220px;margin-bottom:12px;border-radius:12px">
+          <img src="../IMG/vende.webp" alt="CONTPAQi Vende" style="width:220px;margin-bottom:12px;border-radius:12px" loading="lazy">
           <div class="stack">
             <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Vende" target="_blank" rel="noopener">Comprar Suscripción</a>
             <a class="btn btn-grad-purple hero-btn" href="https://www.contpaqi.com/vende" target="_blank" rel="noopener">Probar gratis</a>
@@ -85,10 +59,10 @@
 
         <!-- Col 2: “PDF/Contenido” -->
         <div class="card body pdf-card">
-          <img src="../IMG/usas-vende.jpeg" alt="Equipo facturando en la nube" style="width:100%;border-radius:10px;margin-bottom:10px">
+          <img src="../IMG/usas-vende.jpeg" alt="Equipo facturando en la nube" style="width:100%;border-radius:10px;margin-bottom:10px" loading="lazy">
           <h4 class="title-gradient" style="margin:0 0 6px">Tu Facturación y Cobranza 24/7</h4>
           <p class="hint" style="margin:0 0 8px">Cotiza, factura y gestiona tus cuentas por cobrar en tiempo real, desde cualquier lugar y de forma segura.</p>
-          <iframe class="pdf-frame" title="Ficha de CONTPAQi Vende" src="https://www.contpaqi.com/ficha-producto-vende"></iframe>
+          <iframe class="pdf-frame" title="Ficha de CONTPAQi Vende" src="https://www.contpaqi.com/ficha-producto-vende" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
             <a class="btn btn-outline-gradient" href="https://www.contpaqi.com/ficha-producto-vende" target="_blank" rel="noopener">Abrir en pestaña</a>
           </div>
@@ -98,19 +72,19 @@
         <aside class="card body">
           <h4 class="title-gradient">Galería</h4>
           <div class="carousel" id="carousel1" aria-label="Galería Vende">
-            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-            <div class="carousel-track">
-              <img class="carousel-slide" src="../IMG/1vende_placeholder.webp" alt="Dashboard de ventas en Vende">
-              <img class="carousel-slide" src="../IMG/2vende_placeholder.webp" alt="Creación de factura CFDI 4.0">
-              <img class="carousel-slide" src="../IMG/3vende_placeholder.webp" alt="Reporte de cuentas por cobrar">
-              <img class="carousel-slide" src="../IMG/4vende_placeholder.webp" alt="Personalización de facturas">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <div class="carousel-track" role="region" aria-label="Imágenes">
+              <img class="carousel-slide" src="../IMG/1vende_placeholder.webp" alt="Dashboard de ventas en Vende" loading="lazy">
+              <img class="carousel-slide" src="../IMG/2vende_placeholder.webp" alt="Creación de factura CFDI 4.0" loading="lazy">
+              <img class="carousel-slide" src="../IMG/3vende_placeholder.webp" alt="Reporte de cuentas por cobrar" loading="lazy">
+              <img class="carousel-slide" src="../IMG/4vende_placeholder.webp" alt="Personalización de facturas" loading="lazy">
             </div>
-            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
             <div class="carousel-nav" aria-label="Paginación de galería">
-              <button class="dot active" aria-label="Ir a la imagen 1"></button>
-              <button class="dot" aria-label="Ir a la imagen 2"></button>
-              <button class="dot" aria-label="Ir a la imagen 3"></button>
-              <button class="dot" aria-label="Ir a la imagen 4"></button>
+              <button class="dot active" aria-label="Ir a la imagen 1" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 2" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 3" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 4" type="button"></button>
             </div>
           </div>
         </aside>
@@ -125,163 +99,145 @@
       <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
 
       <div class="pillbar" role="tablist" aria-label="Categorías de características">
-        <button class="pill active" data-filter="facturacion">Facturación y CFDI</button>
-        <button class="pill" data-filter="ventas">Gestión de Ventas</button>
-        <button class="pill" data-filter="cobranza">Cobranza y Reportes</button>
+        <button class="pill active" data-filter="facturacion" type="button">Facturación y CFDI</button>
+        <button class="pill" data-filter="ventas" type="button">Gestión de Ventas</button>
+        <button class="pill" data-filter="cobranza" type="button">Cobranza y Reportes</button>
       </div>
 
       <div class="grid-3 feature-grid">
         <!-- Facturación -->
-        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/203-finanzas.webp" alt=""><h4>CFDI Ilimitados</h4></div><p>Emite facturas, REP, notas de crédito y más (CFDI 4.0) sin costo por timbre.</p></article>
-        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/060-datos.webp" alt=""><h4>Factura con tu Marca</h4></div><p>Personaliza tus documentos PDF con el logo y colores de tu empresa.</p></article>
-        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/150-manejar.webp" alt=""><h4>Migración Fácil de XML</h4></div><p>Carga tu historial de XML generados en otros sistemas (SAT).</p></article>
-        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/008-lista-de-quehaceres.webp" alt=""><h4>Addendas y Complementos</h4></div><p>Cumple con requisitos de clientes específicos (disponible en planes Equipos+).</p></article>
-        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/historial-de-transacciones.webp" alt=""><h4>Facturación en la Nube</h4></div><p>Accede y factura desde cualquier lugar (PC/Mac) con conexión a internet.</p></article>
-        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/165-ley.webp" alt=""><h4>Cumplimiento SAT</h4></div><p>Siempre actualizado con las últimas disposiciones fiscales del SAT (CFDI 4.0).</p></article>
+        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/203-finanzas.webp" alt=""><h4>CFDI Ilimitados</h4></div><p>Emite facturas, REP, notas de crédito y más (CFDI 4.0) sin costo por timbre (desde plan Inicial).</p></article>
+        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/060-datos.webp" alt=""><h4>Factura con tu Marca</h4></div><p>Personaliza tus PDFs con logo y colores de tu empresa.</p></article>
+        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/150-manejar.webp" alt=""><h4>Migración de XML</h4></div><p>Carga historial de XML (SAT u otros sistemas).</p></article>
+        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/008-lista-de-quehaceres.webp" alt=""><h4>Addendas y Complementos</h4></div><p>Para clientes con requisitos específicos (Equipos+).</p></article>
+        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/historial-de-transacciones.webp" alt=""><h4>Nube 24/7</h4></div><p>Factura desde cualquier PC/Mac con internet.</p></article>
+        <article class="fcard tag-facturacion"><div class="fhead"><img class="ficon" src="../IMG/165-ley.webp" alt=""><h4>Cumplimiento SAT</h4></div><p>Siempre al día con CFDI 4.0.</p></article>
 
         <!-- Ventas -->
-        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/179-estructura-4.webp" alt=""><h4>Control de Ventas</h4></div><p>Lleva un control total del ciclo: Cotización → Pedido → Factura.</p></article>
-        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/194-tiempo-de-trabajo.webp" alt=""><h4>Cotizaciones Profesionales</h4></div><p>Genera cotizaciones rápidamente y envíalas a tus clientes.</p></article>
-        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/153-gesto.webp" alt=""><h4>Gestión de Pedidos</h4></div><p>Registra pedidos y conviértelos en facturas con un solo clic.</p></article>
-        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/125-portapapeles.webp" alt=""><h4>Catálogo de Clientes</h4></div><p>Clasifica y administra la información de tus clientes y sus datos fiscales.</p></article>
-        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/115-comercio-electronico.webp" alt=""><h4>Productos y Servicios</h4></div><p>Administra tu catálogo de productos y servicios para facturar más rápido.</p></article>
-        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/029-arquitectura-empresarial.webp" alt=""><h4>Multi RFC (Opcional)</h4></div><p>Maneja la facturación de varias razones sociales (con costo adicional).</p></article>
+        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/179-estructura-4.webp" alt=""><h4>Control de Ventas</h4></div><p>Ciclo: Cotización → Pedido → Factura.</p></article>
+        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/194-tiempo-de-trabajo.webp" alt=""><h4>Cotizaciones</h4></div><p>Genera y envía cotizaciones profesionales.</p></article>
+        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/153-gesto.webp" alt=""><h4>Gestión de Pedidos</h4></div><p>Convierte pedidos en facturas en 1 clic.</p></article>
+        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/125-portapapeles.webp" alt=""><h4>Catálogo de Clientes</h4></div><p>Clasifica datos fiscales y comerciales.</p></article>
+        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/115-comercio-electronico.webp" alt=""><h4>Productos y Servicios</h4></div><p>Factura más rápido con tu catálogo.</p></article>
+        <article class="fcard tag-ventas"><div class="fhead"><img class="ficon" src="../IMG/029-arquitectura-empresarial.webp" alt=""><h4>Multi RFC (Opcional)</h4></div><p>Administra varias razones sociales.</p></article>
 
         <!-- Cobranza -->
-        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/163-trabajo-colaborativo.webp" alt=""><h4>Cuentas por Cobrar</h4></div><p>Mejora tu flujo de efectivo con un seguimiento claro de facturas pendientes.</p></article>
-        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/presentacion%20(1).webp" alt=""><h4>Saldos Insolutos</h4></div><p>Calcula y visualiza fácilmente los saldos pendientes de tus clientes.</p></article>
-        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/148-ganancias.webp" alt=""><h4>Reportes Detallados</h4></div><p>Genera reportes de CFDI emitidos, cobranza y cuentas por cobrar.</p></article>
-        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/contabiliza.webp" alt=""><h4>Integra con Contabiliza</h4></div><p>Envía tus pólizas de ventas y cobros a CONTPAQi Contabiliza.</p></article>
-        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/155-arquitectura-empresarial.webp" alt=""><h4>Recepción de Pagos (REP)</h4></div><p>Emite el Complemento de Registro Electrónico de Pago (REP) en segundos!</p></article>
-        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/149-caja-fuerte.webp" alt=""><h4>Seguridad en la Nube</h4></div><p>Tu información de facturación está segura y respaldada en la nube.</p></article>
+        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/163-trabajo-colaborativo.webp" alt=""><h4>Cuentas por Cobrar</h4></div><p>Seguimiento claro de facturas pendientes.</p></article>
+        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/presentacion%20(1).webp" alt=""><h4>Saldos Insolutos</h4></div><p>Visualiza y calcula montos pendientes.</p></article>
+        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/148-ganancias.webp" alt=""><h4>Reportes</h4></div><p>CFDI emitidos, cobranza y antigüedad de saldos.</p></article>
+        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/contabiliza.webp" alt=""><h4>Integra con Contabiliza</h4></div><p>Envía pólizas de ventas y cobros a la contabilidad.</p></article>
+        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/155-arquitectura-empresarial.webp" alt=""><h4>Recepción de Pagos (REP)</h4></div><p>Complemento de pagos en segundos.</p></article>
+        <article class="fcard tag-cobranza"><div class="fhead"><img class="ficon" src="../IMG/149-caja-fuerte.webp" alt=""><h4>Seguridad</h4></div><p>Información protegida y respaldada.</p></article>
       </div>
     </div>
   </section>
-<!-- ===== BENEFICIOS + REELS ===== -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Vende? <span class="badge">Beneficios Nube</span></h2>
-      <p class="lead">La solución en la nube que te da CFDI ilimitados, mejora tu cobranza y te permite gestionar tu ciclo de ventas desde cualquier lugar.</p>
 
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-        <div class="listTrack">
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/132-banco.webp" alt=""></div><div><strong>GENERA CFDI ILIMITADOS</strong><div>Emite facturas, pagos y traslados sin costo extra por timbre.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/138-lista-de-quehaceres-14.webp" alt=""></div><div><strong>MEJORA TU COBRANZA</strong><div>Calcula saldos insolutos y administra cuentas pendientes.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/pago-en-linea.webp" alt=""></div><div><strong>VENDE DESDE CUALQUIER LUGAR</strong><div>Accede 24/7 en la nube (PC/Mac) para cotizar y facturar.</div></div></div>
-          </div>
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/plan-estrategico%20(1).webp" alt=""></div><div><strong>IMAGEN PROFESIONAL</strong><div>Personaliza tus documentos y facturas con el logo de tu empresa.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/137-estructura-3.webp" alt=""></div><div><strong>CONTROL TOTAL DE VENTAS</strong><div>Desde la cotización y el pedido hasta la factura y el cobro.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/contabiliza.webp" alt=""></div><div><strong>ECOSISTEMA NUBE</strong><div>Conecta tus ventas con tu contabilidad (Contabiliza).</div></div></div>
-          </div>
-        </div>
-        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-      </div>
-    </div>
+  <!-- ===== BENEFICIOS + REELS ===== -->
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
+      <div>
+        <h2 class="title-gradient">¿Por qué usar Vende? <span class="badge">Beneficios Nube</span></h2>
+        <p class="lead">CFDI ilimitados, mejor cobranza y control del ciclo de ventas desde cualquier lugar.</p>
 
-    <div>
-      <aside class="card body">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: CONTPAQi Vende</h4>
-
-        <!-- Títulos sincronizados con el carrusel -->
-        <h4 class="reel-title active">Reel Principal Vende</h4>
-        <h4 class="reel-title">Otro Reel de Vende</h4>
-
-        <div class="carousel" id="carouselReels" aria-label="Reels Vende">
-          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-
-          <div class="carousel-track">
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="BXYHYbyBc2I"
-                   data-title="Reel Principal Vende"
-                   aria-label="Reel principal de Vende"></div>
+        <div class="listSlider">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+          <div class="listTrack" role="region" aria-label="Beneficios">
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/132-banco.webp" alt="" loading="lazy"></div><div><strong>GENERA CFDI ILIMITADOS</strong><div>Facturas, pagos y traslados sin costo extra por timbre.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/138-lista-de-quehaceres-14.webp" alt="" loading="lazy"></div><div><strong>MEJORA TU COBRANZA</strong><div>Calcula saldos insolutos y administra pendientes.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/pago-en-linea.webp" alt="" loading="lazy"></div><div><strong>VENDE DESDE CUALQUIER LUGAR</strong><div>Acceso 24/7 en la nube (PC/Mac).</div></div></div>
             </div>
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="PLACEHOLDER_REEL_ID_VENDE_2"
-                   data-title="Otro Reel de Vende"
-                   aria-label="Segundo reel de Vende"></div>
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/plan-estrategico%20(1).webp" alt="" loading="lazy"></div><div><strong>IMAGEN PROFESIONAL</strong><div>Personaliza PDFs con tu marca.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/137-estructura-3.webp" alt="" loading="lazy"></div><div><strong>CONTROL DE VENTAS</strong><div>Cotización → Pedido → Factura → Cobro.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/contabiliza.webp" alt="" loading="lazy"></div><div><strong>ECOSISTEMA CONTPAQI</strong><div>Conecta ventas con tu contabilidad.</div></div></div>
             </div>
           </div>
-
-          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-
-          <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-          </div>
+          <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
         </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ===== VIDEOS ===== -->
-<section id="videos" aria-labelledby="videos-title">
-  <div class="card body">
-    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-    <div class="yt-grid">
-      <div class="yt">
-        <h4 style="margin-bottom:8px;text-align:center;">Video Principal CONTPAQi Vende</h4>
-        <div class="yt-wrap"
-             data-ytid="VIDEO_ID_VENDE_1"
-             data-title="Video Principal CONTPAQi Vende (accesible)"></div>
       </div>
-      <div class="yt">
-        <h4 style="margin-bottom:8px;text-align:center;">Demo CONTPAQi Vende</h4>
-        <div class="yt-wrap"
-             data-ytid="VIDEO_ID_VENDE_2"
-             data-title="Demo CONTPAQi Vende (accesible)"></div>
+
+      <div>
+        <aside class="card body" aria-label="Reels destacados">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: CONTPAQi Vende</h4>
+          <h4 class="reel-title active">Reel Principal Vende</h4>
+          <h4 class="reel-title">Otro Reel de Vende</h4>
+
+          <div class="carousel" id="carouselReels" aria-label="Reels Vende">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <div class="carousel-slide">
+                <div class="reel-embed" data-ytid="BXYHYbyBc2I" data-title="Reel Principal Vende" aria-label="Reel principal de Vende"></div>
+              </div>
+              <div class="carousel-slide">
+                <div class="reel-embed" data-ytid="PLACEHOLDER_REEL_ID_VENDE_2" data-title="Otro Reel de Vende" aria-label="Segundo reel de Vende"></div>
+              </div>
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-  
+  <!-- ===== VIDEOS ===== -->
+  <section id="videos" aria-labelledby="videos-title">
+    <div class="card body">
+      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+      <div class="yt-grid">
+        <div class="yt">
+          <h4 class="yt-title">Video Principal CONTPAQi Vende</h4>
+          <div class="yt-wrap" data-ytid="VIDEO_ID_VENDE_1" data-title="Video Principal CONTPAQi Vende (accesible)"></div>
+        </div>
+        <div class="yt">
+          <h4 class="yt-title">Demo CONTPAQi Vende</h4>
+          <div class="yt-wrap" data-ytid="VIDEO_ID_VENDE_2" data-title="Demo CONTPAQi Vende (accesible)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== INTEGRACIONES ===== -->
-<section id="integra" aria-labelledby="integra-title">
-  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-  <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Vende</h3>
-  <div class="card body">
-    <div class="carouselX" data-step="3">
-      <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-      <div class="track">
-        <article class="sys" data-href="../SISTEMAS/contabiliza.html">
-          <img src="../IMG/contabiliza.webp" alt="Contabiliza">
-          <h4>CONTPAQi Contabiliza</h4>
-          <p>Envía tus pólizas de ventas y cobros automáticamente a la nube.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
-
-        <article class="sys" data-href="../SISTEMAS/kursa.html">
-          <img src="../IMG/kursa.webp" alt="Kursa">
-          <h4>CONTPAQi Kursa</h4>
-          <p>Capacítate en el uso del sistema y nuevas funciones.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
-
-        <article class="sys" data-href="../SISTEMAS/colabora.html">
-          <img src="../IMG/colabora.webp" alt="Colabora">
-          <h4>CONTPAQi Colabora</h4>
-          <p>Conecta a tu equipo para gestionar procesos internos.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+  <section id="integra" aria-labelledby="integra-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Vende</h3>
+    <div class="card body">
+      <div class="carouselX" data-step="3" aria-label="Sistemas integrables">
+        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+        <div class="track">
+          <article class="sys" data-href="../SISTEMAS/contabiliza.html">
+            <img src="../IMG/contabiliza.webp" alt="Contabiliza">
+            <h4>CONTPAQi Contabiliza</h4>
+            <p>Envía tus pólizas de ventas y cobros automáticamente a la nube.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
+          <article class="sys" data-href="../SISTEMAS/kursa.html">
+            <img src="../IMG/kursa.webp" alt="Kursa">
+            <h4>CONTPAQi Kursa</h4>
+            <p>Capacítate en el uso del sistema y nuevas funciones.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
+          <article class="sys" data-href="../SISTEMAS/colabora.html">
+            <img src="../IMG/colabora.webp" alt="Colabora">
+            <h4>CONTPAQi Colabora</h4>
+            <p>Conecta a tu equipo para gestionar procesos internos.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
+        </div>
+        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+        <div class="group-dots" aria-label="Paginación"></div>
       </div>
-      <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-      <div class="group-dots" aria-label="Paginación"></div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-  <!-- ===== PRECIOS / “CALCULADORA” NUBE ===== -->
+  <!-- ===== PRECIOS / TABLA NUBE ===== -->
   <section id="calculadora-section" aria-labelledby="calc">
     <h3 id="calc" class="title-gradient">Planes y Precios (Anuales)</h3>
-    <p class="hint" style="text-align:center">CONTPAQi Vende se maneja por suscripción anual basada en el plan y número de usuarios.</p>
+    <p class="hint center">CONTPAQi Vende se maneja por suscripción anual basada en el plan y número de usuarios.</p>
     <div class="card body">
       <table class="pricing-table-nube" aria-describedby="calc">
         <thead>
@@ -327,13 +283,17 @@
         <tfoot>
           <tr>
             <td class="note" colspan="4">
-              <strong>Usuario Adicional:</strong> $1,490 anual (disponible para planes Equipos, Empresarial y Corporativo).
+              <strong>Usuario Adicional:</strong> $1,490 anual (para planes Equipos, Empresarial y Corporativo).
             </td>
           </tr>
         </tfoot>
       </table>
-      <p class="hint" style="text-align:center;margin-top:15px;">Precios tomados de tu archivo <code>precios-contpaqi.js</code>. Precios más IVA.</p>
+      <p class="hint center" style="margin-top:15px;">Precios tomados de tu archivo <code>precios-contpaqi.js</code>. Precios más IVA.</p>
     </div>
+
+    <!-- (Opcional) Punto de montaje de calculadora unificada -->
+    <div id="calc-primary"></div>
+    <div id="app" data-system="CONTPAQi Vende" data-calc-mount="#calc-primary"></div>
   </section>
 
   <!-- ===== COMPARATIVAS ===== -->
@@ -342,28 +302,28 @@
     <h3 id="comparativa-title" class="title-gradient">Comparativas</h3>
     <div class="card body">
 
-      <h4 style="margin-bottom:15px;">Vende vs Otras Marcas (Facturación Nube)</h4>
+      <h4 class="mb-15">Vende vs Otras Marcas (Facturación Nube)</h4>
       <table class="table-like" aria-label="Comparativa Vende vs otras marcas">
         <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Vende</th><th>Facturador SAT</th><th>Otras Apps (Bind, Alegra)</th></tr></thead>
         <tbody>
-          <tr><td>Enfoque Principal</td><td class="highlight">✅ Facturación y Cobranza (PyME)</td><td>✅ Solo Facturación (Básico)</td><td>✅ ERP/Admin Nube (Más amplio)</td></tr>
-          <tr><td>CFDI Ilimitados</td><td class="highlight">✅ (Planes Inicial+)</td><td>✅ Gratis</td><td>✅ Generalmente</td></tr>
-          <tr><td>Gestión Ventas (Pedidos)</td><td class="highlight">✅ (Cotiza, Pide, Factura)</td><td>❌ No</td><td>✅ Sí (Gestión de Ventas)</td></tr>
-          <tr><td>Cuentas por Cobrar</td><td class="highlight">✅ (Saldos y reportes)</td><td>❌ No</td><td>✅ Sí (Tesorería)</td></tr>
-          <tr><td>Ecosistema CONTPAQi</td><td class="highlight">✅ Nativo (Contabiliza)</td><td>❌ No</td><td>❌ No (Conexiones API)</td></tr>
+          <tr><td>Enfoque Principal</td><td class="highlight">✅ Facturación y Cobranza (PyME)</td><td>✅ Solo Facturación (Básico)</td><td>✅ ERP/Admin Nube</td></tr>
+          <tr><td>CFDI Ilimitados</td><td class="highlight">✅ (Inicial+)</td><td>✅ Gratis</td><td>✅ Generalmente</td></tr>
+          <tr><td>Gestión de Ventas</td><td class="highlight">✅ Cotiza→Pedido→Factura</td><td>❌ No</td><td>✅ Sí</td></tr>
+          <tr><td>Cuentas por Cobrar</td><td class="highlight">✅ Reportes y saldos</td><td>❌ No</td><td>✅ Sí</td></tr>
+          <tr><td>Ecosistema CONTPAQi</td><td class="highlight">✅ Nativo (Contabiliza)</td><td>❌ No</td><td>❌ No (APIs)</td></tr>
         </tbody>
       </table>
 
-      <h4 style="margin-top:25px;margin-bottom:15px;">Vende (Nube) vs Comercial (Escritorio)</h4>
+      <h4 class="mb-15 mt-25">Vende (Nube) vs Comercial (Escritorio)</h4>
       <table class="table-like" aria-label="Comparativa Vende vs Comercial de escritorio">
         <thead><tr><th>Característica</th><th class="highlight">Vende (Nube)</th><th>Comercial Start/Pro (Escritorio)</th></tr></thead>
         <tbody>
-          <tr><td>Acceso</td><td class="highlight">✅ Web 24/7 (PC/Mac)</td><td>⚠️ Solo Windows (Instalado)</td></tr>
-          <tr><td>Instalación</td><td class="highlight">✅ Ninguna (Automático)</td><td>⚠️ Manual (Service Packs)</td></tr>
-          <tr><td>Enfoque</td><td class="highlight">✅ Facturación, Pedidos, Cobranza</td><td>✅ Admin. Comercial Completa</td></tr>
-          <tr><td>Gestión de Inventarios</td><td class="highlight">❌ Básico (Solo Catálogo)</td><td>✅ Robusto (Costeo, almacenes)</td></tr>
+          <tr><td>Acceso</td><td class="highlight">✅ Web 24/7 (PC/Mac)</td><td>⚠️ Windows (Instalado)</td></tr>
+          <tr><td>Instalación</td><td class="highlight">✅ Automática</td><td>⚠️ Manual</td></tr>
+          <tr><td>Enfoque</td><td class="highlight">✅ Facturación/Pedidos/Cobranza</td><td>✅ Gestión Comercial Completa</td></tr>
+          <tr><td>Inventarios</td><td class="highlight">❌ Básico</td><td>✅ Robusto (Costeo, almacenes)</td></tr>
           <tr><td>Procesos</td><td class="highlight">✅ Cotiza → Pedido → Factura</td><td>✅ Cotiz → Pedido → Remisión → Factura</td></tr>
-          <tr><td>Integración Contable</td><td class="highlight">✅ Nativa (Contabiliza Nube)</td><td>✅ Nativa (Contabilidad Escritorio)</td></tr>
+          <tr><td>Integración Contable</td><td class="highlight">✅ Contabiliza Nube</td><td>✅ Contabilidad Escritorio</td></tr>
         </tbody>
       </table>
     </div>
@@ -374,11 +334,11 @@
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
     <div class="faq-wrap" id="faqWrap">
-      <details class="faq-item"><summary>¿Puedo emitir facturas sin límite de timbrado con Vende?</summary><p>Sí, a partir del plan <strong>Inicial</strong>, CONTPAQi Vende® ofrece timbrado ilimitado para que factures (CFDI 4.0), generes REP y más, sin preocuparte por restricciones. El plan LIGHT incluye 50 timbres.</p></details>
-      <details class="faq-item"><summary>¿Cómo ayuda a mejorar la administración de cuentas por cobrar?</summary><p>Te permite calcular saldos insolutos de clientes, emitir reportes claros de cobranza y dar seguimiento efectivo a tus cuentas pendientes para mejorar tu flujo de efectivo.</p></details>
-      <details class="faq-item"><summary>¿Es posible personalizar mis facturas (PDF) con mi logo?</summary><p>Sí, puedes incluir el logo de tu empresa y tus colores corporativos en los PDFs de las facturas, cotizaciones y pedidos para reforzar la identidad visual de tu marca.</p></details>
-      <details class="faq-item"><summary>¿Puedo migrar mis XML generados en otros sistemas?</summary><p>Sí, puedes cargar tu historial de archivos XML generados previamente (por ejemplo, desde el portal del SAT u otro sistema) para facilitar la transición y tener tu historial de facturación.</p></details>
-      <details class="faq-item"><summary>¿El precio es anual? ¿Qué es un "Usuario Adicional"?</summary><p>Sí, todos los precios son de suscripción anual (más IVA). Un usuario es quien puede entrar al sistema. Los planes Equipos, Empresarial y Corporativo te permiten comprar "Usuarios Adicionales" (con un costo de $1,490 anual) si necesitas que más personas usen el sistema simultáneamente.</p></details>
+      <details class="faq-item"><summary>¿Puedo emitir facturas sin límite de timbrado?</summary><p>Sí, desde el plan <strong>Inicial</strong> el timbrado es ilimitado (CFDI 4.0). El plan LIGHT incluye 50 timbres.</p></details>
+      <details class="faq-item"><summary>¿Cómo mejora la cobranza?</summary><p>Calcula saldos insolutos, genera reportes y da seguimiento a pendientes para mejorar flujo de efectivo.</p></details>
+      <details class="faq-item"><summary>¿Puedo personalizar mis facturas (PDF)?</summary><p>Sí, puedes agregar logo y colores corporativos en facturas, cotizaciones y pedidos.</p></details>
+      <details class="faq-item"><summary>¿Puedo migrar mis XML de otros sistemas?</summary><p>Sí, carga tu historial de XML (SAT u otros) para conservar tu histórico de facturación.</p></details>
+      <details class="faq-item"><summary>¿El precio es anual? ¿Qué es un usuario adicional?</summary><p>La suscripción es anual (+IVA). Un usuario es quien puede acceder al sistema; en planes Equipos/Empresarial/Corporativo puedes agregar usuarios adicionales.</p></details>
     </div>
   </section>
 
@@ -387,16 +347,16 @@
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 class="title-gradient">¿Listo para simplificar tu Facturación y Cobranza?</h3>
     <p>Agenda una sesión con nuestros especialistas o tramita tu prueba sin costo.</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+    <div class="cta-center">
       <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20agendar%20una%20sesi%C3%B3n%20guiada%20de%2045%20minutos%20por%20Zoom%20para%20Vende" target="_blank" rel="noopener">Agendar sesión guiada (45 min)</a>
       <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Vende" target="_blank" rel="noopener">Comprar ahora</a>
     </div>
   </section>
 
-  <!-- ===== TOC flotante ===== -->
+  <!-- ===== TOC ===== -->
   <aside class="toc collapsed" id="toc" aria-live="polite">
-    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
-    <button class="toc-close" aria-label="Cerrar">×</button>
+    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa" type="button">🗺️ Mapa</button>
+    <button class="toc-close" aria-label="Cerrar" type="button">×</button>
     <strong class="toc-title">Mapa del sitio</strong>
     <a href="#caracteristicas">Funcionalidades</a>
     <a href="#videos">Vídeos</a>
@@ -408,50 +368,59 @@
   </aside>
 </main>
 
-<footer>
-  <div class="container footer-grid">
-    <div>
-      <h3 class="footer-title">Contacto</h3>
-      <div class="contact-list">
-        <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
-        <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
-        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
-      </div>
-    </div>
-    <div>
-      <h3 class="footer-title">Formas de pago</h3>
-      <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy"></div>
-    </div>
-    <div>
-      <h3 class="footer-title">Marcas</h3>
-      <div class="brands-col">
-        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi"></div>
-        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft"></div>
-      </div>
-    </div>
-    <div class="ally-col">
-      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
-      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
-      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <div style="display:flex;align-items:center;gap:10px">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px">
-      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
-    </div>
-    <div class="hint">Aviso de privacidad · Términos</div>
-  </div>
-</footer>
+<!-- Footer dinámico (partial) -->
+<div id="footer-placeholder"></div>
 
-<!-- ===== SCRIPTS ===== -->
-<!-- 1) Tabla de precios (debe existir la clave del sistema) -->
-<script src="../precios-contpaqi.js"></script>
+<!-- ===== Loader de header/footer + normalizador de rutas ===== -->
+<script>
+(async () => {
+  const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
+  const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
 
-  <!-- 2) Adaptador + calculadora NUBE (tu main.js con el auto-detector) -->
+  const isGh = location.hostname.endsWith("github.io");
+  const firstSeg = location.pathname.split("/")[1] || "";
+  const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
+  const inSistemas = location.pathname.includes("/SISTEMAS/");
+
+  function prefix(p){
+    if (!p || /^https?:\/\//i.test(p)) return p;
+    if (isGh) return (repoBase + "/" + p).replace(/\/+/g,"/");
+    const depth = inSistemas ? "../" : "";
+    return (depth + p).replace(/\/+/g,"/");
+  }
+
+  const headerURL = await pickFirst([
+    "../PARTIALS/global-header.html",
+    "./PARTIALS/global-header.html",
+    `${repoBase}/PARTIALS/global-header.html`,
+    "/PARTIALS/global-header.html"
+  ]);
+  const footerURL = await pickFirst([
+    "../PARTIALS/global-footer.html",
+    "./PARTIALS/global-footer.html",
+    `${repoBase}/PARTIALS/global-footer.html`,
+    "/PARTIALS/global-footer.html"
+  ]);
+
+  const [headerHTML, footerHTML] = await Promise.all([
+    fetch(headerURL).then(r=>r.text()),
+    fetch(footerURL).then(r=>r.text())
+  ]);
+
+  const hp = document.getElementById("header-placeholder");
+  const fp = document.getElementById("footer-placeholder");
+  if (hp) hp.outerHTML = headerHTML;
+  if (fp) fp.outerHTML = footerHTML;
+
+  // Año en footer parcial (si existe)
+  const y = document.getElementById("gf-year");
+  if (y) y.textContent = new Date().getFullYear();
+})();
+</script>
+
+<!-- ===== Scripts globales y calculadora ===== -->
 <script src="../main.js" defer></script>
-<!-- 3 Motor calculadora ESCRITORIO (tu calculadora.js clásica) -->
+<script src="../precios-contpaqi.js"></script>
 <script src="../calculadora.js" defer></script>
 </body>
 </html>
