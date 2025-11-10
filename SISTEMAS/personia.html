@@ -5,10 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CONTPAQi Personia | Expiriti</title>
 <meta name="description" content="CONTPAQi Personia con Expiriti: Nómina y RH en la nube. Calcula, timbra y administra tu personal fácil. Incluye portal de autoservicio para empleados.">
+
+<!-- Preconnects -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="preconnect" href="https://i.ytimg.com">
 
+<!-- Fuentes + Favicons + CSS global -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -16,64 +21,33 @@
 <link rel="icon" href="../IMG/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
-
-<!-- CSS global del sitio -->
 <link rel="stylesheet" href="../main.css">
 </head>
 
 <body id="top">
-<header>
-  <div class="container nav">
-    <a href="#top" class="brand" aria-label="Inicio Expiriti">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
-      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
-    </a>
-    <nav aria-label="Principal">
-      <ul>
-        <li><a href="#caracteristicas">Funcionalidades</a></li>
-        <li><a href="#videos">Vídeos</a></li>
-        <li><a href="#calculadora-section">Precio</a></li>
-        <li><a href="#comparativa">Comparativa</a></li>
-        <li><a href="#faq">Preguntas frecuentes</a></li>
-        <li><a href="#sesion-guiada">Demo</a></li>
-      </ul>
-    </nav>
-    <div class="cta">
-      <a class="btn btn-ghost" href="tel:+525568437918">55 6843 7918</a>
-      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20Personia" target="_blank" rel="noopener">WhatsApp</a>
-      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
-    </div>
-  </div>
-  <div class="container mobile" id="mobileMenu">
-    <a href="#caracteristicas">Funcionalidades</a>
-    <a href="#videos">Vídeos</a>
-    <a href="#calculadora-section">Precio</a>
-    <a href="#comparativa">Comparativa</a>
-    <a href="#faq">Preguntas frecuentes</a>
-    <a href="#sesion-guiada">Demo</a>
-  </div>
-</header>
+<!-- Header dinámico (partial) -->
+<div id="header-placeholder"></div>
 
 <main class="container hero">
   <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" rel="noopener">← Volver a productos</a>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
   <h1>CONTPAQi Personia <span class="badge badge-azul">Nube</span></h1>
 
-  <div class="badges">
-    <span class="badge">Nómina y RH en la Nube</span>
-    <span class="badge">Cálculo y Timbrado Ilimitado</span>
-    <span class="badge">Gestión de Personal y Expedientes</span>
-    <span class="badge badge-verde">Incluye Portal Colabora</span>
+  <div class="badges" role="list" aria-label="Características destacadas">
+    <span class="badge" role="listitem">Nómina y RH en la Nube</span>
+    <span class="badge" role="listitem">Cálculo y Timbrado Ilimitado</span>
+    <span class="badge" role="listitem">Gestión de Personal y Expedientes</span>
+    <span class="badge badge-verde" role="listitem">Incluye Portal Colabora</span>
   </div>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-  <!-- HERO -->
+  <!-- ===== HERO ===== -->
   <section aria-label="Resumen">
     <div class="card body">
       <div class="hero-3col">
         <!-- Col 1 -->
         <div class="stack-left">
-          <img src="../IMG/personia.webp" alt="CONTPAQi Personia" class="hero-logo">
+          <img src="../IMG/personia.webp" alt="CONTPAQi Personia" class="hero-logo" loading="lazy">
           <div class="stack">
             <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Personia" target="_blank" rel="noopener">Comprar Suscripción</a>
             <a class="btn btn-grad-purple hero-btn" href="https://www.contpaqi.com/personia" target="_blank" rel="noopener">Probar gratis</a>
@@ -85,10 +59,10 @@
 
         <!-- Col 2 -->
         <div class="card body pdf-card">
-          <img src="../IMG/usas.jpeg" alt="Equipo trabajando en la nube" class="hero-header-img">
+          <img src="../IMG/usas.jpeg" alt="Equipo trabajando en la nube" class="hero-header-img" loading="lazy">
           <h4 class="title-gradient hero-copy">Tu Nómina y RH 24/7 desde cualquier lugar</h4>
           <p class="hint hero-subcopy">Accede a tu información, calcula tu nómina y administra a tu personal en tiempo real, de forma fácil y segura.</p>
-          <iframe class="pdf-frame" title="Ficha de CONTPAQi Personia" src="../PDFS/Ficha_Producto_CONTPAQi_Personia.pdf#page=2&view=FitH"></iframe>
+          <iframe class="pdf-frame" title="Ficha de CONTPAQi Personia" src="../PDFS/Ficha_Producto_CONTPAQi_Personia.pdf#page=2&view=FitH" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
           <div class="hero-pdf-actions">
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Personia.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
             <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Personia.pdf" download>Descargar</a>
@@ -99,19 +73,19 @@
         <aside class="card body">
           <h4 class="title-gradient">Galería</h4>
           <div class="carousel" id="carousel1" aria-label="Galería Personia">
-            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-            <div class="carousel-track">
-              <img class="carousel-slide" src="../IMG/personia.webp" alt="Dashboard de RH en Personia">
-              <img class="carousel-slide" src="../IMG/personia.webp" alt="Cálculo de nómina en la nube">
-              <img class="carousel-slide" src="../IMG/personia.webp" alt="Portal del empleado (Colabora)">
-              <img class="carousel-slide" src="../IMG/personia.webp" alt="Acceso móvil y multidispositivo">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <div class="carousel-track" role="region" aria-label="Imágenes">
+              <img class="carousel-slide" src="../IMG/personia.webp" alt="Dashboard de RH en Personia" loading="lazy">
+              <img class="carousel-slide" src="../IMG/personia.webp" alt="Cálculo de nómina en la nube" loading="lazy">
+              <img class="carousel-slide" src="../IMG/personia.webp" alt="Portal del empleado (Colabora)" loading="lazy">
+              <img class="carousel-slide" src="../IMG/personia.webp" alt="Acceso móvil y multidispositivo" loading="lazy">
             </div>
-            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
             <div class="carousel-nav" aria-label="Paginación de galería">
-              <button class="dot active" aria-label="Ir a la imagen 1"></button>
-              <button class="dot" aria-label="Ir a la imagen 2"></button>
-              <button class="dot" aria-label="Ir a la imagen 3"></button>
-              <button class="dot" aria-label="Ir a la imagen 4"></button>
+              <button class="dot active" aria-label="Ir a la imagen 1" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 2" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 3" type="button"></button>
+              <button class="dot" aria-label="Ir a la imagen 4" type="button"></button>
             </div>
           </div>
         </aside>
@@ -119,127 +93,122 @@
     </div>
   </section>
 
-  <!-- FUNCIONES -->
+  <!-- ===== FUNCIONES ===== -->
   <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <div class="card body">
       <h3 id="caracteristicas-title" class="title-gradient">Funciones destacadas</h3>
 
       <div class="pillbar" role="tablist" aria-label="Categorías de características">
-        <button class="pill active" data-filter="nomina">Nómina en la Nube</button>
-        <button class="pill" data-filter="rh">Gestión de Personal y RH</button>
-        <button class="pill" data-filter="cumplimiento">Cumplimiento y Conexión</button>
+        <button class="pill active" data-filter="nomina" type="button">Nómina en la Nube</button>
+        <button class="pill" data-filter="rh" type="button">Gestión de Personal y RH</button>
+        <button class="pill" data-filter="cumplimiento" type="button">Cumplimiento y Conexión</button>
       </div>
 
       <div class="grid-3 feature-grid">
         <!-- Nómina -->
         <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/historial-de-transacciones.webp" alt=""><h4>Nómina en la Nube</h4></div><p>Calcula y administra tu nómina desde cualquier lugar (PC/Mac).</p></article>
         <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/203-finanzas.webp" alt=""><h4>Timbrado Ilimitado</h4></div><p>Emite recibos de nómina CFDI 4.0 sin costo extra por timbre.</p></article>
-        <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/153-gesto.webp" alt=""><h4>Cálculo Automático</h4></div><p>Calcula ISR, IMSS, subsidio, INFONAVIT, FONACOT y más.</p></article>
-        <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/154-calculadora-2.webp" alt=""><h4>Cálculos Especiales</h4></div><p>Gestiona aguinaldo, finiquitos, PTU y nóminas extraordinarias.</p></article>
-        <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/180-crecimiento.webp" alt=""><h4>Dispersión de Pagos</h4></div><p>Genera layouts para la dispersión bancaria de tu nómina.</p></article>
-        <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/129-lista-de-quehaceres-13.webp" alt=""><h4>Conceptos Flexibles</h4></div><p>Agrega tus propias percepciones y deducciones fácilmente.</p></article>
+        <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/153-gesto.webp" alt=""><h4>Cálculo Automático</h4></div><p>ISR, IMSS, subsidio, INFONAVIT, FONACOT y más.</p></article>
+        <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/154-calculadora-2.webp" alt=""><h4>Cálculos Especiales</h4></div><p>Aguinaldo, finiquitos, PTU y nóminas extraordinarias.</p></article>
+        <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/180-crecimiento.webp" alt=""><h4>Dispersión de Pagos</h4></div><p>Layouts para dispersión bancaria.</p></article>
+        <article class="fcard tag-nomina"><div class="fhead"><img class="ficon" src="../IMG/129-lista-de-quehaceres-13.webp" alt=""><h4>Conceptos Flexibles</h4></div><p>Percepciones y deducciones personalizadas.</p></article>
 
         <!-- RH -->
-        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/colabora.webp" alt=""><h4>Portal Colabora (Gratis)</h4></div><p>Portal de autoservicio para que empleados consulten recibos.</p></article>
-        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/059-colaboracion.webp" alt=""><h4>Gestión de Vacaciones</h4></div><p>Empleados solicitan vacaciones y RH autoriza desde el portal.</p></article>
-        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/125-portapapeles.webp" alt=""><h4>Expediente Digital</h4></div><p>Administra y centraliza la información y documentos del personal.</p></article>
-        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/021-calendario.webp" alt=""><h4>Control de Incidencias</h4></div><p>Registra faltas, incapacidades, horas extra, permisos, etc.</p></article>
-        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/029-arquitectura-empresarial.webp" alt=""><h4>Multi Empresa</h4></div><p>Maneja la nómina de varias empresas en la misma plataforma.</p></article>
-        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/060-datos.webp" alt=""><h4>Reportes RH</h4></div><p>Genera reportes de personal, kárdex, aniversarios y más.</p></article>
+        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/colabora.webp" alt=""><h4>Portal Colabora (Gratis)</h4></div><p>Autoservicio para consultar recibos y pedir vacaciones.</p></article>
+        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/059-colaboracion.webp" alt=""><h4>Gestión de Vacaciones</h4></div><p>Solicitudes y autorizaciones desde el portal.</p></article>
+        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/125-portapapeles.webp" alt=""><h4>Expediente Digital</h4></div><p>Documentos y datos del personal centralizados.</p></article>
+        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/021-calendario.webp" alt=""><h4>Control de Incidencias</h4></div><p>Faltas, incapacidades, horas extra, permisos, etc.</p></article>
+        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/029-arquitectura-empresarial.webp" alt=""><h4>Multi Empresa</h4></div><p>Administra varias empresas en la misma plataforma.</p></article>
+        <article class="fcard tag-rh"><div class="fhead"><img class="ficon" src="../IMG/060-datos.webp" alt=""><h4>Reportes RH</h4></div><p>Personal, kárdex, aniversarios y más.</p></article>
 
         <!-- Cumplimiento -->
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/165-ley.webp" alt=""><h4>Cumplimiento Fiscal</h4></div><p>Siempre actualizado con las leyes de ISR e IMSS vigentes.</p></article>
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/infonavit.webp" alt=""><h4>Conexión IDSE</h4></div><p>Facilita el envío de movimientos afiliatorios al IMSS (próximamente).</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/165-ley.webp" alt=""><h4>Cumplimiento Fiscal</h4></div><p>Siempre actualizado con ISR e IMSS vigentes.</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/infonavit.webp" alt=""><h4>Conexión IDSE</h4></div><p>Movimientos afiliatorios al IMSS (próximamente).</p></article>
         <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/contabiliza.webp" alt=""><h4>Integra con Contabiliza</h4></div><p>Envía la póliza de nómina a CONTPAQi Contabiliza.</p></article>
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/205-entregado-1.webp" alt=""><h4>Actualizaciones Automáticas</h4></div><p>Recibe cambios fiscales y mejoras sin instalaciones manuales.</p></article>
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/149-caja-fuerte.webp" alt=""><h4>Seguridad Avanzada</h4></div><p>Tus datos están protegidos en la nube con altos estándares.</p></article>
-        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/171-mundial.webp" alt=""><h4>NOM-037 (Teletrabajo)</h4></div><p>Ayuda a gestionar aspectos relacionados con el teletrabajo.</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/205-entregado-1.webp" alt=""><h4>Actualizaciones Automáticas</h4></div><p>Mejoras y cambios fiscales sin instalaciones.</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/149-caja-fuerte.webp" alt=""><h4>Seguridad Avanzada</h4></div><p>Datos protegidos en la nube.</p></article>
+        <article class="fcard tag-cumplimiento"><div class="fhead"><img class="ficon" src="../IMG/171-mundial.webp" alt=""><h4>NOM-037 (Teletrabajo)</h4></div><p>Apoya la gestión de teletrabajo.</p></article>
       </div>
     </div>
   </section>
 
- <!-- BENEFICIOS + REELS -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Personia? <span class="badge">Beneficios Nube</span></h2>
-      <p class="lead">La nómina en la nube que automatiza tus cálculos, te mantiene al día con el SAT/IMSS y conecta a tus empleados con el portal Colabora.</p>
+  <!-- ===== BENEFICIOS + REELS ===== -->
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
+      <div>
+        <h2 class="title-gradient">¿Por qué usar Personia? <span class="badge">Beneficios Nube</span></h2>
+        <p class="lead">La nómina en la nube que automatiza cálculos, te mantiene al día con SAT/IMSS y conecta a tus empleados con Colabora.</p>
 
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-        <div class="listTrack">
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/historial-de-transacciones.webp" alt=""></div><div><strong>NÓMINA DESDE CUALQUIER LUGAR</strong><div>Accede 24/7 desde cualquier PC o Mac con internet.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/194-tiempo-de-trabajo.webp" alt=""></div><div><strong>CÁLCULO FÁCIL Y AUTOMÁTICO</strong><div>Reduce errores en ISR, IMSS, subsidio y más.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/015-perfil.webp" alt=""></div><div><strong>PORTAL DE EMPLEADOS (COLABORA)</strong><div>Tus empleados consultan recibos y piden vacaciones online.</div></div></div>
-          </div>
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/165-ley.webp" alt=""></div><div><strong>CUMPLIMIENTO GARANTIZADO</strong><div>Siempre actualizado con las últimas reformas fiscales.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/167-servicio-al-cliente.webp" alt=""></div><div><strong>AHORRA TIEMPO A RH</strong><div>Automatiza la entrega de recibos y gestión de vacaciones.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/contpaqi.webp" alt=""></div><div><strong>ECOSISTEMA NUBE</strong><div>Conecta tu nómina con tu contabilidad en la nube.</div></div></div>
-          </div>
-        </div>
-        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-      </div>
-    </div>
-
-    <div>
-      <aside class="card body">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Personia</h4>
-        <!-- Estos títulos se sincronizan con el slide activo -->
-        <h4 class="reel-title active">Reel Principal Personia</h4>
-        <h4 class="reel-title">Otro Reel de Personia</h4>
-
-        <div class="carousel" id="carouselReels" aria-label="Reels Personia">
-          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-
-          <div class="carousel-track">
-            <div class="carousel-slide">
-              <div class="reel-embed" data-ytid="Tq80TjIIYSQ" data-title="Reel Principal Personia" aria-label="Reel principal de Personia"></div>
+        <div class="listSlider">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+          <div class="listTrack" role="region" aria-label="Beneficios">
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/historial-de-transacciones.webp" alt="" loading="lazy"></div><div><strong>NÓMINA DESDE CUALQUIER LUGAR</strong><div>Acceso 24/7 desde PC o Mac.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/194-tiempo-de-trabajo.webp" alt="" loading="lazy"></div><div><strong>CÁLCULO AUTOMÁTICO</strong><div>Reduce errores en ISR, IMSS y subsidio.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/015-perfil.webp" alt="" loading="lazy"></div><div><strong>PORTAL COLABORA</strong><div>Recibos y vacaciones online.</div></div></div>
             </div>
-            <div class="carousel-slide">
-              <div class="reel-embed" data-ytid="BMxOia08CcU" data-title="Otro Reel de Personia" aria-label="Segundo reel de Personia"></div>
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/165-ley.webp" alt="" loading="lazy"></div><div><strong>CUMPLIMIENTO</strong><div>Actualizaciones fiscales continuas.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/167-servicio-al-cliente.webp" alt="" loading="lazy"></div><div><strong>AHORRA TIEMPO A RH</strong><div>Automatiza entregas y solicitudes.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/contpaqi.webp" alt="" loading="lazy"></div><div><strong>ECOSISTEMA CONTPAQI</strong><div>Integra con Contabiliza/Bancos.</div></div></div>
             </div>
           </div>
-
-          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-
-          <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-          </div>
+          <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
         </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- VIDEOS -->
-<section id="videos" aria-labelledby="videos-title">
-  <div class="card body">
-    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-    <div class="yt-grid">
-      <div class="yt">
-        <h4 class="yt-title">Video Principal CONTPAQi Personia</h4>
-        <div class="yt-wrap" data-ytid="MP-9P44zDts" data-title="Video Principal CONTPAQi Personia (accesible)"></div>
       </div>
-      <div class="yt">
-        <h4 class="yt-title">Demo CONTPAQi Personia</h4>
-        <div class="yt-wrap" data-ytid="jtzy_eCozpg" data-title="Demo CONTPAQi Personia (accesible)"></div>
+
+      <div>
+        <aside class="card body" aria-label="Reels destacados">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Personia</h4>
+          <h4 class="reel-title active">Reel Principal Personia</h4>
+          <h4 class="reel-title">Otro Reel de Personia</h4>
+
+          <div class="carousel" id="carouselReels" aria-label="Reels Personia">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <div class="carousel-track">
+              <div class="carousel-slide">
+                <div class="reel-embed" data-ytid="Tq80TjIIYSQ" data-title="Reel Principal Personia" aria-label="Reel principal de Personia"></div>
+              </div>
+              <div class="carousel-slide">
+                <div class="reel-embed" data-ytid="BMxOia08CcU" data-title="Otro Reel de Personia" aria-label="Segundo reel de Personia"></div>
+              </div>
+            </div>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- ===== VIDEOS ===== -->
+  <section id="videos" aria-labelledby="videos-title">
+    <div class="card body">
+      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+      <div class="yt-grid">
+        <div class="yt">
+          <h4 class="yt-title">Video Principal CONTPAQi Personia</h4>
+          <div class="yt-wrap" data-ytid="MP-9P44zDts" data-title="Video Principal CONTPAQi Personia (accesible)"></div>
+        </div>
+        <div class="yt">
+          <h4 class="yt-title">Demo CONTPAQi Personia</h4>
+          <div class="yt-wrap" data-ytid="jtzy_eCozpg" data-title="Demo CONTPAQi Personia (accesible)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- INTEGRACIONES -->
+  <!-- ===== INTEGRACIONES ===== -->
   <section id="integra" aria-labelledby="integra-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="integra-title" class="title-gradient">Sistemas que se integran con Personia</h3>
     <div class="card body">
-      <div class="carouselX" data-step="3">
-        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+      <div class="carouselX" data-step="3" aria-label="Sistemas integrables">
+        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
         <div class="track">
           <article class="sys" data-href="../SISTEMAS/contabiliza.html">
             <img src="../IMG/contabiliza.webp" alt="Contabiliza">
@@ -247,14 +216,12 @@
             <p>Genera la póliza de nómina automáticamente en la nube.</p>
             <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </article>
-
           <article class="sys" data-href="../SISTEMAS/colabora.html">
             <img src="../IMG/colabora.webp" alt="Colabora">
             <h4>CONTPAQi Colabora</h4>
             <p>Incluido para el autoservicio de empleados.</p>
             <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </article>
-
           <article class="sys" data-href="../SISTEMAS/bancos.html">
             <img src="../IMG/bancos.webp" alt="Bancos">
             <h4>CONTPAQi Bancos</h4>
@@ -262,41 +229,37 @@
             <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </article>
         </div>
-        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
         <div class="group-dots" aria-label="Paginación"></div>
       </div>
     </div>
   </section>
 
-  <!-- PRECIOS -->
-<!-- ========= PRECIOS / CALCULADORA ========= -->
-<section id="calculadora-section" aria-labelledby="calc">
-  <h3 id="calc" class="title-gradient">Planes y Precios</h3>
-  <p class="hint center">Calcula tu plan según tu suscripción/licencia.</p>
+  <!-- ===== PRECIOS / CALCULADORA ===== -->
+  <section id="calculadora-section" aria-labelledby="calc">
+    <h3 id="calc" class="title-gradient">Planes y Precios</h3>
+    <p class="hint center">Calcula tu plan según tu suscripción/licencia.</p>
 
-  <!-- Punto de montaje universal (Nube o Escritorio) -->
-  <div id="calc-primary"></div>
+    <!-- Punto de montaje universal (Nube o Escritorio) -->
+    <div id="calc-primary"></div>
 
-  <!-- (Opcional) Resumen combinado si usas multi-sistema -->
-  <div id="combined-wrap" hidden>
-    <table class="calc-nube-table" style="margin-top:12px">
-      <thead><tr><th>Concepto</th><th style="text-align:right">Importe</th></tr></thead>
-      <tbody id="combined-table-body"></tbody>
-      <tfoot><tr><td><strong>Total</strong></td><td id="combined-total" style="text-align:right;font-weight:700"></td></tr></tfoot>
-    </table>
-  </div>
+    <!-- (Opcional) Resumen combinado si usas multi-sistema -->
+    <div id="combined-wrap" hidden>
+      <table class="calc-nube-table" style="margin-top:12px">
+        <thead><tr><th>Concepto</th><th style="text-align:right">Importe</th></tr></thead>
+        <tbody id="combined-table-body"></tbody>
+        <tfoot><tr><td><strong>Total</strong></td><td id="combined-total" style="text-align:right;font-weight:700"></td></tr></tfoot>
+      </table>
+    </div>
 
-  <!-- Identidad del sistema (SOLO Cambia el nombre) -->
-  <div id="app"
-       data-system="CONTPAQi Personia"   <!-- ← Pon aquí el sistema de esta página -->
-       data-calc-mount="#calc-primary">  <!-- ← (opcional) otro selector si no quieres #calc-primary -->
-  </div>
-</section>
+    <!-- Identidad del sistema (SOLO Cambia el nombre) -->
+    <div id="app"
+         data-system="CONTPAQi Personia"
+         data-calc-mount="#calc-primary">
+    </div>
+  </section>
 
-
-
-
-  <!-- COMPARATIVAS -->
+  <!-- ===== COMPARATIVAS ===== -->
   <section id="comparativa" aria-labelledby="comparativa-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="comparativa-title" class="title-gradient">Comparativas</h3>
@@ -305,12 +268,12 @@
       <table class="table-like" aria-label="Comparativa Personia vs otras marcas">
         <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Personia</th><th>Runa</th><th>Worky / Buk</th><th>Excel / Manual</th></tr></thead>
         <tbody>
-          <tr><td>Enfoque Principal</td><td class="highlight">✅ Nómina y RH (PyME)</td><td>✅ Nómina y RH (PyME/Startups)</td><td>✅ RH Integral (Performance, etc.)</td><td>❌ Manual</td></tr>
+          <tr><td>Enfoque Principal</td><td class="highlight">✅ Nómina y RH (PyME)</td><td>✅ Nómina y RH (PyME/Startups)</td><td>✅ RH Integral</td><td>❌ Manual</td></tr>
           <tr><td>Cálculo de Nómina</td><td class="highlight">✅ Robusto (Base CONTPAQi)</td><td>✅ Robusto</td><td>✅ Robusto</td><td>❌ Propenso a errores</td></tr>
-          <tr><td>Portal Empleados (Recibos/Vacaciones)</td><td class="highlight">✅ (Con Colabora)</td><td>✅ Incluido</td><td>✅ Incluido</td><td>❌ Manual (Email)</td></tr>
-          <tr><td>Integración Contable</td><td class="highlight">✅ Nativa (Contabiliza)</td><td>⚠️ Limitada / Exportar</td><td>⚠️ Limitada / Exportar</td><td>❌ Manual</td></tr>
+          <tr><td>Portal Empleados</td><td class="highlight">✅ Con Colabora</td><td>✅ Incluido</td><td>✅ Incluido</td><td>❌ Manual</td></tr>
+          <tr><td>Integración Contable</td><td class="highlight">✅ Nativa (Contabiliza)</td><td>⚠️ Limitada/Exportar</td><td>⚠️ Limitada/Exportar</td><td>❌ Manual</td></tr>
           <tr><td>Ecosistema</td><td class="highlight">✅ Fuerte (CONTPAQi)</td><td>⚠️ Menor</td><td>⚠️ Menor</td><td>❌ N/A</td></tr>
-          <tr><td>Soporte Fiscal (México)</td><td class="highlight">✅ Muy Fuerte (PAC)</td><td>✅ Fuerte</td><td>✅ Fuerte</td><td>❌ Depende del usuario</td></tr>
+          <tr><td>Soporte Fiscal (MX)</td><td class="highlight">✅ Muy Fuerte (PAC)</td><td>✅ Fuerte</td><td>✅ Fuerte</td><td>❌ Depende del usuario</td></tr>
         </tbody>
       </table>
 
@@ -318,31 +281,31 @@
       <table class="table-like" aria-label="Comparativa Personia vs Nóminas de escritorio">
         <thead><tr><th>Característica</th><th class="highlight">Personia (Nube)</th><th>Nóminas (Escritorio)</th></tr></thead>
         <tbody>
-          <tr><td>Acceso</td><td class="highlight">✅ Web 24/7 (PC/Mac)</td><td>⚠️ Solo Windows (Instalado)</td></tr>
-          <tr><td>Instalación / Actualizaciones</td><td class="highlight">✅ Automáticas (en Nube)</td><td>⚠️ Manuales (Service Packs)</td></tr>
-          <tr><td>Cálculo de Nómina</td><td class="highlight">✅ Simplificado / Automatizado</td><td>✅ Muy Robusto / Flexible (Tradicional)</td></tr>
-          <tr><td>Portal Empleados (Colabora)</td><td class="highlight">✅ Incluido y nativo</td><td>✅ Incluido (requiere configuración)</td></tr>
-          <tr><td>Integración Contable</td><td class="highlight">✅ Nativa (Contabiliza Nube)</td><td>✅ Nativa (Contabilidad Escritorio)</td></tr>
-          <tr><td>Gestión RH (Expedientes, etc.)</td><td class="highlight">✅ Integrado</td><td>⚠️ Básico (Nóminas) / Módulo RH separado</td></tr>
+          <tr><td>Acceso</td><td class="highlight">✅ Web 24/7 (PC/Mac)</td><td>⚠️ Windows (Instalado)</td></tr>
+          <tr><td>Instalación/Actualizaciones</td><td class="highlight">✅ Automáticas</td><td>⚠️ Manuales</td></tr>
+          <tr><td>Cálculo de Nómina</td><td class="highlight">✅ Simplificado / Automatizado</td><td>✅ Muy Robusto / Flexible</td></tr>
+          <tr><td>Portal Empleados</td><td class="highlight">✅ Incluido y nativo</td><td>✅ Incluido (requiere configuración)</td></tr>
+          <tr><td>Integración Contable</td><td class="highlight">✅ Contabiliza Nube</td><td>✅ Contabilidad Escritorio</td></tr>
+          <tr><td>Gestión RH</td><td class="highlight">✅ Integrada</td><td>⚠️ Básico / Módulo aparte</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- ===== FAQ ===== -->
   <section id="faq" aria-labelledby="faq-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
     <div class="faq-wrap" id="faqWrap">
-      <details class="faq-item"><summary>¿Cuál es la diferencia entre Personia y Nóminas de escritorio?</summary><p><strong>Personia</strong> es una solución 100% en la nube, ideal para movilidad y automatización de RH y nómina. <strong>CONTPAQi Nóminas</strong> (escritorio) es un software más robusto y tradicional, con cálculos muy especializados, que requiere instalación en Windows.</p></details>
-      <details class="faq-item"><summary>¿Qué es y qué costo tiene CONTPAQi Colabora?</summary><p>Colabora es el portal de autoservicio para empleados (web y móvil) que se conecta a Personia. Permite a los empleados ver sus recibos, solicitar vacaciones, etc. <strong>Viene incluido sin costo</strong> con tu suscripción a Personia.</p></details>
-      <details class="faq-item"><summary>¿El timbrado de recibos es realmente ilimitado?</summary><p>Sí, todos los planes de CONTPAQi Personia incluyen timbrado de recibos de nómina (CFDI 4.0) de forma ilimitada, sin costo adicional por timbre.</p></details>
-      <details class="faq-item"><summary>¿Cómo funciona el precio? ¿Es por empleado?</summary><p>El precio es una suscripción anual. Cada plan (Inicial, Equipos, etc.) incluye un número de empleados. Si rebasas ese número, puedes comprar "paquetes" de empleados adicionales. El costo por empleado adicional disminuye en planes más grandes.</p></details>
-      <details class="faq-item"><summary>¿Puedo usar Personia en una Mac?</summary><p>Sí. Al ser un sistema 100% en la nube, solo necesitas un navegador web (como Safari, Chrome o Firefox) para acceder desde cualquier computadora, sea Mac o Windows.</p></details>
+      <details class="faq-item"><summary>¿Diferencia entre Personia y Nóminas de escritorio?</summary><p><strong>Personia</strong> es 100% nube (movilidad y RH). <strong>CONTPAQi Nóminas</strong> es más robusto y flexible, pero requiere Windows y service packs.</p></details>
+      <details class="faq-item"><summary>¿Qué es CONTPAQi Colabora y costo?</summary><p>Portal de autoservicio para empleados (web/móvil) conectado a Personia. <strong>Incluido sin costo</strong> en tu suscripción.</p></details>
+      <details class="faq-item"><summary>¿El timbrado es ilimitado?</summary><p>Sí, timbrado de recibos CFDI 4.0 sin costo adicional por timbre en todos los planes.</p></details>
+      <details class="faq-item"><summary>¿El precio es por empleado?</summary><p>Suscripción anual por plan (incluye un número de empleados). Si rebasas, agregas paquetes de empleados adicionales con mejor precio en planes altos.</p></details>
+      <details class="faq-item"><summary>¿Funciona en Mac?</summary><p>Sí, al ser web solo necesitas un navegador moderno (Safari/Chrome/Firefox).</p></details>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- ===== CTA ===== -->
   <section id="sesion-guiada" class="card body">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 class="title-gradient">¿Listo para llevar tu Nómina a la Nube?</h3>
@@ -352,54 +315,87 @@
       <a class="btn btn-grad-green" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Personia" target="_blank" rel="noopener">Comprar ahora</a>
     </div>
   </section>
+
+  <!-- ===== TOC ===== -->
+  <aside class="toc collapsed" id="toc" aria-label="Mapa del sitio">
+    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa" type="button">🗺️ Mapa</button>
+    <button class="toc-close" aria-label="Cerrar" type="button">×</button>
+    <strong class="toc-title">Mapa del sitio</strong>
+    <a href="#caracteristicas">Funcionalidades</a>
+    <a href="#videos">Vídeos</a>
+    <a href="#integra">Integraciones</a>
+    <a href="#calculadora-section">Precio</a>
+    <a href="#comparativa">Comparativa</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#sesion-guiada">Demo</a>
+  </aside>
 </main>
 
-<footer>
-  <div class="container footer-grid">
-    <div>
-      <h3 class="footer-title">Contacto</h3>
-      <div class="contact-list">
-        <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
-        <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
-        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
-      </div>
-    </div>
-    <div>
-      <h3 class="footer-title">Formas de pago</h3>
-      <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="métodos de pago" loading="lazy"></div>
-    </div>
-    <div>
-      <h3 class="footer-title">Marcas</h3>
-      <div class="brands-col">
-        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="CONTPAQi"></div>
-        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Microsoft"></div>
-      </div>
-    </div>
-    <div class="ally-col">
-      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
-      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
-      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <div class="brand-mini">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti">
-      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
-    </div>
-    <div class="hint">Aviso de privacidad · Términos</div>
-  </div>
-</footer>
+<!-- Footer dinámico (partial) -->
+<div id="footer-placeholder"></div>
 
-<!-- 1) Tabla de precios (debe existir la clave del sistema) -->
-<script src="../precios-contpaqi.js"></script>
+<!-- ===== Loader de header/footer + normalizador de rutas ===== -->
+<script>
+(async () => {
+  const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
+  const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
 
-  <!-- 2) Adaptador + calculadora NUBE (tu main.js con el auto-detector) -->
+  const isGh = location.hostname.endsWith("github.io");
+  const firstSeg = location.pathname.split("/")[1] || "";
+  const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
+  const inSistemas = location.pathname.includes("/SISTEMAS/");
+
+  function prefix(p){
+    if (!p || /^https?:\/\//i.test(p)) return p;
+    if (isGh) return (repoBase + "/" + p).replace(/\/+/g,"/");
+    const depth = inSistemas ? "../" : "";
+    return (depth + p).replace(/\/+/g,"/");
+  }
+
+  const headerURL = await pickFirst([
+    "../PARTIALS/global-header.html",
+    "./PARTIALS/global-header.html",
+    `${repoBase}/PARTIALS/global-header.html`,
+    "/PARTIALS/global-header.html"
+  ]);
+  const footerURL = await pickFirst([
+    "../PARTIALS/global-footer.html",
+    "./PARTIALS/global-footer.html",
+    `${repoBase}/PARTIALS/global-footer.html`,
+    "/PARTIALS/global-footer.html"
+  ]);
+
+  const [headerHTML, footerHTML] = await Promise.all([
+    fetch(headerURL).then(r=>r.text()),
+    fetch(footerURL).then(r=>r.text())
+  ]);
+
+  const hp = document.getElementById("header-placeholder");
+  const fp = document.getElementById("footer-placeholder");
+  if (hp) hp.outerHTML = headerHTML;
+  if (fp) fp.outerHTML = footerHTML;
+
+  // Normaliza rutas si usas data-*
+  document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+    img.src = prefix(img.getAttribute("data-src"));
+  });
+  document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+    const p = a.getAttribute("data-href"); if (!p) return;
+    const [path, hash] = p.split("#");
+    a.href = prefix(path) + (hash ? ("#"+hash) : "");
+  });
+
+  // Año en footer parcial
+  const y = document.getElementById("gf-year");
+  if (y) y.textContent = new Date().getFullYear();
+})();
+</script>
+
+<!-- Lógica global (carruseles, embeds, TOC, etc.) -->
 <script src="../main.js" defer></script>
-<!-- 3 Motor calculadora ESCRITORIO (tu calculadora.js clásica) -->
+
+<!-- Pricing/Calculadora -->
+<script src="../precios-contpaqi.js"></script>
 <script src="../calculadora.js" defer></script>
-
-
-
 </body>
 </html>
