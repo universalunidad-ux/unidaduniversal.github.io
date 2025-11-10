@@ -5,10 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CONTPAQi Colabora | Expiriti</title>
 <meta name="description" content="CONTPAQi Colabora con Expiriti: Portal para empleados conectado a Nóminas. Consulta recibos, solicita vacaciones y agiliza la comunicación con RH.">
+
+<!-- Preconnects -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="preconnect" href="https://i.ytimg.com">
 
+<!-- Fuente + CSS global -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -16,42 +21,12 @@
 <link rel="icon" href="../IMG/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
-<!-- ⚙️ CSS global (carrusel) -->
 <link rel="stylesheet" href="../main.css">
-
 </head>
-<body id="top">
-<header>
-  <div class="container nav">
-    <a href="#top" class="brand" aria-label="Inicio Expiriti">
-      <img src="../IMG/expiritilogo.webp" alt="Logo de Expiriti">
-      <div>Expiriti<small>Distribuidor CONTPAQi</small></div>
-    </a>
-    <nav aria-label="Principal">
-      <ul>
-        <li><a href="#caracteristicas">Funcionalidades</a></li>
-        <li><a href="#videos">Vídeos</a></li>
-        <li><a href="#integra">Integración</a></li>
-        <li><a href="#comparativa">Comparativa</a></li>
-        <li><a href="#faq">Preguntas frecuentes</a></li>
-        <li><a href="#sesion-guiada">Contacto</a></li>
-      </ul>
-    </nav>
-    <div class="cta">
-      <a class="btn btn-ghost" href="tel:+525568437918" aria-label="Llamar 55 6843 7918">55 6843 7918</a>
-      <a class="btn btn-ghost" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20de%20CONTPAQi%20Colabora" target="_blank" rel="noopener">WhatsApp</a>
-      <button class="burger" id="burger" aria-label="Abrir menú">≡</button>
-    </div>
-  </div>
-  <div class="container mobile" id="mobileMenu" aria-label="Menú móvil">
-    <a href="#caracteristicas">Funcionalidades</a>
-    <a href="#videos">Vídeos</a>
-    <a href="#integra">Integración</a>
-    <a href="#comparativa">Comparativa</a>
-    <a href="#faq">Preguntas frecuentes</a>
-    <a href="#sesion-guiada">Contacto</a>
-  </div>
-</header>
+
+<body id="top" data-calc="escritorio">
+  <!-- Header dinámico -->
+  <div id="header-placeholder"></div>
 
 <main class="container hero">
   <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" rel="noopener">← Volver a productos</a>
@@ -66,6 +41,7 @@
   </div>
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
+  <!-- ===== Resumen ===== -->
   <section aria-label="Resumen">
     <div class="card body">
       <div class="hero-3col">
@@ -82,7 +58,7 @@
           <h4 class="title-gradient" style="margin:0 0 6px">Optimiza la comunicación RH-Empleado</h4>
           <p class="hint" style="margin:0 0 8px">Brinda a tus colaboradores acceso fácil a su información y reduce la carga administrativa de Recursos Humanos.</p>
 
-          <!-- Reemplaza este PDF cuando tengas material propio -->
+          <!-- Placeholder temporal — sustituir por ficha/guía de Colabora -->
           <iframe class="pdf-frame" title="Guía Colabora (PDF)" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=1&view=FitH" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
           <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
             <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
@@ -114,6 +90,7 @@
     </div>
   </section>
 
+  <!-- ===== Funcionalidades ===== -->
   <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <div class="card body">
@@ -152,111 +129,110 @@
       </div>
     </div>
   </section>
-<!-- ✅ REELS + VIDEOS (Colabora) -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Colabora? <span class="badge">Beneficios clave</span></h2>
-      <p class="lead">Empodera a tus empleados dándoles acceso a su información y libera tiempo valioso del equipo de Recursos Humanos.</p>
 
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-        <div class="listTrack" role="region" aria-label="Beneficios">
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/207-entregado-2.webp" alt="" loading="lazy"></div><div><strong>EMPLEADOS INFORMADOS</strong><div>Autoservicio para consultas de recibos y saldos.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/100-mision-2.webp" alt="" loading="lazy"></div><div><strong>RH MÁS EFICIENTE</strong><div>Reduce drásticamente las solicitudes manuales.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/189-estructura-5.webp" alt="" loading="lazy"></div><div><strong>PROCESOS ÁGILES</strong><div>Solicitud y autorización de vacaciones en línea.</div></div></div>
-          </div>
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/nominas.webp" alt="" loading="lazy"></div><div><strong>CONEXIÓN DIRECTA</strong><div>Sincronización segura con CONTPAQi Nóminas.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/126-solicitud.webp" alt="" loading="lazy"></div><div><strong>ACCESO 24/7</strong><div>Disponible web y app móvil.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/161-marcador.webp" alt="" loading="lazy"></div><div><strong>VALOR AGREGADO</strong><div>Mejora la experiencia del empleado sin costo extra.</div></div></div>
-          </div>
-        </div>
-        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-      </div>
-    </div>
+  <!-- ===== Por qué usar + REELS ===== -->
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
+      <div>
+        <h2 class="title-gradient">¿Por qué usar Colabora? <span class="badge">Beneficios clave</span></h2>
+        <p class="lead">Empodera a tus empleados dándoles acceso a su información y libera tiempo valioso del equipo de Recursos Humanos.</p>
 
-    <!-- 🎥 REELS destacados (sincroniza .reel-title y pausa otros players) -->
-    <div>
-      <aside class="card body">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Colabora</h4>
-        <h4 class="reel-title active">Colabora — Reel principal</h4>
-        <h4 class="reel-title">Colabora — Reel complementario</h4>
-
-        <div class="carousel" id="carouselReels" aria-label="Reels Colabora">
+        <div class="listSlider">
           <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-
-          <div class="carousel-track">
-            <div class="carousel-slide">
-              <div class="reel-embed" data-ytid="gae67GDse30" data-title="Reel CONTPAQi Colabora 1"></div>
+          <div class="listTrack" role="region" aria-label="Beneficios">
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/207-entregado-2.webp" alt="" loading="lazy"></div><div><strong>EMPLEADOS INFORMADOS</strong><div>Autoservicio para consultas de recibos y saldos.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/100-mision-2.webp" alt="" loading="lazy"></div><div><strong>RH MÁS EFICIENTE</strong><div>Reduce drásticamente las solicitudes manuales.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/189-estructura-5.webp" alt="" loading="lazy"></div><div><strong>PROCESOS ÁGILES</strong><div>Solicitud y autorización de vacaciones en línea.</div></div></div>
             </div>
-            <div class="carousel-slide">
-              <div class="reel-embed" data-ytid="aqz-KE-bpKQ" data-title="Reel CONTPAQi Colabora 2 (TEMP)"></div>
+            <div class="listPage">
+              <div class="listItem"><div class="listIcon"><img src="../IMG/nominas.webp" alt="" loading="lazy"></div><div><strong>CONEXIÓN DIRECTA</strong><div>Sincronización segura con CONTPAQi Nóminas.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/126-solicitud.webp" alt="" loading="lazy"></div><div><strong>ACCESO 24/7</strong><div>Disponible web y app móvil.</div></div></div>
+              <div class="listItem"><div class="listIcon"><img src="../IMG/161-marcador.webp" alt="" loading="lazy"></div><div><strong>VALOR AGREGADO</strong><div>Mejora la experiencia del empleado sin costo extra.</div></div></div>
             </div>
           </div>
-
           <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-
-          <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-          </div>
         </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- 🎬 VIDEOS del sistema -->
-<section id="videos" aria-labelledby="videos-title">
-  <div class="card body">
-    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-    <div class="yt-grid">
-      <div class="yt">
-        <h4 class="yt-title">Video principal CONTPAQi Colabora</h4>
-        <div class="yt-wrap" data-ytid="M7lc1UVf-VE" data-title="Video principal CONTPAQi Colabora (TEMP)"></div>
       </div>
-      <div class="yt">
-        <h4 class="yt-title">Demo CONTPAQi Colabora</h4>
-        <div class="yt-wrap" data-ytid="aqz-KE-bpKQ" data-title="Demo CONTPAQi Colabora (TEMP)"></div>
+
+      <!-- REELS -->
+      <div>
+        <aside class="card body">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Colabora</h4>
+          <h4 class="reel-title active">Colabora — Reel principal</h4>
+          <h4 class="reel-title">Colabora — Reel complementario</h4>
+
+          <div class="carousel" id="carouselReels" aria-label="Reels Colabora">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+
+            <div class="carousel-track">
+              <div class="carousel-slide">
+                <div class="reel-embed" data-ytid="gae67GDse30" data-title="Reel CONTPAQi Colabora 1"></div>
+              </div>
+              <div class="carousel-slide">
+                <div class="reel-embed" data-ytid="aqz-KE-bpKQ" data-title="Reel CONTPAQi Colabora 2 (TEMP)"></div>
+              </div>
+            </div>
+
+            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-  
-  
-<section id="integra" aria-labelledby="integra-title">
-  <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-  <h3 id="integra-title" class="title-gradient">CONTPAQi Colabora funciona con:</h3>
-
-  <div class="card body">
-    <div class="carouselX" data-step="3" aria-label="Sistemas que se integran">
-      <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-      <div class="track">
-        <article class="sys" data-href="../SISTEMAS/nominas.html">
-          <img src="../IMG/nominas.webp" alt="Nóminas">
-          <h4>CONTPAQi Nóminas</h4>
-          <p>Sincroniza empleados, recibos y vacaciones.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
-
-        <article class="sys" data-href="../SISTEMAS/personia.html">
-          <img src="../IMG/personia.webp" alt="Personia">
-          <h4>CONTPAQi Personia</h4>
-          <p>Gestión de empleados y recibos en la nube.</p>
-          <div class="hoverMore"><span class="chip">Ver más →</span></div>
-        </article>
+  <!-- ===== Videos ===== -->
+  <section id="videos" aria-labelledby="videos-title">
+    <div class="card body">
+      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+      <div class="yt-grid">
+        <div class="yt">
+          <h4 class="yt-title">Video principal CONTPAQi Colabora</h4>
+          <div class="yt-wrap" data-ytid="M7lc1UVf-VE" data-title="Video principal CONTPAQi Colabora (TEMP)"></div>
+        </div>
+        <div class="yt">
+          <h4 class="yt-title">Demo CONTPAQi Colabora</h4>
+          <div class="yt-wrap" data-ytid="aqz-KE-bpKQ" data-title="Demo CONTPAQi Colabora (TEMP)"></div>
+        </div>
       </div>
-      <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-      <div class="group-dots" aria-label="Paginación"></div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <!-- ===== Integración ===== -->
+  <section id="integra" aria-labelledby="integra-title">
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+    <h3 id="integra-title" class="title-gradient">CONTPAQi Colabora funciona con:</h3>
 
+    <div class="card body">
+      <div class="carouselX" data-step="3" aria-label="Sistemas que se integran">
+        <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+        <div class="track">
+          <article class="sys" data-href="../SISTEMAS/nominas.html">
+            <img src="../IMG/nominas.webp" alt="Nóminas">
+            <h4>CONTPAQi Nóminas</h4>
+            <p>Sincroniza empleados, recibos y vacaciones.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
 
+          <article class="sys" data-href="../SISTEMAS/personia.html">
+            <img src="../IMG/personia.webp" alt="Personia">
+            <h4>CONTPAQi Personia</h4>
+            <p>Gestión de empleados y recibos en la nube.</p>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </article>
+        </div>
+        <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+        <div class="group-dots" aria-label="Paginación"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Comparativa ===== -->
   <section id="comparativa" aria-labelledby="comparativa-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
     <h3 id="comparativa-title" class="title-gradient">Comparativa con otras opciones</h3>
@@ -274,83 +250,96 @@
     </div>
   </section>
 
-  <section id="faq" aria-labelledby="faq-title">
+  <!-- ===== Precio / CTA ===== -->
+  <section id="sesion-guiada" class="card body" aria-labelledby="cta-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
-    <div class="faq-wrap" id="faqWrap">
-      <details class="faq-item"><summary>¿CONTPAQi Colabora tiene costo extra?</summary><p>No. Colabora es un beneficio <strong>incluido sin costo adicional</strong> para licencias vigentes de CONTPAQi Nóminas.</p></details>
-      <details class="faq-item"><summary>¿Cómo acceden los empleados a Colabora?</summary><p>Vía portal web con usuario/contraseña o app móvil (iOS/Android).</p></details>
-      <details class="faq-item"><summary>¿La información se actualiza en tiempo real desde Nóminas?</summary><p>Sí, se sincroniza con la base de datos de CONTPAQi Nóminas.</p></details>
-      <details class="faq-item"><summary>¿Puedo personalizar el flujo de vacaciones?</summary><p>Sí, puedes configurar responsables y niveles de autorización.</p></details>
-      <details class="faq-item"><summary>¿Qué necesito para empezar a usar Colabora?</summary><p>Tener Nóminas vigente, activar Colabora y dar de alta usuarios.</p></details>
-    </div>
-  </section>
-
-  <section id="sesion-guiada" class="card body">
-    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h3 class="title-gradient">¿Te interesa CONTPAQi Nóminas con Colabora?</h3>
-    <p>Contacta a nuestros especialistas para resolver tus dudas.</p>
+    <h3 id="cta-title" class="title-gradient">¿Te interesa CONTPAQi Nóminas con Colabora?</h3>
+    <p>Colabora está <strong>incluido sin costo</strong> al adquirir o renovar <a class="js-link" data-href="../SISTEMAS/nominas.html">CONTPAQi Nóminas</a>. Contáctanos y te guiamos.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
       <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%21%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20CONTPAQi%20N%C3%B3minas%20y%20Colabora" target="_blank" rel="noopener">Solicitar información (WhatsApp)</a>
-      <a class="btn btn-ghost" href="../SISTEMAS/nominas.html">Ver detalles de Nóminas</a>
+      <a class="btn btn-ghost js-link" data-href="../SISTEMAS/nominas.html">Ver detalles de Nóminas</a>
     </div>
   </section>
 
-  <aside class="toc collapsed" id="toc">
-    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
-    <button class="toc-close" aria-label="Cerrar">×</button>
+  <!-- ===== TOC ===== -->
+  <aside class="toc collapsed" id="toc" aria-label="Mapa del sitio">
+    <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa" type="button">🗺️ Mapa</button>
+    <button class="toc-close" aria-label="Cerrar" type="button">×</button>
     <strong class="toc-title">Mapa del sitio</strong>
     <a href="#caracteristicas">Funcionalidades</a>
     <a href="#videos">Vídeos</a>
     <a href="#integra">Integración</a>
     <a href="#comparativa">Comparativa</a>
-    <a href="#faq">Preguntas frecuentes</a>
     <a href="#sesion-guiada">Contacto</a>
   </aside>
 </main>
 
-<footer>
-  <div class="container footer-grid">
-    <div>
-      <h3 class="footer-title">Contacto</h3>
-      <div class="contact-list">
-        <div class="item"><span class="ico">📍</span><span><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</span></div>
-        <div class="item"><span class="ico">☎️</span><span><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></span></div>
-        <div class="item"><span class="ico">✉️</span><span><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></span></div>
-      </div>
-    </div>
-    <div>
-      <h3 class="footer-title">Formas de pago</h3>
-      <div class="payments-grid"><img src="../IMG/pasarela-2.webp" alt="Métodos de pago" loading="lazy"></div>
-    </div>
-    <div>
-      <h3 class="footer-title">Marcas</h3>
-      <div class="brands-col">
-        <div class="brand-item"><img src="../IMG/CONTPAQi.webp" alt="Logo CONTPAQi" loading="lazy"></div>
-        <div class="brand-item"><img src="../IMG/Microsoft.webp" alt="Logo Microsoft" loading="lazy"></div>
-      </div>
-    </div>
-    <div class="ally-col">
-      <h3 class="footer-title" style="justify-self:end">Aliados</h3>
-      <img src="../IMG/bni.webp" alt="BNI" loading="lazy">
-      <img src="../IMG/fucam.webp" alt="FUCAM" loading="lazy">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <div style="display:flex;align-items:center;gap:10px">
-      <img src="../IMG/expiritilogo.webp" alt="Expiriti" style="width:34px;height:34px;border-radius:8px" loading="lazy">
-      <div><strong>Expiriti</strong><div class="hint">© <span id="year"></span> · Todos los derechos reservados</div></div>
-    </div>
-    <div class="hint">Aviso de privacidad · Términos</div>
-  </div>
-</footer>
-<!-- 1) Tabla de precios (debe existir la clave del sistema) -->
-<script src="../precios-contpaqi.js"></script>
+<!-- Footer dinámico -->
+<div id="footer-placeholder"></div>
 
-  <!-- 2) Adaptador + calculadora NUBE (tu main.js con el auto-detector) -->
-<script src="../main.js" defer></script>
-<!-- 3 Motor calculadora ESCRITORIO (tu calculadora.js clásica) -->
-<script src="../calculadora.js" defer></script>
+<!-- ====== Loader ÚNICO de header/footer + resolución de rutas ====== -->
+<script>
+(async () => {
+  const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
+  const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
+
+  const isGh = location.hostname.endsWith("github.io");
+  const firstSeg = location.pathname.split("/")[1] || "";
+  const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
+  const inSistemas = location.pathname.includes("/SISTEMAS/");
+
+  function prefix(p){
+    if (!p || /^https?:\/\//i.test(p)) return p;
+    if (isGh) return (repoBase + "/" + p).replace(/\/+/g,"/");
+    const depth = inSistemas ? "../" : "";
+    return (depth + p).replace(/\/+/g,"/");
+  }
+
+  const headerURL = await pickFirst([
+    "../PARTIALS/global-header.html",
+    "./PARTIALS/global-header.html",
+    `${repoBase}/PARTIALS/global-header.html`,
+    "/PARTIALS/global-header.html"
+  ]);
+  const footerURL = await pickFirst([
+    "../PARTIALS/global-footer.html",
+    "./PARTIALS/global-footer.html",
+    `${repoBase}/PARTIALS/global-footer.html`,
+    "/PARTIALS/global-footer.html"
+  ]);
+
+  const [headerHTML, footerHTML] = await Promise.all([
+    fetch(headerURL).then(r=>r.text()),
+    fetch(footerURL).then(r=>r.text())
+  ]);
+
+  const hp = document.getElementById("header-placeholder");
+  const fp = document.getElementById("footer-placeholder");
+  if (hp) hp.outerHTML = headerHTML;
+  if (fp) fp.outerHTML = footerHTML;
+
+  // Normaliza rutas para elementos marcados
+  document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+    img.src = prefix(img.getAttribute("data-src"));
+  });
+  document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+    const p = a.getAttribute("data-href"); if (!p) return;
+    const [path, hash] = p.split("#");
+    a.href = prefix(path) + (hash ? ("#"+hash) : "");
+  });
+  document.querySelectorAll(".js-img[data-src]").forEach(img=>{
+    img.src = prefix(img.getAttribute("data-src"));
+  });
+  document.querySelectorAll(".js-link[data-href]").forEach(a=>{
+    a.href = prefix(a.getAttribute("data-href"));
+  });
+
+  const y = document.getElementById("gf-year");
+  if (y) y.textContent = new Date().getFullYear();
+})();
+</script>
+
+<!-- Lógica global (carruseles, reels, yt) -->
+<script defer src="../main.js"></script>
 </body>
 </html>
