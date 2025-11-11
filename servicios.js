@@ -1,62 +1,87 @@
-<script>
 // =========================================================
-// Expiriti — Servicios (Soporte): JS específico de la página
-// Requiere utilidades base del sitio (si las tienes) pero funciona standalone
+// Expiriti — Servicios (Soporte): JS independiente
+// No requiere main.js. Incluye helpers defensivos.
 // =========================================================
 
 (function(){
+  "use strict";
+
+  // ---------- Helpers mínimos ----------
+  const $   = (sel, ctx=document) => ctx.querySelector(sel);
+  const $$  = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+  const on  = (el, ev, fn) => el && el.addEventListener(ev, fn);
+
   // ---------- Año en footer ----------
-  const y = document.getElementById('year');
-  if (y) y.textContent = new Date().getFullYear();
+  (function(){
+    const y = $('#year');
+    if (y) y.textContent = new Date().getFullYear();
+  })();
 
   // ---------- Menú móvil ----------
-  const burger = document.getElementById('burger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  if (burger && mobileMenu){
-    burger.addEventListener('click', ()=> mobileMenu.classList.toggle('open'));
-  }
+  (function(){
+    const burger = $('#burger');
+    const mobile = $('#mobileMenu');
+    if (!burger || !mobile) return;
+    on(burger, 'click', ()=> mobile.classList.toggle('open'));
+  })();
 
   // ---------- TOC (Mapa flotante) ----------
   (function(){
-    const toc = document.getElementById('toc');
+    const toc = $('#toc');
     if(!toc) return;
-    const openBtn = document.getElementById('tocToggle');
-    const closeBtn = toc.querySelector('.toc-close');
+    const openBtn  = $('#tocToggle');
+    const closeBtn = $('.toc-close', toc);
     if(!openBtn || !closeBtn) return;
 
-    openBtn.addEventListener('click', e=>{ e.stopPropagation(); toc.classList.toggle('collapsed'); });
-    closeBtn.addEventListener('click', ()=> toc.classList.add('collapsed'));
-    toc.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> toc.classList.add('collapsed')));
-    document.addEventListener('click', e=>{
-      if(!toc.contains(e.target) && e.target !== openBtn) toc.classList.add('collapsed');
+    on(openBtn, 'click', (e)=>{ e.stopPropagation(); toc.classList.toggle('collapsed'); });
+    on(closeBtn, 'click', ()=> toc.classList.add('collapsed'));
+    $$('.toc a', toc).forEach(a=> on(a, 'click', ()=> toc.classList.add('collapsed')));
+    on(document, 'click', (e)=>{ if(!toc.contains(e.target) && e.target !== openBtn) toc.classList.add('collapsed'); });
+  })();
+
+  // ---------- Anclas suaves con compensación de header ----------
+  (function(){
+    const header = document.querySelector('header');
+    const offset = ()=> (header ? header.getBoundingClientRect().height + 8 : 80);
+    $$('.toc a[href^="#"], nav a[href^="#"]').forEach(a=>{
+      on(a, 'click', (e)=>{
+        const id = a.getAttribute('href');
+        if(!id || id === '#') return;
+        const target = document.querySelector(id);
+        if(!target) return;
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.scrollY - offset();
+        window.scrollTo({ top, behavior: 'smooth' });
+        history.pushState(null, '', id);
+      });
     });
   })();
 
   // ---------- Galería portada (carousel simple) ----------
   (function(){
-    const root = document.getElementById('carousel1');
+    const root  = $('#carousel1');
     if(!root) return;
-    const track = root.querySelector('.carousel-track');
-    const dots  = [...root.querySelectorAll('.dot')];
-    const prev  = root.querySelector('.arrowCircle.prev');
-    const next  = root.querySelector('.arrowCircle.next');
+    const track = $('.carousel-track', root);
+    const dots  = $$('.dot', root);
+    const prev  = $('.arrowCircle.prev', root);
+    const next  = $('.arrowCircle.next', root);
     let idx = 0;
 
     function setActive(i){
       if (!track || !dots.length) return;
       idx = (i + dots.length) % dots.length;
-      dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
+      dots.forEach((d,di)=> d.classList.toggle('active', di===idx));
       track.scrollTo({ left: track.clientWidth * idx, behavior:'smooth' });
     }
-    dots.forEach((d,i)=> d.addEventListener('click', ()=> setActive(i)));
-    prev?.addEventListener('click', ()=> setActive(idx-1));
-    next?.addEventListener('click', ()=> setActive(idx+1));
-    track?.addEventListener('scroll', ()=>{
+    dots.forEach((d,i)=> on(d, 'click', ()=> setActive(i)));
+    on(prev, 'click', ()=> setActive(idx-1));
+    on(next, 'click', ()=> setActive(idx+1));
+    on(track, 'scroll', ()=>{
       const i = Math.round(track.scrollLeft / track.clientWidth);
       dots.forEach((d,di)=> d.classList.toggle('active', di===i));
       idx = i;
     });
-    window.addEventListener('resize', ()=> setActive(idx));
+    on(window, 'resize', ()=> setActive(idx));
     setActive(0);
   })();
 
@@ -64,9 +89,9 @@
   (function(){
     const wrap  = document.querySelector('#beneficios .listSlider');
     if(!wrap) return;
-    const track = wrap.querySelector('.listTrack');
-    const prev  = wrap.querySelector('.prev');
-    const next  = wrap.querySelector('.next');
+    const track = $('.listTrack', wrap);
+    const prev  = $('.prev', wrap);
+    const next  = $('.next', wrap);
     if(!track || !prev || !next) return;
 
     let page = 0;
@@ -75,21 +100,21 @@
       page = (i + total) % total;
       track.scrollTo({ left: wrap.clientWidth * page, behavior:'smooth' });
     }
-    prev.addEventListener('click', ()=> go(page-1));
-    next.addEventListener('click', ()=> go(page+1));
-    window.addEventListener('resize', ()=> go(page));
+    on(prev, 'click', ()=> go(page-1));
+    on(next, 'click', ()=> go(page+1));
+    on(window, 'resize', ()=> go(page));
   })();
 
-  // ---------- Carrusel de sistemas (grid horizontal reusables) ----------
+  // ---------- Carrusel de sistemas (cards horizontales reusables) ----------
   (function(){
-    document.querySelectorAll('.carouselX').forEach(root=>{
-      const track = root.querySelector('.track');
-      const prev  = root.querySelector('.arrowCircle.prev');
-      const next  = root.querySelector('.arrowCircle.next');
-      const dotsWrap = root.querySelector('.group-dots');
+    $$('.carouselX').forEach(root=>{
+      const track    = $('.track', root);
+      const prev     = $('.arrowCircle.prev', root);
+      const next     = $('.arrowCircle.next', root);
+      const dotsWrap = $('.group-dots', root);
       if(!track) return;
 
-      const items = track.querySelectorAll('.sys');
+      const items = $$('.sys', track);
       let itemsPerPage = 3;
 
       const updateItemsPerPage = () => {
@@ -99,11 +124,13 @@
       };
       updateItemsPerPage();
 
-      function groupsCount(){ return Math.max(1, Math.ceil(items.length / itemsPerPage)); }
-      function groupW(){ return track.clientWidth / itemsPerPage * Math.min(items.length, itemsPerPage); }
+      const groupsCount = () => Math.max(1, Math.ceil(items.length / itemsPerPage));
+      const groupW = () => track.clientWidth / itemsPerPage * Math.min(items.length, itemsPerPage);
 
       function getScrollAmount(i){
-        if (itemsPerPage === 1) return items[i].offsetLeft - (track.clientWidth - items[i].clientWidth) / 2;
+        if (itemsPerPage === 1 && items[i]) {
+          return items[i].offsetLeft - (track.clientWidth - items[i].clientWidth) / 2;
+        }
         return i * groupW();
       }
 
@@ -114,32 +141,36 @@
       }
       updateCarouselStyles();
 
-      const showControls = groupsCount() > 1;
-      if (prev) prev.style.display = showControls ? '' : 'none';
-      if (next) next.style.display = showControls ? '' : 'none';
-      if (dotsWrap) dotsWrap.style.display = showControls ? '' : 'none';
-      if (!showControls) return;
+      const shouldShow = groupsCount() > 1;
+      if (prev) prev.style.display = shouldShow ? '' : 'none';
+      if (next) next.style.display = shouldShow ? '' : 'none';
+      if (dotsWrap) dotsWrap.style.display = shouldShow ? '' : 'none';
+      if (!shouldShow) return;
 
+      let dots = [];
       function setDot(i){ dots.forEach((d,idx)=> d.classList.toggle('active', idx===i)); }
       function goTo(i){
         track.scrollTo({ left: getScrollAmount(i), behavior:'smooth' });
         setDot(i);
       }
 
-      dotsWrap.innerHTML = '';
-      const dots = Array.from({length: groupsCount()}, (_,i)=>{
-        const b = document.createElement('button');
-        b.className = 'dot' + (i===0 ? ' active' : '');
-        b.addEventListener('click', ()=> goTo(i));
-        dotsWrap.appendChild(b);
-        return b;
-      });
+      if (dotsWrap){
+        dotsWrap.innerHTML = '';
+        dots = Array.from({length: groupsCount()}, (_,i)=>{
+          const b = document.createElement('button');
+          b.className = 'dot' + (i===0 ? ' active' : '');
+          b.setAttribute('aria-label', `Ir al grupo ${i+1}`);
+          on(b, 'click', ()=> goTo(i));
+          dotsWrap.appendChild(b);
+          return b;
+        });
+      }
 
       let idx = 0;
-      prev?.addEventListener('click', ()=> { idx = Math.max(0, idx-1); goTo(idx); });
-      next?.addEventListener('click', ()=> { idx = Math.min(dots.length-1, idx+1); goTo(idx); });
+      on(prev, 'click', ()=> { idx = Math.max(0, idx-1); goTo(idx); });
+      on(next, 'click', ()=> { idx = Math.min(dots.length-1, idx+1); goTo(idx); });
 
-      window.addEventListener('resize', ()=>{
+      on(window, 'resize', ()=>{
         updateItemsPerPage();
         updateCarouselStyles();
         goTo(idx);
@@ -151,8 +182,8 @@
 
   // ---------- Filtros por píldoras (hora / póliza / garantía) ----------
   (function(){
-    const pills = [...document.querySelectorAll('.pill')];
-    const cards = [...document.querySelectorAll('.feature-grid .fcard')];
+    const pills = $$('.pill');
+    const cards = $$('.feature-grid .fcard');
     if(!pills.length || !cards.length) return;
 
     function apply(filter){
@@ -165,29 +196,29 @@
       });
     }
     pills.forEach(p=>{
-      p.addEventListener('click', ()=>{
+      on(p, 'click', ()=>{
         pills.forEach(x=> x.classList.remove('active'));
         p.classList.add('active');
         apply(p.dataset.filter);
       });
     });
-    apply('hora'); // filtro inicial
+    apply('hora'); // filtro inicial (ajústalo si lo deseas)
   })();
 
   // ---------- FAQ acordeón (uno abierto a la vez) ----------
   (function(){
-    const wrap = document.getElementById('faqWrap');
+    const wrap = $('#faqWrap');
     if(!wrap) return;
-    const items = [...wrap.querySelectorAll('.faq-item')];
+    const items = $$('.faq-item', wrap);
     items.forEach(d=>{
-      d.addEventListener('toggle', ()=>{
+      on(d, 'toggle', ()=>{
         if(d.open){ items.forEach(o=>{ if(o!==d) o.removeAttribute('open'); }); }
       });
     });
   })();
 
   // ---------- (Opcional) Bloque “Aplica a” por servicio ----------
-  // Usa data-apply="contabilidad,nominas,comercial,..." en cada .fcard para inyectar iconos
+  // Usa data-apply="contabilidad,nominas,comercial,..." en cada .fcard
   (function(){
     const SYS_ICONS = {
       contabilidad:{src:'../IMG/contabilidad.webp',alt:'CONTPAQi Contabilidad'},
@@ -201,8 +232,8 @@
       despachos:{src:'../IMG/despachos.webp',alt:'CONTPAQi Despachos'}
     };
 
-    document.querySelectorAll('.feature-grid .fcard[data-apply]').forEach(card=>{
-      if(card.querySelector('.aplica-wrap')) return; // evita duplicado
+    $$('.feature-grid .fcard[data-apply]').forEach(card=>{
+      if($('.aplica-wrap', card)) return; // evita duplicado
       const list = (card.getAttribute('data-apply')||'')
         .split(',').map(s=>s.trim()).filter(Boolean);
       if(!list.length) return;
@@ -230,5 +261,15 @@
     });
   })();
 
+  // ---------- (Opcional) Tarjetas <article.sys> con data-href ----------
+  (function(){
+    $$('.carouselX .sys[data-href]').forEach(card=>{
+      card.style.cursor = 'pointer';
+      on(card, 'click', ()=>{
+        const url = card.getAttribute('data-href');
+        if(url) window.location.href = url;
+      });
+    });
+  })();
+
 })();
-</script>
