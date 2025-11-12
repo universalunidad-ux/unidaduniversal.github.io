@@ -6,9 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Migraciones a CONTPAQi | Expiriti</title>
   <meta name="description" content="Migraciones de datos y sistemas hacia CONTPAQi. Incluye migración de ASPEL COI/NOI, Contafiscal 2000, ContaSIX y traslado de sistemas CONTPAQi a otro equipo.">
+
   <!-- Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <!-- Fuente + CSS global -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../main.css" />
@@ -161,7 +163,7 @@
         </div>
       </article>
 
-      <!-- Migración por empresa (nota de cálculo) -->
+      <!-- Migración por empresa -->
       <article class="mig-card">
         <div class="mig-head">
           <img class="mig-icon" src="../IMG/empresa.webp" alt="Migración por empresa">
@@ -174,7 +176,7 @@
         </div>
       </article>
 
-      <!-- Restauración de Base de Datos (incluida aquí por estar en el bloque de migración/recuperación) -->
+      <!-- Restauración de Base de Datos -->
       <article class="mig-card">
         <div class="mig-head">
           <img class="mig-icon" src="../IMG/restauracion.webp" alt="Restauración BD">
@@ -203,107 +205,76 @@
   <!-- Footer dinámico -->
   <div id="footer-placeholder"></div>
 
-  <!-- Loader de header/footer con resolución de rutas (igual que en otras páginas) -->
+  <!-- ====== Loader ÚNICO (mismo que el que sí te funciona en Soporte) ====== -->
   <script>
-(async () => {
-  const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
-  const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
+  (async () => {
+    const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
+    const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
 
-  const isGh = location.hostname.endsWith("github.io");
-  const firstSeg = location.pathname.split("/")[1] || "";
-  const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
-  const inSistemas = location.pathname.includes("/SISTEMAS/");
+    const isGh = location.hostname.endsWith("github.io");
+    const firstSeg = location.pathname.split("/")[1] || "";
+    const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
+    const inSistemas = location.pathname.includes("/SISTEMAS/");
 
-  function prefix(p){
-    if (!p || /^https?:\/\//i.test(p) || p.startsWith("mailto:") || p.startsWith("tel:")) return p;
-    if (p.startsWith("/")) {
-      // raíz del sitio → en GH hay que anteponer repoBase
-      return (isGh ? (repoBase + p) : p).replace(/\/+/g,"/");
+    function prefix(p){
+      if (!p || /^https?:\/\//i.test(p)) return p;
+      if (isGh) return (repoBase + "/" + p).replace(/\/+/g,"/");
+      const depth = inSistemas ? "../" : "";
+      return (depth + p).replace(/\/+/g,"/");
     }
-    // ruta relativa (./, ../ o simple)
-    const depth = inSistemas ? "../" : "";
-    const rel = (depth + p).replace(/\/+/g,"/");
-    return isGh ? (repoBase + "/" + rel).replace(/\/+/g,"/") : rel;
-  }
 
-  const headerURL = await pickFirst([
-    "../PARTIALS/global-header.html",
-    "./PARTIALS/global-header.html",
-    `${repoBase}/PARTIALS/global-header.html`,
-    "/PARTIALS/global-header.html"
-  ]);
-  const footerURL = await pickFirst([
-    "../PARTIALS/global-footer.html",
-    "./PARTIALS/global-footer.html",
-    `${repoBase}/PARTIALS/global-footer.html`,
-    "/PARTIALS/global-footer.html"
-  ]);
+    const headerURL = await pickFirst([
+      "../PARTIALS/global-header.html",
+      "./PARTIALS/global-header.html",
+      `${repoBase}/PARTIALS/global-header.html`,
+      "/PARTIALS/global-header.html"
+    ]);
+    const footerURL = await pickFirst([
+      "../PARTIALS/global-footer.html",
+      "./PARTIALS/global-footer.html",
+      `${repoBase}/PARTIALS/global-footer.html`,
+      "/PARTIALS/global-footer.html"
+    ]);
 
-  const [headerHTML, footerHTML] = await Promise.all([
-    fetch(headerURL).then(r=>r.text()),
-    fetch(footerURL).then(r=>r.text())
-  ]);
+    const [headerHTML, footerHTML] = await Promise.all([
+      fetch(headerURL).then(r=>r.text()),
+      fetch(footerURL).then(r=>r.text())
+    ]);
 
-  const hp = document.getElementById("header-placeholder");
-  const fp = document.getElementById("footer-placeholder");
-  if (hp) hp.outerHTML = headerHTML;
-  if (fp) fp.outerHTML = footerHTML;
+    const hp = document.getElementById("header-placeholder");
+    const fp = document.getElementById("footer-placeholder");
+    if (hp) hp.outerHTML = headerHTML;
+    if (fp) fp.outerHTML = footerHTML;
 
-  // --- Normalización robusta de rutas en parciales insertados ---
-  function fixUrls(scope=document){
-    // 1) data-* declarativos de tus parciales
-    scope.querySelectorAll(".js-abs-src[data-src], .js-img[data-src]").forEach(el=>{
-      el.src = prefix(el.getAttribute("data-src"));
+    // Normalización declarativa igual que en Soporte
+    document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+      img.src = prefix(img.getAttribute("data-src"));
     });
-    scope.querySelectorAll(".js-abs-href[data-href], .js-link[data-href]").forEach(el=>{
-      const p = el.getAttribute("data-href"); if (!p) return;
+    document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+      const p = a.getAttribute("data-href"); if (!p) return;
       const [path, hash] = p.split("#");
-      el.href = prefix(path) + (hash ? ("#"+hash) : "");
+      a.href = prefix(path) + (hash ? ("#"+hash) : "");
     });
 
-    // 2) Atributos directos (src/href) relativos (sin http/https y sin “mailto/tel”)
-    scope.querySelectorAll("img[src], source[srcset], a[href], link[href]").forEach(el=>{
-      // src
-      if (el.hasAttribute("src")) {
-        const v = el.getAttribute("src");
-        if (v && !/^https?:\/\//i.test(v) && !v.startsWith("data:") && !v.startsWith("mailto:") && !v.startsWith("tel:")) {
-          el.setAttribute("src", prefix(v));
-        }
-      }
-      // srcset (solo primera URL; si usas múltiples, conviene pasarlas a data-srcset con un parser)
-      if (el.hasAttribute("srcset")) {
-        const v = el.getAttribute("srcset");
-        if (v && !/^https?:\/\//i.test(v) && !v.startsWith("/")) {
-          el.setAttribute("srcset", prefix(v));
-        }
-      }
-      // href
-      if (el.hasAttribute("href")) {
-        const v = el.getAttribute("href");
-        if (v && !/^https?:\/\//i.test(v) && !v.startsWith("/") && !v.startsWith("#") && !v.startsWith("mailto:") && !v.startsWith("tel:")) {
-          el.setAttribute("href", prefix(v));
-        } else if (v && v.startsWith("/")) {
-          el.setAttribute("href", prefix(v));
-        }
-      }
+    document.querySelectorAll(".js-img[data-src]").forEach(img=>{
+      img.src = prefix(img.getAttribute("data-src"));
     });
-  }
+    document.querySelectorAll(".js-link[data-href]").forEach(a=>{
+      a.href = prefix(a.getAttribute("data-href"));
+    });
 
-  // Corregir rutas en todo el documento (header + footer incluidos)
-  fixUrls(document);
+    const y = document.getElementById("gf-year");
+    if (y) y.textContent = new Date().getFullYear();
+  })();
+  </script>
 
-  const y = document.getElementById("gf-year");
-  if (y) y.textContent = new Date().getFullYear();
-})();
-</script>
-
-  <!-- WhatsApp dinámico -->
+  <!-- WhatsApp dinámico (sin comillas en el nombre del servicio) -->
   <script>
   (function(){
     const to = "5568437918";
     document.querySelectorAll('.wa').forEach(btn=>{
       const tag = btn.getAttribute('data-wa') || 'Migración';
-      const msg = `Hola, quiero m\u00E1s info del servicio de migraci\u00F3n: "${tag}"`;
+      const msg = `Hola, quiero más info del servicio de migración para ${tag}`;
       const url = `https://wa.me/${to}?text=${encodeURIComponent(msg)}`;
       btn.setAttribute('href', url);
       btn.setAttribute('target', '_blank');
