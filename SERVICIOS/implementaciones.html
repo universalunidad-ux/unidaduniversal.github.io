@@ -6,8 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Implementaciones CONTPAQi | Expiriti</title>
   <meta name="description" content="Implementaciones de sistemas CONTPAQi por Expiriti: instalación, configuración, formatos, CSD, timbrado de prueba, capacitación y más.">
+
+  <!-- Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fuente + CSS global -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../main.css" />
 
@@ -54,7 +58,6 @@
     .toc{position:sticky;top:82px;margin-left:auto;max-width:260px}
     .toc .card{position:sticky;top:82px}
     .mini{font-size:12px;color:#9eb0c9}
-    /* Nota de íconos azules (se agregará en index) */
     .icons-note{border:1px dashed #274261;background:#0c1422;color:#b7cae6;padding:10px;border-radius:12px;text-align:center}
   </style>
 </head>
@@ -101,7 +104,7 @@
           <li>Elaboración y timbrado de factura (prueba)</li>
           <li>Cancelación de comprobante</li>
         </ul>
-        <p class="req"><strong>Requisitos:</strong> FIEL para firmar manifiesto (.KEY, .CER, contraseña) y CSD (.KEY, .CER, contraseña).</p>
+        <p class="req"><strong>Requisitos:</strong> FIEL para firmar manifiesto (.KEY, .CER y contraseña) y CSD (.KEY, .CER y contraseña).</p>
         <div class="cta-row">
           <a class="btn btn-grad-blue wa" data-wa="Factura Electrónica">WhatsApp: Quiero info</a>
           <a class="btn btn-ghost" href="#faq">Ver preguntas frecuentes</a>
@@ -339,7 +342,7 @@
   <!-- Footer dinámico -->
   <div id="footer-placeholder"></div>
 
-  <!-- Loader de header/footer con resolución de rutas -->
+  <!-- ====== Loader ÚNICO (mismo patrón que en Soporte) ====== -->
   <script>
   (async () => {
     const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
@@ -380,18 +383,30 @@
     if (hp) hp.outerHTML = headerHTML;
     if (fp) fp.outerHTML = footerHTML;
 
-    // normalizar rutas declarativas en parciales
-    document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{ img.src = prefix(img.getAttribute("data-src")); });
+    // Normalización declarativa (como en Soporte)
+    document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+      img.src = prefix(img.getAttribute("data-src"));
+    });
     document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
       const p = a.getAttribute("data-href"); if (!p) return;
       const [path, hash] = p.split("#");
       a.href = prefix(path) + (hash ? ("#"+hash) : "");
     });
-    const y = document.getElementById("gf-year"); if (y) y.textContent = new Date().getFullYear();
+
+    // Extra por compatibilidad: soportar parciales con js-img/js-link
+    document.querySelectorAll(".js-img[data-src]").forEach(img=>{
+      img.src = prefix(img.getAttribute("data-src"));
+    });
+    document.querySelectorAll(".js-link[data-href]").forEach(a=>{
+      a.href = prefix(a.getAttribute("data-href"));
+    });
+
+    const y = document.getElementById("gf-year");
+    if (y) y.textContent = new Date().getFullYear();
   })();
   </script>
 
-  <!-- JS local: filtros y WhatsApp dinámico -->
+  <!-- JS local: filtros y WhatsApp dinámico (sin comillas en el nombre del sistema) -->
   <script>
   // Filtro por sistema
   (function(){
@@ -412,12 +427,12 @@
     apply('all');
   })();
 
-  // Botones WhatsApp: mensaje dinámico con nombre de sistema
+  // Botones WhatsApp: mensaje dinámico con nombre de sistema (sin comillas)
   (function(){
     const to = "5568437918";
     document.querySelectorAll('.wa').forEach(btn=>{
       const sys = btn.getAttribute('data-wa') || 'Implementación';
-      const msg = `Hola, quiero más info del servicio de implementación para "${sys}"`;
+      const msg = `Hola, quiero más info del servicio de implementación para ${sys}`;
       const url = `https://wa.me/${to}?text=${encodeURIComponent(msg)}`;
       btn.setAttribute('href', url);
       btn.setAttribute('target', '_blank');
@@ -425,8 +440,5 @@
     });
   })();
   </script>
-
-  <!-- (Opcional) scripts globales si los necesitas -->
-
 </body>
 </html>
