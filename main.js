@@ -272,59 +272,210 @@
 })();
 
 /* ---------- Reels (id^="carouselReels*") + pausa global de YouTube ---------- */
+/* =========================================================
+   GESTOR UNIFICADO DE YOUTUBE (Reels + Lazy Embeds)
+   Auto-pausa global real usando la API
+   ========================================================= */
 (function(){
-  document.querySelectorAll('.carousel[id^="carouselReels"]').forEach(root=>{
-    const scope  = root.closest('aside') || root;
-    const track  = root.querySelector('.carousel-track');
-    const slides = [...(track?.querySelectorAll('.carousel-slide')||[])];
-    const dots   = [...root.querySelectorAll('.carousel-nav .dot')];
-    const prev   = root.querySelector('.arrowCircle.prev');
-    const next   = root.querySelector('.arrowCircle.next');
+  // Almacén global de reproductores para control cruzado
+  window.exPlayers = [];
+
+  // Función maestra: Pausa todos menos el que acaba de iniciar (target)
+  function pauseOthers(targetPlayer) {
+    window.exPlayers.forEach(p => {
+      // Verificamos que p sea válido, que no sea el actual, y que tenga el método pauseVideo
+      if (p && p !== targetPlayer && typeof p.pauseVideo === 'function') {
+        // Verificamos el estado (1=Playing, 3=Buffering) para no pausar lo que ya está pausado
+        try {
+          const state = p.getPlayerState();
+          if (state === 1 || state === 3) {
+            p.pauseVideo();
+          }
+        } catch(e){}
+      }
+    });
+  }
+
+  // Handler estándar para cuando un video cambia de estado
+  function onPlayerStateChange(event) {
+    // YT.PlayerState.PLAYING === 1
+    if (event.data === 1) { 
+      pauseOthers(event.target);
+    }
+  }
+
+  // 1. Inicializador para iframes ya existentes (Reels)
+  window.onYouTubeIframeAPIReady = function() {
+    // Busca iframes que ya estén en el DOM (ej. Reels hardcoded)
+    document.querySelectorAll('iframe[src*="youtube"]').forEach((iframe, index) => {
+      // Evitar doble inicialización
+      if(iframe.dataset.ytInit) return;
+      iframe.dataset.ytInit = "1";
+
+      // Habilitar API en la URL si no la tiene
+      let src = iframe.src;
+      if (!src.includes('enablejsapi=1')) {
+        src += (src.includes('?') ? '&' : '?') + 'enablejsapi=1';
+        iframe.src = src;
+      }
+      
+      // Crear jugador
+      const p = new YT.Player(iframe, {
+        events: { 'onStateChange': onPlayerStateChange }
+      });
+      window.exPlayers.push(p);
+    });
+  };
+
+  // Cargar API de YouTube si no existe
+  if (!window.YT) {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  }
+
+  /* ---------- Lógica Específica de Reels (Carrusel) ---------- */
+  document.querySelectorAll('.carousel[id^="carouselReels"]').forEach(root => {
+    const scope = root.closest('aside') || root;
+    const track = root.querySelector('.carousel-track');
+    const slides = [...(track?.querySelectorAll('.carousel-slide') || [])];
+    const dots = [...root.querySelectorAll('.carousel-nav .dot')];
+    const prev = root.querySelector('.arrowCircle.prev');
+    const next = root.querySelector('.arrowCircle.next');
     const reelTitles = [...scope.querySelectorAll('.reel-title')];
     let idx = 0;
 
-    const titles = slides.map(sl=>{
+    // Extraer títulos
+    const titles = slides.map(sl => {
       const wrap = sl.querySelector('.reel-embed');
-      const dt   = wrap?.dataset?.title || sl.dataset?.title || '';
+      const dt = wrap?.dataset?.title || sl.dataset?.title || '';
       if (dt) return dt;
       const ifr = sl.querySelector('iframe');
       return ifr?.getAttribute('title') || '';
     });
 
-    function paintUI(){
-      dots.forEach((d,di)=>d.classList.toggle('active', di===idx));
-      reelTitles.forEach((t)=>t.classList.remove('active'));
-      if (reelTitles.length === 1){
-        reelTitles[0].textContent = titles[idx] || reelTitles[0].textContent;
-        reelTitles[0].classList.add('active');
-      } else if (reelTitles.length >= 2){
-        const nextIdx = (idx + 1) % titles.length;
-        reelTitles[0].textContent = titles[idx]     || reelTitles[0].textContent;
-        reelTitles[1].textContent = titles[nextIdx] || reelTitles[1].textContent;
-        reelTitles[0].classList.add('active');
+    function paintUI() {
+      dots.forEach((d, di) => d.classList.toggle('active', di === idx));
+      reelTitles.forEach((t) => t.classList.remove('active'));
+      
+      // Lógica para actualizar títulos
+      if (reelTitles.length > 0) {
+        const t1 = reelTitles[0];
+        const t2 = reelTitles[1]; // Puede ser undefined
+        
+        if (titles[idx]) t1.textContent = titles[idx];
+        t1.classList.add('active');
+        
+        if (t2) {
+          const nextIdx = (idx + 1) % titles.length;
+          if (titles[nextIdx]) t2.textContent = titles[nextIdx];
+        }
       }
     }
 
-    function setActive(i){
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-      if(!dots.length || !slides.length) return;
+    function setActive(i) {
+      // Pausar todos al mover el carrusel (opcional, buena práctica UX)
+      window.exPlayers.forEach(p => { try{ p.pauseVideo(); }catch(_){} });
+
+      if (!dots.length || !slides.length) return;
       idx = (i + dots.length) % dots.length;
       const slideWidth = track.clientWidth || root.clientWidth || 1;
       track.scrollTo({ left: slideWidth * idx, behavior: 'smooth' });
       paintUI();
     }
 
-    dots.forEach((d,i)=>d.addEventListener('click',()=>setActive(i)));
-    prev?.addEventListener('click',()=>setActive(idx-1));
-    next?.addEventListener('click',()=>setActive(idx+1));
-    track?.addEventListener('scroll',()=>{
+    dots.forEach((d, i) => d.addEventListener('click', () => setActive(i)));
+    prev?.addEventListener('click', () => setActive(idx - 1));
+    next?.addEventListener('click', () => setActive(idx + 1));
+    
+    // Sincronizar scroll manual
+    track?.addEventListener('scroll', () => {
       const w = track.clientWidth || 1;
       const i = Math.round(track.scrollLeft / w);
-      if(i !== idx && i >= 0 && i < dots.length){ idx = i; paintUI(); }
+      if (i !== idx && i >= 0 && i < dots.length) {
+        idx = i;
+        paintUI();
+      }
     });
-    window.addEventListener('resize',()=>setActive(idx));
+
+    window.addEventListener('resize', () => setActive(idx));
     setActive(0);
   });
+
+
+  /* ---------- Lógica Lazy Load para .yt-wrap (Videos normales) ---------- */
+  const selWrappers = [".yt-wrap"];
+  
+  function mountLazyEmbed(wrapper) {
+    if (wrapper.dataset.ytMounted) return;
+    
+    const ytid = wrapper.getAttribute("data-ytid");
+    if (!ytid) return;
+    
+    // Construir portada
+    const thumb = new Image();
+    thumb.src = `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`;
+    thumb.alt = "Video thumbnail";
+    thumb.style.cssText = "display:block; width:100%; height:100%; object-fit:cover; cursor:pointer;";
+
+    const playBtn = document.createElement("button");
+    playBtn.setAttribute("aria-label", "Reproducir video");
+    playBtn.style.cssText = "position:absolute; inset:0; margin:auto; width:64px; height:64px; border-radius:50%; border:none; cursor:pointer; background:rgba(0,0,0,0.6); transition:transform 0.2s;";
+    playBtn.innerHTML = '<div style="margin-left:4px; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:18px solid white;"></div>';
+    
+    // Efecto hover simple
+    playBtn.onmouseenter = () => playBtn.style.transform = "scale(1.1)";
+    playBtn.onmouseleave = () => playBtn.style.transform = "scale(1)";
+
+    const ph = document.createElement("div");
+    ph.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center;";
+    ph.appendChild(thumb);
+    ph.appendChild(playBtn);
+    wrapper.appendChild(ph);
+
+    // Acción al hacer Click
+    function loadIframe() {
+      wrapper.dataset.ytMounted = "1"; // Marcar como montado
+      
+      // 1. Crear un DIV temporal que la API reemplazará
+      const tempId = "yt-player-" + Math.random().toString(36).substr(2, 9);
+      const tempDiv = document.createElement('div');
+      tempDiv.id = tempId;
+      
+      wrapper.innerHTML = ""; // Limpiar portada
+      wrapper.appendChild(tempDiv);
+
+      // 2. Instanciar API
+      // Usamos setTimeout para asegurar que el div esté en el DOM
+      setTimeout(() => {
+        const player = new YT.Player(tempId, {
+          videoId: ytid,
+          playerVars: {
+            'autoplay': 1,
+            'rel': 0,
+            'modestbranding': 1
+          },
+          events: {
+            'onStateChange': onPlayerStateChange // <--- AQUÍ LA MAGIA
+          }
+        });
+        window.exPlayers.push(player);
+      }, 10);
+    }
+
+    playBtn.addEventListener("click", loadIframe);
+    thumb.addEventListener("click", loadIframe);
+  }
+
+  function initYouTubeEmbeds() {
+    document.querySelectorAll(selWrappers.join(",")).forEach(wrapper => {
+      // Solo montar si tiene data-ytid
+      if(wrapper.hasAttribute("data-ytid")) mountLazyEmbed(wrapper);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
+})();
 
   // Carga API YouTube si hace falta (para compatibilidad)
   if(!window.YT){
