@@ -1,5 +1,6 @@
 /* =========================================================
    Expiriti - main.js — Escritorio + Carruseles + Reels (YouTube pause)
+   [CORREGIDO Y UNIFICADO]
    ========================================================= */
 
 /* ---------- Utils ---------- */
@@ -61,7 +62,7 @@
     set(0);
   }
 
-  // Vincula títulos .reel-title si existen en el mismo "scope" (para carouseles de imágenes/videos excepto reels)
+  // Vincula títulos .reel-title si existen en el mismo "scope"
   document.querySelectorAll(".carousel:not([id^='carouselReels'])").forEach(car=>{
     const sel = car.getAttribute("data-titles");
     let titles = null;
@@ -143,7 +144,6 @@
 /* ---------- Carrusel de sistemas (.carouselX) — Auto UI + FIX ---------- */
 (function(){
   function ensureUI(root){
-    // Flechas
     let prev = root.querySelector(".arrowCircle.prev");
     let next = root.querySelector(".arrowCircle.next");
     if(!prev){
@@ -158,7 +158,6 @@
       next.innerHTML = '<span class="chev">›</span>';
       root.appendChild(next);
     }
-    // Dots
     let dotsWrap = root.querySelector(".group-dots");
     if(!dotsWrap){
       dotsWrap = document.createElement("div");
@@ -172,7 +171,6 @@
     const track=root.querySelector(".track");
     if(!track) return;
 
-    // Click en tarjetas
     const items=[...root.querySelectorAll(".sys")];
     items.forEach(it=>{
       it.setAttribute("role","link"); it.setAttribute("tabindex","0");
@@ -182,11 +180,8 @@
     });
 
     const { prev, next, dotsWrap } = ensureUI(root);
-
     const perView   = () => (window.innerWidth<=980 ? 1 : 3);
     const viewportW = () => track.clientWidth || root.clientWidth || 1;
-
-    // Total de páginas basado en ancho scrolleable real
     const pageCount = () => Math.max(1, Math.ceil((track.scrollWidth - 1) / viewportW()));
 
     function buildDots(){
@@ -212,12 +207,8 @@
     function go(j){
       const total = pageCount();
       idx = ((j % total) + total) % total;
-
-      // Calcula el primer ítem visible de esa página y alinea por offsetLeft
       const startIdx = Math.min(idx * perView(), items.length - 1);
       const first    = items[startIdx];
-
-      // Si es la primera página, ancla a 0 para evitar offsets residuales
       let baseLeft = (idx === 0)
         ? 0
         : (first ? first.offsetLeft - (track.firstElementChild?.offsetLeft || 0) : idx * viewportW());
@@ -248,15 +239,11 @@
     window.addEventListener("resize",()=>{
       const now = pageCount();
       if(dots.length !== now) dots = buildDots();
-      setTimeout(()=>go(idx), 0); // re-alinea tras cambio de ancho
+      setTimeout(()=>go(idx), 0);
     });
 
-    // Fuerza inicio en la primera página
     function resetStart(){
-      track.scrollLeft = 0;
-      idx = 0;
-      paint(0);
-      toggleUI();
+      track.scrollLeft = 0; idx = 0; paint(0); toggleUI();
     }
     requestAnimationFrame(resetStart);
     window.addEventListener('load', ()=> setTimeout(resetStart, 0));
@@ -265,61 +252,53 @@
 
     track.style.overflowX = "auto";
     track.style.scrollBehavior = "smooth";
-
     toggleUI(); go(0);
     setTimeout(()=> track.scrollTo({ left: 0, behavior: "auto" }), 50);
   });
 })();
 
-/* ---------- Reels (id^="carouselReels*") + pausa global de YouTube ---------- */
 /* =========================================================
-   GESTOR UNIFICADO DE YOUTUBE (Reels + Lazy Embeds)
-   Auto-pausa global real usando la API
+   GESTOR UNIFICADO DE YOUTUBE (Reels + Lazy Embeds + Pausa)
+   Corrige duplicaciones y conflictos
    ========================================================= */
 (function(){
-  // Almacén global de reproductores para control cruzado
+  // 1. Almacén global de reproductores
   window.exPlayers = [];
 
-  // Función maestra: Pausa todos menos el que acaba de iniciar (target)
-  function pauseOthers(targetPlayer) {
+  // 2. Función Global de Pausa (Expuesta para los carruseles)
+  window.pauseAllYTIframes = function(exceptPlayer) {
     window.exPlayers.forEach(p => {
-      // Verificamos que p sea válido, que no sea el actual, y que tenga el método pauseVideo
-      if (p && p !== targetPlayer && typeof p.pauseVideo === 'function') {
-        // Verificamos el estado (1=Playing, 3=Buffering) para no pausar lo que ya está pausado
+      if (p && p !== exceptPlayer && typeof p.pauseVideo === 'function') {
         try {
-          const state = p.getPlayerState();
-          if (state === 1 || state === 3) {
-            p.pauseVideo();
-          }
+          const s = p.getPlayerState();
+          if (s === 1 || s === 3) p.pauseVideo(); // 1=Playing, 3=Buffering
         } catch(e){}
       }
     });
-  }
+  };
 
-  // Handler estándar para cuando un video cambia de estado
+  // Handler de cambio de estado (Auto-pausa)
   function onPlayerStateChange(event) {
-    // YT.PlayerState.PLAYING === 1
+    // Si empieza a reproducir (1), pausa los demás
     if (event.data === 1) { 
-      pauseOthers(event.target);
+      window.pauseAllYTIframes(event.target);
     }
   }
 
-  // 1. Inicializador para iframes ya existentes (Reels)
+  // 3. Inicializador API YouTube
   window.onYouTubeIframeAPIReady = function() {
-    // Busca iframes que ya estén en el DOM (ej. Reels hardcoded)
-    document.querySelectorAll('iframe[src*="youtube"]').forEach((iframe, index) => {
-      // Evitar doble inicialización
+    // A) Inicializar iframes existentes (Reels / Videos hardcoded)
+    document.querySelectorAll('iframe[src*="youtube"]').forEach((iframe) => {
       if(iframe.dataset.ytInit) return;
       iframe.dataset.ytInit = "1";
 
-      // Habilitar API en la URL si no la tiene
+      // Asegurar enablejsapi=1
       let src = iframe.src;
       if (!src.includes('enablejsapi=1')) {
         src += (src.includes('?') ? '&' : '?') + 'enablejsapi=1';
         iframe.src = src;
       }
       
-      // Crear jugador
       const p = new YT.Player(iframe, {
         events: { 'onStateChange': onPlayerStateChange }
       });
@@ -327,14 +306,14 @@
     });
   };
 
-  // Cargar API de YouTube si no existe
+  // Cargar script de API si no existe
   if (!window.YT) {
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     document.head.appendChild(tag);
   }
 
-  /* ---------- Lógica Específica de Reels (Carrusel) ---------- */
+  /* ---------- A. Lógica Reels (Carrusel) ---------- */
   document.querySelectorAll('.carousel[id^="carouselReels"]').forEach(root => {
     const scope = root.closest('aside') || root;
     const track = root.querySelector('.carousel-track');
@@ -345,42 +324,32 @@
     const reelTitles = [...scope.querySelectorAll('.reel-title')];
     let idx = 0;
 
-    // Extraer títulos
     const titles = slides.map(sl => {
-      const wrap = sl.querySelector('.reel-embed');
-      const dt = wrap?.dataset?.title || sl.dataset?.title || '';
-      if (dt) return dt;
-      const ifr = sl.querySelector('iframe');
-      return ifr?.getAttribute('title') || '';
+      const wrap = sl.querySelector('.reel-embed'); // Nuevo wrapper
+      const ifr  = sl.querySelector('iframe');
+      return (wrap?.dataset?.title) || (sl.dataset?.title) || (ifr?.getAttribute('title')) || '';
     });
 
     function paintUI() {
       dots.forEach((d, di) => d.classList.toggle('active', di === idx));
       reelTitles.forEach((t) => t.classList.remove('active'));
-      
-      // Lógica para actualizar títulos
       if (reelTitles.length > 0) {
-        const t1 = reelTitles[0];
-        const t2 = reelTitles[1]; // Puede ser undefined
-        
-        if (titles[idx]) t1.textContent = titles[idx];
-        t1.classList.add('active');
-        
-        if (t2) {
-          const nextIdx = (idx + 1) % titles.length;
-          if (titles[nextIdx]) t2.textContent = titles[nextIdx];
+        if (titles[idx]) reelTitles[0].textContent = titles[idx];
+        reelTitles[0].classList.add('active');
+        // Si hay un segundo título para animación (opcional)
+        if (reelTitles[1]) {
+           const nextIdx = (idx + 1) % titles.length;
+           if(titles[nextIdx]) reelTitles[1].textContent = titles[nextIdx];
         }
       }
     }
 
     function setActive(i) {
-      // Pausar todos al mover el carrusel (opcional, buena práctica UX)
-      window.exPlayers.forEach(p => { try{ p.pauseVideo(); }catch(_){} });
-
+      window.pauseAllYTIframes(); // Pausa todo al mover
       if (!dots.length || !slides.length) return;
       idx = (i + dots.length) % dots.length;
-      const slideWidth = track.clientWidth || root.clientWidth || 1;
-      track.scrollTo({ left: slideWidth * idx, behavior: 'smooth' });
+      const w = track.clientWidth || root.clientWidth || 1;
+      track.scrollTo({ left: w * idx, behavior: 'smooth' });
       paintUI();
     }
 
@@ -388,76 +357,59 @@
     prev?.addEventListener('click', () => setActive(idx - 1));
     next?.addEventListener('click', () => setActive(idx + 1));
     
-    // Sincronizar scroll manual
     track?.addEventListener('scroll', () => {
       const w = track.clientWidth || 1;
       const i = Math.round(track.scrollLeft / w);
       if (i !== idx && i >= 0 && i < dots.length) {
-        idx = i;
-        paintUI();
+        idx = i; paintUI();
       }
     });
-
     window.addEventListener('resize', () => setActive(idx));
     setActive(0);
   });
 
-
-  /* ---------- Lógica Lazy Load para .yt-wrap (Videos normales) ---------- */
-  const selWrappers = [".yt-wrap"];
-  
+  /* ---------- B. Lógica Lazy Load (.yt-wrap) ---------- */
   function mountLazyEmbed(wrapper) {
     if (wrapper.dataset.ytMounted) return;
-    
     const ytid = wrapper.getAttribute("data-ytid");
     if (!ytid) return;
     
-    // Construir portada
+    // Crear portada
     const thumb = new Image();
     thumb.src = `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`;
     thumb.alt = "Video thumbnail";
-    thumb.style.cssText = "display:block; width:100%; height:100%; object-fit:cover; cursor:pointer;";
+    thumb.style.cssText = "display:block;width:100%;height:100%;object-fit:cover;cursor:pointer;";
 
     const playBtn = document.createElement("button");
-    playBtn.setAttribute("aria-label", "Reproducir video");
-    playBtn.style.cssText = "position:absolute; inset:0; margin:auto; width:64px; height:64px; border-radius:50%; border:none; cursor:pointer; background:rgba(0,0,0,0.6); transition:transform 0.2s;";
-    playBtn.innerHTML = '<div style="margin-left:4px; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:18px solid white;"></div>';
+    playBtn.setAttribute("aria-label", "Reproducir");
+    playBtn.style.cssText = "position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;background:rgba(0,0,0,0.6);transition:transform 0.2s;";
+    playBtn.innerHTML = '<div style="margin-left:4px;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid white;"></div>';
     
-    // Efecto hover simple
     playBtn.onmouseenter = () => playBtn.style.transform = "scale(1.1)";
     playBtn.onmouseleave = () => playBtn.style.transform = "scale(1)";
 
     const ph = document.createElement("div");
-    ph.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; display:flex; justify-content:center; align-items:center;";
+    ph.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;";
     ph.appendChild(thumb);
     ph.appendChild(playBtn);
     wrapper.appendChild(ph);
 
-    // Acción al hacer Click
     function loadIframe() {
-      wrapper.dataset.ytMounted = "1"; // Marcar como montado
-      
-      // 1. Crear un DIV temporal que la API reemplazará
+      wrapper.dataset.ytMounted = "1";
+      // Crear div temporal para la API
       const tempId = "yt-player-" + Math.random().toString(36).substr(2, 9);
       const tempDiv = document.createElement('div');
       tempDiv.id = tempId;
       
-      wrapper.innerHTML = ""; // Limpiar portada
+      wrapper.innerHTML = ""; 
       wrapper.appendChild(tempDiv);
 
-      // 2. Instanciar API
-      // Usamos setTimeout para asegurar que el div esté en el DOM
+      // Esperar un tick para que el div exista
       setTimeout(() => {
         const player = new YT.Player(tempId, {
           videoId: ytid,
-          playerVars: {
-            'autoplay': 1,
-            'rel': 0,
-            'modestbranding': 1
-          },
-          events: {
-            'onStateChange': onPlayerStateChange // <--- AQUÍ LA MAGIA
-          }
+          playerVars: { 'autoplay': 1, 'rel': 0, 'modestbranding': 1 },
+          events: { 'onStateChange': onPlayerStateChange }
         });
         window.exPlayers.push(player);
       }, 10);
@@ -467,146 +419,12 @@
     thumb.addEventListener("click", loadIframe);
   }
 
+  // Inicializar Lazy Loaders
   function initYouTubeEmbeds() {
-    document.querySelectorAll(selWrappers.join(",")).forEach(wrapper => {
-      // Solo montar si tiene data-ytid
-      if(wrapper.hasAttribute("data-ytid")) mountLazyEmbed(wrapper);
-    });
+    document.querySelectorAll(".yt-wrap[data-ytid]").forEach(mountLazyEmbed);
   }
-
   document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
-})();
 
-  // Carga API YouTube si hace falta (para compatibilidad)
-  if(!window.YT){
-    const tag=document.createElement('script');
-    tag.src="https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
-  }
-  let players=[];
-  const prevReady = window.onYouTubeIframeAPIReady;
-  window.onYouTubeIframeAPIReady = function(){
-    if (typeof prevReady === 'function') { try{ prevReady(); }catch(_){} }
-    document.querySelectorAll('iframe[src*="youtube"]').forEach((el)=>{
-      try{
-        const p=new YT.Player(el,{
-          events:{ 'onStateChange':(e)=>{
-            if(e.data===1){ players.forEach(pl=>{ if(pl!==p) pl.pauseVideo(); }); }
-          }}
-        });
-        players.push(p);
-      }catch(_){}
-    });
-  };
-})();
-
-/* === YouTube Embeds: normalizador + lazy (nocookie) ===================== */
-(function(){
-  const YT_PARAMS = "enablejsapi=1&rel=0&modestbranding=1&controls=1&fs=1";
-  const selWrappers = [".reel-embed", ".yt-wrap"]; // 9:16 y 16:9 ya los tienes en CSS
-
-  function toNoCookie(urlOrId){
-    if (!urlOrId) return null;
-    if (!/^(http|\/\/)/i.test(urlOrId)) return `https://www.youtube-nocookie.com/embed/${urlOrId}?${YT_PARAMS}`;
-    try{
-      const u = new URL(urlOrId, location.href);
-      let id = u.searchParams.get("v");
-      if (!id) {
-        const m = u.pathname.match(/\/(embed|shorts)\/([^\/\?\&]+)/) || (u.hostname==="youtu.be" && u.pathname.match(/^\/([^\/\?\&]+)/));
-        id = m && m[2] || m && m[1] || null;
-      }
-      return id ? `https://www.youtube-nocookie.com/embed/${id}?${YT_PARAMS}` : null;
-    }catch(e){ return null; }
-  }
-
-  function normalizeExistingIframes(scope=document){
-    scope.querySelectorAll("iframe[src*='youtube'], iframe[src*='youtu.be']").forEach(ifr=>{
-      const newSrc = toNoCookie(ifr.getAttribute("src"));
-      if (newSrc) ifr.src = newSrc;
-      ifr.setAttribute("loading","lazy");
-      ifr.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-      ifr.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
-      ifr.allowFullscreen = true;
-      ifr.removeAttribute("width"); ifr.removeAttribute("height"); ifr.style.width=""; ifr.style.height="";
-    });
-  }
-
-  function mountLazyEmbed(wrapper){
-    if (wrapper.dataset.ytMounted) return;
-    const ytid = wrapper.getAttribute("data-ytid");
-    if (!ytid) return;
-    wrapper.dataset.ytMounted = "1";
-
-    const thumb = new Image();
-    thumb.src = `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`;
-    thumb.alt = "Video thumbnail";
-    thumb.style.display="block";
-    thumb.style.width="100%";
-    thumb.style.height="100%";
-    thumb.style.objectFit="cover";
-
-    const play = document.createElement("button");
-    play.type="button";
-    play.setAttribute("aria-label","Reproducir video");
-    Object.assign(play.style,{
-      position:"absolute", inset:"0", margin:"auto", width:"64px", height:"64px",
-      borderRadius:"50%", border:"0", cursor:"pointer", background:"rgba(0,0,0,.55)"
-    });
-    const tri = document.createElement("div");
-    Object.assign(tri.style,{
-      margin:"auto", width:0, height:0, borderTop:"12px solid transparent",
-      borderBottom:"12px solid transparent", borderLeft:"20px solid white",
-      transform:"translateX(4px)"
-    });
-    play.appendChild(tri);
-
-    const ph = document.createElement("div");
-    Object.assign(ph.style,{position:"relative", width:"100%", height:"100%", borderRadius:"12px", overflow:"hidden"});
-    ph.appendChild(thumb); ph.appendChild(play);
-    wrapper.appendChild(ph);
-
-    function loadIframe(){
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes(); // 👈 pausa lo anterior
-      if (wrapper.querySelector("iframe")) return;
-      const iframe = document.createElement("iframe");
-      iframe.src = toNoCookie(ytid);
-      iframe.title = wrapper.getAttribute("data-title") || "YouTube video";
-      iframe.setAttribute("frameborder","0");
-      iframe.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-      iframe.setAttribute("loading","lazy");
-      iframe.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
-      iframe.allowFullscreen = true;
-      Object.assign(iframe.style,{position:"absolute", inset:"0", width:"100%", height:"100%"});
-      wrapper.innerHTML="";
-      wrapper.appendChild(iframe);
-    }
-
-    play.addEventListener("click", loadIframe, {once:true});
-
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if (e.isIntersecting) { loadIframe(); io.disconnect(); } });
-    }, {root:null, rootMargin:"200px", threshold:0.01});
-    io.observe(wrapper);
-  }
-
-  function initYouTubeEmbeds(scope=document){
-    normalizeExistingIframes(scope);
-    selWrappers.forEach(sel=>{
-      scope.querySelectorAll(`${sel}[data-ytid]`).forEach(mountLazyEmbed);
-    });
-  }
-
-  function postToYT(iframe, cmd){ try{ iframe.contentWindow.postMessage(JSON.stringify(cmd), "*"); }catch(e){} }
-  function pauseAllYTIframes(scope=document){
-    scope.querySelectorAll("iframe[src*='youtube-nocookie.com/embed/']").forEach(ifr=>{
-      postToYT(ifr, {event:"command", func:"pauseVideo", args:""});
-    });
-  }
-
-  window.initYouTubeEmbeds = initYouTubeEmbeds;
-  window.pauseAllYTIframes = pauseAllYTIframes;
-
-  document.addEventListener("DOMContentLoaded", ()=> initYouTubeEmbeds());
 })();
 
 /* =========================================================
@@ -614,7 +432,6 @@
    ========================================================= */
 (function(){
   document.addEventListener('DOMContentLoaded', function(){
-    // Solo para ESCRITORIO
     const app = document.getElementById('app');
     const PRIMARY = app?.dataset?.system?.trim();
     if (!PRIMARY) return;
@@ -623,7 +440,6 @@
     const fmt = v => moneyMX.format(Math.round(Number(v||0)));
     const hasPrices = name => !!(window.preciosContpaqi && window.preciosContpaqi[name]);
 
-    // Catálogo de sistemas para el picker (ajusta rutas si hace falta)
     window.CATALOG_SISTEMAS = window.CATALOG_SISTEMAS || [
       { name: "CONTPAQi Contabilidad",       img: "../IMG/contabilidad.webp" },
       { name: "CONTPAQi Bancos",             img: "../IMG/bancos.webp" },
@@ -696,7 +512,6 @@
     const selected = { secondary: null, tertiary: null };
     const selectedSet = ()=> new Set([selected.secondary, selected.tertiary].filter(Boolean));
 
-    // Render inicial pickers
     const initialExclude = new Set(PRIMARY ? [PRIMARY] : []);
     renderSistemasPicker("icons-sec-sys", initialExclude);
     renderSistemasPicker("icons-third-sys", initialExclude);
@@ -711,15 +526,12 @@
       if(addMore) addMore.style.display = selected.secondary ? '' : 'none';
     }
 
-    // Secundaria
     pick2?.addEventListener('click', e=>{
       const btn=e.target.closest('.sys-icon'); if(!btn) return;
       const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
       selected.secondary = sys;
       selected.tertiary  = selected.tertiary === sys ? null : selected.tertiary;
-
       if (slot2 && slot2.id === 'calc-slot-2') { slot2.className='calc-container'; slot2.id='calc-secondary'; }
-
       if (window.CalculadoraContpaqi?.setSecondarySystem){
         window.CalculadoraContpaqi.setSecondarySystem(sys,{
           secondarySelector:'#calc-secondary',
@@ -731,14 +543,12 @@
       showAddMoreIfReady();
     });
 
-    // Terciaria
     pick3?.addEventListener('click', e=>{
       const btn=e.target.closest('.sys-icon'); if(!btn) return;
       const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
       if (sys === selected.secondary) return;
       selected.tertiary = sys;
       if (slot3) slot3.style.display='block';
-
       if (window.CalculadoraContpaqi?.setTertiarySystem){
         window.CalculadoraContpaqi.setTertiarySystem(sys,{
           tertiarySelector:'#calc-tertiary',
@@ -755,7 +565,6 @@
       window.CalculadoraContpaqi.onCombinedSet(renderCombinedTable);
     }
 
-    // Inicializa la calculadora ESCRITORIO principal
     if (window.CalculadoraContpaqi?.init){
       document.body.setAttribute('data-calc','escritorio');
       window.CalculadoraContpaqi.init({
@@ -771,7 +580,6 @@
 
 /* =========================================================
    Compactador + Unión “Instalación + Servicios (opcional)”
-   (No altera la v13 moderna, solo legacy si aparece)
    ========================================================= */
 (function () {
   function pickByLabel(container, regex){
@@ -790,58 +598,36 @@
 
   function compactar(container){
     if (!container) return;
-
-    // ⛔️ Si es la calculadora moderna v13, no reordenamos nada.
     if (container.querySelector('form.calc-form')) return;
-
-    // Si ya existe la grilla compactada previa, solo une instalación+servicios y sal.
     if (container.querySelector('.controls-grid')) {
       unirInstalacionServicios(container);
       return;
     }
-
-    // detectar bloques por label
     const bLic = pickByLabel(container, /^licencia/);
     const bTipo= pickByLabel(container, /^tipo/);
     const bUsu = pickByLabel(container, /^usuarios?/);
-
     let bInst = container.querySelector('.inst-wrap') || pickByLabel(container, /instalaci/);
     if (!bInst) {
       const anyChk = container.querySelector('input[type="checkbox"]');
       bInst = anyChk ? (anyChk.closest('.instalacion-box') || anyChk.closest('.field') || anyChk.parentElement) : null;
     }
-
     const bloques = [bLic, bTipo, bUsu, bInst].filter(Boolean);
     bloques.forEach(b => b?.classList?.add('field'));
     if (!bLic || !bTipo || !bUsu || !bInst) return;
-
     const grid = document.createElement('div');
     grid.className = 'controls-grid';
     grid.append(bLic, bTipo, bUsu, bInst);
     container.insertBefore(grid, container.firstElementChild);
-
-    // Une instalación + servicios si aplica
     unirInstalacionServicios(container);
   }
 
   function unirInstalacionServicios(container){
     if (!container) return;
     if (container.querySelector('.inst-wrap .instalacion-box')) return;
-
-    const selInst = pickSelect(container, [
-      'select#instalacion',
-      'select[name*="instal"]',
-      'select[data-field*="instal"]'
-    ]);
-    const selServ = pickSelect(container, [
-      'select#servicios', 'select#ervicios',
-      'select[name*="servi"]',
-      'select[data-field*="servi"]'
-    ]);
-
+    const selInst = pickSelect(container, [ 'select#instalacion', 'select[name*="instal"]', 'select[data-field*="instal"]' ]);
+    const selServ = pickSelect(container, [ 'select#servicios', 'select#ervicios', 'select[name*="servi"]', 'select[data-field*="servi"]' ]);
     if (!selInst || !selServ) return;
     if (selInst.closest('.instalacion-box') || selServ.closest('.instalacion-box')) return;
-
     let wrap = container.querySelector('.inst-wrap');
     if (!wrap) {
       wrap = document.createElement('div');
@@ -851,17 +637,13 @@
     }
     const box = document.createElement('div');
     box.className = 'instalacion-box';
-
     const instLbl = (selInst.labels && selInst.labels[0]) ? selInst.labels[0] : null;
     const servLbl = (selServ.labels && selServ.labels[0]) ? selServ.labels[0] : null;
-
     if (instLbl) box.appendChild(instLbl);
     box.appendChild(selInst);
     if (servLbl) box.appendChild(servLbl);
     box.appendChild(selServ);
-
     wrap.appendChild(box);
-
     if (!wrap.querySelector('.inst-hint')) {
       const hint = document.createElement('small');
       hint.className = 'inst-hint';
@@ -876,19 +658,16 @@
   const tryCompact = () => {
     const container = document.querySelector('.calc-container') || target;
     if (!container) return;
-    if (container.querySelector('form.calc-form')) return; // v13: no tocar
+    if (container.querySelector('form.calc-form')) return;
     compactar(container);
   };
 
   tryCompact();
   requestAnimationFrame(tryCompact);
-
   const mo = new MutationObserver(() => tryCompact());
   mo.observe(target, { childList: true, subtree: true });
-
   window.addEventListener('calc-recompute', tryCompact);
   window.addEventListener('calc-render', tryCompact);
-
   setTimeout(tryCompact, 500);
   setTimeout(tryCompact, 1200);
 })();
@@ -904,28 +683,21 @@
     const cs = getComputedStyle(el);
     const name = el.className || el.id || `track#${i}`;
     const warn = (msg, val) => console.warn(`⚠️ [${name}] ${msg}`, val);
-
     if (el.scrollWidth <= el.clientWidth + 2)
       warn("No tiene scroll real (scrollWidth ≈ clientWidth)", {scrollWidth: el.scrollWidth, clientWidth: el.clientWidth});
-
     if ((cs.scrollSnapType && cs.scrollSnapType !== "none") || el.style.scrollSnapType)
       warn("scroll-snap-type activo → puede bloquear el primer item", cs.scrollSnapType);
-
     if (cs.justifyContent.includes("center"))
       warn("justify-content:center detectado → puede impedir scroll hacia la izquierda", cs.justifyContent);
-
     if (cs.direction === "rtl")
       warn("direction:rtl detectado → puede invertir o romper scrollLeft", cs.direction);
-
     const rect = el.getBoundingClientRect();
     const probe = document.elementsFromPoint(rect.left + 10, rect.top + rect.height/2);
     const blocker = probe.find(n => n !== el && !el.contains(n) && getComputedStyle(n).pointerEvents !== "none");
     if (blocker)
       warn("Elemento sobre la orilla izquierda (posible overlay con z-index alto)", blocker);
-
     if (el.scrollLeft > 5)
       warn("scrollLeft inicial ≠ 0", el.scrollLeft);
-
     el._diagFix = {
       noSnap: () => { el.style.scrollSnapType="none"; el.querySelectorAll("*").forEach(n=>n.style.scrollSnapAlign="none"); console.log(`✅ Snap desactivado en ${name}`); },
       flexStart: () => { el.style.justifyContent="flex-start"; console.log(`✅ justify-content:flex-start aplicado en ${name}`); },
