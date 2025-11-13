@@ -166,12 +166,66 @@ nav a:hover{opacity:1}
 .reel-title{margin-bottom:8px;text-align:center;color:#fff;font-weight:700;display:none}
 .reel-title.active{display:block}
 
-/* ---------- Videos ---------- */
-.yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;justify-items:center}
-@media(max-width:900px){.yt-grid{grid-template-columns:1fr}}
+/* =========================================
+   ESTILOS ESPECÍFICOS PARA CARRUSEL DE VIDEOS
+   (Y SECCIÓN DE VIDEOS EN GENERAL)
+   ========================================= */
 
-.yt{width:100%}
-.yt-title{margin-bottom:8px;text-align:center}
+/* Define que el video ocupe el 100% de su contenedor .yt */
+.yt {
+  width: 100%;
+}
+
+/* El grid de 2 columnas DENTRO de un slide del carrusel */
+#carouselVideos .yt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 Columnas exactas */
+  gap: 20px; /* Espacio entre videos */
+  width: 100%;
+  align-items: start;
+}
+
+/* Ajuste para que las flechas no tapen los videos */
+#carouselVideos .carousel-slide {
+  padding: 0 50px; /* Espacio a los lados para las flechas */
+  box-sizing: border-box;
+}
+
+/* Títulos de los videos (definición única y mejorada) */
+.yt-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e8eef6; /* Color claro */
+  margin-bottom: 10px;
+  text-align: center;
+  min-height: 40px; /* Para alinear si un título es más largo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenedor del video (mantiene ratio 16:9) */
+.yt-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Ratio 16:9 */
+  height: 0;
+  background-color: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #1c2533;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Ajuste Responsive: En celular se ve 1 solo video */
+@media (max-width: 768px) {
+  #carouselVideos .yt-grid {
+    grid-template-columns: 1fr; /* 1 Columna */
+  }
+  #carouselVideos .carousel-slide {
+    padding: 0 10px; /* Menos padding en móvil */
+  }
+}
 
 /* AQUÍ ESTÁ LA CORRECCIÓN: */
 .yt-wrap {
