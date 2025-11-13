@@ -175,22 +175,51 @@
     </section>
 
     <!-- Videos -->
-    <section id="videos" aria-labelledby="videos-title">
-      <div class="card body">
-        <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-        <div class="yt-grid">
-          <div class="yt">
-            <h4 class="yt-title" style="text-align:center;margin-bottom:8px;">Presentación CONTPAQi Nóminas</h4>
-            <div class="yt-wrap" data-ytid="0IB6jQ6V_o0" data-title="Presentación CONTPAQi Nóminas (accesible)"></div>
-          </div>
-          <div class="yt">
-            <h4 class="yt-title" style="text-align:center;margin-bottom:8px;">Nóminas y su trabajo con Contabilidad</h4>
-            <div class="yt-wrap" data-ytid="mEyMrPjpS9M" data-title="Nóminas y su trabajo con Contabilidad (accesible)"></div>
+  <section id="videos" aria-labelledby="videos-title">
+  <div class="card body">
+    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+
+    <div class="carousel" id="carouselVideos">
+      
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
+
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <div class="yt-grid">
+            
+            <div class="yt">
+              <h4 class="yt-title">Presentación CONTPAQi Nóminas</h4>
+              <div class="yt-wrap" 
+                   data-ytid="0IB6jQ6V_o0" 
+                   data-title="Presentación CONTPAQi Nóminas">
+              </div>
+            </div>
+
+            <div class="yt">
+              <h4 class="yt-title">Nóminas y su trabajo con Contabilidad</h4>
+              <div class="yt-wrap" 
+                   data-ytid="mEyMrPjpS9M" 
+                   data-title="Nóminas y su trabajo con Contabilidad">
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
-    </section>
 
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <div class="carousel-nav" aria-label="Paginación de videos">
+        <button class="dot active" aria-label="Grupo 1" type="button"></button>
+      </div>
+
+    </div>
+  </div>
+</section>
     <!-- Integraciones -->
     <section id="integra" aria-labelledby="integra-title">
       <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
