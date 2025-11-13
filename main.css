@@ -169,10 +169,37 @@ nav a:hover{opacity:1}
 /* ---------- Videos ---------- */
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;justify-items:center}
 @media(max-width:900px){.yt-grid{grid-template-columns:1fr}}
+
 .yt{width:100%}
 .yt-title{margin-bottom:8px;text-align:center}
-.yt-wrap{position:relative;width:min(960px,100%);margin:0 auto;border-radius:12px;overflow:hidden;border:1px solid #1c2533;background:#0e1724}
-.yt-wrap iframe{width:100%;aspect-ratio:16/9;height:auto;display:block}
+
+/* AQUÍ ESTÁ LA CORRECCIÓN: */
+.yt-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 960px; /* Tu límite original */
+  margin: 0 auto;
+  
+  /* TRUCO CLAVE: Esto fuerza la proporción 16:9 (9/16 = 0.5625) */
+  padding-bottom: 56.25%; 
+  height: 0;
+  
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #1c2533;
+  background: #0e1724;
+}
+
+/* Asegura que tanto el video (iframe) como la portada (div) llenen el espacio */
+.yt-wrap iframe,
+.yt-wrap > div {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0;
+}
 
 /* ---------- ¿Por qué usar...? ---------- */
 .listSlider{position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);border:1px solid #1c2533;padding:8px;overflow:hidden}
