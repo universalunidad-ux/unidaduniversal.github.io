@@ -419,11 +419,15 @@
     thumb.addEventListener("click", loadIframe);
   }
 
-  // Inicializar Lazy Loaders
+  // Inicializar Lazy Loaders (videos normales + reels)
   function initYouTubeEmbeds() {
-    document.querySelectorAll(".yt-wrap[data-ytid]").forEach(mountLazyEmbed);
+    document
+      .querySelectorAll(".yt-wrap[data-ytid], .reel-embed[data-ytid]")
+      .forEach(mountLazyEmbed);
   }
+
   document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
+
 
 })();
 
