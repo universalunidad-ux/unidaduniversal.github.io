@@ -156,35 +156,33 @@
 
          <!-- REELS + VIDEOS — CONTPAQi Contabilidad -->
         <!-- Columna derecha dentro de la grid-2 -->
-        <div>
-          <!-- REELS -->
-          <aside class="card body">
-            <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: CONTPAQi Contabilidad</h4>
-            <h4 class="reel-title active">Reel principal Contabilidad</h4>
-            <h4 class="reel-title">Reel secundario Contabilidad</h4>
+      <!-- REELS -->
+<div class="carousel-slide">
+  <div class="reel-embed"
+       data-ytid="LeULZYwMQCY"
+       data-title="Reel principal Contabilidad">
+  </div>
+</div>
 
-            <div class="carousel" id="carouselReels" aria-label="Reels CONTPAQi Contabilidad">
-              <button class="arrowCircle prev" aria-label="Anterior" type="button">
-                <span class="chev">‹</span>
-              </button>
+<div class="carousel-slide">
+  <div class="reel-embed"
+       data-ytid="BNnKJCWjB1Q"
+       data-title="Reel secundario Contabilidad">
+  </div>
+</div>
 
-              <div class="carousel-track">
-                <div class="carousel-slide">
-                  <div class="reel-embed"
-                       data-ytid="VIDEO_ID_1"
-                       data-title="Reel principal Contabilidad">
-                  </div>
-                </div>
+<!-- VIDEOS DEL SISTEMA -->
+<div class="yt-wrap"
+     data-ytid="LeULZYwMQCY"
+     data-title="Presentación CONTPAQi Contabilidad">
+</div>
 
-                <div class="carousel-slide">
-                  <div class="reel-embed"
-                       data-ytid="VIDEO_ID_2"
-                       data-title="Reel secundario Contabilidad">
-                  </div>
-                </div>
-              </div>
+<div class="yt-wrap"
+     data-ytid="BNnKJCWjB1Q"
+     data-title="Demo: pólizas y reportes">
+</div>
 
-              <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <button class="arrowCircle next" aria-label="Siguiente" type="button">
                 <span class="chev">›</span>
               </button>
 
@@ -198,37 +196,72 @@
       </div>
     </section>
 
-    <!-- ===== NUEVA SECCIÓN: VIDEOS ===== -->
-    <section id="videos" aria-labelledby="videos-title">
-      <div class="card body">
-        <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+  <!-- ===== NUEVA SECCIÓN: VIDEOS (Carrusel 2 en 2) ===== -->
+<section id="videos" aria-labelledby="videos-title">
+  <div class="card body">
+    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
 
-        <div class="yt-grid">
-          <!-- Video 1 -->
-          <div class="yt">
-            <h4 class="yt-title" style="margin-bottom:8px;text-align:center;">
-              Presentación CONTPAQi Contabilidad
-            </h4>
-            <div class="yt-wrap"
-                 data-ytid="VIDEO_ID_1"
-                 data-title="Presentación CONTPAQi Contabilidad">
+    <!-- Títulos de los videos (se muestran arriba) -->
+    <div class="yt-titles">
+      <h4 class="yt-title">Presentación CONTPAQi Contabilidad</h4>
+      <h4 class="yt-title">Demo: pólizas y reportes</h4>
+    </div>
+
+    <!-- Carrusel de videos -->
+    <div class="carousel" id="carouselVideos">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
+
+      <div class="carousel-track">
+        <!-- Slide 1: muestra 2 videos a la vez -->
+        <div class="carousel-slide">
+          <div class="yt-grid">
+            <!-- Video 1 -->
+            <div class="yt">
+              <h4 class="yt-title" style="margin-bottom:8px;text-align:center;">
+                Presentación CONTPAQi Contabilidad
+              </h4>
+              <div class="yt-wrap"
+                   data-ytid="VIDEO_ID_1"
+                   data-title="Presentación CONTPAQi Contabilidad">
+              </div>
             </div>
-          </div>
 
-          <!-- Video 2 -->
-          <div class="yt">
-            <h4 class="yt-title" style="margin-bottom:8px;text-align:center;">
-              Demo: pólizas y reportes
-            </h4>
-            <div class="yt-wrap"
-                 data-ytid="VIDEO_ID_2"
-                 data-title="Demo: pólizas y reportes">
+            <!-- Video 2 -->
+            <div class="yt">
+              <h4 class="yt-title" style="margin-bottom:8px;text-align:center;">
+                Demo: pólizas y reportes
+              </h4>
+              <div class="yt-wrap"
+                   data-ytid="VIDEO_ID_2"
+                   data-title="Demo: pólizas y reportes">
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Si luego agregas más videos, creas otro slide así:
+        <div class="carousel-slide">
+          <div class="yt-grid">
+            ...otros 2 .yt con sus .yt-wrap...
+          </div>
+        </div>
+        -->
       </div>
-    </section>
-    <!-- FIN REELS + VIDEOS CONTPAQi Contabilidad -->
+
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <div class="carousel-nav" aria-label="Paginación de videos">
+        <button class="dot active" aria-label="Ir al grupo 1" type="button"></button>
+        <!-- Si agregas más slides, agrega más dots -->
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ===== FIN SECCIÓN VIDEOS ===== -->
 
 
     
