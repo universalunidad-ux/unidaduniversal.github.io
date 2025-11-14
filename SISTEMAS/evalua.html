@@ -148,50 +148,100 @@
         </div>
       </div>
 
-      <!-- Reels -->
-      <div>
-        <aside class="card body" aria-label="Reels destacados">
-          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Evalúa</h4>
-          <h4 class="reel-title active">Cumple con la NOM-035</h4>
-          <h4 class="reel-title">Mejora el Clima Laboral</h4>
+    <!-- REELS Evalúa -->
+<div>
+  <aside class="card body" aria-label="Reels Evalúa">
+    <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Evalúa</h4>
 
-          <div class="carousel" id="carouselReelsEvalua" aria-label="Reels Evalúa">
-            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-            <div class="carousel-track">
-              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-                <div class="reel-embed" data-ytid="M7lc1UVf-VE" data-title="Reel CONTPAQi Evalúa 1 (TEMP)"></div>
-              </div>
-              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-                <div class="reel-embed" data-ytid="aqz-KE-bpKQ" data-title="Reel CONTPAQi Evalúa 2 (TEMP)"></div>
+    <!-- Títulos dinámicos -->
+    <h4 class="reel-title active">Título 1</h4>
+    <h4 class="reel-title">Título 2</h4>
+    <h4 class="reel-title">Título 3</h4>
+
+    <div class="carousel" id="carouselReelsEvalua" aria-label="Reels Evalúa">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
+
+      <div class="carousel-track">
+
+        <!-- Reel 1 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="REEMPLAZAR_ID_1"
+               data-title="Título 1"
+               aria-label="Reel Evalúa 1"></div>
+        </div>
+
+        <!-- Reel 2 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="REEMPLAZAR_ID_2"
+               data-title="Título 2"
+               aria-label="Reel Evalúa 2"></div>
+        </div>
+
+        <!-- Reel 3 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="REEMPLAZAR_ID_3"
+               data-title="Título 3"
+               aria-label="Reel Evalúa 3"></div>
+        </div>
+
+      </div>
+
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <div class="carousel-nav" aria-label="Paginación de reels">
+        <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+        <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+        <button class="dot" aria-label="Ir al reel 3" type="button"></button>
+      </div>
+    </div>
+  </aside>
+</div>
+<!-- VIDEOS Evalúa -->
+<section id="videos" aria-labelledby="videos-title">
+  <div class="card body">
+    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+
+    <div class="carousel" id="carouselVideosEvalua">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
+
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <div class="yt-grid">
+
+            <!-- Video único -->
+            <div class="yt">
+              <h4 class="yt-title">Evalúa | Presentación</h4>
+              <div class="yt-wrap"
+                   data-ytid="Im5t0qxDx_I"
+                   data-title="Evalúa | Presentación">
               </div>
             </div>
-            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-            <div class="carousel-nav" aria-label="Paginación de reels">
-              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-            </div>
+
           </div>
-        </aside>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ===== Videos ===== -->
-  <section id="videos" aria-labelledby="videos-title">
-    <div class="card body">
-      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-      <div class="yt-grid">
-        <div class="yt">
-          <h4 class="yt-title">Presentación CONTPAQi Evalúa</h4>
-          <div class="yt-wrap" data-ytid="Im5t0qxDx_I" data-title="Presentación CONTPAQi Evalúa"></div>
-        </div>
-        <div class="yt">
-          <h4 class="yt-title">Demo CONTPAQi Evalúa</h4>
-          <div class="yt-wrap" data-ytid="aqz-KE-bpKQ" data-title="Demo CONTPAQi Evalúa (TEMP)"></div>
-        </div>
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <div class="carousel-nav" aria-label="Paginación de videos">
+        <button class="dot active" aria-label="Grupo 1" type="button"></button>
       </div>
+
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- ===== Integraciones ===== -->
   <section id="integra" aria-labelledby="integra-title">
