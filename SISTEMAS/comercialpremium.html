@@ -150,56 +150,155 @@
           </div>
         </div>
 
-        <!-- Reels -->
-        <div>
-          <aside class="card body">
-            <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Comercial Premium</h4>
-            <h4 class="reel-title active">Comercial Premium — Reel principal</h4>
-            <h4 class="reel-title">Comercial Premium — Reel complementario</h4>
+       <!-- REELS CPREMIUM -->
+<div>
+  <aside class="card body" aria-label="Reels Comercial Premium">
+    <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Comercial Premium</h4>
 
-            <div class="carousel" id="carouselReels" aria-label="Reels Comercial Premium">
-              <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+    <!-- Títulos dinámicos (el JS los va cambiando según el reel activo) -->
+    <h4 class="reel-title active">Controla tus inventarios con CONTPAQi Comercial Premium!</h4>
+    <h4 class="reel-title">Tus Notas de Venta más rápido y fácil en Comercial Premium</h4>
 
-              <div class="carousel-track">
-                <div class="carousel-slide">
-                  <div class="reel-embed" data-ytid="_Krv5nTyFuY" data-title="Reel CONTPAQi Comercial Premium 1"></div>
-                </div>
-                <div class="carousel-slide">
-                  <div class="reel-embed" data-ytid="M7lc1UVf-VE" data-title="Reel CONTPAQi Comercial Premium 2 (TEMP)"></div>
-                </div>
-              </div>
+    <div class="carousel" id="carouselReelsCPREMIUM" aria-label="Reels Comercial Premium">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
 
-              <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-              <div class="carousel-nav" aria-label="Paginación de reels">
-                <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-                <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+      <div class="carousel-track">
+        <!-- Reel 1 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="IYwNBfmWxJU"
+               data-title="Controla tus inventarios con CONTPAQi Comercial Premium! #contpaqi #inventarios #almacenes"
+               aria-label="Reel CPREMIUM 1">
+          </div>
+        </div>
+
+        <!-- Reel 2 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="_Krv5nTyFuY"
+               data-title="Tus Notas de Venta más rápido y fácil en Comercial Premium | #contpaqi"
+               aria-label="Reel CPREMIUM 2">
+          </div>
+        </div>
+
+        <!-- Reel 3 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="HmgOQrasCVw"
+               data-title="Notas de Venta en Comercial Premium CONTPAQi® #contpaqi #negocios"
+               aria-label="Reel CPREMIUM 3">
+          </div>
+        </div>
+
+        <!-- Reel 4 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="WGPOzQ1GsSE"
+               data-title="Documentos por WhatsApp en Comercial Premium | CONTPAQi® #contpaqi"
+               aria-label="Reel CPREMIUM 4">
+          </div>
+        </div>
+      </div>
+
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <div class="carousel-nav" aria-label="Paginación de reels">
+        <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+        <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+        <button class="dot" aria-label="Ir al reel 3" type="button"></button>
+        <button class="dot" aria-label="Ir al reel 4" type="button"></button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- VIDEOS CPREMIUM -->
+<section id="videos" aria-labelledby="videos-title">
+  <div class="card body">
+    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+
+    <div class="carousel" id="carouselVideosCPREMIUM">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
+
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <div class="yt-grid">
+
+            <!-- Video 1 (sin título → Título 1) -->
+            <div class="yt">
+              <h4 class="yt-title">Título 1</h4>
+              <div class="yt-wrap"
+                   data-ytid="5DbmFwNkLRE"
+                   data-title="Título 1">
               </div>
             </div>
-          </aside>
-        </div>
-      </div>
-    </section>
 
-<!-- ===== NUEVA SECCIÓN: VIDEOS ===== -->
-    <section id="videos" aria-labelledby="videos-title">
-      <div class="card body">
-        <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-        <div class="yt-grid">
-          <div class="yt">
-            <h4 class="yt-title" style="margin-bottom:8px;text-align:center;">Presentación CONTPAQi Bancos</h4>
-            <div class="yt-wrap"
-                 data-ytid="j-m-3g-l2iI"
-                 data-title="Presentación CONTPAQi Bancos (accesible)"></div>
-          </div>
-          <div class="yt">
-            <h4 class="yt-title" style="margin-bottom:8px;text-align:center;">Demo: Conciliación y flujo</h4>
-            <div class="yt-wrap"
-                 data-ytid="DEi0pOpkYOs"
-                 data-title="Demo CONTPAQi Bancos (accesible)"></div>
+            <!-- Video 2 (sin título → Título 2) -->
+            <div class="yt">
+              <h4 class="yt-title">Título 2</h4>
+              <div class="yt-wrap"
+                   data-ytid="GjrAZGlF-L0"
+                   data-title="Título 2">
+              </div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="yt">
+              <h4 class="yt-title">Comercial Premium | Nuevas funciones</h4>
+              <div class="yt-wrap"
+                   data-ytid="ZHt_E9wdqcw"
+                   data-title="Comercial Premium | Nuevas funciones">
+              </div>
+            </div>
+
+            <!-- Video 4 -->
+            <div class="yt">
+              <h4 class="yt-title">Comercial Premium | Integración con WhatsApp</h4>
+              <div class="yt-wrap"
+                   data-ytid="W_BN48xljEs"
+                   data-title="Comercial Premium | Integración con WhatsApp">
+              </div>
+            </div>
+
+            <!-- Video 5 -->
+            <div class="yt">
+              <h4 class="yt-title">Comercial Premium | Configura Notas de Venta</h4>
+              <div class="yt-wrap"
+                   data-ytid="xpcCLkLLIgU"
+                   data-title="Comercial Premium | Configura Notas de Venta">
+              </div>
+            </div>
+
+            <!-- Video 6 -->
+            <div class="yt">
+              <h4 class="yt-title">Comercial Premium | Captura del Carta Porte</h4>
+              <div class="yt-wrap"
+                   data-ytid="5D8AyOzY9WE"
+                   data-title="Comercial Premium | Captura del Carta Porte">
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
-    </section>
+
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <div class="carousel-nav" aria-label="Paginación de videos">
+        <button class="dot active" aria-label="Grupo 1" type="button"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
     
