@@ -155,50 +155,117 @@
         </div>
       </div>
 
-      <!-- REELS -->
-      <div>
-        <aside class="card body">
-          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Factura Electrónica</h4>
-          <h4 class="reel-title active">Presentación Factura Electrónica</h4>
-          <h4 class="reel-title">Factura Rápido en la Nube</h4>
+    <!-- REELS Factura Electrónica -->
+<div>
+  <aside class="card body" aria-label="Reels Factura Electrónica">
+    <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Factura Electrónica</h4>
 
-          <div class="carousel" id="carouselReelsFactura" aria-label="Reels Factura Electrónica">
-            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-            <div class="carousel-track">
-              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-                <div class="reel-embed" data-ytid="nMEgM_BvxTs" data-title="Reel CONTPAQi Factura Electrónica 1"></div>
-              </div>
-              <div class="carousel-slide" style="padding:10px;box-sizing:border-box;">
-                <div class="reel-embed" data-ytid="2uBSGZHLsGs" data-title="Reel CONTPAQi Factura Electrónica 2"></div>
-              </div>
-            </div>
-            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-            <div class="carousel-nav" aria-label="Paginación de reels">
-              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-            </div>
+    <!-- Títulos dinámicos (el JS los va cambiando según el reel activo) -->
+    <h4 class="reel-title active">Factura Electrónica v13 | Novedades CONTPAQi</h4>
+    <h4 class="reel-title">Carta Porte CFDI | CONTPAQi Factura Electrónica</h4>
+
+    <div class="carousel" id="carouselReelsFACTURA" aria-label="Reels Factura Electrónica">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
+
+      <div class="carousel-track">
+        <!-- Reel 1 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="nMEgM_BvxTs"
+               data-title="Factura Electrónica v13 | Novedades CONTPAQi® #contpaqi"
+               aria-label="Reel Factura Electrónica 1">
           </div>
-        </aside>
-      </div>
-    </div>
-  </section>
+        </div>
 
-  <!-- ===== Videos ===== -->
-  <section id="videos" aria-labelledby="videos-title">
-    <div class="card body">
-      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
-      <div class="yt-grid">
-        <div class="yt">
-          <h4 class="yt-title">Presentación CONTPAQi Factura Electrónica</h4>
-          <div class="yt-wrap" data-ytid="wIWOlIGMtcc" data-title="Presentación CONTPAQi Factura Electrónica"></div>
+        <!-- Reel 2 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="IA5-tguZzCc"
+               data-title="Carta Porte CFDI | CONTPAQi® Factura Electrónica #contpaqi"
+               aria-label="Reel Factura Electrónica 2">
+          </div>
         </div>
-        <div class="yt">
-          <h4 class="yt-title">¿Qué hace CONTPAQi Factura Electrónica?</h4>
-          <div class="yt-wrap" data-ytid="SidN_z5r2Xc" data-title="Qué hace CONTPAQi Factura Electrónica"></div>
+
+        <!-- Reel 3 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="2uBSGZHLsGs"
+               data-title="Factura Electrónica | Sector notarial #contpaqi #facturaciónelectrónica"
+               aria-label="Reel Factura Electrónica 3">
+          </div>
         </div>
       </div>
+
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <div class="carousel-nav" aria-label="Paginación de reels">
+        <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+        <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+        <button class="dot" aria-label="Ir al reel 3" type="button"></button>
+      </div>
     </div>
-  </section>
+  </aside>
+</div>
+
+<!-- VIDEOS Factura Electrónica -->
+<section id="videos" aria-labelledby="videos-title">
+  <div class="card body">
+    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+
+    <div class="carousel" id="carouselVideosFACTURA">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
+
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <div class="yt-grid">
+
+            <!-- Video 1 (sin título → Título 1) -->
+            <div class="yt">
+              <h4 class="yt-title">Título 1</h4>
+              <div class="yt-wrap"
+                   data-ytid="SidN_z5r2Xc"
+                   data-title="Título 1">
+              </div>
+            </div>
+
+            <!-- Video 2 (sin título → Título 2) -->
+            <div class="yt">
+              <h4 class="yt-title">Título 2</h4>
+              <div class="yt-wrap"
+                   data-ytid="wIWOlIGMtcc"
+                   data-title="Título 2">
+              </div>
+            </div>
+
+            <!-- Video 3 (con título real) -->
+            <div class="yt">
+              <h4 class="yt-title">Factura Electrónica | Carta Porte nuevas funciones</h4>
+              <div class="yt-wrap"
+                   data-ytid="V8jbv8XmJew"
+                   data-title="Factura Electrónica | Carta Porte nuevas funciones">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <div class="carousel-nav" aria-label="Paginación de videos">
+        <button class="dot active" aria-label="Grupo 1" type="button"></button>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- ===== Integraciones ===== -->
   <section id="integra" aria-labelledby="integra-title">
