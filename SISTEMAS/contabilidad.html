@@ -155,94 +155,91 @@
         </div>
 
          <!-- REELS + VIDEOS — CONTPAQi Contabilidad -->
-        <!-- Columna derecha dentro de la grid-2 -->
-      <!-- REELS -->
-<!-- REELS -->
-<div>
-  <aside class="card body" aria-label="Reels de Contabilidad">
-    <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Contabilidad</h4>
-    <h4 class="reel-title active">Reel Principal Contabilidad</h4>
-    <h4 class="reel-title">Cómo Contabilizar Automáticamente</h4>
+        <!-- REELS (misma estructura que Nóminas) -->
+        <div>
+          <aside class="card body" aria-label="Reels de Contabilidad">
+            <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Contabilidad</h4>
+            <h4 class="reel-title active">Reel Principal Contabilidad</h4>
+            <h4 class="reel-title">Cómo Contabilizar Automáticamente</h4>
 
-    <div class="carousel" id="carouselReelsContabilidad" aria-label="Reels Contabilidad">
-      <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-      <div class="carousel-track">
+            <div class="carousel" id="carouselReels" aria-label="Reels Contabilidad">
+              <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                <span class="chev">‹</span>
+              </button>
 
-        <div class="carousel-slide">
-          <div class="reel-embed" 
-               data-ytid="REEL_ID_CONTAB_1" 
-               data-title="Reel Principal Contabilidad" 
-               aria-label="Reel principal de Contabilidad"></div>
+              <div class="carousel-track">
+                <div class="carousel-slide">
+                  <div class="reel-embed"
+                       data-ytid="REEL_ID_CONTAB_1"
+                       data-title="Reel Principal Contabilidad"
+                       aria-label="Reel principal de Contabilidad">
+                  </div>
+                </div>
+                <div class="carousel-slide">
+                  <div class="reel-embed"
+                       data-ytid="REEL_ID_CONTAB_2"
+                       data-title="Cómo Contabilizar Automáticamente"
+                       aria-label="Reel Contabilizar Fácil">
+                  </div>
+                </div>
+              </div>
+
+              <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                <span class="chev">›</span>
+              </button>
+
+              <div class="carousel-nav" aria-label="Paginación de reels">
+                <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+                <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+              </div>
+            </div>
+          </aside>
         </div>
-
-        <div class="carousel-slide">
-          <div class="reel-embed" 
-               data-ytid="REEL_ID_CONTAB_2" 
-               data-title="Cómo Contabilizar Automáticamente" 
-               aria-label="Reel Contabilizar Fácil"></div>
-        </div>
-
       </div>
-      <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-      <div class="carousel-nav" aria-label="Paginación de reels">
-        <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-        <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-      </div>
-    </div>
-  </aside>
-</div>
-</div>
-</section>
+    </section>
 
-<!-- Videos -->
-<section id="videos" aria-labelledby="videos-title">
-<div class="card body">
-  <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+    <!-- Videos (igual que Nóminas, solo cambia títulos/links) -->
+    <section id="videos" aria-labelledby="videos-title">
+      <div class="card body">
+        <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
 
-  <div class="carousel" id="carouselVideosContabilidad">
-    
-    <button class="arrowCircle prev" aria-label="Anterior" type="button">
-      <span class="chev">‹</span>
-    </button>
+        <div class="carousel" id="carouselVideos">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button">
+            <span class="chev">‹</span>
+          </button>
 
-    <div class="carousel-track">
-      <div class="carousel-slide">
-        <div class="yt-grid">
-          
-          <div class="yt">
-            <h4 class="yt-title">Presentación CONTPAQi Contabilidad</h4>
-            <div class="yt-wrap" 
-                 data-ytid="VIDEO_ID_CONTAB_1"
-                 data-title="Presentación CONTPAQi Contabilidad">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="yt-grid">
+                <div class="yt">
+                  <h4 class="yt-title">Presentación CONTPAQi Contabilidad</h4>
+                  <div class="yt-wrap"
+                       data-ytid="VIDEO_ID_CONTAB_1"
+                       data-title="Presentación CONTPAQi Contabilidad">
+                  </div>
+                </div>
+
+                <div class="yt">
+                  <h4 class="yt-title">Cómo generar pólizas desde XML</h4>
+                  <div class="yt-wrap"
+                       data-ytid="VIDEO_ID_CONTAB_2"
+                       data-title="Cómo generar pólizas desde XML">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="yt">
-            <h4 class="yt-title">Cómo generar pólizas desde XML</h4>
-            <div class="yt-wrap" 
-                 data-ytid="VIDEO_ID_CONTAB_2"
-                 data-title="Cómo generar pólizas desde XML">
-            </div>
-          </div>
+          <button class="arrowCircle next" aria-label="Siguiente" type="button">
+            <span class="chev">›</span>
+          </button>
 
+          <div class="carousel-nav" aria-label="Paginación de videos">
+            <button class="dot active" aria-label="Grupo 1" type="button"></button>
+          </div>
         </div>
       </div>
-    </div>
-
-    <button class="arrowCircle next" aria-label="Siguiente" type="button">
-      <span class="chev">›</span>
-    </button>
-
-    <div class="carousel-nav" aria-label="Paginación de videos">
-      <button class="dot active" aria-label="Grupo 1" type="button"></button>
-    </div>
-
-  </div>
-</div>
-</section>
-
-
-
+    </section>
     
     <!-- ===== Integraciones ===== -->
     <section id="integra" aria-labelledby="integra-title">
