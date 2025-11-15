@@ -286,8 +286,8 @@
   </div>
 </section>
 
-<!-- ====================================== -->
-<!-- 🎥 VIDEOS — CONTPAQi Vende -->
+  <!-- ====================================== -->
+<!-- 🎥 VIDEOS — CONTPAQi Vende (2 videos por slide) -->
 <!-- ====================================== -->
 <section id="videos" aria-labelledby="videos-title">
   <div class="card body">
@@ -299,6 +299,8 @@
       </button>
 
       <div class="carousel-track">
+
+        <!-- SLIDE 1: Video 1 + 2 -->
         <div class="carousel-slide">
           <div class="yt-grid">
 
@@ -318,6 +320,13 @@
                    data-title="Vende | Descarga facturas para enviarlas a tu contador"></div>
             </div>
 
+          </div>
+        </div>
+
+        <!-- SLIDE 2: Video 3 + 4 -->
+        <div class="carousel-slide">
+          <div class="yt-grid">
+
             <!-- Video 3 -->
             <div class="yt">
               <h4 class="yt-title">Factura fácil y rápido</h4>
@@ -336,14 +345,17 @@
 
           </div>
         </div>
+
       </div>
 
       <button class="arrowCircle next" aria-label="Siguiente" type="button">
         <span class="chev">›</span>
       </button>
 
-      <div class="carousel-nav">
-        <button class="dot active"></button>
+      <!-- 1 dot por SLIDE -->
+      <div class="carousel-nav" aria-label="Paginación de videos">
+        <button class="dot active" aria-label="Grupo 1" type="button"></button>
+        <button class="dot" aria-label="Grupo 2" type="button"></button>
       </div>
     </div>
   </div>
