@@ -404,7 +404,6 @@
 <!-- Footer dinámico (partial) -->
 <div id="footer-placeholder"></div>
 
-<!-- ===== Loader de header/footer + normalizador de rutas ===== -->
 <script>
 (async () => {
   const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
@@ -445,7 +444,7 @@
   if (hp) hp.outerHTML = headerHTML;
   if (fp) fp.outerHTML = footerHTML;
 
-  // Normaliza rutas si usas data-*
+  // 🔹 NORMALIZADOR DE RUTAS (lo que te falta en Vende)
   document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
     img.src = prefix(img.getAttribute("data-src"));
   });
@@ -454,12 +453,18 @@
     const [path, hash] = p.split("#");
     a.href = prefix(path) + (hash ? ("#"+hash) : "");
   });
+  document.querySelectorAll(".js-img[data-src]").forEach(img=>{
+    img.src = prefix(img.getAttribute("data-src"));
+  });
+  document.querySelectorAll(".js-link[data-href]").forEach(a=>{
+    a.href = prefix(a.getAttribute("data-href"));
+  });
 
-  // Año en footer parcial
   const y = document.getElementById("gf-year");
   if (y) y.textContent = new Date().getFullYear();
 })();
 </script>
+
 
 <!-- Lógica global (carruseles, reels, YouTube wrappers, TOC, etc.) -->
 <script src="../main.js" defer></script>
