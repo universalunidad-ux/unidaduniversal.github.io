@@ -231,61 +231,66 @@
     </div>
   </section>
 
-  <!-- VIDEOS Factura Electrónica -->
-  <section id="videos" aria-labelledby="videos-title">
-    <div class="card body">
-      <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
+<!-- VIDEOS Factura Electrónica -->
+<section id="videos" aria-labelledby="videos-title">
+  <div class="card body">
+    <h3 id="videos-title" class="title-gradient">Videos del sistema</h3>
 
-      <div class="carousel" id="carouselVideosFACTURA">
-        <button class="arrowCircle prev" aria-label="Anterior" type="button">
-          <span class="chev">‹</span>
-        </button>
+    <div class="carousel" id="carouselVideos">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
 
-        <div class="carousel-track">
-          <div class="carousel-slide">
-            <div class="yt-grid">
-
-              <!-- Video 1 (sin título → Título 1) -->
-              <div class="yt">
-                <h4 class="yt-title">Título 1</h4>
-                <div class="yt-wrap"
-                     data-ytid="SidN_z5r2Xc"
-                     data-title="Título 1">
-                </div>
+      <div class="carousel-track">
+        <!-- SLIDE 1: Video 1 + 2 -->
+        <div class="carousel-slide">
+          <div class="yt-grid">
+            <!-- Video 1 -->
+            <div class="yt">
+              <h4 class="yt-title">Título 1</h4>
+              <div class="yt-wrap"
+                   data-ytid="SidN_z5r2Xc"
+                   data-title="Título 1">
               </div>
+            </div>
 
-              <!-- Video 2 (sin título → Título 2) -->
-              <div class="yt">
-                <h4 class="yt-title">Título 2</h4>
-                <div class="yt-wrap"
-                     data-ytid="wIWOlIGMtcc"
-                     data-title="Título 2">
-                </div>
+            <!-- Video 2 -->
+            <div class="yt">
+              <h4 class="yt-title">Título 2</h4>
+              <div class="yt-wrap"
+                   data-ytid="wIWOlIGMtcc"
+                   data-title="Título 2">
               </div>
-
-              <!-- Video 3 (con título real) -->
-              <div class="yt">
-                <h4 class="yt-title">Factura Electrónica | Carta Porte nuevas funciones</h4>
-                <div class="yt-wrap"
-                     data-ytid="V8jbv8XmJew"
-                     data-title="Factura Electrónica | Carta Porte nuevas funciones">
-                </div>
-              </div>
-
             </div>
           </div>
         </div>
 
-        <button class="arrowCircle next" aria-label="Siguiente" type="button">
-          <span class="chev">›</span>
-        </button>
-
-        <div class="carousel-nav" aria-label="Paginación de videos">
-          <button class="dot active" aria-label="Grupo 1" type="button"></button>
+        <!-- SLIDE 2: Video 3 (y si luego agregas un 4, lo pones aquí) -->
+        <div class="carousel-slide">
+          <div class="yt-grid">
+            <div class="yt">
+              <h4 class="yt-title">Factura Electrónica | Carta Porte nuevas funciones</h4>
+              <div class="yt-wrap"
+                   data-ytid="V8jbv8XmJew"
+                   data-title="Factura Electrónica | Carta Porte nuevas funciones">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <div class="carousel-nav" aria-label="Paginación de videos">
+        <button class="dot active" aria-label="Grupo 1" type="button"></button>
+        <button class="dot" aria-label="Grupo 2" type="button"></button>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
 
   <!-- ===== Integraciones ===== -->
