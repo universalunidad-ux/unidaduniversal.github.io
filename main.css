@@ -254,6 +254,18 @@ nav a:hover{opacity:1}
   height: 100% !important;
   border: 0;
 }
+/* Caso especial: Analiza (un solo video) → centrado */
+#carouselVideos .yt-grid.yt-grid-single{
+  grid-template-columns: minmax(0, 480px);
+  justify-content: center;
+}
+
+@media (max-width: 768px){
+  #carouselVideos .yt-grid.yt-grid-single{
+    grid-template-columns: 1fr;
+  }
+}
+
 
 /* ---------- ¿Por qué usar...? ---------- */
 .listSlider{position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);border:1px solid #1c2533;padding:8px;overflow:hidden}
