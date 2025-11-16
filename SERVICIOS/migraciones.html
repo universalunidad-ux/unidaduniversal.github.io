@@ -542,30 +542,50 @@
       btn.setAttribute('rel', 'noopener');
     });
   })();
-  </script>
-
   <!-- JS del selector (pills) -->
   <script>
   (function(){
     const pills = document.querySelectorAll('.pillbar .pill');
-    if (!pills.length) return;
+    const cards = document.querySelectorAll('.mig-card');
+    if (!pills.length || !cards.length) return;
 
+    // Aplica filtro: muestra solo las cards de ese grupo
+    function applyFilter(group){
+      cards.forEach(card=>{
+        const g = card.dataset.group;
+        if (!group || g === group){
+          card.style.display = 'grid';   // coincide con el layout original
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Click en cada pill
     pills.forEach(pill=>{
       pill.addEventListener('click', ()=>{
-        // visual
+        // estado visual
         pills.forEach(x=>x.classList.remove('active'));
         pill.classList.add('active');
 
-        // scroll al primer card del grupo
         const group = pill.dataset.group;
-        if (!group) return;
-        const target = document.querySelector(`.mig-card[data-group="${group}"]`);
-        if (target){
-          target.scrollIntoView({behavior:'smooth', block:'start'});
+        applyFilter(group);
+
+        // opcional: subir al inicio del grid
+        const section = document.querySelector('.grid-3');
+        if (section){
+          section.scrollIntoView({behavior:'smooth', block:'start'});
         }
       });
     });
+
+    // Al cargar la página: aplica el filtro del pill activo
+    const active = document.querySelector('.pillbar .pill.active');
+    applyFilter(active ? active.dataset.group : null);
   })();
   </script>
+
+
+
 </body>
 </html>
