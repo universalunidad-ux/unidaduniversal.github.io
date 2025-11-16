@@ -187,6 +187,122 @@
       .toc{right:10px;bottom:10px;width:86vw}
       .carousel{min-height:360px}
     }
+    /* =========================================================
+   Expiriti Glow — reutilizado en toda la página
+   ========================================================= */
+
+/* 1) POR QUÉ ELEGIR NUESTRO SOPORTE (beneficios) */
+#beneficios .listItem{
+  background:linear-gradient(135deg,#0f1622,#0f1724);
+  border:1px solid #1c2533;
+  border-radius:14px;
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    transform .12s ease;
+}
+#beneficios .listItem:hover{
+  background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);
+  border-color:var(--brand-2,#60a5fa);
+  box-shadow:0 10px 26px rgba(0,0,0,.35);
+  transform:translateY(-1px);
+}
+
+/* Tipografía homogénea con servicios complementarios */
+#beneficios .listItem strong{
+  font-size:14px;
+}
+#beneficios .listItem div>div{
+  font-size:13px;
+}
+
+/* 2) NUESTROS SERVICIOS DE SOPORTE (feature-grid) */
+.feature-grid .fcard{
+  background:linear-gradient(135deg,#0f1622,#0f1724);
+  border:1px solid #1c2533;
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    transform .12s ease;
+}
+.feature-grid .fcard:hover{
+  background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);
+  border-color:var(--brand-2,#60a5fa);
+  box-shadow:0 10px 26px rgba(0,0,0,.35);
+  transform:translateY(-2px);
+}
+.feature-grid .fcard h4{
+  font-size:14px;
+}
+.feature-grid .fcard p{
+  font-size:13px;
+}
+
+/* 3) CARRUSEL DE SISTEMAS (Sistemas que soportamos) */
+.carouselX .sys{
+  background:linear-gradient(135deg,#0f1622,#0f1724);
+  border:1px solid #1c2533;
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    transform .12s ease;
+}
+.carouselX .sys:hover{
+  background:radial-gradient(circle at top left,rgba(96,165,250,.18),#0f1724);
+  border-color:var(--brand-2,#60a5fa);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  transform:translateY(-2px);
+}
+
+/* 4) TABLA COMPARATIVA — resaltar fila al pasar el mouse */
+#comparativa .table-like tbody tr{
+  transition:
+    background .16s ease,
+    box-shadow .16s ease,
+    transform .12s ease;
+}
+#comparativa .table-like tbody tr:hover{
+  background:radial-gradient(circle at top left,rgba(96,165,250,.13),#020617);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  transform:translateY(-1px);
+}
+
+/* 5) FAQ — el header de cada pregunta como card clickeable */
+#faq .faq-item>summary{
+  transition:
+    background .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease,
+    transform .12s ease;
+}
+#faq .faq-item>summary:hover{
+  background:radial-gradient(circle at top left,rgba(96,165,250,.14),#020617);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  transform:translateY(-1px);
+}
+#faq .faq-item[open]>summary{
+  border-color:var(--brand-2,#60a5fa);
+  border-bottom:1px solid #1e2b3c;
+}
+
+/* 6) CTA FINAL — botones “Enviar WhatsApp / Llamar” con glow */
+#sesion-guiada .btn.btn-grad-green,
+#sesion-guiada .btn.btn-grad-blue{
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease,
+    filter .16s ease;
+}
+#sesion-guiada .btn.btn-grad-green:hover,
+#sesion-guiada .btn.btn-grad-blue:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 30px rgba(0,0,0,.45);
+  filter:brightness(1.05);
+}
+
   </style>
 </head>
 <body id="top">
@@ -594,16 +710,17 @@
     min-width:0;
   }
   /* Tamaños de letra alineados a lo que vienes usando */
-  .svc-title{
-    font-size:14px;
-    font-weight:600;
-    color:#e5efff;
-  }
-  .svc-sub{
-    font-size:13px;
-    color:#9fb1cc;
-    line-height:1.35;
-  }
+.svc-title{
+  font-size:14px;
+  font-weight:600;
+  color:#e5efff;
+}
+.svc-sub{
+  font-size:13px;
+  color:#9fb1cc;
+  line-height:1.35;
+}
+
   .svc-pill{
     flex-shrink:0;
     align-self:center;
