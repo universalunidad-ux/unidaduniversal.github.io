@@ -15,7 +15,7 @@
 
   <!-- Fuente + CSS global -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../mainservicios.css">
+  <link rel="stylesheet" href="../mainservicios.css">
 
   <!-- Favicon set -->
   <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
@@ -25,9 +25,6 @@
   <link rel="icon" href="../IMG/favicon.ico">
   <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
-
-
-
 </head>
 <body id="top">
   <!-- Header dinámico -->
@@ -49,100 +46,154 @@
 
     <!-- ===== Beneficios + Reels en hero ===== -->
     <section id="beneficios" aria-label="Por qué elegirnos">
-      <div class="card body">
-        <div class="grid-2 align-center">
-          <!-- Columna izquierda: lista de beneficios -->
+      <div class="grid-2 align-center">
+
+        <!-- ========== Columna izquierda ========== -->
+        <div class="stack">
+          <!-- Título + texto FUERA de la tarjeta -->
           <div>
             <h2 class="title-gradient">¿Por qué elegir nuestro Soporte?</h2>
-            <p class="lead">Somos Distribuidores certificados por CONTPAQi. No solo vendemos el software, lo entendemos a fondo y garantizamos su correcta operación fiscal y técnica.</p>
-            <div class="listSlider">
-              <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-              <div class="listTrack">
-                <div class="listPage">
-                  <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/ic_certificado_full.webp" alt=""></div>
-                    <div><strong>CERTIFICADOS POR CONTPAQi</strong><div>Nuestros técnicos están avalados para diagnósticos precisos.</div></div>
-                  </div>
-                  <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/ic_anydesk_full.webp" alt=""></div>
-                    <div><strong>ATENCIÓN VÍA ANYDESK</strong><div>Rápido, seguro y sin necesidad de visitas físicas costosas.</div></div>
-                  </div>
-                  <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/ic_no_preocupaciones.webp" alt=""></div>
-                    <div><strong>NO MÁS PREOCUPACIONES</strong><div>Delega tus problemas técnicos y enfócate en tu negocio.</div></div>
-                  </div>
-                </div>
-                <div class="listPage">
-                  <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/ic_garantia_15min.webp" alt=""></div>
-                    <div><strong>GARANTÍA 15 MIN</strong><div>Dudas rápidas y errores menores se resuelven sin costo.</div></div>
-                  </div>
-                  <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/ic_flexibilidad.webp" alt=""></div>
-                    <div><strong>MODELOS FLEXIBLES</strong><div>Desde 1 hora prepagada hasta pólizas mensuales ilimitadas.</div></div>
-                  </div>
-                  <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/ic_servicio_integral.webp" alt=""></div>
-                    <div><strong>SERVICIO INTEGRAL</strong><div>No solo "reparamos", capacitamos y prevenimos problemas futuros.</div></div>
-                  </div>
-                </div>
-              </div>
-              <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-            </div>
+            <p class="lead">
+              Somos Distribuidores certificados por CONTPAQi. No solo vendemos el software,
+              lo entendemos a fondo y garantizamos su correcta operación fiscal y técnica.
+            </p>
           </div>
 
-          <!-- Columna derecha: Reels -->
-          <aside class="card body" aria-label="Reels de Soporte">
-            <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Soporte</h4>
+          <!-- Tarjeta azul SOLO para la lista -->
+          <div class="card">
+            <div class="body">
+              <div class="listSlider">
+                <button class="arrowCircle prev" aria-label="Anterior">
+                  <span class="chev">‹</span>
+                </button>
 
-            <!-- Títulos de apoyo (puedes luego sincronizarlos con JS si quieres) -->
-            <h4 class="reel-title active">Resolvemos tu error en minutos</h4>
-            <h4 class="reel-title">Soporte remoto sin complicaciones</h4>
+                <div class="listTrack">
+                  <!-- Página 1 -->
+                  <div class="listPage">
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_certificado_full.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>CERTIFICADOS POR CONTPAQi</strong>
+                        <div>Nuestros técnicos están avalados para diagnósticos precisos.</div>
+                      </div>
+                    </div>
 
-            <div class="carousel" id="carouselReelsSoporte" aria-label="Reels Soporte">
-              <button class="arrowCircle prev" aria-label="Anterior" type="button">
-                <span class="chev">‹</span>
-              </button>
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_anydesk_full.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>ATENCIÓN VÍA ANYDESK</strong>
+                        <div>Rápido, seguro y sin necesidad de visitas físicas costosas.</div>
+                      </div>
+                    </div>
 
-              <div class="carousel-track">
-                <!-- Reel 1 -->
-                <div class="carousel-slide">
-                  <div class="reel-embed">
-                    <iframe
-                      src="https://www.youtube-nocookie.com/embed/3YUbSEyU678?rel=0&modestbranding=1&controls=1&fs=1"
-                      title="Reel Soporte 1"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      loading="lazy"
-                      allowfullscreen>
-                    </iframe>
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_no_preocupaciones.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>NO MÁS PREOCUPACIONES</strong>
+                        <div>Delega tus problemas técnicos y enfócate en tu negocio.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Página 2 -->
+                  <div class="listPage">
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_garantia_15min.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>GARANTÍA 15 MIN</strong>
+                        <div>Dudas rápidas y errores menores se resuelven sin costo.</div>
+                      </div>
+                    </div>
+
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_flexibilidad.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>MODELOS FLEXIBLES</strong>
+                        <div>Desde 1 hora prepagada hasta pólizas mensuales ilimitadas.</div>
+                      </div>
+                    </div>
+
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_servicio_integral.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>SERVICIO INTEGRAL</strong>
+                        <div>No solo "reparamos", capacitamos y prevenimos problemas futuros.</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <!-- Reel 2 -->
-                <div class="carousel-slide">
-                  <div class="reel-embed">
-                    <iframe
-                      src="https://www.youtube-nocookie.com/embed/LC1Ccpv_jzo?rel=0&modestbranding=1&controls=1&fs=1"
-                      title="Reel Soporte 2"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      loading="lazy"
-                      allowfullscreen>
-                    </iframe>
-                  </div>
-                </div>
-              </div>
-
-              <button class="arrowCircle next" aria-label="Siguiente" type="button">
-                <span class="chev">›</span>
-              </button>
-
-              <div class="carousel-nav" aria-label="Paginación de reels">
-                <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-                <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+                <button class="arrowCircle next" aria-label="Siguiente">
+                  <span class="chev">›</span>
+                </button>
               </div>
             </div>
-          </aside>
+          </div>
         </div>
+
+        <!-- ========== Columna derecha: Reels ========== -->
+        <aside class="card body" aria-label="Reels de Soporte">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Soporte</h4>
+
+          <!-- Títulos de apoyo (puedes luego sincronizarlos con JS si quieres) -->
+          <h4 class="reel-title active">Resolvemos tu error en minutos</h4>
+          <h4 class="reel-title">Soporte remoto sin complicaciones</h4>
+
+          <div class="carousel" id="carouselReelsSoporte" aria-label="Reels Soporte">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button">
+              <span class="chev">‹</span>
+            </button>
+
+            <div class="carousel-track">
+              <!-- Reel 1 -->
+              <div class="carousel-slide">
+                <div class="reel-embed">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/3YUbSEyU678?rel=0&modestbranding=1&controls=1&fs=1"
+                    title="Reel Soporte 1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    loading="lazy"
+                    allowfullscreen>
+                  </iframe>
+                </div>
+              </div>
+
+              <!-- Reel 2 -->
+              <div class="carousel-slide">
+                <div class="reel-embed">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/LC1Ccpv_jzo?rel=0&modestbranding=1&controls=1&fs=1"
+                    title="Reel Soporte 2"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    loading="lazy"
+                    allowfullscreen>
+                  </iframe>
+                </div>
+              </div>
+            </div>
+
+            <button class="arrowCircle next" aria-label="Siguiente" type="button">
+              <span class="chev">›</span>
+            </button>
+
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -174,8 +225,6 @@
       </div>
     </section>
 
-
-
     <!-- ===== Sistemas soportados ===== -->
     <section id="sistemas-soportados" aria-labelledby="sistemas-title">
       <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
@@ -206,7 +255,9 @@
       <p class="hint" style="text-align:center">Elige el plan que mejor se adapte a tu operación.</p>
       <div class="card body">
         <table class="pricing-table-nube" aria-describedby="calc">
-          <thead><tr><th>Servicio</th><th>Descripción</th><th style="text-align:right">Precio</th></tr></thead>
+          <thead>
+            <tr><th>Servicio</th><th>Descripción</th><th style="text-align:right">Precio</th></tr>
+          </thead>
           <tbody>
             <tr><td class="plan-name">Hora de Soporte (Remoto)</td><td>Atención vía AnyDesk. Facturable por hora.</td><td class="price">$800 + IVA</td></tr>
             <tr style="background:#0f1622"><td class="plan-name">Paquete Prepago (5 Horas)</td><td>Ahorra comprando horas por adelantado. (Consulta paquetes)</td><td class="price">Desde $3,750 + IVA</td></tr>
@@ -214,7 +265,11 @@
             <tr style="background:#0f1622"><td class="plan-name">Póliza de Soporte Mensual</td><td>Soporte ilimitado, cursos, desarrollos y más, bajo contrato.</td><td class="price" style="color:var(--brand-2);">Solicitar Cotización</td></tr>
           </tbody>
           <tfoot>
-            <tr><td class="note" colspan="3" style="text-align:center;"><a class="btn btn-grad-blue hero-btn" href="polizas-de-soporte.html" style="margin-top:10px;">Conocer más de Pólizas de Soporte</a></td></tr>
+            <tr>
+              <td class="note" colspan="3" style="text-align:center;">
+                <a class="btn btn-grad-blue hero-btn" href="polizas-de-soporte.html" style="margin-top:10px;">Conocer más de Pólizas de Soporte</a>
+              </td>
+            </tr>
           </tfoot>
         </table>
         <p class="hint" style="text-align:center;margin-top:15px;">Precios más IVA. Consultar descuentos del mes por compras en paquete (más de 2 sistemas nube)</p>
@@ -228,7 +283,9 @@
       <div class="card body">
         <h4 style="margin-bottom:15px;">Expiriti vs Soporte Genérico (TI)</h4>
         <table class="table-like" aria-label="Comparativa Expiriti vs otros soportes">
-          <thead><tr><th>Característica</th><th class="highlight">Expiriti (Certificado)</th><th>Soporte TI Genérico</th><th>Soporte directo (Fabricante)</th></tr></thead>
+          <thead>
+            <tr><th>Característica</th><th class="highlight">Expiriti (Certificado)</th><th>Soporte TI Genérico</th><th>Soporte directo (Fabricante)</th></tr>
+          </thead>
           <tbody>
             <tr><td>Especialización CONTPAQi</td><td class="highlight">✅ Totalmente Especializado</td><td>❌ Nulo (Formatean equipos)</td><td>✅ Especializado</td></tr>
             <tr><td>Entendimiento Fiscal/Contable</td><td class="highlight">✅ Alto (Contadores en equipo)</td><td>❌ Nulo</td><td>✅ Alto</td></tr>
@@ -264,131 +321,131 @@
       </div>
     </section>
 
-<!-- ===== Servicios Complementarios (reutilizable) ===== -->
-<section id="servicios-complementarios" aria-labelledby="relacionados">
-  <h3 id="relacionados" class="title-gradient">Servicios complementarios</h3>
-  <p class="hint" style="margin-top:4px;margin-bottom:10px;">
-    Haz clic en el servicio que necesites para ver el detalle completo.
-  </p>
+    <!-- ===== Servicios Complementarios (reutilizable) ===== -->
+    <section id="servicios-complementarios" aria-labelledby="relacionados">
+      <h3 id="relacionados" class="title-gradient">Servicios complementarios</h3>
+      <p class="hint" style="margin-top:4px;margin-bottom:10px;">
+        Haz clic en el servicio que necesites para ver el detalle completo.
+      </p>
 
-  <div class="card body">
-    <div class="svc-grid">
-      <!-- Columna 1: Soporte, instalaciones, migraciones -->
-      <ul class="svc-list">
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
-          <div class="svc-text">
-            <span class="svc-title">Pólizas de Soporte Técnico Mensual</span>
-            <span class="svc-sub">Soporte y cursos ilimitados, desarrollos y más. Todo firmado por contrato.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
+      <div class="card body">
+        <div class="svc-grid">
+          <!-- Columna 1 -->
+          <ul class="svc-list">
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+              <div class="svc-text">
+                <span class="svc-title">Pólizas de Soporte Técnico Mensual</span>
+                <span class="svc-sub">Soporte y cursos ilimitados, desarrollos y más. Todo firmado por contrato.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
 
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
-          <div class="svc-text">
-            <span class="svc-title">Hora de soporte y soporte sin costo</span>
-            <span class="svc-sub">Atención por evento vía AnyDesk.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
-        
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
-          <div class="svc-text">
-            <span class="svc-title">Cursos por sistema CONTPAQi</span>
-            <span class="svc-sub">Contabilidad, Bancos, Nóminas, Comercial, nube, etc.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+              <div class="svc-text">
+                <span class="svc-title">Hora de soporte y soporte sin costo</span>
+                <span class="svc-sub">Atención por evento vía AnyDesk.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
+            
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+              <div class="svc-text">
+                <span class="svc-title">Cursos por sistema CONTPAQi</span>
+                <span class="svc-sub">Contabilidad, Bancos, Nóminas, Comercial, nube, etc.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
 
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
-          <div class="svc-text">
-            <span class="svc-title">Instalaciones</span>
-            <span class="svc-sub">En otro equipo o nuevas versiones.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
-        
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
-          <div class="svc-text">
-            <span class="svc-title">Migración de equipo</span>
-            <span class="svc-sub">Mueve tu sistema CONTPAQi a otro equipo.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+              <div class="svc-text">
+                <span class="svc-title">Instalaciones</span>
+                <span class="svc-sub">En otro equipo o nuevas versiones.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
+            
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+              <div class="svc-text">
+                <span class="svc-title">Migración de equipo</span>
+                <span class="svc-sub">Mueve tu sistema CONTPAQi a otro equipo.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
 
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
-          <div class="svc-text">
-            <span class="svc-title">Migración y conversión de datos a CONTPAQi</span>
-            <span class="svc-sub">De otros sistemas a CONTPAQi.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
-      </ul>
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+              <div class="svc-text">
+                <span class="svc-title">Migración y conversión de datos a CONTPAQi</span>
+                <span class="svc-sub">De otros sistemas a CONTPAQi.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
+          </ul>
 
-      <!-- Columna 2: Reportes, formatos, cursos, desarrollos, etc. -->
-      <ul class="svc-list">
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
-          <div class="svc-text">
-            <span class="svc-title">Contabilización por empresa</span>
-            <span class="svc-sub">Procesos contables recurrentes por compañía.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
+          <!-- Columna 2 -->
+          <ul class="svc-list">
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+              <div class="svc-text">
+                <span class="svc-title">Contabilización por empresa</span>
+                <span class="svc-sub">Procesos contables recurrentes por compañía.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
 
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
-          <div class="svc-text">
-            <span class="svc-title">Adecuación de formatos PDF</span>
-            <span class="svc-sub">Formatos amigables de facturas, cotizaciones, tickets, etc.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+              <div class="svc-text">
+                <span class="svc-title">Adecuación de formatos PDF</span>
+                <span class="svc-sub">Formatos amigables de facturas, cotizaciones, tickets, etc.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
 
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
-          <div class="svc-text">
-            <span class="svc-title">Reportes personalizados</span>
-            <span class="svc-sub">Indicadores y listados hechos a tu medida.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+              <div class="svc-text">
+                <span class="svc-title">Reportes personalizados</span>
+                <span class="svc-sub">Indicadores y listados hechos a tu medida.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
 
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
-          <div class="svc-text">
-            <span class="svc-title">Capacitaciones por rol</span>
-            <span class="svc-sub">Sesiones por persona o equipo según funciones.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+              <div class="svc-text">
+                <span class="svc-title">Capacitaciones por rol</span>
+                <span class="svc-sub">Sesiones por persona o equipo según funciones.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
 
-        <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
-          <div class="svc-text">
-            <span class="svc-title">Desarrollos a tu medida</span>
-            <span class="svc-sub">Soluciones específicas sobre el ecosistema CONTPAQi.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
+              <div class="svc-text">
+                <span class="svc-title">Desarrollos a tu medida</span>
+                <span class="svc-sub">Soluciones específicas sobre el ecosistema CONTPAQi.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
 
-        <li class="svc-link"
-            data-url="https://wa.me/5568437918?text=Hola%21%20Estoy%20buscando%20un%20servicio%20que%20no%20encontr%C3%A9%20en%20su%20p%C3%A1gina.%20Necesito%3A">
-          <div class="svc-text">
-            <span class="svc-title">¡Y más!</span>
-            <span class="svc-sub">Cuéntanos tus requerimientos en CONTPAQi.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
+            <li class="svc-link"
+                data-url="https://wa.me/5568437918?text=Hola%21%20Estoy%20buscando%20un%20servicio%20que%20no%20encontr%C3%A9%20en%20su%20p%C3%A1gina.%20Necesito%3A">
+              <div class="svc-text">
+                <span class="svc-title">¡Y más!</span>
+                <span class="svc-sub">Cuéntanos tus requerimientos en CONTPAQi.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
     <!-- TOC -->
     <aside class="toc collapsed" id="toc" aria-live="polite">
@@ -408,7 +465,6 @@
   <!-- Footer dinámico -->
   <div id="footer-placeholder"></div>
 
- <script src="../mainservicios.js" defer></script>
-
+  <script src="../mainservicios.js" defer></script>
 </body>
 </html>
