@@ -1,10 +1,9 @@
 /* =========================================================
-   Expiriti - main.css v2 (Personia / Sistemas)
-   Núcleo de UI: tokens, layout, header/footer, carruseles,
-   videos, tablas, FAQ, TOC y calculadoras.
+   Expiriti - main.css v3
+   Modernizado con "Expiriti Glow" para sistemas / Personia
    ========================================================= */
 
-/* ---------- Tema / Variables ---------- */
+/* ---------- Tokens ---------- */
 :root{
   --bg:#0b0f14;
   --bg-2:#0d1219;
@@ -46,7 +45,7 @@ img,video,iframe{max-width:100%;display:block;height:auto}
 a{color:inherit;text-decoration:none}
 .container{max-width:var(--maxw);margin:0 auto;padding:0 34px}
 
-/* ---------- Tipografía y badges ---------- */
+/* Tipografía */
 h1{font-size:clamp(28px,3.4vw,42px);line-height:1.1;margin:8px 0 14px}
 h2{font-size:clamp(22px,2.4vw,30px);margin:0 0 10px}
 h3{font-size:clamp(18px,2vw,22px);margin:0 0 10px}
@@ -54,6 +53,7 @@ h4{margin:0 0 8px}
 .lead{color:#c6d1e3;font-size:18px;max-width:68ch}
 .hint{color:#aebbd0;opacity:.9}
 
+/* Badges / títulos */
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
 .badge{
   display:inline-block;
@@ -64,14 +64,12 @@ h4{margin:0 0 8px}
   color:#cfe3ff;
   font-size:12px;
 }
-
 .title-gradient{
   background:linear-gradient(90deg,var(--brand),var(--brand-2));
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
 }
-
 .lock-note{
   margin:8px 0 0;
   font-size:12px;
@@ -81,13 +79,12 @@ h4{margin:0 0 8px}
   align-items:center;
 }
 .lock-note::before{content:"⚠️";}
-
 section{
   padding:26px 0;
   border-top:1px solid #11182725;
 }
 
-/* ---------- Layout helpers ---------- */
+/* Layout helpers */
 .grid-2{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -95,7 +92,6 @@ section{
   align-items:start;
 }
 .grid-2.align-center{align-items:center}
-
 .grid-3{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -143,7 +139,7 @@ nav a:hover{opacity:1}
 .cta{display:flex;gap:10px;align-items:center}
 .burger{display:none}
 
-/* ---------- Botones ---------- */
+/* Botones */
 .btn{
   display:inline-flex;
   align-items:center;
@@ -194,24 +190,27 @@ nav a:hover{opacity:1}
   mask-composite:exclude;
 }
 
-/* ---------- Hero ---------- */
-.hero{padding:26px 0 0}
-.hero-btn{
-  transition:transform .2s ease,
-             box-shadow .2s ease,
-             background .2s ease,
-             border-color .2s ease;
+/* Hover “premium” para CTAs clave */
+.hero-btn,
+#sesion-guiada .btn.btn-grad-green,
+#sesion-guiada .btn.btn-grad-blue{
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease,
+    filter .16s ease,
+    background .16s ease,
+    border-color .16s ease;
 }
-.hero-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 26px rgba(0,0,0,.35);
+.hero-btn:hover,
+#sesion-guiada .btn.btn-grad-green:hover,
+#sesion-guiada .btn.btn-grad-blue:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 30px rgba(0,0,0,.45);
+  filter:brightness(1.05);
 }
-.hero-btn.btn-grad-green:hover{box-shadow:0 10px 26px rgba(34,197,94,.3)}
-.hero-btn.btn-grad-purple:hover{box-shadow:0 10px 26px rgba(168,85,247,.3)}
-.hero-btn.btn-grad-blue:hover{box-shadow:0 10px 26px rgba(59,130,246,.3)}
-.hero-btn.btn-ghost:hover{background:#192636;border-color:#2a3c52}
 
-/* ---------- Hero 3 columnas + PDF ---------- */
+/* Hero + PDF */
+.hero{padding:26px 0 0}
 .hero-3col{
   display:grid;
   grid-template-columns:280px 1.55fr 1.05fr;
@@ -241,11 +240,11 @@ nav a:hover{opacity:1}
 }
 
 /* =========================================================
-   Cards
+   Cards base
    ========================================================= */
 
 .card{
-  background:var(--card);
+  background:linear-gradient(135deg,#0f1622,#0f1724);
   border:1px solid #1c2533;
   border-radius:16px;
   overflow:hidden;
@@ -340,7 +339,7 @@ nav a:hover{opacity:1}
 }
 .carouselX .sys{
   flex:0 0 calc((100% - 28px)/3);
-  background:#0f1622;
+  background:linear-gradient(135deg,#0f1622,#0f1724);
   border:1px solid #1c2533;
   border-radius:16px;
   padding:18px;
@@ -352,12 +351,14 @@ nav a:hover{opacity:1}
   cursor:pointer;
   transition:
     background .18s ease,
-    transform .18s ease,
-    border-color .18s ease;
+    border-color .18s ease,
+    box-shadow .18s ease,
+    transform .12s ease;
 }
 .carouselX .sys:hover{
-  background:#0f1c2c;
-  border-color:#274061;
+  background:radial-gradient(circle at top left,rgba(96,165,250,.18),#0f1724);
+  border-color:var(--brand-2,#60a5fa);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
   transform:translateY(-2px);
 }
 .carouselX .sys img{
@@ -370,12 +371,12 @@ nav a:hover{opacity:1}
 }
 .carouselX .sys h4{
   margin:8px 0 6px;
-  font-size:17px;
+  font-size:14px;               /* alineado con servicios */
 }
 .carouselX .sys p{
   margin:0;
   color:#b9c8de;
-  font-size:14px;
+  font-size:13px;
   line-height:1.35;
 }
 
@@ -399,7 +400,7 @@ nav a:hover{opacity:1}
   opacity:1;
 }
 
-/* Flechas reutilizadas dentro de .carouselX */
+/* Flechas dentro de .carouselX */
 .carouselX .arrowCircle{
   position:absolute;
   top:50%;
@@ -425,10 +426,9 @@ nav a:hover{opacity:1}
 }
 
 /* =========================================================
-   Reels & YouTube grid
+   Reels & YouTube
    ========================================================= */
 
-/* Reels vertical tipo 9:16 */
 .reel-embed{
   position:relative;
   width:min(380px,100%) !important;
@@ -458,7 +458,7 @@ nav a:hover{opacity:1}
 }
 .reel-title.active{display:block}
 
-/* Grid base de videos */
+/* Grid videos */
 .yt-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -471,13 +471,13 @@ nav a:hover{opacity:1}
 }
 .yt{width:100%}
 
-/* Contenedor del video (ratio 16:9) */
+/* Contenedor 16:9 */
 .yt-wrap{
   position:relative;
   width:100%;
   max-width:960px;
   margin:0 auto;
-  padding-bottom:56.25%; /* 16:9 */
+  padding-bottom:56.25%;
   height:0;
   border-radius:12px;
   overflow:hidden;
@@ -494,7 +494,7 @@ nav a:hover{opacity:1}
   border:0;
 }
 
-/* Título de video */
+/* Títulos video */
 .yt-title{
   font-size:15px;
   font-weight:600;
@@ -507,7 +507,7 @@ nav a:hover{opacity:1}
   justify-content:center;
 }
 
-/* Variante de un solo video centrado (Analiza, etc.) */
+/* 1 solo video centrado */
 .yt-grid-single{
   grid-template-columns:minmax(0,480px);
   justify-content:center;
@@ -516,7 +516,7 @@ nav a:hover{opacity:1}
   .yt-grid-single{grid-template-columns:1fr}
 }
 
-/* Ajustes específicos para el carrusel de videos, si se usa */
+/* Carrusel de videos */
 #carouselVideos .carousel-slide{
   padding:0 50px;
   box-sizing:border-box;
@@ -526,7 +526,7 @@ nav a:hover{opacity:1}
 }
 
 /* =========================================================
-   ListSlider (Por qué usar... / Beneficios)
+   ListSlider / “Por qué usar...”
    ========================================================= */
 
 .listSlider{
@@ -551,15 +551,21 @@ nav a:hover{opacity:1}
   grid-template-columns:84px 1fr;
   gap:14px;
   align-items:center;
-  background:#0f1c2c;
-  border:1px solid #152437;
+  background:linear-gradient(135deg,#0f1622,#0f1724);
+  border:1px solid #1c2533;
   border-radius:14px;
   margin:10px 4px;
   padding:14px;
-  transition:border-color .15s ease,transform .12s ease;
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    transform .12s ease;
 }
 .listItem:hover{
-  border-color:#254064;
+  background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);
+  border-color:var(--brand-2,#60a5fa);
+  box-shadow:0 10px 26px rgba(0,0,0,.35);
   transform:translateY(-1px);
 }
 .listIcon{
@@ -575,6 +581,16 @@ nav a:hover{opacity:1}
   width:84px;
   height:84px;
   object-fit:cover;
+}
+
+/* Tipografía alineada con servicios */
+.listItem strong{
+  font-size:14px;
+}
+.listItem div>div{
+  font-size:13px;
+  color:#b9c8de;
+  line-height:1.35;
 }
 
 /* =========================================================
@@ -608,7 +624,7 @@ nav a:hover{opacity:1}
   border:none;
 }
 
-/* Grid de funciones */
+/* Feature grid */
 .feature-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -623,16 +639,21 @@ nav a:hover{opacity:1}
 .fcard{
   border:1px solid #1e2b3c;
   border-radius:12px;
-  background:linear-gradient(180deg,#0f1622,#0f1724);
+  background:linear-gradient(135deg,#0f1622,#0f1724);
   padding:12px;
   display:grid;
   gap:6px;
-  transition:transform .12s ease,box-shadow .12s ease,border-color .15s ease;
+  transition:
+    background .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease,
+    transform .12s ease;
 }
 .fcard:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 18px rgba(0,0,0,.22);
-  border-color:#284061;
+  background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);
+  border-color:var(--brand-2,#60a5fa);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  transform:translateY(-2px);
 }
 .fhead{
   display:flex;
@@ -660,7 +681,7 @@ nav a:hover{opacity:1}
 }
 
 /* =========================================================
-   Tablas (Precios, Comparativas)
+   Tablas (precios / comparativas)
    ========================================================= */
 
 .pricing-table-nube{
@@ -720,6 +741,19 @@ nav a:hover{opacity:1}
   font-weight:700;
 }
 
+/* Hover glow por fila (comparativa) */
+.table-like tbody tr{
+  transition:
+    background .16s ease,
+    box-shadow .16s ease,
+    transform .12s ease;
+}
+.table-like tbody tr:hover{
+  background:radial-gradient(circle at top left,rgba(96,165,250,.13),#020617);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  transform:translateY(-1px);
+}
+
 /* =========================================================
    FAQ
    ========================================================= */
@@ -742,8 +776,18 @@ nav a:hover{opacity:1}
   display:flex;
   align-items:center;
   gap:8px;
+  transition:
+    background .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease,
+    transform .12s ease;
 }
 .faq-item>summary::marker{display:none}
+.faq-item>summary:hover{
+  background:radial-gradient(circle at top left,rgba(96,165,250,.14),#020617);
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  transform:translateY(-1px);
+}
 .faq-item[open]>summary{
   background:#0e1724;
   border-bottom:1px solid #1e2b3c;
@@ -755,7 +799,7 @@ nav a:hover{opacity:1}
 }
 
 /* =========================================================
-   TOC flotante
+   TOC
    ========================================================= */
 
 .toc{
@@ -827,7 +871,6 @@ footer{
   font-size:14px;
 }
 .item .ico{width:22px}
-
 .payments-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -878,7 +921,7 @@ footer{
 }
 
 /* =========================================================
-   Calculadora NUBE (estructura + tabla)
+   Calculadora NUBE
    ========================================================= */
 
 .calc-nube .grid-nube{
@@ -926,7 +969,7 @@ footer{
 .calc-nube-table tr:last-child td{border-bottom:none}
 
 /* =========================================================
-   Calculadora Escritorio — contenedores e iconos
+   Calculadora Escritorio
    ========================================================= */
 
 .calc-strip{
@@ -948,7 +991,7 @@ footer{
 }
 
 .calc-container{
-  background:var(--card);
+  background:linear-gradient(135deg,#0f1622,#0f1724);
   border:1px solid #1c2533;
   border-radius:16px;
   padding:14px;
@@ -971,7 +1014,7 @@ footer{
 }
 .placeholder .note{max-width:50ch}
 
-/* Carril de iconos (picker) */
+/* Carril de iconos */
 .icons-wrap,
 .calc-container .icons-wrap{
   display:flex !important;
@@ -1050,7 +1093,7 @@ footer{
   font-size:10px;
 }
 
-/* Card totales combinado */
+/* Totales combinados */
 .combined-card{
   background:#0f1622;
   border:1px solid #1c2533;
@@ -1074,8 +1117,7 @@ footer{
 }
 .combined-table tr:last-child td{border-bottom:none}
 
-/* ---------- Inputs dentro de calculadora ---------- */
-
+/* Inputs */
 .calc-container select,
 .calc-container input[type="number"],
 .calc-container input[type="text"]{
@@ -1095,8 +1137,7 @@ footer{
   font-size:13px;
 }
 
-/* ---------- Layout 2×2 estable (lic / RFC / usuarios / instalación) ---------- */
-
+/* 2×2 estable */
 .calc-container form{
   display:grid !important;
   grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;
@@ -1109,14 +1150,14 @@ footer{
 .calc-container .field.lic{grid-column:1 !important}
 .calc-container .field.rfc{grid-column:2 !important}
 
-/* Operación tradicional (fila completa) */
+/* Operación (fila completa) */
 .calc-container .op-label{grid-column:1 / -1 !important}
 
 /* Fila 2 */
 .calc-container .field.usr{grid-column:1 !important}
 .calc-container .inst-wrap{grid-column:2 !important}
 
-/* Píldora de instalación */
+/* Píldora instalación */
 .calc-container .instalacion-box{
   display:flex !important;
   align-items:center !important;
@@ -1141,7 +1182,7 @@ footer{
   line-height:1.25;
 }
 
-/* Tablas/subtotales dentro de calculadora */
+/* Tablas dentro de calculadora */
 .calc-container table{
   width:100%;
   max-width:640px;
@@ -1175,8 +1216,7 @@ footer{
   text-align:right;
 }
 
-/* ---------- Modos: nube / escritorio ---------- */
-
+/* Modos nube/escritorio */
 #calc-primary{display:block !important}
 .nube-only{display:none}
 .desk-only{display:none}
@@ -1201,9 +1241,7 @@ body[data-calc="escritorio"] #add-more-panel,
 body[data-calc="escritorio"] #combined-wrap,
 body[data-calc="escritorio"] .icons-wrap{display:initial}
 
-/* ---------- Centrado vertical de pickers con :has ---------- */
-
-/* Navegadores modernos */
+/* Centrados con :has */
 .calc-container:has(> .icons-wrap):not(:has(form, .calc-nube)),
 .calc-container:has(> h4 + .icons-wrap):not(:has(form, .calc-nube)){
   display:flex !important;
@@ -1217,7 +1255,7 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   padding-inline:16px;
 }
 
-/* Fallback sin :has (Firefox antiguo, etc.) */
+/* Fallback sin :has */
 @supports not (selector(:has(*))) {
   #calc-secondary,
   #calc-tertiary{
