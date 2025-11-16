@@ -1,5 +1,5 @@
 /* =========================================================
-   Expiriti - main.css v3
+   Expiriti - main.css v4
    Modernizado con "Expiriti Glow" para sistemas / Personia
    ========================================================= */
 
@@ -209,6 +209,25 @@ nav a:hover{opacity:1}
   filter:brightness(1.05);
 }
 
+/* =========================================================
+   Focus states globales accesibles
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+.btn:focus-visible,
+.pill:focus-visible,
+.svc-link:focus-visible,
+.dot:focus-visible,
+.arrowCircle:focus-visible,
+.fcard:focus-visible,
+.sys-icon:focus-visible{
+  outline:2px solid var(--brand);
+  outline-offset:2px;
+  box-shadow:0 0 0 1px var(--brand);
+}
+
 /* Hero + PDF */
 .hero{padding:26px 0 0}
 .hero-3col{
@@ -371,7 +390,7 @@ nav a:hover{opacity:1}
 }
 .carouselX .sys h4{
   margin:8px 0 6px;
-  font-size:14px;               /* alineado con servicios */
+  font-size:14px;
 }
 .carouselX .sys p{
   margin:0;
@@ -583,7 +602,7 @@ nav a:hover{opacity:1}
   object-fit:cover;
 }
 
-/* Tipografía alineada con servicios */
+/* Tipografía alineada */
 .listItem strong{
   font-size:14px;
 }
@@ -1273,6 +1292,18 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
 }
 
 /* =========================================================
+   Interacción: scroll suave en carruseles / carriles
+   ========================================================= */
+
+.carousel-track,
+.carouselX .track,
+.icons-wrap{
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  overscroll-behavior-x:contain;
+}
+
+/* =========================================================
    Responsive global
    ========================================================= */
 
@@ -1321,123 +1352,77 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   }
   .calc-container .instalacion-box{flex-wrap:wrap}
 }
+
 /* =========================================================
    Ajustes extra responsive — mobile / tablet
-   (añadir al final de mainservicios.css)
    ========================================================= */
 
-/* Desktop grande → un poco más de aire lateral */
-@media (min-width: 1280px){
+/* Desktop grande */
+@media (min-width:1280px){
   .container{
-    max-width: 1200px;
-    padding-inline: 40px;
+    max-width:1200px;
+    padding-inline:40px;
   }
 }
 
 /* Tablets horizontales (iPad) */
-@media (max-width: 1024px){
-  body{
-    scroll-padding-top: 76px;
-  }
-  .container{
-    padding-inline: 24px;
-  }
-
-  /* Hero más compacto */
-  .hero{
-    padding-top: 20px;
-  }
-
-  /* Texto no tan ancho para que sea más legible */
-  .lead{
-    max-width: 60ch;
-  }
-
-  /* Cards respiran un poco más */
-  .card .body{
-    padding: 14px;
-  }
+@media (max-width:1024px){
+  body{scroll-padding-top:76px;}
+  .container{padding-inline:24px;}
+  .hero{padding-top:20px;}
+  .lead{max-width:60ch;}
+  .card .body{padding:14px;}
 }
 
 /* Móvil estándar (≤ 768px) */
-@media (max-width: 768px){
-  body{
-    scroll-padding-top: 68px;
-  }
+@media (max-width:768px){
+  body{scroll-padding-top:68px;}
+  .container{padding-inline:16px;}
 
-  .container{
-    padding-inline: 16px;
-  }
+  h1{font-size:clamp(24px,7vw,30px);}
+  h2{font-size:clamp(18px,5.5vw,24px);}
 
-  h1{
-    font-size: clamp(24px, 7vw, 30px);
-  }
-  h2{
-    font-size: clamp(18px, 5.5vw, 24px);
-  }
+  section{padding:20px 0;}
 
-  /* Secciones un poco más compactas */
-  section{
-    padding: 20px 0;
-  }
-
-  /* Grids a 1 columna */
   .grid-2,
   .grid-3,
   .feature-grid{
-    grid-template-columns: 1fr;
+    grid-template-columns:1fr;
   }
 
-  /* Lista “por qué elegir nuestro soporte” → icono arriba, texto abajo */
   .listItem{
-    grid-template-columns: 1fr;
-    text-align: left;
+    grid-template-columns:1fr;
+    text-align:left;
   }
   .listIcon{
-    justify-self: flex-start;
+    justify-self:flex-start;
   }
 
-  /* Servicios complementarios: columnas a 1 */
-  .svc-grid{
-    grid-template-columns: 1fr;
-  }
-
-  /* Reels y videos: ancho completo */
   .reel-embed{
-    width: 100%;
-    max-width: 420px;
+    width:100%;
+    max-width:420px;
   }
   .yt{
-    max-width: 100%;
+    max-width:100%;
   }
 
-  /* TOC: ocupa casi todo el ancho y no estorba tanto */
   .toc{
-    right: 10px;
-    bottom: 10px;
-    width: 86vw;
+    right:10px;
+    bottom:10px;
+    width:86vw;
   }
 }
 
 /* Móviles pequeños (≤ 520px) */
-@media (max-width: 520px){
+@media (max-width:520px){
   .btn{
-    width: 100%;
-    justify-content: center;
+    width:100%;
+    justify-content:center;
   }
-
-  /* Píldoras en 2 filas más cómodas */
-  .pillbar{
-    gap: 8px;
-  }
+  .pillbar{gap:8px;}
   .pill{
-    font-size: 12px;
-    padding: 7px 10px;
+    font-size:12px;
+    padding:7px 10px;
   }
-
-  /* Cards con padding un pelín menor para que quepa todo */
-  .card .body{
-    padding: 10px;
-  }
+  .card .body{padding:10px;}
 }
-
