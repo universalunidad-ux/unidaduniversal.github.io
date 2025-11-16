@@ -220,6 +220,68 @@
       color:#0b0f14;
       border-color:transparent;
     }
+
+    /* Comparativa */
+    .table-like{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      border:1px solid #1e2b3c;
+      border-radius:12px;
+      overflow:hidden;
+      font-size:13px;
+    }
+    .table-like th,
+    .table-like td{
+      padding:10px 12px;
+      border-bottom:1px solid #1e2b3c;
+      vertical-align:top;
+    }
+    .table-like thead th{
+      background:#0e1724;
+      color:#dce8ff;
+      text-align:left;
+    }
+    .table-like tr:last-child td{
+      border-bottom:none;
+    }
+    .table-like .highlight{
+      background:rgba(45,212,191,.08);
+      font-weight:700;
+    }
+
+    /* FAQ */
+    .faq-wrap{
+      display:grid;
+      gap:10px;
+    }
+    .faq-item{
+      border:1px solid #1e2b3c;
+      border-radius:12px;
+      background:#0f1622;
+      overflow:hidden;
+    }
+    .faq-item > summary{
+      list-style:none;
+      cursor:pointer;
+      padding:12px 14px;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .faq-item > summary::marker{display:none}
+    .faq-item[open] > summary{
+      background:#0e1724;
+      border-bottom:1px solid #1e2b3c;
+    }
+    .faq-item p{
+      padding:12px 14px;
+      margin:0;
+      color:#cfe3ff;
+      font-size:14px;
+      line-height:1.45;
+    }
   </style>
 </head>
 <body id="top">
@@ -430,6 +492,115 @@
 
     </section>
 
+    <!-- COMPARATIVA -->
+    <section id="comparativa" aria-labelledby="comparativa-title">
+      <h3 id="comparativa-title" class="title-gradient">¿Por qué migrar con Expiriti?</h3>
+      <div class="card body">
+        <p class="note" style="margin-bottom:10px;">
+          Comparativa entre migrar con un <strong>partner especializado</strong>, hacerlo "a mano" en la empresa
+          y usar soporte genérico de TI.
+        </p>
+        <table class="table-like" aria-label="Comparativa de migraciones">
+          <thead>
+            <tr>
+              <th>Característica</th>
+              <th class="highlight">Expiriti (especializado CONTPAQi)</th>
+              <th>Migración interna “a mano”</th>
+              <th>Soporte TI genérico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Plan de trabajo y checklist</td>
+              <td class="highlight">✅ Procedimiento claro, requisitos por sistema y respaldo.</td>
+              <td>⚠️ Depende de la experiencia del usuario, no siempre hay guía.</td>
+              <td>❌ Se enfocan en servidores / Windows, no en procesos contables.</td>
+            </tr>
+            <tr>
+              <td>Validación de saldos y catálogos</td>
+              <td class="highlight">✅ Revisamos estructura contable y consistencia de saldos.</td>
+              <td>⚠️ Se suele revisar “a mano” y solo lo más visible.</td>
+              <td>❌ No verifican contabilidad, solo que “abra” el sistema.</td>
+            </tr>
+            <tr>
+              <td>Riesgo de pérdida de información</td>
+              <td class="highlight">✅ Respaldos previos y pruebas antes de operar en producción.</td>
+              <td>⚠️ Alto riesgo si se sobrescriben bases o se importan datos mal mapeados.</td>
+              <td>⚠️ Pueden mover carpetas o bases sin conocer la lógica de CONTPAQi.</td>
+            </tr>
+            <tr>
+              <td>Tiempo fuera de operación</td>
+              <td class="highlight">✅ Se agenda ventana y se minimiza el downtime.</td>
+              <td>⚠️ Se alarga por pruebas y correcciones improvisadas.</td>
+              <td>⚠️ Depende de su carga de soporte general.</td>
+            </tr>
+            <tr>
+              <td>Acompañamiento posterior</td>
+              <td class="highlight">✅ Soporte para dudas y ajustes post-migración.</td>
+              <td>❌ “Cada quien se adapta” a lo que quedó.</td>
+              <td>⚠️ Solo corrigen errores técnicos, no procesos.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" aria-labelledby="faq-title">
+      <h3 id="faq-title" class="title-gradient">Preguntas frecuentes sobre migraciones</h3>
+      <div class="card body">
+        <div class="faq-wrap" id="faqWrap">
+          <details class="faq-item" open>
+            <summary>¿Qué necesito preparar antes de una migración o conversión?</summary>
+            <p>
+              Principalmente: respaldos recientes de tus empresas (archivos FDB/FBK/BAK o carpetas completas
+              en sistemas antiguos), saber cuántas empresas vas a migrar y desde qué versión/sistema vienes
+              (ASPEL COI/NOI, Contafiscal, ContaSIX, etc.). Con eso diseñamos el plan de trabajo.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Se conserva el historial de años anteriores?</summary>
+            <p>
+              En la mayoría de los casos sí. Las conversiones se cotizan <strong>por empresa</strong> sin limitar
+              el número de ejercicios. Si hay restricciones por versión o formato te lo indicamos antes de avanzar,
+              para que sepas exactamente qué quedará disponible en CONTPAQi.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿La migración se puede hacer totalmente en remoto?</summary>
+            <p>
+              Sí. La mayoría de migraciones y conversiones las realizamos vía remota usando herramientas seguras.
+              Solo necesitamos acceso a tu servidor o equipo, y los respaldos listos. Si requieres visita en sitio,
+              también se puede cotizar por separado.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Intenté migrar por mi cuenta y ahora la base marca errores, ¿aún se puede rescatar?</summary>
+            <p>
+              Podemos hacer un <strong>diagnóstico de base de datos</strong>. En muchos casos se recupera la
+              información desde respaldos o se reprocessan catálogos y saldos. Si la base está dañada o incompleta,
+              te explicamos claramente las opciones antes de generar cualquier cargo.
+            </p>
+          </details>
+
+          <details class="faq-item">
+            <summary>¿Cómo se cobra: por hora, por empresa o por sistema?</summary>
+            <p>
+              Las <strong>conversiones y migraciones</strong> se cobran principalmente
+              <strong>por empresa</strong> y por tipo de sistema/versión. La
+              <strong>restauración de bases</strong> también se calcula por empresa
+              a restaurar. Si el proyecto incluye pasos adicionales (por ejemplo,
+              reconfiguración de formatos o conexiones remotas) se cotizan como servicios
+              extra, siempre por escrito y antes de comenzar.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA final -->
     <section class="card body" aria-label="Contacto">
       <h3 class="title-gradient">¿Necesitas migrar hoy?</h3>
@@ -480,7 +651,7 @@
     const footerURL = await pickFirst([
       "../PARTIALS/global-footer.html",
       "./PARTIALS/global-footer.html",
-      `${repoBase}/PARTIALS/global-footer.html`,
+      `${repoBase}/PARTIALS/global-footer.html",
       "/PARTIALS/global-footer.html"
     ]);
 
@@ -530,8 +701,9 @@
   })();
   </script>
 
-  <!-- Filtro de pills (sin scroll automático) -->
+  <!-- Filtro de pills (sin scroll automático) + FAQ acordeón -->
   <script>
+  // Filtro de grupos
   (function(){
     const pills = document.querySelectorAll('.pillbar .pill');
     const cards = document.querySelectorAll('.mig-card');
@@ -552,19 +724,30 @@
       pill.addEventListener('click', ()=>{
         pills.forEach(x=>x.classList.remove('active'));
         pill.classList.add('active');
-
         const group = pill.dataset.group || "";
         applyFilter(group);
-        // OJO: aquí ya NO hay scrollIntoView
       });
     });
 
-    // Filtro inicial
     const active = document.querySelector('.pillbar .pill.active') || pills[0];
     if (active){
       active.classList.add('active');
       applyFilter(active.dataset.group || "");
     }
+  })();
+
+  // FAQ: solo una abierta a la vez
+  (function(){
+    const wrap = document.getElementById('faqWrap');
+    if (!wrap) return;
+    const items = Array.from(wrap.querySelectorAll('.faq-item'));
+    items.forEach(it=>{
+      it.addEventListener('toggle', ()=>{
+        if (it.open){
+          items.forEach(o=>{ if (o !== it) o.removeAttribute('open'); });
+        }
+      });
+    });
   })();
   </script>
 </body>
