@@ -424,7 +424,7 @@
       </div>
     </section>
 
-    <!-- ===== Servicios Complementarios (reutilizable) ===== -->
+<!-- ===== Servicios Complementarios (reutilizable) ===== -->
 <section id="servicios-complementarios" aria-labelledby="relacionados">
   <h3 id="relacionados" class="title-gradient">Servicios complementarios</h3>
   <p class="hint" style="margin-top:4px;margin-bottom:10px;">
@@ -449,6 +449,15 @@
           <div class="svc-text">
             <span class="svc-title">Hora de soporte y soporte sin costo</span>
             <span class="svc-sub">Atención por evento vía AnyDesk.</span>
+          </div>
+          <span class="svc-pill">Ver más →</span>
+        </li>
+        
+        <li class="svc-link"
+            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+          <div class="svc-text">
+            <span class="svc-title">Cursos por sistema CONTPAQi</span>
+            <span class="svc-sub">Contabilidad, Bancos, Nóminas, Comercial, nube, etc.</span>
           </div>
           <span class="svc-pill">Ver más →</span>
         </li>
@@ -479,8 +488,10 @@
           </div>
           <span class="svc-pill">Ver más →</span>
         </li>
+      </ul>
 
-      <!-- Columna 2: Reportes, formatos, cursos, desarrollos -->
+      <!-- Columna 2: Reportes, formatos, cursos, desarrollos, etc. -->
+      <ul class="svc-list">
         <li class="svc-link"
             data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
           <div class="svc-text">
@@ -507,28 +518,30 @@
           </div>
           <span class="svc-pill">Ver más →</span>
         </li>
+
         <li class="svc-link"
             data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
           <div class="svc-text">
-            <span class="svc-title">Capacitación por persona</span>
-            <span class="svc-sub">Sesiones enfocadas en el rol de cada usuario.</span>
+            <span class="svc-title">Capacitaciones por rol</span>
+            <span class="svc-sub">Sesiones por persona o equipo según funciones.</span>
           </div>
           <span class="svc-pill">Ver más →</span>
         </li>
 
         <li class="svc-link"
-            data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
-          <div class="svc-text">
-            <span class="svc-title">Cursos por sistema CONTPAQi</span>
-            <span class="svc-sub">Contabilidad, Bancos, Nóminas, Comercial, nube, etc.</span>
-          </div>
-          <span class="svc-pill">Ver más →</span>
-        </li>
-        <li class="svc-link"
             data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
           <div class="svc-text">
             <span class="svc-title">Desarrollos a tu medida</span>
             <span class="svc-sub">Soluciones específicas sobre el ecosistema CONTPAQi.</span>
+          </div>
+          <span class="svc-pill">Ver más →</span>
+        </li>
+
+        <li class="svc-link"
+            data-url="https://wa.me/5568437918?text=Hola%21%20Estoy%20buscando%20un%20servicio%20que%20no%20encontr%C3%A9%20en%20su%20p%C3%A1gina.%20Necesito%3A">
+          <div class="svc-text">
+            <span class="svc-title">¡Y más!</span>
+            <span class="svc-sub">Cuéntanos tus requerimientos en CONTPAQi.</span>
           </div>
           <span class="svc-pill">Ver más →</span>
         </li>
@@ -580,20 +593,21 @@
     gap:2px;
     min-width:0;
   }
+  /* Tamaños de letra alineados a lo que vienes usando */
   .svc-title{
-    font-size:13px;
+    font-size:14px;
     font-weight:600;
     color:#e5efff;
   }
   .svc-sub{
-    font-size:12px;
+    font-size:13px;
     color:#9fb1cc;
     line-height:1.35;
   }
   .svc-pill{
     flex-shrink:0;
     align-self:center;
-    font-size:11px;
+    font-size:12px;
     border-radius:999px;
     padding:4px 9px;
     border:1px solid rgba(96,165,250,.3);
@@ -616,7 +630,7 @@
     background:rgba(15,23,42,.95);
     border-color:rgba(96,165,250,.9);
   }
-  /* Estado focus accesible si un día vuelves esto navegable con teclado */
+  /* Focus accesible por si luego lo haces navegable con teclado */
   .svc-link:focus-visible{
     outline:none;
     border-color:var(--brand,#2dd4bf);
@@ -635,6 +649,7 @@
     });
   })();
 </script>
+
 
     <!-- TOC -->
     <aside class="toc collapsed" id="toc" aria-live="polite">
