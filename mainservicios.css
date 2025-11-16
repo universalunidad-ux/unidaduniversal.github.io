@@ -1,7 +1,8 @@
- /* =========================================================
+/* =========================================================
    Expiriti - mainservicios.css
    Servicios: Soporte, Pólizas, Cursos, Migraciones, etc.
    UI/UX unificado + Glow premium
+   (Versión 3: refinada + scroll en carruseles)
    ========================================================= */
 
 /* ---------- Root / Tokens ---------- */
@@ -21,7 +22,7 @@
 
   --maxw:1200px;
 
-  /* Radios y sombras heredadas + nuevas semánticas */
+  /* Radios y sombras */
   --radius:14px;
   --radius-lg:16px;
   --radius-md:12px;
@@ -53,14 +54,11 @@ html,body{
   margin:0;
   height:100%;
 }
-
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  background:linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
   color:var(--text);
   scroll-padding-top:84px;
 }
@@ -85,31 +83,25 @@ img,video,iframe{
 /* =========================================================
    Tipografía / Layout
    ========================================================= */
-
-.hero{
-  padding:26px 0 0;
-}
+.hero{padding:26px 0 0}
 
 h1{
   font-size:clamp(28px,3.4vw,42px);
   line-height:1.1;
   margin:8px 0 14px;
 }
-
-h2,h3,h4{
+h2{
+  font-size:clamp(22px,2.5vw,32px);
   margin:0 0 10px;
 }
+h3,h4{margin:0 0 10px}
 
 .lead{
   color:#c6d1e3;
-  font-size:18px;
+  font-size:clamp(16px,1.2vw + 1px,18px);
   max-width:68ch;
 }
-
-.hint{
-  color:#aebbd0;
-  opacity:.9;
-}
+.hint{color:#aebbd0;opacity:.9}
 
 .title-gradient{
   background:linear-gradient(90deg,var(--brand),var(--brand-2));
@@ -144,9 +136,7 @@ h2,h3,h4{
   gap:6px;
   align-items:center;
 }
-.lock-note::before{
-  content:"⚠️";
-}
+.lock-note::before{content:"⚠️";}
 
 /* Secciones */
 section{
@@ -161,18 +151,13 @@ section{
   gap:14px;
   align-items:start;
 }
-.grid-2.align-center{
-  align-items:center;
-}
+.grid-2.align-center{align-items:center}
 .grid-3{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:14px;
 }
-.stack{
-  display:grid;
-  gap:12px;
-}
+.stack{display:grid;gap:12px}
 .stack-left{
   display:grid;
   gap:10px;
@@ -189,10 +174,8 @@ section{
 /* =========================================================
    Cards
    ========================================================= */
-
-/* Card base */
 .card{
-  background:radial-gradient(circle at top left, rgba(15,23,42,.85), #0b1018);
+  background:radial-gradient(circle at top left,rgba(15,23,42,.85),#0b1018);
   border-radius:var(--radius-lg);
   border:1px solid var(--border-subtle);
   box-shadow:var(--shadow-soft);
@@ -202,7 +185,7 @@ section{
   color:#c8d3e5;
 }
 
-/* Card interactiva genérica (si la necesitas) */
+/* Card interactiva genérica */
 .card--interactive{
   position:relative;
   background:linear-gradient(135deg,var(--surface-base),var(--surface-elevated));
@@ -225,7 +208,6 @@ section{
 /* =========================================================
    Botones
    ========================================================= */
-
 .btn{
   display:inline-flex;
   align-items:center;
@@ -247,7 +229,6 @@ section{
     transform var(--transition-fast),
     filter var(--transition-fast);
 }
-
 .btn-grad-green{
   background:linear-gradient(145deg,#16a34a,#22c55e);
   color:#0b0f14;
@@ -287,34 +268,29 @@ section{
 }
 
 /* Hero buttons */
-.hero-btn{
-  transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .2s ease;
-}
+.hero-btn{}
 .hero-btn:hover{
   transform:translateY(-3px);
-  box-shadow:0 10px 26px rgba(0,0,0,.35);
+  box-shadow:var(--shadow-soft);
 }
 .hero-btn.btn-grad-green:hover{box-shadow:0 10px 26px rgba(34,197,94,.3)}
 .hero-btn.btn-grad-purple:hover{box-shadow:0 10px 26px rgba(168,85,247,.3)}
 .hero-btn.btn-grad-blue:hover{box-shadow:0 10px 26px rgba(59,130,246,.3)}
 .hero-btn.btn-ghost:hover{background:#192636;border-color:#2a3c52}
 
-/* CTA sección “¿Tu sistema CONTPAQi está fallando?” */
-#sesion-guiada .btn.btn-grad-green,
-#sesion-guiada .btn.btn-grad-blue{
+/* Botón con hover elevado reutilizable */
+.btn--elevated-hover{
   box-shadow:var(--shadow-soft);
 }
-#sesion-guiada .btn.btn-grad-green:hover,
-#sesion-guiada .btn.btn-grad-blue:hover{
+.btn--elevated-hover:hover{
   transform:translateY(-2px);
   box-shadow:var(--shadow-elevated);
   filter:brightness(1.05);
 }
 
 /* =========================================================
-   Carrusel genérico (.carousel) — Reels, etc.
+   Carrusel genérico (.carousel)
    ========================================================= */
-
 .carousel{
   position:relative;
   border-radius:var(--radius);
@@ -326,7 +302,9 @@ section{
 .carousel-track{
   display:flex;
   scroll-snap-type:x mandatory;
-  overflow-x:auto;
+  overflow-x:auto;             /* permite scroll horizontal */
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
   scroll-behavior:smooth;
   height:calc(100% - 38px);
 }
@@ -381,7 +359,9 @@ section{
 .arrowCircle.next{right:8px}
 .arrowCircle .chev{font-size:24px;line-height:1}
 
-/* Carrusel horizontal de sistemas (.carouselX) */
+/* =========================================================
+   Carrusel horizontal de sistemas (.carouselX)
+   ========================================================= */
 .carouselX{
   position:relative;
   border-radius:var(--radius-lg);
@@ -393,9 +373,12 @@ section{
 .carouselX .track{
   display:flex;
   gap:12px;
-  overflow:hidden;
+  overflow-x:auto;                  /* ← scroll horizontal habilitado */
+  overflow-y:hidden;
   padding:4px;
   min-height:220px;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
 }
 .carouselX .sys{
   flex:0 0 calc((100% - 24px)/3);
@@ -440,7 +423,6 @@ section{
 /* =========================================================
    Pricing / Tablas
    ========================================================= */
-
 .pricing-table-nube{
   width:100%;
   max-width:960px;
@@ -463,9 +445,7 @@ section{
   color:#dce8ff;
   font-size:16px;
 }
-.pricing-table-nube tbody tr:last-child td{
-  border-bottom:none;
-}
+.pricing-table-nube tbody tr:last-child td{border-bottom:none}
 .pricing-table-nube td:nth-child(2),
 .pricing-table-nube td:nth-child(3){
   text-align:left;
@@ -510,9 +490,7 @@ section{
   padding:12px 14px;
   border-bottom:1px solid #1e2b3c;
 }
-.table-like tr:last-child td{
-  border-bottom:none;
-}
+.table-like tr:last-child td{border-bottom:none}
 .table-like thead th{
   background:#0e1724;
   color:#dce8ff;
@@ -523,24 +501,22 @@ section{
   font-weight:700;
 }
 
-/* Hover fila comparativa */
-#comparativa .table-like tbody tr{
+/* Hover opcional por fila (añadir clase table-like--hoverable en HTML) */
+.table-like--hoverable tbody tr{
   transition:
     background var(--transition-med),
     box-shadow var(--transition-med),
     transform var(--transition-fast);
-  cursor:default;
 }
-#comparativa .table-like tbody tr:hover{
+.table-like--hoverable tbody tr:hover{
   background:radial-gradient(circle at top left,rgba(96,165,250,.13),#020617);
-  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  box-shadow:var(--shadow-elevated);
   transform:translateY(-1px);
 }
 
 /* =========================================================
    TOC flotante
    ========================================================= */
-
 .toc{
   position:fixed;
   right:16px;
@@ -569,9 +545,7 @@ section{
 }
 .toc.collapsed .toc-title,
 .toc.collapsed a,
-.toc.collapsed .toc-close{
-  display:none;
-}
+.toc.collapsed .toc-close{display:none}
 .toc-title{
   font-weight:800;
   color:#b9c8de;
@@ -591,12 +565,10 @@ section{
 /* =========================================================
    FAQ
    ========================================================= */
-
 .faq-wrap{
   display:grid;
   gap:10px;
 }
-
 .faq-item{
   border:1px solid #1e2b3c;
   border-radius:12px;
@@ -617,9 +589,7 @@ section{
   align-items:center;
   gap:8px;
 }
-.faq-item>summary::marker{
-  display:none;
-}
+.faq-item>summary::marker{display:none}
 .faq-item p{
   padding:12px 14px;
   margin:0;
@@ -633,16 +603,15 @@ section{
 .faq-item[open]>summary{
   border-bottom:1px solid #1e2b3c;
 }
-#faq .faq-item>summary:hover{
+.faq-item>summary:hover{
   background:radial-gradient(circle at top left,rgba(96,165,250,.14),#020617);
-  box-shadow:0 10px 24px rgba(0,0,0,.35);
+  box-shadow:var(--shadow-elevated);
   transform:translateY(-1px);
 }
 
 /* =========================================================
    Pills (filtros de servicios)
    ========================================================= */
-
 .pillbar{
   display:flex;
   flex-wrap:wrap;
@@ -673,18 +642,14 @@ section{
   border:none;
 }
 
-/* Feature grid (Nuestros servicios de soporte) */
+/* Feature grid */
 .feature-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:12px;
 }
-@media (max-width:980px){
-  .feature-grid{grid-template-columns:1fr 1fr}
-}
-@media (max-width:680px){
-  .feature-grid{grid-template-columns:1fr}
-}
+@media (max-width:980px){.feature-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:680px){.feature-grid{grid-template-columns:1fr}}
 
 .feature-grid .fcard{
   border-radius:var(--radius-md);
@@ -730,9 +695,8 @@ section{
 }
 
 /* =========================================================
-   Por qué elegir nuestro soporte (#beneficios)
+   Por qué elegir nuestro soporte (listSlider)
    ========================================================= */
-
 .listSlider{
   position:relative;
   border-radius:var(--radius-lg);
@@ -744,8 +708,10 @@ section{
 }
 .listTrack{
   display:flex;
-  overflow:hidden;
+  overflow-x:auto;                /* ← scroll horizontal */
+  overflow-y:hidden;
   scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
 }
 .listPage{
   min-width:100%;
@@ -797,25 +763,22 @@ section{
   color:#b9c8de;
   line-height:1.35;
 }
-#beneficios .arrowCircle{
+
+/* Flechas dentro de listSlider */
+.listSlider .arrowCircle{
   width:40px;
   height:40px;
 }
-#beneficios .arrowCircle .chev{
-  font-size:22px;
-}
+.listSlider .arrowCircle .chev{font-size:22px}
 
 /* =========================================================
-   Servicios complementarios (#servicios-complementarios)
+   Servicios complementarios
    ========================================================= */
-
-#servicios-complementarios .card.body{
-  padding:16px 14px;
-}
+#servicios-complementarios .card.body{padding:16px 14px}
 
 .svc-grid{
   display:grid;
-  grid-template-columns:repeat(2, minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:16px;
 }
 @media (max-width:980px){
@@ -830,7 +793,6 @@ section{
   gap:6px;
 }
 
-/* Estilo svc-link como patrón global */
 .svc-link{
   display:flex;
   align-items:flex-start;
@@ -848,15 +810,12 @@ section{
     box-shadow var(--transition-med),
     transform var(--transition-fast);
 }
-
 .svc-text{
   display:flex;
   flex-direction:column;
   gap:2px;
   min-width:0;
 }
-
-/* Tamaños de letra alineados a lo que vienes usando */
 .svc-title{
   font-size:14px;
   font-weight:600;
@@ -867,7 +826,6 @@ section{
   color:#9fb1cc;
   line-height:1.35;
 }
-
 .svc-pill{
   flex-shrink:0;
   align-self:center;
@@ -886,7 +844,6 @@ section{
     background var(--transition-med);
   white-space:nowrap;
 }
-
 .svc-link:hover{
   background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);
   border-color:var(--brand-2);
@@ -899,8 +856,6 @@ section{
   background:rgba(15,23,42,.95);
   border-color:rgba(96,165,250,.9);
 }
-
-/* Focus accesible */
 .svc-link:focus-visible{
   outline:none;
   border-color:var(--brand);
@@ -910,7 +865,6 @@ section{
 /* =========================================================
    YouTube grid + Reels
    ========================================================= */
-
 .yt-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -933,7 +887,7 @@ section{
   background:#0e1724;
 }
 
-/* Reels embebidos (vertical tipo reel) */
+/* Reels embebidos */
 .reel-embed{
   position:relative;
   width:min(480px,100%);
@@ -955,14 +909,11 @@ section{
 /* =========================================================
    Responsivo extra
    ========================================================= */
-
 @media (max-width:980px){
   .toc{
     right:10px;
     bottom:10px;
     width:86vw;
   }
-  .carousel{
-    min-height:360px;
-  }
+  .carousel{min-height:360px}
 }
