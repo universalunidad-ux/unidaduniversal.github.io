@@ -376,7 +376,7 @@
     
     // Crear portada
     const thumb = new Image();
-    thumb.src = `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`;
+    thumb.src = `https://i.ytimg.com/vi/${ytid}/maxresdefault.jpg`;
     thumb.alt = "Video thumbnail";
     thumb.style.cssText = "display:block;width:100%;height:100%;object-fit:cover;cursor:pointer;";
 
