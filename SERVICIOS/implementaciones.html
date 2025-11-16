@@ -51,14 +51,46 @@
     .btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
     .btn-ghost{background:#101826;color:#e8eef6}
     .req{font-size:12px;color:#aebbd0}
-    .pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
-    .pill{padding:8px 12px;border-radius:999px;border:1px solid #1c2533;background:linear-gradient(180deg,#0f1c2c,#0e1724);color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px}
+
+    /* Pills selector (3 filtros) */
+    .pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 18px}
+    .pill{padding:8px 14px;border-radius:999px;border:1px solid #1c2533;background:linear-gradient(180deg,#0f1c2c,#0e1724);color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;transition:background .15s ease, transform .12s ease, box-shadow .12s ease}
+    .pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
     .pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
     .hide{display:none !important}
     .toc{position:sticky;top:82px;margin-left:auto;max-width:260px}
     .toc .card{position:sticky;top:82px}
     .mini{font-size:12px;color:#9eb0c9}
     .icons-note{border:1px dashed #274261;background:#0c1422;color:#b7cae6;padding:10px;border-radius:12px;text-align:center}
+
+    /* Servicios complementarios: estilo link */
+    .svc-link{
+      position:relative;
+      cursor:pointer;
+      padding:6px 10px;
+      margin:4px 0;
+      border-radius:10px;
+      transition:background .15s ease,color .15s ease,transform .12s ease;
+    }
+    .svc-link .svc-more{
+      position:absolute;
+      right:10px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:12px;
+      color:var(--brand-2);
+      opacity:0;
+      transition:opacity .15s ease;
+      pointer-events:none;
+    }
+    .svc-link:hover{
+      background:rgba(37,99,235,.14);
+      color:#e6f2ff;
+      transform:translateY(-1px);
+    }
+    .svc-link:hover .svc-more{
+      opacity:1;
+    }
   </style>
 </head>
 <body id="top">
@@ -71,27 +103,16 @@
     <p class="lead">Paquetes claros, instalación correcta, formatos listos, CSD configurado, timbrado de prueba y <strong>capacitación</strong>. Todo para que empieces a operar sin fricción.</p>
     <div class="icons-note">Debajo de cada servicio, más adelante se colocarán <strong>íconos azules</strong> de los sistemas donde aplica (se hará en el index).</div>
 
-    <!-- Filtros rápidos -->
-    <div class="pillbar" role="tablist" aria-label="Filtrar por sistema">
-      <button class="pill active" data-filter="all">Todos</button>
-      <button class="pill" data-filter="Factura Electrónica">Factura Electrónica</button>
-      <button class="pill" data-filter="Punto de Venta">Punto de Venta</button>
-      <button class="pill" data-filter="Módulo de Ventas">Módulo de Ventas</button>
-      <button class="pill" data-filter="Comercial Start">Comercial Start</button>
-      <button class="pill" data-filter="Comercial Premium">Comercial Premium</button>
-      <button class="pill" data-filter="Vende">Vende</button>
-      <button class="pill" data-filter="Nóminas">Nóminas</button>
-      <button class="pill" data-filter="Contabilidad">Contabilidad</button>
-      <button class="pill" data-filter="Bancos">Bancos</button>
-      <button class="pill" data-filter="Personia">Personia</button>
-      <button class="pill" data-filter="Contabiliza">Contabiliza</button>
-      <button class="pill" data-filter="Analiza">Analiza</button>
-      <button class="pill" data-filter="Despachos">Despachos</button>
+    <!-- Filtros por tipo de proceso -->
+    <div class="pillbar" role="tablist" aria-label="Filtrar por tipo de proceso">
+      <button class="pill active" data-filter="comerciales">Procesos comerciales</button>
+      <button class="pill" data-filter="contables">Procesos contables</button>
+      <button class="pill" data-filter="nube">Sistemas en la nube</button>
     </div>
 
     <section class="grid-3" id="impGrid" aria-label="Listado de implementaciones">
       <!-- ===== Factura Electrónica ===== -->
-      <article class="imp-card" data-sistema="Factura Electrónica">
+      <article class="imp-card" data-sistema="Factura Electrónica" data-tipo="comerciales">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/facturaelectronica.webp" alt="Factura Electrónica">
           <h4>Implementación Factura Electrónica</h4>
@@ -112,7 +133,7 @@
       </article>
 
       <!-- ===== Punto de Venta (resumen) ===== -->
-      <article class="imp-card" data-sistema="Punto de Venta">
+      <article class="imp-card" data-sistema="Punto de Venta" data-tipo="comerciales">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/puntoventa.webp" alt="Punto de Venta">
           <h4>Implementación Punto de Venta</h4>
@@ -133,7 +154,7 @@
       </article>
 
       <!-- ===== Módulo de Ventas ===== -->
-      <article class="imp-card" data-sistema="Módulo de Ventas">
+      <article class="imp-card" data-sistema="Módulo de Ventas" data-tipo="comerciales">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/comercial.webp" alt="Módulo de Ventas">
           <h4>Implementación Módulo de Ventas</h4>
@@ -153,7 +174,7 @@
       </article>
 
       <!-- ===== Comercial Start (Almacén) ===== -->
-      <article class="imp-card" data-sistema="Comercial Start">
+      <article class="imp-card" data-sistema="Comercial Start" data-tipo="comerciales">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/comercialstart.webp" alt="Comercial Start">
           <h4>Implementación Manejo de Almacén (Comercial Start)</h4>
@@ -174,7 +195,7 @@
       </article>
 
       <!-- ===== Comercial Premium ===== -->
-      <article class="imp-card" data-sistema="Comercial Premium">
+      <article class="imp-card" data-sistema="Comercial Premium" data-tipo="comerciales">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/comercialpremium.webp" alt="Comercial Premium">
           <h4>Implementación CONTPAQi Comercial Premium</h4>
@@ -195,7 +216,7 @@
       </article>
 
       <!-- ===== Vende (básico) ===== -->
-      <article class="imp-card" data-sistema="Vende">
+      <article class="imp-card" data-sistema="Vende" data-tipo="comerciales">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/vende.webp" alt="Vende">
           <h4>Implementación Básica: CONTPAQi Vende</h4>
@@ -214,8 +235,8 @@
         </div>
       </article>
 
-      <!-- ===== Sistemas faltantes (Marcadores con "Falta agregar descripción") ===== -->
-      <article class="imp-card" data-sistema="Nóminas">
+      <!-- ===== Contables ===== -->
+      <article class="imp-card" data-sistema="Nóminas" data-tipo="contables">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/nominas.webp" alt="Nóminas">
           <h4>Implementación CONTPAQi Nóminas</h4>
@@ -226,7 +247,7 @@
         </div>
       </article>
 
-      <article class="imp-card" data-sistema="Contabilidad">
+      <article class="imp-card" data-sistema="Contabilidad" data-tipo="contables">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/contabilidad.webp" alt="Contabilidad">
           <h4>Implementación CONTPAQi Contabilidad</h4>
@@ -237,7 +258,7 @@
         </div>
       </article>
 
-      <article class="imp-card" data-sistema="Bancos">
+      <article class="imp-card" data-sistema="Bancos" data-tipo="contables">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/bancos.webp" alt="Bancos">
           <h4>Implementación CONTPAQi Bancos</h4>
@@ -248,7 +269,8 @@
         </div>
       </article>
 
-      <article class="imp-card" data-sistema="Personia">
+      <!-- ===== Nube ===== -->
+      <article class="imp-card" data-sistema="Personia" data-tipo="nube">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/personia.webp" alt="Personia">
           <h4>Implementación CONTPAQi Personia</h4>
@@ -259,7 +281,7 @@
         </div>
       </article>
 
-      <article class="imp-card" data-sistema="Contabiliza">
+      <article class="imp-card" data-sistema="Contabiliza" data-tipo="nube">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/contabiliza.webp" alt="Contabiliza">
           <h4>Implementación CONTPAQi Contabiliza</h4>
@@ -270,7 +292,7 @@
         </div>
       </article>
 
-      <article class="imp-card" data-sistema="Analiza">
+      <article class="imp-card" data-sistema="Analiza" data-tipo="nube">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/analiza.webp" alt="Analiza">
           <h4>Implementación CONTPAQi Analiza</h4>
@@ -281,7 +303,7 @@
         </div>
       </article>
 
-      <article class="imp-card" data-sistema="Despachos">
+      <article class="imp-card" data-sistema="Despachos" data-tipo="nube">
         <div class="imp-head">
           <img class="imp-icon" src="../IMG/despachos.webp" alt="Despachos">
           <h4>Implementación CONTPAQi Despachos</h4>
@@ -299,20 +321,64 @@
       <div class="card body">
         <div class="grid-2">
           <ul class="imp-list">
-            <li>Pólizas de Soporte Técnico Mensual</li>
-            <li>Conversión de datos a CONTPAQi</li>
-            <li>Migración de ASPEL COI/NOI → CONTPAQi</li>
-            <li>Restauración de bases de datos</li>
-            <li>Migración de sistema CONTPAQi a otro equipo</li>
-            <li>Reportes personalizados</li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+              Pólizas de Soporte Técnico Mensual
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+              Conversión de datos a CONTPAQi
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+              Migración de ASPEL COI/NOI → CONTPAQi
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+              Restauración de bases de datos
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+              Migración de sistema CONTPAQi a otro equipo
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+              Reportes personalizados
+              <span class="svc-more">Ver más →</span>
+            </li>
           </ul>
           <ul class="imp-list">
-            <li>Formateo de formatos (PDF/impresión) amigables</li>
-            <li>Conexiones remotas (Router / Windows Server)</li>
-            <li>Contabilización por empresa</li>
-            <li>Curso interfaz Nóminas → Contabilidad</li>
-            <li>Instalación (servidor/terminal/monousuario)</li>
-            <li>Desarrollos para extracción/inserción de datos</li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+              Formateo de formatos (PDF/impresión) amigables
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+              Conexiones remotas (Router / Windows Server)
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+              Contabilización por empresa
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+              Curso interfaz Nóminas → Contabilidad
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+              Instalación (servidor/terminal/monousuario)
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
+              Desarrollos para extracción/inserción de datos
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
+              Desarrollos a tu medida
+              <span class="svc-more">Ver más →</span>
+            </li>
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+              Cursos por sistema CONTPAQi
+              <span class="svc-more">Ver más →</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -406,28 +472,33 @@
   })();
   </script>
 
-  <!-- JS local: filtros y WhatsApp dinámico (sin comillas en el nombre del sistema) -->
+  <!-- JS local: filtros, WhatsApp dinámico y enlaces de servicios complementarios -->
   <script>
-  // Filtro por sistema
+  // Filtro por tipo de proceso (contables / comerciales / nube)
   (function(){
     const pills = Array.from(document.querySelectorAll('.pill'));
     const cards = Array.from(document.querySelectorAll('#impGrid .imp-card'));
+
     function apply(filter){
       cards.forEach(c=>{
-        c.classList.toggle('hide', filter!=='all' && c.dataset.sistema !== filter);
+        const tipo = c.dataset.tipo || '';
+        c.classList.toggle('hide', filter && tipo !== filter);
       });
     }
+
     pills.forEach(p=>{
       p.addEventListener('click', ()=>{
         pills.forEach(x=>x.classList.remove('active'));
         p.classList.add('active');
-        apply(p.dataset.filter);
+        apply(p.dataset.filter || '');
       });
     });
-    apply('all');
+
+    const active = document.querySelector('.pill.active');
+    apply(active ? active.dataset.filter : 'comerciales');
   })();
 
-  // Botones WhatsApp: mensaje dinámico con nombre de sistema (sin comillas)
+  // Botones WhatsApp: mensaje dinámico con nombre de sistema
   (function(){
     const to = "5568437918";
     document.querySelectorAll('.wa').forEach(btn=>{
@@ -437,6 +508,16 @@
       btn.setAttribute('href', url);
       btn.setAttribute('target', '_blank');
       btn.setAttribute('rel', 'noopener');
+    });
+  })();
+
+  // Servicios complementarios: click para ir a la URL
+  (function(){
+    document.querySelectorAll('.svc-link[data-url]').forEach(li=>{
+      li.addEventListener('click', ()=>{
+        const url = li.getAttribute('data-url');
+        if (url) window.location.href = url;
+      });
     });
   })();
   </script>
