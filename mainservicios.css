@@ -917,3 +917,124 @@ section{
   }
   .carousel{min-height:360px}
 }
+
+/* =========================================================
+   Ajustes extra responsive — mobile / tablet
+   (añadir al final de mainservicios.css)
+   ========================================================= */
+
+/* Desktop grande → un poco más de aire lateral */
+@media (min-width: 1280px){
+  .container{
+    max-width: 1200px;
+    padding-inline: 40px;
+  }
+}
+
+/* Tablets horizontales (iPad) */
+@media (max-width: 1024px){
+  body{
+    scroll-padding-top: 76px;
+  }
+  .container{
+    padding-inline: 24px;
+  }
+
+  /* Hero más compacto */
+  .hero{
+    padding-top: 20px;
+  }
+
+  /* Texto no tan ancho para que sea más legible */
+  .lead{
+    max-width: 60ch;
+  }
+
+  /* Cards respiran un poco más */
+  .card .body{
+    padding: 14px;
+  }
+}
+
+/* Móvil estándar (≤ 768px) */
+@media (max-width: 768px){
+  body{
+    scroll-padding-top: 68px;
+  }
+
+  .container{
+    padding-inline: 16px;
+  }
+
+  h1{
+    font-size: clamp(24px, 7vw, 30px);
+  }
+  h2{
+    font-size: clamp(18px, 5.5vw, 24px);
+  }
+
+  /* Secciones un poco más compactas */
+  section{
+    padding: 20px 0;
+  }
+
+  /* Grids a 1 columna */
+  .grid-2,
+  .grid-3,
+  .feature-grid{
+    grid-template-columns: 1fr;
+  }
+
+  /* Lista “por qué elegir nuestro soporte” → icono arriba, texto abajo */
+  .listItem{
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .listIcon{
+    justify-self: flex-start;
+  }
+
+  /* Servicios complementarios: columnas a 1 */
+  .svc-grid{
+    grid-template-columns: 1fr;
+  }
+
+  /* Reels y videos: ancho completo */
+  .reel-embed{
+    width: 100%;
+    max-width: 420px;
+  }
+  .yt{
+    max-width: 100%;
+  }
+
+  /* TOC: ocupa casi todo el ancho y no estorba tanto */
+  .toc{
+    right: 10px;
+    bottom: 10px;
+    width: 86vw;
+  }
+}
+
+/* Móviles pequeños (≤ 520px) */
+@media (max-width: 520px){
+  .btn{
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Píldoras en 2 filas más cómodas */
+  .pillbar{
+    gap: 8px;
+  }
+  .pill{
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+
+  /* Cards con padding un pelín menor para que quepa todo */
+  .card .body{
+    padding: 10px;
+  }
+}
+
