@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- (Opcional) CSS global si lo usas en el resto del sitio -->
+  <!-- (Opcional) CSS global -->
   <link rel="stylesheet" href="../main.css" />
 
   <!-- Favicons -->
@@ -447,7 +447,7 @@
   <!-- Footer dinámico -->
   <div id="footer-placeholder"></div>
 
-  <!-- Loader de header/footer con normalizador COMPLETO (incluye js-abs-src y js-abs-href) -->
+  <!-- Loader de header/footer con normalizador -->
   <script>
   (async () => {
     const exists = async (u) => {
@@ -530,7 +530,7 @@
   })();
   </script>
 
-  <!-- Filtro de pills (muestra solo el grupo seleccionado) -->
+  <!-- Filtro de pills (sin scroll automático) -->
   <script>
   (function(){
     const pills = document.querySelectorAll('.pillbar .pill');
@@ -541,7 +541,7 @@
       cards.forEach(card=>{
         const g = card.dataset.group || "";
         if (!group || g === group){
-          card.style.display = "grid";   // mantiene el layout de la tarjeta
+          card.style.display = "grid";
         } else {
           card.style.display = "none";
         }
@@ -555,15 +555,11 @@
 
         const group = pill.dataset.group || "";
         applyFilter(group);
-
-        const section = document.querySelector('.grid-3');
-        if (section){
-          section.scrollIntoView({behavior:'smooth', block:'start'});
-        }
+        // OJO: aquí ya NO hay scrollIntoView
       });
     });
 
-    // Filtro inicial al cargar
+    // Filtro inicial
     const active = document.querySelector('.pillbar .pill.active') || pills[0];
     if (active){
       active.classList.add('active');
