@@ -1,0 +1,53 @@
+# .github/workflows/deploy.yml
+# --- El Gerente Automático ---
+
+name: Deploy Expiriti Website
+
+# 1. "Cuándo" - Se activa cada vez que subes (push) a la rama "main"
+on:
+  push:
+    branches: ["main"] # Puedes cambiar "main" a "master" si usas esa
+  
+  # También permite correrlo manualmente desde la pestaña "Actions" en GitHub
+  workflow_dispatch:
+
+# 2. Permisos
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 3. Tareas (Jobs)
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # Usar una máquina virtual de Linux
+    
+    steps:
+      # 3.1. Traer tu código al servidor
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 3.2. Preparar el entorno de Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Usar una versión moderna de Node
+
+      # 3.3. Instalar las herramientas (el 'glob' del package.json)
+      - name: Install dependencies
+        run: npm install
+
+      # 3.4. ¡Ejecutar el Robot!
+      - name: Build static site
+        run: node build.js # Corre el script que creamos
+
+      # 3.5. Preparar la carpeta '/dist' para la publicación
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist' # La carpeta que el robot creó
+
+      # 3.6. Publicar el sitio
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
