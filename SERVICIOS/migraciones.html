@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Migraciones a CONTPAQi | Expiriti</title>
-  <meta name="description" content="Migraciones de datos y sistemas hacia CONTPAQi. Incluye migración de ASPEL COI/NOI, Contafiscal 2000, ContaSIX y traslado de sistemas CONTPAQi a otro equipo.">
+  <meta name="description" content="Migraciones de datos y sistemas hacia CONTPAQi. Incluye migración de ASPEL COI/NOI, Contafiscal 2000, ContaSIX, migración de sistemas CONTPAQi a otro equipo, restauración y conversiones.">
 
   <!-- Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,34 +23,91 @@
   <link rel="icon" href="../IMG/favicon.ico">
 
   <style>
-    :root{--bg:#0b0f14;--bg-2:#0d1219;--card:#111723;--muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)}
-    *{box-sizing:border-box} html,body{margin:0} html{scroll-behavior:smooth}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%);color:var(--text)}
+    :root{
+      --bg:#0b0f14;--bg-2:#0d1219;--card:#111723;--muted:#95a2b3;--text:#e8eef6;
+      --brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
+      --maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%);
+      color:var(--text)
+    }
     .container{max-width:var(--maxw);margin:0 auto;padding:0 34px}
     a{color:inherit;text-decoration:none}
     section{padding:26px 0;border-top:1px solid #11182725}
-    .title-gradient{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .title-gradient{
+      background:linear-gradient(90deg,var(--brand),var(--brand-2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent
+    }
+    h1{font-size:clamp(26px,3.3vw,36px);margin:10px 0}
     .lead{color:#c6d1e3;max-width:72ch}
     .mini{font-size:12px;color:#9eb0c9}
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-    @media (max-width:980px){ .grid-3{grid-template-columns:1fr 1fr} .grid-2{grid-template-columns:1fr} }
-    @media (max-width:680px){ .grid-3{grid-template-columns:1fr} }
+    @media (max-width:980px){
+      .grid-3{grid-template-columns:1fr 1fr}
+      .grid-2{grid-template-columns:1fr}
+    }
+    @media (max-width:680px){
+      .grid-3{grid-template-columns:1fr}
+    }
     .card{background:var(--card);border:1px solid #1c2533;border-radius:16px}
     .card .body{padding:14px}
-    .mig-card{display:grid;gap:10px;border:1px solid #1e2b3c;border-radius:14px;background:linear-gradient(180deg,#0f1622,#0f1724);padding:14px}
+    .mig-card{
+      display:grid;gap:10px;
+      border:1px solid #1e2b3c;
+      border-radius:14px;
+      background:linear-gradient(180deg,#0f1622,#0f1724);
+      padding:14px
+    }
     .mig-head{display:flex;align-items:center;gap:12px}
-    .mig-icon{width:40px;height:40px;border-radius:10px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
-    .mig-card h4{margin:0;font-size:16px}
+    .mig-icon{
+      width:40px;height:40px;border-radius:10px;
+      background:#0e1724;border:1px solid #1e2b3c;
+      object-fit:cover
+    }
+    .mig-card h4{margin:0;font-size:15px}
     .mig-card p{margin:0;color:#bcd0ea;font-size:14px;line-height:1.45}
-    .mig-list{margin:0;padding-left:18px;color:#cfe3ff}
-    .mig-list li{margin:6px 0}
+    .mig-list{margin:6px 0 0;padding-left:18px;color:#cfe3ff;font-size:13px}
+    .mig-list li{margin:4px 0}
     .note{font-size:12px;color:#aebbd0}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #1c2533;background:#121a25;box-shadow:var(--shadow);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
-    .btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid #1c2533;background:#121a25;
+      box-shadow:var(--shadow);font-weight:700;font-size:14px;
+      cursor:pointer;white-space:nowrap
+    }
+    .btn-grad-blue{
+      background:linear-gradient(145deg,#2563eb,#3b82f6);
+      color:#fff;border:none
+    }
     .btn-ghost{background:#101826;color:#e8eef6}
     .cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .warn{background:rgba(245,158,11,.12);border:1px solid #f59e0b;color:#fcd34d;border-radius:10px;padding:8px 10px;font-size:12px}
+    .warn{
+      background:rgba(245,158,11,.12);
+      border:1px solid #f59e0b;
+      color:#fcd34d;
+      border-radius:10px;
+      padding:8px 10px;
+      font-size:12px
+    }
+    .pillbar{
+      display:flex;flex-wrap:wrap;gap:8px;
+      margin:10px 0 4px
+    }
+    .pill{
+      padding:6px 10px;border-radius:999px;
+      border:1px solid #1e2b3c;
+      background:#0f1c2c;
+      font-size:12px;color:#cfe3ff
+    }
   </style>
 </head>
 <body id="top">
@@ -59,26 +116,52 @@
 
   <main class="container">
     <a class="mini" href="index.html#servicios">← Volver a servicios</a>
-    <h1 class="title-gradient" style="margin:8px 0 6px">Migraciones a CONTPAQi</h1>
-    <p class="lead">Opciones de migración y conversión tal como se especificó: requisitos, alcances y notas. Si algún punto carece de detalle, se indica explícitamente.</p>
+    <h1 class="title-gradient">Migraciones, conversiones y restauraciones a CONTPAQi</h1>
+    <p class="lead">
+      Servicios especializados para mover tu información a CONTPAQi: conversiones desde otros sistemas,
+      migraciones de empresas y restauración de bases de datos. Todo con procedimientos claros y requisitos definidos.
+    </p>
 
     <!-- Bloque de notas generales -->
     <section aria-labelledby="notas">
       <div class="card body">
-        <div class="warn">“Migración de una empresa se calcula con base en la cantidad de empresas a migrar. <strong>El servicio incluye una empresa</strong>; si tiene más empresas se cotizan.”</div>
+        <div class="warn">
+          <strong>Migración de una empresa</strong> se calcula con base en la cantidad de empresas a migrar.  
+          El servicio <strong>incluye una empresa</strong>; si tienes más empresas, se cotizan adicionalmente.
+        </div>
+        <p class="note" style="margin-top:8px">
+          La <strong>restauración de base de datos</strong> se calcula con base en el número de empresas a restaurar.
+        </p>
+      </div>
+    </section>
+
+    <!-- Pequeña separación por tipo de servicio -->
+    <section aria-label="Tipos de servicios de migración">
+      <div class="pillbar">
+        <span class="pill">Conversiones a CONTPAQi</span>
+        <span class="pill">Migraciones entre equipos / empresas</span>
+        <span class="pill">Restauración de bases de datos</span>
       </div>
     </section>
 
     <!-- GRID MIGRACIONES -->
-    <section class="grid-3" aria-label="Listado de migraciones">
+    <section class="grid-3" aria-label="Listado de migraciones, conversiones y restauraciones">
 
       <!-- Conversión de datos a CONTPAQi -->
       <article class="mig-card">
         <div class="mig-head">
           <img class="mig-icon" src="../IMG/convert.webp" alt="Conversión de datos">
-          <h4>CONVERSIÓN DE DATOS A CONTPAQi</h4>
+          <h4>CONVERSIONES A CONTPAQi</h4>
         </div>
-        <p>Se calcula con base en el número de empresas <strong>sin importar</strong> número de ejercicios a migrar.</p>
+        <p>
+          Conversión de datos a CONTPAQi <strong>por número de empresas</strong>. Ideal cuando ya tienes información
+          en otro sistema contable y quieres seguir trabajando ahora en el ecosistema CONTPAQi.
+        </p>
+        <ul class="mig-list">
+          <li>Conversión de datos a CONTPAQi (por empresa).</li>
+          <li>Respeto a la estructura contable definida para cada empresa.</li>
+          <li>Revisión de consistencia de saldos posterior a la conversión.</li>
+        </ul>
         <div class="cta-row">
           <a class="btn btn-grad-blue wa" data-wa="Conversión de datos a CONTPAQi">WhatsApp: Quiero info</a>
         </div>
@@ -88,17 +171,22 @@
       <article class="mig-card">
         <div class="mig-head">
           <img class="mig-icon" src="../IMG/aspel.webp" alt="ASPEL COI">
-          <h4>Migración de empresas de ASPEL COI → CONTPAQi Contabilidad (costo por empresa)</h4>
+          <h4>Conversión / Migración ASPEL COI → CONTPAQi Contabilidad</h4>
         </div>
-        <p>Se requieren los respaldos y estructura de cuentas de cada empresa y versión de COI y los segmentos de negocios o centros de costos.</p>
+        <p>
+          Migración de empresas desde <strong>ASPEL COI 4, 5, 6, 7, 8</strong> hacia CONTPAQi Contabilidad
+          (costo por empresa).
+        </p>
         <ul class="mig-list">
           <li><strong>A)</strong> Un respaldo de la información de acuerdo al tipo de conversión a realizar.</li>
-          <li><strong>B)</strong> Conocer la estructura del catálogo de cuentas para una conversión de contabilidad.</li>
+          <li><strong>B)</strong> Conocer la estructura del catálogo de cuentas y segmentos/centros de costos.</li>
         </ul>
-        <p><strong>COI 4</strong> (archivos con la exportación a texto del catálogo y pólizas (mes a mes)).</p>
-        <p><strong>COI 5</strong> (copia de la carpeta donde está la empresa (archivos con extensión *.DB, *.PX)).</p>
-        <p><strong>COI 6, COI 7 o COI 8</strong> (archivo de la empresa (.FDB) o archivo de respaldo (.FBK)) y <strong>MSSQL</strong> (.BAK).</p>
-        <p><em>- No se podrán migrar los proyectos.</em></p>
+        <p class="note">
+          <strong>COI 4:</strong> archivos con la exportación a texto del catálogo y pólizas (mes a mes).<br>
+          <strong>COI 5:</strong> copia de la carpeta de la empresa (archivos *.DB, *.PX).<br>
+          <strong>COI 6, 7, 8:</strong> archivo de la empresa (.FDB) o archivo de respaldo (.FBK) y/o <strong>MSSQL</strong> (.BAK).<br>
+          No se podrán migrar los <strong>proyectos</strong>.
+        </p>
         <div class="cta-row">
           <a class="btn btn-grad-blue wa" data-wa="Migración ASPEL COI a CONTPAQi Contabilidad">WhatsApp: Quiero info</a>
         </div>
@@ -108,12 +196,23 @@
       <article class="mig-card">
         <div class="mig-head">
           <img class="mig-icon" src="../IMG/aspel-noi.webp" alt="ASPEL NOI">
-          <h4>Migración de ASPEL NOI</h4>
+          <h4>Conversión/Migración ASPEL NOI → CONTPAQi Nóminas</h4>
         </div>
-        <p><strong>C)</strong> Para una conversión de NOI saber si quieren el catálogo consolidado de empleados de todos los periodos o solo los empleados del periodo más reciente.</p>
-        <p><strong>NOI 5, 6 y 7</strong> (archivo de la empresa (.FDB) o archivo de respaldo (.FBK)).</p>
+        <p>
+          Migración desde <strong>NOI 5, 6 y 7</strong> hacia CONTPAQi Nóminas.
+        </p>
+        <ul class="mig-list">
+          <li>
+            <strong>C)</strong> Definir si se requiere:
+            <ul class="mig-list">
+              <li>Catálogo consolidado de empleados de todos los periodos, o</li>
+              <li>Solo los empleados del periodo más reciente.</li>
+            </ul>
+          </li>
+          <li>Archivo de la empresa (.FDB) o archivo de respaldo (.FBK).</li>
+        </ul>
         <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Migración ASPEL NOI">WhatsApp: Quiero info</a>
+          <a class="btn btn-grad-blue wa" data-wa="Migración ASPEL NOI a CONTPAQi Nóminas">WhatsApp: Quiero info</a>
         </div>
       </article>
 
@@ -121,10 +220,18 @@
       <article class="mig-card">
         <div class="mig-head">
           <img class="mig-icon" src="../IMG/contafiscal.webp" alt="Contafiscal 2000">
-          <h4>Migración Contafiscal 2000 → CONTPAQi</h4>
+          <h4>Conversión Contafiscal 2000 → CONTPAQi</h4>
         </div>
-        <p>Requisito: copia de la carpeta donde está la empresa (archivos con extensión <strong>.DAT</strong> <strong>.IDX</strong>).</p>
-        <p class="note"><em>Falta información adicional (alcances, mapeos, sistema destino).</em></p>
+        <p>
+          Conversión de empresas desde <strong>Contafiscal 2000</strong> hacia CONTPAQi.
+        </p>
+        <ul class="mig-list">
+          <li>Copia de la carpeta donde está la empresa (archivos con extensión <strong>.DAT</strong> y <strong>.IDX</strong>).</li>
+        </ul>
+        <p class="note">
+          Pendiente de definir a detalle: alcance de información a convertir, mapeos específicos y sistema destino
+          (Contabilidad, Comercial, etc.). Se cotiza caso por caso.
+        </p>
         <div class="cta-row">
           <a class="btn btn-grad-blue wa" data-wa="Migración Contafiscal 2000 a CONTPAQi">WhatsApp: Quiero info</a>
         </div>
@@ -134,10 +241,18 @@
       <article class="mig-card">
         <div class="mig-head">
           <img class="mig-icon" src="../IMG/contasix.webp" alt="ContaSIX">
-          <h4>Migración ContaSIX → CONTPAQi</h4>
+          <h4>Conversión ContaSIX → CONTPAQi</h4>
         </div>
-        <p>Requisito: copia de la carpeta donde está la empresa (archivos con extensión <strong>.DBF</strong> <strong>.CDX</strong>).</p>
-        <p class="note"><em>Falta información adicional (alcances, mapeos, sistema destino).</em></p>
+        <p>
+          Conversión de empresas desde <strong>ContaSIX</strong> hacia CONTPAQi.
+        </p>
+        <ul class="mig-list">
+          <li>Copia de la carpeta donde está la empresa (archivos con extensión <strong>.DBF</strong> y <strong>.CDX</strong>).</li>
+        </ul>
+        <p class="note">
+          Al igual que en Contafiscal, los alcances específicos (qué módulos, qué niveles de detalle)
+          se definen en una sesión de levantamiento y se cotizan según el caso.
+        </p>
         <div class="cta-row">
           <a class="btn btn-grad-blue wa" data-wa="Migración ContaSIX a CONTPAQi">WhatsApp: Quiero info</a>
         </div>
@@ -149,14 +264,14 @@
           <img class="mig-icon" src="../IMG/migracion-equipo.webp" alt="Migración a otro equipo">
           <h4>Migración de sistema CONTPAQi a otro equipo</h4>
         </div>
-        <p>Incluye:</p>
+        <p>Servicio para cambiar tu sistema CONTPAQi a un nuevo equipo.</p>
         <ul class="mig-list">
-          <li>Respaldo de la empresa en el equipo actual (debe estar funcionando)</li>
-          <li>Instalación del sistema en equipo nuevo</li>
-          <li>Restaurar respaldo en equipo nuevo</li>
-          <li>Validación de la información</li>
-          <li>Revocación de Licencia en equipo actual</li>
-          <li>Activación de sistema en equipo nuevo</li>
+          <li>Respaldo de la empresa en el equipo actual (debe estar funcionando).</li>
+          <li>Instalación del sistema en equipo nuevo.</li>
+          <li>Restaurar respaldo en el equipo nuevo.</li>
+          <li>Validación de la información.</li>
+          <li>Revocación de licencia en el equipo actual.</li>
+          <li>Activación del sistema en el equipo nuevo.</li>
         </ul>
         <div class="cta-row">
           <a class="btn btn-grad-blue wa" data-wa="Migración de sistema CONTPAQi a otro equipo">WhatsApp: Quiero info</a>
@@ -167,10 +282,16 @@
       <article class="mig-card">
         <div class="mig-head">
           <img class="mig-icon" src="../IMG/empresa.webp" alt="Migración por empresa">
-          <h4>Migración de una empresa (costo por empresa)</h4>
+          <h4>Migración de empresa(s) CONTPAQi</h4>
         </div>
-        <p>Migración de una empresa se calcula con base en la cantidad de empresas a migrar.</p>
-        <p><strong>EL SERVICIO INCLUYE UNA EMPRESA, SI TIENE MÁS EMPRESAS SE COTIZAN.</strong></p>
+        <p>
+          Migración de empresas entre equipos, instancias o servidores,
+          con <strong>costo por empresa</strong>.
+        </p>
+        <p>
+          <strong>El servicio incluye una empresa;</strong> si tienes más empresas, se cotizan según volumen
+          y complejidad.
+        </p>
         <div class="cta-row">
           <a class="btn btn-grad-blue wa" data-wa="Migración de una empresa (costo por empresa)">WhatsApp: Quiero info</a>
         </div>
@@ -182,8 +303,19 @@
           <img class="mig-icon" src="../IMG/restauracion.webp" alt="Restauración BD">
           <h4>RESTAURACIÓN DE BASE DE DATOS</h4>
         </div>
-        <p>Se calcula con base en el número de empresas a restaurar.</p>
-        <p class="note"><em>Falta información adicional (formatos de respaldo aceptados, versión del motor, consideraciones).</em></p>
+        <p>
+          Servicio de restauración de bases de datos de CONTPAQi
+          (por empresa a restaurar).
+        </p>
+        <ul class="mig-list">
+          <li>Se calcula con base en el número de empresas a restaurar.</li>
+          <li>Aplicable a respaldos en formatos soportados por CONTPAQi (FDB, FBK, BAK, etc.).</li>
+          <li>Incluye pruebas de acceso y verificación de integridad básica.</li>
+        </ul>
+        <p class="note">
+          Casos especiales (bases dañadas, respaldos incompletos o corrupción de datos)
+          se diagnostican primero y pueden requerir una cotización adicional.
+        </p>
         <div class="cta-row">
           <a class="btn btn-grad-blue wa" data-wa="Restauración de base de datos">WhatsApp: Quiero info</a>
         </div>
@@ -194,9 +326,12 @@
     <!-- CTA -->
     <section class="card body" aria-label="Contacto">
       <h3 class="title-gradient">¿Necesitas migrar hoy?</h3>
-      <p>Cuéntanos de qué sistema vienes y cuántas empresas son. Te indicamos el procedimiento exacto de respaldo que necesitamos.</p>
+      <p>
+        Cuéntanos desde qué sistema vienes, cuánto tiempo de información necesitas convertir y cuántas empresas son.
+        Te indicamos el procedimiento exacto de respaldo y te enviamos una cotización clara.
+      </p>
       <div class="cta-row">
-        <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20necesito%20una%20migraci%C3%B3n%20a%20CONTPAQi%20y%20tengo%20dudas%20sobre%20los%20respaldos." target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20necesito%20una%20migraci%C3%B3n%20o%20conversi%C3%B3n%20a%20CONTPAQi%20y%20tengo%20dudas%20sobre%20los%20respaldos." target="_blank" rel="noopener">WhatsApp</a>
         <a class="btn btn-ghost" href="tel:+525568437918">Llamar (55 6843 7918)</a>
       </div>
     </section>
@@ -205,11 +340,17 @@
   <!-- Footer dinámico -->
   <div id="footer-placeholder"></div>
 
-  <!-- ====== Loader ÚNICO (mismo que el que sí te funciona en Soporte) ====== -->
+  <!-- ====== Loader de header/footer + normalizador de rutas ====== -->
   <script>
   (async () => {
-    const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
-    const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
+    const exists = async (u) => {
+      try { const r = await fetch(u, {method:"HEAD"}); return r.ok; }
+      catch { return false; }
+    };
+    const pickFirst = async (paths) => {
+      for (const p of paths) if (await exists(p)) return p;
+      return paths[0];
+    };
 
     const isGh = location.hostname.endsWith("github.io");
     const firstSeg = location.pathname.split("/")[1] || "";
@@ -268,13 +409,13 @@
   })();
   </script>
 
-  <!-- WhatsApp dinámico (sin comillas en el nombre del servicio) -->
+  <!-- WhatsApp dinámico -->
   <script>
   (function(){
     const to = "5568437918";
     document.querySelectorAll('.wa').forEach(btn=>{
       const tag = btn.getAttribute('data-wa') || 'Migración';
-      const msg = `Hola, quiero más info del servicio de migración para ${tag}`;
+      const msg = `Hola, quiero más info del servicio de migración/conversión: ${tag}`;
       const url = `https://wa.me/${to}?text=${encodeURIComponent(msg)}`;
       btn.setAttribute('href', url);
       btn.setAttribute('target', '_blank');
