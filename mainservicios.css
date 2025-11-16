@@ -1,8 +1,7 @@
 /* =========================================================
    Expiriti - mainservicios.css
    Servicios: Soporte, Pólizas, Cursos, Migraciones, etc.
-   UI/UX unificado + Glow premium
-   (Versión 3: refinada + scroll en carruseles)
+   UI/UX unificado + Glow premium (2025-ready)
    ========================================================= */
 
 /* ---------- Root / Tokens ---------- */
@@ -32,7 +31,7 @@
   --shadow-soft:0 10px 26px rgba(0,0,0,.35);
   --shadow-elevated:0 18px 40px rgba(0,0,0,.5);
 
-  /* Superficies semánticas */
+  /* Superficies */
   --surface-base:#0f1622;
   --surface-elevated:#0f1724;
   --surface-soft:#0e1724;
@@ -54,11 +53,14 @@ html,body{
   margin:0;
   height:100%;
 }
-html{scroll-behavior:smooth}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+  background:linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
   color:var(--text);
   scroll-padding-top:84px;
 }
@@ -83,25 +85,35 @@ img,video,iframe{
 /* =========================================================
    Tipografía / Layout
    ========================================================= */
-.hero{padding:26px 0 0}
+
+.hero{
+  padding:26px 0 0;
+}
 
 h1{
   font-size:clamp(28px,3.4vw,42px);
   line-height:1.1;
   margin:8px 0 14px;
 }
+
 h2{
   font-size:clamp(22px,2.5vw,32px);
   margin:0 0 10px;
 }
-h3,h4{margin:0 0 10px}
+h3,h4{
+  margin:0 0 10px;
+}
 
 .lead{
   color:#c6d1e3;
   font-size:clamp(16px,1.2vw + 1px,18px);
   max-width:68ch;
 }
-.hint{color:#aebbd0;opacity:.9}
+
+.hint{
+  color:#aebbd0;
+  opacity:.9;
+}
 
 .title-gradient{
   background:linear-gradient(90deg,var(--brand),var(--brand-2));
@@ -127,7 +139,7 @@ h3,h4{margin:0 0 10px}
   font-size:12px;
 }
 
-/* Lock note */
+/* Nota de “no borrar sección” */
 .lock-note{
   margin:8px 0 0;
   font-size:12px;
@@ -136,7 +148,9 @@ h3,h4{margin:0 0 10px}
   gap:6px;
   align-items:center;
 }
-.lock-note::before{content:"⚠️";}
+.lock-note::before{
+  content:"⚠️";
+}
 
 /* Secciones */
 section{
@@ -151,13 +165,18 @@ section{
   gap:14px;
   align-items:start;
 }
-.grid-2.align-center{align-items:center}
+.grid-2.align-center{
+  align-items:center;
+}
 .grid-3{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:14px;
 }
-.stack{display:grid;gap:12px}
+.stack{
+  display:grid;
+  gap:12px;
+}
 .stack-left{
   display:grid;
   gap:10px;
@@ -165,7 +184,7 @@ section{
   justify-items:start;
 }
 
-/* Responsivo */
+/* Responsivo global */
 @media (max-width:980px){
   .grid-2{grid-template-columns:1fr}
   .grid-3{grid-template-columns:1fr}
@@ -174,8 +193,9 @@ section{
 /* =========================================================
    Cards
    ========================================================= */
+
 .card{
-  background:radial-gradient(circle at top left,rgba(15,23,42,.85),#0b1018);
+  background:radial-gradient(circle at top left, rgba(15,23,42,.85), #0b1018);
   border-radius:var(--radius-lg);
   border:1px solid var(--border-subtle);
   box-shadow:var(--shadow-soft);
@@ -208,6 +228,7 @@ section{
 /* =========================================================
    Botones
    ========================================================= */
+
 .btn{
   display:inline-flex;
   align-items:center;
@@ -229,6 +250,7 @@ section{
     transform var(--transition-fast),
     filter var(--transition-fast);
 }
+
 .btn-grad-green{
   background:linear-gradient(145deg,#16a34a,#22c55e);
   color:#0b0f14;
@@ -267,7 +289,7 @@ section{
   mask-composite:exclude;
 }
 
-/* Hero buttons */
+/* Hero buttons (reusan transiciones de .btn) */
 .hero-btn{}
 .hero-btn:hover{
   transform:translateY(-3px);
@@ -278,7 +300,7 @@ section{
 .hero-btn.btn-grad-blue:hover{box-shadow:0 10px 26px rgba(59,130,246,.3)}
 .hero-btn.btn-ghost:hover{background:#192636;border-color:#2a3c52}
 
-/* Botón con hover elevado reutilizable */
+/* Botón con hover elevado (para CTAs tipo WhatsApp/Llamar) */
 .btn--elevated-hover{
   box-shadow:var(--shadow-soft);
 }
@@ -291,6 +313,7 @@ section{
 /* =========================================================
    Carrusel genérico (.carousel)
    ========================================================= */
+
 .carousel{
   position:relative;
   border-radius:var(--radius);
@@ -302,9 +325,7 @@ section{
 .carousel-track{
   display:flex;
   scroll-snap-type:x mandatory;
-  overflow-x:auto;             /* permite scroll horizontal */
-  overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;
+  overflow-x:auto;
   scroll-behavior:smooth;
   height:calc(100% - 38px);
 }
@@ -359,9 +380,7 @@ section{
 .arrowCircle.next{right:8px}
 .arrowCircle .chev{font-size:24px;line-height:1}
 
-/* =========================================================
-   Carrusel horizontal de sistemas (.carouselX)
-   ========================================================= */
+/* Carrusel horizontal de sistemas (.carouselX) */
 .carouselX{
   position:relative;
   border-radius:var(--radius-lg);
@@ -373,12 +392,9 @@ section{
 .carouselX .track{
   display:flex;
   gap:12px;
-  overflow-x:auto;                  /* ← scroll horizontal habilitado */
-  overflow-y:hidden;
+  overflow:hidden;
   padding:4px;
   min-height:220px;
-  scroll-behavior:smooth;
-  -webkit-overflow-scrolling:touch;
 }
 .carouselX .sys{
   flex:0 0 calc((100% - 24px)/3);
@@ -423,6 +439,7 @@ section{
 /* =========================================================
    Pricing / Tablas
    ========================================================= */
+
 .pricing-table-nube{
   width:100%;
   max-width:960px;
@@ -445,7 +462,9 @@ section{
   color:#dce8ff;
   font-size:16px;
 }
-.pricing-table-nube tbody tr:last-child td{border-bottom:none}
+.pricing-table-nube tbody tr:last-child td{
+  border-bottom:none;
+}
 .pricing-table-nube td:nth-child(2),
 .pricing-table-nube td:nth-child(3){
   text-align:left;
@@ -490,7 +509,9 @@ section{
   padding:12px 14px;
   border-bottom:1px solid #1e2b3c;
 }
-.table-like tr:last-child td{border-bottom:none}
+.table-like tr:last-child td{
+  border-bottom:none;
+}
 .table-like thead th{
   background:#0e1724;
   color:#dce8ff;
@@ -501,12 +522,13 @@ section{
   font-weight:700;
 }
 
-/* Hover opcional por fila (añadir clase table-like--hoverable en HTML) */
+/* Hover opcional por fila: usar .table-like--hoverable en la tabla */
 .table-like--hoverable tbody tr{
   transition:
     background var(--transition-med),
     box-shadow var(--transition-med),
     transform var(--transition-fast);
+  cursor:default;
 }
 .table-like--hoverable tbody tr:hover{
   background:radial-gradient(circle at top left,rgba(96,165,250,.13),#020617);
@@ -517,6 +539,7 @@ section{
 /* =========================================================
    TOC flotante
    ========================================================= */
+
 .toc{
   position:fixed;
   right:16px;
@@ -545,7 +568,9 @@ section{
 }
 .toc.collapsed .toc-title,
 .toc.collapsed a,
-.toc.collapsed .toc-close{display:none}
+.toc.collapsed .toc-close{
+  display:none;
+}
 .toc-title{
   font-weight:800;
   color:#b9c8de;
@@ -565,10 +590,12 @@ section{
 /* =========================================================
    FAQ
    ========================================================= */
+
 .faq-wrap{
   display:grid;
   gap:10px;
 }
+
 .faq-item{
   border:1px solid #1e2b3c;
   border-radius:12px;
@@ -589,7 +616,9 @@ section{
   align-items:center;
   gap:8px;
 }
-.faq-item>summary::marker{display:none}
+.faq-item>summary::marker{
+  display:none;
+}
 .faq-item p{
   padding:12px 14px;
   margin:0;
@@ -612,6 +641,7 @@ section{
 /* =========================================================
    Pills (filtros de servicios)
    ========================================================= */
+
 .pillbar{
   display:flex;
   flex-wrap:wrap;
@@ -648,8 +678,12 @@ section{
   grid-template-columns:repeat(3,1fr);
   gap:12px;
 }
-@media (max-width:980px){.feature-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:680px){.feature-grid{grid-template-columns:1fr}}
+@media (max-width:980px){
+  .feature-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:680px){
+  .feature-grid{grid-template-columns:1fr}
+}
 
 .feature-grid .fcard{
   border-radius:var(--radius-md);
@@ -663,6 +697,8 @@ section{
     border-color var(--transition-med),
     box-shadow var(--transition-med),
     transform var(--transition-fast);
+  /* Hace cada card un contenedor para @container */
+  container-type:inline-size;
 }
 .feature-grid .fcard:hover{
   background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);
@@ -694,9 +730,21 @@ section{
   line-height:1.35;
 }
 
+/* Adaptación “por etapas” dentro de cada fcard (container query):
+   cuando el card se hace estrecho, icono arriba y texto debajo */
+@container (max-width: 420px){
+  .feature-grid .fcard{
+    text-align:left;
+  }
+  .feature-grid .fcard .fhead{
+    align-items:flex-start;
+  }
+}
+
 /* =========================================================
    Por qué elegir nuestro soporte (listSlider)
    ========================================================= */
+
 .listSlider{
   position:relative;
   border-radius:var(--radius-lg);
@@ -708,10 +756,8 @@ section{
 }
 .listTrack{
   display:flex;
-  overflow-x:auto;                /* ← scroll horizontal */
-  overflow-y:hidden;
+  overflow:hidden;
   scroll-behavior:smooth;
-  -webkit-overflow-scrolling:touch;
 }
 .listPage{
   min-width:100%;
@@ -769,16 +815,21 @@ section{
   width:40px;
   height:40px;
 }
-.listSlider .arrowCircle .chev{font-size:22px}
+.listSlider .arrowCircle .chev{
+  font-size:22px;
+}
 
 /* =========================================================
-   Servicios complementarios
+   Servicios complementarios (#servicios-complementarios)
    ========================================================= */
-#servicios-complementarios .card.body{padding:16px 14px}
+
+#servicios-complementarios .card.body{
+  padding:16px 14px;
+}
 
 .svc-grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(2, minmax(0,1fr));
   gap:16px;
 }
 @media (max-width:980px){
@@ -809,6 +860,7 @@ section{
     border-color var(--transition-med),
     box-shadow var(--transition-med),
     transform var(--transition-fast);
+  container-type:inline-size; /* para futuras container queries, si quieres */
 }
 .svc-text{
   display:flex;
@@ -844,6 +896,7 @@ section{
     background var(--transition-med);
   white-space:nowrap;
 }
+
 .svc-link:hover{
   background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);
   border-color:var(--brand-2);
@@ -856,15 +909,23 @@ section{
   background:rgba(15,23,42,.95);
   border-color:rgba(96,165,250,.9);
 }
-.svc-link:focus-visible{
-  outline:none;
-  border-color:var(--brand);
-  box-shadow:0 0 0 1px var(--brand);
+
+/* Layout adaptativo por etapas dentro del propio svc-link */
+@container (max-width: 460px){
+  .svc-link{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .svc-pill{
+    align-self:flex-start;
+    margin-top:4px;
+  }
 }
 
 /* =========================================================
    YouTube grid + Reels
    ========================================================= */
+
 .yt-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -887,7 +948,7 @@ section{
   background:#0e1724;
 }
 
-/* Reels embebidos */
+/* Reels embebidos (vertical tipo reel) */
 .reel-embed{
   position:relative;
   width:min(480px,100%);
@@ -907,134 +968,78 @@ section{
 }
 
 /* =========================================================
+   Scroll táctil amigable en carruseles
+   ========================================================= */
+
+.carousel-track,
+.carouselX .track,
+.icons-wrap,
+.listTrack{
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  overscroll-behavior-x:contain;
+}
+
+/* =========================================================
+   Focus global accesible (para TODO lo clickeable)
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+.svc-link:focus-visible,
+.pill:focus-visible,
+.btn:focus-visible,
+.dot:focus-visible,
+.arrowCircle:focus-visible{
+  outline:2px solid var(--brand);
+  outline-offset:2px;
+  box-shadow:0 0 0 1px var(--brand);
+}
+
+/* =========================================================
+   Container utilities (para layouts modulables)
+   ========================================================= */
+
+/* Si quieres que una sección adapte su layout internamente
+   según ancho propio y no del viewport:
+   <section class="section-cq">...</section> */
+.section-cq{
+  container-type:inline-size;
+}
+
+/* Ejemplo: en una section-cq, cuando se estrecha, grid-2
+   se vuelve columna, aunque el viewport sea grande */
+@container (max-width: 800px){
+  .section-cq .grid-2{
+    grid-template-columns:1fr;
+  }
+}
+
+/* =========================================================
+   Preferencias de movimiento reducido
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce){
+  *{
+    scroll-behavior:auto !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+
+/* =========================================================
    Responsivo extra
    ========================================================= */
+
 @media (max-width:980px){
   .toc{
     right:10px;
     bottom:10px;
     width:86vw;
   }
-  .carousel{min-height:360px}
-}
-
-/* =========================================================
-   Ajustes extra responsive — mobile / tablet
-   (añadir al final de mainservicios.css)
-   ========================================================= */
-
-/* Desktop grande → un poco más de aire lateral */
-@media (min-width: 1280px){
-  .container{
-    max-width: 1200px;
-    padding-inline: 40px;
+  .carousel{
+    min-height:360px;
   }
 }
-
-/* Tablets horizontales (iPad) */
-@media (max-width: 1024px){
-  body{
-    scroll-padding-top: 76px;
-  }
-  .container{
-    padding-inline: 24px;
-  }
-
-  /* Hero más compacto */
-  .hero{
-    padding-top: 20px;
-  }
-
-  /* Texto no tan ancho para que sea más legible */
-  .lead{
-    max-width: 60ch;
-  }
-
-  /* Cards respiran un poco más */
-  .card .body{
-    padding: 14px;
-  }
-}
-
-/* Móvil estándar (≤ 768px) */
-@media (max-width: 768px){
-  body{
-    scroll-padding-top: 68px;
-  }
-
-  .container{
-    padding-inline: 16px;
-  }
-
-  h1{
-    font-size: clamp(24px, 7vw, 30px);
-  }
-  h2{
-    font-size: clamp(18px, 5.5vw, 24px);
-  }
-
-  /* Secciones un poco más compactas */
-  section{
-    padding: 20px 0;
-  }
-
-  /* Grids a 1 columna */
-  .grid-2,
-  .grid-3,
-  .feature-grid{
-    grid-template-columns: 1fr;
-  }
-
-  /* Lista “por qué elegir nuestro soporte” → icono arriba, texto abajo */
-  .listItem{
-    grid-template-columns: 1fr;
-    text-align: left;
-  }
-  .listIcon{
-    justify-self: flex-start;
-  }
-
-  /* Servicios complementarios: columnas a 1 */
-  .svc-grid{
-    grid-template-columns: 1fr;
-  }
-
-  /* Reels y videos: ancho completo */
-  .reel-embed{
-    width: 100%;
-    max-width: 420px;
-  }
-  .yt{
-    max-width: 100%;
-  }
-
-  /* TOC: ocupa casi todo el ancho y no estorba tanto */
-  .toc{
-    right: 10px;
-    bottom: 10px;
-    width: 86vw;
-  }
-}
-
-/* Móviles pequeños (≤ 520px) */
-@media (max-width: 520px){
-  .btn{
-    width: 100%;
-    justify-content: center;
-  }
-
-  /* Píldoras en 2 filas más cómodas */
-  .pillbar{
-    gap: 8px;
-  }
-  .pill{
-    font-size: 12px;
-    padding: 7px 10px;
-  }
-
-  /* Cards con padding un pelín menor para que quepa todo */
-  .card .body{
-    padding: 10px;
-  }
-}
-
