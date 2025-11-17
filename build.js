@@ -1,6 +1,6 @@
 // build.js v2.0
 // --- El Robot Armador (con optimización) ---
-import { readFile, writeFile, mkdir, copyFile }F rom 'fs/promises';
+import { readFile, writeFile, mkdir, copyFile } from 'fs/promises'; // <--- ¡AQUÍ ESTÁ CORREGIDO!
 import { resolve, dirname } from 'path';
 import { glob } from 'glob';
 // --- NUEVAS HERRAMIENTAS DE OPTIMIZACIÓN ---
