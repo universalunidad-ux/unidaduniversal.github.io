@@ -925,7 +925,7 @@ section{
 /* =========================================================
    YouTube grid + Reels
    ========================================================= */
-
+/* ====== VIDEO NORMAL (16:9) ====== */
 .yt-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -948,11 +948,14 @@ section{
   background:#0e1724;
 }
 
-/* Reels embebidos (vertical tipo reel) */
+/* ====== REELS (9:16) — versión mejorada ====== */
 .reel-embed{
   position:relative;
-  width:min(380px,100%) !important;
-  max-width:380px !important;
+
+  /* 👇 nuevo tamaño más elegante */
+  width:min(320px, 100%) !important;
+  max-width:320px !important;
+
   aspect-ratio:9/16;
   border-radius:12px;
   overflow:hidden;
@@ -961,7 +964,16 @@ section{
   margin:0 auto;
   flex:0 0 auto;
   justify-self:center;
-} 
+}
+
+/* 👇 todavía más finito en pantallas grandes */
+@media (min-width:1200px){
+  .reel-embed{
+    width:300px !important;
+    max-width:300px !important;
+  }
+}
+
 .reel-embed iframe{
   position:absolute;
   inset:0;
@@ -969,14 +981,18 @@ section{
   height:100%;
   border:0;
 }
+
+/* ====== Títulos ====== */
 .reel-title{
-  margin-bottom:8px;
+  margin-bottom:6px;
   text-align:center;
   color:#fff;
   font-weight:700;
+  font-size:0.95rem;
   display:none;
 }
 .reel-title.active{display:block}
+
 /* =========================================================
    Scroll táctil amigable en carruseles
    ========================================================= */
