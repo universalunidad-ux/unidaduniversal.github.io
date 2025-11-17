@@ -1,7 +1,7 @@
 // =========================================================
 // Expiriti - mainservicios.js
-// Páginas de servicios (Soporte, Pólizas, Cursos, Migraciones, etc.)
-// Glow UI + parciales + carruseles + filtros + FAQ
+// Servicios (Soporte, Pólizas, Cursos, Migraciones, etc.)
+// Parciales + TOC + Carruseles + Filtros + FAQ
 // =========================================================
 
 (function(){
@@ -16,15 +16,23 @@
   // =========================================================
   (function(){
     $$('#servicios-complementarios .svc-link[data-url]').forEach(li=>{
-      li.addEventListener('click', ()=>{
+      const go = () => {
         const url = li.getAttribute('data-url');
         if (url) window.location.href = url;
+      };
+      li.addEventListener('click', go);
+      li.addEventListener('keydown', e=>{
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          go();
+        }
       });
     });
   })();
 
   // =========================================================
   // 2) Carga de parciales (header/footer) + normalización rutas
+  //    (adaptado de tu mainservicios.js original)
   // =========================================================
   (async function loadPartials(){
     const exists = async (u) => {
@@ -108,7 +116,7 @@
   })();
 
   // =========================================================
-  // 3) TOC flotante (índice)
+  // 3) TOC flotante (índice) — mapa del sitio
   // =========================================================
   (function(){
     const toc      = $("#toc");
@@ -135,233 +143,124 @@
   })();
 
   // =========================================================
-  // 4) Carrusel genérico (.carousel con .carousel-track, .dot)
-  //    Flechas + dots (scroll horizontal nativo del navegador)
+  // 4) Carrusel genérico (.carousel con .carousel-track y .carousel-nav .dot)
+  //    → Copia del motor de main.js (funciona bien ahí)
   // =========================================================
   (function(){
-    $$(".carousel").forEach(root=>{
+    function initCarousel(root, onChange){
       const track = root.querySelector(".carousel-track");
-      const dots  = [...root.querySelectorAll(".carousel-nav .dot")];
       const prev  = root.querySelector(".arrowCircle.prev");
       const next  = root.querySelector(".arrowCircle.next");
-      if (!track || !dots.length) return;
+      let dots    = [...root.querySelectorAll(".carousel-nav .dot")];
+      let i = 0;
+      let len = dots.length || (track?.children?.length || 0);
 
-      let idx = 0;
-
-      function setActive(i){
-        idx = (i + dots.length) % dots.length;
-        dots.forEach((d,di)=>d.classList.toggle("active", di === idx));
-        track.scrollTo({
-          left: track.clientWidth * idx,
-          behavior: "smooth"
-        });
+      function paint(idx){
+        if (!dots.length) return;
+        dots.forEach((d,di)=>d.classList.toggle("active",di===idx));
       }
 
-      dots.forEach((d,i)=> d.addEventListener("click", ()=> setActive(i)));
-      prev?.addEventListener("click", ()=> setActive(idx - 1));
-      next?.addEventListener("click", ()=> setActive(idx + 1));
+      function set(n){
+        if(!track || !len) return;
+        i = (n + len) % len;
+        paint(i);
+        track.scrollTo({left:track.clientWidth * i, behavior:"smooth"});
+        onChange && onChange(i);
+      }
 
-      // Cuando se usa el trackpad / scroll horizontal, actualiza dots
-      track.addEventListener("scroll", ()=>{
-        const i = Math.round(track.scrollLeft / track.clientWidth);
-        dots.forEach((d,di)=> d.classList.toggle("active", di === i));
-        idx = i;
+      dots.forEach((d,idx)=>d.addEventListener("click",()=>{
+        if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+        set(idx);
+      }));
+      prev && prev.addEventListener("click",()=>{
+        if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+        set(i-1);
+      });
+      next && next.addEventListener("click",()=>{
+        if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+        set(i+1);
       });
 
-      window.addEventListener("resize", ()=> setActive(idx));
-
-      setActive(0);
-    });
-  })();
-
-  // =========================================================
-  // 5) Slider beneficios (#beneficios .listSlider)
-  // =========================================================
-  (function(){
-    const wrap = $("#beneficios .listSlider");
-    if (!wrap) return;
-
-    const track = wrap.querySelector(".listTrack");
-    const prev  = wrap.querySelector(".prev");
-    const next  = wrap.querySelector(".next");
-    if (!track) return;
-
-    let page  = 0;
-    const total = track.children.length || 1;
-
-    function go(i){
-      page = (i + total) % total;
-      track.scrollTo({
-        left: wrap.clientWidth * page,
-        behavior: "smooth"
+      track && track.addEventListener("scroll",()=>{
+        const n = Math.round(track.scrollLeft / track.clientWidth);
+        if(n!==i){ i=n; paint(i); onChange&&onChange(i); }
       });
+
+      window.addEventListener("resize",()=>set(i));
+      set(0);
     }
 
-    prev?.addEventListener("click", ()=> go(page - 1));
-    next?.addEventListener("click", ()=> go(page + 1));
-
-    // Si el usuario arrastra con trackpad, ajustamos la página “activa”
-    track.addEventListener("scroll", ()=>{
-      const i = Math.round(track.scrollLeft / wrap.clientWidth);
-      page = i;
-    });
-
-    window.addEventListener("resize", ()=> go(page));
-
-    go(0);
-  })();
-
-  // =========================================================
-  // 6) Carrusel sistemas (.carouselX) — responsive + dots
-  // =========================================================
-  (function(){
-    $$(".carouselX").forEach(root=>{
-      const track    = root.querySelector(".track");
-      const prev     = root.querySelector(".arrowCircle.prev");
-      const next     = root.querySelector(".arrowCircle.next");
-      const dotsWrap = root.querySelector(".group-dots");
-      if (!track) return;
-
-      const items = track.querySelectorAll(".sys");
-      if (!items.length) return;
-
-      let itemsPerPage = 3;
-      let idx = 0;
-      let dots = [];
-      let groupOffsets = [];
-
-      const updateItemsPerPage = () => {
-        if (window.innerWidth <= 680)      itemsPerPage = 1;
-        else if (window.innerWidth <= 980) itemsPerPage = 2;
-        else                               itemsPerPage = 3;
-      };
-
-      const updateItemWidth = () => {
-        items.forEach(item=>{
-          const gap = 14; // mismo gap que en CSS
-          item.style.flexBasis =
-            `calc((100% - ${gap * (itemsPerPage - 1)}px) / ${itemsPerPage})`;
-        });
-      };
-
-      const groupsCount = () =>
-        Math.max(1, Math.ceil(items.length / itemsPerPage));
-
-      const computeGroupOffsets = () => {
-        groupOffsets = [];
-        const gCount = groupsCount();
-        for (let g = 0; g < gCount; g++){
-          const firstIndex = g * itemsPerPage;
-          const item       = items[firstIndex] || items[items.length - 1];
-          groupOffsets.push(item.offsetLeft);
+    // Vincula títulos .reel-title si existen en el mismo scope
+    document.querySelectorAll(".carousel").forEach(car=>{
+      const sel = car.getAttribute("data-titles");
+      let titles = null;
+      if (sel) titles = [...document.querySelectorAll(sel)];
+      else {
+        const scope = car.closest("aside,.card,.body,section,div") || document;
+        titles = [...scope.querySelectorAll(".reel-title")];
+      }
+      if(!titles?.length) titles = null;
+      initCarousel(car, idx=>{
+        if (titles){
+          titles.forEach((t,i)=>t.classList.toggle("active", i===idx));
         }
-      };
-
-      const setDot = (i) => {
-        dots.forEach((d,idxDot)=> d.classList.toggle("active", idxDot === i));
-      };
-
-      const goTo = (i) => {
-        const gCount = groupsCount();
-        const target = Math.max(0, Math.min(i, gCount - 1));
-        const left   = groupOffsets[target] ?? 0;
-        track.scrollTo({ left, behavior:"smooth" });
-        idx = target;
-        setDot(idx);
-      };
-
-      const setupDots = () => {
-        const gCount = groupsCount();
-        const showControls = gCount > 1;
-        if (prev)     prev.style.display     = showControls ? "" : "none";
-        if (next)     next.style.display     = showControls ? "" : "none";
-        if (dotsWrap) dotsWrap.style.display = showControls ? "" : "none";
-        dots = [];
-
-        if (!showControls || !dotsWrap) return;
-
-        dotsWrap.innerHTML = "";
-        for (let i = 0; i < gCount; i++){
-          const b = document.createElement("button");
-          b.className = "dot" + (i === 0 ? " active" : "");
-          b.addEventListener("click", ()=> goTo(i));
-          dotsWrap.appendChild(b);
-          dots.push(b);
-        }
-      };
-
-      // Init
-      updateItemsPerPage();
-      updateItemWidth();
-      computeGroupOffsets();
-      setupDots();
-      goTo(0);
-
-      prev?.addEventListener("click", ()=>{
-        idx = Math.max(0, idx - 1);
-        goTo(idx);
-      });
-      next?.addEventListener("click", ()=>{
-        const maxIdx = groupsCount() - 1;
-        idx = Math.min(maxIdx, idx + 1);
-        goTo(idx);
-      });
-
-      // Cuando el usuario hace scroll con trackpad, actualizamos el dot activo
-      track.addEventListener("scroll", ()=>{
-        if (!groupOffsets.length) return;
-        const scroll = track.scrollLeft;
-        let nearest = 0;
-        let minDiff = Infinity;
-        groupOffsets.forEach((off, i)=>{
-          const diff = Math.abs(scroll - off);
-          if (diff < minDiff){
-            minDiff = diff;
-            nearest = i;
-          }
-        });
-        idx = nearest;
-        setDot(idx);
-      });
-
-      window.addEventListener("resize", ()=>{
-        updateItemsPerPage();
-        updateItemWidth();
-        computeGroupOffsets();
-        setupDots();
-        goTo(idx);
       });
     });
   })();
 
   // =========================================================
-  // 7) Píldoras (filtros de servicios)
+  // 5) List slider (“¿Por qué elegir nuestro Soporte?”)
+  //    → Igual al de main.js, pero sin cosas extra
   // =========================================================
   (function(){
-    const pills = $$(".pill");
-    const cards = $$(".feature-grid .fcard");
-    if (!pills.length || !cards.length) return;
+    document.querySelectorAll(".listSlider").forEach(w=>{
+      const track = w.querySelector(".listTrack");
+      const prev  = w.querySelector(".arrowCircle.prev");
+      const next  = w.querySelector(".arrowCircle.next");
+      if(!track || !prev || !next) return;
 
-    function apply(filter){
-      cards.forEach(c=>{
-        if (!filter){ c.style.display = ""; return; }
-        const show =
-          (filter === "hora"     && c.classList.contains("tag-hora"))     ||
-          (filter === "poliza"   && c.classList.contains("tag-poliza"))   ||
-          (filter === "garantia" && c.classList.contains("tag-garantia"));
-        c.style.display = show ? "" : "none";
+      let i   = 0;
+      const len = track.children.length;
+
+      function go(n){
+        if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+        i = (n + len) % len;
+        track.scrollTo({left: w.clientWidth * i, behavior:"smooth"});
+      }
+
+      prev.addEventListener("click",()=>go(i-1));
+      next.addEventListener("click",()=>go(i+1));
+      window.addEventListener("resize",()=>go(i));
+
+      go(0);
+    });
+  })();
+
+  // =========================================================
+  // 6) Píldoras (filtros de servicios)
+  //    Para Soporte: data-filter="hora" | "poliza" | "garantia"
+  // =========================================================
+  (function(){
+    const pills = [...document.querySelectorAll(".pill")];
+    const cards = [...document.querySelectorAll(".feature-grid .fcard")];
+    if(!pills.length || !cards.length) return;
+
+    function apply(tag){
+      cards.forEach(card=>{
+        if (!tag){ card.style.display = ""; return; }
+        card.style.display = card.classList.contains("tag-"+tag) ? "" : "none";
       });
     }
 
     pills.forEach(p=>{
       p.addEventListener("click", ()=>{
-        pills.forEach(x=> x.classList.remove("active"));
+        pills.forEach(x=>x.classList.remove("active"));
         p.classList.add("active");
         apply(p.dataset.filter || "");
       });
     });
 
-    // Estado inicial recomendado
+    // Estado inicial: primer pill
     const first = pills[0];
     if (first){
       first.classList.add("active");
@@ -370,20 +269,175 @@
   })();
 
   // =========================================================
-  // 8) FAQ acordeón (uno abierto a la vez)
+  // 7) FAQ: solo uno abierto a la vez
   // =========================================================
   (function(){
-    const wrap  = $("#faqWrap");
-    if (!wrap) return;
+    const wrap = document.getElementById("faqWrap");
+    if(!wrap) return;
+    [...wrap.querySelectorAll(".faq-item")].forEach(item=>{
+      item.addEventListener("toggle",()=>{
+        if(item.open){
+          [...wrap.querySelectorAll(".faq-item")].forEach(o=>{
+            if(o !== item) o.removeAttribute("open");
+          });
+        }
+      });
+    });
+  })();
 
-    const items = [...wrap.querySelectorAll(".faq-item")];
-    items.forEach(d=>{
-      d.addEventListener("toggle", ()=>{
-        if (!d.open) return;
-        items.forEach(o=>{
-          if (o !== d) o.removeAttribute("open");
+  // =========================================================
+  // 8) Carrusel de sistemas (.carouselX) — Copia de main.js
+  //     Auto UI + dots + flechas + accesible
+  // =========================================================
+  (function(){
+    function ensureUI(root){
+      let prev = root.querySelector(".arrowCircle.prev");
+      let next = root.querySelector(".arrowCircle.next");
+      if(!prev){
+        prev = document.createElement("button");
+        prev.className = "arrowCircle prev";
+        prev.setAttribute("aria-label","Anterior");
+        prev.innerHTML = '<span class="chev">‹</span>';
+        root.appendChild(prev);
+      }
+      if(!next){
+        next = document.createElement("button");
+        next.className = "arrowCircle next";
+        next.setAttribute("aria-label","Siguiente");
+        next.innerHTML = '<span class="chev">›</span>';
+        root.appendChild(next);
+      }
+      let dotsWrap = root.querySelector(".group-dots");
+      if(!dotsWrap){
+        dotsWrap = document.createElement("div");
+        dotsWrap.className = "group-dots";
+        root.appendChild(dotsWrap);
+      }
+      return { prev, next, dotsWrap };
+    }
+
+    document.querySelectorAll(".carouselX").forEach(root=>{
+      const track = root.querySelector(".track");
+      if(!track) return;
+
+      const items = [...root.querySelectorAll(".sys")];
+      if (!items.length) return;
+
+      // Cada tarjeta como "link" accesible, por si en el futuro les pones data-href
+      items.forEach(it=>{
+        it.setAttribute("role","link");
+        it.setAttribute("tabindex","0");
+        const go = () => {
+          const href = it.getAttribute("data-href");
+          if(href) window.open(href,"_blank","noopener");
+        };
+        it.addEventListener("click", go);
+        it.addEventListener("keydown", e=>{
+          if(e.key === "Enter" || e.key === " "){
+            e.preventDefault();
+            go();
+          }
         });
       });
+
+      const { prev, next, dotsWrap } = ensureUI(root);
+
+      const perView   = () => (window.innerWidth <= 980 ? 1 : 3);
+      const viewportW = () => track.clientWidth || root.clientWidth || 1;
+      const pageCount = () => Math.max(1, Math.ceil((track.scrollWidth - 1) / viewportW()));
+
+      function buildDots(){
+        dotsWrap.innerHTML = "";
+        const total = pageCount();
+        const arr = [...Array(total)].map((_,j)=>{
+          const b = document.createElement("button");
+          b.className = "dot" + (j===0 ? " active" : "");
+          b.setAttribute("aria-label","Ir a página "+(j+1));
+          b.addEventListener("click",()=>{
+            if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+            go(j);
+          });
+          dotsWrap.appendChild(b);
+          return b;
+        });
+        return arr;
+      }
+
+      let dots = buildDots();
+      let idx  = 0;
+
+      function paint(j){
+        dots.forEach((d,i)=>d.classList.toggle("active", i===j));
+      }
+
+      function go(j){
+        const total = pageCount();
+        idx = ((j % total) + total) % total;
+
+        const startIdx = Math.min(idx * perView(), items.length - 1);
+        const first    = items[startIdx];
+        let baseLeft = (idx === 0)
+          ? 0
+          : (first ? first.offsetLeft - (track.firstElementChild?.offsetLeft || 0)
+                   : idx * viewportW());
+
+        const maxLeft = Math.max(0, track.scrollWidth - viewportW());
+        const left    = Math.min(Math.max(0, baseLeft), maxLeft);
+
+        track.scrollTo({left, behavior:"smooth"});
+        paint(idx);
+        toggleUI();
+      }
+
+      function toggleUI(){
+        const multi = pageCount() > 1;
+        prev.style.display     = multi ? "" : "none";
+        next.style.display     = multi ? "" : "none";
+        dotsWrap.style.display = multi ? "" : "none";
+      }
+
+      prev.addEventListener("click",()=>{
+        if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+        go(idx-1);
+      });
+      next.addEventListener("click",()=>{
+        if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+        go(idx+1);
+      });
+
+      // Mantener dots sincronizados si el usuario hace scroll con trackpad
+      track.addEventListener("scroll",()=>{
+        const i = Math.round(track.scrollLeft / viewportW());
+        if(i !== idx){
+          idx = i;
+          paint(idx);
+        }
+      });
+
+      window.addEventListener("resize",()=>{
+        const nowPages = pageCount();
+        if(dots.length !== nowPages) dots = buildDots();
+        setTimeout(()=>go(idx), 0);
+      });
+
+      function resetStart(){
+        track.scrollLeft = 0;
+        idx = 0;
+        paint(0);
+        toggleUI();
+      }
+
+      // Estado inicial
+      requestAnimationFrame(resetStart);
+      window.addEventListener('load', ()=> setTimeout(resetStart, 0));
+      window.addEventListener('pageshow', resetStart);
+      setTimeout(resetStart, 350);
+
+      track.style.overflowX       = "auto";
+      track.style.scrollBehavior  = "smooth";
+      toggleUI();
+      go(0);
+      setTimeout(()=> track.scrollTo({ left: 0, behavior: "auto" }), 50);
     });
   })();
 
