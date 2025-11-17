@@ -142,7 +142,7 @@
 
   // =========================================================
   // 4) Carrusel genérico (.carousel) — dots + flechas
-  //    Usa pauseAllYTIframes() si existe
+  //    OJO: excluye los reels (id^="carouselReels")
   // =========================================================
   (function(){
     function initCarousel(root, onChange){
@@ -188,8 +188,9 @@
       set(0);
     }
 
-    // Vincula títulos .reel-title si existen cerca
-    document.querySelectorAll(".carousel").forEach(car=>{
+    // Vincula títulos .reel-title si existen cerca,
+    // pero SOLO para .carousel que NO sean reels
+    document.querySelectorAll('.carousel:not([id^="carouselReels"])').forEach(car=>{
       const sel = car.getAttribute("data-titles");
       let titles = null;
       if (sel) titles = [...document.querySelectorAll(sel)];
@@ -496,6 +497,79 @@
       // Si ya estaba cargada la API, inicializamos de inmediato
       window.onYouTubeIframeAPIReady();
     }
+  })();
+
+  // =========================================================
+  // 10) Carrusel de REELS (Shopify vibes + pausa YouTube)
+  //      - Usa .is-active para animación CSS
+  //      - Pausa el video anterior al cambiar
+  // =========================================================
+  (function(){
+    document.querySelectorAll('.carousel[id^="carouselReels"]').forEach(root => {
+      const scope       = root.closest('aside') || root;
+      const track       = root.querySelector('.carousel-track');
+      const slides      = [...(track?.querySelectorAll('.carousel-slide') || [])];
+      const dots        = [...root.querySelectorAll('.carousel-nav .dot')];
+      const prev        = root.querySelector('.arrowCircle.prev');
+      const next        = root.querySelector('.arrowCircle.next');
+      const reelTitles  = [...scope.querySelectorAll('.reel-title')];
+      let idx = 0;
+
+      const titles = slides.map(sl => {
+        const wrap = sl.querySelector('.reel-embed');
+        const ifr  = sl.querySelector('iframe');
+        return (wrap?.dataset?.title) || (sl.dataset?.title) || (ifr?.getAttribute('title')) || '';
+      });
+
+      function paintUI() {
+        // dots
+        dots.forEach((d, di) => d.classList.toggle('active', di === idx));
+        // títulos
+        reelTitles.forEach(t => t.classList.remove('active'));
+        if (reelTitles.length > 0) {
+          if (titles[idx]) reelTitles[0].textContent = titles[idx];
+          reelTitles[0].classList.add('active');
+          if (reelTitles[1]) {
+            const nextIdx = (idx + 1) % titles.length;
+            if (titles[nextIdx]) reelTitles[1].textContent = titles[nextIdx];
+          }
+        }
+      }
+
+      function setActive(i) {
+        if (window.pauseAllYTIframes) window.pauseAllYTIframes(); // pausa el reel anterior
+
+        if (!dots.length || !slides.length) return;
+        idx = (i + dots.length) % dots.length;
+
+        const w = track.clientWidth || root.clientWidth || 1;
+        track.scrollTo({ left: w * idx, behavior: 'smooth' });
+
+        // marcar slide activo para animación CSS (Shopify/Dribbble feel)
+        slides.forEach((sl, si) => sl.classList.toggle('is-active', si === idx));
+
+        paintUI();
+      }
+
+      dots.forEach((d, i) => d.addEventListener('click', () => setActive(i)));
+      prev?.addEventListener('click', () => setActive(idx - 1));
+      next?.addEventListener('click', () => setActive(idx + 1));
+
+      track?.addEventListener('scroll', () => {
+        const w = track.clientWidth || 1;
+        const i = Math.round(track.scrollLeft / w);
+        if (i !== idx && i >= 0 && i < dots.length) {
+          idx = i;
+          paintUI();
+          slides.forEach((sl, si) => sl.classList.toggle('is-active', si === idx));
+        }
+      });
+
+      window.addEventListener('resize', () => setActive(idx));
+
+      // Estado inicial
+      setActive(0);
+    });
   })();
 
 })(); // fin IIFE global
