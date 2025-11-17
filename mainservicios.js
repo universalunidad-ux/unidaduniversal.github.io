@@ -1,7 +1,6 @@
 // =========================================================
-// Expiriti - mainservicios.js
-// Páginas de servicios (Soporte, Pólizas, Cursos, Migraciones, etc.)
-// Glow UI + parciales + carruseles + filtros + FAQ
+// Expiriti - mainservicios.js (CORREGIDO)
+// Arregla el scroll-vertical y la paginación del carrusel .carouselX
 // =========================================================
 
 (function(){
@@ -11,16 +10,24 @@
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
   const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
 
-  // Convierte scroll vertical de la rueda/trackpad en scroll horizontal
+  // ---------------------------------------------------------
+  // --- ARREGLO 1: Scroll horizontal más agresivo ---
+  // Esta versión es más "agresiva" con el e.preventDefault()
+  // para asegurar que SÓLO mueva el carrusel y no la página.
+  // ---------------------------------------------------------
   function enableHorizontalWheelScroll(scroller){
     if (!scroller) return;
     scroller.addEventListener("wheel", (e)=>{
-      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return; // ya es scroll horizontal
-      // Sólo si realmente estamos encima del carril
-      if (!scroller.contains(e.target)) return;
+      // Solo actuar si el scroll es principalmente vertical
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return; 
+      
+      // Frenar el scroll vertical de la página INMEDIATAMENTE
+      e.preventDefault(); 
+      e.stopPropagation(); // Y detener el evento (no avisar a la página)
+
+      // Aplicar ese scroll vertical al scroll horizontal
       scroller.scrollLeft += e.deltaY;
-      e.preventDefault();
-    }, { passive:false });
+    }, { passive:false }); // passive:false es crucial para que funcione preventDefault
   }
 
   // =========================================================
@@ -38,6 +45,7 @@
   // =========================================================
   // 2) Carga de parciales (header/footer) + normalización rutas
   // =========================================================
+  // (Este módulo será ELIMINADO por tu 'build.js' en producción)
   (async function loadPartials(){
     const exists = async (u) => {
       try {
@@ -58,7 +66,6 @@
     const isGh      = location.hostname.endsWith("github.io");
     const firstSeg  = location.pathname.split("/")[1] || "";
     const repoBase  = (isGh && firstSeg) ? ("/" + firstSeg) : "";
-    // Soporta /SISTEMAS/ y /SERVICIOS/ como subcarpetas
     const inSubDir  = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
 
     function prefix(p){
@@ -97,7 +104,7 @@
     if (hp && headerHTML) hp.outerHTML = headerHTML;
     if (fp && footerHTML) fp.outerHTML = footerHTML;
 
-    // Normalización de rutas declarativas dentro de parciales
+    // Normalización de rutas declarativas
     $$(".js-abs-src[data-src]").forEach(img=>{
       img.src = prefix(img.getAttribute("data-src"));
     });
@@ -148,7 +155,6 @@
 
   // =========================================================
   // 4) Carrusel genérico (.carousel con .carousel-track, .dot)
-  //    Flechas + dots + scroll con trackpad
   // =========================================================
   (function(){
     $$(".carousel").forEach(root=>{
@@ -175,6 +181,7 @@
       prev?.addEventListener("click", ()=> setActive(idx - 1));
       next?.addEventListener("click", ()=> setActive(idx + 1));
 
+      // Este listener SÍ estaba bien y actualizaba los puntos en scroll
       track.addEventListener("scroll", ()=>{
         const i = Math.round(track.scrollLeft / track.clientWidth);
         dots.forEach((d,di)=> d.classList.toggle("active", di === i));
@@ -182,7 +189,6 @@
       });
 
       window.addEventListener("resize", ()=> setActive(idx));
-
       setActive(0);
     });
   })();
@@ -191,32 +197,31 @@
   // 5) Slider beneficios (#beneficios .listSlider)
   // =========================================================
   (function(){
-    const wrap = $("#beneficios .listSlider");
-    if (!wrap) return;
-
-    const track = wrap.querySelector(".listTrack");
-    const prev  = wrap.querySelector(".prev");
-    const next  = wrap.querySelector(".next");
-    if (!track) return;
-
-    enableHorizontalWheelScroll(track);
-
-    let page  = 0;
-    const total = track.children.length || 1;
-
-    function go(i){
-      page = (i + total) % total;
-      track.scrollTo({
-        left: wrap.clientWidth * page,
-        behavior: "smooth"
-      });
-    }
-
-    prev?.addEventListener("click", ()=> go(page - 1));
-    next?.addEventListener("click", ()=> go(page + 1));
-    window.addEventListener("resize", ()=> go(page));
-
-    go(0);
+    $$(".listSlider").forEach(wrap => { // Aplicar a todos los .listSlider
+      const track = wrap.querySelector(".listTrack");
+      const prev  = wrap.querySelector(".prev");
+      const next  = wrap.querySelector(".next");
+      if (!track) return;
+  
+      enableHorizontalWheelScroll(track);
+  
+      let page  = 0;
+      const total = track.children.length || 1;
+  
+      function go(i){
+        page = (i + total) % total;
+        track.scrollTo({
+          left: wrap.clientWidth * page,
+          behavior: "smooth"
+        });
+      }
+  
+      prev?.addEventListener("click", ()=> go(page - 1));
+      next?.addEventListener("click", ()=> go(page + 1));
+      window.addEventListener("resize", ()=> go(page));
+  
+      go(0);
+    });
   })();
 
   // =========================================================
@@ -236,6 +241,7 @@
       if (!items.length) return;
 
       let itemsPerPage = 3;
+      let dots = []; // Mover dots aquí para que sea accesible por el listener de scroll
 
       const updateItemsPerPage = () => {
         if (window.innerWidth <= 680)      itemsPerPage = 1;
@@ -251,37 +257,32 @@
         });
       };
 
-      updateItemsPerPage();
-      updateItemWidth();
-
       const groupsCount = () =>
         Math.max(1, Math.ceil(items.length / itemsPerPage));
-
-      const showControls = groupsCount() > 1;
-      if (prev)     prev.style.display     = showControls ? "" : "none";
-      if (next)     next.style.display     = showControls ? "" : "none";
-      if (dotsWrap) dotsWrap.style.display = showControls ? "" : "none";
-
-      if (!showControls) return;
-
-      dotsWrap.innerHTML = "";
-      const dots = Array.from({ length: groupsCount() }, (_,i)=>{
-        const b = document.createElement("button");
-        b.className = "dot" + (i === 0 ? " active" : "");
-        b.addEventListener("click", ()=> goTo(i));
-        dotsWrap.appendChild(b);
-        return b;
-      });
 
       function setDot(i){
         dots.forEach((d,idx)=> d.classList.toggle("active", idx === i));
       }
 
       function offsetForGroup(i){
-        // Cada grupo comienza en el primer item de ese grupo
         const firstIndex = i * itemsPerPage;
         const item       = items[firstIndex] || items[0];
-        return item?.offsetLeft ?? 0;
+        // fallback simple si offsetLeft da 0
+        if (item?.offsetLeft) {
+            return item.offsetLeft;
+        }
+        return (track.clientWidth / itemsPerPage) * i;
+      }
+      
+      function buildDots() {
+          dotsWrap.innerHTML = "";
+          dots = Array.from({ length: groupsCount() }, (_,i)=>{
+            const b = document.createElement("button");
+            b.className = "dot" + (i === 0 ? " active" : "");
+            b.addEventListener("click", ()=> goTo(i));
+            dotsWrap.appendChild(b);
+            return b;
+          });
       }
 
       function goTo(i){
@@ -293,6 +294,17 @@
       }
 
       let idx = 0;
+      
+      buildDots(); // Construir dots al inicio
+      updateItemsPerPage();
+      updateItemWidth();
+
+      const showControls = groupsCount() > 1;
+      if (prev)     prev.style.display     = showControls ? "" : "none";
+      if (next)     next.style.display     = showControls ? "" : "none";
+      if (dotsWrap) dotsWrap.style.display = showControls ? "" : "none";
+      if (!showControls) return;
+
 
       prev?.addEventListener("click", ()=>{
         idx = Math.max(0, idx - 1);
@@ -303,9 +315,40 @@
         goTo(idx);
       });
 
+      // ---------------------------------------------------------------
+      // --- ARREGLO 2: AÑADIR EL LISTENER DE SCROLL que faltaba ---
+      // ---------------------------------------------------------------
+      // Usamos 'debounce' para no disparar esto 1000 veces por segundo
+      let scrollTimer;
+      track.addEventListener("scroll", () => {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(() => {
+              const currentScroll = track.scrollLeft;
+              let closestGroup = 0;
+              let minDiff = Infinity;
+              
+              // Encuentra el "grupo" (dot) más cercano a la posición actual
+              for (let i = 0; i < dots.length; i++) {
+                  const groupOffset = offsetForGroup(i);
+                  const diff = Math.abs(currentScroll - groupOffset);
+                  
+                  if (diff < (minDiff - 1)) { // -1 para dar "preferencia" al actual
+                      minDiff = diff;
+                      closestGroup = i;
+                  }
+              }
+
+              if (closestGroup !== idx) {
+                  setDot(closestGroup);
+                  idx = closestGroup; // Actualiza el índice
+              }
+          }, 100); // 100ms de espera
+      });
+
       window.addEventListener("resize", ()=>{
         updateItemsPerPage();
         updateItemWidth();
+        buildDots(); // Re-construir dots si el número de grupos cambia
         goTo(idx);
       });
 
@@ -317,17 +360,18 @@
   // 7) Píldoras (filtros de servicios)
   // =========================================================
   (function(){
-    const pills = $$(".pill");
+    const pills = $$(".pillbar .pill[data-filter]"); // <-- Más específico
     const cards = $$(".feature-grid .fcard");
     if (!pills.length || !cards.length) return;
 
+    // ---------------------------------------------------------------
+    // --- ARREGLO 3: Lógica de filtros declarativa ---
+    // ---------------------------------------------------------------
     function apply(filter){
       cards.forEach(c=>{
-        if (!filter){ c.style.display = ""; return; }
-        const show =
-          (filter === "hora"     && c.classList.contains("tag-hora"))     ||
-          (filter === "poliza"   && c.classList.contains("tag-poliza"))   ||
-          (filter === "garantia" && c.classList.contains("tag-garantia"));
+        // Si el filtro está vacío (data-filter=""), muestra todo
+        // Si no, muestra solo las tarjetas que tienen esa clase (tag)
+        const show = !filter || c.classList.contains(filter);
         c.style.display = show ? "" : "none";
       });
     }
@@ -336,15 +380,15 @@
       p.addEventListener("click", ()=>{
         pills.forEach(x=> x.classList.remove("active"));
         p.classList.add("active");
-        apply(p.dataset.filter || "");
+        apply(p.dataset.filter); // 'filter' ya no es 'hora', sino 'tag-hora'
       });
     });
 
-    // Estado inicial recomendado
-    const first = pills[0];
-    if (first){
-      first.classList.add("active");
-      apply(first.dataset.filter || "");
+    // Estado inicial (basado en el primer pill que ya esté 'active')
+    const activePill = $(".pillbar .pill.active") || pills[0];
+    if (activePill){
+      activePill.classList.add("active");
+      apply(activePill.dataset.filter);
     }
   })();
 
