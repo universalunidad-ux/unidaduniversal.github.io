@@ -948,52 +948,7 @@ section{
   background:#0e1724;
 }
 
-/* ====== REELS (9:16) — versión mejorada ====== */
-.reel-embed{
-  position:relative;
-
-  /* 👇 nuevo tamaño más elegante */
-  width:min(320px, 100%) !important;
-  max-width:320px !important;
-
-  aspect-ratio:9/16;
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid #1c2533;
-  background:#0e1724;
-  margin:0 auto;
-  flex:0 0 auto;
-  justify-self:center;
-}
-
-/* 👇 todavía más finito en pantallas grandes */
-@media (min-width:1200px){
-  .reel-embed{
-    width:300px !important;
-    max-width:300px !important;
-  }
-}
-
-.reel-embed iframe{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
-}
-
-/* ====== Títulos ====== */
-.reel-title{
-  margin-bottom:6px;
-  text-align:center;
-  color:#fff;
-  font-weight:700;
-  font-size:0.95rem;
-  display:none;
-}
-.reel-title.active{display:block}
-
-/* ===== Reels card tipo Shopify / Dribbble ===== */
+/* ===== CARD REELS tipo Shopify / Dribbble ===== */
 .reels-card{
   display:flex;
   flex-direction:column;
@@ -1001,7 +956,8 @@ section{
   gap:10px;
   padding:16px 16px 18px;
   border-radius:16px;
-  box-shadow:0 18px 40px rgba(0,0,0,.55); /* sombra suave tipo Dribbble */
+  background:linear-gradient(145deg,#020617,#020617 40%,#020617 70%,rgba(45,212,191,.06));
+  box-shadow:0 18px 40px rgba(0,0,0,.55);
 }
 
 /* Alineado con el texto del lado izquierdo en desktop */
@@ -1021,7 +977,7 @@ section{
   }
 }
 
-/* ===== Reels (9:16) más compactos y con glow ===== */
+/* ===== REELS (9:16) compactos + glow ===== */
 .reel-embed{
   position:relative;
   width:min(320px,100%) !important;
@@ -1036,10 +992,9 @@ section{
   justify-self:center;
 
   box-shadow:0 20px 40px rgba(0,0,0,.60);
-  transition:transform .22s ease, box-shadow .22s ease;
+  transition:transform .22s ease, box-shadow .22s ease, filter .22s ease;
 }
 
-/* En pantallas grandes, un pelín más chico para que se vea fino */
 @media (min-width:1200px){
   .reel-embed{
     width:300px !important;
@@ -1047,22 +1002,40 @@ section{
   }
 }
 
-/* Hover sutil, estilo Dribbble */
+/* Hover sutil estilo Dribbble */
 .reel-embed:hover{
   transform:translateY(-2px);
   box-shadow:0 26px 60px rgba(0,0,0,.72);
 }
 
-/* Título de reel más compacto */
-.reels-card .reel-title{
+/* Reel activo: un poquito más “vivo” */
+#carouselReelsSoporte .carousel-slide.is-active .reel-embed{
+  transform:translateY(-3px);
+  box-shadow:0 30px 70px rgba(0,0,0,.85);
+  filter:saturate(1.05);
+}
+
+/* ===== Iframe del reel ===== */
+.reel-embed iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+/* ===== Títulos de reels ===== */
+.reel-title{
   margin-bottom:6px;
   text-align:center;
   color:#fff;
   font-weight:700;
   font-size:0.95rem;
+  display:none;
 }
+.reel-title.active{display:block}
 
-/* ===== Animación suave entre reels ===== */
+/* ===== Animación suave entre reels (slides) ===== */
 #carouselReelsSoporte .carousel-slide{
   opacity:0;
   transform:translateX(16px);
