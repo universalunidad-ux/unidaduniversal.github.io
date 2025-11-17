@@ -1,7 +1,7 @@
 // =========================================================
 // Expiriti - mainservicios.js
 // Servicios (Soporte, Pólizas, Cursos, Migraciones, etc.)
-// Parciales + TOC + Carruseles + Filtros + FAQ
+// Parciales + TOC + Carruseles + Filtros + FAQ + YouTube pause
 // =========================================================
 
 (function(){
@@ -32,7 +32,6 @@
 
   // =========================================================
   // 2) Carga de parciales (header/footer) + normalización rutas
-  //    (adaptado de tu mainservicios.js original)
   // =========================================================
   (async function loadPartials(){
     const exists = async (u) => {
@@ -54,7 +53,6 @@
     const isGh      = location.hostname.endsWith("github.io");
     const firstSeg  = location.pathname.split("/")[1] || "";
     const repoBase  = (isGh && firstSeg) ? ("/" + firstSeg) : "";
-    // Soporta /SISTEMAS/ y /SERVICIOS/ como subcarpetas
     const inSubDir  = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
 
     function prefix(p){
@@ -143,8 +141,8 @@
   })();
 
   // =========================================================
-  // 4) Carrusel genérico (.carousel con .carousel-track y .carousel-nav .dot)
-  //    → Copia del motor de main.js (funciona bien ahí)
+  // 4) Carrusel genérico (.carousel) — dots + flechas
+  //    Usa pauseAllYTIframes() si existe
   // =========================================================
   (function(){
     function initCarousel(root, onChange){
@@ -182,7 +180,7 @@
       });
 
       track && track.addEventListener("scroll",()=>{
-        const n = Math.round(track.scrollLeft / track.clientWidth);
+        const n = Math.round(track.scrollLeft/track.clientWidth);
         if(n!==i){ i=n; paint(i); onChange&&onChange(i); }
       });
 
@@ -190,7 +188,7 @@
       set(0);
     }
 
-    // Vincula títulos .reel-title si existen en el mismo scope
+    // Vincula títulos .reel-title si existen cerca
     document.querySelectorAll(".carousel").forEach(car=>{
       const sel = car.getAttribute("data-titles");
       let titles = null;
@@ -210,7 +208,6 @@
 
   // =========================================================
   // 5) List slider (“¿Por qué elegir nuestro Soporte?”)
-  //    → Igual al de main.js, pero sin cosas extra
   // =========================================================
   (function(){
     document.querySelectorAll(".listSlider").forEach(w=>{
@@ -238,7 +235,6 @@
 
   // =========================================================
   // 6) Píldoras (filtros de servicios)
-  //    Para Soporte: data-filter="hora" | "poliza" | "garantia"
   // =========================================================
   (function(){
     const pills = [...document.querySelectorAll(".pill")];
@@ -260,7 +256,6 @@
       });
     });
 
-    // Estado inicial: primer pill
     const first = pills[0];
     if (first){
       first.classList.add("active");
@@ -286,8 +281,7 @@
   })();
 
   // =========================================================
-  // 8) Carrusel de sistemas (.carouselX) — Copia de main.js
-  //     Auto UI + dots + flechas + accesible
+  // 8) Carrusel de sistemas (.carouselX) — Auto UI + dots
   // =========================================================
   (function(){
     function ensureUI(root){
@@ -323,7 +317,6 @@
       const items = [...root.querySelectorAll(".sys")];
       if (!items.length) return;
 
-      // Cada tarjeta como "link" accesible, por si en el futuro les pones data-href
       items.forEach(it=>{
         it.setAttribute("role","link");
         it.setAttribute("tabindex","0");
@@ -405,7 +398,6 @@
         go(idx+1);
       });
 
-      // Mantener dots sincronizados si el usuario hace scroll con trackpad
       track.addEventListener("scroll",()=>{
         const i = Math.round(track.scrollLeft / viewportW());
         if(i !== idx){
@@ -427,18 +419,83 @@
         toggleUI();
       }
 
-      // Estado inicial
       requestAnimationFrame(resetStart);
       window.addEventListener('load', ()=> setTimeout(resetStart, 0));
       window.addEventListener('pageshow', resetStart);
       setTimeout(resetStart, 350);
 
-      track.style.overflowX       = "auto";
-      track.style.scrollBehavior  = "smooth";
+      track.style.overflowX      = "auto";
+      track.style.scrollBehavior = "smooth";
       toggleUI();
       go(0);
       setTimeout(()=> track.scrollTo({ left: 0, behavior: "auto" }), 50);
     });
+  })();
+
+  // =========================================================
+  // 9) GESTOR YOUTUBE — pausa reels al cambiar
+  //     - Si un reel empieza a reproducirse, pausa los demás
+  //     - Si cambias de slide / haces click en otro reel, se pausa el anterior
+  // =========================================================
+  (function(){
+    // Si ya existe en otra parte (otra página), respétalo
+    if (!window.exPlayers) window.exPlayers = [];
+
+    if (!window.pauseAllYTIframes) {
+      window.pauseAllYTIframes = function(exceptPlayer){
+        window.exPlayers.forEach(p=>{
+          if (!p || p === exceptPlayer) return;
+          try{
+            if (typeof p.getPlayerState === "function" &&
+                typeof p.pauseVideo     === "function"){
+              const s = p.getPlayerState();
+              if (s === 1 || s === 3) p.pauseVideo(); // 1=Playing, 3=Buffering
+            }
+          }catch(e){}
+        });
+      };
+    }
+
+    function onPlayerStateChange(event){
+      // Cuando este player comienza a reproducirse → pausa el resto
+      if (event.data === 1){
+        window.pauseAllYTIframes(event.target);
+      }
+    }
+
+    // Encadenar si ya hay otra callback global
+    const prevOnReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function(){
+      if (typeof prevOnReady === "function") prevOnReady();
+
+      document.querySelectorAll('iframe[src*="youtube"]').forEach(iframe=>{
+        if (iframe.dataset.ytInit) return;
+        iframe.dataset.ytInit = "1";
+
+        let src = iframe.src;
+        if (!src.includes("enablejsapi=1")){
+          src += (src.includes("?") ? "&" : "?") + "enablejsapi=1";
+          iframe.src = src;
+        }
+
+        if (window.YT && window.YT.Player){
+          const player = new YT.Player(iframe, {
+            events:{ onStateChange:onPlayerStateChange }
+          });
+          window.exPlayers.push(player);
+        }
+      });
+    };
+
+    // Cargar API de YouTube si no está
+    if (!window.YT || !window.YT.Player){
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    } else {
+      // Si ya estaba cargada la API, inicializamos de inmediato
+      window.onYouTubeIframeAPIReady();
+    }
   })();
 
 })(); // fin IIFE global
