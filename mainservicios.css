@@ -925,7 +925,9 @@ section{
 /* =========================================================
    YouTube grid + Reels
    ========================================================= */
-/* ====== VIDEO NORMAL (16:9) ====== */
+/* =========================================================
+   VIDEO NORMAL (16:9)
+   ========================================================= */
 .yt-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -934,12 +936,14 @@ section{
   justify-items:center;
 }
 @media (max-width:768px){
-  .yt-grid{grid-template-columns:1fr}
+  .yt-grid{ grid-template-columns:1fr; }
 }
+
 .yt{
   width:100%;
   max-width:680px;
 }
+
 .yt iframe{
   aspect-ratio:16/9;
   width:100%;
@@ -948,7 +952,13 @@ section{
   background:#0e1724;
 }
 
-/* ===== CARD REELS tipo Shopify / Dribbble ===== */
+
+
+/* =========================================================
+   REELS (9:16) — Versión Shopify / Dribbble
+   ========================================================= */
+
+/* Tarjeta que envuelve título + carrusel */
 .reels-card{
   display:flex;
   flex-direction:column;
@@ -956,11 +966,11 @@ section{
   gap:10px;
   padding:16px 16px 18px;
   border-radius:16px;
-  background:linear-gradient(145deg,#020617,#020617 40%,#020617 70%,rgba(45,212,191,.06));
-  box-shadow:0 18px 40px rgba(0,0,0,.55);
+  box-shadow:0 18px 40px rgba(0,0,0,.55); /* sombra suave premium */
+  background:#0b0f16;
 }
 
-/* Alineado con el texto del lado izquierdo en desktop */
+/* Alineación en desktop para que encaje con el texto */
 @media (min-width:980px){
   #beneficios .grid-2{
     align-items:flex-start;
@@ -977,16 +987,22 @@ section{
   }
 }
 
-/* ===== REELS (9:16) compactos + glow ===== */
+
+/* =========================================================
+   REEL EMBED (9:16) — Glow + Elegante + Sin parpadeo
+   ========================================================= */
 .reel-embed{
   position:relative;
+
   width:min(320px,100%) !important;
   max-width:320px !important;
+
   aspect-ratio:9/16;
   border-radius:16px;
   overflow:hidden;
   border:1px solid #111827;
   background:#020617;
+
   margin:4px auto 0;
   flex:0 0 auto;
   justify-self:center;
@@ -995,6 +1011,7 @@ section{
   transition:transform .22s ease, box-shadow .22s ease, filter .22s ease;
 }
 
+/* Un poco más fino en pantallas grandes */
 @media (min-width:1200px){
   .reel-embed{
     width:300px !important;
@@ -1002,20 +1019,13 @@ section{
   }
 }
 
-/* Hover sutil estilo Dribbble */
+/* Hover premium estilo Dribbble */
 .reel-embed:hover{
   transform:translateY(-2px);
   box-shadow:0 26px 60px rgba(0,0,0,.72);
 }
 
-/* Reel activo: un poquito más “vivo” */
-#carouselReelsSoporte .carousel-slide.is-active .reel-embed{
-  transform:translateY(-3px);
-  box-shadow:0 30px 70px rgba(0,0,0,.85);
-  filter:saturate(1.05);
-}
-
-/* ===== Iframe del reel ===== */
+/* Reels internos */
 .reel-embed iframe{
   position:absolute;
   inset:0;
@@ -1024,7 +1034,10 @@ section{
   border:0;
 }
 
-/* ===== Títulos de reels ===== */
+
+/* =========================================================
+   TÍTULOS REEL
+   ========================================================= */
 .reel-title{
   margin-bottom:6px;
   text-align:center;
@@ -1033,19 +1046,29 @@ section{
   font-size:0.95rem;
   display:none;
 }
-.reel-title.active{display:block}
-
-/* ===== Animación suave entre reels (slides) ===== */
-#carouselReelsSoporte .carousel-slide{
-  opacity:0;
-  transform:translateX(16px);
-  transition:opacity .28s ease, transform .28s ease;
+.reel-title.active{
+  display:block;
 }
 
-#carouselReelsSoporte .carousel-slide.is-active{
-  opacity:1;
+
+
+/* =========================================================
+   ANIMACIÓN ENTRE REELS (sin parpadeo)
+   ========================================================= */
+
+/* No usamos fade-in/out porque genera parpadeo con scroll */
+#carouselReelsSoporte .carousel-slide{
+  opacity:1;              /* siempre visibles */
   transform:translateX(0);
 }
+
+/* Reel activo — pequeño realce premium */
+#carouselReelsSoporte .carousel-slide.is-active .reel-embed{
+  transform:translateY(-3px);
+  box-shadow:0 30px 70px rgba(0,0,0,.85);
+  filter:saturate(1.05);
+}
+
 
 /* =========================================================
    Scroll táctil amigable en carruseles
