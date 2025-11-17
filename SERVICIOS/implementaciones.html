@@ -1,4 +1,4 @@
-<!-- ====== Implementaciones CONTPAQi | Expiriti ====== -->
+<!-- ====== Implementaciones CONTPAQi | Expiriti (con parciales) ====== -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,10 +10,12 @@
   <!-- Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.youtube-nocookie.com">
+  <link rel="preconnect" href="https://i.ytimg.com">
 
   <!-- Fuente + CSS global -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../main.css" />
+  <link rel="stylesheet" href="../mainservicios.css" />
 
   <!-- Favicon set -->
   <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
@@ -21,505 +23,608 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
   <link rel="manifest" href="../IMG/site.webmanifest">
   <link rel="icon" href="../IMG/favicon.ico">
-
-  <style>
-    :root{--bg:#0b0f14;--bg-2:#0d1219;--card:#111723;--muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25)}
-    *{box-sizing:border-box} html,body{margin:0} html{scroll-behavior:smooth}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#0b0f14 0%, #0d1219 100%);color:var(--text)}
-    .container{max-width:var(--maxw);margin:0 auto;padding:0 34px}
-    a{color:inherit;text-decoration:none}
-    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1c2c;border:1px solid #203044;color:#cfe3ff;font-size:12px}
-    .title-gradient{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-    .lock-note{margin:8px 0 0;font-size:12px;color:#94a8c6;display:inline-flex;gap:6px;align-items:center}.lock-note::before{content:"⚠️";}
-    section{padding:26px 0;border-top:1px solid #11182725}
-    .card{background:var(--card);border:1px solid #1c2533;border-radius:16px}
-    .card .body{padding:14px}
-    .lead{color:#c6d1e3;max-width:72ch}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-    @media (max-width:980px){ .grid-3{grid-template-columns:1fr 1fr} .grid-2{grid-template-columns:1fr} }
-    @media (max-width:680px){ .grid-3{grid-template-columns:1fr} }
-    .imp-card{display:grid;gap:10px;border:1px solid #1e2b3c;border-radius:14px;background:linear-gradient(180deg,#0f1622,#0f1724);padding:14px}
-    .imp-head{display:flex;align-items:center;gap:12px}
-    .imp-icon{width:40px;height:40px;border-radius:10px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
-    .imp-card h4{margin:0;font-size:16px}
-    .imp-card p{margin:0;color:#bcd0ea;font-size:14px;line-height:1.45}
-    .imp-list{margin:0;padding-left:18px;color:#cfe3ff}
-    .imp-list li{margin:6px 0}
-    .cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #1c2533;background:#121a25;box-shadow:var(--shadow);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap}
-    .btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
-    .btn-ghost{background:#101826;color:#e8eef6}
-    .req{font-size:12px;color:#aebbd0}
-
-    /* Pills selector (3 filtros) */
-    .pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 18px}
-    .pill{padding:8px 14px;border-radius:999px;border:1px solid #1c2533;background:linear-gradient(180deg,#0f1c2c,#0e1724);color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;transition:background .15s ease, transform .12s ease, box-shadow .12s ease}
-    .pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
-    .pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
-    .hide{display:none !important}
-    .toc{position:sticky;top:82px;margin-left:auto;max-width:260px}
-    .toc .card{position:sticky;top:82px}
-    .mini{font-size:12px;color:#9eb0c9}
-    .icons-note{border:1px dashed #274261;background:#0c1422;color:#b7cae6;padding:10px;border-radius:12px;text-align:center}
-
-    /* Servicios complementarios: estilo link */
-    .svc-link{
-      position:relative;
-      cursor:pointer;
-      padding:6px 10px;
-      margin:4px 0;
-      border-radius:10px;
-      transition:background .15s ease,color .15s ease,transform .12s ease;
-    }
-    .svc-link .svc-more{
-      position:absolute;
-      right:10px;
-      top:50%;
-      transform:translateY(-50%);
-      font-size:12px;
-      color:var(--brand-2);
-      opacity:0;
-      transition:opacity .15s ease;
-      pointer-events:none;
-    }
-    .svc-link:hover{
-      background:rgba(37,99,235,.14);
-      color:#e6f2ff;
-      transform:translateY(-1px);
-    }
-    .svc-link:hover .svc-more{
-      opacity:1;
-    }
-  </style>
+  <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
 </head>
 <body id="top">
   <!-- Header dinámico -->
   <div id="header-placeholder"></div>
 
-  <main class="container">
-    <a class="mini" href="index.html#servicios">← Volver a servicios</a>
-    <h1 class="title-gradient" style="margin:8px 0 6px">Implementaciones CONTPAQi</h1>
-    <p class="lead">Paquetes claros, instalación correcta, formatos listos, CSD configurado, timbrado de prueba y <strong>capacitación</strong>. Todo para que empieces a operar sin fricción.</p>
-    <div class="icons-note">Debajo de cada servicio, más adelante se colocarán <strong>íconos azules</strong> de los sistemas donde aplica (se hará en el index).</div>
+  <main class="container hero">
+    <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#servicios">← Volver a servicios</a>
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <!-- Filtros por tipo de proceso -->
-    <div class="pillbar" role="tablist" aria-label="Filtrar por tipo de proceso">
-      <button class="pill active" data-filter="comerciales">Procesos comerciales</button>
-      <button class="pill" data-filter="contables">Procesos contables</button>
-      <button class="pill" data-filter="nube">Sistemas en la nube</button>
+    <h1>Implementaciones CONTPAQi <span class="badge" style="background:rgba(245,158,11,.15);border-color:#f59e0b;color:#fcd34d;">Servicio</span></h1>
+
+    <div class="badges">
+      <span class="badge" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">Instalación inicial</span>
+      <span class="badge">CSD y timbrado de prueba</span>
+      <span class="badge">Formatos amigables</span>
+      <span class="badge">Capacitación básica</span>
     </div>
+    <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <section class="grid-3" id="impGrid" aria-label="Listado de implementaciones">
-      <!-- ===== Factura Electrónica ===== -->
-      <article class="imp-card" data-sistema="Factura Electrónica" data-tipo="comerciales">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/facturaelectronica.webp" alt="Factura Electrónica">
-          <h4>Implementación Factura Electrónica</h4>
-        </div>
-        <p>Deja facturando tu empresa en una sesión: instalación, empresa, formato, CSD, cliente y producto de prueba, timbrado y cancelación.</p>
-        <ul class="imp-list">
-          <li>Instalación y creación de empresa</li>
-          <li>Configuración de formato y cargado de CSD</li>
-          <li>Creación de cliente y producto</li>
-          <li>Elaboración y timbrado de factura (prueba)</li>
-          <li>Cancelación de comprobante</li>
-        </ul>
-        <p class="req"><strong>Requisitos:</strong> FIEL para firmar manifiesto (.KEY, .CER y contraseña) y CSD (.KEY, .CER y contraseña).</p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Factura Electrónica">WhatsApp: Quiero info</a>
-          <a class="btn btn-ghost" href="#faq">Ver preguntas frecuentes</a>
-        </div>
-      </article>
+    <!-- ===== Beneficios + Reels en hero ===== -->
+    <section id="beneficios" aria-label="Por qué elegir nuestras implementaciones">
+      <div class="grid-2 align-center">
 
-      <!-- ===== Punto de Venta (resumen) ===== -->
-      <article class="imp-card" data-sistema="Punto de Venta" data-tipo="comerciales">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/puntoventa.webp" alt="Punto de Venta">
-          <h4>Implementación Punto de Venta</h4>
-        </div>
-        <p>Configuración completa para operar caja y tickets desde el día 1. Incluye flujo de venta, movimientos de caja e inventario básico.</p>
-        <ul class="imp-list">
-          <li>Usuarios, administrador y empresa</li>
-          <li>Catálogos, movimientos y procesos de caja</li>
-          <li>Inventario inicial, salidas y traspasos</li>
-          <li>Inventario físico, reportes y formatos de impresión</li>
-          <li>Documento de venta (Factura/Remisión), tickets genéricos</li>
-        </ul>
-        <p class="req">Formato personalizado se cotiza por separado.</p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Punto de Venta">WhatsApp: Quiero info</a>
-          <a class="btn btn-ghost" href="#faq">Ver preguntas frecuentes</a>
-        </div>
-      </article>
+        <!-- ========== Columna izquierda ========== -->
+        <div class="stack">
+          <div>
+            <h2 class="title-gradient">¿Por qué una Implementación con Expiriti?</h2>
+            <p class="lead">
+              No es solo instalar el sistema. Dejamos tu CONTPAQi <strong>listo para operar</strong>:
+              empresa configurada, CSD cargado, timbrado de prueba y capacitación en el flujo básico
+              para que no te “estrenes” con el SAT.
+            </p>
+          </div>
 
-      <!-- ===== Módulo de Ventas ===== -->
-      <article class="imp-card" data-sistema="Módulo de Ventas" data-tipo="comerciales">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/comercial.webp" alt="Módulo de Ventas">
-          <h4>Implementación Módulo de Ventas</h4>
-        </div>
-        <p>De cero a venta timbrada con formatos listos y capacitación para tu equipo.</p>
-        <ul class="imp-list">
-          <li>Creación de empresa y CSD</li>
-          <li>Adecuación de formato amigable</li>
-          <li>Cliente y producto/servicio de prueba</li>
-          <li>Timbrado y cancelación de prueba</li>
-          <li>Capacitación en flujo de ventas y control de OCs</li>
-        </ul>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Módulo de Ventas">WhatsApp: Quiero info</a>
-          <a class="btn btn-ghost" href="#faq">Ver preguntas frecuentes</a>
-        </div>
-      </article>
+          <!-- Tarjeta con lista de beneficios -->
+          <div class="card">
+            <div class="body">
+              <div class="listSlider">
+                <button class="arrowCircle prev" aria-label="Anterior">
+                  <span class="chev">‹</span>
+                </button>
 
-      <!-- ===== Comercial Start (Almacén) ===== -->
-      <article class="imp-card" data-sistema="Comercial Start" data-tipo="comerciales">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/comercialstart.webp" alt="Comercial Start">
-          <h4>Implementación Manejo de Almacén (Comercial Start)</h4>
-        </div>
-        <p>Arranca con catálogos bien definidos, formatos y procesos de facturación y REP.</p>
-        <ul class="imp-list">
-          <li>Instalación y configuración de productos</li>
-          <li>Adecuación de formatos (Cotización, Remisión, Pedido, Factura)</li>
-          <li>Creación de productos (código de barras, imagen)</li>
-          <li>Timbrado, REP y cancelación</li>
-          <li>Reportes de almacén</li>
-        </ul>
-        <p class="req">Incluye 10 días naturales de soporte post-implementación (dudas relacionadas).</p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Comercial Start">WhatsApp: Quiero info</a>
-          <a class="btn btn-ghost" href="#faq">Ver preguntas frecuentes</a>
-        </div>
-      </article>
+                <div class="listTrack">
+                  <!-- Página 1 -->
+                  <div class="listPage">
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_instalacion.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>TODO LISTO DESDE EL DÍA 1</strong>
+                        <div>Empresa, formatos, CSD y pruebas de timbrado/cancelación en la misma sesión.</div>
+                      </div>
+                    </div>
 
-      <!-- ===== Comercial Premium ===== -->
-      <article class="imp-card" data-sistema="Comercial Premium" data-tipo="comerciales">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/comercialpremium.webp" alt="Comercial Premium">
-          <h4>Implementación CONTPAQi Comercial Premium</h4>
-        </div>
-        <p>Implementación integral administrativa y comercial con interfaz a Contabilidad.</p>
-        <ul class="imp-list">
-          <li>Instalación y carga de catálogos (Clientes, Proveedores, Agentes, Productos, Servicios, Proyectos, Almacenes)</li>
-          <li>Adecuación de formatos y procesos dentro del sistema</li>
-          <li>Compras y Ventas (flujo completo), reportes CxC, CxP y Almacén</li>
-          <li>Hoja electrónica y creación de conceptos</li>
-          <li>Interfaz con Contabilidad y manejo de XML (visor, clasificación, vistas)</li>
-          <li>Inventario físico y documento de compra a partir de XML</li>
-        </ul>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Comercial Premium">WhatsApp: Quiero info</a>
-          <a class="btn btn-ghost" href="#faq">Ver preguntas frecuentes</a>
-        </div>
-      </article>
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_capacitacion.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>CAPACITACIÓN INCLUIDA</strong>
+                        <div>Te explicamos el flujo básico para que el equipo arranque sin miedo.</div>
+                      </div>
+                    </div>
 
-      <!-- ===== Vende (básico) ===== -->
-      <article class="imp-card" data-sistema="Vende" data-tipo="comerciales">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/vende.webp" alt="Vende">
-          <h4>Implementación Básica: CONTPAQi Vende</h4>
-        </div>
-        <p>Pon en marcha tus ventas en la nube con timbrado y cancelación de prueba.</p>
-        <ul class="imp-list">
-          <li>Creación de empresa y formato</li>
-          <li>Cargado de CSD</li>
-          <li>Cliente y producto</li>
-          <li>Timbrado, REP y cancelación</li>
-        </ul>
-        <p class="req"><strong>Requisitos:</strong> FIEL (para manifiesto) y CSD vigentes (.KEY, .CER, contraseñas).</p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Vende">WhatsApp: Quiero info</a>
-          <a class="btn btn-ghost" href="#faq">Ver preguntas frecuentes</a>
-        </div>
-      </article>
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_formatos.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>FORMATOS AMIGABLES</strong>
+                        <div>Dejamos un formato limpio para que tu documento se vea profesional.</div>
+                      </div>
+                    </div>
+                  </div>
 
-      <!-- ===== Contables ===== -->
-      <article class="imp-card" data-sistema="Nóminas" data-tipo="contables">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/nominas.webp" alt="Nóminas">
-          <h4>Implementación CONTPAQi Nóminas</h4>
-        </div>
-        <p><em>Falta agregar descripción.</em></p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Nóminas">WhatsApp: Quiero info</a>
-        </div>
-      </article>
+                  <!-- Página 2 -->
+                  <div class="listPage">
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_timbrado.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>PRUEBAS ANTES DE OPERAR</strong>
+                        <div>Timbramos y cancelamos comprobantes de prueba para validar todo.</div>
+                      </div>
+                    </div>
 
-      <article class="imp-card" data-sistema="Contabilidad" data-tipo="contables">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/contabilidad.webp" alt="Contabilidad">
-          <h4>Implementación CONTPAQi Contabilidad</h4>
-        </div>
-        <p><em>Falta agregar descripción.</em></p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Contabilidad">WhatsApp: Quiero info</a>
-        </div>
-      </article>
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_soporte_personal.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>EVITAS ERRORES CRÍTICOS</strong>
+                        <div>Configuramos parámetros clave para evitar dolores de cabeza posteriores.</div>
+                      </div>
+                    </div>
 
-      <article class="imp-card" data-sistema="Bancos" data-tipo="contables">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/bancos.webp" alt="Bancos">
-          <h4>Implementación CONTPAQi Bancos</h4>
-        </div>
-        <p><em>Falta agregar descripción.</em></p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Bancos">WhatsApp: Quiero info</a>
-        </div>
-      </article>
+                    <div class="listItem">
+                      <div class="listIcon">
+                        <img src="../IMG/ic_inversion.webp" alt="">
+                      </div>
+                      <div>
+                        <strong>INVIERTE UNA VEZ, BIEN</strong>
+                        <div>Una implementación correcta vale más que muchas horas de correcciones.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-      <!-- ===== Nube ===== -->
-      <article class="imp-card" data-sistema="Personia" data-tipo="nube">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/personia.webp" alt="Personia">
-          <h4>Implementación CONTPAQi Personia</h4>
-        </div>
-        <p><em>Falta agregar descripción.</em></p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Personia">WhatsApp: Quiero info</a>
-        </div>
-      </article>
+                <button class="arrowCircle next" aria-label="Siguiente">
+                  <span class="chev">›</span>
+                </button>
+              </div>
+            </div>
+          </div>
 
-      <article class="imp-card" data-sistema="Contabiliza" data-tipo="nube">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/contabiliza.webp" alt="Contabiliza">
-          <h4>Implementación CONTPAQi Contabiliza</h4>
+          <!-- Botones principales -->
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
+            <a class="btn btn-grad-green hero-btn"
+               href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20agendar%20una%20implementaci%C3%B3n%20de%20CONTPAQi."
+               target="_blank" rel="noopener">Agendar mi implementación</a>
+            <a class="btn btn-grad-blue hero-btn" href="tel:+525568437918">Llamar (55 6843 7918)</a>
+            <a class="btn btn-ghost hero-btn" href="#caracteristicas">Ver paquetes por sistema</a>
+          </div>
         </div>
-        <p><em>Falta agregar descripción.</em></p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Contabiliza">WhatsApp: Quiero info</a>
-        </div>
-      </article>
 
-      <article class="imp-card" data-sistema="Analiza" data-tipo="nube">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/analiza.webp" alt="Analiza">
-          <h4>Implementación CONTPAQi Analiza</h4>
-        </div>
-        <p><em>Falta agregar descripción.</em></p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Analiza">WhatsApp: Quiero info</a>
-        </div>
-      </article>
+        <!-- ========== Columna derecha: Reel / Casos ==========
+             (usa mismos estilos que Soporte/Desarrollos: .reels-card, .reel-embed, etc.) -->
+        <aside class="card body reels-card" aria-label="Reels de Implementaciones">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Implementaciones</h4>
 
-      <article class="imp-card" data-sistema="Despachos" data-tipo="nube">
-        <div class="imp-head">
-          <img class="imp-icon" src="../IMG/despachos.webp" alt="Despachos">
-          <h4>Implementación CONTPAQi Despachos</h4>
-        </div>
-        <p><em>Falta agregar descripción.</em></p>
-        <div class="cta-row">
-          <a class="btn btn-grad-blue wa" data-wa="Despachos">WhatsApp: Quiero info</a>
-        </div>
-      </article>
+          <h4 class="reel-title active">De cero a facturar en una sesión</h4>
+          <h4 class="reel-title">Implementación completa de Comercial y Factura</h4>
+
+          <div class="carousel" id="carouselReelsImplementaciones" aria-label="Reels Implementaciones">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button">
+              <span class="chev">‹</span>
+            </button>
+
+            <div class="carousel-track">
+              <!-- Reel 1 -->
+              <div class="carousel-slide is-active">
+                <div class="reel-embed">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/VIDEO_ID_IMPL_1?rel=0&modestbranding=1&controls=1&fs=1"
+                    title="Reel Implementaciones 1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    loading="lazy"
+                    allowfullscreen>
+                  </iframe>
+                </div>
+              </div>
+
+              <!-- Reel 2 -->
+              <div class="carousel-slide">
+                <div class="reel-embed">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/VIDEO_ID_IMPL_2?rel=0&modestbranding=1&controls=1&fs=1"
+                    title="Reel Implementaciones 2"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    loading="lazy"
+                    allowfullscreen>
+                  </iframe>
+                </div>
+              </div>
+            </div>
+
+            <button class="arrowCircle next" aria-label="Siguiente" type="button">
+              <span class="chev">›</span>
+            </button>
+
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <!-- Relacionados / Servicios complementarios -->
-    <section aria-labelledby="relacionados">
-      <h3 id="relacionados" class="title-gradient">Servicios Complementarios</h3>
+    <!-- ===== Paquetes de Implementación ===== -->
+    <section id="caracteristicas" aria-labelledby="caracteristicas-title">
+      <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <div class="card body">
-        <div class="grid-2">
-          <ul class="imp-list">
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
-              Pólizas de Soporte Técnico Mensual
-              <span class="svc-more">Ver más →</span>
+        <h3 id="caracteristicas-title" class="title-gradient">Paquetes de Implementación por Sistema</h3>
+        <p class="hint" style="margin:4px 0 10px;">
+          Elige el tipo de proceso que quieres ver. Más detalle se revisa en la sesión de implementación.
+        </p>
+
+        <div class="pillbar" role="tablist" aria-label="Filtrar implementaciones">
+          <button class="pill active" data-filter="comerciales">Procesos comerciales</button>
+          <button class="pill" data-filter="contables">Procesos contables</button>
+          <button class="pill" data-filter="nube">Sistemas en la nube</button>
+        </div>
+
+        <div class="grid-3 feature-grid" id="impGrid">
+          <!-- === COMERCIALES === -->
+          <article class="fcard tag-comerciales">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/facturaelectronica.webp" alt="Factura Electrónica">
+              <h4>Implementación Factura Electrónica</h4>
+            </div>
+            <p>Deja facturando tu empresa en una sesión: instalación, empresa, formato, CSD, timbrado y cancelación de prueba.</p>
+            <ul class="imp-list">
+              <li>Instalación y creación de empresa</li>
+              <li>Carga de CSD y configuración de formato</li>
+              <li>Cliente y producto de prueba</li>
+              <li>Timbrado y cancelación de comprobante</li>
+            </ul>
+            <p class="hint"><strong>Requisito:</strong> FIEL y CSD vigentes (.KEY, .CER y contraseñas).</p>
+          </article>
+
+          <article class="fcard tag-comerciales">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/puntoventa.webp" alt="Punto de Venta">
+              <h4>Implementación Punto de Venta</h4>
+            </div>
+            <p>Configuramos caja, inventario y flujo de venta para que puedas cobrar desde el día uno.</p>
+            <ul class="imp-list">
+              <li>Usuarios, empresa y movimientos de caja</li>
+              <li>Inventario inicial y movimientos básicos</li>
+              <li>Documentos de venta y tickets</li>
+              <li>Reportes básicos de venta e inventario</li>
+            </ul>
+          </article>
+
+          <article class="fcard tag-comerciales">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/comercial.webp" alt="Módulo de Ventas">
+              <h4>Implementación Módulo de Ventas</h4>
+            </div>
+            <p>De cero a venta timbrada con formatos listos y flujo de ventas claro para tu equipo.</p>
+            <ul class="imp-list">
+              <li>Empresa, CSD y formato amigable</li>
+              <li>Cliente y producto de prueba</li>
+              <li>Timbrado y cancelación de comprobante</li>
+              <li>Capacitación en flujo de ventas y pedidos</li>
+            </ul>
+          </article>
+
+          <article class="fcard tag-comerciales">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/comercialstart.webp" alt="Comercial Start">
+              <h4>Implementación Manejo de Almacén (Comercial Start)</h4>
+            </div>
+            <p>Ideal para arrancar con catálogos, formatos y procesos de almacén bien definidos.</p>
+            <ul class="imp-list">
+              <li>Configuración de productos y almacenes</li>
+              <li>Formatos: Cotización, Remisión, Pedido, Factura</li>
+              <li>Inventario inicial, traspasos, salidas</li>
+              <li>Timbrado, REP y reportes de almacén</li>
+            </ul>
+          </article>
+
+          <article class="fcard tag-comerciales">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/comercialpremium.webp" alt="Comercial Premium">
+              <h4>Implementación CONTPAQi Comercial Premium</h4>
+            </div>
+            <p>Implementación administrativa y comercial con integración a Contabilidad.</p>
+            <ul class="imp-list">
+              <li>Carga de catálogos (clientes, proveedores, agentes, productos, proyectos, almacenes)</li>
+              <li>Adecuación de formatos y procesos de Compras/Ventas</li>
+              <li>Reportes de CxC, CxP y almacén</li>
+              <li>Interfaz con Contabilidad y manejo de XML</li>
+            </ul>
+          </article>
+
+          <article class="fcard tag-comerciales">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/vende.webp" alt="Vende">
+              <h4>Implementación Básica: CONTPAQi Vende</h4>
+            </div>
+            <p>Pon en marcha tus ventas en la nube con timbrado y cancelación de prueba.</p>
+            <ul class="imp-list">
+              <li>Creación de empresa y formato</li>
+              <li>Carga de CSD</li>
+              <li>Cliente y producto de prueba</li>
+              <li>Timbrado, REP y cancelación</li>
+            </ul>
+          </article>
+
+          <!-- === CONTABLES === -->
+          <article class="fcard tag-contables">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/nominas.webp" alt="Nóminas">
+              <h4>Implementación CONTPAQi Nóminas</h4>
+            </div>
+            <p>Configuramos la empresa, periodos, percepciones/deducciones y timbrado para que inicies tu nómina correctamente.</p>
+            <ul class="imp-list">
+              <li>Empresa y parámetros de nómina</li>
+              <li>Catálogos básicos (empleados, percepciones, deducciones)</li>
+              <li>Timbrado de recibos de prueba</li>
+              <li>Capacitación en cálculo y timbrado</li>
+            </ul>
+          </article>
+
+          <article class="fcard tag-contables">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/contabilidad.webp" alt="Contabilidad">
+              <h4>Implementación CONTPAQi Contabilidad</h4>
+            </div>
+            <p>Dejamos configurado catálogo de cuentas, pólizas básicas y conexión con XML para tus primeros cierres.</p>
+            <ul class="imp-list">
+              <li>Empresa y catálogo de cuentas inicial</li>
+              <li>Parámetros fiscales y contables</li>
+              <li>Alta de pólizas tipo ingreso, egreso y diario</li>
+              <li>Carga y asociación de XML de prueba</li>
+            </ul>
+          </article>
+
+          <article class="fcard tag-contables">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/bancos.webp" alt="Bancos">
+              <h4>Implementación CONTPAQi Bancos</h4>
+            </div>
+            <p>Configuración de cuentas bancarias, conciliación y flujo básico de pagos/cobros.</p>
+            <ul class="imp-list">
+              <li>Alta de cuentas bancarias</li>
+              <li>Políticas básicas para conciliación</li>
+              <li>Registro de movimientos de prueba</li>
+              <li>Conciliación bancaria inicial</li>
+            </ul>
+          </article>
+
+          <!-- === NUBE === -->
+          <article class="fcard tag-nube">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/personia.webp" alt="Personia">
+              <h4>Implementación CONTPAQi Personia</h4>
+            </div>
+            <p>Configuración inicial de empresa, periodos y conceptos para iniciar tu nómina en la nube.</p>
+            <ul class="imp-list">
+              <li>Empresa y periodos de pago</li>
+              <li>Conceptos de nómina básicos</li>
+              <li>Portal para colaboradores (según plan)</li>
+              <li>Nomina de prueba timbrada</li>
+            </ul>
+          </article>
+
+          <article class="fcard tag-nube">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/contabiliza.webp" alt="Contabiliza">
+              <h4>Implementación CONTPAQi Contabiliza</h4>
+            </div>
+            <p>Arranque rápido para consultar indicadores contables y financieros en la nube.</p>
+            <ul class="imp-list">
+              <li>Conexión con tu Contabilidad</li>
+              <li>Configuración de tableros básicos</li>
+              <li>Carga de datos de prueba</li>
+              <li>Capacitación en lectura de indicadores</li>
+            </ul>
+          </article>
+
+          <article class="fcard tag-nube">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/analiza.webp" alt="Analiza">
+              <h4>Implementación CONTPAQi Analiza</h4>
+            </div>
+            <p>Configuramos conectores y dashboards iniciales para que tu información cobre vida.</p>
+            <ul class="imp-list">
+              <li>Conexión a las bases origen</li>
+              <li>Dashboards básicos de ejemplo</li>
+              <li>Capas de seguridad y acceso</li>
+              <li>Capacitación en uso de vistas</li>
+            </ul>
+          </article>
+
+          <article class="fcard tag-nube">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/despachos.webp" alt="Despachos">
+              <h4>Implementación CONTPAQi Despachos</h4>
+            </div>
+            <p>Gestión de clientes, obligaciones y flujos básicos para tu despacho contable.</p>
+            <ul class="imp-list">
+              <li>Catálogo de clientes y obligaciones</li>
+              <li>Configuración de responsables y tareas</li>
+              <li>Reportes básicos de seguimiento</li>
+              <li>Capacitación en flujo diario del despacho</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Comparativa ===== -->
+    <section id="comparativa" aria-labelledby="comparativa-title">
+      <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+      <h3 id="comparativa-title" class="title-gradient">¿Implementación profesional o “solo lo instalamos”?</h3>
+      <div class="card body">
+        <h4 style="margin-bottom:15px;">Implementación con Expiriti vs instalación genérica</h4>
+        <table class="table-like" aria-label="Comparativa implementación Expiriti vs instalación genérica">
+          <thead>
+            <tr>
+              <th>Característica</th>
+              <th class="highlight">Implementación Expiriti</th>
+              <th>Solo instalación básica</th>
+              <th>Hacerlo tú solo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Empresa lista para timbrar</td>
+              <td class="highlight">✅ Sí, con pruebas de timbrado</td>
+              <td>⚠️ Depende del técnico</td>
+              <td>❌ Lo vas armando sobre la marcha</td>
+            </tr>
+            <tr>
+              <td>Formatos amigables</td>
+              <td class="highlight">✅ Incluimos al menos un formato limpio</td>
+              <td>⚠️ Formato genérico</td>
+              <td>❌ Formato por defecto</td>
+            </tr>
+            <tr>
+              <td>Capacitación básica</td>
+              <td class="highlight">✅ Incluida en el paquete</td>
+              <td>⚠️ Explicación mínima</td>
+              <td>❌ Autodidacta (videos/manual)</td>
+            </tr>
+            <tr>
+              <td>Riesgo de errores críticos</td>
+              <td class="highlight">✅ Bajo (parámetros revisados)</td>
+              <td>⚠️ Medio</td>
+              <td>❌ Alto</td>
+            </tr>
+            <tr>
+              <td>Tiempo de arranque</td>
+              <td class="highlight">✅ En 1–2 sesiones</td>
+              <td>⚠️ Variable</td>
+              <td>❌ Semanas probando</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Servicios Complementarios ===== -->
+    <section id="servicios-complementarios" aria-labelledby="relacionados">
+      <h3 id="relacionados" class="title-gradient">Servicios complementarios</h3>
+      <p class="hint" style="margin-top:4px;margin-bottom:10px;">
+        Haz clic en el servicio que necesites para ver el detalle completo.
+      </p>
+
+      <div class="card body">
+        <div class="svc-grid">
+          <!-- Columna 1 -->
+          <ul class="svc-list">
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+              <div class="svc-text">
+                <span class="svc-title">Pólizas de Soporte Técnico Mensual</span>
+                <span class="svc-sub">Soporte y cursos ilimitados, desarrollos y más. Todo firmado por contrato.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
-              Conversión de datos a CONTPAQi
-              <span class="svc-more">Ver más →</span>
+
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+              <div class="svc-text">
+                <span class="svc-title">Hora de soporte y soporte sin costo</span>
+                <span class="svc-sub">Atención por evento vía AnyDesk.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
-              Migración de ASPEL COI/NOI → CONTPAQi
-              <span class="svc-more">Ver más →</span>
+            
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+              <div class="svc-text">
+                <span class="svc-title">Cursos por sistema CONTPAQi</span>
+                <span class="svc-sub">Contabilidad, Bancos, Nóminas, Comercial, nube, etc.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
-              Restauración de bases de datos
-              <span class="svc-more">Ver más →</span>
+
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+              <div class="svc-text">
+                <span class="svc-title">Migración y conversión de datos a CONTPAQi</span>
+                <span class="svc-sub">De otros sistemas a CONTPAQi.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
-              Migración de sistema CONTPAQi a otro equipo
-              <span class="svc-more">Ver más →</span>
-            </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
-              Reportes personalizados
-              <span class="svc-more">Ver más →</span>
+
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+              <div class="svc-text">
+                <span class="svc-title">Migración de equipo</span>
+                <span class="svc-sub">Mueve tu sistema CONTPAQi a otro equipo.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
           </ul>
-          <ul class="imp-list">
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
-              Formateo de formatos (PDF/impresión) amigables
-              <span class="svc-more">Ver más →</span>
+
+          <!-- Columna 2 -->
+          <ul class="svc-list">
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+              <div class="svc-text">
+                <span class="svc-title">Adecuación de formatos PDF</span>
+                <span class="svc-sub">Formatos amigables de facturas, cotizaciones, tickets, etc.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
-              Conexiones remotas (Router / Windows Server)
-              <span class="svc-more">Ver más →</span>
+
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+              <div class="svc-text">
+                <span class="svc-title">Reportes personalizados</span>
+                <span class="svc-sub">Indicadores y listados hechos a tu medida.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
-              Contabilización por empresa
-              <span class="svc-more">Ver más →</span>
+
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+              <div class="svc-text">
+                <span class="svc-title">Capacitaciones por rol</span>
+                <span class="svc-sub">Sesiones por persona o equipo según funciones.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
-              Curso interfaz Nóminas → Contabilidad
-              <span class="svc-more">Ver más →</span>
+
+            <li class="svc-link"
+                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
+              <div class="svc-text">
+                <span class="svc-title">Desarrollos a tu medida</span>
+                <span class="svc-sub">Soluciones específicas sobre el ecosistema CONTPAQi.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
-              Instalación (servidor/terminal/monousuario)
-              <span class="svc-more">Ver más →</span>
-            </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
-              Desarrollos para extracción/inserción de datos
-              <span class="svc-more">Ver más →</span>
-            </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
-              Desarrollos a tu medida
-              <span class="svc-more">Ver más →</span>
-            </li>
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
-              Cursos por sistema CONTPAQi
-              <span class="svc-more">Ver más →</span>
+
+            <li class="svc-link"
+                data-url="https://wa.me/5568437918?text=Hola%21%20Estoy%20buscando%20un%20servicio%20que%20no%20encontr%C3%A9%20en%20su%20p%C3%A1gina.%20Necesito%3A">
+              <div class="svc-text">
+                <span class="svc-title">¿No ves lo que buscas?</span>
+                <span class="svc-sub">Cuéntanos tu caso específico en CONTPAQi.</span>
+              </div>
+              <span class="svc-pill">Ver más →</span>
             </li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- FAQ breve -->
+    <!-- ===== FAQ ===== -->
     <section id="faq" aria-labelledby="faq-title">
+      <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <h3 id="faq-title" class="title-gradient">Preguntas frecuentes</h3>
-      <div class="card body">
-        <details><summary>¿Qué necesito para implementar Factura Electrónica o Vende?</summary><p>Tu FIEL vigente para firma de manifiesto (.KEY, .CER y contraseña) y tu Certificado de Sello Digital para timbrar (.KEY, .CER y contraseña).</p></details>
-        <details><summary>¿Cuánto dura una implementación típica?</summary><p>Depende del sistema y del volumen de datos. Los paquetes “básicos” suelen resolverse el mismo día con timbrado de prueba.</p></details>
-        <details><summary>¿Incluye capacitación?</summary><p>Sí. Todas las implementaciones incluyen una capacitación puntual del flujo básico. Capacitaciones extendidas se cotizan.</p></details>
+      <div class="faq-wrap" id="faqWrap">
+        <details class="faq-item">
+          <summary>¿Qué necesito para implementar Factura Electrónica o Vende?</summary>
+          <p>Tu FIEL vigente para firma de manifiesto (.KEY, .CER y contraseña) y tu Certificado de Sello Digital para timbrar (.KEY, .CER y contraseña), además de la información básica de tu empresa.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Cuánto dura una implementación típica?</summary>
+          <p>Depende del sistema y el volumen de información inicial. Los paquetes básicos suelen quedar en una o dos sesiones, incluyendo timbrado de prueba.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Incluye capacitación?</summary>
+          <p>Sí. Todas las implementaciones incluyen capacitación puntual del flujo básico. Si necesitas cursos más profundos por rol o por sistema, podemos cotizarlos como servicio adicional.</p>
+        </details>
+        <details class="faq-item">
+          <summary>¿Pueden ayudarnos si ya teníamos el sistema pero “mal configurado”?</summary>
+          <p>Sí. Podemos hacer una revisión y, si conviene, una reimplementación parcial para dejarlo correcto. Lo vemos en la llamada inicial.</p>
+        </details>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="card body" aria-label="Contacto">
+    <!-- ===== CTA ===== -->
+    <section id="sesion-guiada" class="card body">
+      <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <h3 class="title-gradient">¿Listo para implementar?</h3>
-      <p>Escríbenos y agenda tu implementación esta semana.</p>
-      <div class="cta-row">
-        <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20agendar%20una%20implementaci%C3%B3n." target="_blank" rel="noopener">WhatsApp</a>
-        <a class="btn btn-ghost" href="tel:+525568437918">Llamar (55 6843 7918)</a>
+      <p>Agenda una sesión y deja tu sistema CONTPAQi listo para facturar, pagar nómina o controlar inventarios sin improvisar.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+        <a class="btn btn-grad-green"
+           href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20agendar%20una%20implementaci%C3%B3n%20de%20CONTPAQi."
+           target="_blank" rel="noopener">Agendar por WhatsApp</a>
+        <a class="btn btn-grad-blue" href="tel:+525568437918" target="_blank" rel="noopener">Llamar (55 6843 7918)</a>
       </div>
     </section>
+
+    <!-- TOC -->
+    <aside class="toc collapsed" id="toc" aria-live="polite">
+      <button class="toc-toggle" id="tocToggle" aria-label="Abrir mapa">🗺️ Mapa</button>
+      <button class="toc-close" aria-label="Cerrar">×</button>
+      <strong class="toc-title">Mapa del sitio</strong>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#caracteristicas">Paquetes</a>
+      <a href="#comparativa">Comparativa</a>
+      <a href="#servicios-complementarios">Servicios complementarios</a>
+      <a href="#faq">Preguntas frecuentes</a>
+      <a href="#sesion-guiada">Contacto</a>
+    </aside>
   </main>
 
   <!-- Footer dinámico -->
   <div id="footer-placeholder"></div>
 
-  <!-- ====== Loader ÚNICO (mismo patrón que en Soporte) ====== -->
-  <script>
-  (async () => {
-    const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
-    const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
-
-    const isGh = location.hostname.endsWith("github.io");
-    const firstSeg = location.pathname.split("/")[1] || "";
-    const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
-    const inSistemas = location.pathname.includes("/SISTEMAS/");
-
-    function prefix(p){
-      if (!p || /^https?:\/\//i.test(p)) return p;
-      if (isGh) return (repoBase + "/" + p).replace(/\/+/g,"/");
-      const depth = inSistemas ? "../" : "";
-      return (depth + p).replace(/\/+/g,"/");
-    }
-
-    const headerURL = await pickFirst([
-      "../PARTIALS/global-header.html",
-      "./PARTIALS/global-header.html",
-      `${repoBase}/PARTIALS/global-header.html`,
-      "/PARTIALS/global-header.html"
-    ]);
-    const footerURL = await pickFirst([
-      "../PARTIALS/global-footer.html",
-      "./PARTIALS/global-footer.html",
-      `${repoBase}/PARTIALS/global-footer.html`,
-      "/PARTIALS/global-footer.html"
-    ]);
-
-    const [headerHTML, footerHTML] = await Promise.all([
-      fetch(headerURL).then(r=>r.text()),
-      fetch(footerURL).then(r=>r.text())
-    ]);
-
-    const hp = document.getElementById("header-placeholder");
-    const fp = document.getElementById("footer-placeholder");
-    if (hp) hp.outerHTML = headerHTML;
-    if (fp) fp.outerHTML = footerHTML;
-
-    // Normalización declarativa (como en Soporte)
-    document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
-      img.src = prefix(img.getAttribute("data-src"));
-    });
-    document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
-      const p = a.getAttribute("data-href"); if (!p) return;
-      const [path, hash] = p.split("#");
-      a.href = prefix(path) + (hash ? ("#"+hash) : "");
-    });
-
-    // Extra por compatibilidad: soportar parciales con js-img/js-link
-    document.querySelectorAll(".js-img[data-src]").forEach(img=>{
-      img.src = prefix(img.getAttribute("data-src"));
-    });
-    document.querySelectorAll(".js-link[data-href]").forEach(a=>{
-      a.href = prefix(a.getAttribute("data-href"));
-    });
-
-    const y = document.getElementById("gf-year");
-    if (y) y.textContent = new Date().getFullYear();
-  })();
-  </script>
-
-  <!-- JS local: filtros, WhatsApp dinámico y enlaces de servicios complementarios -->
-  <script>
-  // Filtro por tipo de proceso (contables / comerciales / nube)
-  (function(){
-    const pills = Array.from(document.querySelectorAll('.pill'));
-    const cards = Array.from(document.querySelectorAll('#impGrid .imp-card'));
-
-    function apply(filter){
-      cards.forEach(c=>{
-        const tipo = c.dataset.tipo || '';
-        c.classList.toggle('hide', filter && tipo !== filter);
-      });
-    }
-
-    pills.forEach(p=>{
-      p.addEventListener('click', ()=>{
-        pills.forEach(x=>x.classList.remove('active'));
-        p.classList.add('active');
-        apply(p.dataset.filter || '');
-      });
-    });
-
-    const active = document.querySelector('.pill.active');
-    apply(active ? active.dataset.filter : 'comerciales');
-  })();
-
-  // Botones WhatsApp: mensaje dinámico con nombre de sistema
-  (function(){
-    const to = "5568437918";
-    document.querySelectorAll('.wa').forEach(btn=>{
-      const sys = btn.getAttribute('data-wa') || 'Implementación';
-      const msg = `Hola, quiero más info del servicio de implementación para ${sys}`;
-      const url = `https://wa.me/${to}?text=${encodeURIComponent(msg)}`;
-      btn.setAttribute('href', url);
-      btn.setAttribute('target', '_blank');
-      btn.setAttribute('rel', 'noopener');
-    });
-  })();
-
-  // Servicios complementarios: click para ir a la URL
-  (function(){
-    document.querySelectorAll('.svc-link[data-url]').forEach(li=>{
-      li.addEventListener('click', ()=>{
-        const url = li.getAttribute('data-url');
-        if (url) window.location.href = url;
-      });
-    });
-  })();
-  </script>
+  <!-- JS global servicios -->
+  <script src="../mainservicios.js" defer></script>
 </body>
 </html>
