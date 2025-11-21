@@ -27,72 +27,192 @@
 <body id="top">
 <!-- Header dinámico (partial) -->
 <div id="header-placeholder"></div>
-
 <main class="container hero">
-  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#productos" rel="noopener">← Volver a productos</a>
+  <a class="hint" href="../index.html#productos" rel="noopener">← Volver a productos</a>
+
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-  <h1>CONTPAQi Evalúa <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nube</span></h1>
+
+  <!-- Encabezado con logo + badge -->
+  <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
+    <img src="../IMG/evalua.webp"
+         alt="CONTPAQi Evalúa"
+         style="width:230px;max-width:60vw;border-radius:14px;"
+         loading="lazy">
+    <span class="badge"
+          style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">
+      Nube
+    </span>
+  </h1>
 
   <div class="badges" role="list" aria-label="Características destacadas">
-    <span class="badge" role="listitem" style="background:rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #fcd34d;">Cumplimiento NOM-035</span>
+    <span class="badge" role="listitem"
+          style="background:rgba(245,158,11,.15);border-color:#f59e0b;color:#fcd34d;">
+      Cumplimiento NOM-035
+    </span>
     <span class="badge" role="listitem">Riesgos Psicosociales</span>
     <span class="badge" role="listitem">Clima Laboral</span>
     <span class="badge" role="listitem">NOM-037 Teletrabajo</span>
   </div>
+
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-  <!-- ===== Resumen ===== -->
-  <section aria-label="Resumen">
-    <div class="card body">
-      <div class="hero-3col">
-        <!-- Col 1 -->
-        <div class="stack-left">
-          <img src="../IMG/evalua.webp" alt="CONTPAQi Evalúa" style="width:220px;margin-bottom:12px;border-radius:12px" loading="lazy">
-          <div class="stack">
-            <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Evalua" target="_blank" rel="noopener">Comprar Suscripción</a>
-            <a class="btn btn-grad-purple hero-btn" href="https://www.contpaqi.com/evalua" target="_blank" rel="noopener">Probar gratis (20 días)</a>
-            <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
-            <a class="btn btn-ghost hero-btn" href="https://www.contpaqi.com/ficha-producto-evalua" target="_blank" rel="noopener">Ficha técnica (Web)</a>
-            <a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>
-          </div>
-        </div>
+  <!-- ============================== -->
+  <!-- Por qué usar + Reels (SIN PDF NI GALERÍA) -->
+  <!-- ============================== -->
+  <section id="beneficios" aria-label="Por qué usar">
+    <div class="grid-2 align-center">
 
-        <!-- Col 2 -->
-        <div class="card body pdf-card">
-          <img src="../IMG/usas.jpeg" alt="Equipo trabajando en la nube" style="width:100%;border-radius:10px;margin-bottom:10px" loading="lazy">
-          <h4 class="title-gradient" style="margin:0 0 6px">Cumple la NOM-035 y mejora tu Clima Laboral</h4>
-          <p class="hint" style="margin:0 0 8px">Evalúa, analiza y previene riesgos psicosociales con reportes listos para inspección.</p>
-          <iframe class="pdf-frame" title="Ficha de CONTPAQi Evalúa" src="../PDFS/Ficha_Producto_CONTPAQi_Evalua.pdf#page=1&view=FitH" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
-            <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Evalua.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
-            <a class="btn btn-outline-gradient" href="../PDFS/Ficha_Producto_CONTPAQi_Evalua.pdf" download>Descargar</a>
-          </div>
-        </div>
+      <!-- BENEFICIOS -->
+      <div>
+        <h2 class="title-gradient">
+          ¿Por qué usar Evalúa?
+          <span class="badge">Beneficios Nube</span>
+        </h2>
 
-        <!-- Col 3: Galería -->
-        <aside class="card body">
-          <h4 class="title-gradient">Galería</h4>
-          <div class="carousel" id="carousel1" aria-label="Galería Evalúa">
-            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-            <div class="carousel-track" role="region" aria-label="Imágenes">
-              <img class="carousel-slide" src="../IMG/1evalua_placeholder.webp" alt="Dashboard de Cumplimiento NOM-035" loading="lazy">
-              <img class="carousel-slide" src="../IMG/2evalua_placeholder.webp" alt="Gestión de Encuestas de Clima Laboral" loading="lazy">
-              <img class="carousel-slide" src="../IMG/3evalua_placeholder.webp" alt="Reportes de Riesgos Psicosociales" loading="lazy">
-              <img class="carousel-slide" src="../IMG/4evalua_placeholder.webp" alt="Integración con Personia" loading="lazy">
+        <p class="lead">
+          Asegura el cumplimiento NOM-035/037, mejora clima laboral y automatiza la evidencia.
+        </p>
+
+        <div class="listSlider">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button">
+            <span class="chev">‹</span>
+          </button>
+
+          <div class="listTrack" role="region" aria-label="Beneficios">
+
+            <div class="listPage">
+              <div class="listItem">
+                <div class="listIcon">
+                  <img src="../IMG/165-ley.webp" loading="lazy">
+                </div>
+                <div>
+                  <strong>EVITA SANCIONES</strong>
+                  <div>Guías I, II y III integradas para facilitar auditorías.</div>
+                </div>
+              </div>
+
+              <div class="listItem">
+                <div class="listIcon">
+                  <img src="../IMG/059-colaboracion.webp" loading="lazy">
+                </div>
+                <div>
+                  <strong>MEJORA EL BIENESTAR</strong>
+                  <div>Detecta factores de riesgo psicosocial y toma acción.</div>
+                </div>
+              </div>
+
+              <div class="listItem">
+                <div class="listIcon">
+                  <img src="../IMG/058-lista-de-quehaceres-5.webp" loading="lazy">
+                </div>
+                <div>
+                  <strong>DECISIONES INFORMADAS</strong>
+                  <div>Reportes y comparativos listos para inspección.</div>
+                </div>
+              </div>
             </div>
-            <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-            <div class="carousel-nav" aria-label="Paginación de galería">
-              <button class="dot active" aria-label="Ir a la imagen 1" type="button"></button>
-              <button class="dot" aria-label="Ir a la imagen 2" type="button"></button>
-              <button class="dot" aria-label="Ir a la imagen 3" type="button"></button>
-              <button class="dot" aria-label="Ir a la imagen 4" type="button"></button>
+
+            <div class="listPage">
+
+              <div class="listItem">
+                <div class="listIcon">
+                  <img src="../IMG/127-documento-1.webp" loading="lazy">
+                </div>
+                <div>
+                  <strong>IMPLEMENTACIÓN FÁCIL</strong>
+                  <div>Encuestas por área, centro de trabajo o departamento.</div>
+                </div>
+              </div>
+
+              <div class="listItem">
+                <div class="listIcon">
+                  <img src="../IMG/personia.webp" loading="lazy">
+                </div>
+                <div>
+                  <strong>INTEGRACIÓN DE RH</strong>
+                  <div>Compatible con CONTPAQi Personia.</div>
+                </div>
+              </div>
+
+              <div class="listItem">
+                <div class="listIcon">
+                  <img src="../IMG/069-mision-1.webp" loading="lazy">
+                </div>
+                <div>
+                  <strong>AHORRA TIEMPO</strong>
+                  <div>Automatiza aplicación, análisis y reportes.</div>
+                </div>
+              </div>
+
             </div>
+
+          </div>
+
+          <button class="arrowCircle next" aria-label="Siguiente" type="button">
+            <span class="chev">›</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- REELS -->
+      <div>
+        <aside class="card body" aria-label="Reels Evalúa">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Evalúa</h4>
+
+          <!-- Títulos dinámicos -->
+          <h4 class="reel-title active">Título 1</h4>
+          <h4 class="reel-title">Título 2</h4>
+          <h4 class="reel-title">Título 3</h4>
+
+          <div class="carousel" id="carouselReelsEvalua">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button">
+              <span class="chev">‹</span>
+            </button>
+
+            <div class="carousel-track">
+
+              <!-- Reel 1 -->
+              <div class="carousel-slide">
+                <div class="reel-embed"
+                     data-ytid="REEMPLAZAR_ID_1"
+                     data-title="Título 1"
+                     aria-label="Reel Evalúa 1"></div>
+              </div>
+
+              <!-- Reel 2 -->
+              <div class="carousel-slide">
+                <div class="reel-embed"
+                     data-ytid="REEMPLAZAR_ID_2"
+                     data-title="Título 2"
+                     aria-label="Reel Evalúa 2"></div>
+              </div>
+
+              <!-- Reel 3 -->
+              <div class="carousel-slide">
+                <div class="reel-embed"
+                     data-ytid="REEMPLAZAR_ID_3"
+                     data-title="Título 3"
+                     aria-label="Reel Evalúa 3"></div>
+              </div>
+
+            </div>
+
+            <button class="arrowCircle next" aria-label="Siguiente" type="button">
+              <span class="chev">›</span>
+            </button>
+
+            <div class="carousel-nav">
+              <button class="dot active"></button>
+              <button class="dot"></button>
+              <button class="dot"></button>
+            </div>
+
           </div>
         </aside>
       </div>
+
     </div>
   </section>
-
   <!-- ===== Funcionalidades ===== -->
   <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
@@ -124,111 +244,7 @@
     </div>
   </section>
 
-<!-- ===== Por qué usar + REELS ===== -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Evalúa? <span class="badge">Beneficios Nube</span></h2>
-      <p class="lead">Asegura el cumplimiento NOM-035/037, mejora clima laboral y automatiza la evidencia.</p>
 
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior" type="button">
-          <span class="chev">‹</span>
-        </button>
-
-        <div class="listTrack" role="region" aria-label="Beneficios">
-          <div class="listPage">
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/165-ley.webp" alt="" loading="lazy"></div>
-              <div><strong>EVITA SANCIONES</strong><div>Guías I, II y III integradas.</div></div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/059-colaboracion.webp" alt="" loading="lazy"></div>
-              <div><strong>MEJORA EL BIENESTAR</strong><div>Identifica riesgos y planifica acciones.</div></div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/058-lista-de-quehaceres-5.webp" alt="" loading="lazy"></div>
-              <div><strong>DECISIONES INFORMADAS</strong><div>Reportes y comparativos listos.</div></div>
-            </div>
-          </div>
-
-          <div class="listPage">
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/127-documento-1.webp" alt="" loading="lazy"></div>
-              <div><strong>IMPLEMENTACIÓN FÁCIL</strong><div>Encuestas por centro/área/depto.</div></div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/personia.webp" alt="" loading="lazy"></div>
-              <div><strong>INTEGRACIÓN DE RH</strong><div>Conecta con CONTPAQi Personia.</div></div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/069-mision-1.webp" alt="" loading="lazy"></div>
-              <div><strong>AHORRA TIEMPO</strong><div>Automatiza aplicación y análisis.</div></div>
-            </div>
-          </div>
-        </div>
-
-        <button class="arrowCircle next" aria-label="Siguiente" type="button">
-          <span class="chev">›</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- REELS Evalúa -->
-    <div>
-      <aside class="card body" aria-label="Reels Evalúa">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Evalúa</h4>
-
-        <!-- Títulos dinámicos -->
-        <h4 class="reel-title active">Título 1</h4>
-        <h4 class="reel-title">Título 2</h4>
-        <h4 class="reel-title">Título 3</h4>
-
-        <div class="carousel" id="carouselReelsEvalua" aria-label="Reels Evalúa">
-          <button class="arrowCircle prev" aria-label="Anterior" type="button">
-            <span class="chev">‹</span>
-          </button>
-
-          <div class="carousel-track">
-            <!-- Reel 1 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="REEMPLAZAR_ID_1"
-                   data-title="Título 1"
-                   aria-label="Reel Evalúa 1"></div>
-            </div>
-
-            <!-- Reel 2 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="REEMPLAZAR_ID_2"
-                   data-title="Título 2"
-                   aria-label="Reel Evalúa 2"></div>
-            </div>
-
-            <!-- Reel 3 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="REEMPLAZAR_ID_3"
-                   data-title="Título 3"
-                   aria-label="Reel Evalúa 3"></div>
-            </div>
-          </div>
-
-          <button class="arrowCircle next" aria-label="Siguiente" type="button">
-            <span class="chev">›</span>
-          </button>
-
-          <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 3" type="button"></button>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
 
 <!-- ====================================== -->
 <!-- 🎥 VIDEOS — CONTPAQi Evalúa -->
