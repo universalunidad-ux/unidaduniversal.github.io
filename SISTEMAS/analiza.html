@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>CONTPAQi Analiza | Expiriti</title>
-  <meta name="description" content="Dashboards y reportes inteligentes para decisiones estratégicas. Conecta Contabilidad, Comercial y Nóminas.">
+  <meta name="description" content="Dashboards y reportes inteligentes en la nube para tomar mejores decisiones con tus sistemas CONTPAQi.">
 
   <!-- Preconnects recomendados -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../main.css?v=2025.11.09-1">
 
-  <!-- Favicon set -->
+  <!-- Favicon set (como en los demás sistemas) -->
   <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -35,7 +35,7 @@
     <a class="hint" href="../index.html#productos">← Volver a productos</a>
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <!-- H1 ahora muestra la imagen del sistema en lugar de texto -->
+    <!-- H1 muestra la imagen del sistema + badge Nube -->
     <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
       <img src="../IMG/analiza.webp"
            alt="CONTPAQi Analiza"
@@ -44,11 +44,11 @@
       <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nube</span>
     </h1>
 
-    <div class="badges" role="list">
-      <span class="badge" role="listitem">Dashboards y Reportes</span>
+    <div class="badges" role="list" aria-label="Características destacadas">
+      <span class="badge" role="listitem">Dashboards y reportes en tiempo real</span>
       <span class="badge" role="listitem">Business Intelligence (BI)</span>
-      <span class="badge" role="listitem">Toma de Decisiones</span>
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e;color:#86efac;">
+      <span class="badge" role="listitem">Mejor toma de decisiones</span>
+      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
         Conecta Contabilidad, Comercial y Nóminas
       </span>
     </div>
@@ -57,187 +57,179 @@
     <!-- =================== HERO / RESUMEN =================== -->
     <section aria-label="Resumen">
       <div class="card body">
-        <div class="hero-3col">
-          <!-- ========================= -->
-          <!-- Columna Izquierda (imagen + CTAs) -->
-          <!-- ========================= -->
-          <div class="stack-left">
-            <img src="../IMG/analiza.webp" alt="CONTPAQi Analiza" style="width:220px;margin-bottom:12px;border-radius:12px">
+        <!-- Solo 2 columnas: beneficios (izq) y reels (der) -->
+        <div class="grid-2 align-center">
+          <!-- Columna 1: Beneficios -->
+          <div>
+            <h2 class="title-gradient" style="margin-top: 0;">
+              ¿Por qué usar Analiza en tu empresa?
+              <span class="badge">Beneficios en la nube</span>
+            </h2>
+            <p class="lead">
+              Deja de depender de hojas de cálculo. Unifica la información de tus sistemas CONTPAQi
+              y obtén dashboards claros para tomar decisiones más rápidas y seguras.
+            </p>
 
-            <div class="stack">
-              <a class="btn btn-grad-green hero-btn"
-                 href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Analiza"
-                 target="_blank" rel="noopener">Solicitar cotización</a>
+            <div class="listSlider">
+              <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                <span class="chev">‹</span>
+              </button>
 
-              <a class="btn btn-grad-purple hero-btn"
-                 href="https://www.contpaqi.com/analiza"
-                 target="_blank" rel="noopener">Probar gratis</a>
+              <div class="listTrack" role="region" aria-label="Beneficios Analiza">
+                <!-- Página 1 -->
+                <div class="listPage">
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/estadisticas%20(1).webp" alt="">
+                    </div>
+                    <div>
+                      <strong>VISIBILIDAD 360</strong>
+                      <div>Centraliza datos de finanzas, ventas y nómina en un solo lugar.</div>
+                    </div>
+                  </div>
 
-              <a class="btn btn-grad-blue hero-btn"
-                 href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/el-tiempo-es-dinero.webp" alt="">
+                    </div>
+                    <div>
+                      <strong>AHORRA TIEMPO</strong>
+                      <div>Genera reportes y KPIs en segundos sin exportar a Excel.</div>
+                    </div>
+                  </div>
 
-              <a class="btn btn-ghost hero-btn"
-                 href="../PDFS/Ficha_Producto_CONTPAQi_Analiza.pdf"
-                 target="_blank" rel="noopener">Ficha técnica (PDF)</a>
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/creatividad.webp" alt="">
+                    </div>
+                    <div>
+                      <strong>DECISIONES INTELIGENTES</strong>
+                      <div>Toma decisiones basadas en datos reales y actualizados.</div>
+                    </div>
+                  </div>
+                </div>
 
-              <a class="btn btn-ghost hero-btn"
-                 href="#caracteristicas">Resumen ficha técnica</a>
+                <!-- Página 2 -->
+                <div class="listPage">
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/estadisticas.webp" alt="">
+                    </div>
+                    <div>
+                      <strong>ACCESO 24/7</strong>
+                      <div>Consulta tus indicadores desde cualquier lugar (web / móvil).</div>
+                    </div>
+                  </div>
+
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/excel.webp" alt="">
+                    </div>
+                    <div>
+                      <strong>MENOS ERRORES</strong>
+                      <div>Evita capturas manuales y versiones distintas de la misma información.</div>
+                    </div>
+                  </div>
+
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/red-en-la-nube.webp" alt="">
+                    </div>
+                    <div>
+                      <strong>ECOSISTEMA CONECTADO</strong>
+                      <div>El BI diseñado específicamente para sistemas CONTPAQi.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                <span class="chev">›</span>
+              </button>
             </div>
           </div>
 
-          <!-- ========================= -->
-          <!-- Columna Centro (PDF) -->
-          <!-- ========================= -->
-          <div class="card body pdf-card">
-            <img src="../IMG/usas.jpeg" alt="Dashboard Analiza" style="width:100%;border-radius:10px;margin-bottom:10px">
+          <!-- Columna 2: Reels -->
+          <div>
+            <aside class="card body" aria-label="Reels de Analiza" style="margin-bottom: 0;">
+              <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Analiza</h4>
 
-            <h4 class="title-gradient" style="margin:0 0 6px">La salud de tu negocio en un vistazo</h4>
-            <p class="hint" style="margin:0 0 8px">Conecta tus sistemas y obtén dashboards interactivos para tomar decisiones.</p>
+              <!-- Títulos (el JS usará estos y los actualizará según el reel activo) -->
+              <h4 class="reel-title active">Conciliación fiscal y bancaria</h4>
+              <h4 class="reel-title">Detecta descuadres entre CFDI y contabilidad</h4>
+              <h4 class="reel-title">Controla tus indicadores clave</h4>
 
-            <iframe class="pdf-frame"
-                    title="Ficha CONTPAQi Analiza"
-                    src="../PDFS/Ficha_Producto_CONTPAQi_Analiza.pdf#page=1&view=FitH"></iframe>
+              <div class="carousel" id="carouselReelsAnaliza" aria-label="Reels Analiza">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
 
-            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
-              <a class="btn btn-outline-gradient"
-                 href="../PDFS/Ficha_Producto_CONTPAQi_Analiza.pdf"
-                 target="_blank" rel="noopener">Abrir en pestaña</a>
+                <div class="carousel-track">
+                  <!-- Reel 1 -->
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="wr-eeR3eE7w"
+                         data-title="Analiza | Conciliación fiscal y bancaria"
+                         aria-label="Reel Conciliación fiscal y bancaria">
+                    </div>
+                  </div>
 
-              <a class="btn btn-outline-gradient"
-                 href="../PDFS/Ficha_Producto_CONTPAQi_Analiza.pdf" download>Descargar</a>
-            </div>
+                  <!-- Reel 2 -->
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="gAIGxMHaCLQ"
+                         data-title="Analiza | Identifica descuadres CFDIs y Nóminas"
+                         aria-label="Reel Identifica descuadres CFDIs y Nóminas">
+                    </div>
+                  </div>
 
-            <small class="hint">Si tu navegador no ejecuta formularios, ábrelo en un visor de PDF o descárgalo.</small>
+                  <!-- Reel 3 -->
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="iEQM_21OmBI"
+                         data-title="Conciliación fiscal y contable con Analiza"
+                         aria-label="Reel Conciliación fiscal y contable">
+                    </div>
+                  </div>
+                </div>
+
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
+
+                <div class="carousel-nav" aria-label="Paginación de reels">
+                  <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+                  <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+                  <button class="dot" aria-label="Ir al reel 3" type="button"></button>
+                </div>
+              </div>
+            </aside>
           </div>
-
-          <!-- ========================= -->
-          <!-- Columna Derecha (Galería) -->
-          <!-- ========================= -->
-          <aside class="card body">
-            <h4 class="title-gradient">Galería</h4>
-
-            <div class="carousel" id="carousel1">
-              <button class="arrowCircle prev"><span class="chev">‹</span></button>
-
-              <div class="carousel-track">
-                <img class="carousel-slide" src="../IMG/1analiza_placeholder.webp" alt="Dashboard financiero">
-                <img class="carousel-slide" src="../IMG/2analiza_placeholder.webp" alt="KPIs de ventas">
-                <img class="carousel-slide" src="../IMG/3analiza_placeholder.webp" alt="Análisis de nómina">
-                <img class="carousel-slide" src="../IMG/4analiza_placeholder.webp" alt="Acceso móvil">
-              </div>
-
-              <button class="arrowCircle next"><span class="chev">›</span></button>
-
-              <div class="carousel-nav">
-                <button class="dot active"></button>
-                <button class="dot"></button>
-                <button class="dot"></button>
-                <button class="dot"></button>
-              </div>
-            </div>
-          </aside>
         </div>
+      </div>
+
+      <!-- Fila de CTAs como en Contabilidad/Nóminas: ABAJO del card -->
+      <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;">
+        <a class="btn btn-grad-green hero-btn"
+           href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Analiza"
+           target="_blank" rel="noopener">Solicitar cotización</a>
+
+        <a class="btn btn-grad-purple hero-btn"
+           href="https://www.contpaqi.com/analiza"
+           target="_blank" rel="noopener">Probar gratis</a>
+
+        <a class="btn btn-grad-blue hero-btn"
+           href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
+
+        <a class="btn btn-ghost hero-btn"
+           href="https://www.contpaqi.com/ficha-producto-analiza"
+           target="_blank" rel="noopener">Ficha técnica (Web)</a>
+
+        <a class="btn btn-ghost hero-btn"
+           href="#caracteristicas">Resumen ficha técnica</a>
       </div>
     </section>
 
-    <!-- ======================== -->
-    <!-- Beneficios + Reels -->
-    <!-- ======================== -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <!-- Beneficios -->
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Analiza? <span class="badge">Beneficios Nube</span></h2>
-      <p class="lead">
-        Deja de perder tiempo en Excel. Unifica la información de tus sistemas CONTPAQi y obtén reportes en segundos para tomar mejores decisiones.
-      </p>
-
-      <div class="listSlider">
-        <button class="arrowCircle prev"><span class="chev">‹</span></button>
-
-        <div class="listTrack">
-          <div class="listPage">
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/estadisticas%20(1).webp"></div>
-              <div><strong>VISIBILIDAD 360</strong><div>Centraliza datos de todas tus áreas.</div></div>
-            </div>
-
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/el-tiempo-es-dinero.webp"></div>
-              <div><strong>AHORRA TIEMPO</strong><div>Reportes en segundos.</div></div>
-            </div>
-
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/creatividad.webp"></div>
-              <div><strong>DECISIONES INTELIGENTES</strong><div>Con datos reales y actualizados.</div></div>
-            </div>
-          </div>
-
-          <div class="listPage">
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/estadisticas.webp"></div>
-              <div><strong>ACCESO 24/7</strong><div>Consulta KPIs donde estés.</div></div>
-            </div>
-
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/excel.webp"></div>
-              <div><strong>DEJA EL EXCEL</strong><div>Adiós exportaciones manuales.</div></div>
-            </div>
-
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/red-en-la-nube.webp"></div>
-              <div><strong>ECOSISTEMA CONECTADO</strong><div>El BI ideal para CONTPAQi.</div></div>
-            </div>
-          </div>
-        </div>
-
-        <button class="arrowCircle next"><span class="chev">›</span></button>
-      </div>
-    </div>
-
-    <!-- Reels -->
-    <div>
-      <aside class="card body">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Analiza</h4>
-
-        <h4 class="reel-title active">Conciliación fiscal y bancaria</h4>
-        <h4 class="reel-title">Identifica descuadres CFDI / Nómina</h4>
-
-        <div class="carousel" id="carouselReelsAnaliza">
-          <button class="arrowCircle prev"><span class="chev">‹</span></button>
-
-          <div class="carousel-track">
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="wr-eeR3eE7w"
-                   data-title="Analiza | Conciliación fiscal y bancaria"></div>
-            </div>
-
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="gAIGxMHaCLQ"
-                   data-title="Analiza | Descubre descuadres CFDI/Nómina"></div>
-            </div>
-
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="iEQM_21OmBI"
-                   data-title="Conciliación fiscal y contable"></div>
-            </div>
-          </div>
-
-          <button class="arrowCircle next"><span class="chev">›</span></button>
-
-          <div class="carousel-nav">
-            <button class="dot active"></button>
-            <button class="dot"></button>
-            <button class="dot"></button>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
 
     <!-- Funciones destacadas -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
