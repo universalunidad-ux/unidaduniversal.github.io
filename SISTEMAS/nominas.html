@@ -1,3 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>CONTPAQi Nóminas | Expiriti</title>
+  <meta name="description" content="CONTPAQi Nóminas con Expiriti: Cálculo preciso, CFDI 4.0, cumplimiento IMSS/INFONAVIT/ISR. Incluye App CONTPAQi Colabora sin costo. Soporte experto.">
+
+  <!-- Preconnects -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.youtube-nocookie.com">
+  <link rel="preconnect" href="https://i.ytimg.com">
+
+  <!-- Fuente + CSS global -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../main.css?v=2025.11.09-1">
+
+  <!-- Favicon set (igual que en Contabilidad) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
+  <link rel="manifest" href="../IMG/site.webmanifest">
+  <link rel="icon" href="../IMG/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
+</head>
+
+<body id="top" data-calc="escritorio">
+  <!-- Header dinámico -->
+  <div id="header-placeholder"></div>
+
+  <main class="container hero">
     <a class="hint" href="../index.html#productos">← Volver a productos</a>
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
@@ -10,22 +44,22 @@
       <span class="badge">Actualizado 2025</span>
     </h1>
 
-    <div class="badges">
-      <span class="badge">Cálculo y Timbrado CFDI 4.0</span>
-      <span class="badge">Cumplimiento IMSS, INFONAVIT, ISR</span>
-      <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Incluye App CONTPAQi Colabora</span>
-      <span class="badge">Administración RH completa</span>
+    <div class="badges" role="list" aria-label="Características destacadas">
+      <span class="badge" role="listitem">Cálculo y Timbrado CFDI 4.0</span>
+      <span class="badge" role="listitem">Cumplimiento IMSS, INFONAVIT, ISR</span>
+      <span class="badge" role="listitem" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Incluye App CONTPAQi Colabora</span>
+      <span class="badge" role="listitem">Administración RH completa</span>
     </div>
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <!-- =================== HERO / RESUMEN (FORMATO BUENO) =================== -->
+    <!-- =================== HERO / RESUMEN =================== -->
     <section aria-label="Resumen">
       <div class="card body">
         <!-- Solo 2 columnas: beneficios (izq) y reels (der) -->
         <div class="grid-2 align-center">
-          <!-- Columna 1: Beneficios Nóminas -->
+          <!-- Columna 1: Beneficios -->
           <div>
-            <h2 class="title-gradient">
+            <h2 class="title-gradient" style="margin-top: 0;">
               ¿Por qué usar Nóminas en tu empresa?
               <span class="badge">Beneficios clave</span>
             </h2>
@@ -39,7 +73,7 @@
                 <span class="chev">‹</span>
               </button>
 
-              <div class="listTrack">
+              <div class="listTrack" role="region" aria-label="Beneficios Nóminas">
                 <div class="listPage">
                   <div class="listItem">
                     <div class="listIcon">
@@ -111,7 +145,7 @@
             </div>
           </div>
 
-          <!-- Columna 2: Reels Nóminas -->
+          <!-- Columna 2: Reels -->
           <div>
             <aside class="card body" aria-label="Reels de Nóminas" style="margin-bottom: 0;">
               <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Nóminas</h4>
@@ -163,7 +197,7 @@
                   <span class="chev">›</span>
                 </button>
 
-                <div class="carousel-nav">
+                <div class="carousel-nav" aria-label="Paginación de reels">
                   <button class="dot active" aria-label="Reel 1"></button>
                   <button class="dot" aria-label="Reel 2"></button>
                   <button class="dot" aria-label="Reel 3"></button>
@@ -176,7 +210,7 @@
         </div>
       </div>
 
-      <!-- Fila de CTAs como en el formato bueno (botones abajo del card) -->
+      <!-- Fila de CTAs como en Contabilidad (botones abajo del card) -->
       <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;">
         <a class="btn btn-grad-green hero-btn"
            href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20N%C3%B3minas"
@@ -197,7 +231,6 @@
            href="#caracteristicas">Resumen ficha técnica</a>
       </div>
     </section>
-
     
 
     <!-- Características -->
