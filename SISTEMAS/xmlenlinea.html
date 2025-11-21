@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>CONTPAQi Vende | Expiriti</title>
-  <meta name="description" content="CONTPAQi Vende con Expiriti: Facturación y cobranza en la nube. Emite CFDI 4.0 ilimitados, cotiza, controla pedidos y gestiona tus cuentas por cobrar.">
+  <title>CONTPAQi XML en Línea | Expiriti</title>
+  <meta name="description" content="CONTPAQi XML en Línea con Expiriti: Descarga masiva de CFDI del SAT, valida EFOS, organiza y administra tus XML fácilmente.">
 
   <!-- Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,41 +13,42 @@
   <link rel="preconnect" href="https://www.youtube-nocookie.com">
   <link rel="preconnect" href="https://i.ytimg.com">
 
-  <!-- Fuente + CSS -->
+  <!-- Fuente + CSS global -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../main.css">
+  <link rel="stylesheet" href="../main.css?v=2025.11.09-1">
+
+  <!-- Favicons (mismo set que en otras páginas) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
+  <link rel="manifest" href="../IMG/site.webmanifest">
+  <link rel="icon" href="../IMG/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
 </head>
 
-<body id="top">
+<body id="top" data-calc="escritorio">
   <!-- Header dinámico -->
   <div id="header-placeholder"></div>
 
   <main class="container hero">
-
-    <a class="hint" href="../index.html#productos">← Volver a productos</a>
+    <a class="hint js-link" data-href="index.html#productos" href="../index.html#productos">← Volver a productos</a>
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <!-- H1 estilo Nóminas -->
+    <!-- H1 estilo Nóminas (logo + badge) -->
     <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
-      <img src="../IMG/vende.webp"
-           alt="CONTPAQi Vende"
+      <img src="../IMG/xml.webp"
+           alt="CONTPAQi XML en Línea"
            style="width:230px;max-width:60vw;border-radius:14px;"
            loading="lazy">
-
-      <span class="badge"
-            style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">
-        Nube
-      </span>
+      <span class="badge">Actualizado 2025</span>
     </h1>
 
     <div class="badges" role="list">
-      <span class="badge" role="listitem">Facturación y Cobranza</span>
-      <span class="badge" role="listitem">CFDI 4.0 Ilimitados</span>
-      <span class="badge" role="listitem">Control de Ventas y Pedidos</span>
-      <span class="badge" role="listitem"
-            style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">
-        Cuentas por Cobrar Claras
-      </span>
+      <span class="badge" role="listitem">Descarga Masiva CFDI del SAT</span>
+      <span class="badge" role="listitem">Validación Automática (EFOS)</span>
+      <span class="badge" role="listitem">Organización en ADD</span>
+      <span class="badge" role="listitem">Búsqueda Avanzada y Reportes</span>
     </div>
 
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
@@ -60,100 +61,123 @@
           <!-- Columna 1: Beneficios -->
           <div>
             <h2 class="title-gradient" style="margin-top:0;">
-              ¿Por qué usar Vende?
-              <span class="badge">Beneficios Nube</span>
+              ¿Por qué usar XML en Línea?
+              <span class="badge">Beneficios clave</span>
             </h2>
 
             <p class="lead">
-              CFDI ilimitados, mejor cobranza y control total del ciclo de ventas desde cualquier lugar.
+              Ahorra tiempo y evita riesgos fiscales descargando y validando automáticamente todos tus CFDI directamente del SAT.
             </p>
 
             <div class="listSlider">
-              <button class="arrowCircle prev"><span class="chev">‹</span></button>
+              <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                <span class="chev">‹</span>
+              </button>
 
-              <div class="listTrack">
+              <div class="listTrack" role="region" aria-label="Beneficios XML en Línea">
 
                 <!-- Página 1 -->
                 <div class="listPage">
                   <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/132-banco.webp" loading="lazy"></div>
-                    <div><strong>CFDI ILIMITADOS</strong><div>Facturas, REP, notas y traslados sin costo por timbre.</div></div>
+                    <div class="listIcon">
+                      <img src="../IMG/instalacion-del-sistema.webp" alt="" loading="lazy">
+                    </div>
+                    <div>
+                      <strong>AHORRA HORAS DE TRABAJO</strong>
+                      <div>Descarga masiva automática, olvídate de entrar manualmente al portal del SAT.</div>
+                    </div>
                   </div>
 
                   <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/138-lista-de-quehaceres-14.webp" loading="lazy"></div>
-                    <div><strong>MEJORA TU COBRANZA</strong><div>Saldos insolutos, cobranza más clara y rápida.</div></div>
+                    <div class="listIcon">
+                      <img src="../IMG/escudo-de-seguridad.webp" alt="" loading="lazy">
+                    </div>
+                    <div>
+                      <strong>EVITA RIESGOS (EFOS)</strong>
+                      <div>Validación automática contra listas negras del SAT (Art. 69-B).</div>
+                    </div>
                   </div>
 
                   <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/pago-en-linea.webp" loading="lazy"></div>
-                    <div><strong>VENDE DESDE CUALQUIER LUGAR</strong><div>Acceso 24/7 desde cualquier navegador.</div></div>
+                    <div class="listIcon">
+                      <img src="../IMG/archivos%20(1).webp" alt="" loading="lazy">
+                    </div>
+                    <div>
+                      <strong>ORGANIZA TUS XML</strong>
+                      <div>Centraliza y encuentra fácilmente cualquier CFDI en el ADD.</div>
+                    </div>
                   </div>
                 </div>
 
                 <!-- Página 2 -->
                 <div class="listPage">
                   <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/plan-estrategico%20(1).webp" loading="lazy"></div>
-                    <div><strong>IMAGEN PROFESIONAL</strong><div>Facturas y PDFs con tu propio branding.</div></div>
+                    <div class="listIcon">
+                      <img src="../IMG/innovacion.webp" alt="" loading="lazy">
+                    </div>
+                    <div>
+                      <strong>SEGURIDAD Y CONTROL</strong>
+                      <div>Verifica validez, estado y conserva tus CFDI de forma segura.</div>
+                    </div>
                   </div>
 
                   <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/137-estructura-3.webp" loading="lazy"></div>
-                    <div><strong>CONTROL DE TODO EL CICLO</strong><div>Cotización → Pedido → Factura → Cobro.</div></div>
+                    <div class="listIcon">
+                      <img src="../IMG/despachos.webp" alt="" loading="lazy">
+                    </div>
+                    <div>
+                      <strong>INTEGRACIÓN CONTPAQi</strong>
+                      <div>Complemento ideal para Contabilidad, Bancos y Comercial.</div>
+                    </div>
                   </div>
 
                   <div class="listItem">
-                    <div class="listIcon"><img src="../IMG/contabiliza.webp" loading="lazy"></div>
-                    <div><strong>ECOSISTEMA CONTPAQi</strong><div>Conecta ventas y cobranza con Contabilidad.</div></div>
+                    <div class="listIcon">
+                      <img src="../IMG/163-trabajo-colaborativo.webp" alt="" loading="lazy">
+                    </div>
+                    <div>
+                      <strong>IDEAL PARA DESPACHOS</strong>
+                      <div>Administra múltiples RFC desde una sola herramienta.</div>
+                    </div>
                   </div>
                 </div>
 
               </div>
 
-              <button class="arrowCircle next"><span class="chev">›</span></button>
+              <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                <span class="chev">›</span>
+              </button>
             </div>
           </div>
 
           <!-- Columna 2: Reels -->
           <div>
-            <aside class="card body">
-              <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Vende</h4>
+            <aside class="card body" aria-label="Reels XML en Línea">
+              <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: XML en Línea+</h4>
 
-              <!-- Primer título visible -->
-              <h4 class="reel-title active">Carta Porte fácil y rápida</h4>
+              <h4 class="reel-title active">El día que José dejó de sufrir con el SAT</h4>
 
-              <div class="carousel" id="carouselReelsVende">
-                <button class="arrowCircle prev"><span class="chev">‹</span></button>
+              <div class="carousel" id="carouselReelsXML" aria-label="Reels XML en Línea">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
 
                 <div class="carousel-track">
-
+                  <!-- Reel único -->
                   <div class="carousel-slide">
                     <div class="reel-embed"
-                        data-ytid="2Ty_SD8B_FU"
-                        data-title="Vende | Carta Porte fácil y rápida"></div>
+                         data-ytid="nhoUDNnGQ90"
+                         data-title="El día que José dejó de sufrir con el SAT descargando CFDIs"
+                         aria-label="Reel CFDIs SAT XML"></div>
                   </div>
-
-                  <div class="carousel-slide">
-                    <div class="reel-embed"
-                        data-ytid="UPyufjDByNc"
-                        data-title="Testimonio CONTPAQi Vende"></div>
-                  </div>
-
-                  <div class="carousel-slide">
-                    <div class="reel-embed"
-                        data-ytid="Grx1woHMGsU"
-                        data-title="Vende en la nube"></div>
-                  </div>
-
                 </div>
 
-                <button class="arrowCircle next"><span class="chev">›</span></button>
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
 
-                <div class="carousel-nav">
-                  <button class="dot active"></button>
-                  <button class="dot"></button>
-                  <button class="dot"></button>
+                <div class="carousel-nav" aria-label="Paginación de reels">
+                  <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
                 </div>
               </div>
             </aside>
@@ -162,28 +186,30 @@
         </div>
       </div>
 
-      <!-- ============ CTAs (AL FINAL COMO EN NÓMINAS) ============ -->
-      <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;">
+      <!-- ============ CTAs AL FINAL (FORMATO NÓMINAS) ============ -->
+      <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;">
         <a class="btn btn-grad-green hero-btn"
-           href="https://wa.me/5568437918?text=Hola%20Expiriti,%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Vende"
-           target="_blank" rel="noopener">Comprar Suscripción</a>
+           href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20XML%20en%20L%C3%ADnea"
+           target="_blank" rel="noopener">Compra ahora</a>
 
         <a class="btn btn-grad-purple hero-btn"
-           href="https://www.contpaqi.com/vende"
-           target="_blank" rel="noopener">Probar gratis</a>
+           href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20XML%20en%20L%C3%ADnea"
+           target="_blank" rel="noopener">Tramitar prueba 30 días</a>
 
         <a class="btn btn-grad-blue hero-btn"
            href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
 
         <a class="btn btn-ghost hero-btn"
-           href="https://www.contpaqi.com/ficha-producto-vende"
-           target="_blank" rel="noopener">Ficha técnica (Web)</a>
+           href="../PDFS/Ficha_XML_Linea.pdf"
+           target="_blank" rel="noopener">Ficha técnica (PDF)</a>
 
         <a class="btn btn-ghost hero-btn"
            href="#caracteristicas">Resumen ficha técnica</a>
       </div>
     </section>
-
+  </main>
+</body>
+</html>
 
 
     <!-- Características -->
