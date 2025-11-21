@@ -1437,3 +1437,42 @@ body[data-calc="escritorio"] .icons-wrap{display:initial}
   }
   .card .body{padding:10px;}
 }
+
+/* Botón "Ver más" dentro de cada sistema */
+.carouselX .hoverMore{
+  margin-top:18px;
+  opacity:0;
+  transform:translateY(6px);
+  transition:
+    opacity .18s ease,
+    transform .18s ease;
+  pointer-events:none;
+}
+
+/* Al pasar el mouse sobre la tarjeta (desktop) */
+.carouselX .sys:hover .hoverMore{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+/* Estilo del chip "Ver más →" */
+.chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 14px;
+  border-radius:999px;
+  background:rgba(15,23,42,.9);
+  border:1px solid #1e2b3c;
+  font-size:14px;
+  font-weight:600;
+  color:#e5f0ff;
+}
+
+/* Mostrar Ver Más cuando el item tenga la clase show-hover (primer toque en móvil) */
+.carouselX .sys.show-hover .hoverMore{
+  opacity:1 !important;
+  transform:translateY(0) !important;
+  pointer-events:auto;
+}
