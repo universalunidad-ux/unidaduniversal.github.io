@@ -28,7 +28,14 @@
 
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <h1>CONTPAQi Comercial Start <span class="badge">Actualizado 2025</span></h1>
+    <!-- H1 con imagen, como en las demás páginas -->
+    <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
+      <img src="../IMG/comercialstart.webp"
+           alt="CONTPAQi Comercial Start"
+           style="width:230px;max-width:60vw;border-radius:14px"
+           loading="lazy">
+      <span class="badge">Actualizado 2025</span>
+    </h1>
 
     <div class="badges" role="list" aria-label="Características destacadas">
       <span class="badge" role="listitem">Control de Inventarios</span>
@@ -39,106 +46,14 @@
 
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <!-- ===== Resumen (Hero 3 col) ===== -->
-    <section aria-label="Resumen">
-      <div class="card body">
-        <div class="hero-3col">
-
-          <!-- Col 1: Logo + Botones -->
-          <div class="stack-left">
-            <img src="../IMG/comercialstart.webp"
-                 alt="CONTPAQi Comercial Start"
-                 style="width:220px;margin-bottom:12px;border-radius:12px"
-                 loading="lazy">
-
-            <div class="stack">
-              <a class="btn btn-grad-green hero-btn"
-                 href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Comercial%20Start"
-                 target="_blank" rel="noopener">Compra ahora</a>
-
-              <a class="btn btn-grad-purple hero-btn"
-                 href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Comercial%20Start"
-                 target="_blank" rel="noopener">Tramitar prueba 30 días</a>
-
-              <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
-
-              <a class="btn btn-ghost hero-btn"
-                 href="../PDFS/Ficha_Comercial_Start.pdf"
-                 target="_blank" rel="noopener">Ficha técnica (PDF)</a>
-
-              <a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>
-            </div>
-          </div>
-
-          <!-- Col 2: PDF -->
-          <div class="card body pdf-card">
-            <img src="../IMG/usas.jpeg" alt="Equipo usando el sistema"
-                 style="width:100%;border-radius:10px;margin-bottom:10px" loading="lazy">
-
-            <h4 class="title-gradient" style="margin:0 0 6px">Beneficios de un Sistema Comercial</h4>
-
-            <p class="hint" style="margin:0 0 8px">
-              Administra tu ciclo comercial de forma eficiente y cumple con tus obligaciones fiscales fácilmente.
-            </p>
-
-            <iframe class="pdf-frame"
-                    title="Checklist Comercial (placeholder)"
-                    src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=1&view=FitH"
-                    loading="lazy"
-                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
-
-            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
-              <a class="btn btn-outline-gradient"
-                 href="../PDFS/Checklist%20Sistema%20Contable.pdf"
-                 target="_blank" rel="noopener">Abrir en pestaña</a>
-
-              <a class="btn btn-outline-gradient"
-                 href="../PDFS/Checklist%20Sistema%20Contable.pdf"
-                 download>Descargar</a>
-            </div>
-
-            <small class="hint">Placeholder: considera añadir un PDF específico de Comercial Start.</small>
-          </div>
-
-          <!-- Col 3: Galería -->
-          <aside class="card body">
-            <h4 class="title-gradient">Galería</h4>
-
-            <div class="carousel" id="carousel1">
-              <button class="arrowCircle prev" aria-label="Anterior">
-                <span class="chev">‹</span>
-              </button>
-
-              <div class="carousel-track" role="region" aria-label="Galería de imágenes">
-                <img class="carousel-slide" src="../IMG/1start_placeholder.webp" alt="Facturación CFDI 4.0 sencilla" loading="lazy">
-                <img class="carousel-slide" src="../IMG/2start_placeholder.webp" alt="Control de inventarios básico" loading="lazy">
-                <img class="carousel-slide" src="../IMG/3start_placeholder.webp" alt="Administración de clientes y CxC" loading="lazy">
-                <img class="carousel-slide" src="../IMG/4start_placeholder.webp" alt="Reportes de ventas y cobranza" loading="lazy">
-              </div>
-
-              <button class="arrowCircle next" aria-label="Siguiente">
-                <span class="chev">›</span>
-              </button>
-
-              <div class="carousel-nav" aria-label="Paginación">
-                <button class="dot active" aria-label="Slide 1"></button>
-                <button class="dot" aria-label="Slide 2"></button>
-                <button class="dot" aria-label="Slide 3"></button>
-                <button class="dot" aria-label="Slide 4"></button>
-              </div>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Por qué usar + Reels ===== -->
+    <!-- ===== Por qué usar + Reels (nuevo patrón) ===== -->
     <section id="beneficios" aria-label="Por qué usar">
       <div class="grid-2 align-center">
 
         <!-- Beneficios -->
         <div>
-          <h2 class="title-gradient">¿Por qué usar Comercial Start?
+          <h2 class="title-gradient">
+            ¿Por qué usar Comercial Start?
             <span class="badge">Beneficios clave</span>
           </h2>
 
@@ -148,12 +63,16 @@
           </p>
 
           <div class="listSlider">
-            <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+            <button class="arrowCircle prev" aria-label="Anterior" type="button">
+              <span class="chev">‹</span>
+            </button>
 
             <div class="listTrack" role="region" aria-label="Beneficios">
               <div class="listPage">
                 <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/153-gesto.webp" loading="lazy"></div>
+                  <div class="listIcon">
+                    <img src="../IMG/153-gesto.webp" loading="lazy" alt="">
+                  </div>
                   <div>
                     <strong>FÁCIL DE USAR</strong>
                     <div>Interfaz intuitiva para empezar rápido.</div>
@@ -161,7 +80,9 @@
                 </div>
 
                 <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/203-finanzas.webp" loading="lazy"></div>
+                  <div class="listIcon">
+                    <img src="../IMG/203-finanzas.webp" loading="lazy" alt="">
+                  </div>
                   <div>
                     <strong>FACTURA SIN ERRORES</strong>
                     <div>Cumple CFDI 4.0 y timbra ilimitadamente.</div>
@@ -169,7 +90,9 @@
                 </div>
 
                 <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/115-comercio-electronico.webp" loading="lazy"></div>
+                  <div class="listIcon">
+                    <img src="../IMG/115-comercio-electronico.webp" loading="lazy" alt="">
+                  </div>
                   <div>
                     <strong>CONTROLA TU INVENTARIO</strong>
                     <div>Evita faltantes y excesos.</div>
@@ -179,7 +102,9 @@
 
               <div class="listPage">
                 <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/162-ganador-1.webp" loading="lazy"></div>
+                  <div class="listIcon">
+                    <img src="../IMG/162-ganador-1.webp" loading="lazy" alt="">
+                  </div>
                   <div>
                     <strong>MEJORA TU COBRANZA</strong>
                     <div>Gestiona CxC y acelera flujo.</div>
@@ -187,7 +112,9 @@
                 </div>
 
                 <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/032-grafico-de-barras-1.webp" loading="lazy"></div>
+                  <div class="listIcon">
+                    <img src="../IMG/032-grafico-de-barras-1.webp" loading="lazy" alt="">
+                  </div>
                   <div>
                     <strong>TOMA DECISIONES</strong>
                     <div>Reportes claros de ventas e inventarios.</div>
@@ -195,7 +122,9 @@
                 </div>
 
                 <div class="listItem">
-                  <div class="listIcon"><img src="../IMG/contpaqi.webp" loading="lazy"></div>
+                  <div class="listIcon">
+                    <img src="../IMG/contpaqi.webp" loading="lazy" alt="">
+                  </div>
                   <div>
                     <strong>CRECE CONTIGO</strong>
                     <div>Integra con Contabilidad y Bancos. Migra a Pro/Premium.</div>
@@ -225,7 +154,6 @@
               </button>
 
               <div class="carousel-track">
-
                 <!-- Reel 1 -->
                 <div class="carousel-slide">
                   <div class="reel-embed"
@@ -264,6 +192,33 @@
           </aside>
         </div>
 
+      </div>
+    </section>
+
+    <!-- ===== CTA abajo, como en las demás páginas ===== -->
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;">
+      <a class="btn btn-grad-green hero-btn"
+         href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Comercial%20Start"
+         target="_blank" rel="noopener">Compra ahora</a>
+
+      <a class="btn btn-grad-purple hero-btn"
+         href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Comercial%20Start"
+         target="_blank" rel="noopener">Tramitar prueba 30 días</a>
+
+      <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">
+        Sesión guiada 45 min por Zoom
+      </a>
+
+      <a class="btn btn-ghost hero-btn"
+         href="../PDFS/Ficha_Comercial_Start.pdf"
+         target="_blank" rel="noopener">
+        Ficha técnica (PDF)
+      </a>
+
+      <a class="btn btn-ghost hero-btn" href="#caracteristicas">
+        Resumen ficha técnica
+      </a>
+    </div>
       </div>
     </section>
 
