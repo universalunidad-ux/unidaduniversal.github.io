@@ -172,11 +172,53 @@
     if(!track) return;
 
     const items=[...root.querySelectorAll(".sys")];
-    items.forEach(it=>{
-      it.setAttribute("role","link"); it.setAttribute("tabindex","0");
-      const go=()=>{const href=it.getAttribute("data-href"); if(href) window.open(href,"_blank","noopener");};
-      it.addEventListener("click",go);
-      it.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
+
+    // 💡 Lógica de click / doble toque + "Ver más"
+    items.forEach(it => {
+      it.setAttribute("role", "link");
+      it.setAttribute("tabindex", "0");
+
+      let touchedOnce = false; // solo para móvil
+
+      const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+
+      const goSystem = () => {
+        const href = it.getAttribute("data-href");
+        if (!href) return;
+
+        // 💻 DESKTOP → abrir directo en misma pestaña
+        if (!isMobile()) {
+          window.location.href = href;
+          return;
+        }
+
+        // 📱 MÓVIL → primer toque solo muestra "Ver más"
+        if (!touchedOnce) {
+          touchedOnce = true;
+          it.classList.add("show-hover");
+          // si no hay segundo toque en 2 s, se resetea
+          setTimeout(() => { touchedOnce = false; }, 2000);
+          return;
+        }
+
+        // 📱 MÓVIL → segundo toque abre en nueva pestaña
+        window.open(href, "_blank", "noopener");
+      };
+
+      // CLICK
+      it.addEventListener("click", (e) => {
+        e.preventDefault();
+        goSystem();
+      });
+
+      // ENTER o SPACE desde teclado (accesibilidad)
+      it.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const href = it.getAttribute("data-href");
+          if (href) window.location.href = href;
+        }
+      });
     });
 
     const { prev, next, dotsWrap } = ensureUI(root);
@@ -193,7 +235,7 @@
         b.setAttribute("aria-label","Ir a página "+(j+1));
         b.addEventListener("click",()=>{
           if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-          go(j);
+          go(j); // 👈 aquí es el go del carrusel, no el de sistemas
         });
         dotsWrap.appendChild(b);
         return b;
@@ -427,8 +469,6 @@
   }
 
   document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
-
-
 })();
 
 /* =========================================================
