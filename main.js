@@ -174,53 +174,48 @@
     const items=[...root.querySelectorAll(".sys")];
 
     // 💡 Lógica de click / doble toque + "Ver más"
-    items.forEach(it => {
-      it.setAttribute("role", "link");
-      it.setAttribute("tabindex", "0");
+   items.forEach(it => {
+  it.setAttribute("role", "link");
+  it.setAttribute("tabindex", "0");
 
-      let touchedOnce = false; // solo para móvil
+  let touchedOnce = false; // solo para móvil
+  const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
 
-      const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+  const go = () => {
+    const href = it.getAttribute("data-href");
+    if (!href) return;
 
-      const goSystem = () => {
-        const href = it.getAttribute("data-href");
-        if (!href) return;
+    // SIEMPRE abrir en nueva pestaña, independientemente del dispositivo
+    window.open(href, "_blank", "noopener");
+  };
 
-        // 💻 DESKTOP → abrir directo en misma pestaña
-        if (!isMobile()) {
-          window.location.href = href;
-          return;
-        }
+  // CLICK
+  it.addEventListener("click", (e) => {
+    e.preventDefault();
 
-        // 📱 MÓVIL → primer toque solo muestra "Ver más"
-        if (!touchedOnce) {
-          touchedOnce = true;
-          it.classList.add("show-hover");
-          // si no hay segundo toque en 2 s, se resetea
-          setTimeout(() => { touchedOnce = false; }, 2000);
-          return;
-        }
+    // En móvil, conserva la lógica del primer toque para mostrar “Ver más”
+    if (isMobile()) {
+      if (!touchedOnce) {
+        touchedOnce = true;
+        it.classList.add("show-hover");
+        setTimeout(() => { touchedOnce = false; }, 2000);
+        return;
+      }
+    }
 
-        // 📱 MÓVIL → segundo toque abre en nueva pestaña
-        window.open(href, "_blank", "noopener");
-      };
+    // Abrir en otra pestaña
+    go();
+  });
 
-      // CLICK
-      it.addEventListener("click", (e) => {
-        e.preventDefault();
-        goSystem();
-      });
-
-      // ENTER o SPACE desde teclado (accesibilidad)
-      it.addEventListener("keydown", e => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          const href = it.getAttribute("data-href");
-          if (href) window.location.href = href;
-        }
-      });
-    });
-
+  // ENTER o SPACE desde teclado (accesibilidad)
+  it.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      go(); // SIEMPRE nueva pestaña
+    }
+  });
+});
+     
     const { prev, next, dotsWrap } = ensureUI(root);
     const perView   = () => (window.innerWidth<=980 ? 1 : 3);
     const viewportW = () => track.clientWidth || root.clientWidth || 1;
