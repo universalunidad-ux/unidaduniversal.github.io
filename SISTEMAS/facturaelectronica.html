@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://www.youtube-nocookie.com">
 <link rel="preconnect" href="https://i.ytimg.com">
 
-<!-- Fuente + CSS global -->
+<!-- Fuente + Favicon + CSS global -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
@@ -24,9 +24,10 @@
 <link rel="stylesheet" href="../main.css">
 </head>
 
-<body id="top" data-calc="escritorio">
-  <!-- Header dinámico -->
-  <div id="header-placeholder"></div>
+<body id="top">
+<!-- Header dinámico -->
+<div id="header-placeholder"></div>
+
 <main class="container hero">
   <a class="hint" href="../index.html#productos" rel="noopener">← Volver a productos</a>
 
@@ -38,23 +39,41 @@
          alt="CONTPAQi Factura Electrónica"
          style="width:230px;max-width:60vw;border-radius:14px;"
          loading="lazy">
-
-    <span class="badge">
+    <span class="badge"
+          style="background:rgba(245,158,11,.15);border-color:#f59e0b;color:#fbbf24;">
       Actualizado 2025
     </span>
   </h1>
 
+  <!-- Highlights -->
   <div class="badges" role="list" aria-label="Características destacadas">
     <span class="badge" role="listitem">CFDI 4.0 (Factura, REP, Notas)</span>
-
     <span class="badge" role="listitem"
           style="background:rgba(245,158,11,.15);border-color:#f59e0b;color:#fbbf24;">
       Carta Porte 3.1
     </span>
-
     <span class="badge" role="listitem">Timbrado ilimitado</span>
     <span class="badge" role="listitem">Multi RFC</span>
     <span class="badge" role="listitem">Fácil de usar</span>
+  </div>
+
+  <!-- CTAs -->
+  <div class="stack" style="margin:18px 0 26px;">
+    <a class="btn btn-grad-green hero-btn"
+       href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Factura%20Electr%C3%B3nica"
+       target="_blank" rel="noopener">Compra ahora</a>
+
+    <a class="btn btn-grad-purple hero-btn"
+       href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Factura%20Electr%C3%B3nica"
+       target="_blank" rel="noopener">Tramitar prueba 30 días</a>
+
+    <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">
+      Sesión guiada 45 min por Zoom
+    </a>
+
+    <a class="btn btn-ghost hero-btn" href="#caracteristicas">
+      Resumen ficha técnica
+    </a>
   </div>
 
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
@@ -62,6 +81,7 @@
   <!-- ============================== -->
   <!-- Por qué usar + Reels (SIN PDF NI GALERÍA) -->
   <!-- ============================== -->
+
   <section id="beneficios" aria-label="Por qué usar">
     <div class="grid-2 align-center">
 
@@ -73,46 +93,34 @@
         </h2>
 
         <p class="lead">
-          Emite todo tipo de CFDI, cumple con el SAT (incl. Carta Porte 3.1)
-          y administra tu facturación con timbrado ilimitado.
+          Emite todo tipo de CFDI, cumple con el SAT (incl. Carta Porte 3.1) y administra tu facturación con timbrado ilimitado.
         </p>
 
         <div class="listSlider">
-          <button class="arrowCircle prev" aria-label="Anterior" type="button">
-            <span class="chev">‹</span>
-          </button>
+          <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
 
-          <div class="listTrack" role="region" aria-label="Beneficios">
+          <div class="listTrack">
 
             <div class="listPage">
 
               <div class="listItem">
-                <div class="listIcon">
-                  <img src="../IMG/194-tiempo-de-trabajo.webp" loading="lazy">
-                </div>
-                <div>
-                  <strong>EMITE FÁCIL Y RÁPIDO</strong>
+                <div class="listIcon"><img src="../IMG/194-tiempo-de-trabajo.webp" loading="lazy"></div>
+                <div><strong>EMITE FÁCIL Y RÁPIDO</strong>
                   <div>Interfaz clara para facturar en minutos.</div>
                 </div>
               </div>
 
               <div class="listItem">
-                <div class="listIcon">
-                  <img src="../IMG/206-certificado.webp" loading="lazy">
-                </div>
-                <div>
-                  <strong>CUMPLE SIEMPRE</strong>
+                <div class="listIcon"><img src="../IMG/206-certificado.webp" loading="lazy"></div>
+                <div><strong>CUMPLE SIEMPRE</strong>
                   <div>CFDI 4.0, REP 2.0 y complementos vigentes.</div>
                 </div>
               </div>
 
               <div class="listItem">
-                <div class="listIcon">
-                  <img src="../IMG/045-seguimiento.webp" loading="lazy">
-                </div>
-                <div>
-                  <strong>CARTA PORTE 3.1</strong>
-                  <div>Asistentes que simplifican todo el proceso.</div>
+                <div class="listIcon"><img src="../IMG/045-seguimiento.webp" loading="lazy"></div>
+                <div><strong>CARTA PORTE 3.1</strong>
+                  <div>Asistentes que simplifican el proceso.</div>
                 </div>
               </div>
 
@@ -121,32 +129,23 @@
             <div class="listPage">
 
               <div class="listItem">
-                <div class="listIcon">
-                  <img src="../IMG/032-banco.webp" loading="lazy">
-                </div>
-                <div>
-                  <strong>TIMBRADO ILIMITADO</strong>
-                  <div>Sin pagos adicionales por CFDI.</div>
+                <div class="listIcon"><img src="../IMG/032-banco.webp" loading="lazy"></div>
+                <div><strong>TIMBRADO ILIMITADO</strong>
+                  <div>Sin pagar por CFDI adicional.</div>
                 </div>
               </div>
 
               <div class="listItem">
-                <div class="listIcon">
-                  <img src="../IMG/163-trabajo-colaborativo.webp" loading="lazy">
-                </div>
-                <div>
-                  <strong>IDEAL MULTI-RFC</strong>
-                  <div>Administra varios RFC en una sola licencia.</div>
+                <div class="listIcon"><img src="../IMG/163-trabajo-colaborativo.webp" loading="lazy"></div>
+                <div><strong>IDEAL MULTI-EMPRESA</strong>
+                  <div>Maneja varios RFC en una sola licencia.</div>
                 </div>
               </div>
 
               <div class="listItem">
-                <div class="listIcon">
-                  <img src="../IMG/contpaqi.webp" loading="lazy">
-                </div>
-                <div>
-                  <strong>INTEGRACIÓN TOTAL</strong>
-                  <div>Se conecta con Contabilidad y Bancos.</div>
+                <div class="listIcon"><img src="../IMG/contpaqi.webp" loading="lazy"></div>
+                <div><strong>INTEGRACIÓN</strong>
+                  <div>Con Contabilidad y Bancos.</div>
                 </div>
               </div>
 
@@ -154,74 +153,58 @@
 
           </div>
 
-          <button class="arrowCircle next" aria-label="Siguiente" type="button">
-            <span class="chev">›</span>
-          </button>
-
+          <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
         </div>
       </div>
 
       <!-- REELS -->
-      <aside class="card body" aria-label="Reels Factura Electrónica">
-        <h4 class="title-gradient" style="margin-bottom:8px;">
-          Reels Destacados: Factura Electrónica
-        </h4>
+      <div>
+        <aside class="card body" aria-label="Reels Factura Electrónica">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Factura Electrónica</h4>
 
-        <!-- Títulos dinámicos -->
-        <h4 class="reel-title active">Factura Electrónica v13 | Novedades CONTPAQi</h4>
-        <h4 class="reel-title">Carta Porte CFDI | CONTPAQi Factura Electrónica</h4>
-        <h4 class="reel-title">Factura Electrónica | Sector Notarial</h4>
+          <h4 class="reel-title active">Factura Electrónica v13 | Novedades</h4>
+          <h4 class="reel-title">Carta Porte CFDI 3.1</h4>
+          <h4 class="reel-title">Factura para Notarías</h4>
 
-        <div class="carousel" id="carouselReelsFactura">
-          <button class="arrowCircle prev" aria-label="Anterior" type="button">
-            <span class="chev">‹</span>
-          </button>
+          <div class="carousel" id="carouselReelsFACTURA">
+            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
 
-          <div class="carousel-track">
+            <div class="carousel-track">
 
-            <!-- Reel 1 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="nMEgM_BvxTs"
-                   data-title="Factura Electrónica v13 | Novedades CONTPAQi"
-                   aria-label="Reel Factura 1"></div>
+              <div class="carousel-slide">
+                <div class="reel-embed"
+                     data-ytid="nMEgM_BvxTs"
+                     data-title="Factura Electrónica v13 | Novedades CONTPAQi"
+                     aria-label="Reel 1"></div>
+              </div>
+
+              <div class="carousel-slide">
+                <div class="reel-embed"
+                     data-ytid="IA5-tguZzCc"
+                     data-title="Carta Porte CFDI 3.1 | CONTPAQi Factura Electrónica"
+                     aria-label="Reel 2"></div>
+              </div>
+
+              <div class="carousel-slide">
+                <div class="reel-embed"
+                     data-ytid="2uBSGZHLsGs"
+                     data-title="Factura Electrónica para Notarías"
+                     aria-label="Reel 3"></div>
+              </div>
+
             </div>
 
-            <!-- Reel 2 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="IA5-tguZzCc"
-                   data-title="Carta Porte CFDI | CONTPAQi Factura Electrónica"
-                   aria-label="Reel Factura 2"></div>
+            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
+            <div class="carousel-nav">
+              <button class="dot active"></button>
+              <button class="dot"></button>
+              <button class="dot"></button>
             </div>
-
-            <!-- Reel 3 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="2uBSGZHLsGs"
-                   data-title="Factura Electrónica | Sector notarial"
-                   aria-label="Reel Factura 3"></div>
-            </div>
-
           </div>
-
-          <button class="arrowCircle next" aria-label="Siguiente" type="button">
-            <span class="chev">›</span>
-          </button>
-
-          <div class="carousel-nav">
-            <button class="dot active"></button>
-            <button class="dot"></button>
-            <button class="dot"></button>
-          </div>
-
-        </div>
-      </aside>
-
+        </aside>
+      </div>
     </div>
   </section>
-</main>
-
   <!-- ===== Funciones ===== -->
   <section id="caracteristicas" aria-labelledby="caracteristicas-title">
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
