@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
@@ -17,72 +17,199 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../main.css" />
 </head>
+
 <body id="top" data-calc="escritorio">
+
   <!-- Header dinámico -->
   <div id="header-placeholder"></div>
 
   <main class="container hero">
     <a class="hint" href="../index.html#productos" rel="noopener">← Volver a productos</a>
+
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h1>CONTPAQi Comercial Pro <span class="badge">Actualizado 2025</span></h1>
+
+    <!-- H1 con imagen -->
+    <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
+      <img src="../IMG/comercialpro.webp"
+           alt="CONTPAQi Comercial Pro"
+           style="width:230px;max-width:60vw;border-radius:14px;"
+           loading="lazy">
+      <span class="badge">Actualizado 2025</span>
+    </h1>
 
     <div class="badges" role="list" aria-label="Características destacadas">
       <span class="badge" role="listitem">Inventarios Avanzados (Lotes, Pedimentos, Series, Caducidades)</span>
       <span class="badge" role="listitem">Multi-Almacén</span>
-      <span class="badge" role="listitem">Compras, Ventas, CxC, CxP</span>
+      <span class="badge" role="listitem">Compras, Ventas, CxC/CxP</span>
       <span class="badge" role="listitem">Facturación CFDI 4.0</span>
     </div>
+
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <!-- Resumen -->
-    <section aria-label="Resumen">
-      <div class="card body">
-        <div class="hero-3col">
-          <div class="stack-left">
-            <img src="../IMG/comercialpro.webp" alt="Pantalla de CONTPAQi Comercial Pro" style="width:220px;margin-bottom:12px;border-radius:12px" loading="lazy">
-            <div class="stack">
-              <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Comercial%20Pro" target="_blank" rel="noopener">Compra ahora</a>
-              <a class="btn btn-grad-purple hero-btn" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Comercial%20Pro" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
-              <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
-              <a class="btn btn-ghost hero-btn" href="../PDFS/Ficha_Comercial_Pro.pdf" target="_blank" rel="noopener">Ficha técnica (PDF)</a>
-              <a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>
-            </div>
-          </div>
+    <!-- ============================== -->
+    <!-- SECTION:  Beneficios + Reels -->
+    <!-- ============================== -->
+    <section id="beneficios" aria-label="Por qué usar">
+      <div class="grid-2 align-center">
 
-          <div class="card body pdf-card">
-            <img src="../IMG/usas.jpeg" alt="Equipo usando el sistema" style="width:100%;border-radius:10px;margin-bottom:10px" loading="lazy">
-            <h4 class="title-gradient" style="margin:0 0 6px">Control Total de tu Ciclo Comercial</h4>
-            <p class="hint" style="margin:0 0 8px">Administra desde la compra hasta la cobranza, con control detallado de inventarios y cumplimiento fiscal.</p>
-            <iframe class="pdf-frame" title="Guía Comercial Pro (PDF)" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=1&view=FitH" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
-              <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
-              <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" download>Descargar</a>
-            </div>
-            <small class="hint">Placeholder: añade tu PDF de Comercial Pro cuando lo tengas.</small>
-          </div>
+        <!-- BENEFICIOS -->
+        <div>
+          <h2 class="title-gradient">
+            ¿Por qué usar Comercial Pro?
+            <span class="badge">Beneficios clave</span>
+          </h2>
 
-          <aside class="card body">
-            <h4 class="title-gradient">Galería</h4>
-            <div class="carousel" id="carousel1">
-              <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-              <div class="carousel-track" role="region" aria-label="Galería de imágenes">
-                <img class="carousel-slide" src="../IMG/1pro_placeholder.webp" alt="Control de lotes y pedimentos" loading="lazy">
-                <img class="carousel-slide" src="../IMG/2pro_placeholder.webp" alt="Multi-almacén y traspasos" loading="lazy">
-                <img class="carousel-slide" src="../IMG/3pro_placeholder.webp" alt="Ciclo completo de compra-venta" loading="lazy">
-                <img class="carousel-slide" src="../IMG/4pro_placeholder.webp" alt="Reportes avanzados de utilidad" loading="lazy">
+          <p class="lead">
+            Controla tu ciclo comercial con trazabilidad completa, inventarios precisos y flujos integrados de compras, ventas y cobranza.
+          </p>
+
+          <div class="listSlider">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button">
+              <span class="chev">‹</span>
+            </button>
+
+            <div class="listTrack" role="region" aria-label="Beneficios">
+              <!-- Página 1 -->
+              <div class="listPage">
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/076-codigo-de-barras.webp" alt=""></div>
+                  <div>
+                    <strong>TRAZABILIDAD TOTAL</strong>
+                    <div>Control detallado: lotes, pedimentos, caducidades y series.</div>
+                  </div>
+                </div>
+
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/014-carretilla.webp" alt=""></div>
+                  <div>
+                    <strong>MULTI-ALMACÉN</strong>
+                    <div>Control de existencias, traspasos y costos reales.</div>
+                  </div>
+                </div>
+
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/009-carpeta.webp" alt=""></div>
+                  <div>
+                    <strong>OPERACIÓN COMPLETA</strong>
+                    <div>Compras, ventas, inventarios, CxC y CxP totalmente integrados.</div>
+                  </div>
+                </div>
               </div>
-              <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-              <div class="carousel-nav" aria-label="Paginación galería">
-                <button class="dot active" aria-label="Slide 1"></button>
-                <button class="dot" aria-label="Slide 2"></button>
-                <button class="dot" aria-label="Slide 3"></button>
-                <button class="dot" aria-label="Slide 4"></button>
+
+              <!-- Página 2 -->
+              <div class="listPage">
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/presentacion%20(1).webp" alt=""></div>
+                  <div>
+                    <strong>UTILIDAD REAL</strong>
+                    <div>Costeo exacto, márgenes y análisis de rentabilidad por producto.</div>
+                  </div>
+                </div>
+
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/038-verificado.webp" alt=""></div>
+                  <div>
+                    <strong>CUMPLIMIENTO SAT</strong>
+                    <div>CFDI 4.0, complementos y controles fiscales integrados.</div>
+                  </div>
+                </div>
+
+                <div class="listItem">
+                  <div class="listIcon"><img src="../IMG/contpaqi.webp" alt=""></div>
+                  <div>
+                    <strong>ECOSISTEMA CONTPAQi</strong>
+                    <div>Integración con Contabilidad, Bancos y Nóminas.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="arrowCircle next" aria-label="Siguiente" type="button">
+              <span class="chev">›</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- REELS -->
+        <div>
+          <aside class="card body">
+            <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Comercial Pro</h4>
+
+            <!-- títulos dinámicos -->
+            <h4 class="reel-title active">CONTPAQi Comercial Pro: control total comercial</h4>
+            <h4 class="reel-title">Flujo completo: compra → almacén → venta</h4>
+            <h4 class="reel-title">Trazabilidad profesional (lotes y caducidades)</h4>
+
+            <div class="carousel" id="carouselReelsComercialPRO">
+              <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                <span class="chev">‹</span>
+              </button>
+
+              <div class="carousel-track">
+                <!-- Reel 1 -->
+                <div class="carousel-slide">
+                  <div class="reel-embed"
+                       data-ytid="rEYzPXOX1_Y"
+                       data-title="CONTPAQi Comercial Pro: control total de inventario y ciclos"
+                       aria-label="Reel Comercial Pro 1"></div>
+                </div>
+
+                <!-- Reel 2 -->
+                <div class="carousel-slide">
+                  <div class="reel-embed"
+                       data-ytid="-SJq6t2SM7c"
+                       data-title="Flujo completo comercial con CONTPAQi"
+                       aria-label="Reel Comercial Pro 2"></div>
+                </div>
+
+                <!-- Reel 3 -->
+                <div class="carousel-slide">
+                  <div class="reel-embed"
+                       data-ytid="5AowfYsAm4E"
+                       data-title="Trazabilidad avanzada: lotes, series y caducidades"
+                       aria-label="Reel Comercial Pro 3"></div>
+                </div>
+              </div>
+
+              <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                <span class="chev">›</span>
+              </button>
+
+              <div class="carousel-nav">
+                <button class="dot active" aria-label="Ir al reel 1"></button>
+                <button class="dot" aria-label="Ir al reel 2"></button>
+                <button class="dot" aria-label="Ir al reel 3"></button>
               </div>
             </div>
           </aside>
         </div>
       </div>
     </section>
+
+    <!-- ============================== -->
+    <!-- Botones CTA al final -->
+    <!-- ============================== -->
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;">
+      <a class="btn btn-grad-green hero-btn"
+         href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Comercial%20Pro"
+         target="_blank" rel="noopener">Compra ahora</a>
+
+      <a class="btn btn-grad-purple hero-btn"
+         href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Comercial%20Pro"
+         target="_blank" rel="noopener">Tramitar prueba 30 días</a>
+
+      <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">Sesión guiada por Zoom</a>
+
+      <a class="btn btn-ghost hero-btn" href="../PDFS/Ficha_Comercial_Pro.pdf" target="_blank" rel="noopener">
+        Ficha técnica (PDF)
+      </a>
+
+      <a class="btn btn-ghost hero-btn" href="#caracteristicas">
+        Resumen ficha técnica
+      </a>
+    </div>
+    </section>
+
 
     <!-- Características -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
@@ -124,128 +251,6 @@
       </div>
     </section>
 
-<!-- Beneficios + Reels -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Comercial Pro? <span class="badge">Beneficios clave</span></h2>
-      <p class="lead">Obtén un control detallado de tu ciclo comercial, optimiza tus inventarios con trazabilidad completa y toma decisiones basadas en información precisa.</p>
-
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior" type="button">
-          <span class="chev">‹</span>
-        </button>
-
-        <div class="listTrack" role="region" aria-label="Beneficios">
-          <div class="listPage">
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/076-codigo-de-barras.webp" alt="" loading="lazy"></div>
-              <div>
-                <strong>TRAZABILIDAD TOTAL</strong>
-                <div>Control preciso con lotes, pedimentos, series y caducidades.</div>
-              </div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/014-carretilla.webp" alt="" loading="lazy"></div>
-              <div>
-                <strong>GESTIÓN MULTI-ALMACÉN</strong>
-                <div>Controla existencias y traspasos entre tus almacenes.</div>
-              </div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/009-carpeta.webp" alt="" loading="lazy"></div>
-              <div>
-                <strong>OPERACIÓN EFICIENTE</strong>
-                <div>Integra compras, ventas, inventarios, CxC y CxP.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="listPage">
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/presentacion%20(1).webp" alt="" loading="lazy"></div>
-              <div>
-                <strong>CONOCE TU RENTABILIDAD</strong>
-                <div>Calcula costos exactos y analiza la utilidad por producto.</div>
-              </div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/038-verificado.webp" alt="" loading="lazy"></div>
-              <div>
-                <strong>CUMPLE CON EL SAT</strong>
-                <div>Facturación CFDI 4.0 y complementos.</div>
-              </div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/contpaqi.webp" alt="" loading="lazy"></div>
-              <div>
-                <strong>ECOSISTEMA CONTPAQi</strong>
-                <div>Conecta con Contabilidad, Bancos y Nóminas.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button class="arrowCircle next" aria-label="Siguiente" type="button">
-          <span class="chev">›</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- REELS Comercial PRO -->
-    <div>
-      <aside class="card body" aria-label="Reels Comercial PRO">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Comercial PRO</h4>
-
-        <h4 class="reel-title active">Título 1</h4>
-        <h4 class="reel-title">Título 2</h4>
-        <h4 class="reel-title">Título 3</h4>
-
-        <div class="carousel" id="carouselReelsComercialPRO" aria-label="Reels Comercial PRO">
-          <button class="arrowCircle prev" aria-label="Anterior" type="button">
-            <span class="chev">‹</span>
-          </button>
-
-          <div class="carousel-track">
-            <!-- Reel 1 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="rEYzPXOX1_Y"
-                   data-title="Título 1"
-                   aria-label="Reel Comercial PRO 1"></div>
-            </div>
-
-            <!-- Reel 2 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="-SJq6t2SM7c"
-                   data-title="Título 2"
-                   aria-label="Reel Comercial PRO 2"></div>
-            </div>
-
-            <!-- Reel 3 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="5AowfYsAm4E"
-                   data-title="Título 3"
-                   aria-label="Reel Comercial PRO 3"></div>
-            </div>
-          </div>
-
-          <button class="arrowCircle next" aria-label="Siguiente" type="button">
-            <span class="chev">›</span>
-          </button>
-
-          <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 3" type="button"></button>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
 
 <!-- Videos -->
 <section id="videos" aria-labelledby="videos-title">
