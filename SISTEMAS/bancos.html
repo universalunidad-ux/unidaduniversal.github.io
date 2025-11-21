@@ -15,7 +15,16 @@
 
   <!-- Fuente + CSS global -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../main.css" />
+  <link rel="stylesheet" href="../main.css?v=2025.11.09-1" />
+
+  <!-- Favicon set (igual que en Contabilidad / Nóminas) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
+  <link rel="manifest" href="../IMG/site.webmanifest">
+  <link rel="icon" href="../IMG/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
 </head>
 
 <body id="top" data-calc="escritorio">
@@ -25,65 +34,168 @@
   <main class="container hero">
     <a class="hint" href="../index.html#productos">← Volver a productos</a>
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h1>CONTPAQi Bancos <span class="badge">Actualizado 2025</span></h1>
 
-    <div class="badges">
-      <span class="badge">Conexión directa a bancos</span>
-      <span class="badge">Conciliación automática</span>
-      <span class="badge" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nueva conexión: CONTPAQi Despachos</span>
-      <span class="badge">Tesorería y Flujo de Efectivo</span>
+    <!-- H1 con imagen del sistema + badge -->
+    <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
+      <img src="../IMG/bancos.webp"
+           alt="CONTPAQi Bancos"
+           style="width:230px;max-width:60vw;border-radius:14px;"
+           loading="lazy">
+      <span class="badge">Actualizado 2025</span>
+    </h1>
+
+    <div class="badges" role="list" aria-label="Características destacadas">
+      <span class="badge" role="listitem">Conexión directa a bancos</span>
+      <span class="badge" role="listitem">Conciliación automática</span>
+      <span class="badge" role="listitem" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nueva conexión: CONTPAQi Despachos</span>
+      <span class="badge" role="listitem">Tesorería y Flujo de Efectivo</span>
     </div>
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <!-- Resumen héroe -->
+    <!-- =================== HERO / RESUMEN =================== -->
     <section aria-label="Resumen">
       <div class="card body">
-        <div class="hero-3col">
-          <div class="stack-left">
-            <img src="../IMG/bancos.webp" alt="CONTPAQi Bancos" style="width:220px;margin-bottom:12px;border-radius:12px">
-            <div class="stack">
-              <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Bancos" target="_blank" rel="noopener">Compra ahora</a>
-              <a class="btn btn-grad-purple hero-btn" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Bancos" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
-              <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
-              <a class="btn btn-ghost hero-btn" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Ficha técnica (PDF)</a>
-              <a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>
+        <!-- Solo 2 columnas: beneficios (izq) y reels (der) -->
+        <div class="grid-2 align-center">
+          <!-- Columna 1: Beneficios -->
+          <div>
+            <h2 class="title-gradient" style="margin-top: 0;">
+              ¿Por qué usar Bancos en tu empresa?
+              <span class="badge">Beneficios clave</span>
+            </h2>
+            <p class="lead">
+              Toma el control de tu tesorería, concilia en minutos y optimiza tu flujo de efectivo.
+              Ideal para empresas y despachos contables.
+            </p>
+
+            <div class="listSlider">
+              <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                <span class="chev">‹</span>
+              </button>
+              <div class="listTrack" role="region" aria-label="Beneficios Bancos">
+                <div class="listPage">
+                  <div class="listItem">
+                    <div class="listIcon"><img src="../IMG/facturacion.webp" alt=""></div>
+                    <div>
+                      <strong>CONECTA TU BANCO</strong>
+                      <div>Descarga estados de cuenta automáticos.</div>
+                    </div>
+                  </div>
+                  <div class="listItem">
+                    <div class="listIcon"><img src="../IMG/165-ley.webp" alt=""></div>
+                    <div>
+                      <strong>CONCILIACIÓN AUTOMÁTICA</strong>
+                      <div>Ahorra más del 90% del tiempo vs. Excel.</div>
+                    </div>
+                  </div>
+                  <div class="listItem">
+                    <div class="listIcon"><img src="../IMG/097-metodo-de-pago.webp" alt=""></div>
+                    <div>
+                      <strong>TESORERÍA AL DÍA</strong>
+                      <div>Conoce saldos reales y proyecta flujo.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listPage">
+                  <div class="listItem">
+                    <div class="listIcon"><img src="../IMG/119-conexion.webp" alt=""></div>
+                    <div>
+                      <strong>IDEAL PARA DESPACHOS</strong>
+                      <div>Gestiona la tesorería de múltiples clientes.</div>
+                    </div>
+                  </div>
+                  <div class="listItem">
+                    <div class="listIcon"><img src="../IMG/computacion-en-la-nube.webp" alt=""></div>
+                    <div>
+                      <strong>CONEXIÓN NUBE</strong>
+                      <div>Envía CFDI a CONTPAQi Despachos®.</div>
+                    </div>
+                  </div>
+                  <div class="listItem">
+                    <div class="listIcon"><img src="../IMG/153-gesto.webp" alt=""></div>
+                    <div>
+                      <strong>PÓLIZAS EN UN CLIC</strong>
+                      <div>Integra con Contabilidad fácilmente.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                <span class="chev">›</span>
+              </button>
             </div>
           </div>
 
-          <div class="card body pdf-card">
-            <img src="../IMG/usas.jpeg" alt="USAS" style="width:100%;border-radius:10px;margin-bottom:10px">
-            <h4 class="title-gradient" style="margin:0 0 6px">Test de 10 puntos para elegir un sistema óptimo</h4>
-            <p class="hint" style="margin:0 0 8px">PDF interactivo: al capturar tus valores, calcula una suma final para orientar la elección del sistema.</p>
-            <iframe class="pdf-frame" title="Checklist Sistema Contable (interactivo)" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=2&view=FitH"></iframe>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
-              <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
-              <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" download>Descargar</a>
-            </div>
-            <small class="hint">Si tu navegador no ejecuta formularios, ábrelo en un visor de PDF o descárgalo.</small>
-          </div>
+          <!-- Columna 2: Reels -->
+          <div>
+            <aside class="card body" aria-label="Reels de Bancos" style="margin-bottom: 0;">
+              <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Bancos</h4>
 
-          <aside class="card body" aria-label="Galería de imágenes">
-            <h4 class="title-gradient">Galería</h4>
-            <div class="carousel" id="carousel1">
-              <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-              <div class="carousel-track">
-                <img class="carousel-slide" src="../IMG/1conta.webp" alt="Concilia tus bancos automáticamente">
-                <img class="carousel-slide" src="../IMG/3conta.webp" alt="Reportes de flujo de efectivo">
-                <img class="carousel-slide" src="../IMG/2conta.webp" alt="Conecta con tu portal SAT y bancos">
-                <img class="carousel-slide" src="../IMG/4conta.webp" alt="Genera pólizas de pago y cobro">
+              <!-- Títulos, el JS de reels los irá actualizando -->
+              <h4 class="reel-title active">Conciliación bancaria en 3 pasos</h4>
+              <h4 class="reel-title">4 señales que tu empresa necesita Bancos</h4>
+
+              <div class="carousel" id="carouselReelsBancos" aria-label="Reels Bancos">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
+
+                <div class="carousel-track">
+                  <!-- Reel 1 -->
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="3YUbSEyU678"
+                         data-title="Conciliación bancaria en 3 pasos con CONTPAQi Bancos"
+                         aria-label="Reel Conciliación bancaria en 3 pasos">
+                    </div>
+                  </div>
+
+                  <!-- Reel 2 -->
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="LC1Ccpv_jzo"
+                         data-title="4 señales que tu empresa necesita Bancos"
+                         aria-label="Reel 4 señales que necesitas Bancos">
+                    </div>
+                  </div>
+                </div>
+
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
+
+                <div class="carousel-nav" aria-label="Paginación de reels">
+                  <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+                  <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+                </div>
               </div>
-              <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-              <div class="carousel-nav" aria-label="Paginación de la galería">
-                <button class="dot active" aria-label="Ir a la imagen 1"></button>
-                <button class="dot" aria-label="Ir a la imagen 2"></button>
-                <button class="dot" aria-label="Ir a la imagen 3"></button>
-                <button class="dot" aria-label="Ir a la imagen 4"></button>
-              </div>
-            </div>
-          </aside>
+            </aside>
+          </div>
         </div>
       </div>
-    </section>
+
+      <!-- Fila de CTAs abajo del card (formato estándar) -->
+      <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;">
+        <a class="btn btn-grad-green hero-btn"
+           href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20Bancos"
+           target="_blank" rel="noopener">Compra ahora</a>
+
+        <a class="btn btn-grad-purple hero-btn"
+           href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20Bancos"
+           target="_blank" rel="noopener">Tramitar prueba 30 días</a>
+
+        <a class="btn btn-grad-blue hero-btn"
+           href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
+
+        <a class="btn btn-ghost hero-btn"
+           href="../PDFS/Checklist%20Sistema%20Contable.pdf"
+           target="_blank" rel="noopener">Ficha técnica (PDF)</a>
+
+        <a class="btn btn-ghost hero-btn"
+           href="#caracteristicas">Resumen ficha técnica</a>
+      </div>
+    </section>    
 
     <!-- Características -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
@@ -122,123 +234,6 @@
       </div>
     </section>
 
-<!-- Por qué usar + Reels -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Bancos en tu empresa? <span class="badge">Beneficios clave</span></h2>
-      <p class="lead">Toma el control de tu tesorería, concilia en minutos y optimiza tu flujo de efectivo. Ideal para empresas y despachos contables.</p>
-
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior" type="button">
-          <span class="chev">‹</span>
-        </button>
-        <div class="listTrack" role="region" aria-label="Beneficios">
-          <div class="listPage">
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/facturacion.webp" alt=""></div>
-              <div>
-                <strong>CONECTA TU BANCO</strong>
-                <div>Descarga estados de cuenta automáticos.</div>
-              </div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/165-ley.webp" alt=""></div>
-              <div>
-                <strong>CONCILIACIÓN AUTOMÁTICA</strong>
-                <div>Ahorra más del 90% del tiempo vs. Excel.</div>
-              </div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/097-metodo-de-pago.webp" alt=""></div>
-              <div>
-                <strong>TESORERÍA AL DÍA</strong>
-                <div>Conoce saldos reales y proyecta flujo.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="listPage">
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/119-conexion.webp" alt=""></div>
-              <div>
-                <strong>IDEAL PARA DESPACHOS</strong>
-                <div>Gestiona la tesorería de múltiples clientes.</div>
-              </div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/computacion-en-la-nube.webp" alt=""></div>
-              <div>
-                <strong>CONEXIÓN NUBE</strong>
-                <div>Envía CFDI a CONTPAQi Despachos®.</div>
-              </div>
-            </div>
-            <div class="listItem">
-              <div class="listIcon"><img src="../IMG/153-gesto.webp" alt=""></div>
-              <div>
-                <strong>PÓLIZAS EN UN CLIC</strong>
-                <div>Integra con Contabilidad fácilmente.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="arrowCircle next" aria-label="Siguiente" type="button">
-          <span class="chev">›</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- ========================== -->
-    <!-- 🎬 REELS — CONTPAQi Bancos -->
-    <!-- ========================== -->
-    <div>
-      <aside class="card body" aria-label="Reels de Bancos">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Bancos</h4>
-
-        <!-- Solo 2 títulos, el JS los va cambiando -->
-        <h4 class="reel-title active">Conciliación bancaria en 3 pasos</h4>
-        <h4 class="reel-title">4 señales que tu empresa necesita Bancos</h4>
-
-        <div class="carousel" id="carouselReelsBancos" aria-label="Reels Bancos">
-          <button class="arrowCircle prev" aria-label="Anterior" type="button">
-            <span class="chev">‹</span>
-          </button>
-
-          <div class="carousel-track">
-
-            <!-- 1 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="3YUbSEyU678"
-                   data-title="Conciliación bancaria en 3 pasos con CONTPAQi Bancos"
-                   aria-label="Reel Conciliación bancaria">
-              </div>
-            </div>
-
-            <!-- 2 -->
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="LC1Ccpv_jzo"
-                   data-title="4 señales que tu empresa necesita Bancos"
-                   aria-label="Reel 4 señales que necesitas Bancos">
-              </div>
-            </div>
-
-          </div>
-
-          <button class="arrowCircle next" aria-label="Siguiente" type="button">
-            <span class="chev">›</span>
-          </button>
-
-          <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
 
 <!-- ========================== -->
 <!-- 🎥 VIDEOS — CONTPAQi Bancos -->
