@@ -27,9 +27,13 @@
 <body id="top">
 <!-- Header dinámico -->
 <div id="header-placeholder"></div>
+
 <main class="container hero">
   <a class="hint" href="../index.html#productos" rel="noopener">← Volver a productos</a>
+
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+
+  <!-- H1 con logo + badge (formato Nóminas) -->
   <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
     <img src="../IMG/despachos.webp"
          alt="CONTPAQi Despachos"
@@ -40,20 +44,22 @@
       Nube
     </span>
   </h1>
+
   <div class="badges" role="list" aria-label="Características destacadas">
     <span class="badge" role="listitem">Gestión de Despachos</span>
     <span class="badge" role="listitem">Control de Clientes Ilimitados</span>
     <span class="badge" role="listitem">Obligaciones Fiscales y Alertas</span>
-    <span class="badge" role="listitem" style="background:rgba(34,197,94,0.15);border-color:#22c55e;color:#86efac;">
+    <span class="badge" role="listitem"
+          style="background:rgba(34,197,94,0.15);border-color:#22c55e;color:#86efac;">
       Integración Contabilidad/Bancos
     </span>
   </div>
 
   <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-
   <!-- ===================================================== -->
-  <!--     NUEVO FORMATO: Solo Beneficios + Reels (sin PDF)  -->
+  <!--  BENEFICIOS + REELS (SIN PDF / SIN GALERÍA)          -->
+  <!--  Formato igual al de Nóminas / Contabiliza           -->
   <!-- ===================================================== -->
 
   <section id="beneficios" aria-label="Por qué usar">
@@ -61,7 +67,10 @@
 
       <!-- BENEFICIOS -->
       <div>
-        <h2 class="title-gradient">¿Por qué usar Despachos? <span class="badge">Beneficios Nube</span></h2>
+        <h2 class="title-gradient">
+          ¿Por qué usar Despachos?
+          <span class="badge">Beneficios Nube</span>
+        </h2>
 
         <p class="lead">
           Centraliza la gestión de clientes, automatiza obligaciones y conéctalo con tus sistemas contables.
@@ -72,11 +81,14 @@
             <span class="chev">‹</span>
           </button>
 
-          <div class="listTrack" role="region" aria-label="Beneficios">
+          <div class="listTrack" role="region" aria-label="Beneficios Despachos">
 
+            <!-- Página 1 -->
             <div class="listPage">
               <div class="listItem">
-                <div class="listIcon"><img src="../IMG/163-trabajo-colaborativo.webp" loading="lazy"></div>
+                <div class="listIcon">
+                  <img src="../IMG/163-trabajo-colaborativo.webp" loading="lazy" alt="">
+                </div>
                 <div>
                   <strong>CENTRALIZA TUS CLIENTES</strong>
                   <div>Administra clientes ilimitados y sus regímenes fiscales.</div>
@@ -84,7 +96,9 @@
               </div>
 
               <div class="listItem">
-                <div class="listIcon"><img src="../IMG/135-fluir.webp" loading="lazy"></div>
+                <div class="listIcon">
+                  <img src="../IMG/135-fluir.webp" loading="lazy" alt="">
+                </div>
                 <div>
                   <strong>CONTROL DE OBLIGACIONES</strong>
                   <div>Monitorea el cumplimiento y recibe alertas preventivas.</div>
@@ -92,7 +106,9 @@
               </div>
 
               <div class="listItem">
-                <div class="listIcon"><img src="../IMG/178-perfil-1.webp" loading="lazy"></div>
+                <div class="listIcon">
+                  <img src="../IMG/178-perfil-1.webp" loading="lazy" alt="">
+                </div>
                 <div>
                   <strong>GESTIÓN DE EQUIPO</strong>
                   <div>Asigna carteras y mide la carga por ejecutivo.</div>
@@ -100,17 +116,22 @@
               </div>
             </div>
 
+            <!-- Página 2 -->
             <div class="listPage">
               <div class="listItem">
-                <div class="listIcon"><img src="../IMG/149-caja-fuerte.webp" loading="lazy"></div>
+                <div class="listIcon">
+                  <img src="../IMG/149-caja-fuerte.webp" loading="lazy" alt="">
+                </div>
                 <div>
                   <strong>EXPEDIENTE DIGITAL SEGURO</strong>
-                  <div>Documentos y acuses en la nube.</div>
+                  <div>Guarda documentos y acuses en la nube.</div>
                 </div>
               </div>
 
               <div class="listItem">
-                <div class="listIcon"><img src="../IMG/contpaqi.webp" loading="lazy"></div>
+                <div class="listIcon">
+                  <img src="../IMG/contpaqi.webp" loading="lazy" alt="">
+                </div>
                 <div>
                   <strong>INTEGRACIÓN CONTABLE</strong>
                   <div>Conecta con Contabilidad y Bancos para enviar CFDI.</div>
@@ -118,7 +139,9 @@
               </div>
 
               <div class="listItem">
-                <div class="listIcon"><img src="../IMG/032-grafico-de-barras-1.webp" loading="lazy"></div>
+                <div class="listIcon">
+                  <img src="../IMG/032-grafico-de-barras-1.webp" loading="lazy" alt="">
+                </div>
                 <div>
                   <strong>VISIBILIDAD TOTAL</strong>
                   <div>Dashboards y métricas de desempeño.</div>
@@ -134,7 +157,6 @@
         </div>
       </div>
 
-
       <!-- REELS -->
       <div>
         <aside class="card body" aria-label="Reels destacados">
@@ -149,12 +171,12 @@
             </button>
 
             <div class="carousel-track">
-
               <!-- Reel 1 -->
               <div class="carousel-slide">
                 <div class="reel-embed"
                      data-ytid="KBEOTwnFXQ4"
-                     data-title="Gestión de Despachos en la Nube">
+                     data-title="Gestión de Despachos en la Nube"
+                     aria-label="Reel Despachos 1">
                 </div>
               </div>
 
@@ -162,19 +184,19 @@
               <div class="carousel-slide">
                 <div class="reel-embed"
                      data-ytid="aqz-KE-bpKQ"
-                     data-title="Control de Obligaciones">
+                     data-title="Control de Obligaciones"
+                     aria-label="Reel Despachos 2">
                 </div>
               </div>
-
             </div>
 
             <button class="arrowCircle next" aria-label="Siguiente" type="button">
               <span class="chev">›</span>
             </button>
 
-            <div class="carousel-nav">
-              <button class="dot active" aria-label="Ir al reel 1"></button>
-              <button class="dot" aria-label="Ir al reel 2"></button>
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
             </div>
           </div>
 
@@ -184,19 +206,22 @@
     </div>
   </section>
 
-
   <!-- ==================================== -->
-  <!--        CTA abajo del todo            -->
+  <!--        CTAs ABAJO (formato Nóminas) -->
   <!-- ==================================== -->
 
-  <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;">
+  <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;">
     <a class="btn btn-grad-green hero-btn"
        href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20suscripci%C3%B3n%20de%20CONTPAQi%20Despachos"
-       target="_blank" rel="noopener">Comprar Suscripción</a>
+       target="_blank" rel="noopener">
+      Comprar Suscripción
+    </a>
 
     <a class="btn btn-grad-purple hero-btn"
        href="https://www.contpaqi.com/despachos"
-       target="_blank" rel="noopener">Probar gratis</a>
+       target="_blank" rel="noopener">
+      Probar gratis
+    </a>
 
     <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">
       Sesión guiada 45 min por Zoom
@@ -211,9 +236,9 @@
     <a class="btn btn-ghost hero-btn" href="#caracteristicas">
       Resumen ficha técnica
     </a>
-  </div>
-  </div>
-    </section>
+   </div>
+</section>
+
 
 
   <!-- ===== Funcionalidades ===== -->
