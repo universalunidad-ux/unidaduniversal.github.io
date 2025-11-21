@@ -1,31 +1,14 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>CONTPAQi Nóminas | Expiriti</title>
-  <meta name="description" content="CONTPAQi Nóminas con Expiriti: Cálculo preciso, CFDI 4.0, cumplimiento IMSS/INFONAVIT/ISR. Incluye app Colabora sin costo. Soporte experto.">
-
-  <!-- Preconnects -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://www.youtube-nocookie.com">
-  <link rel="preconnect" href="https://i.ytimg.com">
-
-  <!-- Fuente + CSS global -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../main.css?v=2025.11.09-1">
-</head>
-
-<body id="top" data-calc="escritorio">
-  <!-- Header dinámico -->
-  <div id="header-placeholder"></div>
-
-  <main class="container hero">
     <a class="hint" href="../index.html#productos">← Volver a productos</a>
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
-    <h1>CONTPAQi Nóminas <span class="badge">Actualizado 2025</span></h1>
+
+    <!-- H1 ahora muestra la imagen del sistema en lugar de texto grande -->
+    <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
+      <img src="../IMG/nominas.webp"
+           alt="CONTPAQi Nóminas"
+           style="width:230px;max-width:60vw;border-radius:14px;"
+           loading="lazy">
+      <span class="badge">Actualizado 2025</span>
+    </h1>
 
     <div class="badges">
       <span class="badge">Cálculo y Timbrado CFDI 4.0</span>
@@ -35,55 +18,187 @@
     </div>
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <!-- Resumen héroe -->
+    <!-- =================== HERO / RESUMEN (FORMATO BUENO) =================== -->
     <section aria-label="Resumen">
       <div class="card body">
-        <div class="hero-3col">
-          <div class="stack-left">
-            <img src="../IMG/nominas.webp" alt="CONTPAQi Nóminas" style="width:220px;margin-bottom:12px;border-radius:12px">
-            <div class="stack">
-              <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">Compra ahora</a>
-              <a class="btn btn-grad-purple hero-btn" href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20N%C3%B3minas" target="_blank" rel="noopener">Tramitar prueba 30 días</a>
-              <a class="btn btn-grad-blue hero-btn" href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
-              <a class="btn btn-ghost hero-btn" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Ficha técnica (PDF)</a>
-              <a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>
+        <!-- Solo 2 columnas: beneficios (izq) y reels (der) -->
+        <div class="grid-2 align-center">
+          <!-- Columna 1: Beneficios Nóminas -->
+          <div>
+            <h2 class="title-gradient">
+              ¿Por qué usar Nóminas en tu empresa?
+              <span class="badge">Beneficios clave</span>
+            </h2>
+            <p class="lead">
+              Simplifica tu nómina, asegura el cumplimiento fiscal y laboral,
+              y mejora la experiencia de tus empleados con la app Colabora incluida.
+            </p>
+
+            <div class="listSlider">
+              <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                <span class="chev">‹</span>
+              </button>
+
+              <div class="listTrack">
+                <div class="listPage">
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/094-ganador.webp" loading="lazy" alt="">
+                    </div>
+                    <div>
+                      <strong>CUMPLE SIEMPRE</strong>
+                      <div>Actualizado con SAT, IMSS, INFONAVIT y reformas laborales.</div>
+                    </div>
+                  </div>
+
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/145-elegido.webp" loading="lazy" alt="">
+                    </div>
+                    <div>
+                      <strong>CÁLCULO PRECISO</strong>
+                      <div>Evita errores y pagos innecesarios en ISR, IMSS y más.</div>
+                    </div>
+                  </div>
+
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/038-verificado.webp" loading="lazy" alt="">
+                    </div>
+                    <div>
+                      <strong>TIMBRADO ILIMITADO</strong>
+                      <div>Emite recibos CFDI 4.0 sin costo adicional.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listPage">
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/colabora.webp" loading="lazy" alt="">
+                    </div>
+                    <div>
+                      <strong>APP COLABORA ¡GRATIS!</strong>
+                      <div>Consulta recibos y solicita vacaciones desde el móvil.</div>
+                    </div>
+                  </div>
+
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/037-cronografo.webp" loading="lazy" alt="">
+                    </div>
+                    <div>
+                      <strong>AHORRA TIEMPO</strong>
+                      <div>Automatiza cálculos, dispersión y conexión IDSE.</div>
+                    </div>
+                  </div>
+
+                  <div class="listItem">
+                    <div class="listIcon">
+                      <img src="../IMG/128-estructura-2.webp" loading="lazy" alt="">
+                    </div>
+                    <div>
+                      <strong>INTEGRACIÓN TOTAL</strong>
+                      <div>Genera pólizas y conecta con Contabilidad y Bancos.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                <span class="chev">›</span>
+              </button>
             </div>
           </div>
 
-          <div class="card body pdf-card">
-            <img src="../IMG/usas.jpeg" alt="Cabecera del PDF" style="width:100%;border-radius:10px;margin-bottom:10px">
-            <h4 class="title-gradient" style="margin:0 0 6px">Test de 10 puntos para elegir un sistema óptimo</h4>
-            <p class="hint" style="margin:0 0 8px">PDF interactivo: al capturar tus valores, calcula una suma final para orientar la elección del sistema.</p>
-            <iframe class="pdf-frame" title="Checklist Sistema Contable (interactivo)" src="../PDFS/Checklist%20Sistema%20Contable.pdf#page=2&view=FitH"></iframe>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px">
-              <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" target="_blank" rel="noopener">Abrir en pestaña</a>
-              <a class="btn btn-outline-gradient" href="../PDFS/Checklist%20Sistema%20Contable.pdf" download>Descargar</a>
-            </div>
-            <small class="hint">Si tu navegador no ejecuta formularios, ábrelo en un visor de PDF o descárgalo.</small>
-          </div>
+          <!-- Columna 2: Reels Nóminas -->
+          <div>
+            <aside class="card body" aria-label="Reels de Nóminas" style="margin-bottom: 0;">
+              <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Nóminas</h4>
 
-          <aside class="card body" aria-label="Galería de imágenes">
-            <h4 class="title-gradient">Galería</h4>
-            <div class="carousel" id="carousel1">
-              <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
-              <div class="carousel-track">
-                <img class="carousel-slide" src="../IMG/contabilidad.webp" alt="Cálculo preciso de nómina">
-                <img class="carousel-slide" src="../IMG/2nomina_placeholder.webp" alt="Cumplimiento fiscal garantizado">
-                <img class="carousel-slide" src="../IMG/3nomina_placeholder.webp" alt="Timbrado CFDI 4.0 ilimitado">
-                <img class="carousel-slide" src="../IMG/4nomina_placeholder.webp" alt="App Colabora para empleados">
+              <h4 class="reel-title active">Checador por GPS</h4>
+              <h4 class="reel-title">Software #1 en México</h4>
+              <h4 class="reel-title">Automatiza tus procesos</h4>
+              <h4 class="reel-title">App Colabora gratis</h4>
+              <h4 class="reel-title">Qué hace CONTPAQi Nóminas por ti</h4>
+
+              <div class="carousel" id="carouselReelsNominas" aria-label="Reels Nóminas">
+                <button class="arrowCircle prev" type="button" aria-label="Anterior">
+                  <span class="chev">‹</span>
+                </button>
+
+                <div class="carousel-track">
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="gae67GDse30"
+                         data-title="Nóminas y Personia | Checador por GPS"></div>
+                  </div>
+
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="8-2rT99euog"
+                         data-title="Nóminas | Software #1 en México"></div>
+                  </div>
+
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="2eVOzoBoP6s"
+                         data-title="Nóminas | Automatiza tus procesos"></div>
+                  </div>
+
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="nLRgiOPQM80"
+                         data-title="Nóminas | App Colabora gratis"></div>
+                  </div>
+
+                  <div class="carousel-slide">
+                    <div class="reel-embed"
+                         data-ytid="MfiiX1La2vQ"
+                         data-title="Qué hace CONTPAQi Nóminas por ti"></div>
+                  </div>
+                </div>
+
+                <button class="arrowCircle next" type="button" aria-label="Siguiente">
+                  <span class="chev">›</span>
+                </button>
+
+                <div class="carousel-nav">
+                  <button class="dot active" aria-label="Reel 1"></button>
+                  <button class="dot" aria-label="Reel 2"></button>
+                  <button class="dot" aria-label="Reel 3"></button>
+                  <button class="dot" aria-label="Reel 4"></button>
+                  <button class="dot" aria-label="Reel 5"></button>
+                </div>
               </div>
-              <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
-              <div class="carousel-nav" aria-label="Paginación de la galería">
-                <button class="dot active" aria-label="Ir a la imagen 1"></button>
-                <button class="dot" aria-label="Ir a la imagen 2"></button>
-                <button class="dot" aria-label="Ir a la imagen 3"></button>
-                <button class="dot" aria-label="Ir a la imagen 4"></button>
-              </div>
-            </div>
-          </aside>
+            </aside>
+          </div>
         </div>
       </div>
+
+      <!-- Fila de CTAs como en el formato bueno (botones abajo del card) -->
+      <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start;">
+        <a class="btn btn-grad-green hero-btn"
+           href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20comprar%20mi%20licencia%20de%20CONTPAQi%20N%C3%B3minas"
+           target="_blank" rel="noopener">Compra ahora</a>
+
+        <a class="btn btn-grad-purple hero-btn"
+           href="https://wa.me/5568437918?text=Quiero%20tramitar%20mi%20prueba%20de%2030%20d%C3%ADas%20de%20CONTPAQi%20N%C3%B3minas"
+           target="_blank" rel="noopener">Tramitar prueba 30 días</a>
+
+        <a class="btn btn-grad-blue hero-btn"
+           href="#sesion-guiada">Sesión guiada 45 min por Zoom</a>
+
+        <a class="btn btn-ghost hero-btn"
+           href="../PDFS/Checklist%20Sistema%20Contable.pdf"
+           target="_blank" rel="noopener">Ficha técnica (PDF)</a>
+
+        <a class="btn btn-ghost hero-btn"
+           href="#caracteristicas">Resumen ficha técnica</a>
+      </div>
     </section>
+
+    
 
     <!-- Características -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
@@ -122,108 +237,6 @@
       </div>
     </section>
 
-<!-- ===== Por qué usar + Reels ===== -->
-<section id="beneficios" aria-label="Por qué usar">
-  <div class="grid-2 align-center">
-    <div>
-      <h2 class="title-gradient">¿Por qué usar Nóminas en tu empresa? <span class="badge">Beneficios clave</span></h2>
-      <p class="lead">Simplifica tu nómina, asegura el cumplimiento fiscal y laboral, y mejora la experiencia de tus empleados con la app Colabora incluida.</p>
-
-      <div class="listSlider">
-        <button class="arrowCircle prev" aria-label="Anterior" type="button">
-          <span class="chev">‹</span>
-        </button>
-
-        <div class="listTrack">
-
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/094-ganador.webp" loading="lazy"></div><div><strong>CUMPLE SIEMPRE</strong><div>Actualizado con SAT, IMSS, INFONAVIT y reformas laborales.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/145-elegido.webp" loading="lazy"></div><div><strong>CÁLCULO PRECISO</strong><div>Evita errores y pagos innecesarios en ISR, IMSS y más.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/038-verificado.webp" loading="lazy"></div><div><strong>TIMBRADO ILIMITADO</strong><div>Emite recibos CFDI 4.0 sin costo adicional.</div></div></div>
-          </div>
-
-          <div class="listPage">
-            <div class="listItem"><div class="listIcon"><img src="../IMG/colabora.webp" loading="lazy"></div><div><strong>APP COLABORA ¡GRATIS!</strong><div>Consulta recibos y solicita vacaciones desde el móvil.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/037-cronografo.webp" loading="lazy"></div><div><strong>AHORRA TIEMPO</strong><div>Automatiza cálculos, dispersión y conexión IDSE.</div></div></div>
-            <div class="listItem"><div class="listIcon"><img src="../IMG/128-estructura-2.webp" loading="lazy"></div><div><strong>INTEGRACIÓN TOTAL</strong><div>Genera pólizas y conecta con Contabilidad y Bancos.</div></div></div>
-          </div>
-
-        </div>
-
-        <button class="arrowCircle next" aria-label="Siguiente" type="button">
-          <span class="chev">›</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- ========================== -->
-    <!-- 🎬 REELS — CONTPAQi Nóminas -->
-    <!-- ========================== -->
-    <div>
-      <aside class="card body" aria-label="Reels de Nóminas">
-        <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Nóminas</h4>
-
-        <h4 class="reel-title active">Checador por GPS</h4>
-        <h4 class="reel-title">Software #1 en México</h4>
-        <h4 class="reel-title">Automatiza tus procesos</h4>
-        <h4 class="reel-title">App Colabora gratis</h4>
-        <h4 class="reel-title">Qué hace CONTPAQi Nóminas por ti</h4>
-
-        <div class="carousel" id="carouselReelsNominas" aria-label="Reels Nóminas">
-          <button class="arrowCircle prev" type="button" aria-label="Anterior">
-            <span class="chev">‹</span>
-          </button>
-
-          <div class="carousel-track">
-
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="gae67GDse30"
-                   data-title="Nóminas y Personia | Checador por GPS"></div>
-            </div>
-
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="8-2rT99euog"
-                   data-title="Nóminas | Software #1 en México"></div>
-            </div>
-
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="2eVOzoBoP6s"
-                   data-title="Nóminas | Automatiza tus procesos"></div>
-            </div>
-
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="nLRgiOPQM80"
-                   data-title="Nóminas | App Colabora gratis"></div>
-            </div>
-
-            <div class="carousel-slide">
-              <div class="reel-embed"
-                   data-ytid="MfiiX1La2vQ"
-                   data-title="Qué hace CONTPAQi Nóminas por ti"></div>
-            </div>
-
-          </div>
-
-          <button class="arrowCircle next" type="button" aria-label="Siguiente">
-            <span class="chev">›</span>
-          </button>
-
-          <div class="carousel-nav">
-            <button class="dot active"></button>
-            <button class="dot"></button>
-            <button class="dot"></button>
-            <button class="dot"></button>
-            <button class="dot"></button>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
 
     <!-- ========================== -->
 <!-- 🎥 VIDEOS — CONTPAQi Nóminas (2 x slide) -->
