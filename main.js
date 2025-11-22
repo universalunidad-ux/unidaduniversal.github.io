@@ -575,7 +575,7 @@
     setActive(0);
   });
 
-   /* ------------------------------------------------------
+    /* ------------------------------------------------------
      9.B) LÓGICA LAZY LOAD (.yt-wrap / .reel-embed[data-ytid])
      - Intenta usar maxresdefault.jpg
      - Si falla, hace fallback a sddefault/hqdefault
@@ -586,16 +586,27 @@
     const ytid = wrapper.getAttribute("data-ytid");
     if (!ytid) return;
 
-    // El contenedor será el marco del video
-    wrapper.style.position = "relative";
+    // Marco del video
+    if (!wrapper.style.position || wrapper.style.position === "static"){
+      wrapper.style.position = "relative";
+    }
     wrapper.style.overflow = "hidden";
     wrapper.style.backgroundColor = "#000";
 
-    // 1) Miniatura de YouTube con lazy + fallback de calidad
+    // 1) Miniatura con lazy + fallback de calidad
     const thumb = document.createElement("img");
-    thumb.alt = "Video thumbnail";
+    thumb.alt = "Miniatura de video";
     thumb.loading = "lazy"; // 👈 lazy nativo
-    thumb.style.cssText = "display:block;width:100%;height:100%;object-fit:cover;cursor:pointer;";
+    thumb.style.cssText = [
+      "position:absolute",
+      "top:0",
+      "left:0",
+      "width:100%",
+      "height:100%",
+      "object-fit:cover",
+      "display:block",
+      "cursor:pointer"
+    ].join(";");
 
     // orden de intentos: maxres → sd → hq
     const sources = [
@@ -681,9 +692,14 @@
     thumb.addEventListener("click", loadIframe);
   }
 
-  // INICIALIZAR LAZY EMBEDS (AQUÍ ESTABA EL ERROR EOF)
-  document.querySelectorAll(".yt-wrap, .reel-embed").forEach(mountLazyEmbed);
-})();
+  // Inicializar todos los wrappers lazy de YouTube
+  function initYouTubeEmbeds(){
+    document
+      .querySelectorAll(".yt-wrap[data-ytid], .reel-embed[data-ytid]")
+      .forEach(mountLazyEmbed);
+  }
+
+  document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
 
 /* =========================================================
    10) COMPLEMENTOS CALCULADORA ESCRITORIO
