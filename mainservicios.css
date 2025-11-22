@@ -104,3 +104,21 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.svc-link:foc
 
 /* Botón "Ver más" dentro de cada sistema */
 .carouselX .hoverMore{margin-top:18px;opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease;pointer-events:none}.carouselX .sys:hover .hoverMore{opacity:1;transform:translateY(0);pointer-events:auto}.chip{display:inline-flex;align-items:center;justify-content:center;padding:6px 14px;border-radius:999px;background:rgba(15,23,42,.9);border:1px solid #1c2533;font-size:14px;font-weight:600;color:#e5f0ff}.carouselX .sys.show-hover .hoverMore{opacity:1 !important;transform:translateY(0) !important;pointer-events:auto}
+
+/* =========================================================
+   Scrollbars carruseles (Windows / Edge / Chrome)
+   Aplica a: .carousel-track, .carouselX .track, .icons-wrap, .listTrack
+   ========================================================= */
+
+/* Barra delgada y oscura */
+.carousel-track,.carouselX .track,.icons-wrap,.listTrack{scrollbar-width:thin;scrollbar-color:#020617 transparent}
+.carousel-track::-webkit-scrollbar,.carouselX .track::-webkit-scrollbar,.icons-wrap::-webkit-scrollbar,.listTrack::-webkit-scrollbar{height:4px;background:transparent}
+.carousel-track::-webkit-scrollbar-track,.carouselX .track::-webkit-scrollbar-track,.icons-wrap::-webkit-scrollbar-track,.listTrack::-webkit-scrollbar-track{background:transparent}
+.carousel-track::-webkit-scrollbar-thumb,.carouselX .track::-webkit-scrollbar-thumb,.icons-wrap::-webkit-scrollbar-thumb,.listTrack::-webkit-scrollbar-thumb{background:#020617;border-radius:999px}
+
+/* --- OPCIONAL: si quieres ocultar la barra por completo, descomenta esto --- */
+/*
+.carousel-track,.carouselX .track,.icons-wrap,.listTrack{scrollbar-width:none}
+.carousel-track::-webkit-scrollbar,.carouselX .track::-webkit-scrollbar,.icons-wrap::-webkit-scrollbar,.listTrack::-webkit-scrollbar{display:none}
+*/
+
