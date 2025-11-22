@@ -681,6 +681,10 @@
     thumb.addEventListener("click", loadIframe);
   }
 
+  // INICIALIZAR LAZY EMBEDS (AQUÍ ESTABA EL ERROR EOF)
+  document.querySelectorAll(".yt-wrap, .reel-embed").forEach(mountLazyEmbed);
+})();
+
 /* =========================================================
    10) COMPLEMENTOS CALCULADORA ESCRITORIO
    ---------------------------------------------------------
