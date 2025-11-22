@@ -54,44 +54,47 @@
       text-decoration:underline;
     }
 
-    /* ---------- Pagos ---------- */
+    /* ---------- Pagos (más grande) ---------- */
+    .gf-payments{
+      display:flex;
+      justify-content:center;
+    }
     .gf-payments img{
-      max-width:100%;
+      max-width:260px;              /* MÁS GRANDE */
+      width:100%;
       height:auto;
       border-radius:10px;
       border:1px solid rgba(255,255,255,.08);
       display:block;
-      margin:0 auto;
     }
 
-    /* ---------- Marcas (vertical, compacto) ---------- */
+    /* ---------- Marcas (vertical, menos aire) ---------- */
     .gf-brands{
       display:flex;
       flex-direction:column;
-      gap:14px;
+      gap:12px;
       align-items:center;
     }
     .gf-brand{
       width:220px;
-      min-height:110px;              /* menos alto → menos espacio vacío */
-      padding:10px 12px;             /* padding un poco más compacto */
+      min-height:110px;             /* antes 120: menos alto */
+      padding:8px 14px;             /* menos padding vertical */
       background:var(--card,#111723);
       border:1px solid rgba(255,255,255,.08);
-      border-radius:16px;
+      border-radius:18px;
       display:flex;
-      align-items:center;            /* centra vertical */
-      justify-content:center;        /* centra horizontal */
+      align-items:center;
+      justify-content:center;
       box-shadow:0 10px 26px rgba(0,0,0,.35);
     }
     .gf-brand img{
-      max-height:72px;               /* logos un poco más grandes */
+      max-height:60px;              /* tamaño de logo se mantiene */
       width:auto;
       object-fit:contain;
       display:block;
     }
-    /* Ajustes finos: Dell y ESET un poco más contenidos */
-    .gf-brand--dell img{max-height:68px;}
-    .gf-brand--eset img{max-height:64px;}
+    .gf-brand--dell img{max-height:56px;}
+    .gf-brand--eset img{max-height:56px;}
 
     /* ---------- Presencia en todo el país ---------- */
     .gf-presence{
@@ -113,7 +116,7 @@
     }
     .gf-map-card img{
       width:100%;
-      max-width:190px; /* ~20px más grande que la versión original */
+      max-width:190px;              /* mapa ~190px como comentaste */
       height:auto;
       display:block;
     }
@@ -193,7 +196,6 @@
       <section aria-labelledby="gf-contacto">
         <h3 id="gf-contacto" class="gf-title">Contacto</h3>
         <div class="gf-contact">
-          <!-- Ubicación -->
           <div class="gf-row">
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 21s-6-5.3-6-11a6 6 0 1 1 12 0c0 5.7-6 11-6 11z" stroke="currentColor" stroke-width="1.8"/>
@@ -201,38 +203,23 @@
             </svg>
             <div><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</div>
           </div>
-          <!-- Teléfono -->
           <div class="gf-row">
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6.5 3h2l2 4-2 1a11 11 0 0 0 4.5 4.5l1-2 4 2v2a2 2 0 0 1-2.2 2 15 15 0 0 1-9.8-9.8A2 2 0 0 1 6.5 3z"
                     stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
             </svg>
-            <div>
-              <strong>Tel:</strong>
-              <a href="tel:+525568437917">55 6843 7917</a> ·
-              <a href="tel:+525568437918">55 6843 7918</a>
-            </div>
+            <div><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></div>
           </div>
-          <!-- Mail -->
           <div class="gf-row">
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <rect x="3" y="5" width="18" height="14" rx="2.2" stroke="currentColor" stroke-width="1.8"/>
               <path d="M5 7.5l7 5 7-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
-            <div>
-              <strong>Mail:</strong>
-              <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a>
-            </div>
+            <div><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></div>
           </div>
-          <!-- WhatsApp -->
           <div class="gf-row">
             <img class="gf-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp" aria-hidden="true">
-            <div>
-              <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quisiera%20informaci%C3%B3n"
-                 target="_blank" rel="noopener">
-                WhatsApp directo
-              </a>
-            </div>
+            <div><a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quisiera%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp directo</a></div>
           </div>
         </div>
       </section>
@@ -267,7 +254,7 @@
         </div>
       </section>
 
-      <!-- Columna: Presencia en todo el país -->
+      <!-- Columna: Presencia -->
       <section aria-labelledby="gf-presencia">
         <h3 id="gf-presencia" class="gf-title">Presencia en todo el país</h3>
         <div class="gf-presence">
