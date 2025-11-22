@@ -575,46 +575,95 @@
     setActive(0);
   });
 
-  /* ------------------------------------------------------
+   /* ------------------------------------------------------
      9.B) LÓGICA LAZY LOAD (.yt-wrap / .reel-embed[data-ytid])
+     - Intenta usar maxresdefault.jpg
+     - Si falla, hace fallback a sddefault/hqdefault
+     - Mantiene botón tipo YouTube centrado
      ------------------------------------------------------ */
   function mountLazyEmbed(wrapper){
     if (wrapper.dataset.ytMounted) return;
     const ytid = wrapper.getAttribute("data-ytid");
     if (!ytid) return;
-    
-    // Portada (thumbnail)
-    const thumb = new Image();
-    thumb.src = `https://i.ytimg.com/vi/${ytid}/maxresdefault.jpg`;
+
+    // El contenedor será el marco del video
+    wrapper.style.position = "relative";
+    wrapper.style.overflow = "hidden";
+    wrapper.style.backgroundColor = "#000";
+
+    // 1) Miniatura de YouTube con lazy + fallback de calidad
+    const thumb = document.createElement("img");
     thumb.alt = "Video thumbnail";
+    thumb.loading = "lazy"; // 👈 lazy nativo
     thumb.style.cssText = "display:block;width:100%;height:100%;object-fit:cover;cursor:pointer;";
 
-    // Botón de Play
-    const playBtn = document.createElement("button");
-    playBtn.setAttribute("aria-label", "Reproducir");
-    playBtn.style.cssText = "position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;background:rgba(0,0,0,0.6);transition:transform 0.2s;";
-    playBtn.innerHTML = '<div style="margin-left:4px;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid white;"></div>';
-    
-    playBtn.onmouseenter = () => playBtn.style.transform = "scale(1.1)";
-    playBtn.onmouseleave = () => playBtn.style.transform = "scale(1)";
+    // orden de intentos: maxres → sd → hq
+    const sources = [
+      `https://i.ytimg.com/vi/${ytid}/maxresdefault.jpg`,
+      `https://i.ytimg.com/vi/${ytid}/sddefault.jpg`,
+      `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`
+    ];
+    let srcIndex = 0;
 
-    // Contenedor para overlay (thumb + botón)
-    const ph = document.createElement("div");
-    ph.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;";
-    ph.appendChild(thumb);
-    ph.appendChild(playBtn);
-    wrapper.appendChild(ph);
+    function tryNextSrc(){
+      if (srcIndex >= sources.length) return;
+      thumb.src = sources[srcIndex++];
+    }
 
-    // Monta iframe real cuando se hace click
+    thumb.addEventListener("error", () => {
+      // si alguna falla, probamos la siguiente resolución
+      tryNextSrc();
+    });
+
+    // primer intento: maxres
+    tryNextSrc();
+    wrapper.appendChild(thumb);
+
+    // 2) Overlay centrado con icono estilo YouTube
+    const overlayBtn = document.createElement("button");
+    overlayBtn.type = "button";
+    overlayBtn.setAttribute("aria-label", "Reproducir video en YouTube");
+    overlayBtn.style.cssText = [
+      "position:absolute",
+      "top:50%",
+      "left:50%",
+      "transform:translate(-50%,-50%)",
+      "border:none",
+      "background:transparent",
+      "padding:0",
+      "cursor:pointer",
+      "display:flex",
+      "align-items:center",
+      "justify-content:center"
+    ].join(";");
+
+    const iconWrap = document.createElement("div");
+    iconWrap.innerHTML = `
+      <svg viewBox="0 0 68 48" width="68" height="48" aria-hidden="true">
+        <rect x="1" y="7" width="66" height="36" rx="12" fill="#FF0000"></rect>
+        <polygon points="28,17 28,31 42,24" fill="#FFFFFF"></polygon>
+      </svg>
+    `;
+    overlayBtn.appendChild(iconWrap);
+    wrapper.appendChild(overlayBtn);
+
+    overlayBtn.addEventListener("mouseenter", () => {
+      iconWrap.style.transform = "scale(1.08)";
+      iconWrap.style.transition = "transform 0.15s ease-out";
+    });
+    overlayBtn.addEventListener("mouseleave", () => {
+      iconWrap.style.transform = "scale(1)";
+    });
+
+    // 3) Montar iframe real cuando se hace clic
     function loadIframe(){
       wrapper.dataset.ytMounted = "1";
 
-      // div temporal para la API de YT
       const tempId  = "yt-player-" + Math.random().toString(36).substr(2, 9);
       const tempDiv = document.createElement("div");
       tempDiv.id = tempId;
-      
-      wrapper.innerHTML = ""; 
+
+      wrapper.innerHTML = "";
       wrapper.appendChild(tempDiv);
 
       setTimeout(() => {
@@ -627,19 +676,10 @@
       }, 10);
     }
 
-    playBtn.addEventListener("click", loadIframe);
+    // Click en miniatura o botón → cargar iframe (lazy)
+    overlayBtn.addEventListener("click", loadIframe);
     thumb.addEventListener("click", loadIframe);
   }
-
-  // Inicializa todos los wrappers lazy de YouTube
-  function initYouTubeEmbeds(){
-    document
-      .querySelectorAll(".yt-wrap[data-ytid], .reel-embed[data-ytid]")
-      .forEach(mountLazyEmbed);
-  }
-
-  document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
-})();
 
 /* =========================================================
    10) COMPLEMENTOS CALCULADORA ESCRITORIO
