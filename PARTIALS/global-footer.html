@@ -13,32 +13,23 @@
       margin:0 auto;
       padding:22px 16px;
     }
-
-    /* 5 columnas en desktop:
-       1) Contacto
-       2) Formas de pago
-       3) Marcas (vertical)
-       4) Presencia en todo el país
-       5) Aliados (vertical) */
     .gf-grid{
       display:grid;
-      grid-template-columns:1.8fr 1.2fr 1.2fr 1.3fr 1.3fr;
+      grid-template-columns:2fr 1.3fr 1.3fr 1.7fr 1.4fr;
       gap:18px;
-      align-items:flex-start;
     }
-
     .gf h3.gf-title{
-      margin:0 0 10px;
+      margin:0 0 8px;
       font-size:16px;
       color:var(--text);
-      text-align:center; /* títulos centrados */
+      text-align:center;
     }
     .gf .gf-hint{
       color:var(--muted,#95a2b3);
       font-size:13px;
     }
 
-    /* Contacto */
+    /* ---------- Contacto ---------- */
     .gf-contact{
       display:flex;
       flex-direction:column;
@@ -63,17 +54,17 @@
       text-decoration:underline;
     }
 
-    /* Pagos */
+    /* ---------- Pagos ---------- */
     .gf-payments img{
       max-width:100%;
       height:auto;
-      border-radius:12px;
+      border-radius:10px;
       border:1px solid rgba(255,255,255,.08);
-      background:var(--card,#111723);
-      padding:6px;
+      display:block;
+      margin:0 auto;
     }
 
-    /* Marcas — vertical, una debajo de otra */
+    /* ---------- Marcas (vertical) ---------- */
     .gf-brands{
       display:flex;
       flex-direction:column;
@@ -81,73 +72,91 @@
       align-items:center;
     }
     .gf-brand{
+      width:190px;
+      height:120px; /* altura pedida */
       background:var(--card,#111723);
       border:1px solid rgba(255,255,255,.08);
-      border-radius:12px;              /* borde redondeado */
-      padding:8px 10px;
+      border-radius:18px;
+      padding:10px 14px;
       display:flex;
       align-items:center;
       justify-content:center;
-      width:100%;
-      max-width:180px;
+      box-shadow:0 10px 26px rgba(0,0,0,.35);
     }
     .gf-brand img{
-      max-width:100%;
-      height:auto;
+      max-width:90%;
+      max-height:80px;
+      object-fit:contain;
       display:block;
     }
+    /* Ajustes finos: Dell y ESET ligeramente más pequeños */
+    .gf-brand--dell img{max-height:72px;}
+    .gf-brand--eset img{max-height:68px;}
 
-    /* Presencia en todo el país */
+    /* ---------- Presencia en todo el país ---------- */
     .gf-presence{
-      text-align:center;
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:8px;
-    }
-    .gf-presence img{
-      max-width:120px;
-      height:auto;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.08);
-      background:var(--card,#111723);
-      padding:6px;
-      display:block;
-    }
-    .gf-presence .gf-hint{
-      max-width:220px;
-      margin:0 auto;
-    }
-
-    /* Aliados — vertical, imágenes más grandes */
-    .gf-ally{
+      gap:10px;
       text-align:center;
     }
+    .gf-map-card{
+      background:var(--card,#111723);
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px;
+      box-shadow:0 10px 26px rgba(0,0,0,.35);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .gf-map-card img{
+      width:100%;
+      max-width:260px; /* ~20px más grande que antes */
+      height:auto;
+      display:block;
+    }
+    .gf-presence p{
+      margin:0;
+      font-size:13px;
+      color:var(--muted,#cbd5f5);
+      max-width:22rem;
+    }
+
+    /* ---------- Aliados (vertical) ---------- */
     .gf-allies{
       display:flex;
-      flex-direction:column;  /* vertical */
-      gap:12px;
+      flex-direction:column;
+      gap:14px;
       align-items:center;
-      justify-content:flex-start;
     }
-    .gf-allies img{
-      height:56px;            /* más grandes que antes */
-      width:auto;
-      border-radius:10px;
+    .gf-ally-card{
       background:var(--card,#111723);
+      border-radius:18px;
       border:1px solid rgba(255,255,255,.08);
-      padding:8px;
+      padding:10px 18px;
+      box-shadow:0 10px 26px rgba(0,0,0,.35);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:70px;
+    }
+    .gf-ally-card img{
+      height:48px;
+      width:auto;
+      object-fit:contain;
       display:block;
     }
 
-    /* Bottom bar */
+    /* ---------- Bottom bar ---------- */
     .gf-bottom{
       display:flex;
       align-items:center;
       justify-content:space-between;
       border-top:1px solid rgba(255,255,255,.06);
       padding-top:14px;
-      margin-top:18px;
+      margin-top:16px;
     }
     .gf-brandmini{
       display:flex;
@@ -160,18 +169,15 @@
       border-radius:8px;
     }
 
-    /* Responsive */
+    /* ---------- Responsive ---------- */
     @media (max-width:980px){
       .gf-grid{
-        grid-template-columns:1fr 1fr; /* 2 columnas en tablet */
-      }
-      .gf-allies{
-        align-items:center;
+        grid-template-columns:1fr 1fr;
       }
     }
     @media (max-width:640px){
       .gf-grid{
-        grid-template-columns:1fr;     /* 1 columna en móvil */
+        grid-template-columns:1fr;
       }
       .gf-bottom{
         flex-direction:column;
@@ -183,19 +189,26 @@
 
   <div class="gf-container">
     <div class="gf-grid" aria-label="Información de pie de página">
-      <!-- Columna 1: Contacto -->
+      <!-- Columna: Contacto -->
       <section aria-labelledby="gf-contacto">
         <h3 id="gf-contacto" class="gf-title">Contacto</h3>
         <div class="gf-contact">
+
+          <!-- Ubicación -->
           <div class="gf-row">
+            <!-- Icono ubicación (outline moderno) -->
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 2l7 7v11H5V9l7-7z" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 21s-6-5.3-6-11a6 6 0 1 1 12 0c0 5.7-6 11-6 11z" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.6"/>
             </svg>
             <div><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</div>
           </div>
+
+          <!-- Teléfono -->
           <div class="gf-row">
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M22 16.92V21a1 1 0 0 1-1.09 1A19.86 19.86 0 0 1 3 5.09 1 1 0 0 1 4 4h4.09A1 1 0 0 1 9 4.91a12.66 12.66 0 0 0 7.05 7.05 1 1 0 0 1 .91.91V18a1 1 0 0 1-1 1h-.09" stroke="currentColor" stroke-width="2"/>
+              <path d="M6.5 3h2l2 4-2 1a11 11 0 0 0 4.5 4.5l1-2 4 2v2a2 2 0 0 1-2.2 2 15 15 0 0 1-9.8-9.8A2 2 0 0 1 6.5 3z"
+                    stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
             </svg>
             <div>
               <strong>Tel:</strong>
@@ -203,15 +216,20 @@
               <a href="tel:+525568437918">55 6843 7918</a>
             </div>
           </div>
+
+          <!-- Mail -->
           <div class="gf-row">
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 4h16v16H4z M22 6l-10 7L2 6" stroke="currentColor" stroke-width="2"/>
+              <rect x="3" y="5" width="18" height="14" rx="2.2" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M5 7.5l7 5 7-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
             <div>
               <strong>Mail:</strong>
               <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a>
             </div>
           </div>
+
+          <!-- WhatsApp -->
           <div class="gf-row">
             <img class="gf-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp" aria-hidden="true">
             <div>
@@ -224,7 +242,7 @@
         </div>
       </section>
 
-      <!-- Columna 2: Formas de pago -->
+      <!-- Columna: Formas de pago -->
       <section aria-labelledby="gf-pagos">
         <h3 id="gf-pagos" class="gf-title">Formas de pago</h3>
         <div class="gf-payments">
@@ -232,43 +250,49 @@
         </div>
       </section>
 
-      <!-- Columna 3: Marcas (vertical) -->
+      <!-- Columna: Marcas (vertical) -->
       <section aria-labelledby="gf-marcas">
         <h3 id="gf-marcas" class="gf-title">Marcas</h3>
         <div class="gf-brands">
           <div class="gf-brand">
-            <img class="js-img" data-src="IMG/contpaqi.webp" alt="CONTPAQi" loading="lazy">
+            <img class="js-img" data-src="IMG/CONTPAQi.webp" alt="CONTPAQi" loading="lazy">
           </div>
           <div class="gf-brand">
-            <img class="js-img" data-src="IMG/microsoft.webp" alt="Microsoft" loading="lazy">
+            <img class="js-img" data-src="IMG/Microsoft.webp" alt="Microsoft" loading="lazy">
           </div>
           <div class="gf-brand">
-            <img class="js-img" data-src="IMG/hpserver.webp" alt="HP Servidores" loading="lazy">
+            <img class="js-img" data-src="IMG/hpserver.webp" alt="HP ProLiant Servers" loading="lazy">
           </div>
-          <div class="gf-brand">
-            <img class="js-img" data-src="IMG/dell.webp" alt="Dell" loading="lazy">
+          <div class="gf-brand gf-brand--dell">
+            <img class="js-img" data-src="IMG/dell.webp" alt="Dell Technologies" loading="lazy">
           </div>
-          <div class="gf-brand">
-            <img class="js-img" data-src="IMG/eset.webp" alt="ESET" loading="lazy">
+          <div class="gf-brand gf-brand--eset">
+            <img class="js-img" data-src="IMG/eset.webp" alt="ESET NOD32" loading="lazy">
           </div>
         </div>
       </section>
 
-      <!-- Columna 4: Presencia en todo el país -->
-      <section aria-labelledby="gf-presencia" class="gf-presence">
+      <!-- Columna: Presencia en todo el país -->
+      <section aria-labelledby="gf-presencia">
         <h3 id="gf-presencia" class="gf-title">Presencia en todo el país</h3>
-        <img class="js-img" data-src="IMG/mexico.webp" alt="Mapa de México" loading="lazy">
-        <p class="gf-hint">
-          Atendemos clientes en los 32 estados de la República Mexicana.
-        </p>
+        <div class="gf-presence">
+          <div class="gf-map-card">
+            <img class="js-img" data-src="IMG/mexico.webp" alt="Mapa de México" loading="lazy">
+          </div>
+          <p>Atendemos clientes en los 32 estados de la República Mexicana.</p>
+        </div>
       </section>
 
-      <!-- Columna 5: Aliados (vertical, BNI luego FUCAM) -->
+      <!-- Columna: Aliados -->
       <section aria-labelledby="gf-aliados" class="gf-ally">
         <h3 id="gf-aliados" class="gf-title">Aliados</h3>
         <div class="gf-allies" aria-label="Aliados">
-          <img class="js-img" data-src="IMG/bni.webp" alt="BNI" loading="lazy">
-          <img class="js-img" data-src="IMG/fucam.webp" alt="FUCAM" loading="lazy">
+          <div class="gf-ally-card">
+            <img class="js-img" data-src="IMG/bni.webp" alt="BNI" loading="lazy">
+          </div>
+          <div class="gf-ally-card">
+            <img class="js-img" data-src="IMG/fucam.webp" alt="FUCAM" loading="lazy">
+          </div>
         </div>
       </section>
     </div>
@@ -278,9 +302,7 @@
         <img class="js-img" data-src="IMG/expiritilogo.webp" alt="Expiriti">
         <div>
           <strong>Expiriti</strong>
-          <div class="gf-hint">
-            © <span id="gf-year"></span> · Todos los derechos reservados
-          </div>
+          <div class="gf-hint">© <span id="gf-year"></span> · Todos los derechos reservados</div>
         </div>
       </div>
       <div class="gf-hint">
