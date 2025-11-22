@@ -700,6 +700,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
+   })();  
 
 /* =========================================================
    10) COMPLEMENTOS CALCULADORA ESCRITORIO
