@@ -185,6 +185,37 @@
         align-items:flex-start;
       }
     }
+    /* ==== Ajuste de tamaño compacto para tarjetas de Marcas ==== */
+
+/* Contenedor general */
+.gf-brands {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+/* Tarjeta individual */
+.gf-brand {
+  width: 220px;               /* ancho uniforme */
+  min-height: 120px;          /* altura compacta */
+  padding: 12px;              /* reduce espacio interno */
+  background: var(--card,#111723);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;        /* centra vertical */
+  justify-content: center;    /* centra horizontal */
+}
+
+/* Imagen dentro */
+.gf-brand img {
+  max-height: 60px;           /* ALTURA CONTROLADA */
+  width: auto;
+  object-fit: contain;        /* evita deformación */
+  display: block;
+}
+
   </style>
 
   <div class="gf-container">
