@@ -273,3 +273,81 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.svc-link:foc
 #carouselReelsSoporte .carousel-track::-webkit-scrollbar,
 #carouselReelsSoporte .carousel-slide::-webkit-scrollbar{display:none !important}
 #carouselReelsSoporte,. #carouselReelsSoporte .carousel-track{scrollbar-width:none !important}
+
+/* =========================================================
+   Scroll horizontal sensible (trackpad + móviles)
+   para TODOS los carruseles
+   ========================================================= */
+
+.carousel-track,
+.carouselX .track,
+.icons-wrap,
+.listTrack{
+  /* Horizontal scroll usable en trackpad y touch */
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  overscroll-behavior-x:contain;
+  touch-action:pan-x; /* indica que el gesto principal es horizontal */
+}
+
+/* Scrollbars delgadas y oscuras (o invisibles si quieres) */
+.carousel-track,
+.carouselX .track,
+.icons-wrap,
+.listTrack{
+  scrollbar-width:thin;
+  scrollbar-color:#020617 transparent;
+}
+.carousel-track::-webkit-scrollbar,
+.carouselX .track::-webkit-scrollbar,
+.icons-wrap::-webkit-scrollbar,
+.listTrack::-webkit-scrollbar{
+  height:4px;
+  background:transparent;
+}
+.carousel-track::-webkit-scrollbar-track,
+.carouselX .track::-webkit-scrollbar-track,
+.icons-wrap::-webkit-scrollbar-track,
+.listTrack::-webkit-scrollbar-track{
+  background:transparent;
+}
+.carousel-track::-webkit-scrollbar-thumb,
+.carouselX .track::-webkit-scrollbar-thumb,
+.icons-wrap::-webkit-scrollbar-thumb,
+.listTrack::-webkit-scrollbar-thumb{
+  background:#020617;
+  border-radius:999px;
+}
+
+/* =========================================================
+   Reels Soporte: sin hueco y con swipe horizontal
+   ========================================================= */
+
+/* El carrusel en sí puede ajustar su alto al contenido */
+#carouselReelsSoporte{
+  min-height:auto;
+  overflow:hidden; /* para que no se vea nada fuera del frame */
+}
+
+/* El track sí necesita overflow-x:auto para el swipe */
+#carouselReelsSoporte .carousel-track{
+  height:auto;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:smooth;
+  touch-action:pan-x;
+  scrollbar-width:none; /* sin barra visible en este carrusel */
+}
+#carouselReelsSoporte .carousel-track::-webkit-scrollbar{
+  display:none;
+}
+
+/* Las slides se ajustan al alto del reel */
+#carouselReelsSoporte .carousel-slide{
+  height:auto;
+  align-items:center;
+  justify-content:center;
+}
