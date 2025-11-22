@@ -122,3 +122,22 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.svc-link:foc
 .carousel-track::-webkit-scrollbar,.carouselX .track::-webkit-scrollbar,.icons-wrap::-webkit-scrollbar,.listTrack::-webkit-scrollbar{display:none}
 */
 
+/* =========================================================
+   FIX — Reels sin scrollbars (Windows + Chrome + Edge)
+   ========================================================= */
+
+/* Quita scroll vertical y horizontal */
+#carouselReelsSoporte .carousel,
+#carouselReelsSoporte .carousel-track,
+#carouselReelsSoporte .carousel-slide {
+    overflow: hidden !important;
+}
+
+/* Oculta scrollbars forzado */
+#carouselReelsSoporte .carousel-track::-webkit-scrollbar,
+#carouselReelsSoporte .carousel::-webkit-scrollbar,
+#carouselReelsSoporte .carousel-slide::-webkit-scrollbar {
+    display: none !important;
+}
+#carouselReelsSoporte .carousel-track{scrollbar-width:none !important;}
+
