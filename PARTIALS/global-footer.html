@@ -64,34 +64,34 @@
       margin:0 auto;
     }
 
-    /* ---------- Marcas (vertical) ---------- */
+    /* ---------- Marcas (vertical, compacto) ---------- */
     .gf-brands{
       display:flex;
       flex-direction:column;
-      gap:10px;
+      gap:14px;
       align-items:center;
     }
     .gf-brand{
-      width:190px;
-      height:120px; /* altura pedida */
+      width:220px;
+      min-height:110px;              /* menos alto → menos espacio vacío */
+      padding:10px 12px;             /* padding un poco más compacto */
       background:var(--card,#111723);
       border:1px solid rgba(255,255,255,.08);
-      border-radius:18px;
-      padding:10px 14px;
+      border-radius:16px;
       display:flex;
-      align-items:center;
-      justify-content:center;
+      align-items:center;            /* centra vertical */
+      justify-content:center;        /* centra horizontal */
       box-shadow:0 10px 26px rgba(0,0,0,.35);
     }
     .gf-brand img{
-      max-width:90%;
-      max-height:80px;
+      max-height:72px;               /* logos un poco más grandes */
+      width:auto;
       object-fit:contain;
       display:block;
     }
-    /* Ajustes finos: Dell y ESET ligeramente más pequeños */
-    .gf-brand--dell img{max-height:72px;}
-    .gf-brand--eset img{max-height:68px;}
+    /* Ajustes finos: Dell y ESET un poco más contenidos */
+    .gf-brand--dell img{max-height:68px;}
+    .gf-brand--eset img{max-height:64px;}
 
     /* ---------- Presencia en todo el país ---------- */
     .gf-presence{
@@ -113,7 +113,7 @@
     }
     .gf-map-card img{
       width:100%;
-      max-width:260px; /* ~20px más grande que antes */
+      max-width:260px; /* ~20px más grande que la versión original */
       height:auto;
       display:block;
     }
@@ -185,37 +185,6 @@
         align-items:flex-start;
       }
     }
-    /* ==== Ajuste de tamaño compacto para tarjetas de Marcas ==== */
-
-/* Contenedor general */
-.gf-brands {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  align-items: center;
-}
-
-/* Tarjeta individual */
-.gf-brand {
-  width: 220px;               /* ancho uniforme */
-  min-height: 120px;          /* altura compacta */
-  padding: 12px;              /* reduce espacio interno */
-  background: var(--card,#111723);
-  border: 1px solid rgba(255,255,255,.06);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;        /* centra vertical */
-  justify-content: center;    /* centra horizontal */
-}
-
-/* Imagen dentro */
-.gf-brand img {
-  max-height: 60px;           /* ALTURA CONTROLADA */
-  width: auto;
-  object-fit: contain;        /* evita deformación */
-  display: block;
-}
-
   </style>
 
   <div class="gf-container">
@@ -224,17 +193,14 @@
       <section aria-labelledby="gf-contacto">
         <h3 id="gf-contacto" class="gf-title">Contacto</h3>
         <div class="gf-contact">
-
           <!-- Ubicación -->
           <div class="gf-row">
-            <!-- Icono ubicación (outline moderno) -->
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 21s-6-5.3-6-11a6 6 0 1 1 12 0c0 5.7-6 11-6 11z" stroke="currentColor" stroke-width="1.8"/>
               <circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.6"/>
             </svg>
             <div><strong>Ubicación:</strong> Insurgentes Sur 1188, CDMX</div>
           </div>
-
           <!-- Teléfono -->
           <div class="gf-row">
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -247,7 +213,6 @@
               <a href="tel:+525568437918">55 6843 7918</a>
             </div>
           </div>
-
           <!-- Mail -->
           <div class="gf-row">
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -259,7 +224,6 @@
               <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a>
             </div>
           </div>
-
           <!-- WhatsApp -->
           <div class="gf-row">
             <img class="gf-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp" aria-hidden="true">
@@ -281,7 +245,7 @@
         </div>
       </section>
 
-      <!-- Columna: Marcas (vertical) -->
+      <!-- Columna: Marcas -->
       <section aria-labelledby="gf-marcas">
         <h3 id="gf-marcas" class="gf-title">Marcas</h3>
         <div class="gf-brands">
