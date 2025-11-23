@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://www.youtube-nocookie.com">
   <link rel="preconnect" href="https://i.ytimg.com">
 
-  <!-- Tipografía + CSS global servicios/home -->
+  <!-- Tipografía + CSS global -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="mainservicios.css?v=2025.11.09-1" />
+  <link rel="stylesheet" href="mainservicios.css?v=2025.11.21-1" />
 
   <!-- Favicons (carpeta /IMG en raíz) -->
   <link rel="apple-touch-icon" sizes="180x180" href="IMG/apple-touch-icon.png">
@@ -62,7 +62,7 @@
 
       <div class="hero-card" aria-label="Tarjeta de contacto rápido">
         <h3 style="margin:6px 0 10px">¿Necesitas ayuda hoy?</h3>
-        <p class="hint" style="margin:0 0 12px;">
+        <p style="margin:0 0 12px;color:#c6d1e3">
           Escríbenos por WhatsApp y cuéntanos tu caso. Resolvemos dudas de instalación, timbrado, licencias y más.
         </p>
         <form id="quickForm" aria-label="Formulario rápido">
@@ -78,6 +78,7 @@
             <option>XML en Línea</option>
             <option>Factura electrónica</option>
             <option>Analiza (Nube)</option>
+            <option>Evalúa / Personia / Colabora</option>
             <option>Otro</option>
           </select>
           <label for="mensaje">Mensaje</label>
@@ -96,7 +97,7 @@
     <div class="container">
       <div class="section-title">
         <h2 style="margin:0">Productos CONTPAQi</h2>
-        <a class="btn btn-ghost btn--elevated-hover" href="#contacto">Cotizar ahora</a>
+        <a class="btn btn-ghost btn-sm" href="#contacto">Cotizar ahora</a>
       </div>
 
       <!-- Selector de solución -->
@@ -110,7 +111,8 @@
       <!-- Panel Contable -->
       <div id="panel-contable" role="tabpanel" aria-labelledby="tab-contable">
         <div class="grid-2 align-center section-cq">
-          <!-- Columna izquierda: productos en 2 columnas -->
+
+          <!-- Izquierda: productos 2 columnas -->
           <div>
             <div class="cards cards-products">
               <article class="card product-card" data-href="SISTEMAS/contabilidad.html">
@@ -125,7 +127,7 @@
                   <p style="margin:0 0 10px;">
                     Catálogos, pólizas y reportes fiscales listos para cumplir con el SAT. Ideal para despachos y PyMEs.
                   </p>
-                  <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                  <div class="foot">
                     <a class="btn btn-ghost btn-sm" href="SISTEMAS/contabilidad.html">Ver ficha</a>
                     <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Contabilidad" target="_blank" rel="noopener">WhatsApp</a>
                     <div class="hoverMore">
@@ -147,7 +149,7 @@
                   <p style="margin:0 0 10px;">
                     Cálculo, incidencias y timbrado sin complicaciones. Capacitación y migración incluidas.
                   </p>
-                  <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                  <div class="foot">
                     <a class="btn btn-ghost btn-sm" href="SISTEMAS/nominas.html">Ver ficha</a>
                     <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20N%C3%B3minas" target="_blank" rel="noopener">WhatsApp</a>
                     <div class="hoverMore">
@@ -169,7 +171,7 @@
                   <p style="margin:0 0 10px;">
                     Conciliación bancaria ágil, flujos de caja y plantillas para acelerar tu cierre.
                   </p>
-                  <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                  <div class="foot">
                     <a class="btn btn-ghost btn-sm" href="SISTEMAS/bancos.html">Ver ficha</a>
                     <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Bancos" target="_blank" rel="noopener">WhatsApp</a>
                     <div class="hoverMore">
@@ -191,7 +193,7 @@
                   <p style="margin:0 0 10px;">
                     Descarga y administración de CFDI directamente del SAT para tu contabilidad.
                   </p>
-                  <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                  <div class="foot">
                     <a class="btn btn-ghost btn-sm" href="SISTEMAS/xmlenlinea.html">Ver ficha</a>
                     <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20XML%20en%20l%C3%ADnea%2B" target="_blank" rel="noopener">WhatsApp</a>
                     <div class="hoverMore">
@@ -203,7 +205,7 @@
             </div>
           </div>
 
-          <!-- Columna derecha: Reels por sistema contable -->
+          <!-- Derecha: Reels por sistema contable -->
           <article class="card reels-home-card">
             <div class="body">
               <h3 class="title-gradient" style="margin-bottom:4px;">Reels por sistema contable</h3>
@@ -211,41 +213,34 @@
                 Elige el sistema para ver videos cortos de casos reales, tips y beneficios.
               </p>
 
-              <h4 class="reel-title" id="reelHomeTitle"></h4>
+              <h4 class="reel-title" id="reelTitle-contable"></h4>
 
-              <div class="carousel" id="carouselReelsHome" aria-label="Reels por sistema contable">
+              <div class="carousel" id="carouselReels-contable" aria-label="Reels por sistema contable">
                 <button class="arrowCircle prev" aria-label="Anterior" type="button">
                   <span class="chev">‹</span>
                 </button>
-
-                <div class="carousel-track">
-                  <!-- se llena por JS -->
-                </div>
-
+                <div class="carousel-track"></div>
                 <button class="arrowCircle next" aria-label="Siguiente" type="button">
                   <span class="chev">›</span>
                 </button>
-
-                <div class="carousel-nav" aria-label="Paginación de reels">
-                  <!-- dots por JS -->
-                </div>
+                <div class="carousel-nav" aria-label="Paginación de reels"></div>
               </div>
 
-              <!-- Selector de sistema (iconos) ABAJO del carrusel -->
+              <!-- Selector abajo del carrusel -->
               <div class="reel-sys-tabs" aria-label="Selecciona sistema contable">
-                <button class="reel-tab active" data-sys="contabilidad" type="button">
+                <button class="reel-tab active" data-panel="contable" data-sys="contabilidad" type="button">
                   <img src="IMG/contabilidad.webp" alt="Contabilidad">
                   <span>Contabilidad</span>
                 </button>
-                <button class="reel-tab" data-sys="nominas" type="button">
+                <button class="reel-tab" data-panel="contable" data-sys="nominas" type="button">
                   <img src="IMG/nominas.webp" alt="Nóminas">
                   <span>Nóminas</span>
                 </button>
-                <button class="reel-tab" data-sys="bancos" type="button">
+                <button class="reel-tab" data-panel="contable" data-sys="bancos" type="button">
                   <img src="IMG/bancos.webp" alt="Bancos">
                   <span>Bancos</span>
                 </button>
-                <button class="reel-tab" data-sys="xml" type="button">
+                <button class="reel-tab" data-panel="contable" data-sys="xml" type="button">
                   <img src="IMG/xmlenlinea.webp" alt="XML en Línea+">
                   <span>XML en Línea+</span>
                 </button>
@@ -257,75 +252,131 @@
 
       <!-- Panel Comercial -->
       <div id="panel-comercial" class="hidden" role="tabpanel" aria-labelledby="tab-comercial">
-        <div class="cards cards-products">
-          <article class="card product-card" data-href="SISTEMAS/comercialstart.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/comercialstart.webp" alt="Comercial Start">
-                <div>
-                  <span class="badge">Comercial</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">CONTPAQi Comercial Start</h3>
-                </div>
-              </div>
-              <p style="margin:0 0 10px;">Entrada ideal para ventas e inventario con lo esencial para arrancar.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/comercialstart.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Comercial%20Start" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
-              </div>
-            </div>
-          </article>
+        <div class="grid-2 align-center section-cq">
 
-          <article class="card product-card" data-href="SISTEMAS/comercialpremium.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/comercialpremium.webp" alt="Comercial Premium">
-                <div>
-                  <span class="badge">Comercial</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">CONTPAQi Comercial Premium</h3>
+          <!-- Izquierda: productos Comercial -->
+          <div>
+            <div class="cards cards-products">
+              <article class="card product-card" data-href="SISTEMAS/comercialstart.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/comercialstart.webp" alt="Icono Comercial Start">
+                    <div>
+                      <span class="badge">Comercial</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">CONTPAQi Comercial Start</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">
+                    Entrada ideal para ventas e inventario con lo esencial para arrancar.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/comercialstart.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Comercial%20Start" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
                 </div>
-              </div>
-              <p style="margin:0 0 10px;">Control avanzado de listas de precio, políticas y reportes. Ideal para crecimiento.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/comercialpremium.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Comercial%20Premium" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
-              </div>
-            </div>
-          </article>
+              </article>
 
-          <article class="card product-card" data-href="SISTEMAS/comercialpro.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/comercialpro.webp" alt="Comercial Pro">
-                <div>
-                  <span class="badge">Comercial</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">CONTPAQi Comercial Pro</h3>
+              <article class="card product-card" data-href="SISTEMAS/comercialpro.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/comercialpro.webp" alt="Icono Comercial Pro">
+                    <div>
+                      <span class="badge">Comercial</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">CONTPAQi Comercial Pro</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">
+                    Para operaciones con alto volumen y resurtidos. Compatible multi-sucursal.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/comercialpro.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Comercial%20Pro" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
                 </div>
-              </div>
-              <p style="margin:0 0 10px;">Para operaciones con alto volumen y resurtidos. Compatible multi-sucursal.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/comercialpro.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Comercial%20Pro" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
-              </div>
-            </div>
-          </article>
+              </article>
 
-          <article class="card product-card" data-href="SISTEMAS/facturaelectronica.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/facturaelectronica.webp" alt="Factura electrónica">
-                <div>
-                  <span class="tag-nube">Nube</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">Factura Electrónica</h3>
+              <article class="card product-card" data-href="SISTEMAS/comercialpremium.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/comercialpremium.webp" alt="Icono Comercial Premium">
+                    <div>
+                      <span class="badge">Comercial</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">CONTPAQi Comercial Premium</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">
+                    Control avanzado de listas de precio, políticas y reportes. Ideal para crecimiento.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/comercialpremium.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Comercial%20Premium" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
                 </div>
+              </article>
+
+              <article class="card product-card" data-href="SISTEMAS/facturaelectronica.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/facturaelectronica.webp" alt="Icono Factura electrónica">
+                    <div>
+                      <span class="badge-nube">Nube</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">Factura Electrónica</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">
+                    Timbrado y facturación rápida desde cualquier lugar. CFDI 4.0 listo.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/facturaelectronica.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Factura%20Electr%C3%B3nica" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Derecha: Reels Comercial -->
+          <article class="card reels-home-card">
+            <div class="body">
+              <h3 class="title-gradient" style="margin-bottom:4px;">Reels por sistema comercial</h3>
+              <p class="hint" style="margin:0 0 10px;">
+                Revisa casos reales de ventas, inventarios y timbrado.
+              </p>
+
+              <h4 class="reel-title" id="reelTitle-comercial"></h4>
+
+              <div class="carousel" id="carouselReels-comercial" aria-label="Reels por sistema comercial">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
+                <div class="carousel-track"></div>
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
+                <div class="carousel-nav" aria-label="Paginación de reels"></div>
               </div>
-              <p style="margin:0 0 10px;">Timbrado y facturación rápida desde cualquier lugar. CFDI 4.0 listo.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/facturaelectronica.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Factura%20Electr%C3%B3nica" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
+
+              <div class="reel-sys-tabs" aria-label="Selecciona sistema comercial">
+                <button class="reel-tab active" data-panel="comercial" data-sys="start" type="button">
+                  <img src="IMG/comercialstart.webp" alt="Start">
+                  <span>Start</span>
+                </button>
+                <button class="reel-tab" data-panel="comercial" data-sys="pro" type="button">
+                  <img src="IMG/comercialpro.webp" alt="Pro">
+                  <span>Pro</span>
+                </button>
+                <button class="reel-tab" data-panel="comercial" data-sys="premium" type="button">
+                  <img src="IMG/comercialpremium.webp" alt="Premium">
+                  <span>Premium</span>
+                </button>
+                <button class="reel-tab" data-panel="comercial" data-sys="factura" type="button">
+                  <img src="IMG/facturaelectronica.webp" alt="Factura">
+                  <span>Factura Elec.</span>
+                </button>
               </div>
             </div>
           </article>
@@ -334,119 +385,122 @@
 
       <!-- Panel Nube -->
       <div id="panel-nube" class="hidden" role="tabpanel" aria-labelledby="tab-nube">
-        <div class="section-title" style="margin-top:0">
-          <h3 style="margin:0">Contables</h3>
-        </div>
-        <div class="cards cards-products" style="margin-bottom:18px">
-          <article class="card product-card" data-href="SISTEMAS/contabiliza.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/contabiliza.webp" alt="Contabiliza">
-                <div>
-                  <span class="tag-nube">Nube</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">Contabiliza</h3>
+        <div class="grid-2 align-center section-cq">
+          <!-- Izquierda: productos Nube -->
+          <div>
+            <div class="cards cards-products">
+              <article class="card product-card" data-href="SISTEMAS/contabiliza.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/contabiliza.webp" alt="Contabiliza">
+                    <div>
+                      <span class="tag-nube">Nube</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">Contabiliza</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">Contabilidad en la nube conectada a tus sistemas CONTPAQi.</p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/contabiliza.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Contabiliza" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
                 </div>
-              </div>
-              <p style="margin:0 0 10px;">Contabilidad en la nube.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/contabiliza.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Contabiliza" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
-              </div>
-            </div>
-          </article>
+              </article>
 
-          <article class="card product-card" data-href="SISTEMAS/analiza.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/analiza.webp" alt="Analiza">
-                <div>
-                  <span class="tag-nube">Nube</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">Analiza</h3>
+              <article class="card product-card" data-href="SISTEMAS/analiza.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/analiza.webp" alt="Analiza">
+                    <div>
+                      <span class="tag-nube">Nube</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">Analiza</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">Dashboards y BI nativo para tus datos de Contabilidad, Comercial y Nóminas.</p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/analiza.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Analiza" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
                 </div>
-              </div>
-              <p style="margin:0 0 10px;">Reportes y analítica para tus sistemas CONTPAQi.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/analiza.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Analiza" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
-              </div>
-            </div>
-          </article>
+              </article>
 
-          <article class="card product-card" data-href="SISTEMAS/personia.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/personia.webp" alt="Personia">
-                <div>
-                  <span class="tag-nube">Nube</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">Personia</h3>
+              <article class="card product-card" data-href="SISTEMAS/despachos.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/despachos.webp" alt="Despachos">
+                    <div>
+                      <span class="tag-nube">Nube</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">Despachos</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">Gestión integral para despachos contables en la nube.</p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/despachos.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Despachos" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
                 </div>
-              </div>
-              <p style="margin:0 0 10px;">Expedientes de empleados en la nube.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/personia.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Personia" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
-              </div>
-            </div>
-          </article>
+              </article>
 
-          <article class="card product-card" data-href="SISTEMAS/despachos.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/despachos.webp" alt="Despachos">
-                <div>
-                  <span class="tag-nube">Nube</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">Despachos</h3>
+              <article class="card product-card" data-href="SISTEMAS/vende.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/vende.webp" alt="Vende">
+                    <div>
+                      <span class="tag-nube">Nube</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">Vende</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">Punto de venta en la nube, listo para sucursales.</p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/vende.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Vende" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
                 </div>
-              </div>
-              <p style="margin:0 0 10px;">Gestión para despachos contables.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/despachos.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Despachos" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
-              </div>
+              </article>
             </div>
-          </article>
-        </div>
+          </div>
 
-        <div class="section-title" style="margin-top:0">
-          <h3 style="margin:0">Comercial</h3>
-        </div>
-        <div class="cards cards-products">
-          <article class="card product-card" data-href="SISTEMAS/vende.html">
+          <!-- Derecha: Reels Nube -->
+          <article class="card reels-home-card">
             <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/vende.webp" alt="Vende">
-                <div>
-                  <span class="tag-nube">Nube</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">Vende</h3>
-                </div>
-              </div>
-              <p style="margin:0 0 10px;">Punto de venta en la nube.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/vende.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Vende" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
-              </div>
-            </div>
-          </article>
+              <h3 class="title-gradient" style="margin-bottom:4px;">Reels de soluciones en la nube</h3>
+              <p class="hint" style="margin:0 0 10px;">
+                Visualiza cómo Analiza, Contabiliza, Despachos y Vende automatizan tu operación.
+              </p>
 
-          <article class="card product-card" data-href="SISTEMAS/facturaelectronica.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/facturaelectronica.webp" alt="Factura electrónica nube">
-                <div>
-                  <span class="tag-nube">Nube</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">Factura Electrónica</h3>
-                </div>
+              <h4 class="reel-title" id="reelTitle-nube"></h4>
+
+              <div class="carousel" id="carouselReels-nube" aria-label="Reels productos nube">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
+                <div class="carousel-track"></div>
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
+                <div class="carousel-nav" aria-label="Paginación de reels"></div>
               </div>
-              <p style="margin:0 0 10px;">Facturación y timbrado CFDI 4.0.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/facturaelectronica.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Factura%20Electr%C3%B3nica" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
+
+              <div class="reel-sys-tabs" aria-label="Selecciona producto nube">
+                <button class="reel-tab active" data-panel="nube" data-sys="analiza" type="button">
+                  <img src="IMG/analiza.webp" alt="Analiza">
+                  <span>Analiza</span>
+                </button>
+                <button class="reel-tab" data-panel="nube" data-sys="contabiliza" type="button">
+                  <img src="IMG/contabiliza.webp" alt="Contabiliza">
+                  <span>Contabiliza</span>
+                </button>
+                <button class="reel-tab" data-panel="nube" data-sys="despachos" type="button">
+                  <img src="IMG/despachos.webp" alt="Despachos">
+                  <span>Despachos</span>
+                </button>
+                <button class="reel-tab" data-panel="nube" data-sys="vende" type="button">
+                  <img src="IMG/vende.webp" alt="Vende">
+                  <span>Vende</span>
+                </button>
               </div>
             </div>
           </article>
@@ -455,39 +509,100 @@
 
       <!-- Panel Productividad -->
       <div id="panel-productividad" class="hidden" role="tabpanel" aria-labelledby="tab-productividad">
-        <div class="cards cards-products">
-          <article class="card product-card" data-href="SISTEMAS/evalua.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/evalua.webp" alt="Evalúa">
-                <div>
-                  <span class="badge">Productividad</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">Evalúa (NOM 035/037)</h3>
+        <div class="grid-2 align-center section-cq">
+          <!-- Izquierda: Productividad -->
+          <div>
+            <div class="cards cards-products">
+              <article class="card product-card" data-href="SISTEMAS/evalua.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/evalua.webp" alt="Evalúa">
+                    <div>
+                      <span class="badge">Productividad</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">Evalúa (NOM 035/037)</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">Evalúa clima laboral, riesgos psicosociales y condiciones de trabajo.</p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/evalua.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Eval%C3%BAa" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
                 </div>
-              </div>
-              <p style="margin:0 0 10px;">Gestiona evaluaciones NOM 035 y 037.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/evalua.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Eval%C3%BAa" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
-              </div>
-            </div>
-          </article>
+              </article>
 
-          <article class="card product-card" data-href="SISTEMAS/colabora.html">
-            <div class="body">
-              <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-                <img class="ficon" src="IMG/colabora.webp" alt="Colabora">
-                <div>
-                  <span class="badge">Productividad</span>
-                  <h3 style="margin:4px 0 0;font-size:18px;">Colabora (¡Gratis!)</h3>
+              <article class="card product-card" data-href="SISTEMAS/colabora.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/colabora.webp" alt="Colabora">
+                    <div>
+                      <span class="badge">Productividad</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">Colabora (¡Gratis!)</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">App gratuita para colaboración y seguimiento desde el móvil.</p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/colabora.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Colabora" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
                 </div>
+              </article>
+
+              <article class="card product-card" data-href="SISTEMAS/personia.html">
+                <div class="body">
+                  <div class="fhead" style="margin-bottom:8px;display:flex;align-items:center;gap:10px;">
+                    <img class="ficon" src="IMG/personia.webp" alt="Personia">
+                    <div>
+                      <span class="badge">Productividad</span>
+                      <h3 style="margin:4px 0 0;font-size:18px;">Personia</h3>
+                    </div>
+                  </div>
+                  <p style="margin:0 0 10px;">Expedientes de empleados y gestión de personal en la nube.</p>
+                  <div class="foot">
+                    <a class="btn btn-ghost btn-sm" href="SISTEMAS/personia.html">Ver ficha</a>
+                    <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Personia" target="_blank" rel="noopener">WhatsApp</a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Derecha: Reels Productividad -->
+          <article class="card reels-home-card">
+            <div class="body">
+              <h3 class="title-gradient" style="margin-bottom:4px;">Reels de productividad y clima laboral</h3>
+              <p class="hint" style="margin:0 0 10px;">
+                Ve cómo Evalúa, Colabora y Personia te ayudan con tu gente.
+              </p>
+
+              <h4 class="reel-title" id="reelTitle-productividad"></h4>
+
+              <div class="carousel" id="carouselReels-productividad" aria-label="Reels productividad">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
+                <div class="carousel-track"></div>
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
+                <div class="carousel-nav" aria-label="Paginación de reels"></div>
               </div>
-              <p style="margin:0 0 10px;">Gestión colaborativa básica sin costo.</p>
-              <div class="foot" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                <a class="btn btn-ghost btn-sm" href="SISTEMAS/colabora.html">Ver ficha</a>
-                <a class="btn btn-grad-green btn-sm" href="https://wa.me/525568437918?text=Info%20Colabora" target="_blank" rel="noopener">WhatsApp</a>
-                <div class="hoverMore"><span class="chip">Ver más →</span></div>
+
+              <div class="reel-sys-tabs" aria-label="Selecciona app de productividad">
+                <button class="reel-tab active" data-panel="productividad" data-sys="evalua" type="button">
+                  <img src="IMG/evalua.webp" alt="Evalúa">
+                  <span>Evalúa</span>
+                </button>
+                <button class="reel-tab" data-panel="productividad" data-sys="colabora" type="button">
+                  <img src="IMG/colabora.webp" alt="Colabora">
+                  <span>Colabora</span>
+                </button>
+                <button class="reel-tab" data-panel="productividad" data-sys="personia" type="button">
+                  <img src="IMG/personia.webp" alt="Personia">
+                  <span>Personia</span>
+                </button>
               </div>
             </div>
           </article>
@@ -499,7 +614,7 @@
   <!-- Sectores & Diferenciales -->
   <section id="sectores">
     <div class="container grid-2">
-      <div class="card body">
+      <div class="card" style="padding:16px">
         <h3 style="margin-top:0">Sectores en los que brillamos</h3>
         <ul class="features">
           <li>Restaurantes y food service (multi-sucursal)</li>
@@ -508,7 +623,7 @@
           <li>Servicios profesionales</li>
         </ul>
       </div>
-      <div class="card body">
+      <div class="card" style="padding:16px">
         <h3 style="margin-top:0">¿Por qué Expiriti?</h3>
         <ul class="features">
           <li>Atención cercana por WhatsApp y llamadas</li>
@@ -526,8 +641,8 @@
       <div class="section-title"><h2 style="margin:0">Videos</h2></div>
       <div class="videos-grid">
         <!-- Sustituye los IDs por tus reels reales -->
-        <iframe style="aspect-ratio:16/9" src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Video 1" frameborder="0" allowfullscreen loading="lazy"></iframe>
-        <iframe style="aspect-ratio:16/9" src="https://www.youtube-nocookie.com/embed/oHg5SJYRHA0" title="Video 2" frameborder="0" allowfullscreen loading="lazy"></iframe>
+        <iframe style="aspect-ratio:16/9" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video 1" frameborder="0" allowfullscreen loading="lazy"></iframe>
+        <iframe style="aspect-ratio:16/9" src="https://www.youtube.com/embed/oHg5SJYRHA0" title="Video 2" frameborder="0" allowfullscreen loading="lazy"></iframe>
       </div>
     </div>
   </section>
@@ -536,59 +651,49 @@
   <section id="servicios">
     <div class="container">
       <div class="section-title"><h2 style="margin:0">Servicios</h2></div>
-      <div class="cards cards-products">
-        <article class="card product-card" data-href="SERVICIOS/implementaciones.html">
-          <div class="body">
-            <h3>Implementaciones CONTPAQi</h3>
-            <p>Instalación, configuración inicial, CSD, timbrado de prueba y puesta en marcha.</p>
-            <div class="foot">
-              <a class="btn btn-ghost btn-sm" href="SERVICIOS/implementaciones.html">Ver más</a>
-              <div class="hoverMore"><span class="chip">Ver más →</span></div>
-            </div>
+      <div class="cards">
+        <article class="card product-card" data-href="SERVICIOS/implementaciones.html" style="padding:16px">
+          <h3>Implementaciones CONTPAQi</h3>
+          <p class="body">Instalación, configuración inicial, CSD, timbrado de prueba y puesta en marcha.</p>
+          <div class="foot">
+            <a class="btn btn-ghost btn-sm" href="SERVICIOS/implementaciones.html">Ver más</a>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
 
-        <article class="card product-card" data-href="SERVICIOS/migraciones.html">
-          <div class="body">
-            <h3>Migraciones</h3>
-            <p>Migración desde otros sistemas (ASPEL, Excel, etc.) hacia CONTPAQi.</p>
-            <div class="foot">
-              <a class="btn btn-ghost btn-sm" href="SERVICIOS/migraciones.html">Ver más</a>
-              <div class="hoverMore"><span class="chip">Ver más →</span></div>
-            </div>
+        <article class="card product-card" data-href="SERVICIOS/migraciones.html" style="padding:16px">
+          <h3>Migraciones</h3>
+          <p class="body">Migración desde otros sistemas (ASPEL, Excel, etc.) hacia CONTPAQi.</p>
+          <div class="foot">
+            <a class="btn btn-ghost btn-sm" href="SERVICIOS/migraciones.html">Ver más</a>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
 
-        <article class="card product-card" data-href="SERVICIOS/desarrollos.html">
-          <div class="body">
-            <h3>Desarrollos a la medida</h3>
-            <p>Integraciones, reportes especiales y automatizaciones sobre CONTPAQi.</p>
-            <div class="foot">
-              <a class="btn btn-ghost btn-sm" href="SERVICIOS/desarrollos.html">Ver más</a>
-              <div class="hoverMore"><span class="chip">Ver más →</span></div>
-            </div>
+        <article class="card product-card" data-href="SERVICIOS/desarrollos.html" style="padding:16px">
+          <h3>Desarrollos a la medida</h3>
+          <p class="body">Integraciones, reportes especiales y automatizaciones sobre CONTPAQi.</p>
+          <div class="foot">
+            <a class="btn btn-ghost btn-sm" href="SERVICIOS/desarrollos.html">Ver más</a>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
 
-        <article class="card product-card" data-href="SERVICIOS/servidoresvirtuales.html">
-          <div class="body">
-            <h3>Servidores virtuales</h3>
-            <p>Montamos tus sistemas CONTPAQi en la nube con acceso remoto seguro.</p>
-            <div class="foot">
-              <a class="btn btn-ghost btn-sm" href="SERVICIOS/servidoresvirtuales.html">Ver más</a>
-              <div class="hoverMore"><span class="chip">Ver más →</span></div>
-            </div>
+        <article class="card product-card" data-href="SERVICIOS/servidoresvirtuales.html" style="padding:16px">
+          <h3>Servidores virtuales</h3>
+          <p class="body">Montamos tus sistemas CONTPAQi en la nube con acceso remoto seguro.</p>
+          <div class="foot">
+            <a class="btn btn-ghost btn-sm" href="SERVICIOS/servidoresvirtuales.html">Ver más</a>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
 
-        <article class="card product-card" data-href="SERVICIOS/soporte.html">
-          <div class="body">
-            <h3>Soporte técnico</h3>
-            <p>Pólizas, soporte remoto por sesión y atención por WhatsApp.</p>
-            <div class="foot">
-              <a class="btn btn-ghost btn-sm" href="SERVICIOS/soporte.html">Ver más</a>
-              <div class="hoverMore"><span class="chip">Ver más →</span></div>
-            </div>
+        <article class="card product-card" data-href="SERVICIOS/soporte.html" style="padding:16px">
+          <h3>Soporte técnico</h3>
+          <p class="body">Pólizas, soporte remoto por sesión y atención por WhatsApp.</p>
+          <div class="foot">
+            <a class="btn btn-ghost btn-sm" href="SERVICIOS/soporte.html">Ver más</a>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
       </div>
@@ -614,6 +719,121 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-title">
+        <h2 style="margin:0">Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq-wrap">
+        <!-- 1. Distribuidor / con quién contrato -->
+        <details class="faq-item" open>
+          <summary>¿Con quién contrato al comprar con Expiriti?</summary>
+          <p>
+            Compras tus licencias de <strong>CONTPAQi</strong> con un
+            <strong>distribuidor autorizado</strong>.  
+            Nosotros te ayudamos con la <strong>cotización, compra, instalación,
+            timbrado de prueba y capacitación básica</strong>, pero tu sistema
+            sigue siendo oficial CONTPAQi, con sus políticas y actualizaciones.
+          </p>
+        </details>
+
+        <!-- 2. Licencia anual vs tradicional -->
+        <details class="faq-item">
+          <summary>¿Cuál es la diferencia entre licencia anual y tradicional?</summary>
+          <p>
+            La <strong>licencia anual</strong> incluye actualizaciones y derecho
+            de uso por un año, ideal si quieres estar siempre al día y mantener
+            el costo controlado.  
+            La <strong>licencia tradicional</strong> se paga una sola vez y se
+            actualiza mediante pólizas o paquetes específicos.  
+            Si nos contactas por WhatsApp, te ayudamos a ver qué opción conviene
+            más según tu flujo de trabajo y presupuesto.
+          </p>
+        </details>
+
+        <!-- 3. Usuarios / equipos -->
+        <details class="faq-item">
+          <summary>¿Cuántos equipos puedo usar con mi licencia? ¿Qué significa “usuarios simultáneos”?</summary>
+          <p>
+            El sistema se puede instalar en varios equipos, pero el límite lo
+            marca el número de <strong>usuarios simultáneos</strong> contratados.  
+            Ejemplo: si tienes <strong>1 usuario</strong>, puedes instalar en
+            3–4 equipos, pero solo <strong>una persona a la vez</strong> puede
+            entrar al sistema.  
+            Si tienes dudas, revisamos tu caso y te sugerimos el número correcto
+            de usuarios para que nadie se quede fuera.
+          </p>
+        </details>
+
+        <!-- 4. Instalación remota -->
+        <details class="faq-item">
+          <summary>¿La instalación y configuración se pueden hacer a distancia?</summary>
+          <p>
+            Sí. Hacemos la <strong>implementación remota</strong> por sesión
+            (AnyDesk/Zoom), incluyendo:
+            alta de empresa, conexión con certificados, timbrado de prueba y
+            configuración básica según tu giro.  
+            Si lo necesitas, podemos agendar también una sesión de
+            <strong>capacitación inicial</strong> para tu equipo.
+          </p>
+        </details>
+
+        <!-- 5. Soporte incluido / pólizas -->
+        <details class="faq-item">
+          <summary>¿Qué soporte tengo después de comprar el sistema?</summary>
+          <p>
+            Al comprar con Expiriti te acompañamos en la
+            <strong>puesta en marcha</strong>.  
+            Después, puedes contratar una <strong>póliza de soporte</strong> con
+            horas mensuales o atención por evento, según el tamaño de tu empresa.  
+            Pregúntanos por los planes de <strong>soporte, cursos y
+            actualizaciones</strong> para dejarte todo redondo.
+          </p>
+        </details>
+
+        <!-- 6. Pagos -->
+        <details class="faq-item">
+          <summary>¿Qué formas de pago aceptan?</summary>
+          <p>
+            Aceptamos <strong>transferencia SPEI</strong> y pagos con
+            <strong>tarjeta</strong> a través de pasarelas autorizadas.  
+            En algunos casos se puede manejar pago fraccionado para servicios
+            de implementación o desarrollos.  
+            Envíanos un mensaje y te compartimos las opciones disponibles según
+            tu proyecto.
+          </p>
+        </details>
+
+        <!-- 7. ¿Si ya tengo distribuidor? -->
+        <details class="faq-item">
+          <summary>Ya tengo un distribuidor, ¿puedo trabajar con Expiriti?</summary>
+          <p>
+            Sí. Podemos apoyarte con <strong>servicios complementarios</strong>:
+            migraciones, desarrollos a la medida, servidores virtuales o cursos,
+            incluso si tu licencia la compraste con otro distribuidor.  
+            Si deseas que Expiriti gestione también tus
+            <strong>renovaciones</strong>, te explicamos el proceso sin
+            compromiso.
+          </p>
+        </details>
+
+        <!-- 8. Migraciones / cambio de sistema -->
+        <details class="faq-item">
+          <summary>Vengo de otro sistema (ASPEL, Excel, etc.), ¿pueden migrar mi información?</summary>
+          <p>
+            Sí. Tenemos servicios de <strong>migración de datos</strong> desde
+            ASPEL, hojas de cálculo u otros orígenes hacia CONTPAQi.  
+            Revisamos contigo qué información es crítica (catálogos, saldos,
+            históricos) y preparamos un plan de migración para que el cambio sea
+            lo menos doloroso posible.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
   <!-- Contacto -->
   <section id="contacto">
     <div class="container grid-2">
@@ -630,7 +850,7 @@
           <span class="badge badge-nube">Nube</span>
         </div>
       </div>
-      <div class="card body">
+      <div class="card" style="padding:16px">
         <form id="contactForm" aria-label="Formulario de contacto">
           <label for="nombre">Nombre</label>
           <input id="nombre" name="nombre" placeholder="Tu nombre" required />
@@ -749,34 +969,38 @@
 
   <!-- Lógica específica del index -->
   <script>
+    // ---------- Utils básicos ----------
+    const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+    const $  = (sel, ctx=document) => ctx.querySelector(sel);
+
     // Formulario rápido → WhatsApp
-    document.getElementById('quickForm')?.addEventListener('submit', (e)=>{
+    $('#quickForm')?.addEventListener('submit', (e)=>{
       e.preventDefault();
-      const modulo = encodeURIComponent(document.getElementById('modulo').value);
-      const mensaje = encodeURIComponent(document.getElementById('mensaje').value.trim());
+      const modulo = encodeURIComponent($('#modulo').value);
+      const mensaje = encodeURIComponent($('#mensaje').value.trim());
       const texto = `Hola Expiriti, me interesa ${modulo}. ${mensaje}`;
       window.open(`https://wa.me/525568437918?text=${texto}`, '_blank');
     });
 
     // Formulario de contacto → WhatsApp
-    document.getElementById('contactForm')?.addEventListener('submit', (e)=>{
+    $('#contactForm')?.addEventListener('submit', (e)=>{
       e.preventDefault();
-      const nombre = encodeURIComponent(document.getElementById('nombre').value.trim());
-      const correo = encodeURIComponent(document.getElementById('correo').value.trim());
-      const telefono = encodeURIComponent(document.getElementById('telefono').value.trim());
-      const interes = encodeURIComponent(document.getElementById('interes').value);
-      const detalle = encodeURIComponent(document.getElementById('detalle').value.trim());
+      const nombre = encodeURIComponent($('#nombre').value.trim());
+      const correo = encodeURIComponent($('#correo').value.trim());
+      const telefono = encodeURIComponent($('#telefono').value.trim());
+      const interes = encodeURIComponent($('#interes').value);
+      const detalle = encodeURIComponent($('#detalle').value.trim());
       const texto = `Hola Expiriti, soy ${nombre}. Email: ${correo}. Tel: ${telefono || 'N/A'}. Interés: ${interes}. Detalle: ${detalle}`;
       window.open(`https://wa.me/525568437918?text=${texto}`, '_blank');
     });
 
-    // Tabs de productos
-    const tabs = Array.from(document.querySelectorAll('.tablist .tab'));
+    // -------- Tabs de productos --------
+    const tabs = $$('.tablist .tab');
     const panels = {
-      'tab-contable':  document.getElementById('panel-contable'),
-      'tab-comercial': document.getElementById('panel-comercial'),
-      'tab-nube':      document.getElementById('panel-nube'),
-      'tab-productividad': document.getElementById('panel-productividad')
+      'tab-contable':  $('#panel-contable'),
+      'tab-comercial': $('#panel-comercial'),
+      'tab-nube':      $('#panel-nube'),
+      'tab-productividad': $('#panel-productividad')
     };
     function activateTab(id){
       tabs.forEach(b=>b.setAttribute('aria-selected','false'));
@@ -798,9 +1022,9 @@
     });
     activateTab('tab-contable');
 
-    // Promos: filtro por categoría
-    const promoBtns = document.querySelectorAll('.promo-btn');
-    const promoImgs = document.querySelectorAll('#promoGrid [data-type]');
+    // -------- Promos: filtro por categoría --------
+    const promoBtns = $$('.promo-btn');
+    const promoImgs = $$('#promoGrid [data-type]');
     function setPromoFilter(type){
       promoBtns.forEach(b=>b.classList.toggle('active', b.dataset.filter===type));
       promoImgs.forEach(img=>{ img.style.display = (img.dataset.type===type) ? '' : 'none'; });
@@ -808,138 +1032,225 @@
     promoBtns.forEach(b=> b.addEventListener('click', ()=> setPromoFilter(b.dataset.filter)));
     setPromoFilter('nuevos');
 
-    // Cards de producto: clic en toda la tarjeta
-    document.addEventListener('click', (e)=>{
-      const card = e.target.closest('.product-card[data-href]');
-      if (!card) return;
-      if (e.target.closest('a, button')) return; // respeta botones
+    // -------- Cards de productos: click completo --------
+    $$('.card.product-card[data-href]').forEach(card=>{
       const href = card.getAttribute('data-href');
-      if (href) window.location.href = href;
+      card.addEventListener('click', (e)=>{
+        // evita doble navegación si hacen click en un <a>
+        if (e.target.closest('a')) return;
+        if (href) window.location.href = href;
+      });
     });
 
-    // --------- Reels por sistema contable (home) ----------
-    const REELS_HOME = {
-      contabilidad: [
-        { id:"yblBsFFv6bc", title:"Contabilidad y Contabiliza (nube) te ayudan en la DIOT" },
-        { id:"BIhYNn2O0og", title:"Contabilidad | Evita errores en la DIOT" },
-        { id:"rESYB37TP-M", title:"Declaración anual en 5 pasos con Contabilidad" },
-        { id:"LqptaBOF7h4", title:"Fernanda redujo su carga contable con Contabilidad" }
-      ],
-      nominas: [
-        { id:"gae67GDse30", title:"Nóminas y Personia | Checador por GPS" },
-        { id:"8-2rT99euog", title:"Nóminas | Software #1 en México" },
-        { id:"2eVOzoBoP6s", title:"Nóminas | Automatiza tus procesos" },
-        { id:"nLRgiOPQM80", title:"Nóminas | App Colabora gratis" },
-        { id:"MfiiX1La2vQ", title:"Qué hace CONTPAQi Nóminas por ti" }
-      ],
-      bancos: [
-        { id:"3YUbSEyU678", title:"Conciliación bancaria en 3 pasos con CONTPAQi Bancos" },
-        { id:"LC1Ccpv_jzo", title:"4 señales de que tu empresa necesita Bancos" }
-      ],
-      xml: [
-        { id:"nhoUDNnGQ90", title:"El día que José dejó de sufrir con el SAT descargando CFDIs" }
-      ]
+    // -------- Datos de Reels --------
+    const REELS_DATA = {
+      contable: {
+        titleEl: $('#reelTitle-contable'),
+        carousel: $('#carouselReels-contable'),
+        defaultSys: 'nominas',
+        reelsBySys: {
+          contabilidad: [
+            {id:'yblBsFFv6bc', title:'Contabilidad y Contabiliza te ayudan en la DIOT'},
+            {id:'BIhYNn2O0og', title:'Evita errores en la DIOT con Contabilidad'},
+            {id:'rESYB37TP-M', title:'Declaración anual en 5 pasos con Contabilidad'},
+            {id:'LqptaBOF7h4', title:'Fernanda redujo su carga contable con Contabilidad'}
+          ],
+          nominas: [
+            {id:'gae67GDse30', title:'Nóminas y Personia | Checador por GPS'},
+            {id:'8-2rT99euog', title:'Nóminas | Software #1 en México'},
+            {id:'2eVOzoBoP6s', title:'Nóminas | Automatiza tus procesos'},
+            {id:'nLRgiOPQM80', title:'App Colabora gratis con Nóminas'},
+            {id:'MfiiX1La2vQ', title:'Qué hace CONTPAQi Nóminas por ti'}
+          ],
+          bancos: [
+            {id:'3YUbSEyU678', title:'Conciliación bancaria en 3 pasos con Bancos'},
+            {id:'LC1Ccpv_jzo', title:'4 señales de que necesitas Bancos'}
+          ],
+          xml: [
+            {id:'nhoUDNnGQ90', title:'El día que José dejó de sufrir con el SAT descargando CFDIs'}
+          ]
+        }
+      },
+      comercial: {
+        titleEl: $('#reelTitle-comercial'),
+        carousel: $('#carouselReels-comercial'),
+        defaultSys: 'start',
+        reelsBySys: {
+          start: [
+            {id:'dQw4w9WgXcQ', title:'Comercial Start | Reel 1'},
+            {id:'9bZkp7q19f0', title:'Comercial Start | Reel 2'},
+            {id:'3JZ_D3ELwOQ', title:'Comercial Start | Reel 3'}
+          ],
+          pro: [
+            {id:'rEYzPXOX1_Y',  title:'Comercial Pro: control total de inventario'},
+            {id:'-SJq6t2SM7c', title:'Flujo completo con Comercial Pro'},
+            {id:'5AowfYsAm4E', title:'Trazabilidad avanzada en inventarios'}
+          ],
+          premium: [
+            {id:'IYwNBfmWxJU', title:'Controla tus inventarios con Comercial Premium'},
+            {id:'_Krv5nTyFuY', title:'Notas de venta más rápido en Comercial Premium'},
+            {id:'HmgOQrasCVw', title:'Notas de venta en Comercial Premium'},
+            {id:'WGPOzQ1GsSE', title:'Documentos por WhatsApp en Comercial Premium'}
+          ],
+          factura: [
+            {id:'nMEgM_BvxTs', title:'Factura Electrónica v13 | Novedades'},
+            {id:'IA5-tguZzCc', title:'Carta Porte CFDI 3.1 en Factura Electrónica'},
+            {id:'2uBSGZHLsGs', title:'Factura Electrónica para sector notarial'}
+          ]
+        }
+      },
+      nube: {
+        titleEl: $('#reelTitle-nube'),
+        carousel: $('#carouselReels-nube'),
+        defaultSys: 'analiza',
+        reelsBySys: {
+          analiza: [
+            {id:'wr-eeR3eE7w', title:'Analiza | Conciliación fiscal y bancaria'},
+            {id:'gAIGxMHaCLQ', title:'Analiza | Identifica descuadres CFDIs y Nóminas'},
+            {id:'iEQM_21OmBI', title:'Conciliación fiscal y contable con Analiza'}
+          ],
+          contabiliza: [
+            {id:'yblBsFFv6bc', title:'Contabilidad y Contabiliza te ayudan en la DIOT'}
+          ],
+          despachos: [
+            {id:'KBEOTwnFXQ4', title:'Gestión de Despachos en la nube'},
+            {id:'aqz-KE-bpKQ', title:'Control de obligaciones con Despachos'}
+          ],
+          vende: [
+            {id:'2Ty_SD8B_FU', title:'Vende | Carta Porte fácil y rápida'},
+            {id:'UPyufjDByNc', title:'Testimonio CONTPAQi Vende'},
+            {id:'Grx1woHMGsU', title:'Vende en la nube'}
+          ]
+        }
+      },
+      productividad: {
+        titleEl: $('#reelTitle-productividad'),
+        carousel: $('#carouselReels-productividad'),
+        defaultSys: 'evalua',
+        reelsBySys: {
+          evalua: [
+            {id:'REEMPLAZAR_ID_1', title:'Reel Evalúa 1'},
+            {id:'REEMPLAZAR_ID_2', title:'Reel Evalúa 2'},
+            {id:'REEMPLAZAR_ID_3', title:'Reel Evalúa 3'}
+          ],
+          colabora: [
+            {id:'XJQDFDowH0U', title:'Colabora, app sin costo con Nóminas'},
+            {id:'nLRgiOPQM80', title:'App Colabora gratis con Nóminas'}
+          ],
+          personia: [
+            {id:'gae67GDse30', title:'Nóminas y Personia | Checador por GPS'}
+          ]
+        }
+      }
     };
 
-    (function initHomeReels(){
-      const carousel = document.getElementById('carouselReelsHome');
-      if (!carousel) return;
+    function buildReelsSlides(panelKey, sysKey){
+      const config = REELS_DATA[panelKey];
+      if (!config) return;
+      const {carousel, titleEl, reelsBySys} = config;
+      const track = carousel?.querySelector('.carousel-track');
+      const nav  = carousel?.querySelector('.carousel-nav');
+      if (!track || !nav) return;
 
+      const reels = reelsBySys[sysKey] || [];
+      track.innerHTML = '';
+      nav.innerHTML   = '';
+
+      reels.forEach((reel, idx)=>{
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        if (idx === 0) slide.classList.add('is-active');
+
+        const wrap = document.createElement('div');
+        wrap.className = 'reel-embed';
+        wrap.setAttribute('data-ytid', reel.id);
+        wrap.setAttribute('data-title', reel.title);
+
+        // Iframe directo (nocookie)
+        wrap.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${reel.id}"
+                                title="${reel.title}"
+                                loading="lazy"
+                                allowfullscreen
+                                referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+
+        slide.appendChild(wrap);
+        track.appendChild(slide);
+
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'dot' + (idx===0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Ir al reel ' + (idx+1));
+        dot.addEventListener('click', ()=>{
+          const slides = $$('.carousel-slide', track);
+          slides.forEach(s=>s.classList.remove('is-active'));
+          slides[idx]?.classList.add('is-active');
+          $$('.dot', nav).forEach(d=>d.classList.remove('active'));
+          dot.classList.add('active');
+          track.scrollTo({left: track.clientWidth * idx, behavior:'smooth'});
+        });
+        nav.appendChild(dot);
+      });
+
+      if (titleEl) titleEl.textContent = reels[0]?.title || '';
+    }
+
+    function initReelsCarousel(panelKey){
+      const config = REELS_DATA[panelKey];
+      if (!config || !config.carousel) return;
+
+      const {carousel, defaultSys} = config;
       const track = carousel.querySelector('.carousel-track');
-      const nav   = carousel.querySelector('.carousel-nav');
-      const prev  = carousel.querySelector('.arrowCircle.prev');
-      const next  = carousel.querySelector('.arrowCircle.next');
-      const titleEl = document.getElementById('reelHomeTitle');
-      const tabsSys = Array.from(document.querySelectorAll('.reel-tab'));
 
-      const state = { sys:'contabilidad', index:0 };
+      // Flechas
+      const slidesFor = () => $$('.carousel-slide', track);
+      const navDots   = () => $$('.carousel-nav .dot', carousel);
 
-      function renderSlides(sys){
-        const list = REELS_HOME[sys] || [];
-        track.innerHTML = '';
-        nav.innerHTML = '';
-        state.sys = sys;
-        state.index = 0;
+      const goTo = (index)=>{
+        const slides = slidesFor();
+        if (!slides.length) return;
+        const max = slides.length - 1;
+        const i = Math.max(0, Math.min(max, index));
+        slides.forEach(s=>s.classList.remove('is-active'));
+        slides[i].classList.add('is-active');
+        navDots().forEach((d,idx)=>d.classList.toggle('active', idx===i));
+        track.scrollTo({left: track.clientWidth * i, behavior:'smooth'});
+      };
 
-        if (!list.length){
-          titleEl.textContent = '';
-          return;
-        }
-
-        list.forEach((r, i)=>{
-          const slide = document.createElement('div');
-          slide.className = 'carousel-slide';
-
-          const box = document.createElement('div');
-          box.className = 'reel-embed';
-
-          const iframe = document.createElement('iframe');
-          iframe.src = `https://www.youtube-nocookie.com/embed/${r.id}`;
-          iframe.title = r.title || 'Reel sistema contable';
-          iframe.loading = 'lazy';
-          iframe.allowFullscreen = true;
-
-          box.appendChild(iframe);
-          slide.appendChild(box);
-          track.appendChild(slide);
-
-          const dot = document.createElement('button');
-          dot.type = 'button';
-          dot.className = 'dot';
-          dot.setAttribute('aria-label', `Ir al reel ${i+1}`);
-          dot.addEventListener('click', ()=>{
-            state.index = i;
-            updateActive();
-          });
-          nav.appendChild(dot);
-        });
-
-        updateActive();
-      }
-
-      function updateActive(){
-        const list = REELS_HOME[state.sys] || [];
-        const slides = track.querySelectorAll('.carousel-slide');
-        const dots   = nav.querySelectorAll('.dot');
-
-        slides.forEach((s,i)=>{
-          s.style.display = (i === state.index) ? 'flex' : 'none';
-        });
-        dots.forEach((d,i)=>{
-          d.classList.toggle('active', i === state.index);
-        });
-
-        const current = list[state.index];
-        titleEl.textContent = current ? current.title : '';
-      }
-
-      prev?.addEventListener('click', ()=>{
-        const list = REELS_HOME[state.sys] || [];
-        if (!list.length) return;
-        state.index = (state.index - 1 + list.length) % list.length;
-        updateActive();
+      const prevBtn = carousel.querySelector('.arrowCircle.prev');
+      const nextBtn = carousel.querySelector('.arrowCircle.next');
+      prevBtn?.addEventListener('click', ()=>{
+        const idx = slidesFor().findIndex(s=>s.classList.contains('is-active'));
+        goTo(idx - 1);
+      });
+      nextBtn?.addEventListener('click', ()=>{
+        const idx = slidesFor().findIndex(s=>s.classList.contains('is-active'));
+        goTo(idx + 1);
       });
 
-      next?.addEventListener('click', ()=>{
-        const list = REELS_HOME[state.sys] || [];
-        if (!list.length) return;
-        state.index = (state.index + 1) % list.length;
-        updateActive();
-      });
+      // Inicial por defecto
+      buildReelsSlides(panelKey, defaultSys);
+    }
 
-      tabsSys.forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          tabsSys.forEach(b=>b.classList.remove('active'));
-          btn.classList.add('active');
-          const sys = btn.getAttribute('data-sys');
-          renderSlides(sys);
+    // Inicializa todos los paneles de reels
+    ['contable','comercial','nube','productividad'].forEach(initReelsCarousel);
+
+    // Tabs de sistema (iconitos debajo del carrusel)
+    $$('.reel-tab').forEach(tab=>{
+      tab.addEventListener('click', ()=>{
+        const panelKey = tab.dataset.panel;
+        const sysKey   = tab.dataset.sys;
+        if (!panelKey || !sysKey) return;
+
+        // activar visualmente
+        $$('.reel-tab').forEach(t=>{
+          if (t.dataset.panel === panelKey){
+            t.classList.toggle('active', t === tab);
+          }
         });
-      });
 
-      // Inicial
-      renderSlides('nominas'); // si quieres que abra en Nóminas
-      tabsSys.forEach(b=> b.classList.toggle('active', b.dataset.sys === 'nominas'));
-    })();
+        buildReelsSlides(panelKey, sysKey);
+      });
+    });
   </script>
 </body>
 </html>
