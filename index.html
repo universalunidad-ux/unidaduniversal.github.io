@@ -54,7 +54,7 @@
         </div>
         <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
           <a class="btn hero-btn btn-grad-blue" href="#contacto">Quiero una demo</a>
-          <a class="btn hero-btn btn-outline-gradient" href="#productos">
+          <a class="btn hero-btn btn-outline-gradient" href="#productos-con">
             <span style="position:relative;z-index:1">Ver productos</span>
           </a>
         </div>
@@ -102,12 +102,44 @@
     <div class="productos-inline-bar">
       <h2 class="prod-title">Productos <span>CONTPAQi</span></h2>
 
-      <nav class="prod-tabs" role="tablist">
-        <button class="tab active" id="tab-contable">Solución Contable</button>
-        <button class="tab" id="tab-comercial">Solución Comercial</button>
-        <button class="tab" id="tab-nube">Productos Nube</button>
-        <button class="tab" id="tab-productividad">Productividad</button>
-      </nav>
+<nav class="prod-tabs" role="tablist" aria-label="Productos CONTPAQi">
+  <button
+    class="tab active"
+    id="tab-contable"
+    role="tab"
+    aria-selected="true"
+    aria-controls="panel-contable">
+    Solución Contable
+  </button>
+
+  <button
+    class="tab"
+    id="tab-comercial"
+    role="tab"
+    aria-selected="false"
+    aria-controls="panel-comercial">
+    Solución Comercial
+  </button>
+
+  <button
+    class="tab"
+    id="tab-nube"
+    role="tab"
+    aria-selected="false"
+    aria-controls="panel-nube">
+    Productos Nube
+  </button>
+
+  <button
+    class="tab"
+    id="tab-productividad"
+    role="tab"
+    aria-selected="false"
+    aria-controls="panel-productividad">
+    Productividad
+  </button>
+</nav>
+
 
       <button class="prod-cta">Cotizar ahora</button>
     </div>
@@ -626,6 +658,8 @@
     </article>
   </div>
 </section>
+  </div> <!-- .container -->
+</section> <!-- #productos-con -->
 
   
   <!-- Sectores & Diferenciales -->
