@@ -149,7 +149,14 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .feature-grid .fcard{border-radius:var(--radius-md);border:1px solid #1e2b3c;background:linear-gradient(135deg,#0f1622,#0f1724);padding:14px;display:grid;gap:8px;transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-fast);container-type:inline-size}
 .feature-grid .fcard:hover{background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);border-color:var(--brand-2);box-shadow:0 10px 24px rgba(0,0,0,.35);transform:translateY(-2px)}
 .fhead{display:flex;align-items:center;gap:10px}
-.ficon{width:28px;height:28px;border-radius:8px;background:#0e1724;border:1px solid #1e2b3c;object-fit:cover}
+.logo-sistema{
+  width:100%;
+  max-width:260px;   /* ajusta si lo quieres más grande/pequeño */
+  height:auto;
+  display:block;
+  margin:4px auto 12px;
+  object-fit:contain;
+}
 .feature-grid .fcard h4{margin:0;font-size:14px}
 .feature-grid .fcard p{margin:0;color:#bcd0ea;font-size:13px;line-height:1.35}
 @container (max-width:420px){.feature-grid .fcard{text-align:left}.feature-grid .fcard .fhead{align-items:flex-start}}
@@ -932,12 +939,14 @@ textarea{
   transition:.2s;
 }
 
-.tab.active{
+.tab.active,
+.tab[aria-selected="true"]{
   background:linear-gradient(135deg,#2dd4bf,#60a5fa);
   color:#0b0f14;
   border:none;
   box-shadow:0 0 18px rgba(94,234,212,.45);
 }
+
 
 .tab:hover:not(.active){
   background:#1e293b;
