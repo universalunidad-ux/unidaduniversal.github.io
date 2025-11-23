@@ -883,3 +883,95 @@ textarea{
     max-width:100% !important;
   }
 }
+
+/* ============================================================
+   BARRA COMPLETA EN UNA SOLA LÍNEA
+   ============================================================ */
+.productos-inline-bar{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:10px 0 20px;
+  flex-wrap:nowrap;            /* ← OBLIGA UNA SOLA LÍNEA */
+}
+
+/* ---------------- TÍTULO ---------------- */
+.prod-title{
+  margin:0;
+  font-size:28px;
+  font-weight:700;
+  white-space:nowrap;          /* ← NO PERMITE QUE SALTE */
+  color:#e8eef6;
+}
+.prod-title span{
+  background:linear-gradient(90deg,#2dd4bf,#60a5fa);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+/* ---------------- TABS ---------------- */
+.prod-tabs{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:1;                      /* ← PERMITE QUE SE EXPANDA Y CENTRE */
+  justify-content:center;
+  white-space:nowrap;
+}
+
+.tab{
+  padding:8px 16px;
+  border-radius:999px;
+  background:#0f172a;
+  border:1px solid rgba(255,255,255,.1);
+  color:#cbd5e1;
+  font-size:14px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.tab.active{
+  background:linear-gradient(135deg,#2dd4bf,#60a5fa);
+  color:#0b0f14;
+  border:none;
+  box-shadow:0 0 18px rgba(94,234,212,.45);
+}
+
+.tab:hover:not(.active){
+  background:#1e293b;
+}
+
+/* ---------------- CTA ---------------- */
+.prod-cta{
+  padding:10px 20px;
+  border-radius:999px;
+  background:#0f172a;
+  border:1px solid rgba(255,255,255,.15);
+  color:#e8eef6;
+  cursor:pointer;
+  white-space:nowrap;
+  font-weight:600;
+  transition:.2s;
+}
+
+.prod-cta:hover{
+  background:linear-gradient(135deg,#2dd4bf,#60a5fa);
+  color:#0b0f14;
+  border:none;
+  box-shadow:0 0 18px rgba(94,234,212,.45);
+}
+
+/* ---------------- MÓVIL ---------------- */
+@media(max-width:900px){
+  .productos-inline-bar{
+    flex-wrap:wrap;             /* ← ÚNICAMENTE EN MÓVIL SE PERMITE */
+    justify-content:center;
+    gap:16px;
+  }
+  .prod-title{ width:100%; text-align:center; }
+  .prod-tabs{ order:3; flex-wrap:wrap; }
+  .prod-cta{ order:2; }
+}
+
