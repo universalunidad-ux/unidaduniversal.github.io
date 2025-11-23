@@ -1045,8 +1045,9 @@
       window.open(`https://wa.me/525568437918?text=${texto}`, '_blank');
     });
 
-    // -------- Tabs de productos --------
-    const tabs = $$('.tablist .tab');
+
+// -------- Tabs de productos --------
+const tabs = $$('.prod-tabs .tab');
     const panels = {
       'tab-contable':  $('#panel-contable'),
       'tab-comercial': $('#panel-comercial'),
@@ -1060,7 +1061,7 @@
       const panelId = btn ? btn.getAttribute('aria-controls') : null;
       if(btn){ btn.setAttribute('aria-selected','true'); }
       if(panelId){ document.getElementById(panelId).classList.remove('hidden'); }
-      document.getElementById('productos').scrollIntoView({behavior:'smooth', block:'start'});
+      document.getElementById('productos-con')?.scrollIntoView({behavior:'smooth', block:'start'});
     }
     tabs.forEach(btn=>{
       btn.addEventListener('click', ()=> activateTab(btn.id));
