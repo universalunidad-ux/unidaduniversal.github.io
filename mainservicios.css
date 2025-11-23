@@ -642,3 +642,132 @@ textarea{
   }
 }
 
+/* ... ya lo tienes ... */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+/* NUEVO: 2 columnas solo para Productos CONTPAQi */
+.cards-products{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+/* Cards de productos interactivas (tipo .sys) */
+.card.product-card{
+  position:relative;
+  cursor:pointer;
+  transition:
+    transform .14s ease,
+    box-shadow .18s ease,
+    border-color .18s ease,
+    background .18s ease;
+}
+
+.card.product-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 16px 36px rgba(0,0,0,.5);
+  border-color:#2dd4bf;
+  background:radial-gradient(circle at top left,rgba(96,165,250,.18),#0d131d);
+}
+
+/* “Ver más →” tipo chip al hover */
+.card.product-card .foot{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.card.product-card .foot .btn-sm:first-child{
+  margin-right:auto; /* empuja el chip a la derecha */
+}
+
+.card.product-card .hoverMore{
+  opacity:0;
+  transform:translateY(4px);
+  transition:opacity .18s ease, transform .18s ease;
+}
+
+.card.product-card:hover .hoverMore{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* --------- Reels por sistema (panel contable) --------- */
+.reels-home-wrap{margin-top:26px;}
+
+.reels-home-card .body{
+  padding:16px;
+}
+
+.reel-sys-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  margin:10px 0 12px;
+}
+
+.reel-tab{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  padding:8px 10px;
+  min-width:80px;
+  border-radius:12px;
+  border:1px solid #1f2a3a;
+  background:#0e1520;
+  color:#cfe3ff;
+  font-size:12px;
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .16s ease, border-color .16s ease, background .18s ease;
+}
+
+.reel-tab img{
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  object-fit:cover;
+  background:#020617;
+  border:1px solid #223044;
+}
+
+.reel-tab span{
+  line-height:1.2;
+}
+
+.reel-tab:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(0,0,0,.35);
+}
+
+.reel-tab.active{
+  border-color:var(--brand-2);
+  background:radial-gradient(circle at top,rgba(96,165,250,.22),#020617);
+  box-shadow:0 0 0 1px rgba(96,165,250,.6);
+}
+
+.reels-home-card .reel-title{
+  margin:4px 0 10px;
+  text-align:center;
+  color:#e8eef6;
+  font-size:14px;
+  font-weight:600;
+}
+
+.reels-home-card .carousel{
+  margin-top:4px;
+}
+
+/* Responsive: 1 columna en móviles en productos */
+@media (max-width: 900px){
+  .hero-grid{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .cards-products{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+  .videos-grid{grid-template-columns:1fr}
+  .promo-grid{grid-template-columns:1fr}
+}
