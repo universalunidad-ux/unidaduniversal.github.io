@@ -351,3 +351,294 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.svc-link:foc
   align-items:center;
   justify-content:center;
 }
+
+/* =========================================================
+   Ajuste tokens: gap global (si no existía)
+   ========================================================= */
+:root{
+  --gap:14px;
+}
+
+/* =========================================================
+   Home / Index — estilos específicos
+   (se montan sobre mainservicios.css)
+   ========================================================= */
+
+/* Hero del home (texto + tarjeta de contacto) */
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:calc(var(--gap)*1.2);
+  align-items:center;
+}
+.kicker{
+  color:var(--brand);
+  font-weight:700;
+  letter-spacing:.02em;
+  margin-bottom:6px;
+}
+.hero-card{
+  background:
+    radial-gradient(1200px 500px at 30% -20%, rgba(45,212,191,.18), transparent 40%),
+    #0d131d;
+  border:1px solid #1b2535;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:var(--shadow-soft);
+}
+@media (max-width:980px){
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* Palabras en degradado dentro de títulos */
+.gradient-word{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  display:inline;
+}
+
+/* Tags y badges Nube / Conecta usados en productos */
+.tag-nube,
+.tag-conecta{
+  border-radius:var(--radius-pill);
+  padding:6px 10px;
+  font-size:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.tag-nube{
+  background:#0f1c2c;
+  border:1px solid #203044;
+  color:#cfe3ff;
+}
+.tag-conecta{
+  background:#0f1c2c;
+  border:1px solid #1d2e3f;
+  color:#bfffe5;
+}
+.badge-nube{
+  background:rgba(96,165,250,.15);
+  border:1px solid #60a5fa;
+  color:#93c5fd;
+}
+.badge-conecta{
+  background:rgba(34,197,94,.15);
+  border:1px solid #22c55e;
+  color:#86efac;
+}
+
+/* Secciones y grid de cards del index */
+.section-title{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:var(--gap);
+  margin-bottom:var(--gap);
+}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--gap);
+}
+@media (max-width:980px){
+  .cards{
+    grid-template-columns:1fr;
+  }
+}
+
+/* Lista de bullets con check (Sectores / ¿Por qué Expiriti?) */
+.features{
+  display:grid;
+  gap:calc(var(--gap)*0.6);
+  margin:10px 0 0;
+  padding:0;
+  list-style:none;
+}
+.features li{
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+}
+.features li::before{
+  content:"✓";
+  display:inline-grid;
+  place-items:center;
+  width:18px;
+  height:18px;
+  border-radius:6px;
+  background:#132033;
+  color:var(--brand);
+  font-size:12px;
+  margin-top:2px;
+}
+
+/* Tabs de Productos (Solución contable / comercial / nube / productividad) */
+.tablist{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  background:#0e1520;
+  border:1px solid #1f2a3a;
+  padding:8px;
+  border-radius:12px;
+  margin-bottom:var(--gap);
+}
+.tab{
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid #223044;
+  background:#101722;
+  color:#c8d3e5;
+  font-weight:600;
+  cursor:pointer;
+  transition:
+    background var(--transition-med),
+    border-color var(--transition-med),
+    box-shadow var(--transition-med),
+    transform var(--transition-fast);
+}
+.tab[aria-selected="true"]{
+  background:linear-gradient(145deg,var(--brand),var(--brand-2));
+  color:#0b0f14;
+  border:none;
+  box-shadow:0 10px 24px rgba(0,0,0,.3);
+}
+.tab:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(0,0,0,.28);
+}
+.hidden{
+  display:none !important;
+}
+
+/* Formularios del hero y contacto */
+form{
+  display:grid;
+  gap:calc(var(--gap)*0.85);
+}
+input,
+select,
+textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid #223044;
+  background:#0e1520;
+  color:#e2e8f0;
+}
+label{
+  font-size:14px;
+  color:#b8c4d7;
+}
+textarea{
+  resize:vertical;
+}
+.hint{
+  font-size:12px;
+}
+
+/* Grid simple de videos del index (sección "Videos") */
+.videos-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:var(--gap);
+}
+.videos-grid iframe,
+.videos-grid video{
+  width:100%;
+  border-radius:12px;
+  border:1px solid #1c2533;
+  background:#0e1520;
+  box-shadow:0 8px 18px rgba(0,0,0,.35);
+  transition:
+    transform var(--transition-med),
+    box-shadow var(--transition-med),
+    filter var(--transition-med);
+}
+.videos-grid iframe:hover,
+.videos-grid video:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 32px rgba(0,0,0,.55);
+  filter:brightness(1.03);
+}
+@media (max-width:768px){
+  .videos-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* Promociones con filtros (botones + grid de imágenes) */
+.promo-filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.promo-btn{
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid #223044;
+  background:#101722;
+  color:#c8d3e5;
+  font-weight:600;
+  cursor:pointer;
+  transition:
+    background var(--transition-med),
+    border-color var(--transition-med),
+    box-shadow var(--transition-med),
+    transform var(--transition-fast),
+    filter var(--transition-fast);
+}
+.promo-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(0,0,0,.35);
+  filter:brightness(1.04);
+}
+.promo-btn.active{
+  background:linear-gradient(145deg,var(--brand),var(--brand-2));
+  color:#0b0f14;
+  border:none;
+  box-shadow:0 10px 26px rgba(0,0,0,.45);
+}
+.promo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:calc(var(--gap)*0.85);
+}
+.promo-grid img{
+  width:100%;
+  border-radius:12px;
+  border:1px solid #1c2533;
+  background:#0e1520;
+  box-shadow:0 8px 18px rgba(0,0,0,.35);
+  transition:
+    transform var(--transition-med),
+    box-shadow var(--transition-med),
+    filter var(--transition-med);
+}
+.promo-grid img:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 36px rgba(0,0,0,.6);
+  filter:brightness(1.05);
+}
+@media (max-width:768px){
+  .promo-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* Ajuste suave de botones principales en mobile */
+@media (max-width:520px){
+  .promo-btn{
+    width:100%;
+    justify-content:center;
+    text-align:center;
+  }
+}
+
