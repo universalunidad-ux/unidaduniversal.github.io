@@ -726,13 +726,13 @@
 
     // Catálogo de sistemas (logos + nombres + si aplican descuentos)
     window.CATALOG_SISTEMAS = window.CATALOG_SISTEMAS || [
-      { name: "CONTPAQi Contabilidad",        img: "../IMG/contabilidad.webp" },
-      { name: "CONTPAQi Bancos",              img: "../IMG/bancos.webp" },
-      { name: "CONTPAQi Nóminas",             img: "../IMG/nominas.webp" },
-      { name: "CONTPAQi XML en Línea",        img: "../IMG/xml.webp",  noDiscount: true },
-      { name: "CONTPAQi Comercial PRO",       img: "../IMG/comercialpro.webp" },
-      { name: "CONTPAQi Comercial PREMIUM",   img: "../IMG/comercialpremium.webp" },
-      { name: "CONTPAQi Factura Electrónica", img: "../IMG/factura.webp" }
+      { name: "CONTPAQi Contabilidad",        img: "../IMG/contabilidadsq.webp" },
+      { name: "CONTPAQi Bancos",              img: "../IMG/bancossq.webp" },
+      { name: "CONTPAQi Nóminas",             img: "../IMG/nominassq.webp" },
+      { name: "CONTPAQi XML en Línea",        img: "../IMG/xmlsq.webp",  noDiscount: true },
+      { name: "CONTPAQi Comercial PRO",       img: "../IMG/comercialprosq.webp" },
+      { name: "CONTPAQi Comercial PREMIUM",   img: "../IMG/comercialpremiumsq.webp" },
+      { name: "CONTPAQi Factura Electrónica", img: "../IMG/facturasq.webp" }
     ];
 
     // Calcula “precio desde” en base al objeto preciosContpaqi
