@@ -1165,12 +1165,68 @@ if (tabInicial) activarTabProductos(tabInicial);
       }
     };
 
+    // ---------- Helpers para reels / videos YouTube ----------
+function renderReelThumb(wrap){
+  const id    = wrap.dataset.ytid;
+  const title = wrap.dataset.title || '';
+
+  if (!id) return;
+
+  wrap.innerHTML = `
+    <button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
+      <img
+        src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg"
+        loading="lazy"
+        alt="${title}"
+        onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';">
+      <span class="yt-play"></span>
+    </button>
+  `;
+
+  const btn = wrap.querySelector('.yt-thumb');
+  if (!btn) return;
+
+  btn.addEventListener('click', ()=>{
+    // Detiene cualquier otro video que esté sonando
+    stopAllReels();
+    // Y luego reproduce este
+    renderReelIframe(wrap);
+  });
+}
+
+function renderReelIframe(wrap){
+  const id    = wrap.dataset.ytid;
+  const title = wrap.dataset.title || '';
+
+  if (!id) return;
+
+  wrap.innerHTML = `
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1"
+      title="${title}"
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+  `;
+}
+
+// Esto regenera la miniatura en TODOS los contenedores .reel-embed
+function stopAllReels(){
+  document.querySelectorAll('.reel-embed').forEach(wrap=>{
+    if (!wrap.dataset.ytid) return;
+    renderReelThumb(wrap);
+  });
+}
+
 function buildReelsSlides(panelKey, sysKey){
   const config = REELS_DATA[panelKey];
   if (!config) return;
+
   const {carousel, titleEl, reelsBySys} = config;
   const track = carousel?.querySelector('.carousel-track');
-  const nav  = carousel?.querySelector('.carousel-nav');
+  const nav   = carousel?.querySelector('.carousel-nav');
   if (!track || !nav) return;
 
   const reels = reelsBySys[sysKey] || [];
@@ -1184,39 +1240,15 @@ function buildReelsSlides(panelKey, sysKey){
 
     const wrap = document.createElement('div');
     wrap.className = 'reel-embed';
+    wrap.dataset.ytid  = reel.id;
+    wrap.dataset.title = reel.title;
 
-    // 👉 BOTÓN CON MINIATURA (SIN IFRAME)
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'yt-thumb';
-    btn.setAttribute('aria-label', `Reproducir: ${reel.title}`);
+    // 👉 Miniatura inicial (sin iframe)
+    renderReelThumb(wrap);
 
-    btn.innerHTML = `
-      <img
-        src="https://i.ytimg.com/vi/${reel.id}/hqdefault.jpg"
-        loading="lazy"
-        alt="${reel.title}">
-      <span class="yt-play"></span>
-    `;
-
-    // Al hacer clic, se reemplaza por el iframe real
-    btn.addEventListener('click', ()=>{
-      wrap.innerHTML = `
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/${reel.id}?autoplay=1"
-          title="${reel.title}"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>`;
-    });
-
-    wrap.appendChild(btn);
     slide.appendChild(wrap);
     track.appendChild(slide);
 
-    // Puntos de navegación (igual que antes)
     const dot = document.createElement('button');
     dot.type = 'button';
     dot.className = 'dot' + (idx===0 ? ' active' : '');
@@ -1228,6 +1260,9 @@ function buildReelsSlides(panelKey, sysKey){
       $$('.dot', nav).forEach(d=>d.classList.remove('active'));
       dot.classList.add('active');
       track.scrollTo({left: track.clientWidth * idx, behavior:'smooth'});
+
+      // Al cambiar de reel con los puntitos, detenemos cualquier video sonando
+      stopAllReels();
     });
     nav.appendChild(dot);
   });
@@ -1260,14 +1295,17 @@ function buildReelsSlides(panelKey, sysKey){
 
       const prevBtn = carousel.querySelector('.arrowCircle.prev');
       const nextBtn = carousel.querySelector('.arrowCircle.next');
-      prevBtn?.addEventListener('click', ()=>{
-        const idx = slidesFor().findIndex(s=>s.classList.contains('is-active'));
-        goTo(idx - 1);
-      });
-      nextBtn?.addEventListener('click', ()=>{
-        const idx = slidesFor().findIndex(s=>s.classList.contains('is-active'));
-        goTo(idx + 1);
-      });
+prevBtn?.addEventListener('click', ()=>{
+  const idx = slidesFor().findIndex(s=>s.classList.contains('is-active'));
+  goTo(idx - 1);
+  stopAllReels();
+});
+nextBtn?.addEventListener('click', ()=>{
+  const idx = slidesFor().findIndex(s=>s.classList.contains('is-active'));
+  goTo(idx + 1);
+  stopAllReels();
+});
+
 
       // Inicial por defecto
       buildReelsSlides(panelKey, defaultSys);
@@ -1276,53 +1314,52 @@ function buildReelsSlides(panelKey, sysKey){
     // Inicializa todos los paneles de reels
     ['contable','comercial','nube','productividad'].forEach(initReelsCarousel);
 
-    // Tabs de sistema (iconitos debajo del carrusel)
-    $$('.reel-tab').forEach(tab=>{
-      tab.addEventListener('click', ()=>{
-        const panelKey = tab.dataset.panel;
-        const sysKey   = tab.dataset.sys;
-        if (!panelKey || !sysKey) return;
+// Tabs de sistema (iconitos debajo del carrusel)
+$$('.reel-tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    const panelKey = tab.dataset.panel;
+    const sysKey   = tab.dataset.sys;
+    if (!panelKey || !sysKey) return;
 
-        // activar visualmente
-        $$('.reel-tab').forEach(t=>{
-          if (t.dataset.panel === panelKey){
-            t.classList.toggle('active', t === tab);
-          }
-        });
+    // 🧊 Detener cualquier video que esté sonando
+    if (typeof stopAllReels === 'function') {
+      stopAllReels();
+    }
 
-        buildReelsSlides(panelKey, sysKey);
-      });
+    // Activar visualmente solo los tabs del panel actual
+    $$('.reel-tab').forEach(t=>{
+      if (t.dataset.panel === panelKey){
+        t.classList.toggle('active', t === tab);
+      }
     });
-    // ---------- Miniaturas en sección "Videos" ----------
+
+    // Volver a construir los slides para ese sistema
+    buildReelsSlides(panelKey, sysKey);
+  });
+});
+
+// ---------- Miniaturas en sección "Videos" ----------
 function initSimpleThumbs(){
   $$('.yt-lite').forEach(node=>{
-    const id = node.dataset.ytid;
+    const id    = node.dataset.ytid;
     const title = node.dataset.title || '';
     if (!id) return;
 
-    node.classList.add('reel-embed'); // reutiliza mismo estilo de contenedor
-    node.innerHTML = `
-      <button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
-        <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" loading="lazy" alt="${title}">
-        <span class="yt-play"></span>
-      </button>
-    `;
+    // Usamos el mismo contenedor que los reels
+    node.classList.add('reel-embed');
+    node.dataset.ytid  = id;
+    node.dataset.title = title;
 
-    const btn = node.querySelector('.yt-thumb');
-    btn.addEventListener('click', ()=>{
-      node.innerHTML = `
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1"
-          title="${title}"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
-    });
+    // Pinta miniatura reutilizando el helper
+    if (typeof renderReelThumb === 'function') {
+      renderReelThumb(node);
+    }
   });
 }
 
+// Llamada inicial
 initSimpleThumbs();
+
 
   </script>
 </body>
