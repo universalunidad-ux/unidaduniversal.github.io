@@ -1165,55 +1165,76 @@ if (tabInicial) activarTabProductos(tabInicial);
       }
     };
 
-    function buildReelsSlides(panelKey, sysKey){
-      const config = REELS_DATA[panelKey];
-      if (!config) return;
-      const {carousel, titleEl, reelsBySys} = config;
-      const track = carousel?.querySelector('.carousel-track');
-      const nav  = carousel?.querySelector('.carousel-nav');
-      if (!track || !nav) return;
+function buildReelsSlides(panelKey, sysKey){
+  const config = REELS_DATA[panelKey];
+  if (!config) return;
+  const {carousel, titleEl, reelsBySys} = config;
+  const track = carousel?.querySelector('.carousel-track');
+  const nav  = carousel?.querySelector('.carousel-nav');
+  if (!track || !nav) return;
 
-      const reels = reelsBySys[sysKey] || [];
-      track.innerHTML = '';
-      nav.innerHTML   = '';
+  const reels = reelsBySys[sysKey] || [];
+  track.innerHTML = '';
+  nav.innerHTML   = '';
 
-      reels.forEach((reel, idx)=>{
-        const slide = document.createElement('div');
-        slide.className = 'carousel-slide';
-        if (idx === 0) slide.classList.add('is-active');
+  reels.forEach((reel, idx)=>{
+    const slide = document.createElement('div');
+    slide.className = 'carousel-slide';
+    if (idx === 0) slide.classList.add('is-active');
 
-        const wrap = document.createElement('div');
-        wrap.className = 'reel-embed';
-        wrap.setAttribute('data-ytid', reel.id);
-        wrap.setAttribute('data-title', reel.title);
+    const wrap = document.createElement('div');
+    wrap.className = 'reel-embed';
 
-        // Iframe directo (nocookie)
-        wrap.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${reel.id}"
-                                title="${reel.title}"
-                                loading="lazy"
-                                allowfullscreen
-                                referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+    // 👉 BOTÓN CON MINIATURA (SIN IFRAME)
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'yt-thumb';
+    btn.setAttribute('aria-label', `Reproducir: ${reel.title}`);
 
-        slide.appendChild(wrap);
-        track.appendChild(slide);
+    btn.innerHTML = `
+      <img
+        src="https://i.ytimg.com/vi/${reel.id}/hqdefault.jpg"
+        loading="lazy"
+        alt="${reel.title}">
+      <span class="yt-play"></span>
+    `;
 
-        const dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'dot' + (idx===0 ? ' active' : '');
-        dot.setAttribute('aria-label', 'Ir al reel ' + (idx+1));
-        dot.addEventListener('click', ()=>{
-          const slides = $$('.carousel-slide', track);
-          slides.forEach(s=>s.classList.remove('is-active'));
-          slides[idx]?.classList.add('is-active');
-          $$('.dot', nav).forEach(d=>d.classList.remove('active'));
-          dot.classList.add('active');
-          track.scrollTo({left: track.clientWidth * idx, behavior:'smooth'});
-        });
-        nav.appendChild(dot);
-      });
+    // Al hacer clic, se reemplaza por el iframe real
+    btn.addEventListener('click', ()=>{
+      wrap.innerHTML = `
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/${reel.id}?autoplay=1"
+          title="${reel.title}"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>`;
+    });
 
-      if (titleEl) titleEl.textContent = reels[0]?.title || '';
-    }
+    wrap.appendChild(btn);
+    slide.appendChild(wrap);
+    track.appendChild(slide);
+
+    // Puntos de navegación (igual que antes)
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'dot' + (idx===0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Ir al reel ' + (idx+1));
+    dot.addEventListener('click', ()=>{
+      const slides = $$('.carousel-slide', track);
+      slides.forEach(s=>s.classList.remove('is-active'));
+      slides[idx]?.classList.add('is-active');
+      $$('.dot', nav).forEach(d=>d.classList.remove('active'));
+      dot.classList.add('active');
+      track.scrollTo({left: track.clientWidth * idx, behavior:'smooth'});
+    });
+    nav.appendChild(dot);
+  });
+
+  if (titleEl) titleEl.textContent = reels[0]?.title || '';
+}
+
 
     function initReelsCarousel(panelKey){
       const config = REELS_DATA[panelKey];
