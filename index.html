@@ -664,11 +664,11 @@
   <section id="videos">
     <div class="container">
       <div class="section-title"><h2 style="margin:0">Videos</h2></div>
-      <div class="videos-grid">
-        <!-- Sustituye los IDs por tus reels reales -->
-        <iframe style="aspect-ratio:16/9" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Video 1" frameborder="0" allowfullscreen loading="lazy"></iframe>
-        <iframe style="aspect-ratio:16/9" src="https://www.youtube.com/embed/oHg5SJYRHA0" title="Video 2" frameborder="0" allowfullscreen loading="lazy"></iframe>
-      </div>
+<div class="videos-grid">
+  <div class="yt-lite" data-ytid="dQw4w9WgXcQ" data-title="Video 1"></div>
+  <div class="yt-lite" data-ytid="oHg5SJYRHA0" data-title="Video 2"></div>
+</div>
+
     </div>
   </section>
 
@@ -1293,6 +1293,37 @@ function buildReelsSlides(panelKey, sysKey){
         buildReelsSlides(panelKey, sysKey);
       });
     });
+    // ---------- Miniaturas en sección "Videos" ----------
+function initSimpleThumbs(){
+  $$('.yt-lite').forEach(node=>{
+    const id = node.dataset.ytid;
+    const title = node.dataset.title || '';
+    if (!id) return;
+
+    node.classList.add('reel-embed'); // reutiliza mismo estilo de contenedor
+    node.innerHTML = `
+      <button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
+        <img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" loading="lazy" alt="${title}">
+        <span class="yt-play"></span>
+      </button>
+    `;
+
+    const btn = node.querySelector('.yt-thumb');
+    btn.addEventListener('click', ()=>{
+      node.innerHTML = `
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1"
+          title="${title}"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+    });
+  });
+}
+
+initSimpleThumbs();
+
   </script>
 </body>
 </html>
