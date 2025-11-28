@@ -209,10 +209,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 }
 
 /* REEL EMBED (9:16) */
-.reel-embed{position:relative;width:min(320px,100%) !important;max-width:320px !important;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid #111827;background:#020617;margin:4px auto 0;flex:0 0 auto;justify-self:center;box-shadow:0 20px 40px rgba(0,0,0,.60);transition:transform .22s ease,box-shadow .22s ease,filter .22s ease}
-@media (min-width:1200px){.reel-embed{width:300px !important;max-width:300px !important}}
-.reel-embed:hover{transform:translateY(-2px);box-shadow:0 26px 60px rgba(0,0,0,.72)}
-.reel-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.reel-embed{position:relative;width:min(320px,100%);max-width:320px;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid #111827;background:#020617;margin:4px auto 0;flex:0 0 auto;justify-self:center;box-shadow:0 20px 40px rgba(0,0,0,.60);transition:transform .22s ease,box-shadow .22s ease,filter .22s ease}@media (min-width:1200px){.reel-embed{width:300px;max-width:300px}}.reel-embed:hover{transform:translateY(-2px);box-shadow:0 26px 60px rgba(0,0,0,.72)}.reel-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}.yt-thumb{all:unset;cursor:pointer;display:block;width:100%;height:100%;position:relative}.yt-thumb img{width:100%;height:100%;object-fit:cover;display:block}.yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}.yt-play::before{content:'▶';font-size:42px;padding:16px 22px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff}
 
 /* Títulos Reel */
 .reel-title{margin-bottom:6px;text-align:center;color:#fff;font-weight:700;font-size:.95rem;display:none}
@@ -221,6 +218,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 /* Animación entre Reels (sin parpadeo) */
 #carouselReelsSoporte .carousel-slide{opacity:1;transform:translateX(0)}
 #carouselReelsSoporte .carousel-slide.is-active .reel-embed{transform:translateY(-3px);box-shadow:0 30px 70px rgba(0,0,0,.85);filter:saturate(1.05)}
+
 
 /* =========================================================
    Scroll táctil amigable en carruseles
