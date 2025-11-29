@@ -66,6 +66,22 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .yt-wrap{position:relative;width:100%;max-width:960px;margin:0 auto;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;border:1px solid #1c2533;background:#0e1724}.yt-wrap iframe,.yt-wrap > div{position:absolute !important;top:0;left:0;width:100% !important;height:100% !important;border:0}
 .yt-title{font-size:15px;font-weight:600;color:#e8eef6;margin-bottom:10px;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center}.yt-grid-single{grid-template-columns:minmax(0,480px);justify-content:center}@media (max-width:768px){.yt-grid-single{grid-template-columns:1fr}}
 #carouselVideos .carousel-slide{padding:0 50px;box-sizing:border-box}@media (max-width:768px){#carouselVideos .carousel-slide{padding:0 10px}}
+/* ====== FIX: Videos del sistema (Contabilidad, etc.) ====== */
+/* Evita min-height enorme y centrado vertical del contenido */
+
+#carouselVideos{
+  min-height:auto;              /* quita los 420px globales */
+}
+
+#carouselVideos .carousel-track{
+  height:auto;                  /* que el alto lo marque la grid */
+}
+
+#carouselVideos .carousel-slide{
+  height:auto;                  /* deja que la slide se adapte */
+  align-items:flex-start;       /* contenido pegado arriba */
+  justify-content:center;       /* centrado horizontal si quieres */
+}
 
 /* =========================================================
    ListSlider / “Por qué usar...”
