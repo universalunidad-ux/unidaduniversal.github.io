@@ -1,7 +1,5 @@
 /* =========================================================
-   Expiriti - mainservicios.css
-   Servicios: Soporte, Pólizas, Cursos, Migraciones, etc.
-   UI/UX unificado + Glow premium (2025-ready)
+   Expiriti - mainservicios.css (MIN + ANOTACIONES)
    ========================================================= */
 
 /* ---------- Root / Tokens ---------- */
@@ -38,7 +36,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .stack{display:grid;gap:12px}
 .stack-left{display:grid;gap:10px;align-items:start;justify-items:start}
-@media (max-width:980px){.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}}
+@media(max-width:980px){.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}}
 
 /* =========================================================
    Cards
@@ -52,7 +50,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
    Botones
    ========================================================= */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;border-radius:var(--radius-pill);border:1px solid #1c2533;background:#121a25;box-shadow:var(--shadow);font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-fast),filter var(--transition-fast)}
-.btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#0b0f14;border:none}
+.btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#ffffff;border:none}
 .btn-grad-purple{background:linear-gradient(145deg,#7c3aed,#a855f7);color:#fff;border:none}
 .btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
 .btn-ghost{background:#121a25;color:#e8eef6}
@@ -80,13 +78,15 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .arrowCircle.next{right:8px}
 .arrowCircle .chev{font-size:24px;line-height:1}
 
-/* Carrusel horizontal de sistemas (.carouselX) */
+/* =========================================================
+   Carrusel horizontal de sistemas (.carouselX)
+   ========================================================= */
 .carouselX{position:relative;border-radius:var(--radius-lg);background:linear-gradient(180deg,#0e1826,#0f1622);border:1px solid #1c2533;padding:8px;box-shadow:var(--shadow-soft)}
 .carouselX .track{display:flex;gap:12px;overflow:hidden;padding:4px;min-height:220px}
 .carouselX .sys{flex:0 0 calc((100% - 24px)/3);background:linear-gradient(135deg,#0f1622,#0f1724);border:1px solid #1c2533;border-radius:var(--radius-md);padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-fast)}
 .carouselX .sys:hover{background:radial-gradient(circle at top left,rgba(96,165,250,.18),#0f1724);border-color:var(--brand-2);box-shadow:0 10px 24px rgba(0,0,0,.35);transform:translateY(-2px)}
 .carouselX .sys img{width:72px;height:72px;border-radius:16px;margin:6px auto 10px;background:#101826;object-fit:cover}
-.group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0 0}
+.group-dots{display:flex;gap:8px;justify-content:center;margin:8px 0 0}
 .group-dots .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2))}
 .carouselX .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:999px;border:1px solid #2b3c56;background:linear-gradient(145deg,#0f1a2a,#0f1c2c);display:grid;place-items:center;cursor:pointer;z-index:3;color:#eaf2ff;box-shadow:0 6px 18px rgba(0,0,0,.35)}
 .carouselX .arrowCircle.prev{left:8px}
@@ -137,59 +137,48 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .faq-item>summary:hover{background:radial-gradient(circle at top left,rgba(96,165,250,.14),#020617);box-shadow:var(--shadow-elevated);transform:translateY(-1px)}
 
 /* =========================================================
-   Pills (filtros de servicios)
+   Pills (filtros de servicios) + Grid cursos
    ========================================================= */
-/* Pills (filtros de servicios) */
-.pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}.pill{padding:8px 12px;border-radius:var(--radius-pill);border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;transition:transform .12s ease,box-shadow .12s ease,background .2s ease}.pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}.pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
+.pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+.pill{padding:8px 12px;border-radius:var(--radius-pill);border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);color:#cfe3ff;cursor:pointer;font-weight:700;font-size:13px;transition:transform .12s ease,box-shadow .12s ease,background .2s ease}
+.pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
 
-/* Grid de cursos */
-.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}@media (max-width:980px){.feature-grid{grid-template-columns:1fr 1fr}}@media (max-width:680px){.feature-grid{grid-template-columns:1fr}}
+/* Grid de cursos (1ª definición) */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:980px){.feature-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.feature-grid{grid-template-columns:1fr}}
 .feature-grid .fcard{border-radius:var(--radius-md);border:1px solid #1e2b3c;background:linear-gradient(135deg,#0f1622,#0f1724);padding:14px;display:grid;gap:8px;transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-fast);container-type:inline-size}
 .feature-grid .fcard:hover{background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);border-color:var(--brand-2);box-shadow:0 10px 24px rgba(0,0,0,.35);transform:translateY(-2px)}
 .fhead{display:flex;align-items:center;gap:10px}
 .logo-sistema{width:100%;max-width:260px;height:auto;display:block;margin:4px auto 12px;object-fit:contain}
 .feature-grid .fcard h4{margin:0;font-size:14px}
 .feature-grid .fcard p{margin:0;color:#bcd0ea;font-size:13px;line-height:1.35}
-@container (max-width:420px){.feature-grid .fcard{text-align:left}.feature-grid .fcard .fhead{align-items:flex-start}}
+@container(max-width:420px){.feature-grid .fcard{text-align:left}.feature-grid .fcard .fhead{align-items:flex-start}}
 
-/* Iconos de los paquetes de implementación */
+/* Iconos paquetes implementación (1ª) */
 .ficon{width:52px;height:52px;flex-shrink:0;border-radius:12px;background:#020617;object-fit:contain;padding:2px}
 
-/* FIX: Nube con mismo estilo que Escritorio (más específico) */
+/* FIX: Nube con mismo estilo que Escritorio */
 .feature-grid .fcard.tag-nube{display:grid;gap:8px;padding:14px;border-radius:var(--radius-md);background:linear-gradient(135deg,#0f1622,#0f1724);border:1px solid #1c2533}
 .feature-grid .fcard.tag-nube p,
 .feature-grid .fcard.tag-nube ul,
 .feature-grid .fcard.tag-nube li{font-size:14px;color:#cfe3ff;line-height:1.45}
 .feature-grid .fcard.tag-nube h4{font-size:17px;font-weight:700;color:#fff}
 
+/* Iconos paquetes implementación (2ª, misma intención) */
+.ficon{width:52px;height:52px;flex-shrink:0;border-radius:12px;background:#020617;object-fit:contain;padding:2px}
 
-/* Iconos de los paquetes de implementación */
-.ficon{
-  width:52px;
-  height:52px;
-  flex-shrink:0;
-  border-radius:12px;
-  background:#020617;
-  object-fit:contain;   /* respeta proporciones del logo */
-  padding:2px;          /* un poquito de aire alrededor */
-}
-
-@media (max-width:980px){.feature-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:680px){.feature-grid{grid-template-columns:1fr}}
+/* Grid cursos (2ª definición, mismo estilo) */
+@media(max-width:980px){.feature-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.feature-grid{grid-template-columns:1fr}}
 .feature-grid .fcard{border-radius:var(--radius-md);border:1px solid #1e2b3c;background:linear-gradient(135deg,#0f1622,#0f1724);padding:14px;display:grid;gap:8px;transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-fast);container-type:inline-size}
 .feature-grid .fcard:hover{background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);border-color:var(--brand-2);box-shadow:0 10px 24px rgba(0,0,0,.35);transform:translateY(-2px)}
 .fhead{display:flex;align-items:center;gap:10px}
-.logo-sistema{
-  width:100%;
-  max-width:260px;   /* ajusta si lo quieres más grande/pequeño */
-  height:auto;
-  display:block;
-  margin:4px auto 12px;
-  object-fit:contain;
-}
+.logo-sistema{width:100%;max-width:260px;height:auto;display:block;margin:4px auto 12px;object-fit:contain}
 .feature-grid .fcard h4{margin:0;font-size:14px}
 .feature-grid .fcard p{margin:0;color:#bcd0ea;font-size:13px;line-height:1.35}
-@container (max-width:420px){.feature-grid .fcard{text-align:left}.feature-grid .fcard .fhead{align-items:flex-start}}
+@container(max-width:420px){.feature-grid .fcard{text-align:left}.feature-grid .fcard .fhead{align-items:flex-start}}
 
 /* =========================================================
    Por qué elegir nuestro soporte (listSlider)
@@ -211,7 +200,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
    ========================================================= */
 #servicios-complementarios .card.body{padding:16px 14px}
 .svc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-@media (max-width:980px){.svc-grid{grid-template-columns:1fr}}
+@media(max-width:980px){.svc-grid{grid-template-columns:1fr}}
 .svc-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .svc-link{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:9px 12px;border-radius:var(--radius-md);background:linear-gradient(135deg,#0f1622,#0f1724);border:1px solid #1c2533;cursor:pointer;position:relative;transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-fast);container-type:inline-size}
 .svc-text{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -220,26 +209,29 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .svc-pill{flex-shrink:0;align-self:center;font-size:12px;border-radius:var(--radius-pill);padding:4px 9px;border:1px solid rgba(96,165,250,.3);background:rgba(15,23,42,.8);color:var(--brand-2);opacity:0;transform:translateX(6px);transition:opacity var(--transition-med),transform var(--transition-med),border-color var(--transition-med),background var(--transition-med);white-space:nowrap}
 .svc-link:hover{background:radial-gradient(circle at top left,rgba(96,165,250,.16),#0f1724);border-color:var(--brand-2);box-shadow:0 10px 26px rgba(0,0,0,.35);transform:translateY(-1px)}
 .svc-link:hover .svc-pill{opacity:1;transform:translateX(0);background:rgba(15,23,42,.95);border-color:rgba(96,165,250,.9)}
-@container (max-width:460px){.svc-link{flex-direction:column;align-items:flex-start}.svc-pill{align-self:flex-start;margin-top:4px}}
+@container(max-width:460px){.svc-link{flex-direction:column;align-items:flex-start}.svc-pill{align-self:flex-start;margin-top:4px}}
 
 /* =========================================================
-   YouTube grid + Reels
+   YouTube grid + Reels (genérico)
    ========================================================= */
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;justify-items:center}
-@media (max-width:768px){.yt-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.yt-grid{grid-template-columns:1fr}}
 .yt{width:100%;max-width:680px}
 .yt iframe{aspect-ratio:16/9;width:100%;border:1px solid #1c2533;border-radius:12px;background:#0e1724}
 
-/* Tarjeta contenedora de Reels */
+/* Tarjeta contenedora de Reels (soporte) */
 .reels-card{display:flex;flex-direction:column;align-items:center;gap:10px;padding:16px 16px 18px;border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.55);background:#0b0f16}
-@media (min-width:980px){
-  #beneficios .grid-2{align-items:flex-start}
-  .reels-card{align-self:stretch;justify-content:flex-start}
-  .reels-card .carousel{width:100%;max-width:340px;margin-inline:auto;margin-top:4px}
-}
+@media(min-width:980px){#beneficios .grid-2{align-items:flex-start}.reels-card{align-self:stretch;justify-content:flex-start}.reels-card .carousel{width:100%;max-width:340px;margin-inline:auto;margin-top:4px}}
 
 /* REEL EMBED (9:16) */
-.reel-embed{position:relative;width:min(320px,100%);max-width:320px;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid #111827;background:#020617;margin:4px auto 0;flex:0 0 auto;justify-self:center;box-shadow:0 20px 40px rgba(0,0,0,.60);transition:transform .22s ease,box-shadow .22s ease,filter .22s ease}@media (min-width:1200px){.reel-embed{width:300px;max-width:300px}}.reel-embed:hover{transform:translateY(-2px);box-shadow:0 26px 60px rgba(0,0,0,.72)}.reel-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}.yt-thumb{all:unset;cursor:pointer;display:block;width:100%;height:100%;position:relative}.yt-thumb img{width:100%;height:100%;object-fit:cover;display:block}.yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}.yt-play::before{content:'▶';font-size:42px;padding:16px 22px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff}
+.reel-embed{position:relative;width:min(320px,100%);max-width:320px;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid #111827;background:#020617;margin:4px auto 0;flex:0 0 auto;justify-self:center;box-shadow:0 20px 40px rgba(0,0,0,.6);transition:transform .22s ease,box-shadow .22s ease,filter .22s ease}
+@media(min-width:1200px){.reel-embed{width:300px;max-width:300px}}
+.reel-embed:hover{transform:translateY(-2px);box-shadow:0 26px 60px rgba(0,0,0,.72)}
+.reel-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.yt-thumb{all:unset;cursor:pointer;display:block;width:100%;height:100%;position:relative}
+.yt-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.yt-play::before{content:"▶";font-size:42px;padding:16px 22px;border-radius:999px;background:rgba(0,0,0,.55);color:#fff}
 
 /* Títulos Reel */
 .reel-title{margin-bottom:6px;text-align:center;color:#fff;font-weight:700;font-size:.95rem;display:none}
@@ -249,9 +241,8 @@ section{padding:26px 0;border-top:1px solid #11182725}
 #carouselReelsSoporte .carousel-slide{opacity:1;transform:translateX(0)}
 #carouselReelsSoporte .carousel-slide.is-active .reel-embed{transform:translateY(-3px);box-shadow:0 30px 70px rgba(0,0,0,.85);filter:saturate(1.05)}
 
-
 /* =========================================================
-   Scroll táctil amigable en carruseles
+   Scroll táctil amigable en carruseles (1ª pasada)
    ========================================================= */
 .carousel-track,.carouselX .track,.icons-wrap,.listTrack{-webkit-overflow-scrolling:touch;scroll-behavior:smooth;overscroll-behavior-x:contain}
 
@@ -264,31 +255,28 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.svc-link:foc
    Container utilities
    ========================================================= */
 .section-cq{container-type:inline-size}
-@container (max-width:800px){.section-cq .grid-2{grid-template-columns:1fr}}
+@container(max-width:800px){.section-cq .grid-2{grid-template-columns:1fr}}
 
 /* =========================================================
    Preferencias de movimiento reducido
    ========================================================= */
-@media (prefers-reduced-motion:reduce){
-  *{scroll-behavior:auto !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
-}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
 
 /* =========================================================
    Responsivo extra
    ========================================================= */
-@media (max-width:980px){
-  .toc{right:10px;bottom:10px;width:86vw}
-  .carousel{min-height:360px}
-}
+@media(max-width:980px){.toc{right:10px;bottom:10px;width:86vw}.carousel{min-height:360px}}
 
-/* Botón "Ver más" dentro de cada sistema */
+/* =========================================================
+   Botón "Ver más" dentro de cada sistema (carouselX)
+   ========================================================= */
 .carouselX .hoverMore{margin-top:18px;opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease;pointer-events:none}
 .carouselX .sys:hover .hoverMore{opacity:1;transform:translateY(0);pointer-events:auto}
 .chip{display:inline-flex;align-items:center;justify-content:center;padding:6px 14px;border-radius:999px;background:rgba(15,23,42,.9);border:1px solid #1c2533;font-size:14px;font-weight:600;color:#e5f0ff}
 .carouselX .sys.show-hover .hoverMore{opacity:1 !important;transform:translateY(0) !important;pointer-events:auto}
 
 /* =========================================================
-   Scrollbars carruseles (Windows / Edge / Chrome)
+   Scrollbars carruseles (Windows / Edge / Chrome) — 1ª
    ========================================================= */
 .carousel-track,.carouselX .track,.icons-wrap,.listTrack{scrollbar-width:thin;scrollbar-color:#020617 transparent}
 .carousel-track::-webkit-scrollbar,.carouselX .track::-webkit-scrollbar,.icons-wrap::-webkit-scrollbar,.listTrack::-webkit-scrollbar{height:4px;background:transparent}
@@ -296,509 +284,144 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.svc-link:foc
 .carousel-track::-webkit-scrollbar-thumb,.carouselX .track::-webkit-scrollbar-thumb,.icons-wrap::-webkit-scrollbar-thumb,.listTrack::-webkit-scrollbar-thumb{background:#020617;border-radius:999px}
 
 /* =========================================================
-   FIX — Reels Soporte sin barra ni hueco
+   FIX — Reels Soporte sin barra ni hueco (1ª)
    ========================================================= */
-/* el id está EN el .carousel, así que lo usamos directo */
 #carouselReelsSoporte{min-height:0;overflow:hidden}
 #carouselReelsSoporte .carousel-track{height:auto;overflow:hidden}
 #carouselReelsSoporte .carousel-slide{height:auto;align-items:center;justify-content:center}
-
-/* oculta scrollbars solo en este carrusel */
 #carouselReelsSoporte::-webkit-scrollbar,
 #carouselReelsSoporte .carousel-track::-webkit-scrollbar,
 #carouselReelsSoporte .carousel-slide::-webkit-scrollbar{display:none !important}
 #carouselReelsSoporte,. #carouselReelsSoporte .carousel-track{scrollbar-width:none !important}
 
 /* =========================================================
-   Scroll horizontal sensible (trackpad + móviles)
-   para TODOS los carruseles
+   Scroll horizontal sensible (trackpad + móviles) — 2ª
    ========================================================= */
-
 .carousel-track,
 .carouselX .track,
 .icons-wrap,
-.listTrack{
-  /* Horizontal scroll usable en trackpad y touch */
-  overflow-x:auto;
-  overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;
-  scroll-behavior:smooth;
-  overscroll-behavior-x:contain;
-  touch-action:pan-x; /* indica que el gesto principal es horizontal */
-}
+.listTrack{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;overscroll-behavior-x:contain;touch-action:pan-x}
 
-/* Scrollbars delgadas y oscuras (o invisibles si quieres) */
+/* Scrollbars delgadas y oscuras (o invisibles si quieres) — 2ª */
 .carousel-track,
 .carouselX .track,
 .icons-wrap,
-.listTrack{
-  scrollbar-width:thin;
-  scrollbar-color:#020617 transparent;
-}
+.listTrack{scrollbar-width:thin;scrollbar-color:#020617 transparent}
 .carousel-track::-webkit-scrollbar,
 .carouselX .track::-webkit-scrollbar,
 .icons-wrap::-webkit-scrollbar,
-.listTrack::-webkit-scrollbar{
-  height:4px;
-  background:transparent;
-}
+.listTrack::-webkit-scrollbar{height:4px;background:transparent}
 .carousel-track::-webkit-scrollbar-track,
 .carouselX .track::-webkit-scrollbar-track,
 .icons-wrap::-webkit-scrollbar-track,
-.listTrack::-webkit-scrollbar-track{
-  background:transparent;
-}
+.listTrack::-webkit-scrollbar-track{background:transparent}
 .carousel-track::-webkit-scrollbar-thumb,
 .carouselX .track::-webkit-scrollbar-thumb,
 .icons-wrap::-webkit-scrollbar-thumb,
-.listTrack::-webkit-scrollbar-thumb{
-  background:#020617;
-  border-radius:999px;
-}
+.listTrack::-webkit-scrollbar-thumb{background:#020617;border-radius:999px}
 
 /* =========================================================
-   Reels Soporte: sin hueco y con swipe horizontal
+   Reels Soporte: sin hueco y con swipe horizontal — 2ª
    ========================================================= */
-
-/* El carrusel en sí puede ajustar su alto al contenido */
-#carouselReelsSoporte{
-  min-height:auto;
-  overflow:hidden; /* para que no se vea nada fuera del frame */
-}
-
-/* El track sí necesita overflow-x:auto para el swipe */
-#carouselReelsSoporte .carousel-track{
-  height:auto;
-  overflow-x:auto;
-  overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;
-  scroll-behavior:smooth;
-  touch-action:pan-x;
-  scrollbar-width:none; /* sin barra visible en este carrusel */
-}
-#carouselReelsSoporte .carousel-track::-webkit-scrollbar{
-  display:none;
-}
-
-/* Las slides se ajustan al alto del reel */
-#carouselReelsSoporte .carousel-slide{
-  height:auto;
-  align-items:center;
-  justify-content:center;
-}
+#carouselReelsSoporte{min-height:auto;overflow:hidden}
+#carouselReelsSoporte .carousel-track{height:auto;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;touch-action:pan-x;scrollbar-width:none}
+#carouselReelsSoporte .carousel-track::-webkit-scrollbar{display:none}
+#carouselReelsSoporte .carousel-slide{height:auto;align-items:center;justify-content:center}
 
 /* =========================================================
-   Ajuste tokens: gap global (si no existía)
+   Ajuste tokens: gap global
    ========================================================= */
-:root{
-  --gap:14px;
-}
+:root{--gap:14px}
 
 /* =========================================================
    Home / Index — estilos específicos
-   (se montan sobre mainservicios.css)
    ========================================================= */
 
 /* Hero del home (texto + tarjeta de contacto) */
-.hero-grid{
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:calc(var(--gap)*1.2);
-  align-items:center;
-}
-.kicker{
-  color:var(--brand);
-  font-weight:700;
-  letter-spacing:.02em;
-  margin-bottom:6px;
-}
-.hero-card{
-  background:
-    radial-gradient(1200px 500px at 30% -20%, rgba(45,212,191,.18), transparent 40%),
-    #0d131d;
-  border:1px solid #1b2535;
-  border-radius:18px;
-  padding:18px;
-  box-shadow:var(--shadow-soft);
-}
-@media (max-width:980px){
-  .hero-grid{
-    grid-template-columns:1fr;
-  }
-}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:calc(var(--gap)*1.2);align-items:center}
+.kicker{color:var(--brand);font-weight:700;letter-spacing:.02em;margin-bottom:6px}
+.hero-card{background:radial-gradient(1200px 500px at 30% -20%,rgba(45,212,191,.18),transparent 40%),#0d131d;border:1px solid #1b2535;border-radius:18px;padding:18px;box-shadow:var(--shadow-soft)}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr}}
 
 /* Palabras en degradado dentro de títulos */
-.gradient-word{
-  background:linear-gradient(90deg,var(--brand),var(--brand-2));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  -webkit-text-fill-color:transparent;
-  display:inline;
-}
+.gradient-word{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;display:inline}
 
 /* Tags y badges Nube / Conecta usados en productos */
-.tag-nube,
-.tag-conecta{
-  border-radius:var(--radius-pill);
-  padding:6px 10px;
-  font-size:12px;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-}
-.tag-nube{
-  background:#0f1c2c;
-  border:1px solid #203044;
-  color:#cfe3ff;
-}
-.tag-conecta{
-  background:#0f1c2c;
-  border:1px solid #1d2e3f;
-  color:#bfffe5;
-}
-.badge-nube{
-  background:rgba(96,165,250,.15);
-  border:1px solid #60a5fa;
-  color:#93c5fd;
-}
-.badge-conecta{
-  background:rgba(34,197,94,.15);
-  border:1px solid #22c55e;
-  color:#86efac;
-}
+.tag-nube,.tag-conecta{border-radius:var(--radius-pill);padding:6px 10px;font-size:12px;display:inline-flex;align-items:center;gap:6px}
+.tag-nube{background:#0f1c2c;border:1px solid #203044;color:#cfe3ff}
+.tag-conecta{background:#0f1c2c;border:1px solid #1d2e3f;color:#bfffe5}
+.badge-nube{background:rgba(96,165,250,.15);border:1px solid #60a5fa;color:#93c5fd}
+.badge-conecta{background:rgba(34,197,94,.15);border:1px solid #22c55e;color:#86efac}
 
 /* Secciones y grid de cards del index */
-.section-title{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:var(--gap);
-  margin-bottom:var(--gap);
-}
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:var(--gap);
-}
-@media (max-width:980px){
-  .cards{
-    grid-template-columns:1fr;
-  }
-}
+.section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--gap);margin-bottom:var(--gap)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+@media(max-width:980px){.cards{grid-template-columns:1fr}}
 
 /* Lista de bullets con check (Sectores / ¿Por qué Expiriti?) */
-.features{
-  display:grid;
-  gap:calc(var(--gap)*0.6);
-  margin:10px 0 0;
-  padding:0;
-  list-style:none;
-}
-.features li{
-  display:flex;
-  gap:8px;
-  align-items:flex-start;
-}
-.features li::before{
-  content:"✓";
-  display:inline-grid;
-  place-items:center;
-  width:18px;
-  height:18px;
-  border-radius:6px;
-  background:#132033;
-  color:var(--brand);
-  font-size:12px;
-  margin-top:2px;
-}
+.features{display:grid;gap:calc(var(--gap)*.6);margin:10px 0 0;padding:0;list-style:none}
+.features li{display:flex;gap:8px;align-items:flex-start}
+.features li::before{content:"✓";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:6px;background:#132033;color:var(--brand);font-size:12px;margin-top:2px}
 
 /* Tabs de Productos (Solución contable / comercial / nube / productividad) */
-.tablist{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  background:#0e1520;
-  border:1px solid #1f2a3a;
-  padding:8px;
-  border-radius:12px;
-  margin-bottom:var(--gap);
-}
-.tab{
-  padding:8px 12px;
-  border-radius:10px;
-  border:1px solid #223044;
-  background:#101722;
-  color:#c8d3e5;
-  font-weight:600;
-  cursor:pointer;
-  transition:
-    background var(--transition-med),
-    border-color var(--transition-med),
-    box-shadow var(--transition-med),
-    transform var(--transition-fast);
-}
-.tab[aria-selected="true"]{
-  background:linear-gradient(145deg,var(--brand),var(--brand-2));
-  color:#0b0f14;
-  border:none;
-  box-shadow:0 10px 24px rgba(0,0,0,.3);
-}
-.tab:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 18px rgba(0,0,0,.28);
-}
-.hidden{
-  display:none !important;
-}
+.tablist{display:flex;gap:8px;flex-wrap:wrap;background:#0e1520;border:1px solid #1f2a3a;padding:8px;border-radius:12px;margin-bottom:var(--gap)}
+.tab{padding:8px 12px;border-radius:10px;border:1px solid #223044;background:#101722;color:#c8d3e5;font-weight:600;cursor:pointer;transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-fast)}
+.tab[aria-selected="true"]{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.tab:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.28)}
+.hidden{display:none !important}
 
 /* Formularios del hero y contacto */
-form{
-  display:grid;
-  gap:calc(var(--gap)*0.85);
-}
-input,
-select,
-textarea{
-  width:100%;
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid #223044;
-  background:#0e1520;
-  color:#e2e8f0;
-}
-label{
-  font-size:14px;
-  color:#b8c4d7;
-}
-textarea{
-  resize:vertical;
-}
-.hint{
-  font-size:12px;
-}
+form{display:grid;gap:calc(var(--gap)*.85)}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #223044;background:#0e1520;color:#e2e8f0}
+label{font-size:14px;color:#b8c4d7}
+textarea{resize:vertical}
+.hint{font-size:12px}
 
-/* Grid simple de videos del index (sección "Videos") */
-.videos-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:var(--gap);
-}
-.videos-grid iframe,
-.videos-grid video{
-  width:100%;
-  border-radius:12px;
-  border:1px solid #1c2533;
-  background:#0e1520;
-  box-shadow:0 8px 18px rgba(0,0,0,.35);
-  transition:
-    transform var(--transition-med),
-    box-shadow var(--transition-med),
-    filter var(--transition-med);
-}
-.videos-grid iframe:hover,
-.videos-grid video:hover{
-  transform:translateY(-2px);
-  box-shadow:0 16px 32px rgba(0,0,0,.55);
-  filter:brightness(1.03);
-}
-@media (max-width:768px){
-  .videos-grid{
-    grid-template-columns:1fr;
-  }
-}
+/* Grid simple de videos del index (1ª versión) */
+.videos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap)}
+.videos-grid iframe,.videos-grid video{width:100%;border-radius:12px;border:1px solid #1c2533;background:#0e1520;box-shadow:0 8px 18px rgba(0,0,0,.35);transition:transform var(--transition-med),box-shadow var(--transition-med),filter var(--transition-med)}
+.videos-grid iframe:hover,.videos-grid video:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(0,0,0,.55);filter:brightness(1.03)}
+@media(max-width:768px){.videos-grid{grid-template-columns:1fr}}
 
 /* Promociones con filtros (botones + grid de imágenes) */
-.promo-filters{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:12px;
-}
-.promo-btn{
-  padding:8px 12px;
-  border-radius:10px;
-  border:1px solid #223044;
-  background:#101722;
-  color:#c8d3e5;
-  font-weight:600;
-  cursor:pointer;
-  transition:
-    background var(--transition-med),
-    border-color var(--transition-med),
-    box-shadow var(--transition-med),
-    transform var(--transition-fast),
-    filter var(--transition-fast);
-}
-.promo-btn:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 20px rgba(0,0,0,.35);
-  filter:brightness(1.04);
-}
-.promo-btn.active{
-  background:linear-gradient(145deg,var(--brand),var(--brand-2));
-  color:#0b0f14;
-  border:none;
-  box-shadow:0 10px 26px rgba(0,0,0,.45);
-}
-.promo-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:calc(var(--gap)*0.85);
-}
-.promo-grid img{
-  width:100%;
-  border-radius:12px;
-  border:1px solid #1c2533;
-  background:#0e1520;
-  box-shadow:0 8px 18px rgba(0,0,0,.35);
-  transition:
-    transform var(--transition-med),
-    box-shadow var(--transition-med),
-    filter var(--transition-med);
-}
-.promo-grid img:hover{
-  transform:translateY(-2px);
-  box-shadow:0 18px 36px rgba(0,0,0,.6);
-  filter:brightness(1.05);
-}
-@media (max-width:768px){
-  .promo-grid{
-    grid-template-columns:1fr;
-  }
-}
+.promo-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.promo-btn{padding:8px 12px;border-radius:10px;border:1px solid #223044;background:#101722;color:#c8d3e5;font-weight:600;cursor:pointer;transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-fast),filter var(--transition-fast)}
+.promo-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.35);filter:brightness(1.04)}
+.promo-btn.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+.promo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--gap)*.85)}
+.promo-grid img{width:100%;border-radius:12px;border:1px solid #1c2533;background:#0e1520;box-shadow:0 8px 18px rgba(0,0,0,.35);transition:transform var(--transition-med),box-shadow var(--transition-med),filter var(--transition-med)}
+.promo-grid img:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(0,0,0,.6);filter:brightness(1.05)}
+@media(max-width:768px){.promo-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.promo-btn{width:100%;justify-content:center;text-align:center}}
 
-/* Ajuste suave de botones principales en mobile */
-@media (max-width:520px){
-  .promo-btn{
-    width:100%;
-    justify-content:center;
-    text-align:center;
-  }
-}
-
-/* ... ya lo tienes ... */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-}
+/* Cards base (ya lo tienes) */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 
 /* NUEVO: 2 columnas solo para Productos CONTPAQi */
-.cards-products{
-  grid-template-columns:repeat(2,minmax(0,1fr));
-}
+.cards-products{grid-template-columns:repeat(2,minmax(0,1fr))}
 
 /* Cards de productos interactivas (tipo .sys) */
-.card.product-card{
-  position:relative;
-  cursor:pointer;
-  transition:
-    transform .14s ease,
-    box-shadow .18s ease,
-    border-color .18s ease,
-    background .18s ease;
-}
-
-.card.product-card:hover{
-  transform:translateY(-3px);
-  box-shadow:0 16px 36px rgba(0,0,0,.5);
-  border-color:#2dd4bf;
-  background:radial-gradient(circle at top left,rgba(96,165,250,.18),#0d131d);
-}
-
-/* “Ver más →” tipo chip al hover */
-.card.product-card .foot{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-
-.card.product-card .foot .btn-sm:first-child{
-  margin-right:auto; /* empuja el chip a la derecha */
-}
-
-.card.product-card .hoverMore{
-  opacity:0;
-  transform:translateY(4px);
-  transition:opacity .18s ease, transform .18s ease;
-}
-
-.card.product-card:hover .hoverMore{
-  opacity:1;
-  transform:translateY(0);
-}
+.card.product-card{position:relative;cursor:pointer;transition:transform .14s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease}
+.card.product-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(0,0,0,.5);border-color:#2dd4bf;background:radial-gradient(circle at top left,rgba(96,165,250,.18),#0d131d)}
+.card.product-card .foot{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.card.product-card .foot .btn-sm:first-child{margin-right:auto}
+.card.product-card .hoverMore{opacity:0;transform:translateY(4px);transition:opacity .18s ease,transform .18s ease}
+.card.product-card:hover .hoverMore{opacity:1;transform:translateY(0)}
 
 /* --------- Reels por sistema (panel contable) --------- */
-.reels-home-wrap{margin-top:26px;}
-
-.reels-home-card .body{
-  padding:16px;
-}
-
-.reel-sys-tabs{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-  margin:10px 0 12px;
-}
-
-.reel-tab{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-  padding:8px 10px;
-  min-width:80px;
-  border-radius:12px;
-  border:1px solid #1f2a3a;
-  background:#0e1520;
-  color:#cfe3ff;
-  font-size:12px;
-  cursor:pointer;
-  transition:transform .12s ease, box-shadow .16s ease, border-color .16s ease, background .18s ease;
-}
-
-.reel-tab img{
-  width:32px;
-  height:32px;
-  border-radius:8px;
-  object-fit:cover;
-  background:#020617;
-  border:1px solid #223044;
-}
-
-.reel-tab span{
-  line-height:1.2;
-}
-
-.reel-tab:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 20px rgba(0,0,0,.35);
-}
-
-.reel-tab.active{
-  border-color:var(--brand-2);
-  background:radial-gradient(circle at top,rgba(96,165,250,.22),#020617);
-  box-shadow:0 0 0 1px rgba(96,165,250,.6);
-}
-
-.reels-home-card .reel-title{
-  margin:4px 0 10px;
-  text-align:center;
-  color:#e8eef6;
-  font-size:14px;
-  font-weight:600;
-}
-
-.reels-home-card .carousel{
-  margin-top:4px;
-}
+.reels-home-wrap{margin-top:26px}
+.reels-home-card .body{padding:16px}
+.reel-sys-tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0 12px}
+.reel-tab{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 10px;min-width:80px;border-radius:12px;border:1px solid #1f2a3a;background:#0e1520;color:#cfe3ff;font-size:12px;cursor:pointer;transition:transform .12s ease,box-shadow .16s ease,border-color .16s ease,background .18s ease}
+.reel-tab img{width:32px;height:32px;border-radius:8px;object-fit:cover;background:#020617;border:1px solid #223044}
+.reel-tab span{line-height:1.2}
+.reel-tab:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.reel-tab.active{border-color:var(--brand-2);background:radial-gradient(circle at top,rgba(96,165,250,.22),#020617);box-shadow:0 0 0 1px rgba(96,165,250,.6)}
+.reels-home-card .reel-title{margin:4px 0 10px;text-align:center;color:#e8eef6;font-size:14px;font-weight:600}
+.reels-home-card .carousel{margin-top:4px}
 
 /* Responsive: 1 columna en móviles en productos */
-@media (max-width: 900px){
+@media(max-width:900px){
   .hero-grid{grid-template-columns:1fr}
   .cards{grid-template-columns:1fr}
   .cards-products{grid-template-columns:1fr}
@@ -806,255 +429,65 @@ textarea{
   .videos-grid{grid-template-columns:1fr}
   .promo-grid{grid-template-columns:1fr}
 }
+
 /* =========================================================
-   Home: Reels por sistema contable (index)
-   Compacto + selector de sistemas DEBAJO del video
+   Home: Reels por sistema contable (index) — compacto
    ========================================================= */
-
-/* Card contenedora */
-.reels-home-wrap{
-  margin-top:26px;
+.reels-home-wrap{margin-top:26px}
+.reels-home-card{max-width:820px;margin:0 auto}
+.reels-home-card .body{padding:16px 18px 18px}
+.reels-home-card .carousel{min-height:auto;max-width:360px;margin:8px auto 10px}
+.reels-home-card .carousel-track{height:auto}
+.reels-home-card .carousel-slide{height:auto;align-items:center;justify-content:center}
+.reels-home-card .reel-embed{width:min(280px,100%) !important;max-width:280px !important;border-radius:14px}
+.reels-home-card .reel-title{margin:4px 0 10px;text-align:center;color:#e8eef6;font-size:14px;font-weight:600}
+.reel-sys-tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0 4px}
+.reel-tab{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 10px;min-width:86px;border-radius:12px;border:1px solid #1f2a3a;background:#0e1520;color:#cfe3ff;font-size:12px;cursor:pointer;transition:transform .12s ease,box-shadow .16s ease,border-color .16s ease,background .18s ease}
+.reel-tab img{width:30px;height:30px;border-radius:8px;object-fit:cover;background:#020617;border:1px solid #223044}
+.reel-tab span{line-height:1.2}
+.reel-tab:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+.reel-tab.active{border-color:var(--brand-2);background:radial-gradient(circle at top,rgba(96,165,250,.22),#020617);box-shadow:0 0 0 1px rgba(96,165,250,.6)}
+@media(max-width:600px){
+  .reels-home-card .carousel{max-width:300px}
+  .reels-home-card .reel-embed{width:100% !important;max-width:100% !important}
 }
 
-.reels-home-card{
-  max-width:820px;
-  margin:0 auto;
-}
+/* =========================================================
+   BARRA COMPLETA EN UNA SOLA LÍNEA (Productos CONTPAQi)
+   ========================================================= */
+.productos-inline-bar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:10px 0 20px;flex-wrap:nowrap}
+.prod-title{margin:0;font-size:28px;font-weight:700;white-space:nowrap;color:#e8eef6}
+.prod-title span{background:linear-gradient(90deg,#2dd4bf,#60a5fa);-webkit-background-clip:text;color:transparent}
 
-.reels-home-card .body{
-  padding:16px 18px 18px;
-}
+/* Tabs del bloque productos */
+.prod-tabs{display:flex;align-items:center;gap:12px;flex:1;justify-content:center;white-space:nowrap}
+.tab{padding:8px 16px;border-radius:999px;background:#0f172a;border:1px solid rgba(255,255,255,.1);color:#cbd5e1;font-size:14px;cursor:pointer;transition:.2s}
+.tab.active,.tab[aria-selected="true"]{background:linear-gradient(135deg,#2dd4bf,#60a5fa);color:#0b0f14;border:none;box-shadow:0 0 18px rgba(94,234,212,.45)}
+.tab:hover:not(.active){background:#1e293b}
 
-/* Hacemos chico el carrusel (sin min-height gigante) */
-.reels-home-card .carousel{
-  min-height:auto;                 /* anula 420px del carrusel global */
-  max-width:360px;                 /* ancho máximo del video */
-  margin:8px auto 10px;            /* centrado */
-}
+/* CTA lateral productos */
+.prod-cta{padding:10px 20px;border-radius:999px;background:#0f172a;border:1px solid rgba(255,255,255,.15);color:#e8eef6;cursor:pointer;white-space:nowrap;font-weight:600;transition:.2s}
+.prod-cta:hover{background:linear-gradient(135deg,#2dd4bf,#60a5fa);color:#0b0f14;border:none;box-shadow:0 0 18px rgba(94,234,212,.45)}
 
-.reels-home-card .carousel-track{
-  height:auto;
-}
-
-.reels-home-card .carousel-slide{
-  height:auto;
-  align-items:center;
-  justify-content:center;
-}
-
-/* Reel vertical más compacto */
-.reels-home-card .reel-embed{
-  width:min(280px,100%) !important;
-  max-width:280px !important;
-  border-radius:14px;
-}
-
-/* Título del reel */
-.reels-home-card .reel-title{
-  margin:4px 0 10px;
-  text-align:center;
-  color:#e8eef6;
-  font-size:14px;
-  font-weight:600;
-}
-
-/* Selector de sistema: iconos centrados debajo del video */
-.reel-sys-tabs{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  justify-content:center;
-  margin:12px 0 4px; /* margen después del video */
-}
-
-.reel-tab{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-  padding:8px 10px;
-  min-width:86px;
-  border-radius:12px;
-  border:1px solid #1f2a3a;
-  background:#0e1520;
-  color:#cfe3ff;
-  font-size:12px;
-  cursor:pointer;
-  transition:transform .12s ease, box-shadow .16s ease,
-             border-color .16s ease, background .18s ease;
-}
-
-.reel-tab img{
-  width:30px;
-  height:30px;
-  border-radius:8px;
-  object-fit:cover;
-  background:#020617;
-  border:1px solid #223044;
-}
-
-.reel-tab span{
-  line-height:1.2;
-}
-
-.reel-tab:hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 20px rgba(0,0,0,.35);
-}
-
-.reel-tab.active{
-  border-color:var(--brand-2);
-  background:radial-gradient(circle at top,rgba(96,165,250,.22),#020617);
-  box-shadow:0 0 0 1px rgba(96,165,250,.6);
-}
-
-/* Responsive aún más compacto en tel */
-@media (max-width:600px){
-  .reels-home-card .carousel{
-    max-width:300px;
-  }
-  .reels-home-card .reel-embed{
-    width:100% !important;
-    max-width:100% !important;
-  }
-}
-
-/* ============================================================
-   BARRA COMPLETA EN UNA SOLA LÍNEA
-   ============================================================ */
-.productos-inline-bar{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px;
-  padding:10px 0 20px;
-  flex-wrap:nowrap;            /* ← OBLIGA UNA SOLA LÍNEA */
-}
-
-/* ---------------- TÍTULO ---------------- */
-.prod-title{
-  margin:0;
-  font-size:28px;
-  font-weight:700;
-  white-space:nowrap;          /* ← NO PERMITE QUE SALTE */
-  color:#e8eef6;
-}
-.prod-title span{
-  background:linear-gradient(90deg,#2dd4bf,#60a5fa);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-/* ---------------- TABS ---------------- */
-.prod-tabs{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  flex:1;                      /* ← PERMITE QUE SE EXPANDA Y CENTRE */
-  justify-content:center;
-  white-space:nowrap;
-}
-
-.tab{
-  padding:8px 16px;
-  border-radius:999px;
-  background:#0f172a;
-  border:1px solid rgba(255,255,255,.1);
-  color:#cbd5e1;
-  font-size:14px;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.tab.active,
-.tab[aria-selected="true"]{
-  background:linear-gradient(135deg,#2dd4bf,#60a5fa);
-  color:#0b0f14;
-  border:none;
-  box-shadow:0 0 18px rgba(94,234,212,.45);
-}
-
-
-.tab:hover:not(.active){
-  background:#1e293b;
-}
-
-/* ---------------- CTA ---------------- */
-.prod-cta{
-  padding:10px 20px;
-  border-radius:999px;
-  background:#0f172a;
-  border:1px solid rgba(255,255,255,.15);
-  color:#e8eef6;
-  cursor:pointer;
-  white-space:nowrap;
-  font-weight:600;
-  transition:.2s;
-}
-
-.prod-cta:hover{
-  background:linear-gradient(135deg,#2dd4bf,#60a5fa);
-  color:#0b0f14;
-  border:none;
-  box-shadow:0 0 18px rgba(94,234,212,.45);
-}
-
-/* ---------------- MÓVIL ---------------- */
+/* Móvil barra productos */
 @media(max-width:900px){
-  .productos-inline-bar{
-    flex-wrap:wrap;             /* ← ÚNICAMENTE EN MÓVIL SE PERMITE */
-    justify-content:center;
-    gap:16px;
-  }
-  .prod-title{ width:100%; text-align:center; }
-  .prod-tabs{ order:3; flex-wrap:wrap; }
-  .prod-cta{ order:2; }
+  .productos-inline-bar{flex-wrap:wrap;justify-content:center;gap:16px}
+  .prod-title{width:100%;text-align:center}
+  .prod-tabs{order:3;flex-wrap:wrap}
+  .prod-cta{order:2}
 }
 
-/* Botón WhatsApp verde pero texto blanco */
-.btn-grad-green{
-  background:linear-gradient(145deg,#16a34a,#22c55e);
-  color:#ffffff;           /* ← antes era casi negro */
-  border:none;
-}
+/* Reajuste botón WhatsApp verde (texto blanco) */
+.btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#ffffff;border:none}
 
 /* Recuadro que envuelve título + tabs */
-.prod-tabs-shell{
-  flex:1;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:10px 14px;
-  border-radius:999px;
-  background:#050816;
-  border:1px solid #1f2a3a;
-  box-shadow:0 0 0 1px rgba(15,23,42,.6);
-}
+.prod-tabs-shell{flex:1;display:flex;align-items:center;gap:16px;padding:10px 14px;border-radius:999px;background:#050816;border:1px solid #1f2a3a;box-shadow:0 0 0 1px rgba(15,23,42,.6)}
 
-/* Asegura que la barra alinee todo al centro */
-.productos-inline-bar{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px;
-  padding:10px 0 20px;
-}
+/* Reafirma barra alineada */
+.productos-inline-bar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:10px 0 20px}
 
-/* Grid de videos (horizontales) */
-.videos-grid{
-  display:grid;
-  gap:16px;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-}
+/* Grid de videos (horizontales) — override final */
+.videos-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 
 /* Ajuste de miniaturas de videos (no reels) */
-#videos .yt-thumb img{
-  width:100%;
-  aspect-ratio:16 / 9;
-  object-fit:cover;
-  border-radius:12px;
-}
-
-
+#videos .yt-thumb img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px}
