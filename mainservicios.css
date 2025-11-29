@@ -1011,3 +1011,18 @@ textarea{
   gap:24px;
   padding:10px 0 20px;
 }
+
+/* Grid de videos (horizontales) */
+.videos-grid{
+  display:grid;
+  gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+}
+
+/* Ajuste de miniaturas de videos (no reels) */
+#videos .yt-thumb img{
+  width:100%;
+  aspect-ratio:16 / 9;
+  object-fit:cover;
+  border-radius:12px;
+}
