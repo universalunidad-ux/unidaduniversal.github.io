@@ -676,54 +676,79 @@
   <section id="servicios">
     <div class="container">
       <div class="section-title"><h2 style="margin:0">Servicios</h2></div>
+
       <div class="cards">
+
         <article class="card product-card" data-href="SERVICIOS/implementaciones.html" style="padding:16px">
-          <h3>Implementaciones CONTPAQi</h3>
+          <h3>
+            <img src="IMG/srv-implementaciones.webp" alt="" class="svc-icon">
+            Implementaciones CONTPAQi
+          </h3>
           <p class="body">Instalación, configuración inicial, CSD, timbrado de prueba y puesta en marcha.</p>
           <div class="foot">
-            <a class="btn btn-ghost btn-sm" href="SERVICIOS/implementaciones.html">Ver más</a>
             <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
 
         <article class="card product-card" data-href="SERVICIOS/migraciones.html" style="padding:16px">
-          <h3>Migraciones</h3>
+          <h3>
+            <img src="IMG/srv-migraciones.webp" alt="" class="svc-icon">
+            Migraciones
+          </h3>
           <p class="body">Migración desde otros sistemas (ASPEL, Excel, etc.) hacia CONTPAQi.</p>
           <div class="foot">
-            <a class="btn btn-ghost btn-sm" href="SERVICIOS/migraciones.html">Ver más</a>
             <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
 
         <article class="card product-card" data-href="SERVICIOS/desarrollos.html" style="padding:16px">
-          <h3>Desarrollos a la medida</h3>
+          <h3>
+            <img src="IMG/srv-desarrollos.webp" alt="" class="svc-icon">
+            Desarrollos a la medida
+          </h3>
           <p class="body">Integraciones, reportes especiales y automatizaciones sobre CONTPAQi.</p>
           <div class="foot">
-            <a class="btn btn-ghost btn-sm" href="SERVICIOS/desarrollos.html">Ver más</a>
             <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
 
         <article class="card product-card" data-href="SERVICIOS/servidoresvirtuales.html" style="padding:16px">
-          <h3>Servidores virtuales</h3>
+          <h3>
+            <img src="IMG/srv-servidores.webp" alt="" class="svc-icon">
+            Servidores virtuales
+          </h3>
           <p class="body">Montamos tus sistemas CONTPAQi en la nube con acceso remoto seguro.</p>
           <div class="foot">
-            <a class="btn btn-ghost btn-sm" href="SERVICIOS/servidoresvirtuales.html">Ver más</a>
+            <div class="hoverMore"><span class="chip">Ver más →</span></div>
+          </div>
+        </article>
+
+        <article class="card product-card" data-href="SERVICIOS/cursos.html" style="padding:16px">
+          <h3>
+            <img src="IMG/srv-cursos.webp" alt="" class="svc-icon">
+            Cursos y capacitación
+          </h3>
+          <p class="body">Cursos en línea y sesiones personalizadas para que tu equipo domine CONTPAQi.</p>
+          <div class="foot">
             <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
 
         <article class="card product-card" data-href="SERVICIOS/soporte.html" style="padding:16px">
-          <h3>Soporte técnico</h3>
+          <h3>
+            <img src="IMG/srv-soporte.webp" alt="" class="svc-icon">
+            Soporte técnico
+          </h3>
           <p class="body">Pólizas, soporte remoto por sesión y atención por WhatsApp.</p>
           <div class="foot">
-            <a class="btn btn-ghost btn-sm" href="SERVICIOS/soporte.html">Ver más</a>
             <div class="hoverMore"><span class="chip">Ver más →</span></div>
           </div>
         </article>
+
       </div>
     </div>
   </section>
+
 
   <!-- Promociones con filtros -->
   <section id="promociones">
@@ -1345,8 +1370,7 @@ function initSimpleThumbs(){
     const title = node.dataset.title || '';
     if (!id) return;
 
-    // Usamos el mismo contenedor que los reels
-    node.classList.add('reel-embed');
+    // NO usamos .reel-embed aquí para que tenga estilo distinto a los reels
     node.dataset.ytid  = id;
     node.dataset.title = title;
 
@@ -1360,6 +1384,19 @@ function initSimpleThumbs(){
 // Llamada inicial
 initSimpleThumbs();
 
+
+  // -------- FAQ: solo una pregunta abierta --------
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+      // Si este se acaba de abrir, cierra los otros
+      if (!item.open) return;
+      document.querySelectorAll('.faq-item').forEach(otro => {
+        if (otro !== item) {
+          otro.removeAttribute('open');
+        }
+      });
+    });
+  });
 
   </script>
 </body>
