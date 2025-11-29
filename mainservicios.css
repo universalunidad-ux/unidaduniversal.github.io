@@ -144,6 +144,17 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .pill:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));color:#0b0f14;border:none}
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+/* Iconos de los paquetes de implementación */
+.ficon{
+  width:52px;
+  height:52px;
+  flex-shrink:0;
+  border-radius:12px;
+  background:#020617;
+  object-fit:contain;   /* respeta proporciones del logo */
+  padding:2px;          /* un poquito de aire alrededor */
+}
+
 @media (max-width:980px){.feature-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:680px){.feature-grid{grid-template-columns:1fr}}
 .feature-grid .fcard{border-radius:var(--radius-md);border:1px solid #1e2b3c;background:linear-gradient(135deg,#0f1622,#0f1724);padding:14px;display:grid;gap:8px;transition:background var(--transition-med),border-color var(--transition-med),box-shadow var(--transition-med),transform var(--transition-fast);container-type:inline-size}
