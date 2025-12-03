@@ -47,50 +47,52 @@
           <strong>Bancos</strong> y más. Somos tu aliado para que la operación fluya sin complicaciones.
         </p>
         <div class="badges">
-          <span class="badge">Distribuidor autorizado</span>
-          <span class="badge">Atención por WhatsApp</span>
-          <span class="badge">Capacitación y migraciones</span>
-          <span class="badge badge-conecta">Conecta Contabilidad, Comercial y Nóminas</span>
+      
+  
         </div>
         <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
           <a class="btn hero-btn btn-grad-blue" href="#contacto">Quiero una demo</a>
-          <a class="btn hero-btn btn-outline-gradient" href="#productos-con">
-            <span style="position:relative;z-index:1">Ver productos</span>
-          </a>
         </div>
       </div>
+      <!-- Derecha: Galería por sistemas -->
+      <article class="card hero-gallery-card" aria-label="Galería de sistemas CONTPAQi">
+        <div class="hero-gallery-header">
+          <h3>Galería de sistemas CONTPAQi</h3>
+          <p class="hint">Explora pantallas de Sistemas Contables, Comerciales, Nube y Productividad.</p>
+        </div>
 
-      <div class="hero-card" aria-label="Tarjeta de contacto rápido">
-        <h3 style="margin:6px 0 10px">¿Necesitas ayuda hoy?</h3>
-        <p style="margin:0 0 12px;color:#c6d1e3">
-          Escríbenos por WhatsApp y cuéntanos tu caso. Resolvemos dudas de instalación, timbrado, licencias y más.
-        </p>
-        <form id="quickForm" aria-label="Formulario rápido">
-          <label for="modulo">Módulo</label>
-          <select id="modulo" name="modulo" required>
-            <option value="" selected disabled>Selecciona un módulo</option>
-            <option>CONTPAQi Nóminas</option>
-            <option>CONTPAQi Contabilidad</option>
-            <option>CONTPAQi Bancos</option>
-            <option>Comercial Start</option>
-            <option>Comercial PRO</option>
-            <option>Comercial Premium</option>
-            <option>XML en Línea</option>
-            <option>Factura electrónica</option>
-            <option>Analiza (Nube)</option>
-            <option>Evalúa / Personia / Colabora</option>
-            <option>Otro</option>
-          </select>
-          <label for="mensaje">Mensaje</label>
-          <textarea id="mensaje" name="mensaje" rows="3" placeholder="Ej. Necesito migrar mi nómina y capacitar al equipo" required></textarea>
-          <button type="submit" class="btn hero-btn btn-grad-green">
-            Enviar por WhatsApp
+        <!-- Tabs de grupo (arriba, como Productos CONTPAQi) -->
+        <nav class="hero-gallery-groups" id="heroGalleryGroups" role="tablist"
+             aria-label="Grupos de sistemas">
+          <!-- Los botones los genera JS -->
+        </nav>
+
+        <!-- Título dinámico de la imagen / sistema -->
+        <h4 class="hero-gallery-title" id="heroGalleryTitle"></h4>
+
+        <!-- Carrusel de imágenes -->
+        <div class="carousel hero-carousel" id="heroGalleryCarousel" aria-label="Galería de imágenes por sistema">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button">
+            <span class="chev">‹</span>
           </button>
-          <p class="hint">También al teléfono <a href="tel:+525568437918">55 6843 7918</a></p>
-        </form>
-      </div>
-    </div>
-  </section>
+
+          <div class="carousel-track"></div>
+
+          <button class="arrowCircle next" aria-label="Siguiente" type="button">
+            <span class="chev">›</span>
+          </button>
+
+          <div class="carousel-nav" aria-label="Paginación de imágenes"></div>
+        </div>
+
+        <!-- Tabs de sistema (abajo, como los de reels) -->
+        <div class="hero-gallery-tabs" id="heroGalleryTabs"
+             aria-label="Selecciona sistema para ver imágenes">
+          <!-- Los botones los genera JS -->
+        </div>
+      </article>
+
+     
 
 
 <!-- ========================== -->
@@ -1088,6 +1090,285 @@ if (tabInicial) activarTabProductos(tabInicial);
       });
     });
 
+        // ---------- Galería de imágenes del hero ----------
+    // Puedes cambiar las rutas de IMG por screenshots reales cuando los tengas.
+    const HERO_GALLERY_DATA = {
+      contable: {
+        label: 'Sistemas Contables',
+        defaultSys: 'nominas',
+        systems: {
+          contabilidad: {
+            label: 'Contabilidad',
+            icon: 'IMG/contabilidadsq.webp',
+            images: [
+              {src: 'IMG/contabilidad.webp', title: 'Contabilidad · Pólizas y reportes'},
+              {src: 'IMG/contabilidad.webp', title: 'Contabilidad · Auxiliares y balanza'}
+            ]
+          },
+          nominas: {
+            label: 'Nóminas',
+            icon: 'IMG/nominassq.webp',
+            images: [
+              {src: 'IMG/nominas.webp', title: 'Nóminas · Recibos y timbrado'},
+              {src: 'IMG/nominas.webp', title: 'Nóminas · Incidencias y acumulados'}
+            ]
+          },
+          bancos: {
+            label: 'Bancos',
+            icon: 'IMG/bancossq.webp',
+            images: [
+              {src: 'IMG/bancos.webp', title: 'Bancos · Conciliación bancaria'},
+              {src: 'IMG/bancos.webp', title: 'Bancos · Flujo de efectivo'}
+            ]
+          },
+          xml: {
+            label: 'XML en Línea+',
+            icon: 'IMG/xmlsq.webp',
+            images: [
+              {src: 'IMG/xml.webp', title: 'XML en Línea+ · Descarga de CFDI'}
+            ]
+          }
+        }
+      },
+
+      comercial: {
+        label: 'Sistemas Comerciales',
+        defaultSys: 'start',
+        systems: {
+          start: {
+            label: 'Comercial Start',
+            icon: 'IMG/comercialstartsq.webp',
+            images: [
+              {src: 'IMG/comercialstart.webp', title: 'Start · Ventas e inventario básico'}
+            ]
+          },
+          pro: {
+            label: 'Comercial Pro',
+            icon: 'IMG/comercialprosq.webp',
+            images: [
+              {src: 'IMG/comercialpro.webp', title: 'Pro · Operaciones de alto volumen'}
+            ]
+          },
+          premium: {
+            label: 'Comercial Premium',
+            icon: 'IMG/comercialpremiumsq.webp',
+            images: [
+              {src: 'IMG/comercialpremium.webp', title: 'Premium · Políticas y listas de precio'}
+            ]
+          },
+          factura: {
+            label: 'Factura electrónica',
+            icon: 'IMG/facturasq.webp',
+            images: [
+              {src: 'IMG/factura.webp', title: 'Factura electrónica · Timbrado CFDI 4.0'}
+            ]
+          }
+        }
+      },
+
+      nube: {
+        label: 'Soluciones en la Nube',
+        defaultSys: 'analiza',
+        systems: {
+          analiza: {
+            label: 'Analiza',
+            icon: 'IMG/analiza.webp',
+            images: [
+              {src: 'IMG/analiza.webp', title: 'Analiza · Dashboard ejecutivo'}
+            ]
+          },
+          contabiliza: {
+            label: 'Contabiliza',
+            icon: 'IMG/contabiliza.webp',
+            images: [
+              {src: 'IMG/contabiliza.webp', title: 'Contabiliza · Contabilidad en la nube'}
+            ]
+          },
+          despachos: {
+            label: 'Despachos',
+            icon: 'IMG/despachos.webp',
+            images: [
+              {src: 'IMG/despachos.webp', title: 'Despachos · Gestión de despachos en la nube'}
+            ]
+          },
+          vende: {
+            label: 'Vende',
+            icon: 'IMG/vende.webp',
+            images: [
+              {src: 'IMG/vende.webp', title: 'Vende · Punto de venta en la nube'}
+            ]
+          }
+        }
+      },
+
+      productividad: {
+        label: 'Productividad',
+        defaultSys: 'evalua',
+        systems: {
+          evalua: {
+            label: 'Evalúa',
+            icon: 'IMG/evalua.webp',
+            images: [
+              {src: 'IMG/evalua.webp', title: 'Evalúa · Encuestas y clima laboral'}
+            ]
+          },
+          colabora: {
+            label: 'Colabora',
+            icon: 'IMG/colabora.webp',
+            images: [
+              {src: 'IMG/colabora.webp', title: 'Colabora · App sin costo para tu equipo'}
+            ]
+          },
+          personia: {
+            label: 'Personia',
+            icon: 'IMG/personia.webp',
+            images: [
+              {src: 'IMG/personia.webp', title: 'Personia · Expedientes de empleados'}
+            ]
+          }
+        }
+      }
+    };
+
+    const HERO_GALLERY = {
+      groupNav: $('#heroGalleryGroups'),
+      tabsContainer: $('#heroGalleryTabs'),
+      titleEl: $('#heroGalleryTitle'),
+      carousel: $('#heroGalleryCarousel'),
+      defaultGroup: 'contable'
+    };
+
+        function buildHeroGallerySlides(groupKey, sysKey){
+      const configGroup = HERO_GALLERY_DATA[groupKey];
+      if (!configGroup) return;
+      const sys = configGroup.systems[sysKey];
+      if (!sys || !sys.images || !sys.images.length) return;
+
+      const {carousel, titleEl} = HERO_GALLERY;
+      if (!carousel) return;
+
+      const track = carousel.querySelector('.carousel-track');
+      const nav   = carousel.querySelector('.carousel-nav');
+      if (!track || !nav) return;
+
+      track.innerHTML = '';
+      nav.innerHTML   = '';
+
+      sys.images.forEach((item, idx)=>{
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide hero-slide';
+        if (idx === 0) slide.classList.add('is-active');
+
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.loading = 'lazy';
+        img.alt = item.title || sys.label;
+        slide.appendChild(img);
+        track.appendChild(slide);
+
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'dot' + (idx===0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Ir a imagen ' + (idx+1));
+        dot.addEventListener('click', ()=>{
+          const slides = $$('.carousel-slide', track);
+          slides.forEach(s=>s.classList.remove('is-active'));
+          slides[idx]?.classList.add('is-active');
+          $$('.dot', nav).forEach(d=>d.classList.remove('active'));
+          dot.classList.add('active');
+          track.scrollTo({left: track.clientWidth * idx, behavior:'smooth'});
+        });
+        nav.appendChild(dot);
+      });
+
+      if (titleEl) {
+        titleEl.textContent = sys.images[0]?.title || sys.label;
+      }
+    }
+
+    function buildHeroSystemTabs(groupKey){
+      const configGroup = HERO_GALLERY_DATA[groupKey];
+      if (!configGroup) return;
+      const container = HERO_GALLERY.tabsContainer;
+      if (!container) return;
+
+      const defaultSys = configGroup.defaultSys;
+      container.innerHTML = '';
+
+      Object.entries(configGroup.systems).forEach(([sysKey, sys])=>{
+        const btn = document.createElement('button');
+        btn.type  = 'button';
+        btn.className = 'hero-tab' + (sysKey === defaultSys ? ' active' : '');
+        btn.dataset.group = groupKey;
+        btn.dataset.sys   = sysKey;
+        btn.innerHTML = `
+          <img src="${sys.icon}" alt="${sys.label}">
+          <span>${sys.label}</span>
+        `;
+        btn.addEventListener('click', ()=>{
+          $$('.hero-tab', container).forEach(b=> b.classList.toggle('active', b===btn));
+          buildHeroGallerySlides(groupKey, sysKey);
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    function initHeroGallery(){
+      const {groupNav, defaultGroup, carousel} = HERO_GALLERY;
+      if (!groupNav || !carousel) return;
+
+      // Crear tabs de grupo (arriba)
+      groupNav.innerHTML = '';
+      Object.entries(HERO_GALLERY_DATA).forEach(([groupKey, group])=>{
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'hero-group-tab' + (groupKey === defaultGroup ? ' active' : '');
+        btn.dataset.group = groupKey;
+        btn.textContent = group.label;
+        btn.addEventListener('click', ()=>{
+          $$('.hero-group-tab', groupNav).forEach(b=> b.classList.toggle('active', b===btn));
+          const cfg = HERO_GALLERY_DATA[groupKey];
+          const sysDefault = cfg.defaultSys;
+          buildHeroSystemTabs(groupKey);
+          buildHeroGallerySlides(groupKey, sysDefault);
+        });
+        groupNav.appendChild(btn);
+      });
+
+      const track   = carousel.querySelector('.carousel-track');
+      const prevBtn = carousel.querySelector('.arrowCircle.prev');
+      const nextBtn = carousel.querySelector('.arrowCircle.next');
+
+      const slidesFor = () => $$('.carousel-slide', track);
+      const navDots   = () => $$('.dot', carousel.querySelector('.carousel-nav'));
+
+      const goTo = (index)=>{
+        const slides = slidesFor();
+        if (!slides.length) return;
+        const max = slides.length - 1;
+        const i   = Math.max(0, Math.min(max, index));
+        slides.forEach(s=>s.classList.remove('is-active'));
+        slides[i].classList.add('is-active');
+        navDots().forEach((d,idx)=>d.classList.toggle('active', idx===i));
+        track.scrollTo({left: track.clientWidth * i, behavior:'smooth'});
+      };
+
+      prevBtn?.addEventListener('click', ()=>{
+        const idx = slidesFor().findIndex(s=>s.classList.contains('is-active'));
+        goTo(idx - 1);
+      });
+      nextBtn?.addEventListener('click', ()=>{
+        const idx = slidesFor().findIndex(s=>s.classList.contains('is-active'));
+        goTo(idx + 1);
+      });
+
+      // Estado inicial: grupo contable, sistema default
+      const cfg = HERO_GALLERY_DATA[defaultGroup];
+      buildHeroSystemTabs(defaultGroup);
+      buildHeroGallerySlides(defaultGroup, cfg.defaultSys);
+    }
+
+
     // -------- Datos de Reels --------
     const REELS_DATA = {
       contable: {
@@ -1338,6 +1619,9 @@ nextBtn?.addEventListener('click', ()=>{
 
     // Inicializa todos los paneles de reels
     ['contable','comercial','nube','productividad'].forEach(initReelsCarousel);
+
+        // Galería del hero (pantalla principal)
+    initHeroGallery();
 
 // Tabs de sistema (iconitos debajo del carrusel)
 $$('.reel-tab').forEach(tab=>{
