@@ -1,192 +1,14 @@
- <!-- /PARTIALS/global-footer.html -->
+<!-- /PARTIALS/global-footer.html -->
 <footer class="gf" role="contentinfo">
   <style>
-    /* ====== GLOBAL FOOTER (scoped) ====== */
-    .gf{
-      margin-top:40px;
-      background:var(--bg,#0b0f14);
-      border-top:1px solid rgba(255,255,255,.06);
-      color:var(--text,#e8eef6);
-    }
-    .gf-container{
-      max-width:var(--maxw,1200px);
-      margin:0 auto;
-      padding:22px 16px;
-    }
-    .gf-grid{
-      display:grid;
-      grid-template-columns:2fr 1.3fr 1.3fr 1.7fr 1.4fr;
-      gap:18px;
-    }
-    .gf h3.gf-title{
-      margin:0 0 8px;
-      font-size:16px;
-      color:var(--text);
-      text-align:center;
-    }
-    .gf .gf-hint{
-      color:var(--muted,#95a2b3);
-      font-size:13px;
-    }
-
-    /* ---------- Contacto ---------- */
-    .gf-contact{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    .gf-row{
-      display:flex;
-      gap:8px;
-      align-items:flex-start;
-    }
-    .gf-ico{
-      width:18px;
-      height:18px;
-      opacity:.95;
-      flex:0 0 18px;
-    }
-    .gf a{
-      color:var(--text);
-      text-decoration:none;
-    }
-    .gf a:hover{
-      text-decoration:underline;
-    }
-
-    /* ---------- Pagos (más grande) ---------- */
-    .gf-payments{
-      display:flex;
-      justify-content:center;
-    }
-    .gf-payments img{
-      max-width:260px;              /* MÁS GRANDE */
-      width:100%;
-      height:auto;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.08);
-      display:block;
-    }
-
-    /* ---------- Marcas (vertical, menos aire) ---------- */
-    .gf-brands{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      align-items:center;
-    }
-    .gf-brand{
-      width:220px;
-      min-height:110px;             /* antes 120: menos alto */
-      padding:8px 14px;             /* menos padding vertical */
-      background:var(--card,#111723);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow:0 10px 26px rgba(0,0,0,.35);
-    }
-    .gf-brand img{
-      max-height:60px;              /* tamaño de logo se mantiene */
-      width:auto;
-      object-fit:contain;
-      display:block;
-    }
-
-
-    /* ---------- Presencia en todo el país ---------- */
-    .gf-presence{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:10px;
-      text-align:center;
-    }
-    .gf-map-card{
-      background:var(--card,#111723);
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.08);
-      padding:14px;
-      box-shadow:0 10px 26px rgba(0,0,0,.35);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    }
-    .gf-map-card img{
-      width:100%;
-      max-width:190px;              /* mapa ~190px como comentaste */
-      height:auto;
-      display:block;
-    }
-    .gf-presence p{
-      margin:0;
-      font-size:13px;
-      color:var(--muted,#cbd5f5);
-      max-width:22rem;
-    }
-
-    /* ---------- Aliados (vertical) ---------- */
-    .gf-allies{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      align-items:center;
-    }
-    .gf-ally-card{
-      background:var(--card,#111723);
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.08);
-      padding:10px 18px;
-      box-shadow:0 10px 26px rgba(0,0,0,.35);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:70px;
-    }
-    .gf-ally-card img{
-      height:48px;
-      width:auto;
-      object-fit:contain;
-      display:block;
-    }
-
-    /* ---------- Bottom bar ---------- */
-    .gf-bottom{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      border-top:1px solid rgba(255,255,255,.06);
-      padding-top:14px;
-      margin-top:16px;
-    }
-    .gf-brandmini{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .gf-brandmini img{
-      width:50px;
-      height:50px;
-      border-radius:8px;
-    }
-
-    /* ---------- Responsive ---------- */
-    @media (max-width:980px){
-      .gf-grid{
-        grid-template-columns:1fr 1fr;
-      }
-    }
-    @media (max-width:640px){
-      .gf-grid{
-        grid-template-columns:1fr;
-      }
-      .gf-bottom{
-        flex-direction:column;
-        gap:8px;
-        align-items:flex-start;
-      }
-    }
+  /*=== GLOBAL FOOTER (SCOPED) ===*/.gf{margin-top:40px;background:var(--bg,#0b0f14);border-top:1px solid rgba(255,255,255,.06);color:var(--text,#e8eef6)}.gf-container{max-width:var(--maxw,1200px);margin:0 auto;padding:22px 16px}.gf-grid{display:grid;grid-template-columns:2fr 1.3fr 1.3fr 1.7fr 1.4fr;gap:18px}.gf h3.gf-title{margin:0 0 8px;font-size:16px;color:var(--text);text-align:center}.gf .gf-hint{color:var(--muted,#95a2b3);font-size:13px}
+  /*=== CONTACTO ===*/.gf-contact{display:flex;flex-direction:column;gap:8px}.gf-row{display:flex;gap:8px;align-items:flex-start}.gf-ico{width:18px;height:18px;opacity:.95;flex:0 0 18px}.gf a{color:var(--text);text-decoration:none}.gf a:hover{text-decoration:underline}
+  /*=== PAGOS ===*/.gf-payments{display:flex;justify-content:center}.gf-payments img{max-width:260px;width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,.08);display:block}
+  /*=== MARCAS ===*/.gf-brands{display:flex;flex-direction:column;gap:12px;align-items:center}.gf-brand{width:220px;min-height:110px;padding:8px 14px;background:var(--card,#111723);border:1px solid rgba(255,255,255,.08);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.35)}.gf-brand img{max-height:60px;width:auto;object-fit:contain;display:block}
+  /*=== PRESENCIA ===*/.gf-presence{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}.gf-map-card{background:var(--card,#111723);border-radius:18px;border:1px solid rgba(255,255,255,.08);padding:14px;box-shadow:0 10px 26px rgba(0,0,0,.35);display:flex;justify-content:center;align-items:center}.gf-map-card img{width:100%;max-width:190px;height:auto;display:block}.gf-presence p{margin:0;font-size:13px;color:var(--muted,#cbd5f5);max-width:22rem}
+  /*=== ALIADOS ===*/.gf-allies{display:flex;flex-direction:column;gap:14px;align-items:center}.gf-ally-card{background:var(--card,#111723);border-radius:18px;border:1px solid rgba(255,255,255,.08);padding:10px 18px;box-shadow:0 10px 26px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;min-height:70px}.gf-ally-card img{height:48px;width:auto;object-fit:contain;display:block}
+  /*=== BOTTOM BAR ===*/.gf-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;margin-top:16px}.gf-brandmini{display:flex;align-items:center;gap:10px}.gf-brandmini img{width:50px;height:50px;border-radius:8px}
+  /*=== RESPONSIVE ===*/@media(max-width:980px){.gf-grid{grid-template-columns:1fr 1fr}}@media(max-width:640px){.gf-grid{grid-template-columns:1fr}.gf-bottom{flex-direction:column;gap:8px;align-items:flex-start}}
   </style>
 
   <div class="gf-container">
@@ -204,8 +26,7 @@
           </div>
           <div class="gf-row">
             <svg class="gf-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M6.5 3h2l2 4-2 1a11 11 0 0 0 4.5 4.5l1-2 4 2v2a2 2 0 0 1-2.2 2 15 15 0 0 1-9.8-9.8A2 2 0 0 1 6.5 3z"
-                    stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M6.5 3h2l2 4-2 1a11 11 0 0 0 4.5 4.5l1-2 4 2v2a2 2 0 0 1-2.2 2 15 15 0 0 1-9.8-9.8A2 2 0 0 1 6.5 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
             </svg>
             <div><strong>Tel:</strong> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></div>
           </div>
