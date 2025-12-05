@@ -33,40 +33,40 @@ Expiriti
 <!-- Col 1 -->
 <div class="gh-col">
   <a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html">
-    <img class="gh-ico32 js-abs" data-href="IMG/ico_contabilidad.webp"><div class="gh-desc"><b>Contabilidad</b><br>Control fiscal y contable.</div>
+    <img class="gh-ico32 js-abs" data-href="IMG/ico_contabilidad.webp" alt=""><div class="gh-desc"><b>Contabilidad</b><br>Control fiscal y contable.</div>
   </a>
   <a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html">
-    <img class="gh-ico32 js-abs" data-href="IMG/ico_bancos.webp"><div class="gh-desc"><b>Bancos</b><br>Conciliación y tesorería.</div>
+    <img class="gh-ico32 js-abs" data-href="IMG/ico_bancos.webp" alt=""><div class="gh-desc"><b>Bancos</b><br>Conciliación y tesorería.</div>
   </a>
 </div>
 
 <!-- Col 2 -->
 <div class="gh-col">
   <a class="gh-link js-abs-href" data-href="SISTEMAS/comercial_pro.html">
-    <img class="gh-ico32 js-abs" data-href="IMG/ico_comercial.webp"><div class="gh-desc"><b>Comercial Pro</b><br>Punto de venta y facturación.</div>
+    <img class="gh-ico32 js-abs" data-href="IMG/ico_comercial.webp" alt=""><div class="gh-desc"><b>Comercial Pro</b><br>Punto de venta y facturación.</div>
   </a>
   <a class="gh-link js-abs-href" data-href="SISTEMAS/comercial_start.html">
-    <img class="gh-ico32 js-abs" data-href="IMG/ico_start.webp"><div class="gh-desc"><b>Comercial Start</b><br>Emprendedores y Pymes.</div>
+    <img class="gh-ico32 js-abs" data-href="IMG/ico_start.webp" alt=""><div class="gh-desc"><b>Comercial Start</b><br>Emprendedores y Pymes.</div>
   </a>
 </div>
 
 <!-- Col 3 -->
 <div class="gh-col">
-  <a class="gh-link js-abs-href" data-hhref="SISTEMAS/nominas.html">
-    <img class="gh-ico32 js-abs" data-href="IMG/ico_nominas.webp"><div class="gh-desc"><b>Nóminas</b><br>Recursos humanos y timbrado.</div>
+  <a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html">
+    <img class="gh-ico32 js-abs" data-href="IMG/ico_nominas.webp" alt=""><div class="gh-desc"><b>Nóminas</b><br>Recursos humanos y timbrado.</div>
   </a>
   <a class="gh-link js-abs-href" data-href="SISTEMAS/xml_en_linea.html">
-    <img class="gh-ico32 js-abs" data-href="IMG/ico_xml.webp"><div class="gh-desc"><b>XML en Línea</b><br>Descarga y organización CFDI.</div>
+    <img class="gh-ico32 js-abs" data-href="IMG/ico_xml.webp" alt=""><div class="gh-desc"><b>XML en Línea</b><br>Descarga y organización CFDI.</div>
   </a>
 </div>
 
 <!-- Col 4 -->
 <div class="gh-col">
   <a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html">
-    <img class="gh-ico32 js-abs" data-href="IMG/ico_pers.webp"><div class="gh-desc"><b>Personia</b><br>Gestión de personal.</div>
+    <img class="gh-ico32 js-abs" data-href="IMG/ico_pers.webp" alt=""><div class="gh-desc"><b>Personia</b><br>Gestión de personal.</div>
   </a>
   <a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html">
-    <img class="gh-ico32 js-abs" data-href="IMG/ico_evalua.webp"><div class="gh-desc"><b>Evalúa</b><br>Evaluación y perfiles.</div>
+    <img class="gh-ico32 js-abs" data-href="IMG/ico_evalua.webp" alt=""><div class="gh-desc"><b>Evalúa</b><br>Evaluación y perfiles.</div>
   </a>
 </div>
 
@@ -111,41 +111,20 @@ Expiriti
 <!-- ===================== SCRIPT: PATHS + ACTIVE MENU ===================== -->
 <script>
 /*=== RESOLVER RUTAS PARA GITHUB PAGES ===*/
-(function(){var g=location.hostname.endsWith("github.io"),
-s=location.pathname.split("/")[1]||"",b=g&&s?"/"+s:"",A=p=>(b+"/"+p).replace(/\/+/g,"/");document.querySelectorAll("link.js-abs[data-href]").forEach(e=>e.href=A(e.dataset.href));document.querySelectorAll("meta.js-abs-meta[data-path]").forEach(e=>e.content=location.origin+A(e.dataset.path));document.querySelectorAll("img.js-abs[data-href]").forEach(e=>e.src=A(e.dataset.href));document.querySelectorAll("a.js-abs-href[data-href]").forEach(e=>e.href=A(e.dataset.href));})();
-
+(function(){var g=location.hostname.endsWith("github.io"),s=location.pathname.split("/")[1]||"",b=g&&s?"/"+s:"",A=p=>(b+"/"+p).replace(/\/+/g,"/");document.querySelectorAll("link.js-abs[data-href]").forEach(e=>e.href=A(e.dataset.href));document.querySelectorAll("meta.js-abs-meta[data-path]").forEach(e=>e.content=location.origin+A(e.dataset.path));document.querySelectorAll("img.js-abs[data-href]").forEach(e=>e.src=A(e.dataset.href));document.querySelectorAll("a.js-abs-href[data-href]").forEach(e=>e.href=A(e.dataset.href));})();
 /*=== BURGER MOBILE ===*/document.getElementById("gh-burger")?.addEventListener("click",()=>document.getElementById("gh-mnav").classList.toggle("open"));
-
 /*=== DETECCIÓN DE SECCIÓN ACTIVA ===*/
 (function(){
 let p=location.pathname.toUpperCase(),h=location.hash;
-
-/* SISTEMAS */
 if(p.includes("/SISTEMAS/")){activar("sistemas");return;}
-
-/* SERVICIOS */
 if(p.includes("/SERVICIOS/")){activar("servicios");return;}
-
-/* INDEX HASHES */
 if(h==="#promociones"){activar("promociones");return;}
 if(h==="#productos"||h==="#productos-con"){activar("sistemas");return;}
 if(h==="#contacto"){activar("contacto");return;}
-
-/* INDEX GENERAL */
 if(/\/(?:INDEX\.HTML?)?$/.test(p)||p==="/"||p===""){activar("inicio");return;}
-
-/* NOSOTROS */
 if(p.includes("/NOSOTROS")){activar("nosotros");return;}
-
-/* CONTACTO HTML INDIVIDUAL */
 if(p.includes("/CONTACTO")){activar("contacto");return;}
-
 })();
-
-function activar(sec){
-document.querySelectorAll('[data-section]').forEach(a=>{
-a.classList.toggle("gh-active",a.dataset.section===sec);
-});
-}
+function activar(sec){document.querySelectorAll("[data-section]").forEach(a=>{a.classList.toggle("gh-active",a.dataset.section===sec);});}
 </script>
 </header>
