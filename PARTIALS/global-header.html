@@ -29,12 +29,34 @@
 .gh-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .gh-col a.gh-link{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:8px;border-radius:12px;text-decoration:none;color:var(--text);border:1px solid transparent;background:transparent;transition:.22s ease}
 .gh-col a.gh-link:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.18);transform:translateY(-1px)}
-.gh-ico32{
-  width:64px;      /* o 72 u 80, el que te guste */
-  height:64px;
-  object-fit:contain;
-  display:block;
+/* === ICONOS UNIFORMES 72×72 EN MEGA MENÚ === */
+.gh-ico32 {
+  width: 72px;
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Evitar que los íconos se deformen */
+  overflow: hidden;
+
+  /* El marco no debe colapsar */
+  flex-shrink: 0;
+
+  /* Fondo transparente = más elegante */
+  background: transparent;
 }
+
+.gh-ico32 img,
+.gh-ico32 .js-abs-src,
+.gh-col a.gh-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ajusta sin deformar */
+  display: block;
+}
+
 .gh-desc{margin:0;font-size:12px;line-height:1.5;color:var(--muted,#cbd5f5)}
 .gh-col .k{font-size:11px;color:var(--muted)}
 .gh-list{display:flex;flex-direction:column;gap:6px;min-width:260px}
@@ -73,87 +95,222 @@
   <nav class="gh-nav" aria-label="Principal">
     <ul>
       <li><a class="js-abs-href" data-section="inicio" data-href="index.html">Inicio</a></li>
+<!-- SISTEMAS -->
+<li class="gh-has-dd">
+  <a class="js-abs-href" data-section="sistemas" data-href="index.html#productos" aria-haspopup="true" aria-expanded="false">Sistemas</a>
+  <div class="gh-dd mega" role="menu">
+    <div class="gh-mega">
 
-      <!-- SISTEMAS -->
-      <li class="gh-has-dd">
-        <a class="js-abs-href" data-section="sistemas" data-href="index.html#productos" aria-haspopup="true" aria-expanded="false">Sistemas</a>
-        <div class="gh-dd mega" role="menu">
-          <div class="gh-mega">
-
-            <!-- Columna 1: Procesos contables -->
-            <div class="gh-col">
-              <h4>Procesos contables</h4>
-              <div class="gh-subhead">
-                <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 19h6" stroke="currentColor" stroke-width="2"/></svg>
-                <span class="k">Desktop</span>
-              </div>
-              <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html"><img class="gh-ico32 js-abs-src" src="IMG/contabilidad.webp" data-src="IMG/contabilidad.webp" alt="CONTPAQi Contabilidad"><p class="gh-desc">Pólizas, IVA, DIOT y contabilidad electrónica.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html"><img class="gh-ico32 js-abs-src" src="IMG/nominas.webp" data-src="IMG/nominas.webp" alt="CONTPAQi Nóminas"><p class="gh-desc">Cálculo de nómina, timbrado CFDI y obligaciones laborales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html"><img class="gh-ico32 js-abs-src" src="IMG/bancos.webp" data-src="IMG/bancos.webp" alt="CONTPAQi Bancos"><p class="gh-desc">Conciliación bancaria, flujo de efectivo y tesorería.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-ico32 js-abs-src" src="IMG/xml.webp" data-src="IMG/xml.webp" alt="XML en Línea+"><p class="gh-desc">Descarga, validación y resguardo de CFDI 4.0.</p></a></li>
-              </ul>
-
-              <div class="gh-subhead">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/></svg>
-                <span class="k">Nube</span>
-              </div>
-              <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html"><img class="gh-ico32 js-abs-src" src="IMG/contabiliza.webp" data-src="IMG/contabiliza.webp" alt="Contabiliza"><p class="gh-desc">Contabilidad en la nube para despachos y empresas.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html"><img class="gh-ico32 js-abs-src" src="IMG/personia.webp" data-src="IMG/personia.webp" alt="Personia"><p class="gh-desc">Nómina en la nube con autoservicio y timbrado.</p></a></li>
-              </ul>
-            </div>
-
-            <!-- Columna 2: Procesos comerciales -->
-            <div class="gh-col">
-              <h4>Procesos comerciales</h4>
-              <div class="gh-subhead">
-                <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 19h6" stroke="currentColor" stroke-width="2"/></svg>
-                <span class="k">Desktop</span>
-              </div>
-              <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html"><img class="gh-ico32 js-abs-src" src="IMG/comercialpremium.webp" data-src="IMG/comercialpremium.webp" alt="Comercial Premium"><p class="gh-desc">Inventario avanzado, lotes, series y sucursales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html"><img class="gh-ico32 js-abs-src" src="IMG/comercialpro.webp" data-src="IMG/comercialpro.webp" alt="Comercial Pro"><p class="gh-desc">Operaciones de volumen, compras y ventas.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html"><img class="gh-ico32 js-abs-src" src="IMG/comercialstart.webp" data-src="IMG/comercialstart.webp" alt="Comercial Start"><p class="gh-desc">Emisión de CFDI 4.0, notas de crédito y complementos.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" src="IMG/factura.webp" data-src="IMG/factura.webp" alt="Factura electrónica"><p class="gh-desc">CFDI 4.0 y facturación electrónica segura.</p></a></li>
-              </ul>
-
-              <div class="gh-subhead">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/></svg>
-                <span class="k">Nube</span>
-              </div>
-              <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html"><img class="gh-ico32 js-abs-src" src="IMG/vende.webp" data-src="IMG/vende.webp" alt="Vende"><p class="gh-desc">Punto de venta en la nube para mostrador y sucursales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" src="IMG/factura.webp" data-src="IMG/factura.webp" alt="CFDI en Línea"><p class="gh-desc">Facturación en línea y timbrado centralizado.</p></a></li>
-              </ul>
-            </div>
-
-            <!-- Columna 3: Productividad -->
-            <div class="gh-col">
-              <h4>Productividad</h4>
-              <div class="gh-subhead">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/></svg>
-                <span class="k">Nube</span>
-              </div>
-              <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html"><img class="gh-ico32 js-abs-src" src="IMG/analiza.webp" data-src="IMG/analiza.webp" alt="Analiza"><p class="gh-desc">Dashboards y BI con indicadores contables y fiscales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html"><img class="gh-ico32 js-abs-src" src="IMG/despachos.webp" data-src="IMG/despachos.webp" alt="Despachos"><p class="gh-desc">Gestión integral de despachos contables.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html"><img class="gh-ico32 js-abs-src" src="IMG/evalua.webp" data-src="IMG/evalua.webp" alt="Evalúa"><p class="gh-desc">Cumplimiento NOM 035 y NOM 037 con encuestas digitales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html"><img class="gh-ico32 js-abs-src" src="IMG/colabora.webp" data-src="IMG/colabora.webp" alt="Colabora"><p class="gh-desc">Autoservicio de empleados: recibos, constancias y solicitudes.</p></a></li>
-              </ul>
-
-              <div class="gh-subhead">
-                <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 19h6" stroke="currentColor" stroke-width="2"/></svg>
-                <span class="k">Promociones del mes</span>
-              </div>
-              <ul>
-                <li><a class="gh-link js-abs-href" data-href="index.html#promociones"><img class="gh-ico32 js-abs-src" src="IMG/promo.webp" data-src="IMG/promo.webp" alt="Promociones"><p class="gh-desc">Descuentos y paquetes activos este mes.</p></a></li>
-              </ul>
-            </div>
-
-          </div>
+      <!-- Columna 1: Procesos contables -->
+      <div class="gh-col">
+        <h4>Procesos contables</h4>
+        <div class="gh-subhead">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 19h6" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span class="k">Desktop</span>
         </div>
-      </li>
+        <ul>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/contabilidad.webp" data-src="IMG/contabilidad.webp" alt="CONTPAQi Contabilidad">
+              </div>
+              <p class="gh-desc">Pólizas, IVA, DIOT y contabilidad electrónica.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/nominas.webp" data-src="IMG/nominas.webp" alt="CONTPAQi Nóminas">
+              </div>
+              <p class="gh-desc">Cálculo de nómina, timbrado CFDI y obligaciones laborales.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/bancos.webp" data-src="IMG/bancos.webp" alt="CONTPAQi Bancos">
+              </div>
+              <p class="gh-desc">Conciliación bancaria, flujo de efectivo y tesorería.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/xml.webp" data-src="IMG/xml.webp" alt="XML en Línea+">
+              </div>
+              <p class="gh-desc">Descarga, validación y resguardo de CFDI 4.0.</p>
+            </a>
+          </li>
+        </ul>
+
+        <div class="gh-subhead">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span class="k">Nube</span>
+        </div>
+        <ul>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/contabiliza.webp" data-src="IMG/contabiliza.webp" alt="Contabiliza">
+              </div>
+              <p class="gh-desc">Contabilidad en la nube para despachos y empresas.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/personia.webp" data-src="IMG/personia.webp" alt="Personia">
+              </div>
+              <p class="gh-desc">Nómina en la nube con autoservicio y timbrado.</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Columna 2: Procesos comerciales -->
+      <div class="gh-col">
+        <h4>Procesos comerciales</h4>
+        <div class="gh-subhead">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 19h6" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span class="k">Desktop</span>
+        </div>
+        <ul>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/comercialpremium.webp" data-src="IMG/comercialpremium.webp" alt="Comercial Premium">
+              </div>
+              <p class="gh-desc">Inventario avanzado, lotes, series y sucursales.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/comercialpro.webp" data-src="IMG/comercialpro.webp" alt="Comercial Pro">
+              </div>
+              <p class="gh-desc">Operaciones de volumen, compras y ventas.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/comercialstart.webp" data-src="IMG/comercialstart.webp" alt="Comercial Start">
+              </div>
+              <p class="gh-desc">Emisión de CFDI 4.0, notas de crédito y complementos.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/factura.webp" data-src="IMG/factura.webp" alt="Factura electrónica">
+              </div>
+              <p class="gh-desc">CFDI 4.0 y facturación electrónica segura.</p>
+            </a>
+          </li>
+        </ul>
+
+        <div class="gh-subhead">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span class="k">Nube</span>
+        </div>
+        <ul>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/vende.webp" data-src="IMG/vende.webp" alt="Vende">
+              </div>
+              <p class="gh-desc">Punto de venta en la nube para mostrador y sucursales.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/factura.webp" data-src="IMG/factura.webp" alt="CFDI en Línea">
+              </div>
+              <p class="gh-desc">Facturación en línea y timbrado centralizado.</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Columna 3: Productividad -->
+      <div class="gh-col">
+        <h4>Productividad</h4>
+        <div class="gh-subhead">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span class="k">Nube</span>
+        </div>
+        <ul>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/analiza.webp" data-src="IMG/analiza.webp" alt="Analiza">
+              </div>
+              <p class="gh-desc">Dashboards y BI con indicadores contables y fiscales.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/despachos.webp" data-src="IMG/despachos.webp" alt="Despachos">
+              </div>
+              <p class="gh-desc">Gestión integral de despachos contables.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/evalua.webp" data-src="IMG/evalua.webp" alt="Evalúa">
+              </div>
+              <p class="gh-desc">Cumplimiento NOM 035 y NOM 037 con encuestas digitales.</p>
+            </a>
+          </li>
+          <li>
+            <a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/colabora.webp" data-src="IMG/colabora.webp" alt="Colabora">
+              </div>
+              <p class="gh-desc">Autoservicio de empleados: recibos, constancias y solicitudes.</p>
+            </a>
+          </li>
+        </ul>
+
+        <div class="gh-subhead">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 19h6" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span class="k">Promociones del mes</span>
+        </div>
+        <ul>
+          <li>
+            <a class="gh-link js-abs-href" data-href="index.html#promociones">
+              <div class="gh-ico32">
+                <img class="js-abs-src" src="IMG/promo.webp" data-src="IMG/promo.webp" alt="Promociones">
+              </div>
+              <p class="gh-desc">Descuentos y paquetes activos este mes.</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</li>
+
+      
 
       <!-- Servicios -->
       <li class="gh-has-dd">
