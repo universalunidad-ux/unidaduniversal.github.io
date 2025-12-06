@@ -20,8 +20,8 @@
 .gh-has-dd{position:relative}
 .gh-dd{position:absolute;left:0;top:calc(100% + 6px);background:rgba(10,14,23,.98);border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 45px rgba(0,0,0,.6);border-radius:18px;min-width:280px;padding:14px;display:none;max-height:calc(100vh - 80px);overflow:auto}
 .gh-has-dd:focus-within .gh-dd,.gh-has-dd:hover .gh-dd{display:block}
-.gh-dd.mega{min-width:1000px;padding:16px}
-.gh-mega{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.gh-dd.mega{min-width:900px;padding:16px}
+.gh-mega{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .gh-col{border-radius:16px;padding:10px;background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);border:1px solid rgba(255,255,255,.06)}
 .gh-col h4{margin:0 0 6px;font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
 .gh-subhead{display:flex;align-items:center;gap:6px;margin:8px 0 6px;font-weight:500;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
@@ -45,10 +45,12 @@
 .gh-subinner a{font-size:12px;border:1px solid rgba(148,163,184,.6);padding:5px 10px;border-radius:999px;text-decoration:none;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
 .gh-subinner a:hover{background:rgba(148,163,184,.16);color:var(--text)}
 @media(max-width:980px){
-.gh-container{grid-template-columns:1fr auto;gap:8px}
-.gh-nav{display:none}
-.gh-burger{display:inline-flex}
-.gh-cta .gh-btn:first-child{display:none}
+  .gh-container{grid-template-columns:1fr auto;gap:8px}
+  .gh-nav{display:none}
+  .gh-nav.open{display:block;position:absolute;left:0;right:0;top:100%;background:rgba(7,10,16,.98);padding:12px 18px 16px}
+  .gh-nav.open>ul{flex-direction:column;gap:10px}
+  .gh-burger{display:inline-flex}
+  .gh-cta .gh-btn:first-child{display:none}
 }
 </style>
 
@@ -81,10 +83,10 @@
                 <span class="k">Desktop</span>
               </div>
               <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabilidad.webp" alt="CONTPAQi Contabilidad"><p class="gh-desc">Pólizas, IVA, DIOT y contabilidad electrónica.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html"><img class="gh-ico32 js-abs-src" data-src="IMG/nominas.webp" alt="CONTPAQi Nóminas"><p class="gh-desc">Cálculo de nómina, timbrado CFDI y obligaciones laborales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html"><img class="gh-ico32 js-abs-src" data-src="IMG/bancos.webp" alt="CONTPAQi Bancos"><p class="gh-desc">Conciliación bancaria, flujo de efectivo y tesorería.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-ico32 js-abs-src" data-src="IMG/xml.webp" alt="XML en Línea+"><p class="gh-desc">Descarga, validación y resguardo de CFDI 4.0.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html"><img class="gh-ico32 js-abs-src" src="IMG/contabilidad.webp" data-src="IMG/contabilidad.webp" alt="CONTPAQi Contabilidad"><p class="gh-desc">Pólizas, IVA, DIOT y contabilidad electrónica.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html"><img class="gh-ico32 js-abs-src" src="IMG/nominas.webp" data-src="IMG/nominas.webp" alt="CONTPAQi Nóminas"><p class="gh-desc">Cálculo de nómina, timbrado CFDI y obligaciones laborales.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html"><img class="gh-ico32 js-abs-src" src="IMG/bancos.webp" data-src="IMG/bancos.webp" alt="CONTPAQi Bancos"><p class="gh-desc">Conciliación bancaria, flujo de efectivo y tesorería.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-ico32 js-abs-src" src="IMG/xml.webp" data-src="IMG/xml.webp" alt="XML en Línea+"><p class="gh-desc">Descarga, validación y resguardo de CFDI 4.0.</p></a></li>
               </ul>
 
               <div class="gh-subhead">
@@ -92,10 +94,8 @@
                 <span class="k">Nube</span>
               </div>
               <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabiliza.webp" alt="Contabiliza"><p class="gh-desc">Contabilidad en la nube para despachos y empresas.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html"><img class="gh-ico32 js-abs-src" data-src="IMG/analiza.webp" alt="Analiza"><p class="gh-desc">Dashboards y BI con indicadores contables y fiscales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html"><img class="gh-ico32 js-abs-src" data-src="IMG/personia.webp" alt="Personia"><p class="gh-desc">Nómina en la nube con autoservicio y timbrado.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html"><img class="gh-ico32 js-abs-src" data-src="IMG/despachos.webp" alt="Despachos"><p class="gh-desc">Gestión integral de despachos contables.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html"><img class="gh-ico32 js-abs-src" src="IMG/contabiliza.webp" data-src="IMG/contabiliza.webp" alt="Contabiliza"><p class="gh-desc">Contabilidad en la nube para despachos y empresas.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html"><img class="gh-ico32 js-abs-src" src="IMG/personia.webp" data-src="IMG/personia.webp" alt="Personia"><p class="gh-desc">Nómina en la nube con autoservicio y timbrado.</p></a></li>
               </ul>
             </div>
 
@@ -107,10 +107,10 @@
                 <span class="k">Desktop</span>
               </div>
               <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialpremium.webp" alt="Comercial Premium"><p class="gh-desc">Inventario avanzado, lotes, series y sucursales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialpro.webp" alt="Comercial Pro"><p class="gh-desc">Operaciones de volumen, compras y ventas.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialstart.webp" alt="Comercial Start"><p class="gh-desc">Emisión de CFDI 4.0, notas de crédito y complementos.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" data-src="IMG/factura.webp" alt="Factura electrónica"><p class="gh-desc">CFDI 4.0 y facturación electrónica segura.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html"><img class="gh-ico32 js-abs-src" src="IMG/comercialpremium.webp" data-src="IMG/comercialpremium.webp" alt="Comercial Premium"><p class="gh-desc">Inventario avanzado, lotes, series y sucursales.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html"><img class="gh-ico32 js-abs-src" src="IMG/comercialpro.webp" data-src="IMG/comercialpro.webp" alt="Comercial Pro"><p class="gh-desc">Operaciones de volumen, compras y ventas.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html"><img class="gh-ico32 js-abs-src" src="IMG/comercialstart.webp" data-src="IMG/comercialstart.webp" alt="Comercial Start"><p class="gh-desc">Emisión de CFDI 4.0, notas de crédito y complementos.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" src="IMG/factura.webp" data-src="IMG/factura.webp" alt="Factura electrónica"><p class="gh-desc">CFDI 4.0 y facturación electrónica segura.</p></a></li>
               </ul>
 
               <div class="gh-subhead">
@@ -118,8 +118,8 @@
                 <span class="k">Nube</span>
               </div>
               <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html"><img class="gh-ico32 js-abs-src" data-src="IMG/vende.webp" alt="Vende"><p class="gh-desc">Punto de venta en la nube para mostrador y sucursales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" data-src="IMG/factura.webp" alt="CFDI en Línea"><p class="gh-desc">Facturación en línea y timbrado centralizado.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html"><img class="gh-ico32 js-abs-src" src="IMG/vende.webp" data-src="IMG/vende.webp" alt="Vende"><p class="gh-desc">Punto de venta en la nube para mostrador y sucursales.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" src="IMG/factura.webp" data-src="IMG/factura.webp" alt="CFDI en Línea"><p class="gh-desc">Facturación en línea y timbrado centralizado.</p></a></li>
               </ul>
             </div>
 
@@ -131,9 +131,10 @@
                 <span class="k">Nube</span>
               </div>
               <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/kursa.html"><img class="gh-ico32 js-abs-src" data-src="IMG/kursa.webp" alt="Kursa"><p class="gh-desc">Plataforma de capacitación y cursos en línea.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html"><img class="gh-ico32 js-abs-src" data-src="IMG/evalua.webp" alt="Evalúa"><p class="gh-desc">Cumplimiento NOM 035 y NOM 037 con encuestas digitales.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html"><img class="gh-ico32 js-abs-src" data-src="IMG/colabora.webp" alt="Colabora"><p class="gh-desc">Autoservicio de empleados: recibos, constancias y solicitudes.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html"><img class="gh-ico32 js-abs-src" src="IMG/analiza.webp" data-src="IMG/analiza.webp" alt="Analiza"><p class="gh-desc">Dashboards y BI con indicadores contables y fiscales.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html"><img class="gh-ico32 js-abs-src" src="IMG/despachos.webp" data-src="IMG/despachos.webp" alt="Despachos"><p class="gh-desc">Gestión integral de despachos contables.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html"><img class="gh-ico32 js-abs-src" src="IMG/evalua.webp" data-src="IMG/evalua.webp" alt="Evalúa"><p class="gh-desc">Cumplimiento NOM 035 y NOM 037 con encuestas digitales.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html"><img class="gh-ico32 js-abs-src" src="IMG/colabora.webp" data-src="IMG/colabora.webp" alt="Colabora"><p class="gh-desc">Autoservicio de empleados: recibos, constancias y solicitudes.</p></a></li>
               </ul>
 
               <div class="gh-subhead">
@@ -141,21 +142,7 @@
                 <span class="k">Promociones del mes</span>
               </div>
               <ul>
-                <li><a class="gh-link js-abs-href" data-href="promociones.html"><img class="gh-ico32 js-abs-src" data-src="IMG/promo.webp" alt="Promociones"><p class="gh-desc">Descuentos y paquetes activos este mes.</p></a></li>
-              </ul>
-            </div>
-
-            <!-- Columna 4: Infraestructura -->
-            <div class="gh-col">
-              <h4>Infraestructura y servicios nube</h4>
-              <div class="gh-subhead">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/></svg>
-                <span class="k">Nube</span>
-              </div>
-              <ul>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/respaldo.html"><img class="gh-ico32 js-abs-src" data-src="IMG/respaldos.webp" alt="Respaldos"><p class="gh-desc">Respaldos automáticos y restauración administrada.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/escritorio-virtual.html"><img class="gh-ico32 js-abs-src" data-src="IMG/escritorio-virtual.webp" alt="Escritorio Virtual"><p class="gh-desc">Escritorios remotos con sistemas CONTPAQi en la nube.</p></a></li>
-                <li><a class="gh-link js-abs-href" data-href="SISTEMAS/timbra.html"><img class="gh-ico32 js-abs-src" data-src="IMG/timbra.webp" alt="Timbra"><p class="gh-desc">Servicio de timbrado independiente y escalable.</p></a></li>
+                <li><a class="gh-link js-abs-href" data-href="index.html#promociones"><img class="gh-ico32 js-abs-src" src="IMG/promo.webp" data-src="IMG/promo.webp" alt="Promociones"><p class="gh-desc">Descuentos y paquetes activos este mes.</p></a></li>
               </ul>
             </div>
 
@@ -178,8 +165,7 @@
         </div>
       </li>
 
-      <li><a class="js-abs-href" data-section="promociones" data-href="promociones.html">Promociones</a></li>
-      <li><a class="js-abs-href" data-section="eventos" data-href="eventos.html">Eventos</a></li>
+      <li><a class="js-abs-href" data-section="promociones" data-href="index.html#promociones">Promociones</a></li>
       <li><a class="js-abs-href" data-section="nosotros" data-href="nosotros.html">Nosotros</a></li>
       <!-- Contacto → sección del index -->
       <li><a class="js-abs-href" data-section="contacto" data-href="index.html#contacto">Contacto</a></li>
@@ -217,16 +203,21 @@
 
   $$('.js-abs-href[data-href]').forEach(a=>{
     const raw=a.getAttribute('data-href')||"";
-    const parts=raw.split("#");
-    const path=parts[0];
-    const hash=parts[1]?("#"+parts[1]):"";
-    a.href=abs(path)+hash;
+    const [path,hash]=raw.split("#");
+    a.href=abs(path)+(hash?"#"+hash:"");
   });
 
   $$('.js-abs-src[data-src]').forEach(img=>{
     const raw=img.getAttribute('data-src')||"";
     img.src=abs(raw);
   });
+
+  // --- BURGER MOBILE ---
+  const burger=$("#gh-burger");
+  const nav=$(".gh-nav");
+  if(burger&&nav){
+    burger.addEventListener("click",()=>nav.classList.toggle("open"));
+  }
 
   // --- ACTIVAR MENÚ SEGÚN SECCIÓN ---
   function activar(sec){
@@ -238,16 +229,14 @@
   const p=location.pathname.toUpperCase();
   const h=location.hash;
 
-  if(p.includes("/SISTEMAS/")){activar("sistemas");}
-  else if(p.includes("/SERVICIOS/")){activar("servicios");}
-  else if(h==="#promociones"){activar("promociones");}
-  else if(h==="#productos"||h==="#productos-con"){activar("sistemas");}
-  else if(h==="#contacto"){activar("contacto");}
-  else if(/\/(?:INDEX\.HTML?)?$/.test(p)||p==="/"||p===""){activar("inicio");}
-  else if(p.includes("/NOSOTROS")){activar("nosotros");}
-  else if(p.includes("/PROMOCIONES")){activar("promociones");}
-  else if(p.includes("/EVENTOS")){activar("eventos");}
-  else if(p.includes("/CONTACTO")){activar("contacto");}
+  if(p.includes("/SISTEMAS/"))      activar("sistemas");
+  else if(p.includes("/SERVICIOS/"))activar("servicios");
+  else if(h==="#promociones")       activar("promociones");
+  else if(h==="#productos"||h==="#productos-con") activar("sistemas");
+  else if(h==="#contacto")          activar("contacto");
+  else if(/\/(?:INDEX\.HTML?)?$/.test(p)||p==="/"||p==="") activar("inicio");
+  else if(p.includes("/NOSOTROS"))  activar("nosotros");
+  else if(p.includes("/CONTACTO"))  activar("contacto");
 
   // --- SUBNAV CONTEXTUAL (anclas internas si existen) ---
   const subnav=$("#gh-subnav");
