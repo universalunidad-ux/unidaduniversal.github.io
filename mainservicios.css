@@ -461,3 +461,73 @@ textarea { resize: vertical; }
   z-index: 2;
   pointer-events: none;
 }
+
+/* =========================================================
+   AJUSTES DE ACCESIBILIDAD (PageSpeed)
+   ========================================================= */
+
+/* 1) Dots con objetivo táctil grande */
+.carousel-nav .dot {
+  width: 12px;
+  height: 12px;
+  padding: 10px;               /* área clicable ~32x32 */
+  border-radius: 999px;
+  background-clip: content-box; /* el color solo en el círculo central */
+  margin: 0 2px;
+}
+
+/* 2) Flechas fuera del video, manteniendo tamaño táctil */
+.carousel .arrowCircle {
+  width: 44px;
+  height: 44px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Las movemos ligeramente fuera del carrusel para que no tapen el contenido */
+.carousel .arrowCircle.prev { left: -18px; }
+.carousel .arrowCircle.next { right: -18px; }
+
+/* Carrusel de reels verticales */
+#carouselReelsSoporte .arrowCircle {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* En móvil: un poco más pequeñas pero siguen siendo cómodas */
+@media (max-width: 600px) {
+  .carousel .arrowCircle {
+    width: 40px;
+    height: 40px;
+  }
+  .carousel .arrowCircle.prev { left: -10px; }
+  .carousel .arrowCircle.next { right: -10px; }
+
+  .carousel-nav {
+    gap: 6px;
+  }
+}
+
+/* 3) Mejor contraste en títulos y lead */
+.section-title h2,
+h2 {
+  color: #f9fafb; /* casi blanco para máximo contraste */
+}
+
+/* Párrafo lead más claro */
+.lead {
+  color: #e6edf9;
+}
+
+/* Por si algún card usa h2 dentro (ej: Hablemos de tu proyecto) */
+.card h2 {
+  color: #f9fafb;
+}
+
+/* 4) Badges con contraste alto */
+.badge-nube,
+.badge-conecta {
+  background: #020617;   /* fondo más oscuro */
+  border-color: #38bdf8; /* azul brillante */
+  color: #f9fafb;        /* texto blanco */
+}
