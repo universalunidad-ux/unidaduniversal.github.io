@@ -577,15 +577,23 @@ const REELS_DATA = {
   servicios: {
     titleEl: $('#reelTitle-servicios'),
     carousel: $('#carouselReels-servicios'),
-    defaultSys: 'implementacion',
+    // debe ser EXACTAMENTE igual al data-sys del primer tab
+    defaultSys: 'implementaciones',
     reelsBySys: {
-      implementacion: [
+      implementaciones: [
         { id: 'aHGJ-TNpJ-U', title: 'Testimonio Martha: Implementación Contable' }
+      ],
+      migraciones: [
+        // agrega aquí el/los reels que quieras para migraciones
+        // { id: 'VIDEO_ID', title: 'Título migraciones' }
       ],
       desarrollos: [
         { id: 'JkrDOjWV1Gs', title: 'Testimonio Sara: Soft Restaurant' },
         { id: 'uBl5UWkwbr8', title: 'Testimonio Luis: Desarrollo en Nóminas' },
         { id: 'f-F10-F6rnM', title: 'Testimonio Alex: Integración CONTPAQi API' }
+      ],
+      servidores: [
+        // reels para servidores virtuales
       ],
       cursos: [
         { id: 'TgAkwNt4YCA', title: 'Testimonio Ana: Curso Contabilidad' }
@@ -595,7 +603,7 @@ const REELS_DATA = {
       ]
     }
   }
-};
+
 
 function renderReelThumb(wrap) {
   const id = wrap.dataset.ytid;
