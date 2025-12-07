@@ -740,12 +740,16 @@
     </div>
   </section>
 
-  <!-- Servicios -->
-  <section id="servicios">
-    <div class="container">
-      <div class="section-title"><h2 style="margin:0">Servicios</h2></div>
+ <section id="servicios">
+  <div class="container grid-2">
+    
+    <!-- Columna izquierda: servicios 2×2 -->
+    <div>
+      <div class="section-title">
+        <h2 style="margin:0">Servicios</h2>
+      </div>
 
-      <div class="cards">
+      <div class="cards cards-services">
 
         <article class="card product-card" data-href="SERVICIOS/implementaciones.html" style="padding:16px">
           <h3>
@@ -815,7 +819,60 @@
 
       </div>
     </div>
-  </section>
+
+    <!-- Columna derecha: Reels de servicios (igual que productos) -->
+    <article class="card reels-home-card">
+      <div class="body">
+        <h3 class="title-gradient" style="margin-bottom:4px;">Reels de servicios Expiriti</h3>
+        <p class="hint" style="margin:0 0 10px;">
+          Ve ejemplos reales de implementaciones, migraciones, desarrollos, servidores, cursos y soporte.
+        </p>
+
+        <h4 class="reel-title" id="reelTitle-servicios"></h4>
+
+        <div class="carousel" id="carouselReels-servicios" aria-label="Reels de servicios">
+          <button class="arrowCircle prev" aria-label="Anterior" type="button">
+            <span class="chev">‹</span>
+          </button>
+          <div class="carousel-track"></div>
+          <button class="arrowCircle next" aria-label="Siguiente" type="button">
+            <span class="chev">›</span>
+          </button>
+          <div class="carousel-nav" aria-label="Paginación de reels"></div>
+        </div>
+
+        <div class="reel-sys-tabs" aria-label="Selecciona servicio">
+          <button class="reel-tab active" data-panel="servicios" data-sys="implementaciones" type="button">
+            <img src="IMG/srv-implementaciones.webp" alt="Implementaciones">
+            <span>Implementaciones</span>
+          </button>
+          <button class="reel-tab" data-panel="servicios" data-sys="migraciones" type="button">
+            <img src="IMG/srv-migraciones.webp" alt="Migraciones">
+            <span>Migraciones</span>
+          </button>
+          <button class="reel-tab" data-panel="servicios" data-sys="desarrollos" type="button">
+            <img src="IMG/srv-desarrollos.webp" alt="Desarrollos">
+            <span>Desarrollos</span>
+          </button>
+          <button class="reel-tab" data-panel="servicios" data-sys="servidores" type="button">
+            <img src="IMG/srv-servidores.webp" alt="Servidores">
+            <span>Servidores</span>
+          </button>
+          <button class="reel-tab" data-panel="servicios" data-sys="cursos" type="button">
+            <img src="IMG/srv-cursos.webp" alt="Cursos">
+            <span>Cursos</span>
+          </button>
+          <button class="reel-tab" data-panel="servicios" data-sys="soporte" type="button">
+            <img src="IMG/srv-soporte.webp" alt="Soporte">
+            <span>Soporte</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
 
 
   <!-- Promociones con filtros -->
