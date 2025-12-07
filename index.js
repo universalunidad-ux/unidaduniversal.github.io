@@ -7,9 +7,6 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 // Atajo para querySelector
 const $  = (sel, ctx = document) => ctx.querySelector(sel);
 
-// Ejecutar cuando el DOM ya está listo
-// (como cargas este JS al final del <body>, el DOM ya existe).
-
 // ======================================================
 // Formularios → WhatsApp
 // ======================================================
@@ -472,110 +469,110 @@ function initHeroGallery() {
 
 const REELS_DATA = {
   contable: {
-    titleEl:  $('#reelTitle-contable'),
+    titleEl: $('#reelTitle-contable'),
     carousel: $('#carouselReels-contable'),
     defaultSys: 'nominas',
     reelsBySys: {
       contabilidad: [
-        { id: 'yblBsFFv6bc', title: 'Contabilidad y Contabiliza te ayudan en la DIOT' },
-        { id: 'BIhYNn2O0og', title: 'Evita errores en la DIOT con Contabilidad' },
-        { id: 'rESYB37TP-M', title: 'Declaración anual en 5 pasos con Contabilidad' },
-        { id: 'LqptaBOF7h4', title: 'Fernanda redujo su carga contable con Contabilidad' }
+        {id:'yblBsFFv6bc', title:'Contabilidad y Contabiliza te ayudan en la DIOT'},
+        {id:'BIhYNn2O0og', title:'Evita errores en la DIOT con Contabilidad'},
+        {id:'rESYB37TP-M', title:'Declaración anual en 5 pasos con Contabilidad'},
+        {id:'LqptaBOF7h4', title:'Fernanda redujo su carga contable con Contabilidad'}
       ],
       nominas: [
-        { id: 'gae67GDse30', title: 'Nóminas y Personia | Checador por GPS' },
-        { id: '8-2rT99euog', title: 'Nóminas | Software #1 en México' },
-        { id: '2eVOzoBoP6s', title: 'Nóminas | Automatiza tus procesos' },
-        { id: 'nLRgiOPQM80', title: 'App Colabora gratis con Nóminas' },
-        { id: 'MfiiX1La2vQ', title: 'Qué hace CONTPAQi Nóminas por ti' }
+        {id:'gae67GDse30', title:'Nóminas y Personia | Checador por GPS'},
+        {id:'8-2rT99euog', title:'Nóminas | Software #1 en México'},
+        {id:'2eVOzoBoP6s', title:'Nóminas | Automatiza tus procesos'},
+        {id:'nLRgiOPQM80', title:'App Colabora gratis con Nóminas'},
+        {id:'MfiiX1La2vQ', title:'Qué hace CONTPAQi Nóminas por ti'}
       ],
       bancos: [
-        { id: '3YUbSEyU678', title: 'Conciliación bancaria en 3 pasos con Bancos' },
-        { id: 'LC1Ccpv_jzo', title: '4 señales de que necesitas Bancos' }
+        {id:'3YUbSEyU678', title:'Conciliación bancaria en 3 pasos con Bancos'},
+        {id:'LC1Ccpv_jzo', title:'4 señales de que necesitas Bancos'}
       ],
       xml: [
-        { id: 'nhoUDNnGQ90', title: 'El día que José dejó de sufrir con el SAT descargando CFDIs' }
+        {id:'nhoUDNnGQ90', title:'El día que José dejó de sufrir con el SAT descargando CFDIs'}
       ]
     }
   },
 
   comercial: {
-    titleEl:  $('#reelTitle-comercial'),
+    titleEl: $('#reelTitle-comercial'),
     carousel: $('#carouselReels-comercial'),
     defaultSys: 'start',
     reelsBySys: {
       start: [
-        { id: 'dQw4w9WgXcQ', title: 'Comercial Start | Reel 1' },
-        { id: '9bZkp7q19f0', title: 'Comercial Start | Reel 2' },
-        { id: '3JZ_D3ELwOQ', title: 'Comercial Start | Reel 3' }
+        {id:'dQw4w9WgXcQ', title:'Comercial Start | Reel 1'},
+        {id:'9bZkp7q19f0', title:'Comercial Start | Reel 2'},
+        {id:'3JZ_D3ELwOQ', title:'Comercial Start | Reel 3'}
       ],
       pro: [
-        { id: 'rEYzPXOX1_Y',  title: 'Comercial Pro: control total de inventario' },
-        { id: '-SJq6t2SM7c', title: 'Flujo completo con Comercial Pro' },
-        { id: '5AowfYsAm4E', title: 'Trazabilidad avanzada en inventarios' }
+        {id:'rEYzPXOX1_Y',  title:'Comercial Pro: control total de inventario'},
+        {id:'-SJq6t2SM7c', title:'Flujo completo con Comercial Pro'},
+        {id:'5AowfYsAm4E', title:'Trazabilidad avanzada en inventarios'}
       ],
       premium: [
-        { id: 'IYwNBfmWxJU', title: 'Controla tus inventarios con Comercial Premium' },
-        { id: '_Krv5nTyFuY', title: 'Notas de venta más rápido en Comercial Premium' },
-        { id: 'HmgOQrasCVw', title: 'Notas de venta en Comercial Premium' },
-        { id: 'WGPOzQ1GsSE', title: 'Documentos por WhatsApp en Comercial Premium' }
+        {id:'IYwNBfmWxJU', title:'Controla tus inventarios con Comercial Premium'},
+        {id:'_Krv5nTyFuY', title:'Notas de venta más rápido en Comercial Premium'},
+        {id:'HmgOQrasCVw', title:'Notas de venta en Comercial Premium'},
+        {id:'WGPOzQ1GsSE', title:'Documentos por WhatsApp en Comercial Premium'}
       ],
       factura: [
-        { id: 'nMEgM_BvxTs', title: 'Factura Electrónica v13 | Novedades' },
-        { id: 'IA5-tguZzCc', title: 'Carta Porte CFDI 3.1 en Factura Electrónica' },
-        { id: '2uBSGZHLsGs', title: 'Factura Electrónica para sector notarial' }
+        {id:'nMEgM_BvxTs', title:'Factura Electrónica v13 | Novedades'},
+        {id:'IA5-tguZzCc', title:'Carta Porte CFDI 3.1 en Factura Electrónica'},
+        {id:'2uBSGZHLsGs', title:'Factura Electrónica para sector notarial'}
       ]
     }
   },
 
   nube: {
-    titleEl:  $('#reelTitle-nube'),
+    titleEl: $('#reelTitle-nube'),
     carousel: $('#carouselReels-nube'),
     defaultSys: 'analiza',
     reelsBySys: {
       analiza: [
-        { id: 'wr-eeR3eE7w', title: 'Analiza | Conciliación fiscal y bancaria' },
-        { id: 'gAIGxMHaCLQ', title: 'Analiza | Identifica descuadres CFDIs y Nóminas' },
-        { id: 'iEQM_21OmBI', title: 'Conciliación fiscal y contable con Analiza' }
+        {id:'wr-eeR3eE7w', title:'Analiza | Conciliación fiscal y bancaria'},
+        {id:'gAIGxMHaCLQ', title:'Analiza | Identifica descuadres CFDIs y Nóminas'},
+        {id:'iEQM_21OmBI', title:'Conciliación fiscal y contable con Analiza'}
       ],
       contabiliza: [
-        { id: 'yblBsFFv6bc', title: 'Contabilidad y Contabiliza te ayudan en la DIOT' }
+        {id:'yblBsFFv6bc', title:'Contabilidad y Contabiliza te ayudan en la DIOT'}
       ],
       despachos: [
-        { id: 'KBEOTwnFXQ4', title: 'Gestión de Despachos en la nube' },
-        { id: 'aqz-KE-bpKQ', title: 'Control de obligaciones con Despachos' }
+        {id:'KBEOTwnFXQ4', title:'Gestión de Despachos en la nube'},
+        {id:'aqz-KE-bpKQ', title:'Control de obligaciones con Despachos'}
       ],
       vende: [
-        { id: '2Ty_SD8B_FU', title: 'Vende | Carta Porte fácil y rápida' },
-        { id: 'UPyufjDByNc', title: 'Testimonio CONTPAQi Vende' },
-        { id: 'Grx1woHMGsU', title: 'Vende en la nube' }
+        {id:'2Ty_SD8B_FU', title:'Vende | Carta Porte fácil y rápida'},
+        {id:'UPyufjDByNc', title:'Testimonio CONTPAQi Vende'},
+        {id:'Grx1woHMGsU', title:'Vende en la nube'}
       ]
     }
   },
 
   productividad: {
-    titleEl:  $('#reelTitle-productividad'),
+    titleEl: $('#reelTitle-productividad'),
     carousel: $('#carouselReels-productividad'),
     defaultSys: 'evalua',
     reelsBySys: {
       evalua: [
-        { id: 'REEMPLAZAR_ID_1', title: 'Reel Evalúa 1' },
-        { id: 'REEMPLAZAR_ID_2', title: 'Reel Evalúa 2' },
-        { id: 'REEMPLAZAR_ID_3', title: 'Reel Evalúa 3' }
+        {id:'REEMPLAZAR_ID_1', title:'Reel Evalúa 1'},
+        {id:'REEMPLAZAR_ID_2', title:'Reel Evalúa 2'},
+        {id:'REEMPLAZAR_ID_3', title:'Reel Evalúa 3'}
       ],
       colabora: [
-        { id: 'XJQDFDowH0U', title: 'Colabora, app sin costo con Nóminas' },
-        { id: 'nLRgiOPQM80', title: 'App Colabora gratis con Nóminas' }
+        {id:'XJQDFDowH0U', title:'Colabora, app sin costo con Nóminas'},
+        {id:'nLRgiOPQM80', title:'App Colabora gratis con Nóminas'}
       ],
       personia: [
-        { id: 'gae67GDse30', title: 'Nóminas y Personia | Checador por GPS' }
+        {id:'gae67GDse30', title:'Nóminas y Personia | Checador por GPS'}
       ]
     }
   },
 
-  // 🔥 Nuevo panel: Servicios
+  // Panel de reels de SERVICIOS
   servicios: {
-    titleEl:  $('#reelTitle-servicios'),
+    titleEl: $('#reelTitle-servicios'),
     carousel: $('#carouselReels-servicios'),
     defaultSys: 'implementacion',
     reelsBySys: {
@@ -745,30 +742,6 @@ function initReelsCarousel(panelKey) {
   buildReelsSlides(panelKey, defaultSys);
 }
 
-// Inicializa TODOS los paneles de reels (incluye servicios)
-['contable', 'comercial', 'nube', 'productividad', 'servicios'].forEach(initReelsCarousel);
-
-// Tabs de sistema/servicio debajo de cada carrusel
-$$('.reel-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    const panelKey = tab.dataset.panel;
-    const sysKey   = tab.dataset.sys;
-    if (!panelKey || !sysKey) return;
-
-    stopAllReels();
-
-    // Activa solo los tabs del panel actual
-    $$('.reel-tab').forEach(t => {
-      if (t.dataset.panel === panelKey) {
-        t.classList.toggle('active', t === tab);
-      }
-    });
-
-    // Reconstruye slides para ese sistema
-    buildReelsSlides(panelKey, sysKey);
-  });
-});
-
 // ======================================================
 // Miniaturas sección "Videos" (dos videos simples arriba de contacto)
 // ======================================================
@@ -805,6 +778,37 @@ function initFAQ() {
 // Inicialización general de la página
 // ======================================================
 
-initHeroGallery();
-initSimpleThumbs();
-initFAQ();
+window.addEventListener('DOMContentLoaded', () => {
+  // Hero (carrusel de imágenes)
+  initHeroGallery();
+
+  // Reels (productos + servicios)
+  ['contable','comercial','nube','productividad','servicios'].forEach(initReelsCarousel);
+
+  // Tabs de sistema/servicio debajo de cada carrusel
+  $$('.reel-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const panelKey = tab.dataset.panel;
+      const sysKey   = tab.dataset.sys;
+      if (!panelKey || !sysKey) return;
+
+      stopAllReels();
+
+      // Activa solo los tabs del panel actual
+      $$('.reel-tab').forEach(t => {
+        if (t.dataset.panel === panelKey) {
+          t.classList.toggle('active', t === tab);
+        }
+      });
+
+      // Reconstruye slides para ese sistema
+      buildReelsSlides(panelKey, sysKey);
+    });
+  });
+
+  // Miniaturas sección "Videos"
+  initSimpleThumbs();
+
+  // FAQ
+  initFAQ();
+});
