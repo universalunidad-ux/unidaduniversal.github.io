@@ -594,18 +594,30 @@ const REELS_DATA = {
       ]
     }
   },
+ // ... dentro de const REELS_DATA = { ...
+
   servicios: {
     titleEl: $('#reelTitle-servicios'),
     carousel: $('#carouselReels-servicios'),
-    defaultSys: 'implementacion',
+    defaultSys: 'implementaciones', // CORREGIDO: Plural para coincidir con HTML
     reelsBySys: {
-      implementacion: [
-        { id: 'aHGJ-TNpJ-U', title: 'Testimonio Martha: Implementación Contable' }
+      // CORREGIDO: Key en plural para coincidir con data-sys="implementaciones"
+      implementaciones: [
+        { id: 'aHGJ-TNpJ-U', title: 'Testimonio Martha: Implementación Contable' },
+        // Agrega más si tienes
+      ],
+      // AGREGADO: Faltaba esta categoría que tienes en el HTML
+      migraciones: [
+        { id: 'JkrDOjWV1Gs', title: 'Migración de datos a CONTPAQi' } // Video de ejemplo, cámbialo por el real
       ],
       desarrollos: [
         { id: 'JkrDOjWV1Gs', title: 'Testimonio Sara: Soft Restaurant' },
         { id: 'uBl5UWkwbr8', title: 'Testimonio Luis: Desarrollo en Nóminas' },
         { id: 'f-F10-F6rnM', title: 'Testimonio Alex: Integración CONTPAQi API' }
+      ],
+      // AGREGADO: Faltaba esta categoría que tienes en el HTML
+      servidores: [
+        { id: 'Grx1woHMGsU', title: 'Servidores Virtuales para CONTPAQi' } // Video de ejemplo, cámbialo
       ],
       cursos: [
         { id: 'TgAkwNt4YCA', title: 'Testimonio Ana: Curso Contabilidad' }
@@ -615,6 +627,8 @@ const REELS_DATA = {
       ]
     }
   }
+
+// ... fin de REELS_DATA
 };
 
 function renderReelThumb(wrap) {
