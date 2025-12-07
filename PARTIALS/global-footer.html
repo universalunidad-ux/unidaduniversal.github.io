@@ -1,19 +1,51 @@
-<!-- /PARTIALS/global-footer.html -->
 <footer class="gf" role="contentinfo">
   <style>
-  /*=== GLOBAL FOOTER (SCOPED) ===*/.gf{margin-top:40px;background:var(--bg,#0b0f14);border-top:1px solid rgba(255,255,255,.06);color:var(--text,#e8eef6)}.gf-container{max-width:var(--maxw,1200px);margin:0 auto;padding:22px 16px}.gf-grid{display:grid;grid-template-columns:2fr 1.3fr 1.3fr 1.7fr 1.4fr;gap:18px}.gf h3.gf-title{margin:0 0 8px;font-size:16px;color:var(--text);text-align:center}.gf .gf-hint{color:var(--muted,#95a2b3);font-size:13px}
-  /*=== CONTACTO ===*/.gf-contact{display:flex;flex-direction:column;gap:8px}.gf-row{display:flex;gap:8px;align-items:flex-start}.gf-ico{width:18px;height:18px;opacity:.95;flex:0 0 18px}.gf a{color:var(--text);text-decoration:none}.gf a:hover{text-decoration:underline}
-  /*=== PAGOS ===*/.gf-payments{display:flex;justify-content:center}.gf-payments img{max-width:260px;width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,.08);display:block}
-  /*=== MARCAS ===*/.gf-brands{display:flex;flex-direction:column;gap:12px;align-items:center}.gf-brand{width:220px;min-height:110px;padding:8px 14px;background:var(--card,#111723);border:1px solid rgba(255,255,255,.08);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.35)}.gf-brand img{max-height:60px;width:auto;object-fit:contain;display:block}
-  /*=== PRESENCIA ===*/.gf-presence{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}.gf-map-card{background:var(--card,#111723);border-radius:18px;border:1px solid rgba(255,255,255,.08);padding:14px;box-shadow:0 10px 26px rgba(0,0,0,.35);display:flex;justify-content:center;align-items:center}.gf-map-card img{width:100%;max-width:190px;height:auto;display:block}.gf-presence p{margin:0;font-size:13px;color:var(--muted,#cbd5f5);max-width:22rem}
-  /*=== ALIADOS ===*/.gf-allies{display:flex;flex-direction:column;gap:14px;align-items:center}.gf-ally-card{background:var(--card,#111723);border-radius:18px;border:1px solid rgba(255,255,255,.08);padding:10px 18px;box-shadow:0 10px 26px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;min-height:70px}.gf-ally-card img{height:48px;width:auto;object-fit:contain;display:block}
-  /*=== BOTTOM BAR ===*/.gf-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;margin-top:16px}.gf-brandmini{display:flex;align-items:center;gap:10px}.gf-brandmini img{width:50px;height:50px;border-radius:8px}
-  /*=== RESPONSIVE ===*/@media(max-width:980px){.gf-grid{grid-template-columns:1fr 1fr}}@media(max-width:640px){.gf-grid{grid-template-columns:1fr}.gf-bottom{flex-direction:column;gap:8px;align-items:flex-start}}
+  /*=== GLOBAL FOOTER (SCOPED) ===*/
+  .gf{margin-top:40px;background:var(--bg,#0b0f14);border-top:1px solid rgba(255,255,255,.06);color:var(--text,#e8eef6)}
+  .gf-container{max-width:var(--maxw,1200px);margin:0 auto;padding:22px 16px}
+  .gf-grid{display:grid;grid-template-columns:2fr 1.3fr 1.3fr 1.7fr 1.4fr;gap:18px}
+  .gf h3.gf-title{margin:0 0 8px;font-size:16px;color:var(--text);text-align:center}
+  .gf .gf-hint{color:var(--muted,#95a2b3);font-size:13px}
+  
+  /*=== CONTACTO ===*/
+  .gf-contact{display:flex;flex-direction:column;gap:8px}
+  .gf-row{display:flex;gap:8px;align-items:flex-start}
+  .gf-ico{width:18px;height:18px;opacity:.95;flex:0 0 18px}
+  .gf a{color:var(--text);text-decoration:none}
+  .gf a:hover{text-decoration:underline}
+  
+  /*=== PAGOS ===*/
+  .gf-payments{display:flex;justify-content:center}
+  .gf-payments img{max-width:260px;width:100%;height:auto;border-radius:10px;border:1px solid rgba(255,255,255,.08);display:block}
+  
+  /*=== MARCAS ===*/
+  .gf-brands{display:flex;flex-direction:column;gap:12px;align-items:center}
+  .gf-brand{width:220px;min-height:110px;padding:8px 14px;background:var(--card,#111723);border:1px solid rgba(255,255,255,.08);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+  .gf-brand img{max-height:60px;width:auto;object-fit:contain;display:block}
+  
+  /*=== PRESENCIA ===*/
+  .gf-presence{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+  .gf-map-card{background:var(--card,#111723);border-radius:18px;border:1px solid rgba(255,255,255,.08);padding:14px;box-shadow:0 10px 26px rgba(0,0,0,.35);display:flex;justify-content:center;align-items:center}
+  .gf-map-card img{width:100%;max-width:190px;height:auto;display:block}
+  .gf-presence p{margin:0;font-size:13px;color:var(--muted,#cbd5f5);max-width:22rem}
+  
+  /*=== ALIADOS ===*/
+  .gf-allies{display:flex;flex-direction:column;gap:14px;align-items:center}
+  .gf-ally-card{background:var(--card,#111723);border-radius:18px;border:1px solid rgba(255,255,255,.08);padding:10px 18px;box-shadow:0 10px 26px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;min-height:70px}
+  .gf-ally-card img{height:48px;width:auto;object-fit:contain;display:block}
+  
+  /*=== BOTTOM BAR ===*/
+  .gf-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;margin-top:16px}
+  .gf-brandmini{display:flex;align-items:center;gap:10px}
+  .gf-brandmini img{width:50px;height:50px;border-radius:8px}
+  
+  /*=== RESPONSIVE ===*/
+  @media(max-width:980px){.gf-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:640px){.gf-grid{grid-template-columns:1fr}.gf-bottom{flex-direction:column;gap:8px;align-items:flex-start}}
   </style>
 
   <div class="gf-container">
     <div class="gf-grid" aria-label="Información de pie de página">
-      <!-- Columna: Contacto -->
       <section aria-labelledby="gf-contacto">
         <h3 id="gf-contacto" class="gf-title">Contacto</h3>
         <div class="gf-contact">
@@ -38,59 +70,55 @@
             <div><strong>Mail:</strong> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></div>
           </div>
           <div class="gf-row">
-            <img class="gf-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp" aria-hidden="true">
+            <img class="gf-ico js-abs-src" data-src="IMG/whatsapp.svg" alt="WhatsApp" aria-hidden="true" style="opacity:0; transition: opacity 0.3s ease;">
             <div><a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quisiera%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp directo</a></div>
           </div>
         </div>
       </section>
 
-      <!-- Columna: Formas de pago -->
       <section aria-labelledby="gf-pagos">
         <h3 id="gf-pagos" class="gf-title">Formas de pago</h3>
         <div class="gf-payments">
-          <img class="js-img" data-src="IMG/pasarela.webp" alt="Métodos de pago aceptados" loading="lazy">
+          <img class="js-abs-src" data-src="IMG/pasarela.webp" alt="Métodos de pago aceptados" loading="lazy" style="opacity:0; transition: opacity 0.3s ease;">
         </div>
       </section>
 
-      <!-- Columna: Marcas -->
       <section aria-labelledby="gf-marcas">
         <h3 id="gf-marcas" class="gf-title">Marcas</h3>
         <div class="gf-brands">
           <div class="gf-brand">
-            <img class="js-img" data-src="IMG/contpaqi.webp" alt="CONTPAQi" loading="lazy">
+            <img class="js-abs-src" data-src="IMG/contpaqi.webp" alt="CONTPAQi" loading="lazy" style="opacity:0; transition: opacity 0.3s ease;">
           </div>
           <div class="gf-brand">
-            <img class="js-img" data-src="IMG/microsoft.webp" alt="Microsoft" loading="lazy">
+            <img class="js-abs-src" data-src="IMG/microsoft.webp" alt="Microsoft" loading="lazy" style="opacity:0; transition: opacity 0.3s ease;">
           </div>
           <div class="gf-brand">
-            <img class="js-img" data-src="IMG/hpserver.webp" alt="HP ProLiant Servers" loading="lazy">
+            <img class="js-abs-src" data-src="IMG/hpserver.webp" alt="HP ProLiant Servers" loading="lazy" style="opacity:0; transition: opacity 0.3s ease;">
           </div>
         </div>
       </section>
 
-      <!-- Columna: Presencia -->
       <section aria-labelledby="gf-presencia">
         <h3 id="gf-presencia" class="gf-title">Presencia en todo el país</h3>
         <div class="gf-presence">
           <div class="gf-map-card">
-            <img class="js-img" data-src="IMG/mexico.webp" alt="Mapa de México" loading="lazy">
+            <img class="js-abs-src" data-src="IMG/mexico.webp" alt="Mapa de México" loading="lazy" style="opacity:0; transition: opacity 0.3s ease;">
           </div>
           <p>Atendemos clientes en los 32 estados de la República Mexicana.</p>
         </div>
       </section>
 
-      <!-- Columna: Aliados -->
       <section aria-labelledby="gf-aliados" class="gf-ally">
         <h3 id="gf-aliados" class="gf-title">Aliados</h3>
         <div class="gf-allies" aria-label="Aliados">
           <div class="gf-ally-card">
-            <img class="js-img" data-src="IMG/bni.webp" alt="BNI" loading="lazy">
+            <img class="js-abs-src" data-src="IMG/bni.webp" alt="BNI" loading="lazy" style="opacity:0; transition: opacity 0.3s ease;">
           </div>
           <div class="gf-ally-card">
-            <img class="js-img" data-src="IMG/fucam.webp" alt="FUCAM" loading="lazy">
+            <img class="js-abs-src" data-src="IMG/fucam.webp" alt="FUCAM" loading="lazy" style="opacity:0; transition: opacity 0.3s ease;">
           </div>
           <div class="gf-ally-card">
-            <img class="js-img" data-src="IMG/ligo.webp" alt="ligo" loading="lazy">
+            <img class="js-abs-src" data-src="IMG/ligo.webp" alt="ligo" loading="lazy" style="opacity:0; transition: opacity 0.3s ease;">
           </div>
         </div>
       </section>
@@ -98,15 +126,15 @@
 
     <div class="gf-bottom" aria-label="Información legal">
       <div class="gf-brandmini">
-        <img class="js-img" data-src="IMG/expiritilogo.webp" alt="Expiriti">
+        <img class="js-abs-src" data-src="IMG/expiritilogo.webp" alt="Expiriti" style="opacity:0; transition: opacity 0.3s ease;">
         <div>
           <strong>Expiriti</strong>
           <div class="gf-hint">© <span id="gf-year"></span> · Todos los derechos reservados</div>
         </div>
       </div>
       <div class="gf-hint">
-        <a class="js-link" data-href="aviso-de-privacidad.html">Aviso de privacidad</a> ·
-        <a class="js-link" data-href="terminos-y-condiciones.html">Términos</a>
+        <a class="js-abs-href" data-href="aviso-de-privacidad.html">Aviso de privacidad</a> ·
+        <a class="js-abs-href" data-href="terminos-y-condiciones.html">Términos</a>
       </div>
     </div>
   </div>
