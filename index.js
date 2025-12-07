@@ -1,3 +1,8 @@
+/* =========================================================
+   Expiriti - index.js (CORREGIDO)
+   ========================================================= */
+
+// Selectores abreviados
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 
@@ -8,27 +13,17 @@ function getBasePath() {
   return './';
 }
 
-function resolvePath(p) {
-  // Manejo de rutas para GitHub Pages o locales
-  const isGh = location.hostname.endsWith("github.io");
-  const firstSeg = location.pathname.split("/")[1] || "";
-  const base = isGh && firstSeg ? "/" + firstSeg : "";
-  
-  if (!p) return "#";
-  if (/^https?:\/\//i.test(p)) return p;
-  if (p.startsWith("#")) return p;
-  // Limpieza de dobles slashes
-  return (base + "/" + p).replace(/\/+/g, "/");
-}
-
 // --- CARGA DE PARTIALS (Header/Footer) ---
 async function loadPartial(placeholderId, fileName) {
   try {
     const base = getBasePath();
     const target = document.getElementById(placeholderId);
     if (!target) return;
-    const resp = await fetch(`${base}PARTIALS/${fileName}`);
+    
+    // Agregamos timestamp para evitar caché agresivo durante desarrollo
+    const resp = await fetch(`${base}PARTIALS/${fileName}?v=${new Date().getTime()}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    
     const html = await resp.text();
     target.innerHTML = html;
   } catch (err) {
@@ -36,34 +31,59 @@ async function loadPartial(placeholderId, fileName) {
   }
 }
 
-// --- LÓGICA DEL HEADER (Movida desde el HTML para que funcione) ---
+// --- LÓGICA DEL HEADER (Se ejecuta después de cargar el HTML) ---
 function initHeaderLogic() {
-  // 1. Corregir rutas relativas/absolutas en el header cargado
+  const base = getBasePath();
+
+  // 1. Corregir enlaces (href)
   $$('.js-abs-href[data-href]').forEach(a => {
     const raw = a.getAttribute('data-href') || "";
     const [path, hash] = raw.split("#");
-    // Si estamos en subcarpeta, ajustar enlace
-    const prefix = getBasePath() === '../' && !raw.startsWith('http') ? '../' : '';
-    a.href = prefix + path + (hash ? "#" + hash : "");
+    // Si estamos en subcarpeta y no es un link absoluto, agregamos '../'
+    if (base === '../' && !raw.startsWith('http') && !raw.startsWith('#')) {
+      a.href = base + path + (hash ? "#" + hash : "");
+    } else {
+      a.href = raw; // En index, se queda igual
+    }
   });
 
+  // 2. Corregir imágenes (src) y mostrarlas suavemente
   $$('.js-abs-src[data-src]').forEach(img => {
     const raw = img.getAttribute('data-src') || "";
-    const prefix = getBasePath() === '../' ? '../' : '';
-    img.src = prefix + raw;
+    let finalSrc = raw;
+
+    // Calculamos ruta
+    if (base === '../' && !raw.startsWith('http')) {
+      finalSrc = base + raw;
+    }
+
+    // Asignamos src real
+    img.src = finalSrc;
+
+    // Al cargar, quitamos la opacidad 0
+    img.onload = () => {
+      img.style.opacity = '1';
+    };
+    // Por si ya estaba en caché
+    if (img.complete) {
+      img.style.opacity = '1';
+    }
   });
 
-  // 2. Menú Hamburguesa
+  // 3. Menú Hamburguesa (Móvil)
   const burger = $("#gh-burger");
   const nav = $(".gh-nav");
   if (burger && nav) {
-    burger.addEventListener("click", () => nav.classList.toggle("open"));
+    burger.addEventListener("click", () => {
+      nav.classList.toggle("open");
+      burger.textContent = nav.classList.contains("open") ? "✕" : "≡";
+    });
   }
 
-  // 3. Activar clase "gh-active" según la sección actual
+  // 4. Activar clase "gh-active" según sección
   const p = location.pathname.toUpperCase();
   const h = location.hash;
-  let sec = "inicio"; // Default
+  let sec = "inicio";
 
   if (p.includes("/SISTEMAS/")) sec = "sistemas";
   else if (p.includes("/SERVICIOS/")) sec = "servicios";
@@ -138,7 +158,7 @@ $$('.card.product-card[data-href]').forEach(card => {
   });
 });
 
-// --- DATOS Y LÓGICA DE GALERÍA HERO ---
+// --- DATOS GALERÍA HERO ---
 const HERO_GALLERY_DATA = {
   contable: {
     label: 'Contables',
@@ -577,23 +597,15 @@ const REELS_DATA = {
   servicios: {
     titleEl: $('#reelTitle-servicios'),
     carousel: $('#carouselReels-servicios'),
-    // debe ser EXACTAMENTE igual al data-sys del primer tab
-    defaultSys: 'implementaciones',
+    defaultSys: 'implementacion',
     reelsBySys: {
-      implementaciones: [
+      implementacion: [
         { id: 'aHGJ-TNpJ-U', title: 'Testimonio Martha: Implementación Contable' }
-      ],
-      migraciones: [
-        // agrega aquí el/los reels que quieras para migraciones
-        // { id: 'VIDEO_ID', title: 'Título migraciones' }
       ],
       desarrollos: [
         { id: 'JkrDOjWV1Gs', title: 'Testimonio Sara: Soft Restaurant' },
         { id: 'uBl5UWkwbr8', title: 'Testimonio Luis: Desarrollo en Nóminas' },
         { id: 'f-F10-F6rnM', title: 'Testimonio Alex: Integración CONTPAQi API' }
-      ],
-      servidores: [
-        // reels para servidores virtuales
       ],
       cursos: [
         { id: 'TgAkwNt4YCA', title: 'Testimonio Ana: Curso Contabilidad' }
@@ -603,7 +615,7 @@ const REELS_DATA = {
       ]
     }
   }
-
+};
 
 function renderReelThumb(wrap) {
   const id = wrap.dataset.ytid;
