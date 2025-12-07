@@ -355,6 +355,18 @@ textarea { resize: vertical; }
 }
 @media(max-width:520px) { .promo-btn { width: 100%; justify-content: center; text-align: center; } }
 
+/* Cards genéricas (2×2 en desktop) */
+.cards{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+/* Cards productos */
+.cards-products{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 /* Cards productos */
 .cards-products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .card.product-card { position: relative; cursor: pointer; transition: transform .14s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease; }
