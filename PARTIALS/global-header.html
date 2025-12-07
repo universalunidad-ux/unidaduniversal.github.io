@@ -1,4 +1,3 @@
-<!-- /PARTIALS/global-header.html -->
 <header class="gh" role="banner">
 <style>
 .gh{
@@ -266,7 +265,6 @@
 }
 </style>
 
-<!-- ==== TOP ROW ==== -->
 <div class="gh-container">
   <a class="gh-brand js-abs-href" data-href="index.html" aria-label="Inicio Expiriti">
     <img class="js-abs-src" src="IMG/expiritilogo.webp" data-src="IMG/expiritilogo.webp" alt="Expiriti">
@@ -276,18 +274,15 @@
     </div>
   </a>
 
-  <!-- NAV DESKTOP -->
   <nav class="gh-nav" aria-label="Principal">
     <ul>
       <li><a class="js-abs-href" data-section="inicio" data-href="index.html">Inicio</a></li>
 
-      <!-- SISTEMAS -->
       <li class="gh-has-dd">
         <a class="js-abs-href" data-section="sistemas" data-href="index.html#productos" aria-haspopup="true" aria-expanded="false">Sistemas</a>
         <div class="gh-dd mega" role="menu">
           <div class="gh-mega">
 
-            <!-- Columna 1: Procesos contables -->
             <div class="gh-col">
               <h4>Procesos contables</h4>
 
@@ -361,7 +356,6 @@
               </ul>
             </div>
 
-            <!-- Columna 2: Procesos comerciales -->
             <div class="gh-col">
               <h4>Procesos comerciales</h4>
 
@@ -435,7 +429,6 @@
               </ul>
             </div>
 
-            <!-- Columna 3: Productividad -->
             <div class="gh-col">
               <h4>Productividad</h4>
 
@@ -505,7 +498,6 @@
         </div>
       </li>
 
-      <!-- Servicios -->
       <li class="gh-has-dd">
         <a class="js-abs-href" data-section="servicios" data-href="index.html#servicios" aria-haspopup="true" aria-expanded="false">Servicios</a>
         <div class="gh-dd" role="menu">
@@ -526,7 +518,6 @@
     </ul>
   </nav>
 
-  <!-- CTA / Burger -->
   <div class="gh-cta">
     <a class="gh-btn" href="tel:+525568437918">55 6843 7918</a>
     <a class="gh-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
@@ -534,82 +525,7 @@
   </div>
 </div>
 
-<!-- Subnav contextual -->
 <div class="gh-subnav" id="gh-subnav" aria-label="Accesos rápidos">
   <div class="gh-subinner" id="gh-subinner"></div>
 </div>
-
-<script>
-(function(){
-  const $ = s => document.querySelector(s);
-  const $$ = s => Array.from(document.querySelectorAll(s));
-
-  // --- RUTAS PARA GITHUB PAGES ---
-  const isGh = location.hostname.endsWith("github.io");
-  const firstSeg = location.pathname.split("/")[1] || "";
-  const base = isGh && firstSeg ? "/" + firstSeg : "";
-  const abs = p => {
-    if(!p) return "#";
-    if(/^https?:\/\//i.test(p)) return p;
-    if(p.startsWith("#")) return p;
-    return (base + "/" + p).replace(/\/+/g,"/");
-  };
-
-  $$('.js-abs-href[data-href]').forEach(a=>{
-    const raw = a.getAttribute('data-href') || "";
-    const [path, hash] = raw.split("#");
-    a.href = abs(path) + (hash ? "#" + hash : "");
-  });
-
-  $$('.js-abs-src[data-src]').forEach(img=>{
-    const raw = img.getAttribute('data-src') || "";
-    img.src = abs(raw);
-  });
-
-  // --- BURGER MOBILE ---
-  const burger = $("#gh-burger");
-  const nav = $(".gh-nav");
-  if(burger && nav){
-    burger.addEventListener("click", ()=>nav.classList.toggle("open"));
-  }
-
-  // --- ACTIVAR MENÚ SEGÚN SECCIÓN ---
-  function activar(sec){
-    $$('[data-section]').forEach(a=>{
-      a.classList.toggle('gh-active', a.getAttribute('data-section') === sec);
-    });
-  }
-
-  const p = location.pathname.toUpperCase();
-  const h = location.hash;
-
-  if(p.includes("/SISTEMAS/"))           activar("sistemas");
-  else if(p.includes("/SERVICIOS/"))     activar("servicios");
-  else if(h==="#servicios")              activar("servicios");
-  else if(h==="#promociones")            activar("promociones");
-  else if(h==="#productos"||h==="#productos-con") activar("sistemas");
-  else if(h==="#contacto")               activar("contacto");
-  else if(/\/(?:INDEX\.HTML?)?$/.test(p)||p==="/"||p==="") activar("inicio");
-  else if(p.includes("/NOSOTROS"))       activar("nosotros");
-  else if(p.includes("/CONTACTO"))       activar("contacto");
-
-  // --- SUBNAV CONTEXTUAL (anclas internas si existen) ---
-  const subnav = $("#gh-subnav");
-  const subinner = $("#gh-subinner");
-  const quick = [
-    ["#caracteristicas","Funcionalidades"],
-    ["#videos","Vídeos"],
-    ["#integra","Integraciones"],
-    ["#calculadora-section","Precio"],
-    ["#comparativa","Comparativa"],
-    ["#faq","Preguntas frecuentes"],
-    ["#sesion-guiada","Demo"]
-  ].filter(([id])=>document.querySelector(id));
-
-  if(subnav && subinner && quick.length){
-    subnav.style.display = "block";
-    subinner.innerHTML = quick.map(([id,label])=>`<a href="${id}">${label}</a>`).join("");
-  }
-})();
-</script>
 </header>
