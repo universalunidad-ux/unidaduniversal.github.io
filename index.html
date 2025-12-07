@@ -46,13 +46,13 @@
           <strong>Bancos</strong> y más. Somos tu aliado para que la operación fluya sin complicaciones.
         </p>
         <div class="badges">
-      
-  
+          <!-- Puedes agregar badges aquí si quieres -->
         </div>
         <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
           <a class="btn hero-btn btn-grad-blue" href="#contacto">Quiero una demo</a>
         </div>
       </div>
+
       <!-- Derecha: Galería por sistemas -->
       <article class="card hero-gallery-card" aria-label="Galería de sistemas CONTPAQi">
         <div class="hero-gallery-header">
@@ -90,554 +90,632 @@
           <!-- Los botones los genera JS -->
         </div>
       </article>
-  </div> <!-- ✅ cierra .container.hero-grid -->
-  </section> <!-- ✅ cierra .hero -->
+    </div> <!-- cierra .container.hero-grid -->
+  </section> <!-- cierra .hero -->
      
 
+  <!-- ========================== -->
+  <!-- Productos CONTPAQi        -->
+  <!-- ========================== -->
+  <section id="productos-con">
+    <div class="container">
 
-<!-- ========================== -->
-<!-- Productos CONTPAQi        -->
-<!-- ========================== -->
-<section id="productos-con">
-  <div class="container">
+      <!-- Barra superior de productos -->
+      <div class="productos-inline-bar">
+        <!-- Recuadro con título + tabs -->
+        <div class="prod-tabs-shell">
+          <h2 class="prod-title">Productos <span>CONTPAQi</span></h2>
 
-    <!-- Barra superior de productos -->
-    <div class="productos-inline-bar">
-      <!-- Recuadro con título + tabs -->
-      <div class="prod-tabs-shell">
-        <h2 class="prod-title">Productos <span>CONTPAQi</span></h2>
+          <nav class="prod-tabs" role="tablist" aria-label="Productos CONTPAQi">
+            <button class="tab active"
+                    id="tab-contable"
+                    type="button"
+                    data-target="panel-contable">
+              Solución Contable
+            </button>
+            <button class="tab"
+                    id="tab-comercial"
+                    type="button"
+                    data-target="panel-comercial">
+              Solución Comercial
+            </button>
+            <button class="tab"
+                    id="tab-nube"
+                    type="button"
+                    data-target="panel-nube">
+              Productos Nube
+            </button>
+            <button class="tab"
+                    id="tab-productividad"
+                    type="button"
+                    data-target="panel-productividad">
+              Productividad
+            </button>
+          </nav>
+        </div>
 
-        <nav class="prod-tabs" role="tablist" aria-label="Productos CONTPAQi">
-          <button class="tab active"
-                  id="tab-contable"
-                  type="button"
-                  data-target="panel-contable">
-            Solución Contable
-          </button>
-          <button class="tab"
-                  id="tab-comercial"
-                  type="button"
-                  data-target="panel-comercial">
-            Solución Comercial
-          </button>
-          <button class="tab"
-                  id="tab-nube"
-                  type="button"
-                  data-target="panel-nube">
-            Productos Nube
-          </button>
-          <button class="tab"
-                  id="tab-productividad"
-                  type="button"
-                  data-target="panel-productividad">
-            Productividad
-          </button>
-        </nav>
+        <!-- CTA alineado al centro vertical -->
+        <button class="prod-cta" type="button" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth',block:'start'})">
+          Cotizar ahora
+        </button>
       </div>
 
-      <!-- CTA alineado al centro vertical -->
-      <button class="prod-cta" type="button" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth',block:'start'})">
-        Cotizar ahora
-      </button>
+
+      <!-- ========================== -->
+      <!-- PANEL: SOLUCIÓN CONTABLE  -->
+      <!-- ========================== -->
+      <section id="panel-contable" class="panel-productos" role="tabpanel" aria-labelledby="tab-contable">
+        <div class="grid-2 align-center section-cq">
+
+          <!-- Izquierda: productos 2 columnas -->
+          <div>
+            <div class="cards cards-products">
+
+              <!-- Contabilidad -->
+              <article class="card product-card" data-href="SISTEMAS/contabilidad.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/contabilidad.webp" alt="CONTPAQi Contabilidad">
+                  <p style="margin:0 0 10px;">
+                    Catálogos, pólizas y reportes fiscales listos para cumplir con el SAT. Ideal para despachos y PyMEs.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Contabilidad"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore">
+                      <span class="chip">Ver más →</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Nóminas -->
+              <article class="card product-card" data-href="SISTEMAS/nominas.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/nominas.webp" alt="CONTPAQi Nóminas">
+                  <p style="margin:0 0 10px;">
+                    Cálculo, incidencias y timbrado sin complicaciones. Capacitación y migración incluidas.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20N%C3%B3minas"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore">
+                      <span class="chip">Ver más →</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Bancos -->
+              <article class="card product-card" data-href="SISTEMAS/bancos.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/bancos.webp" alt="CONTPAQi Bancos">
+                  <p style="margin:0 0 10px;">
+                    Conciliación bancaria ágil, flujos de caja y plantillas para acelerar tu cierre.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Bancos"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore">
+                      <span class="chip">Ver más →</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- XML en Línea+ -->
+              <article class="card product-card" data-href="SISTEMAS/xmlenlinea.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/xml.webp" alt="XML en Línea+">
+                  <p style="margin:0 0 10px;">
+                    Descarga y administración de CFDI directamente del SAT para tu contabilidad.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20XML%20en%20L%C3%ADnea%2B"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore">
+                      <span class="chip">Ver más →</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- Derecha: Reels por sistema contable -->
+          <article class="card reels-home-card">
+            <div class="body">
+              <h3 class="title-gradient" style="margin-bottom:4px;">Reels por sistema contable</h3>
+              <p class="hint" style="margin:0 0 10px;">
+                Elige el sistema para ver videos cortos de casos reales, tips y beneficios.
+              </p>
+
+              <h4 class="reel-title" id="reelTitle-contable"></h4>
+
+              <div class="carousel" id="carouselReels-contable" aria-label="Reels por sistema contable">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
+                <div class="carousel-track"></div>
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
+                <div class="carousel-nav" aria-label="Paginación de reels"></div>
+              </div>
+
+              <!-- Selector abajo del carrusel -->
+              <div class="reel-sys-tabs" aria-label="Selecciona sistema contable">
+                <button class="reel-tab active" data-panel="contable" data-sys="contabilidad" type="button">
+                  <img src="IMG/contabilidadsq.webp" alt="Contabilidad">
+                  <span>Contabilidad</span>
+                </button>
+                <button class="reel-tab" data-panel="contable" data-sys="nominas" type="button">
+                  <img src="IMG/nominassq.webp" alt="Nóminas">
+                  <span>Nóminas</span>
+                </button>
+                <button class="reel-tab" data-panel="contable" data-sys="bancos" type="button">
+                  <img src="IMG/bancossq.webp" alt="Bancos">
+                  <span>Bancos</span>
+                </button>
+                <button class="reel-tab" data-panel="contable" data-sys="xml" type="button">
+                  <img src="IMG/xmlsq.webp" alt="XML en Línea+">
+                  <span>XML en Línea+</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- ========================== -->
+      <!-- PANEL: SOLUCIÓN COMERCIAL -->
+      <!-- ========================== -->
+      <section id="panel-comercial" class="panel-productos hidden" role="tabpanel" aria-labelledby="tab-comercial">
+        <div class="grid-2 align-center section-cq">
+
+          <!-- Izquierda: productos Comercial -->
+          <div>
+            <div class="cards cards-products">
+
+              <!-- Comercial Start -->
+              <article class="card product-card" data-href="SISTEMAS/comercialstart.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/comercialstart.webp" alt="CONTPAQi Comercial Start">
+                  <p style="margin:0 0 10px;">
+                    Entrada ideal para ventas e inventario con lo esencial para arrancar.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Comercial%20Start"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Comercial Pro -->
+              <article class="card product-card" data-href="SISTEMAS/comercialpro.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/comercialpro.webp" alt="CONTPAQi Comercial Pro">
+                  <p style="margin:0 0 10px;">
+                    Para operaciones con alto volumen y resurtidos. Compatible multi-sucursal.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Comercial%20Pro"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Comercial Premium -->
+              <article class="card product-card" data-href="SISTEMAS/comercialpremium.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/comercialpremium.webp" alt="CONTPAQi Comercial Premium">
+                  <p style="margin:0 0 10px;">
+                    Control avanzado de listas de precio, políticas y reportes. Ideal para crecimiento.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Comercial%20Premium"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Factura electrónica -->
+              <article class="card product-card" data-href="SISTEMAS/facturaelectronica.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/factura.webp" alt="Factura Electrónica">
+                  <p style="margin:0 0 10px;">
+                    Timbrado y facturación rápida desde cualquier lugar. CFDI 4.0 listo.
+                  </p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Factura%20Electr%C3%B3nica"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- Derecha: Reels Comercial -->
+          <article class="card reels-home-card">
+            <div class="body">
+              <h3 class="title-gradient" style="margin-bottom:4px;">Reels por sistema comercial</h3>
+              <p class="hint" style="margin:0 0 10px;">
+                Revisa casos reales de ventas, inventarios y timbrado.
+              </p>
+
+              <h4 class="reel-title" id="reelTitle-comercial"></h4>
+
+              <div class="carousel" id="carouselReels-comercial" aria-label="Reels por sistema comercial">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
+                <div class="carousel-track"></div>
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
+                <div class="carousel-nav" aria-label="Paginación de reels"></div>
+              </div>
+
+              <div class="reel-sys-tabs" aria-label="Selecciona sistema comercial">
+                <button class="reel-tab active" data-panel="comercial" data-sys="start" type="button">
+                  <img src="IMG/comercialstartsq.webp" alt="Start">
+                  <span>Start</span>
+                </button>
+                <button class="reel-tab" data-panel="comercial" data-sys="pro" type="button">
+                  <img src="IMG/comercialprosq.webp" alt="Pro">
+                  <span>Pro</span>
+                </button>
+                <button class="reel-tab" data-panel="comercial" data-sys="premium" type="button">
+                  <img src="IMG/comercialpremiumsq.webp" alt="Premium">
+                  <span>Premium</span>
+                </button>
+                <button class="reel-tab" data-panel="comercial" data-sys="factura" type="button">
+                  <img src="IMG/facturasq.webp" alt="Factura">
+                  <span>Factura Elec.</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- ========================== -->
+      <!-- PANEL: PRODUCTOS NUBE     -->
+      <!-- ========================== -->
+      <section id="panel-nube" class="panel-productos hidden" role="tabpanel" aria-labelledby="tab-nube">
+        <div class="grid-2 align-center section-cq">
+
+          <!-- Izquierda: productos Nube -->
+          <div>
+            <div class="cards cards-products">
+
+              <!-- Contabiliza -->
+              <article class="card product-card" data-href="SISTEMAS/contabiliza.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/contabiliza.webp" alt="Contabiliza">
+                  <p style="margin:0 0 10px;">Contabilidad en la nube conectada a tus sistemas CONTPAQi.</p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Contabiliza"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Analiza -->
+              <article class="card product-card" data-href="SISTEMAS/analiza.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/analiza.webp" alt="Analiza">
+                  <p style="margin:0 0 10px;">Dashboards y BI nativo para tus datos de Contabilidad, Comercial y Nóminas.</p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Analiza"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Despachos -->
+              <article class="card product-card" data-href="SISTEMAS/despachos.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/despachos.webp" alt="Despachos">
+                  <p style="margin:0 0 10px;">Gestión integral para despachos contables en la nube.</p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Despachos"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Vende -->
+              <article class="card product-card" data-href="SISTEMAS/vende.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/vende.webp" alt="Vende">
+                  <p style="margin:0 0 10px;">Punto de venta en la nube, listo para sucursales.</p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Vende"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- Derecha: Reels Nube -->
+          <article class="card reels-home-card">
+            <div class="body">
+              <h3 class="title-gradient" style="margin-bottom:4px;">Reels de soluciones en la nube</h3>
+              <p class="hint" style="margin:0 0 10px;">
+                Visualiza cómo Analiza, Contabiliza, Despachos y Vende automatizan tu operación.
+              </p>
+
+              <h4 class="reel-title" id="reelTitle-nube"></h4>
+
+              <div class="carousel" id="carouselReels-nube" aria-label="Reels productos nube">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
+                <div class="carousel-track"></div>
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
+                <div class="carousel-nav" aria-label="Paginación de reels"></div>
+              </div>
+
+              <div class="reel-sys-tabs" aria-label="Selecciona producto nube">
+                <button class="reel-tab active" data-panel="nube" data-sys="analiza" type="button">
+                  <img src="IMG/analiza.webp" alt="Analiza">
+                  <span>Analiza</span>
+                </button>
+                <button class="reel-tab" data-panel="nube" data-sys="contabiliza" type="button">
+                  <img src="IMG/contabiliza.webp" alt="Contabiliza">
+                  <span>Contabiliza</span>
+                </button>
+                <button class="reel-tab" data-panel="nube" data-sys="despachos" type="button">
+                  <img src="IMG/despachos.webp" alt="Despachos">
+                  <span>Despachos</span>
+                </button>
+                <button class="reel-tab" data-panel="nube" data-sys="vende" type="button">
+                  <img src="IMG/vende.webp" alt="Vende">
+                  <span>Vende</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- ========================== -->
+      <!-- PANEL: PRODUCTIVIDAD      -->
+      <!-- ========================== -->
+      <section id="panel-productividad" class="panel-productos hidden" role="tabpanel" aria-labelledby="tab-productividad">
+        <div class="grid-2 align-center section-cq">
+
+          <!-- Izquierda: Productividad -->
+          <div>
+            <div class="cards cards-products">
+
+              <!-- Evalúa -->
+              <article class="card product-card" data-href="SISTEMAS/evalua.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/evalua.webp" alt="Evalúa">
+                  <p style="margin:0 0 10px;">Evalúa clima laboral, riesgos psicosociales y condiciones de trabajo.</p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Eval%C3%BAa"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Colabora -->
+              <article class="card product-card" data-href="SISTEMAS/colabora.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/colabora.webp" alt="Colabora">
+                  <p style="margin:0 0 10px;">App gratuita para colaboración y seguimiento desde el móvil.</p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Colabora"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Personia -->
+              <article class="card product-card" data-href="SISTEMAS/personia.html">
+                <div class="body">
+                  <img class="logo-sistema" src="IMG/personia.webp" alt="Personia">
+                  <p style="margin:0 0 10px;">Expedientes de empleados y gestión de personal en la nube.</p>
+                  <div class="foot">
+                    <a class="btn btn-grad-green btn-sm"
+                       href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Personia"
+                       target="_blank" rel="noopener">
+                      WhatsApp
+                    </a>
+                    <div class="hoverMore"><span class="chip">Ver más →</span></div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- Derecha: Reels Productividad -->
+          <article class="card reels-home-card">
+            <div class="body">
+              <h3 class="title-gradient" style="margin-bottom:4px;">Reels de productividad y clima laboral</h3>
+              <p class="hint" style="margin:0 0 10px;">
+                Ve cómo Evalúa, Colabora y Personia te ayudan con tu gente.
+              </p>
+
+              <h4 class="reel-title" id="reelTitle-productividad"></h4>
+
+              <div class="carousel" id="carouselReels-productividad" aria-label="Reels productividad">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
+                  <span class="chev">‹</span>
+                </button>
+                <div class="carousel-track"></div>
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
+                  <span class="chev">›</span>
+                </button>
+                <div class="carousel-nav" aria-label="Paginación de reels"></div>
+              </div>
+
+              <div class="reel-sys-tabs" aria-label="Selecciona app de productividad">
+                <button class="reel-tab active" data-panel="productividad" data-sys="evalua" type="button">
+                  <img src="IMG/evalua.webp" alt="Evalúa">
+                  <span>Evalúa</span>
+                </button>
+                <button class="reel-tab" data-panel="productividad" data-sys="colabora" type="button">
+                  <img src="IMG/colabora.webp" alt="Colabora">
+                  <span>Colabora</span>
+                </button>
+                <button class="reel-tab" data-panel="productividad" data-sys="personia" type="button">
+                  <img src="IMG/personia.webp" alt="Personia">
+                  <span>Personia</span>
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </div> <!-- .container -->
+  </section> <!-- #productos-con -->
+
+  <!-- ========================== -->
+  <!-- SECCIÓN VIDEOS SIMPLE     -->
+  <!-- ========================== -->
+  <section id="videos">
+    <div class="container">
+      <div class="section-title"><h2 style="margin:0">Videos</h2></div>
+      <div class="videos-grid">
+        <div class="yt-lite" data-ytid="dQw4w9WgXcQ" data-title="Video 1"></div>
+        <div class="yt-lite" data-ytid="oHg5SJYRHA0" data-title="Video 2"></div>
+      </div>
     </div>
+  </section>
 
+  <!-- ========================== -->
+  <!-- REELS DE SERVICIOS        -->
+  <!-- ========================== -->
+  <section id="reels-servicios">
+    <div class="container">
+      <article class="card reels-home-card">
+        <div class="body">
+          <h3 class="title-gradient" style="margin-bottom:4px;">
+            Reels de servicios Expiriti
+          </h3>
+          <p class="hint" style="margin:0 0 10px;">
+            Mira testimonios y casos reales de implementaciones, desarrollos, cursos y soporte.
+          </p>
 
-    <!-- ========================== -->
-    <!-- PANEL: SOLUCIÓN CONTABLE  -->
-    <!-- ========================== -->
-    <section id="panel-contable" class="panel-productos" role="tabpanel" aria-labelledby="tab-contable">
-      <div class="grid-2 align-center section-cq">
+          <!-- Título dinámico para REELS_DATA.servicios.titleEl -->
+          <h4 class="reel-title" id="reelTitle-servicios"></h4>
 
-        <!-- Izquierda: productos 2 columnas -->
-        <div>
-          <div class="cards cards-products">
+          <!-- Carrusel conectado a REELS_DATA.servicios.carousel -->
+          <div class="carousel" id="carouselReels-servicios" aria-label="Reels de servicios">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button">
+              <span class="chev">‹</span>
+            </button>
 
-            <!-- Contabilidad -->
-            <article class="card product-card" data-href="SISTEMAS/contabilidad.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/contabilidad.webp" alt="CONTPAQi Contabilidad">
-                <p style="margin:0 0 10px;">
-                  Catálogos, pólizas y reportes fiscales listos para cumplir con el SAT. Ideal para despachos y PyMEs.
-                </p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Contabilidad"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore">
-                    <span class="chip">Ver más →</span>
-                  </div>
-                </div>
-              </div>
-            </article>
+            <div class="carousel-track"></div>
 
-            <!-- Nóminas -->
-            <article class="card product-card" data-href="SISTEMAS/nominas.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/nominas.webp" alt="CONTPAQi Nóminas">
-                <p style="margin:0 0 10px;">
-                  Cálculo, incidencias y timbrado sin complicaciones. Capacitación y migración incluidas.
-                </p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20N%C3%B3minas"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore">
-                    <span class="chip">Ver más →</span>
-                  </div>
-                </div>
-              </div>
-            </article>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button">
+              <span class="chev">›</span>
+            </button>
 
-            <!-- Bancos -->
-            <article class="card product-card" data-href="SISTEMAS/bancos.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/bancos.webp" alt="CONTPAQi Bancos">
-                <p style="margin:0 0 10px;">
-                  Conciliación bancaria ágil, flujos de caja y plantillas para acelerar tu cierre.
-                </p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Bancos"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore">
-                    <span class="chip">Ver más →</span>
-                  </div>
-                </div>
-              </div>
-            </article>
+            <div class="carousel-nav" aria-label="Paginación de reels"></div>
+          </div>
 
-            <!-- XML en Línea+ -->
-            <article class="card product-card" data-href="SISTEMAS/xmlenlinea.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/xml.webp" alt="XML en Línea+">
-                <p style="margin:0 0 10px;">
-                  Descarga y administración de CFDI directamente del SAT para tu contabilidad.
-                </p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20XML%20en%20L%C3%ADnea%2B"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore">
-                    <span class="chip">Ver más →</span>
-                  </div>
-                </div>
-              </div>
-            </article>
+          <!-- Tabs para elegir el tipo de servicio (coinciden con reelsBySys) -->
+          <div class="reel-sys-tabs" aria-label="Selecciona tipo de servicio">
+            <button class="reel-tab active"
+                    data-panel="servicios"
+                    data-sys="implementacion"
+                    type="button">
+              <span>Implementación</span>
+            </button>
 
+            <button class="reel-tab"
+                    data-panel="servicios"
+                    data-sys="desarrollos"
+                    type="button">
+              <span>Desarrollos</span>
+            </button>
+
+            <button class="reel-tab"
+                    data-panel="servicios"
+                    data-sys="cursos"
+                    type="button">
+              <span>Cursos</span>
+            </button>
+
+            <button class="reel-tab"
+                    data-panel="servicios"
+                    data-sys="soporte"
+                    type="button">
+              <span>Soporte</span>
+            </button>
           </div>
         </div>
+      </article>
+    </div>
+  </section>
 
-        <!-- Derecha: Reels por sistema contable -->
-        <article class="card reels-home-card">
-          <div class="body">
-            <h3 class="title-gradient" style="margin-bottom:4px;">Reels por sistema contable</h3>
-            <p class="hint" style="margin:0 0 10px;">
-              Elige el sistema para ver videos cortos de casos reales, tips y beneficios.
-            </p>
-
-            <h4 class="reel-title" id="reelTitle-contable"></h4>
-
-            <div class="carousel" id="carouselReels-contable" aria-label="Reels por sistema contable">
-              <button class="arrowCircle prev" aria-label="Anterior" type="button">
-                <span class="chev">‹</span>
-              </button>
-              <div class="carousel-track"></div>
-              <button class="arrowCircle next" aria-label="Siguiente" type="button">
-                <span class="chev">›</span>
-              </button>
-              <div class="carousel-nav" aria-label="Paginación de reels"></div>
-            </div>
-
-            <!-- Selector abajo del carrusel -->
-            <div class="reel-sys-tabs" aria-label="Selecciona sistema contable">
-              <button class="reel-tab active" data-panel="contable" data-sys="contabilidad" type="button">
-                <img src="IMG/contabilidadsq.webp" alt="Contabilidad">
-                <span>Contabilidad</span>
-              </button>
-              <button class="reel-tab" data-panel="contable" data-sys="nominas" type="button">
-                <img src="IMG/nominassq.webp" alt="Nóminas">
-                <span>Nóminas</span>
-              </button>
-              <button class="reel-tab" data-panel="contable" data-sys="bancos" type="button">
-                <img src="IMG/bancossq.webp" alt="Bancos">
-                <span>Bancos</span>
-              </button>
-              <button class="reel-tab" data-panel="contable" data-sys="xml" type="button">
-                <img src="IMG/xmlsq.webp" alt="XML en Línea+">
-                <span>XML en Línea+</span>
-              </button>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-
-    <!-- ========================== -->
-    <!-- PANEL: SOLUCIÓN COMERCIAL -->
-    <!-- ========================== -->
-    <section id="panel-comercial" class="panel-productos hidden" role="tabpanel" aria-labelledby="tab-comercial">
-      <div class="grid-2 align-center section-cq">
-
-        <!-- Izquierda: productos Comercial -->
-        <div>
-          <div class="cards cards-products">
-
-            <!-- Comercial Start -->
-            <article class="card product-card" data-href="SISTEMAS/comercialstart.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/comercialstart.webp" alt="CONTPAQi Comercial Start">
-                <p style="margin:0 0 10px;">
-                  Entrada ideal para ventas e inventario con lo esencial para arrancar.
-                </p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Comercial%20Start"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-            <!-- Comercial Pro -->
-            <article class="card product-card" data-href="SISTEMAS/comercialpro.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/comercialpro.webp" alt="CONTPAQi Comercial Pro">
-                <p style="margin:0 0 10px;">
-                  Para operaciones con alto volumen y resurtidos. Compatible multi-sucursal.
-                </p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Comercial%20Pro"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-            <!-- Comercial Premium -->
-            <article class="card product-card" data-href="SISTEMAS/comercialpremium.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/comercialpremium.webp" alt="CONTPAQi Comercial Premium">
-                <p style="margin:0 0 10px;">
-                  Control avanzado de listas de precio, políticas y reportes. Ideal para crecimiento.
-                </p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Comercial%20Premium"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-            <!-- Factura electrónica -->
-            <article class="card product-card" data-href="SISTEMAS/facturaelectronica.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/factura.webp" alt="Factura Electrónica">
-                <p style="margin:0 0 10px;">
-                  Timbrado y facturación rápida desde cualquier lugar. CFDI 4.0 listo.
-                </p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Factura%20Electr%C3%B3nica"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-          </div>
-        </div>
-
-        <!-- Derecha: Reels Comercial -->
-        <article class="card reels-home-card">
-          <div class="body">
-            <h3 class="title-gradient" style="margin-bottom:4px;">Reels por sistema comercial</h3>
-            <p class="hint" style="margin:0 0 10px;">
-              Revisa casos reales de ventas, inventarios y timbrado.
-            </p>
-
-            <h4 class="reel-title" id="reelTitle-comercial"></h4>
-
-            <div class="carousel" id="carouselReels-comercial" aria-label="Reels por sistema comercial">
-              <button class="arrowCircle prev" aria-label="Anterior" type="button">
-                <span class="chev">‹</span>
-              </button>
-              <div class="carousel-track"></div>
-              <button class="arrowCircle next" aria-label="Siguiente" type="button">
-                <span class="chev">›</span>
-              </button>
-              <div class="carousel-nav" aria-label="Paginación de reels"></div>
-            </div>
-
-            <div class="reel-sys-tabs" aria-label="Selecciona sistema comercial">
-              <button class="reel-tab active" data-panel="comercial" data-sys="start" type="button">
-                <img src="IMG/comercialstartsq.webp" alt="Start">
-                <span>Start</span>
-              </button>
-              <button class="reel-tab" data-panel="comercial" data-sys="pro" type="button">
-                <img src="IMG/comercialprosq.webp" alt="Pro">
-                <span>Pro</span>
-              </button>
-              <button class="reel-tab" data-panel="comercial" data-sys="premium" type="button">
-                <img src="IMG/comercialpremiumsq.webp" alt="Premium">
-                <span>Premium</span>
-              </button>
-              <button class="reel-tab" data-panel="comercial" data-sys="factura" type="button">
-                <img src="IMG/facturasq.webp" alt="Factura">
-                <span>Factura Elec.</span>
-              </button>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-
-    <!-- ========================== -->
-    <!-- PANEL: PRODUCTOS NUBE     -->
-    <!-- ========================== -->
-    <section id="panel-nube" class="panel-productos hidden" role="tabpanel" aria-labelledby="tab-nube">
-      <div class="grid-2 align-center section-cq">
-
-        <!-- Izquierda: productos Nube -->
-        <div>
-          <div class="cards cards-products">
-
-            <!-- Contabiliza -->
-            <article class="card product-card" data-href="SISTEMAS/contabiliza.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/contabiliza.webp" alt="Contabiliza">
-                <p style="margin:0 0 10px;">Contabilidad en la nube conectada a tus sistemas CONTPAQi.</p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Contabiliza"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-            <!-- Analiza -->
-            <article class="card product-card" data-href="SISTEMAS/analiza.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/analiza.webp" alt="Analiza">
-                <p style="margin:0 0 10px;">Dashboards y BI nativo para tus datos de Contabilidad, Comercial y Nóminas.</p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Analiza"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-            <!-- Despachos -->
-            <article class="card product-card" data-href="SISTEMAS/despachos.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/despachos.webp" alt="Despachos">
-                <p style="margin:0 0 10px;">Gestión integral para despachos contables en la nube.</p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Despachos"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-            <!-- Vende -->
-            <article class="card product-card" data-href="SISTEMAS/vende.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/vende.webp" alt="Vende">
-                <p style="margin:0 0 10px;">Punto de venta en la nube, listo para sucursales.</p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Vende"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-          </div>
-        </div>
-
-        <!-- Derecha: Reels Nube -->
-        <article class="card reels-home-card">
-          <div class="body">
-            <h3 class="title-gradient" style="margin-bottom:4px;">Reels de soluciones en la nube</h3>
-            <p class="hint" style="margin:0 0 10px;">
-              Visualiza cómo Analiza, Contabiliza, Despachos y Vende automatizan tu operación.
-            </p>
-
-            <h4 class="reel-title" id="reelTitle-nube"></h4>
-
-            <div class="carousel" id="carouselReels-nube" aria-label="Reels productos nube">
-              <button class="arrowCircle prev" aria-label="Anterior" type="button">
-                <span class="chev">‹</span>
-              </button>
-              <div class="carousel-track"></div>
-              <button class="arrowCircle next" aria-label="Siguiente" type="button">
-                <span class="chev">›</span>
-              </button>
-              <div class="carousel-nav" aria-label="Paginación de reels"></div>
-            </div>
-
-            <div class="reel-sys-tabs" aria-label="Selecciona producto nube">
-              <button class="reel-tab active" data-panel="nube" data-sys="analiza" type="button">
-                <img src="IMG/analiza.webp" alt="Analiza">
-                <span>Analiza</span>
-              </button>
-              <button class="reel-tab" data-panel="nube" data-sys="contabiliza" type="button">
-                <img src="IMG/contabiliza.webp" alt="Contabiliza">
-                <span>Contabiliza</span>
-              </button>
-              <button class="reel-tab" data-panel="nube" data-sys="despachos" type="button">
-                <img src="IMG/despachos.webp" alt="Despachos">
-                <span>Despachos</span>
-              </button>
-              <button class="reel-tab" data-panel="nube" data-sys="vende" type="button">
-                <img src="IMG/vende.webp" alt="Vende">
-                <span>Vende</span>
-              </button>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-
-    <!-- ========================== -->
-    <!-- PANEL: PRODUCTIVIDAD      -->
-    <!-- ========================== -->
-    <section id="panel-productividad" class="panel-productos hidden" role="tabpanel" aria-labelledby="tab-productividad">
-      <div class="grid-2 align-center section-cq">
-
-        <!-- Izquierda: Productividad -->
-        <div>
-          <div class="cards cards-products">
-
-            <!-- Evalúa -->
-            <article class="card product-card" data-href="SISTEMAS/evalua.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/evalua.webp" alt="Evalúa">
-                <p style="margin:0 0 10px;">Evalúa clima laboral, riesgos psicosociales y condiciones de trabajo.</p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Eval%C3%BAa"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-            <!-- Colabora -->
-            <article class="card product-card" data-href="SISTEMAS/colabora.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/colabora.webp" alt="Colabora">
-                <p style="margin:0 0 10px;">App gratuita para colaboración y seguimiento desde el móvil.</p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Colabora"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-            <!-- Personia -->
-            <article class="card product-card" data-href="SISTEMAS/personia.html">
-              <div class="body">
-                <img class="logo-sistema" src="IMG/personia.webp" alt="Personia">
-                <p style="margin:0 0 10px;">Expedientes de empleados y gestión de personal en la nube.</p>
-                <div class="foot">
-                  <a class="btn btn-grad-green btn-sm"
-                     href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Personia"
-                     target="_blank" rel="noopener">
-                    WhatsApp
-                  </a>
-                  <div class="hoverMore"><span class="chip">Ver más →</span></div>
-                </div>
-              </div>
-            </article>
-
-          </div>
-        </div>
-
-        <!-- Derecha: Reels Productividad -->
-        <article class="card reels-home-card">
-          <div class="body">
-            <h3 class="title-gradient" style="margin-bottom:4px;">Reels de productividad y clima laboral</h3>
-            <p class="hint" style="margin:0 0 10px;">
-              Ve cómo Evalúa, Colabora y Personia te ayudan con tu gente.
-            </p>
-
-            <h4 class="reel-title" id="reelTitle-productividad"></h4>
-
-            <div class="carousel" id="carouselReels-productividad" aria-label="Reels productividad">
-              <button class="arrowCircle prev" aria-label="Anterior" type="button">
-                <span class="chev">‹</span>
-              </button>
-              <div class="carousel-track"></div>
-              <button class="arrowCircle next" aria-label="Siguiente" type="button">
-                <span class="chev">›</span>
-              </button>
-              <div class="carousel-nav" aria-label="Paginación de reels"></div>
-            </div>
-
-            <div class="reel-sys-tabs" aria-label="Selecciona app de productividad">
-              <button class="reel-tab active" data-panel="productividad" data-sys="evalua" type="button">
-                <img src="IMG/evalua.webp" alt="Evalúa">
-                <span>Evalúa</span>
-              </button>
-              <button class="reel-tab" data-panel="productividad" data-sys="colabora" type="button">
-                <img src="IMG/colabora.webp" alt="Colabora">
-                <span>Colabora</span>
-              </button>
-              <button class="reel-tab" data-panel="productividad" data-sys="personia" type="button">
-                <img src="IMG/personia.webp" alt="Personia">
-                <span>Personia</span>
-              </button>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-  </div> <!-- .container -->
-</section> <!-- #productos-con -->
-
-  
   <!-- Sectores & Diferenciales -->
   <section id="sectores">
     <div class="container grid-2">
@@ -659,18 +737,6 @@
           <li>Soporte post-implementación</li>
         </ul>
       </div>
-    </div>
-  </section>
-
-  <!-- Videos (arriba de contacto) -->
-  <section id="videos">
-    <div class="container">
-      <div class="section-title"><h2 style="margin:0">Videos</h2></div>
-<div class="videos-grid">
-  <div class="yt-lite" data-ytid="dQw4w9WgXcQ" data-title="Video 1"></div>
-  <div class="yt-lite" data-ytid="oHg5SJYRHA0" data-title="Video 2"></div>
-</div>
-
     </div>
   </section>
 
@@ -767,8 +833,7 @@
         <img src="IMG/40dic.webp" alt="Promo nuevos 1" data-type="nuevos" onerror="this.style.display='none'">
         <img src="IMG/15sisdic.webp"  alt="Promo renovaciones 1" data-type="renovaciones" onerror="this.style.display='none'">
         <img src="IMG/10trad.webp"    alt="Promo adicional 1" data-type="mas" onerror="this.style.display='none'">
-        <img src="IMG/20traddic.webp"    alt="Más" data-type="mas" onerror="this.style.display='none'">
-
+        <img src="IMG/20traddic.webp" alt="Más" data-type="mas" onerror="this.style.display='none'">
       </div>
     </div>
   </section>
@@ -945,7 +1010,7 @@
 
   <!-- Footer dinámico (parcial) -->
   <div id="footer-placeholder"></div>
-<script src="index.js"></script>
 
+  <script src="index.js"></script>
 </body>
 </html>
