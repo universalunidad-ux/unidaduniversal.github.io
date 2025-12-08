@@ -153,7 +153,8 @@
 
         <!-- ========== Columna derecha: Reel / Galería tipo soporte ========== -->
         <aside class="card body reels-card" aria-label="Reels de Desarrollos">
-          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Desarrollos</h4>
+          <!-- AJUSTE: h4 -> h3 para respetar jerarquía de encabezados -->
+          <h3 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Desarrollos</h3>
 
           <!-- Títulos de apoyo -->
           <h4 class="reel-title active">Integración SoftRestaurant + CONTPAQi</h4>
@@ -211,7 +212,8 @@
       <div class="card body">
         <h3 id="caracteristicas-title" class="title-gradient">Nuestras Soluciones de Desarrollo</h3>
 
-        <div class="pillbar" role="tablist" aria-label="Categorías de servicios">
+        <!-- AJUSTE: se elimina role="tablist" para evitar error ARIA -->
+        <div class="pillbar" aria-label="Categorías de servicios">
           <button class="pill active" data-filter="integracion">Integración y APIs</button>
           <button class="pill" data-filter="medida">Software a la Medida</button>
           <button class="pill" data-filter="web">Desarrollo Web y Portales</button>
