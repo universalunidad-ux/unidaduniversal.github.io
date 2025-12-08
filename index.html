@@ -31,6 +31,9 @@
   <!-- Header dinámico (parcial) -->
   <div id="header-placeholder"></div>
 
+  <!-- Contenido principal -->
+  <main id="main" role="main">
+
   <!-- Hero -->
   <section class="hero">
     <div class="container hero-grid">
@@ -56,7 +59,7 @@
       <!-- Derecha: Galería por sistemas -->
       <article class="card hero-gallery-card" aria-label="Galería de sistemas CONTPAQi">
         <div class="hero-gallery-header">
-          <h3>Conoce más de los sistemas CONTPAQi</h3>
+          <h2>Conoce más de los sistemas CONTPAQi</h2>
           <p class="hint">Elige el tipo de sistemas que buscas y descubre lo que traen para ti!</p>
         </div>
 
@@ -110,25 +113,37 @@
             <button class="tab active"
                     id="tab-contable"
                     type="button"
-                    data-target="panel-contable">
+                    data-target="panel-contable"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="panel-contable">
               Solución Contable
             </button>
             <button class="tab"
                     id="tab-comercial"
                     type="button"
-                    data-target="panel-comercial">
+                    data-target="panel-comercial"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="panel-comercial">
               Solución Comercial
             </button>
             <button class="tab"
                     id="tab-nube"
                     type="button"
-                    data-target="panel-nube">
+                    data-target="panel-nube"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="panel-nube">
               Productos Nube
             </button>
             <button class="tab"
                     id="tab-productividad"
                     type="button"
-                    data-target="panel-productividad">
+                    data-target="panel-productividad"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="panel-productividad">
               Productividad
             </button>
           </nav>
@@ -288,7 +303,7 @@
                 <button class="reel-tab active" data-panel="contable" data-sys="contabilidad" type="button">
                   <img
                     src="IMG/contabilidadsq.webp"
-                    alt="Contabilidad"
+                    alt=""
                     width="59"
                     height="49"
                     loading="lazy"
@@ -298,7 +313,7 @@
                 <button class="reel-tab" data-panel="contable" data-sys="nominas" type="button">
                   <img
                     src="IMG/nominassq.webp"
-                    alt="Nóminas"
+                    alt=""
                     width="59"
                     height="49"
                     loading="lazy"
@@ -308,7 +323,7 @@
                 <button class="reel-tab" data-panel="contable" data-sys="bancos" type="button">
                   <img
                     src="IMG/bancossq.webp"
-                    alt="Bancos"
+                    alt=""
                     width="49"
                     height="56"
                     loading="lazy"
@@ -318,7 +333,7 @@
                 <button class="reel-tab" data-panel="contable" data-sys="xml" type="button">
                   <img
                     src="IMG/xmlsq.webp"
-                    alt="XML en Línea+"
+                    alt=""
                     width="59"
                     height="49"
                     loading="lazy"
@@ -462,7 +477,7 @@
                 <button class="reel-tab active" data-panel="comercial" data-sys="start" type="button">
                   <img
                     src="IMG/comercialstartsq.webp"
-                    alt="Start"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -472,7 +487,7 @@
                 <button class="reel-tab" data-panel="comercial" data-sys="pro" type="button">
                   <img
                     src="IMG/comercialprosq.webp"
-                    alt="Pro"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -482,7 +497,7 @@
                 <button class="reel-tab" data-panel="comercial" data-sys="premium" type="button">
                   <img
                     src="IMG/comercialpremiumsq.webp"
-                    alt="Premium"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -492,7 +507,7 @@
                 <button class="reel-tab" data-panel="comercial" data-sys="factura" type="button">
                   <img
                     src="IMG/facturasq.webp"
-                    alt="Factura"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -628,7 +643,7 @@
                 <button class="reel-tab active" data-panel="nube" data-sys="analiza" type="button">
                   <img
                     src="IMG/analiza.webp"
-                    alt="Analiza"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -638,7 +653,7 @@
                 <button class="reel-tab" data-panel="nube" data-sys="contabiliza" type="button">
                   <img
                     src="IMG/contabiliza.webp"
-                    alt="Contabiliza"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -648,7 +663,7 @@
                 <button class="reel-tab" data-panel="nube" data-sys="despachos" type="button">
                   <img
                     src="IMG/despachos.webp"
-                    alt="Despachos"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -658,7 +673,7 @@
                 <button class="reel-tab" data-panel="nube" data-sys="vende" type="button">
                   <img
                     src="IMG/vende.webp"
-                    alt="Vende"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -773,7 +788,7 @@
                 <button class="reel-tab active" data-panel="productividad" data-sys="evalua" type="button">
                   <img
                     src="IMG/evalua.webp"
-                    alt="Evalúa"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -783,7 +798,7 @@
                 <button class="reel-tab" data-panel="productividad" data-sys="colabora" type="button">
                   <img
                     src="IMG/colabora.webp"
-                    alt="Colabora"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -793,7 +808,7 @@
                 <button class="reel-tab" data-panel="productividad" data-sys="personia" type="button">
                   <img
                     src="IMG/personia.webp"
-                    alt="Personia"
+                    alt=""
                     width="60"
                     height="60"
                     loading="lazy"
@@ -995,7 +1010,7 @@
           <button class="reel-tab active" data-panel="servicios" data-sys="implementaciones" type="button">
             <img
               src="IMG/srv-implementaciones.webp"
-              alt="Implementaciones"
+              alt=""
               width="60"
               height="60"
               loading="lazy"
@@ -1005,7 +1020,7 @@
           <button class="reel-tab" data-panel="servicios" data-sys="migraciones" type="button">
             <img
               src="IMG/srv-migraciones.webp"
-              alt="Migraciones"
+              alt=""
               width="60"
               height="60"
               loading="lazy"
@@ -1015,7 +1030,7 @@
           <button class="reel-tab" data-panel="servicios" data-sys="desarrollos" type="button">
             <img
               src="IMG/srv-desarrollos.webp"
-              alt="Desarrollos"
+              alt=""
               width="60"
               height="60"
               loading="lazy"
@@ -1025,7 +1040,7 @@
           <button class="reel-tab" data-panel="servicios" data-sys="servidores" type="button">
             <img
               src="IMG/srv-servidores.webp"
-              alt="Servidores"
+              alt=""
               width="60"
               height="60"
               loading="lazy"
@@ -1035,7 +1050,7 @@
           <button class="reel-tab" data-panel="servicios" data-sys="cursos" type="button">
             <img
               src="IMG/srv-cursos.webp"
-              alt="Cursos"
+              alt=""
               width="60"
               height="60"
               loading="lazy"
@@ -1045,7 +1060,7 @@
           <button class="reel-tab" data-panel="servicios" data-sys="soporte" type="button">
             <img
               src="IMG/srv-soporte.webp"
-              alt="Soporte"
+              alt=""
               width="60"
               height="60"
               loading="lazy"
@@ -1066,10 +1081,10 @@
     <div class="container">
       <div class="section-title"><h2 style="margin:0">Promociones</h2></div>
       <div class="promo-filters" role="tablist" aria-label="Filtro de promociones">
-        <button class="promo-btn active" data-filter="nuevos">Usuarios nuevos</button>
-        <button class="promo-btn" data-filter="renovaciones">Renovaciones</button>
-        <button class="promo-btn" data-filter="tradicional">Tradicional</button>
-        <button class="promo-btn" data-filter="mas">Más</button>
+        <button class="promo-btn active" data-filter="nuevos" role="tab" aria-selected="true">Usuarios nuevos</button>
+        <button class="promo-btn" data-filter="renovaciones" role="tab" aria-selected="false">Renovaciones</button>
+        <button class="promo-btn" data-filter="tradicional" role="tab" aria-selected="false">Tradicional</button>
+        <button class="promo-btn" data-filter="mas" role="tab" aria-selected="false">Más</button>
       </div>
       <div class="promo-grid" id="promoGrid">
         <!-- Coloca tus imágenes en /IMG y márcalas con data-type -->
@@ -1250,6 +1265,8 @@
       </div>
     </div>
   </section>
+
+  </main> <!-- cierra main -->
 
   <!-- Footer dinámico (parcial) -->
   <div id="footer-placeholder"></div>
