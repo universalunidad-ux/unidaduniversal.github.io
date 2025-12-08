@@ -1,233 +1,243 @@
 <header class="gh" role="banner">
 <style>
 /* === ESTILOS BASE HEADER === */
-.gh{position:sticky;top:0;z-index:999;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(7,10,16,.92);border-bottom:1px solid rgba(255,255,255,.06)}.gh-container{max-width:var(--maxw,1200px);margin:0 auto;padding:12px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}.gh-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text,#e8eef6);padding:4px 6px;border-radius:999px;transition:.22s ease}.gh-brand:hover{background:rgba(255,255,255,.04);transform:translateY(-1px)}.gh-brand img{width:44px;height:44px;border-radius:12px;flex:0 0 44px}.gh-brand-title{display:flex;flex-direction:column;line-height:1.1;white-space:nowrap}.gh-brand-title .name{font-size:16px;font-weight:600;letter-spacing:.02em;color:#fff}.gh-brand-title .sub{font-size:13px;color:var(--muted,#95a2b3)}.gh-nav{justify-self:center}.gh-nav>ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;align-items:center}.gh-nav>ul>li{display:flex;align-items:center}
+.gh{position:sticky;top:0;z-index:999;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(7,10,16,.92);border-bottom:1px solid rgba(255,255,255,.06)}
+.gh-container{max-width:var(--maxw,1200px);margin:0 auto;padding:12px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}
+.gh-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text,#e8eef6);padding:4px 6px;border-radius:999px;transition:.22s ease}
+.gh-brand:hover{background:rgba(255,255,255,.04);transform:translateY(-1px)}
+.gh-brand img{width:44px;height:44px;border-radius:12px;flex:0 0 44px}
+.gh-brand-title{display:flex;flex-direction:column;line-height:1.1;white-space:nowrap}
+.gh-brand-title .name{font-size:16px;font-weight:600;letter-spacing:.02em;color:#fff}
+.gh-brand-title .sub{font-size:13px;color:var(--muted,#95a2b3)}
+
+.gh-nav{justify-self:center}
+.gh-nav>ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;align-items:center}
+.gh-nav>ul>li{display:flex;align-items:center}
 
 /* Estilos de Enlaces del Menú */
 .gh-nav a{position:relative;color:var(--text,#e8eef6);text-decoration:none;font-weight:500;font-size:14px;padding:6px 2px;border-radius:0;line-height:1; transition: color 0.2s ease;}
 .gh-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));transform:scaleX(0);transform-origin:center;transition:.22s ease;opacity:0}
 .gh-nav a:hover::after{transform:scaleX(1);opacity:1}
-
-/* CLASE ACTIVA (Se agrega via JS) */
 .gh-nav a.active-parent { color: var(--brand, #2dd4bf); }
 .gh-nav a.active-parent::after { transform: scaleX(1); opacity: 1; }
 
-/* === MEGA MENU === */
-.gh-has-dd{position:relative}.gh-dd{position:absolute;left:0;top:calc(100% + 6px);background:rgba(10,14,23,.98);border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 45px rgba(0,0,0,.6);border-radius:18px;min-width:280px;padding:14px;display:none;max-height:calc(100vh - 80px);overflow:auto}.gh-has-dd:focus-within .gh-dd,.gh-has-dd:hover .gh-dd{display:block}.gh-dd.mega{min-width:1000px;padding:16px}.gh-mega{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.gh-col{border-radius:16px;padding:10px;background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);border:1px solid rgba(255,255,255,.06)}.gh-col h4{margin:0 0 6px;font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}.gh-subhead{display:flex;align-items:center;gap:6px;margin:8px 0 6px;font-weight:500;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.gh-subhead svg{width:16px;height:16px;opacity:.9}.gh-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}.gh-col a.gh-link{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:8px;border-radius:12px;text-decoration:none;color:var(--text);border:1px solid transparent;background:transparent;transition:.22s ease}.gh-col a.gh-link:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.18);transform:translateY(-1px)}
+/* === MEGA MENU CORREGIDO === */
+.gh-has-dd{position:relative}
 
-/* === AJUSTE DE ICONOS FORZADOS === */
-.gh-ico32 {
-    width: 42px;         /* Ancho forzado */
-    height: 42px;        /* Alto forzado */
-    object-fit: contain; /* Mantiene proporción sin estirar */
-    display: block;
-    border-radius: 0;
-    flex-shrink: 0;
+/* Base del dropdown */
+.gh-dd{
+  position:absolute;
+  top:calc(100% + 10px); /* Un poco más separado */
+  background:rgba(10,14,23,.98);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 18px 45px rgba(0,0,0,.6);
+  border-radius:18px;
+  min-width:240px; /* Ancho para menús simples */
+  padding:14px;
+  display:none;
+  z-index: 1000;
+}
+.gh-has-dd:focus-within .gh-dd,
+.gh-has-dd:hover .gh-dd{display:block}
+
+/* Estilos Específicos para el Mega Menú (Sistemas) */
+.gh-dd.mega{
+  /* Aquí está la corrección clave: */
+  left: 50%;                 /* Mover al centro del botón */
+  transform: translateX(-50%); /* Centrar exactamente */
+  width: 980px;              /* Forzar ancho ancho fijo */
+  max-width: 90vw;           /* Evitar que se salga en pantallas chicas */
+  padding: 24px;
 }
 
-.gh-desc{margin:0;font-size:12px;line-height:1.5;color:var(--muted,#cbd5f5)}.gh-col .k{font-size:11px;color:var(--muted)}.gh-list{display:flex;flex-direction:column;gap:6px;min-width:260px}.gh-list a{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;color:var(--text);text-decoration:none;background:rgba(17,23,35,.9);border:1px solid rgba(255,255,255,.06);font-size:13px;transition:.22s ease}.gh-list a:hover{border-color:rgba(255,255,255,.18);background:rgba(27,33,48,1);transform:translateY(-1px)}.gh-ico{width:18px;height:18px;opacity:.9}.gh-cta{display:flex;gap:8px;align-items:center}.gh-btn{border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--text);padding:8px 14px;border-radius:999px;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:6px;transition:.2s ease}.gh-btn:hover{background:linear-gradient(90deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));color:#020617;border-color:transparent;transform:translateY(-1px)}.gh-burger{display:none;border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--text);padding:8px 10px;border-radius:12px;font-size:18px}.gh-subnav{display:none;border-top:1px solid rgba(255,255,255,.06);background:rgba(5,8,14,.96)}.gh-subinner{max-width:var(--maxw,1200px);margin:0 auto;padding:8px 18px;display:flex;gap:8px;flex-wrap:wrap}.gh-subinner a{font-size:12px;border:1px solid rgba(148,163,184,.6);padding:5px 10px;border-radius:999px;text-decoration:none;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}.gh-subinner a:hover{background:rgba(148,163,184,.16);color:var(--text)}@media(max-width:980px){.gh-container{grid-template-columns:1fr auto;gap:8px}.gh-nav{display:none}.gh-burger{display:inline-flex}.gh-cta .gh-btn:first-child{display:none}.gh-mobile{position:fixed;inset:0 0 0 auto;width:min(86%,360px);background:rgba(10,14,23,.98);transform:translateX(100%);transition:.24s ease;box-shadow:0 18px 40px rgba(0,0,0,.65);display:flex;flex-direction:column}.gh-mobile.open{transform:translateX(0)}.gh-mhead{display:flex;align-items:center;justify-content:space-between;padding:14px;border-bottom:1px solid rgba(255,255,255,.08)}.gh-mbody{padding:10px 14px;overflow:auto}.gh-mnav{display:flex;flex-direction:column;gap:6px}.gh-mnav details{border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;background:rgba(15,23,42,.9)}.gh-mnav summary{padding:12px 12px;cursor:pointer;font-weight:600;list-style:none}.gh-mnav a{display:block;padding:10px 12px;color:var(--text);text-decoration:none;border-top:1px solid rgba(255,255,255,.06)}.gh-mclose{border:1px solid rgba(255,255,255,.22);background:transparent;color:var(--text);padding:6px 10px;border-radius:10px}.gh-dd.mega{min-width:unset;padding:10px}.gh-mega{grid-template-columns:1fr;gap:10px}}
+.gh-mega{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr); /* 4 Columnas iguales */
+  gap: 20px;
+}
+
+/* Columnas */
+.gh-col{border-radius:16px;padding:12px;background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);border:1px solid rgba(255,255,255,.06)}
+.gh-col h4{margin:0 0 8px;font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase; opacity: 0.7;}
+
+.gh-subhead{display:flex;align-items:center;gap:6px;margin:12px 0 8px;font-weight:600;font-size:11px;color:#fff;text-transform:uppercase;letter-spacing:.05em}
+.gh-subhead svg{width:14px;height:14px;opacity:.9; color: var(--brand, #2dd4bf);}
+
+.gh-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+
+/* Enlaces dentro de las columnas */
+.gh-col a.gh-link{
+  display:flex;
+  align-items:center; /* Icono al lado del texto */
+  gap:10px;
+  padding:8px;
+  border-radius:10px;
+  text-decoration:none;
+  color:var(--text);
+  border:1px solid transparent;
+  transition:.2s ease
+}
+.gh-col a.gh-link:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
+
+/* Iconos de sistemas */
+.gh-ico32 {
+    width: 36px; height: 36px; /* Ajustado ligeramente */
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+}
+/* Texto descriptivo */
+.gh-link-content { display: flex; flex-direction: column; gap: 2px; }
+.gh-desc{margin:0;font-size:11px;line-height:1.3;color:var(--muted,#94a3b8); display: block;}
+.gh-link strong { font-size: 13px; font-weight: 500; color: #fff; }
+
+.gh-col .k{font-size:11px;color:var(--muted)}
+
+/* Menú Servicios (Lista simple) */
+.gh-list{display:flex;flex-direction:column;gap:6px;min-width:260px}
+.gh-list a{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;color:var(--text);text-decoration:none;background:rgba(17,23,35,.5);border:1px solid rgba(255,255,255,.06);font-size:13px;transition:.22s ease}
+.gh-list a:hover{border-color:rgba(255,255,255,.18);background:rgba(27,33,48,1);transform:translateY(-1px)}
+.gh-ico{width:18px;height:18px;opacity:.9}
+
+.gh-cta{display:flex;gap:8px;align-items:center}
+.gh-btn{border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--text);padding:8px 14px;border-radius:999px;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:6px;transition:.2s ease}
+.gh-btn:hover{background:linear-gradient(90deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));color:#020617;border-color:transparent;transform:translateY(-1px)}
+.gh-burger{display:none;border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--text);padding:8px 10px;border-radius:12px;font-size:18px}
+
+.gh-subnav{display:none;border-top:1px solid rgba(255,255,255,.06);background:rgba(5,8,14,.96)}
+.gh-subinner{max-width:var(--maxw,1200px);margin:0 auto;padding:8px 18px;display:flex;gap:8px;flex-wrap:wrap}
+
+/* === RESPONSIVO CRÍTICO === */
+@media(max-width:1100px){
+  /* Cuando la pantalla es pequeña, ajustamos el mega menú */
+  .gh-dd.mega{
+    width: 90vw; /* Ocupa casi toda la pantalla */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .gh-mega{
+    grid-template-columns: repeat(2, 1fr); /* Cambia a 2 columnas para que no se aplaste */
+  }
+}
+
+@media(max-width:980px){
+  .gh-container{grid-template-columns:1fr auto;gap:8px}
+  .gh-nav{display:none}
+  .gh-burger{display:inline-flex}
+  .gh-cta .gh-btn:first-child{display:none}
+  .gh-mobile{position:fixed;inset:0 0 0 auto;width:min(86%,360px);background:rgba(10,14,23,.98);transform:translateX(100%);transition:.24s ease;box-shadow:0 18px 40px rgba(0,0,0,.65);display:flex;flex-direction:column}
+  .gh-mobile.open{transform:translateX(0)}
+}
 </style>
 
-  <div class="gh-container">
-    <a class="gh-brand js-abs-href" data-href="index.html" aria-label="Inicio Expiriti">
-      <img
-        class="js-abs-src"
-        src="IMG/expiritilogo.webp"
-        data-src="IMG/expiritilogo.webp"
-        alt="Expiriti">
-      <div class="gh-brand-title">
-        <span class="name">Expiriti</span>
-        <span class="sub">Distribuidor CONTPAQi</span>
-      </div>
-    </a>
+  <div class="gh-container">
+    <a class="gh-brand js-abs-href" data-href="index.html" aria-label="Inicio Expiriti">
+      <img class="js-abs-src" src="IMG/expiritilogo.webp" data-src="IMG/expiritilogo.webp" alt="Expiriti">
+      <div class="gh-brand-title">
+        <span class="name">Expiriti</span>
+        <span class="sub">Distribuidor CONTPAQi</span>
+      </div>
+    </a>
 
-    <nav class="gh-nav" aria-label="Principal">
-      <ul>
-        <li><a class="js-abs-href" data-href="index.html">Inicio</a></li>
+    <nav class="gh-nav" aria-label="Principal">
+      <ul>
+        <li><a class="js-abs-href" data-href="index.html">Inicio</a></li>
 
-                <li class="gh-has-dd">
-          <a class="js-abs-href" data-href="index.html#productos" aria-haspopup="true" aria-expanded="false">Sistemas</a>
-          <div class="gh-dd mega" role="menu">
-            <div class="gh-mega">
+        <li class="gh-has-dd">
+          <a class="js-abs-href" data-href="index.html#productos" aria-haspopup="true" aria-expanded="false">Sistemas</a>
+          <div class="gh-dd mega" role="menu">
+            <div class="gh-mega">
 
-                            <div class="gh-col">
-                <h4>Procesos contables</h4>
-                <div class="gh-subhead">
-                  <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 19h6" stroke="currentColor" stroke-width="2"/></svg>
-                  <span class="k">Desktop</span>
-                </div>
-                <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabilidad.webp" alt="CONTPAQi Contabilidad"><p class="gh-desc">Pólizas, IVA, DIOT y contabilidad electrónica.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html"><img class="gh-ico32 js-abs-src" data-src="IMG/nominas.webp" alt="CONTPAQi Nóminas"><p class="gh-desc">Cálculo de nómina, timbrado CFDI y obligaciones laborales.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html"><img class="gh-ico32 js-abs-src" data-src="IMG/bancos.webp" alt="CONTPAQi Bancos"><p class="gh-desc">Conciliación bancaria, flujo de efectivo y tesorería.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-ico32 js-abs-src" data-src="IMG/xml.webp" alt="XML en Línea+"><p class="gh-desc">Descarga, validación y resguardo de CFDI 4.0.</p></a></li>
-                </ul>
+              <div class="gh-col">
+                <h4>Procesos contables</h4>
+                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Desktop</div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabilidad.webp" alt=""><div class="gh-link-content"><strong>Contabilidad</strong><span class="gh-desc">Pólizas, IVA y contabilidad electrónica.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html"><img class="gh-ico32 js-abs-src" data-src="IMG/nominas.webp" alt=""><div class="gh-link-content"><strong>Nóminas</strong><span class="gh-desc">Cálculo de nómina y timbrado.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html"><img class="gh-ico32 js-abs-src" data-src="IMG/bancos.webp" alt=""><div class="gh-link-content"><strong>Bancos</strong><span class="gh-desc">Flujo de efectivo y tesorería.</span></div></a></li>
+                </ul>
+                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>Nube</div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabiliza.webp" alt=""><div class="gh-link-content"><strong>Contabiliza</strong><span class="gh-desc">Contabilidad nube.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html"><img class="gh-ico32 js-abs-src" data-src="IMG/personia.webp" alt=""><div class="gh-link-content"><strong>Personia</strong><span class="gh-desc">Nómina nube.</span></div></a></li>
+                </ul>
+              </div>
 
-                <div class="gh-subhead">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/></svg>
-                  <span class="k">Nube</span>
-                </div>
-                <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabiliza.webp" alt="Contabiliza"><p class="gh-desc">Contabilidad en la nube para despachos y empresas.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html"><img class="gh-ico32 js-abs-src" data-src="IMG/analiza.webp" alt="Analiza"><p class="gh-desc">Dashboards y BI con indicadores contables y fiscales.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html"><img class="gh-ico32 js-abs-src" data-src="IMG/personia.webp" alt="Personia"><p class="gh-desc">Nómina en la nube con autoservicio y timbrado.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html"><img class="gh-ico32 js-abs-src" data-src="IMG/despachos.webp" alt="Despachos"><p class="gh-desc">Gestión integral de despachos contables.</p></a></li>
-                </ul>
-              </div>
+              <div class="gh-col">
+                <h4>Procesos comerciales</h4>
+                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Desktop</div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialpremium.webp" alt=""><div class="gh-link-content"><strong>Comercial Premium</strong><span class="gh-desc">Inventarios y series.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialpro.webp" alt=""><div class="gh-link-content"><strong>Comercial Pro</strong><span class="gh-desc">Alto volumen.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" data-src="IMG/factura.webp" alt=""><div class="gh-link-content"><strong>Factura Electrónica</strong><span class="gh-desc">Facturación servicios.</span></div></a></li>
+                </ul>
+                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>Nube</div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html"><img class="gh-ico32 js-abs-src" data-src="IMG/vende.webp" alt=""><div class="gh-link-content"><strong>Vende</strong><span class="gh-desc">Facturación nube.</span></div></a></li>
+                </ul>
+              </div>
 
-                            <div class="gh-col">
-                <h4>Procesos comerciales</h4>
-                <div class="gh-subhead">
-                  <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 19h6" stroke="currentColor" stroke-width="2"/></svg>
-                  <span class="k">Desktop</span>
-                </div>
-                <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialpremium.webp" alt="Comercial Premium"><p class="gh-desc">Inventario avanzado, lotes, series y sucursales.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialpro.webp" alt="Comercial Pro"><p class="gh-desc">Operaciones de volumen, compras y ventas.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialstart.webp" alt="Comercial Start"><p class="gh-desc">Emisión de CFDI 4.0, notas de crédito y complementos.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" data-src="IMG/factura.webp" alt="Factura electrónica"><p class="gh-desc">CFDI 4.0 y facturación electrónica segura.</p></a></li>
-                </ul>
-                <div class="gh-subhead">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/></svg>
-                  <span class="k">Nube</span>
-                </div>
-                <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html"><img class="gh-ico32 js-abs-src" data-src="IMG/vende.webp" alt="Vende"><p class="gh-desc">Punto de venta en la nube para mostrador y sucursales.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" data-src="IMG/factura.webp" alt="CFDI en Línea"><p class="gh-desc">Facturación en línea y timbrado centralizado.</p></a></li>
-                </ul>
-              </div>
+              <div class="gh-col">
+                <h4>Productividad</h4>
+                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>Nube</div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/kursa.html"><img class="gh-ico32 js-abs-src" data-src="IMG/kursa.webp" alt=""><div class="gh-link-content"><strong>Kursa</strong><span class="gh-desc">Cursos y capacitación.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html"><img class="gh-ico32 js-abs-src" data-src="IMG/evalua.webp" alt=""><div class="gh-link-content"><strong>Evalúa</strong><span class="gh-desc">NOM 035.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html"><img class="gh-ico32 js-abs-src" data-src="IMG/colabora.webp" alt=""><div class="gh-link-content"><strong>Colabora</strong><span class="gh-desc">App empleados.</span></div></a></li>
+                </ul>
+                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Promociones</div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="promociones.html"><img class="gh-ico32 js-abs-src" data-src="IMG/promo.webp" alt=""><div class="gh-link-content"><strong>Promociones</strong><span class="gh-desc">Ver descuentos activos.</span></div></a></li>
+                </ul>
+              </div>
 
-                            <div class="gh-col">
-                <h4>Productividad</h4>
-                <div class="gh-subhead">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/></svg>
-                  <span class="k">Nube</span>
-                </div>
-                <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/kursa.html"><img class="gh-ico32 js-abs-src" data-src="IMG/kursa.webp" alt="Kursa"><p class="gh-desc">Plataforma de capacitación y cursos en línea.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html"><img class="gh-ico32 js-abs-src" data-src="IMG/evalua.webp" alt="Evalúa"><p class="gh-desc">Cumplimiento NOM 035 y NOM 037 con encuestas digitales.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html"><img class="gh-ico32 js-abs-src" data-src="IMG/colabora.webp" alt="Colabora"><p class="gh-desc">Autoservicio de empleados: recibos, constancias y solicitudes.</p></a></li>
-                </ul>
-                <div class="gh-subhead">
-                  <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 19h6" stroke="currentColor" stroke-width="2"/></svg>
-                  <span class="k">Promociones del mes</span>
-                </div>
-                <ul>
-                  <li><a class="gh-link js-abs-href" data-href="promociones.html"><img class="gh-ico32 js-abs-src" data-src="IMG/promo.webp" alt="Promociones"><p class="gh-desc">Descuentos y paquetes activos este mes.</p></a></li>
-                </ul>
-              </div>
+              <div class="gh-col">
+                <h4>Infraestructura</h4>
+                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>Servicios Nube</div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/respaldo.html"><img class="gh-ico32 js-abs-src" data-src="IMG/respaldos.webp" alt=""><div class="gh-link-content"><strong>Respaldos</strong><span class="gh-desc">Nube automática.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/escritorio-virtual.html"><img class="gh-ico32 js-abs-src" data-src="IMG/escritorio-virtual.webp" alt=""><div class="gh-link-content"><strong>Escritorio Virtual</strong><span class="gh-desc">Tu oficina remota.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/timbra.html"><img class="gh-ico32 js-abs-src" data-src="IMG/timbra.webp" alt=""><div class="gh-link-content"><strong>Timbra</strong><span class="gh-desc">Timbrado masivo.</span></div></a></li>
+                </ul>
+              </div>
 
-                            <div class="gh-col">
-                <h4>Infraestructura y servicios nube</h4>
-                <div class="gh-subhead">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85" stroke="currentColor" stroke-width="2"/></svg>
-                  <span class="k">Nube</span>
-                </div>
-                <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/respaldo.html"><img class="gh-ico32 js-abs-src" data-src="IMG/respaldos.webp" alt="Respaldos"><p class="gh-desc">Respaldos automáticos y restauración administrada.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/escritorio-virtual.html"><img class="gh-ico32 js-abs-src" data-src="IMG/escritorio-virtual.webp" alt="Escritorio Virtual"><p class="gh-desc">Escritorios remotos con sistemas CONTPAQi en la nube.</p></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/timbra.html"><img class="gh-ico32 js-abs-src" data-src="IMG/timbra.webp" alt="Timbra"><p class="gh-desc">Servicio de timbrado independiente y escalable.</p></a></li>
-                </ul>
-              </div>
+            </div>
+          </div>
+        </li>
 
-            </div>
-          </div>
-        </li>
+        <li class="gh-has-dd">
+          <a class="js-abs-href" data-href="servicios.html" aria-haspopup="true" aria-expanded="false">Servicios</a>
+          <div class="gh-dd" role="menu">
+            <div class="gh-list" role="group" aria-label="Servicios">
+              <a class="js-abs-href" data-href="SERVICIOS/cursos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M8 5h8v10H8z"/></svg>Cursos</a>
+              <a class="js-abs-href" data-href="SERVICIOS/implementaciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>Implementaciones</a>
+              <a class="js-abs-href" data-href="SERVICIOS/migraciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 4l8 8-8 8"/></svg>Migraciones</a>
+              <a class="js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10H7z"/></svg>Servidores virtuales</a>
+              <a class="js-abs-href" data-href="SERVICIOS/soporte.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6a6 6 0 0 0-6 6v4h12v-4a6 6 0 0 0-6-6z"/></svg>Soporte técnico</a>
+              <a class="js-abs-href" data-href="SERVICIOS/desarrollos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>Desarrollos a la medida</a>
+            </div>
+          </div>
+        </li>
 
-                <li class="gh-has-dd">
-          <a class="js-abs-href" data-href="servicios.html" aria-haspopup="true" aria-expanded="false">Servicios</a>
-          <div class="gh-dd" role="menu">
-            <div class="gh-list" role="group" aria-label="Servicios">
-              <a class="js-abs-href" data-href="SERVICIOS/cursos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none"><path d="M4 19h16M8 5h8v10H8z" stroke="currentColor" stroke-width="2"/></svg>Cursos</a>
-              <a class="js-abs-href" data-href="SERVICIOS/implementaciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="2"/></svg>Implementaciones</a>
-              <a class="js-abs-href" data-href="SERVICIOS/migraciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M12 4l8 8-8 8" stroke="currentColor" stroke-width="2"/></svg>Migraciones</a>
-              <a class="js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none"><path d="M7 7h10v10H7z" stroke="currentColor" stroke-width="2"/></svg>Servidores virtuales</a>
-              <a class="js-abs-href" data-href="SERVICIOS/soporte.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none"><path d="M12 6a6 6 0 0 0-6 6v4h12v-4a6 6 0 0 0-6-6z" stroke="currentColor" stroke-width="2"/></svg>Soporte técnico</a>
-              <a class="js-abs-href" data-href="SERVICIOS/desarrollos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4" stroke="currentColor" stroke-width="2"/></svg>Desarrollos a la medida</a>
-            </div>
-          </div>
-        </li>
+        <li><a class="js-abs-href" data-href="promociones.html">Promociones</a></li>
+        <li><a class="js-abs-href" data-href="eventos.html">Eventos</a></li>
+        <li><a class="js-abs-href" data-href="nosotros.html">Nosotros</a></li>
+        <li><a class="js-abs-href" data-href="contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
 
-        <li><a class="js-abs-href" data-href="promociones.html">Promociones</a></li>
-        <li><a class="js-abs-href" data-href="eventos.html">Eventos</a></li>
-        <li><a class="js-abs-href" data-href="nosotros.html">Nosotros</a></li>
-        <li><a class="js-abs-href" data-href="contacto.html">Contacto</a></li>
-      </ul>
-    </nav>
+    <div class="gh-cta">
+      <a class="gh-btn" href="tel:+525568437918">55 6843 7918</a>
+      <a class="gh-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
+      <button class="gh-burger" id="gh-burger" aria-label="Abrir menú">≡</button>
+    </div>
+  </div>
 
-    <div class="gh-cta">
-      <a class="gh-btn" href="tel:+525568437918">55 6843 7918</a>
-      <a class="gh-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
-      <button class="gh-burger" id="gh-burger" aria-label="Abrir menú">≡</button>
-    </div>
-  </div>
-
-    <div class="gh-subnav" id="gh-subnav" aria-label="Accesos rápidos">
-    <div class="gh-subinner" id="gh-subinner"></div>
-  </div>
+  <div class="gh-subnav" id="gh-subnav" aria-label="Accesos rápidos">
+    <div class="gh-subinner" id="gh-subinner"></div>
+  </div>
 
 <script>
-(()=>{
-    const e=(e,t=document)=>t.querySelector(e),
-          n=(e,t=document)=>Array.from(t.querySelectorAll(e)),
-          // Utilidad para ajustar rutas relativas/absolutas
-          o=location.hostname.endsWith("github.io"),
-          r=location.pathname.split("/")[1]||"",
-          a=o&&r?"/"+r:"",
-          c=t=>{if(!t)return"#";if(/^https?:\/\//i.test(t))return t;if(t.startsWith("#"))return t;return(t.startsWith("/")?a+t:a+"/"+t).replace(/\/+/g,"/")};
-
-    // Ajustar hrefs y src dinámicamente
-    n(".js-abs-href[data-href]").forEach(e=>{const t=e.getAttribute("data-href"),[n,o]=(t||"").split("#");e.href=c(n)+(o?"#"+o:"")});
-    n(".js-abs-src[data-src]").forEach(e=>{e.src=c(e.getAttribute("data-src"))});
-
-    // Menú móvil
-    const t=e("#gh-burger"),s=e("#gh-mobile"),l=e("#gh-mclose"),d=t=>{s&&(s.classList.toggle("open",t),s.setAttribute("aria-hidden",(!t).toString()),document.body.style.overflow=t?"hidden":"")};
-    t&&t.addEventListener("click",(()=>d(!0))),l&&l.addEventListener("click",(()=>d(!1))),s&&s.addEventListener("click",(e=>{e.target===s&&d(!1)}));
-
-    // === LÓGICA DE ESTADO ACTIVO (HIGHLIGHT) ===
-    const currentPath = window.location.pathname.toLowerCase();
-    const navLinks = n(".gh-nav > ul > li > a");
-
-    navLinks.forEach(link => {
-        // Limpiar
-        link.classList.remove('active-parent');
-        
-        const text = link.innerText.trim().toLowerCase();
-        const href = (link.getAttribute('data-href') || "").toLowerCase();
-
-        // 1. Coincidencia por CARPETA (Sistemas / Servicios)
-        if (text === 'sistemas' && currentPath.includes('/sistemas/')) {
-            link.classList.add('active-parent');
-        }
-        else if (text === 'servicios' && currentPath.includes('/servicios/')) {
-            link.classList.add('active-parent');
-        }
-        // 2. Coincidencia por nombre de archivo específico
-        else if (text === 'nosotros' && currentPath.includes('nosotros')) {
-            link.classList.add('active-parent');
-        }
-        else if (text === 'contacto' && currentPath.includes('contacto')) {
-            link.classList.add('active-parent');
-        }
-        else if (text === 'promociones' && currentPath.includes('promociones')) {
-            link.classList.add('active-parent');
-        }
-        else if (text === 'eventos' && currentPath.includes('eventos')) {
-            link.classList.add('active-parent');
-        }
-        // 3. Inicio (exacto o root)
-        else if (text === 'inicio' && (currentPath.endsWith('index.html') || currentPath === '/' || currentPath.endsWith('/'))) {
-            link.classList.add('active-parent');
-        }
-    });
-
-    // Subnavegación contextual (esto lo tenías antes)
-    const u=e("#gh-subnav"),g=e("#gh-subinner"),v=[["#caracteristicas","Funcionalidades"],["#videos","Vídeos"],["#integra","Integraciones"],["#calculadora-section","Precio"],["#comparativa","Comparativa"],["#faq","Preguntas frecuentes"],["#sesion-guiada","Demo"]].filter((([e])=>document.querySelector(e)));
-    v.length&&u&&g&&(u.style.display="block",g.innerHTML=v.map((([e,t])=>`<a href="${e}">${t}</a>`)).join(""));
-
-    // Accesibilidad teclado Mega Menú
-    n(".gh-has-dd > a").forEach(t=>{const n=t.parentElement.querySelector(".gh-dd");t.addEventListener("keydown",(e=>{"ArrowDown"===e.key&&(e.preventDefault(),n&&n.querySelector("a,button,summary")?.focus())}))});
-})();
+(()=>{const e=(e,t=document)=>t.querySelector(e),n=(e,t=document)=>Array.from(t.querySelectorAll(e)),o=location.hostname.endsWith("github.io"),r=location.pathname.split("/")[1]||"",a=o&&r?"/"+r:"",c=t=>{if(!t)return"#";if(/^https?:\/\//i.test(t))return t;if(t.startsWith("#"))return t;return(t.startsWith("/")?a+t:a+"/"+t).replace(/\/+/g,"/")};n(".js-abs-href[data-href]").forEach(e=>{const t=e.getAttribute("data-href"),[n,o]=(t||"").split("#");e.href=c(n)+(o?"#"+o:"")}),n(".js-abs-src[data-src]").forEach(e=>{e.src=c(e.getAttribute("data-src"))});const t=e("#gh-burger"),s=e("#gh-mobile"),l=e("#gh-mclose"),d=t=>{s&&(s.classList.toggle("open",t),s.setAttribute("aria-hidden",(!t).toString()),document.body.style.overflow=t?"hidden":"")};t&&t.addEventListener("click",(()=>d(!0))),l&&l.addEventListener("click",(()=>d(!1))),s&&s.addEventListener("click",(e=>{e.target===s&&d(!1)}));const i=window.location.pathname.toLowerCase(),h=n(".gh-nav > ul > li > a");h.forEach(e=>{e.classList.remove("active-parent");const t=e.innerText.trim().toLowerCase();"sistemas"===t&&i.includes("/sistemas/")?e.classList.add("active-parent"):"servicios"===t&&i.includes("/servicios/")?e.classList.add("active-parent"):"nosotros"===t&&i.includes("nosotros")?e.classList.add("active-parent"):"contacto"===t&&i.includes("contacto")?e.classList.add("active-parent"):"promociones"===t&&i.includes("promociones")?e.classList.add("active-parent"):"eventos"===t&&i.includes("eventos")?e.classList.add("active-parent"):"inicio"===t&&(i.endsWith("index.html")||"/"===i||i.endsWith("/"))&&e.classList.add("active-parent")});const u=e("#gh-subnav"),g=e("#gh-subinner"),v=[["#caracteristicas","Funcionalidades"],["#videos","Vídeos"],["#integra","Integraciones"],["#calculadora-section","Precio"],["#comparativa","Comparativa"],["#faq","Preguntas frecuentes"],["#sesion-guiada","Demo"]].filter((([e])=>document.querySelector(e)));v.length&&u&&g&&(u.style.display="block",g.innerHTML=v.map((([e,t])=>`<a href="${e}">${t}</a>`)).join("")),n(".gh-has-dd > a").forEach(t=>{const n=t.parentElement.querySelector(".gh-dd");t.addEventListener("keydown",(e=>{"ArrowDown"===e.key&&(e.preventDefault(),n&&n.querySelector("a,button,summary")?.focus())}))})})();
 </script>
-
 </header>
