@@ -36,15 +36,16 @@
 
   <!-- Landmark principal -->
   <main id="main-content">
-
     <!-- Hero -->
     <section class="hero">
       <div class="container hero-grid">
+
         <div>
           <div class="kicker">Implementación rápida · Soporte cercano</div>
           <h1>
             CONTPAQi para tu empresa:
-            <span class="gradient-word">licencias, cursos, desarrollos y soporte</span> con Expiriti
+            <span class="gradient-word">licencias, cursos, desarrollos y soporte</span>
+            con Expiriti
           </h1>
           <p class="lead">
             Te ayudamos a elegir, instalar y aprovechar al máximo
@@ -62,12 +63,13 @@
         <!-- Derecha: Galería por sistemas -->
         <article class="card hero-gallery-card" aria-label="Galería de sistemas CONTPAQi">
           <div class="hero-gallery-header">
-            <h3>Conoce más de los sistemas CONTPAQi</h3>
+            <!-- h3 -> h2 para respetar jerarquía -->
+            <h2>Conoce más de los sistemas CONTPAQi</h2>
             <p class="hint">Elige el tipo de sistemas que buscas y descubre lo que traen para ti!</p>
           </div>
 
-          <!-- Tabs de grupo (arriba, como Productos CONTPAQi)
-               Quitamos role="tablist" para evitar error ARIA de hijos obligatorios -->
+          <!-- Tabs de grupo (arriba, como Productos CONTPAQi) -->
+          <!-- Quitamos role="tablist" para evitar error ARIA de hijos obligatorios -->
           <nav class="hero-gallery-groups" id="heroGalleryGroups" aria-label="Grupos de sistemas">
             <!-- Los botones los genera JS -->
           </nav>
@@ -80,84 +82,66 @@
             <button class="arrowCircle prev" aria-label="Anterior" type="button">
               <span class="chev">‹</span>
             </button>
-
             <div class="carousel-track"></div>
-
             <button class="arrowCircle next" aria-label="Siguiente" type="button">
               <span class="chev">›</span>
             </button>
-
             <div class="carousel-nav" aria-label="Paginación de imágenes"></div>
           </div>
 
           <!-- Tabs de sistema (abajo, como los de reels) -->
-          <div class="hero-gallery-tabs" id="heroGalleryTabs"
-              aria-label="Selecciona sistema para ver imágenes">
+          <div class="hero-gallery-tabs" id="heroGalleryTabs" aria-label="Selecciona sistema para ver imágenes">
             <!-- Los botones los genera JS -->
           </div>
         </article>
       </div> <!-- cierra .container.hero-grid -->
     </section> <!-- cierra .hero -->
-      
 
     <!-- ========================== -->
-    <!-- Productos CONTPAQi        -->
+    <!-- Productos CONTPAQi -->
     <!-- ========================== -->
     <section id="productos-con">
       <div class="container">
-
         <!-- Barra superior de productos -->
         <div class="productos-inline-bar">
           <!-- Recuadro con título + tabs -->
           <div class="prod-tabs-shell">
             <h2 class="prod-title">Productos <span>CONTPAQi</span></h2>
-
             <!-- quitamos role="tablist" para evitar mismatch ARIA -->
             <nav class="prod-tabs" aria-label="Productos CONTPAQi">
-              <button class="tab active"
-                      id="tab-contable"
-                      type="button"
-                      data-target="panel-contable">
+              <button class="tab active" id="tab-contable" type="button" data-target="panel-contable">
                 Solución Contable
               </button>
-              <button class="tab"
-                      id="tab-comercial"
-                      type="button"
-                      data-target="panel-comercial">
+              <button class="tab" id="tab-comercial" type="button" data-target="panel-comercial">
                 Solución Comercial
               </button>
-              <button class="tab"
-                      id="tab-nube"
-                      type="button"
-                      data-target="panel-nube">
+              <button class="tab" id="tab-nube" type="button" data-target="panel-nube">
                 Productos Nube
               </button>
-              <button class="tab"
-                      id="tab-productividad"
-                      type="button"
-                      data-target="panel-productividad">
+              <button class="tab" id="tab-productividad" type="button" data-target="panel-productividad">
                 Productividad
               </button>
             </nav>
           </div>
 
           <!-- CTA alineado al centro vertical -->
-          <button class="prod-cta" type="button" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth',block:'start'})">
+          <button
+            class="prod-cta"
+            type="button"
+            onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth',block:'start'})"
+          >
             Cotizar ahora
           </button>
         </div>
 
-
         <!-- ========================== -->
-        <!-- PANEL: SOLUCIÓN CONTABLE  -->
+        <!-- PANEL: SOLUCIÓN CONTABLE -->
         <!-- ========================== -->
         <section id="panel-contable" class="panel-productos" role="tabpanel" aria-labelledby="tab-contable">
           <div class="grid-2 align-center section-cq">
-
             <!-- Izquierda: productos 2 columnas -->
             <div>
               <div class="cards cards-products">
-
                 <!-- Contabilidad -->
                 <article class="card product-card" data-href="SISTEMAS/contabilidad.html">
                   <div class="body">
@@ -168,15 +152,19 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <p style="margin:0 0 10px;">
                       Catálogos, pólizas y reportes fiscales listos para cumplir con el SAT. Ideal para despachos y PyMEs.
                     </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Contabilidad"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de CONTPAQi Contabilidad">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de CONTPAQi Contabilidad"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore">
@@ -196,15 +184,19 @@
                       width="455"
                       height="184"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <p style="margin:0 0 10px;">
                       Cálculo, incidencias y timbrado sin complicaciones. Capacitación y migración incluidas.
                     </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20N%C3%B3minas"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de CONTPAQi Nóminas">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de CONTPAQi Nóminas"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore">
@@ -224,15 +216,19 @@
                       width="455"
                       height="202"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <p style="margin:0 0 10px;">
                       Conciliación bancaria ágil, flujos de caja y plantillas para acelerar tu cierre.
                     </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Bancos"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de CONTPAQi Bancos">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de CONTPAQi Bancos"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore">
@@ -252,15 +248,19 @@
                       width="455"
                       height="150"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <p style="margin:0 0 10px;">
                       Descarga y administración de CFDI directamente del SAT para tu contabilidad.
                     </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20XML%20en%20L%C3%ADnea%2B"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de XML en Línea+">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de XML en Línea+"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore">
@@ -269,7 +269,6 @@
                     </div>
                   </div>
                 </article>
-
               </div>
             </div>
 
@@ -280,9 +279,7 @@
                 <p class="hint" style="margin:0 0 10px;">
                   Elige el sistema para ver videos cortos de casos reales, tips y beneficios.
                 </p>
-
                 <h4 class="reel-title" id="reelTitle-contable"></h4>
-
                 <div class="carousel" id="carouselReels-contable" aria-label="Reels por sistema contable">
                   <button class="arrowCircle prev" aria-label="Anterior" type="button">
                     <span class="chev">‹</span>
@@ -303,7 +300,8 @@
                       width="59"
                       height="49"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Contabilidad</span>
                   </button>
                   <button class="reel-tab" data-panel="contable" data-sys="nominas" type="button">
@@ -313,7 +311,8 @@
                       width="59"
                       height="49"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Nóminas</span>
                   </button>
                   <button class="reel-tab" data-panel="contable" data-sys="bancos" type="button">
@@ -323,7 +322,8 @@
                       width="49"
                       height="56"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Bancos</span>
                   </button>
                   <button class="reel-tab" data-panel="contable" data-sys="xml" type="button">
@@ -333,7 +333,8 @@
                       width="59"
                       height="49"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>XML en Línea+</span>
                   </button>
                 </div>
@@ -342,17 +343,14 @@
           </div>
         </section>
 
-
         <!-- ========================== -->
         <!-- PANEL: SOLUCIÓN COMERCIAL -->
         <!-- ========================== -->
         <section id="panel-comercial" class="panel-productos hidden" role="tabpanel" aria-labelledby="tab-comercial">
           <div class="grid-2 align-center section-cq">
-
             <!-- Izquierda: productos Comercial -->
             <div>
               <div class="cards cards-products">
-
                 <!-- Comercial Start -->
                 <article class="card product-card" data-href="SISTEMAS/comercialstart.html">
                   <div class="body">
@@ -363,15 +361,19 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <p style="margin:0 0 10px;">
                       Entrada ideal para ventas e inventario con lo esencial para arrancar.
                     </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Comercial%20Start"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Comercial Start">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Comercial Start"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
@@ -389,15 +391,19 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <p style="margin:0 0 10px;">
                       Para operaciones con alto volumen y resurtidos. Compatible multi-sucursal.
                     </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Comercial%20Pro"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Comercial Pro">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Comercial Pro"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
@@ -415,15 +421,19 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <p style="margin:0 0 10px;">
                       Control avanzado de listas de precio, políticas y reportes. Ideal para crecimiento.
                     </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20CONTPAQi%20Comercial%20Premium"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Comercial Premium">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Comercial Premium"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
@@ -441,22 +451,25 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <p style="margin:0 0 10px;">
                       Timbrado y facturación rápida desde cualquier lugar. CFDI 4.0 listo.
                     </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Factura%20Electr%C3%B3nica"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Factura Electrónica">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Factura Electrónica"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
                     </div>
                   </div>
                 </article>
-
               </div>
             </div>
 
@@ -464,12 +477,8 @@
             <article class="card reels-home-card">
               <div class="body">
                 <h3 class="title-gradient" style="margin-bottom:4px;">Reels por sistema comercial</h3>
-                <p class="hint" style="margin:0 0 10px;">
-                  Revisa casos reales de ventas, inventarios y timbrado.
-                </p>
-
+                <p class="hint" style="margin:0 0 10px;">Revisa casos reales de ventas, inventarios y timbrado.</p>
                 <h4 class="reel-title" id="reelTitle-comercial"></h4>
-
                 <div class="carousel" id="carouselReels-comercial" aria-label="Reels por sistema comercial">
                   <button class="arrowCircle prev" aria-label="Anterior" type="button">
                     <span class="chev">‹</span>
@@ -480,7 +489,6 @@
                   </button>
                   <div class="carousel-nav" aria-label="Paginación de reels"></div>
                 </div>
-
                 <div class="reel-sys-tabs" aria-label="Selecciona sistema comercial">
                   <button class="reel-tab active" data-panel="comercial" data-sys="start" type="button">
                     <img
@@ -489,7 +497,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Start</span>
                   </button>
                   <button class="reel-tab" data-panel="comercial" data-sys="pro" type="button">
@@ -499,8 +508,9 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
-                    <span>Pro</span>
+                      decoding="async"
+                    >
+                      <span>Pro</span>
                   </button>
                   <button class="reel-tab" data-panel="comercial" data-sys="premium" type="button">
                     <img
@@ -509,7 +519,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Premium</span>
                   </button>
                   <button class="reel-tab" data-panel="comercial" data-sys="factura" type="button">
@@ -519,7 +530,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Factura Elec.</span>
                   </button>
                 </div>
@@ -528,17 +540,14 @@
           </div>
         </section>
 
-
         <!-- ========================== -->
-        <!-- PANEL: PRODUCTOS NUBE     -->
+        <!-- PANEL: PRODUCTOS NUBE -->
         <!-- ========================== -->
         <section id="panel-nube" class="panel-productos hidden" role="tabpanel" aria-labelledby="tab-nube">
           <div class="grid-2 align-center section-cq">
-
             <!-- Izquierda: productos Nube -->
             <div>
               <div class="cards cards-products">
-
                 <!-- Contabiliza -->
                 <article class="card product-card" data-href="SISTEMAS/contabiliza.html">
                   <div class="body">
@@ -549,13 +558,19 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
-                    <p style="margin:0 0 10px;">Contabilidad en la nube conectada a tus sistemas CONTPAQi.</p>
+                      decoding="async"
+                    >
+                    <p style="margin:0 0 10px;">
+                      Contabilidad en la nube conectada a tus sistemas CONTPAQi.
+                    </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Contabiliza"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Contabiliza">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Contabiliza"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
@@ -573,13 +588,19 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
-                    <p style="margin:0 0 10px;">Dashboards y BI nativo para tus datos de Contabilidad, Comercial y Nóminas.</p>
+                      decoding="async"
+                    >
+                    <p style="margin:0 0 10px;">
+                      Dashboards y BI nativo para tus datos de Contabilidad, Comercial y Nóminas.
+                    </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Analiza"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Analiza">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Analiza"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
@@ -597,13 +618,19 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
-                    <p style="margin:0 0 10px;">Gestión integral para despachos contables en la nube.</p>
+                      decoding="async"
+                    >
+                    <p style="margin:0 0 10px;">
+                      Gestión integral para despachos contables en la nube.
+                    </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Despachos"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Despachos">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Despachos"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
@@ -621,20 +648,25 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
-                    <p style="margin:0 0 10px;">Punto de venta en la nube, listo para sucursales.</p>
+                      decoding="async"
+                    >
+                    <p style="margin:0 0 10px;">
+                      Punto de venta en la nube, listo para sucursales.
+                    </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Vende"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Vende">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Vende"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
                     </div>
                   </div>
                 </article>
-
               </div>
             </div>
 
@@ -645,9 +677,7 @@
                 <p class="hint" style="margin:0 0 10px;">
                   Visualiza cómo Analiza, Contabiliza, Despachos y Vende automatizan tu operación.
                 </p>
-
                 <h4 class="reel-title" id="reelTitle-nube"></h4>
-
                 <div class="carousel" id="carouselReels-nube" aria-label="Reels productos nube">
                   <button class="arrowCircle prev" aria-label="Anterior" type="button">
                     <span class="chev">‹</span>
@@ -658,7 +688,6 @@
                   </button>
                   <div class="carousel-nav" aria-label="Paginación de reels"></div>
                 </div>
-
                 <div class="reel-sys-tabs" aria-label="Selecciona producto nube">
                   <button class="reel-tab active" data-panel="nube" data-sys="analiza" type="button">
                     <img
@@ -667,7 +696,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Analiza</span>
                   </button>
                   <button class="reel-tab" data-panel="nube" data-sys="contabiliza" type="button">
@@ -677,7 +707,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Contabiliza</span>
                   </button>
                   <button class="reel-tab" data-panel="nube" data-sys="despachos" type="button">
@@ -687,7 +718,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Despachos</span>
                   </button>
                   <button class="reel-tab" data-panel="nube" data-sys="vende" type="button">
@@ -697,7 +729,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Vende</span>
                   </button>
                 </div>
@@ -706,17 +739,14 @@
           </div>
         </section>
 
-
         <!-- ========================== -->
-        <!-- PANEL: PRODUCTIVIDAD      -->
+        <!-- PANEL: PRODUCTIVIDAD -->
         <!-- ========================== -->
         <section id="panel-productividad" class="panel-productos hidden" role="tabpanel" aria-labelledby="tab-productividad">
           <div class="grid-2 align-center section-cq">
-
             <!-- Izquierda: Productividad -->
             <div>
               <div class="cards cards-products">
-
                 <!-- Evalúa -->
                 <article class="card product-card" data-href="SISTEMAS/evalua.html">
                   <div class="body">
@@ -727,13 +757,19 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
-                    <p style="margin:0 0 10px;">Evalúa clima laboral, riesgos psicosociales y condiciones de trabajo.</p>
+                      decoding="async"
+                    >
+                    <p style="margin:0 0 10px;">
+                      Evalúa clima laboral, riesgos psicosociales y condiciones de trabajo.
+                    </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Eval%C3%BAa"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Evalúa">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Evalúa"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
@@ -751,13 +787,19 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
-                    <p style="margin:0 0 10px;">App gratuita para colaboración y seguimiento desde el móvil.</p>
+                      decoding="async"
+                    >
+                    <p style="margin:0 0 10px;">
+                      App gratuita para colaboración y seguimiento desde el móvil.
+                    </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Colabora"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Colabora">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Colabora"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
@@ -775,20 +817,25 @@
                       width="455"
                       height="160"
                       loading="lazy"
-                      decoding="async">
-                    <p style="margin:0 0 10px;">Expedientes de empleados y gestión de personal en la nube.</p>
+                      decoding="async"
+                    >
+                    <p style="margin:0 0 10px;">
+                      Expedientes de empleados y gestión de personal en la nube.
+                    </p>
                     <div class="foot">
-                      <a class="btn btn-grad-green btn-sm"
+                      <a
+                        class="btn btn-grad-green btn-sm"
                         href="https://wa.me/525568437918?text=Hola%21%20Quiero%20info%20del%20sistema%20Personia"
-                        target="_blank" rel="noopener"
-                        aria-label="WhatsApp para información de Personia">
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="WhatsApp para información de Personia"
+                      >
                         WhatsApp
                       </a>
                       <div class="hoverMore"><span class="chip">Ver más →</span></div>
                     </div>
                   </div>
                 </article>
-
               </div>
             </div>
 
@@ -799,9 +846,7 @@
                 <p class="hint" style="margin:0 0 10px;">
                   Ve cómo Evalúa, Colabora y Personia te ayudan con tu gente.
                 </p>
-
                 <h4 class="reel-title" id="reelTitle-productividad"></h4>
-
                 <div class="carousel" id="carouselReels-productividad" aria-label="Reels productividad">
                   <button class="arrowCircle prev" aria-label="Anterior" type="button">
                     <span class="chev">‹</span>
@@ -812,7 +857,6 @@
                   </button>
                   <div class="carousel-nav" aria-label="Paginación de reels"></div>
                 </div>
-
                 <div class="reel-sys-tabs" aria-label="Selecciona app de productividad">
                   <button class="reel-tab active" data-panel="productividad" data-sys="evalua" type="button">
                     <img
@@ -821,7 +865,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Evalúa</span>
                   </button>
                   <button class="reel-tab" data-panel="productividad" data-sys="colabora" type="button">
@@ -831,7 +876,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Colabora</span>
                   </button>
                   <button class="reel-tab" data-panel="productividad" data-sys="personia" type="button">
@@ -841,7 +887,8 @@
                       width="60"
                       height="60"
                       loading="lazy"
-                      decoding="async">
+                      decoding="async"
+                    >
                     <span>Personia</span>
                   </button>
                 </div>
@@ -849,13 +896,11 @@
             </article>
           </div>
         </section>
-
       </div> <!-- .container -->
     </section> <!-- #productos-con -->
 
-
     <!-- ========================== -->
-    <!-- SECCIÓN VIDEOS SIMPLE     -->
+    <!-- SECCIÓN VIDEOS SIMPLE -->
     <!-- ========================== -->
     <section id="videos">
       <div class="container">
@@ -866,7 +911,6 @@
         </div>
       </div>
     </section>
-
 
     <!-- Sectores & Diferenciales -->
     <section id="sectores">
@@ -892,18 +936,14 @@
       </div>
     </section>
 
-
     <section id="servicios">
       <div class="container grid-2">
-        
         <!-- Columna izquierda: servicios 2×2 -->
         <div>
           <div class="section-title">
             <h2 style="margin:0">Servicios</h2>
           </div>
-
           <div class="cards cards-services">
-
             <article class="card product-card" data-href="SERVICIOS/implementaciones.html" style="padding:16px">
               <h3>
                 <img
@@ -913,10 +953,13 @@
                   width="64"
                   height="64"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 Implementaciones CONTPAQi
               </h3>
-              <p class="body">Instalación, configuración inicial, CSD, timbrado de prueba y puesta en marcha.</p>
+              <p class="body">
+                Instalación, configuración inicial, CSD, timbrado de prueba y puesta en marcha.
+              </p>
               <div class="foot">
                 <div class="hoverMore"><span class="chip">Ver más →</span></div>
               </div>
@@ -931,10 +974,13 @@
                   width="64"
                   height="64"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 Migraciones
               </h3>
-              <p class="body">Migración desde otros sistemas (ASPEL, Excel, etc.) hacia CONTPAQi.</p>
+              <p class="body">
+                Migración desde otros sistemas (ASPEL, Excel, etc.) hacia CONTPAQi.
+              </p>
               <div class="foot">
                 <div class="hoverMore"><span class="chip">Ver más →</span></div>
               </div>
@@ -949,10 +995,13 @@
                   width="64"
                   height="64"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 Desarrollos a la medida
               </h3>
-              <p class="body">Integraciones, reportes especiales y automatizaciones sobre CONTPAQi.</p>
+              <p class="body">
+                Integraciones, reportes especiales y automatizaciones sobre CONTPAQi.
+              </p>
               <div class="foot">
                 <div class="hoverMore"><span class="chip">Ver más →</span></div>
               </div>
@@ -967,10 +1016,13 @@
                   width="64"
                   height="64"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 Servidores virtuales
               </h3>
-              <p class="body">Montamos tus sistemas CONTPAQi en la nube con acceso remoto seguro.</p>
+              <p class="body">
+                Montamos tus sistemas CONTPAQi en la nube con acceso remoto seguro.
+              </p>
               <div class="foot">
                 <div class="hoverMore"><span class="chip">Ver más →</span></div>
               </div>
@@ -985,10 +1037,13 @@
                   width="64"
                   height="64"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 Cursos y capacitación
               </h3>
-              <p class="body">Cursos en línea y sesiones personalizadas para que tu equipo domine CONTPAQi.</p>
+              <p class="body">
+                Cursos en línea y sesiones personalizadas para que tu equipo domine CONTPAQi.
+              </p>
               <div class="foot">
                 <div class="hoverMore"><span class="chip">Ver más →</span></div>
               </div>
@@ -1003,15 +1058,17 @@
                   width="64"
                   height="64"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 Soporte técnico
               </h3>
-              <p class="body">Pólizas, soporte remoto por sesión y atención por WhatsApp.</p>
+              <p class="body">
+                Pólizas, soporte remoto por sesión y atención por WhatsApp.
+              </p>
               <div class="foot">
                 <div class="hoverMore"><span class="chip">Ver más →</span></div>
               </div>
             </article>
-
           </div>
         </div>
 
@@ -1022,9 +1079,7 @@
             <p class="hint" style="margin:0 0 10px;">
               Ve ejemplos reales de implementaciones, migraciones, desarrollos, servidores, cursos y soporte.
             </p>
-
             <h4 class="reel-title" id="reelTitle-servicios"></h4>
-
             <div class="carousel" id="carouselReels-servicios" aria-label="Reels de servicios">
               <button class="arrowCircle prev" aria-label="Anterior" type="button">
                 <span class="chev">‹</span>
@@ -1035,7 +1090,6 @@
               </button>
               <div class="carousel-nav" aria-label="Paginación de reels"></div>
             </div>
-
             <div class="reel-sys-tabs" aria-label="Selecciona servicio">
               <button class="reel-tab active" data-panel="servicios" data-sys="implementaciones" type="button">
                 <img
@@ -1044,7 +1098,8 @@
                   width="60"
                   height="60"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 <span>Implementaciones</span>
               </button>
               <button class="reel-tab" data-panel="servicios" data-sys="migraciones" type="button">
@@ -1054,7 +1109,8 @@
                   width="60"
                   height="60"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 <span>Migraciones</span>
               </button>
               <button class="reel-tab" data-panel="servicios" data-sys="desarrollos" type="button">
@@ -1064,7 +1120,8 @@
                   width="60"
                   height="60"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 <span>Desarrollos</span>
               </button>
               <button class="reel-tab" data-panel="servicios" data-sys="servidores" type="button">
@@ -1074,7 +1131,8 @@
                   width="60"
                   height="60"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 <span>Servidores</span>
               </button>
               <button class="reel-tab" data-panel="servicios" data-sys="cursos" type="button">
@@ -1084,7 +1142,8 @@
                   width="60"
                   height="60"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 <span>Cursos</span>
               </button>
               <button class="reel-tab" data-panel="servicios" data-sys="soporte" type="button">
@@ -1094,23 +1153,20 @@
                   width="60"
                   height="60"
                   loading="lazy"
-                  decoding="async">
+                  decoding="async"
+                >
                 <span>Soporte</span>
               </button>
             </div>
           </div>
         </article>
-
       </div>
     </section>
-
-
 
     <!-- Promociones con filtros -->
     <section id="promociones">
       <div class="container">
         <div class="section-title"><h2 style="margin:0">Promociones</h2></div>
-
         <!-- quitamos role="tablist" para evitar warning ARIA -->
         <div class="promo-filters" aria-label="Filtro de promociones">
           <button class="promo-btn active" data-filter="nuevos">Usuarios nuevos</button>
@@ -1118,21 +1174,48 @@
           <button class="promo-btn" data-filter="tradicional">Tradicional</button>
           <button class="promo-btn" data-filter="mas">Más</button>
         </div>
-
         <div class="promo-grid" id="promoGrid">
           <!-- Imágenes con dimensiones para reducir CLS -->
-          <img src="IMG/40dic.webp" alt="Promo usuarios nuevos diciembre" data-type="nuevos"
-               onerror="this.style.display='none'" loading="lazy" decoding="async"
-               width="600" height="600">
-          <img src="IMG/15sisdic.webp" alt="Promo renovaciones diciembre" data-type="renovaciones"
-               onerror="this.style.display='none'" loading="lazy" decoding="async"
-               width="600" height="600">
-          <img src="IMG/10trad.webp" alt="Promo tradicional diciembre" data-type="mas"
-               onerror="this.style.display='none'" loading="lazy" decoding="async"
-               width="600" height="600">
-          <img src="IMG/20traddic.webp" alt="Más promociones diciembre" data-type="mas"
-               onerror="this.style.display='none'" loading="lazy" decoding="async"
-               width="600" height="600">
+          <img
+            src="IMG/40dic.webp"
+            alt="Promo usuarios nuevos diciembre"
+            data-type="nuevos"
+            onerror="this.style.display='none'"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="600"
+          >
+          <img
+            src="IMG/15sisdic.webp"
+            alt="Promo renovaciones diciembre"
+            data-type="renovaciones"
+            onerror="this.style.display='none'"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="600"
+          >
+          <img
+            src="IMG/10trad.webp"
+            alt="Promo tradicional diciembre"
+            data-type="mas"
+            onerror="this.style.display='none'"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="600"
+          >
+          <img
+            src="IMG/20traddic.webp"
+            alt="Más promociones diciembre"
+            data-type="mas"
+            onerror="this.style.display='none'"
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="600"
+          >
         </div>
       </div>
     </section>
@@ -1143,17 +1226,14 @@
         <div class="section-title">
           <h2 style="margin:0">Preguntas frecuentes</h2>
         </div>
-
         <div class="faq-wrap">
           <!-- 1. Distribuidor / con quién contrato -->
           <details class="faq-item" open>
             <summary>¿Con quién contrato al comprar con Expiriti?</summary>
             <p>
-              Compras tus licencias de <strong>CONTPAQi</strong> con un
-              <strong>distribuidor autorizado</strong>.  
-              Nosotros te ayudamos con la <strong>cotización, compra, instalación,
-              timbrado de prueba y capacitación básica</strong>, pero tu sistema
-              sigue siendo oficial CONTPAQi, con sus políticas y actualizaciones.
+              Compras tus licencias de <strong>CONTPAQi</strong> con un <strong>distribuidor autorizado</strong>.
+              Nosotros te ayudamos con la <strong>cotización, compra, instalación, timbrado de prueba y capacitación básica</strong>,
+              pero tu sistema sigue siendo oficial CONTPAQi, con sus políticas y actualizaciones.
             </p>
           </details>
 
@@ -1161,13 +1241,10 @@
           <details class="faq-item">
             <summary>¿Cuál es la diferencia entre licencia anual y tradicional?</summary>
             <p>
-              La <strong>licencia anual</strong> incluye actualizaciones y derecho
-              de uso por un año, ideal si quieres estar siempre al día y mantener
-              el costo controlado.  
-              La <strong>licencia tradicional</strong> se paga una sola vez y se
-              actualiza mediante pólizas o paquetes específicos.  
-              Si nos contactas por WhatsApp, te ayudamos a ver qué opción conviene
-              más según tu flujo de trabajo y presupuesto.
+              La <strong>licencia anual</strong> incluye actualizaciones y derecho de uso por un año,
+              ideal si quieres estar siempre al día y mantener el costo controlado.
+              La <strong>licencia tradicional</strong> se paga una sola vez y se actualiza mediante pólizas o paquetes específicos.
+              Si nos contactas por WhatsApp, te ayudamos a ver qué opción conviene más según tu flujo de trabajo y presupuesto.
             </p>
           </details>
 
@@ -1175,13 +1252,11 @@
           <details class="faq-item">
             <summary>¿Cuántos equipos puedo usar con mi licencia? ¿Qué significa “usuarios simultáneos”?</summary>
             <p>
-              El sistema se puede instalar en varios equipos, pero el límite lo
-              marca el número de <strong>usuarios simultáneos</strong> contratados.  
-              Ejemplo: si tienes <strong>1 usuario</strong>, puedes instalar en
-              3–4 equipos, pero solo <strong>una persona a la vez</strong> puede
-              entrar al sistema.  
-              Si tienes dudas, revisamos tu caso y te sugerimos el número correcto
-              de usuarios para que nadie se quede fuera.
+              El sistema se puede instalar en varios equipos, pero el límite lo marca el número de
+              <strong>usuarios simultáneos</strong> contratados.
+              Ejemplo: si tienes <strong>1 usuario</strong>, puedes instalar en 3–4 equipos, pero solo
+              <strong>una persona a la vez</strong> puede entrar al sistema.
+              Si tienes dudas, revisamos tu caso y te sugerimos el número correcto de usuarios para que nadie se quede fuera.
             </p>
           </details>
 
@@ -1189,12 +1264,9 @@
           <details class="faq-item">
             <summary>¿La instalación y configuración se pueden hacer a distancia?</summary>
             <p>
-              Sí. Hacemos la <strong>implementación remota</strong> por sesión
-              (AnyDesk/Zoom), incluyendo:
-              alta de empresa, conexión con certificados, timbrado de prueba y
-              configuración básica según tu giro.  
-              Si lo necesitas, podemos agendar también una sesión de
-              <strong>capacitación inicial</strong> para tu equipo.
+              Sí. Hacemos la <strong>implementación remota</strong> por sesión (AnyDesk/Zoom), incluyendo:
+              alta de empresa, conexión con certificados, timbrado de prueba y configuración básica según tu giro.
+              Si lo necesitas, podemos agendar también una sesión de <strong>capacitación inicial</strong> para tu equipo.
             </p>
           </details>
 
@@ -1202,12 +1274,10 @@
           <details class="faq-item">
             <summary>¿Qué soporte tengo después de comprar el sistema?</summary>
             <p>
-              Al comprar con Expiriti te acompañamos en la
-              <strong>puesta en marcha</strong>.  
-              Después, puedes contratar una <strong>póliza de soporte</strong> con
-              horas mensuales o atención por evento, según el tamaño de tu empresa.  
-              Pregúntanos por los planes de <strong>soporte, cursos y
-              actualizaciones</strong> para dejarte todo redondo.
+              Al comprar con Expiriti te acompañamos en la <strong>puesta en marcha</strong>.
+              Después, puedes contratar una <strong>póliza de soporte</strong> con horas mensuales o atención por evento,
+              según el tamaño de tu empresa.
+              Pregúntanos por los planes de <strong>soporte, cursos y actualizaciones</strong> para dejarte todo redondo.
             </p>
           </details>
 
@@ -1215,12 +1285,9 @@
           <details class="faq-item">
             <summary>¿Qué formas de pago aceptan?</summary>
             <p>
-              Aceptamos <strong>transferencia SPEI</strong> y pagos con
-              <strong>tarjeta</strong> a través de pasarelas autorizadas.  
-              En algunos casos se puede manejar pago fraccionado para servicios
-              de implementación o desarrollos.  
-              Envíanos un mensaje y te compartimos las opciones disponibles según
-              tu proyecto.
+              Aceptamos <strong>transferencia SPEI</strong> y pagos con <strong>tarjeta</strong> a través de pasarelas autorizadas.
+              En algunos casos se puede manejar pago fraccionado para servicios de implementación o desarrollos.
+              Envíanos un mensaje y te compartimos las opciones disponibles según tu proyecto.
             </p>
           </details>
 
@@ -1228,12 +1295,9 @@
           <details class="faq-item">
             <summary>Ya tengo un distribuidor, ¿puedo trabajar con Expiriti?</summary>
             <p>
-              Sí. Podemos apoyarte con <strong>servicios complementarios</strong>:
-              migraciones, desarrollos a la medida, servidores virtuales o cursos,
-              incluso si tu licencia la compraste con otro distribuidor.  
-              Si deseas que Expiriti gestione también tus
-              <strong>renovaciones</strong>, te explicamos el proceso sin
-              compromiso.
+              Sí. Podemos apoyarte con <strong>servicios complementarios</strong>: migraciones, desarrollos a la medida,
+              servidores virtuales o cursos, incluso si tu licencia la compraste con otro distribuidor.
+              Si deseas que Expiriti gestione también tus <strong>renovaciones</strong>, te explicamos el proceso sin compromiso.
             </p>
           </details>
 
@@ -1241,11 +1305,9 @@
           <details class="faq-item">
             <summary>Vengo de otro sistema (ASPEL, Excel, etc.), ¿pueden migrar mi información?</summary>
             <p>
-              Sí. Tenemos servicios de <strong>migración de datos</strong> desde
-              ASPEL, hojas de cálculo u otros orígenes hacia CONTPAQi.  
-              Revisamos contigo qué información es crítica (catálogos, saldos,
-              históricos) y preparamos un plan de migración para que el cambio sea
-              lo menos doloroso posible.
+              Sí. Tenemos servicios de <strong>migración de datos</strong> desde ASPEL, hojas de cálculo u otros orígenes hacia CONTPAQi.
+              Revisamos contigo qué información es crítica (catálogos, saldos, históricos) y preparamos un plan de migración
+              para que el cambio sea lo menos doloroso posible.
             </p>
           </details>
         </div>
@@ -1258,16 +1320,22 @@
         <div>
           <h2 style="margin-top:0">Hablemos de tu proyecto</h2>
           <p class="lead">
-            Cuéntanos qué módulo usas y qué quieres lograr. Te proponemos un plan claro de implementación,
-            capacitación y soporte.
+            Cuéntanos qué módulo usas y qué quieres lograr. Te proponemos un plan claro de implementación, capacitación y soporte.
           </p>
           <div class="badges">
             <span class="badge">Tel: <a href="tel:+525568437918">55 6843 7918</a></span>
-            <span class="badge">WhatsApp: <a href="https://wa.me/525568437918" target="_blank" rel="noopener">5568437918</a></span>
-            <span class="badge">Email: <a href="mailto:hola@expiriti.mx">hola@expiriti.mx</a></span>
+            <span class="badge">
+              WhatsApp:
+              <a href="https://wa.me/525568437918" target="_blank" rel="noopener">5568437918</a>
+            </span>
+            <span class="badge">
+              Email:
+              <a href="mailto:hola@expiriti.mx">hola@expiriti.mx</a>
+            </span>
             <span class="badge badge-nube">Nube</span>
           </div>
         </div>
+
         <div class="card" style="padding:16px">
           <form id="contactForm" aria-label="Formulario de contacto">
             <label for="nombre">Nombre</label>
@@ -1296,7 +1364,13 @@
             </select>
 
             <label for="detalle">Cuéntanos más</label>
-            <textarea id="detalle" name="detalle" rows="4" placeholder="Ej. Migración desde Excel, capacitación, timbrado, licencias, etc." required></textarea>
+            <textarea
+              id="detalle"
+              name="detalle"
+              rows="4"
+              placeholder="Ej. Migración desde Excel, capacitación, timbrado, licencias, etc."
+              required
+            ></textarea>
 
             <button class="btn hero-btn btn-grad-blue" type="submit">
               Enviar (abre WhatsApp)
@@ -1306,12 +1380,12 @@
         </div>
       </div>
     </section>
-
   </main> <!-- cierra main-content -->
 
   <!-- Footer dinámico (parcial) -->
   <div id="footer-placeholder"></div>
 
-  <script src="index.js"></script>
+  <!-- JS principal con defer para no bloquear render -->
+  <script src="index.js" defer></script>
 </body>
 </html>
