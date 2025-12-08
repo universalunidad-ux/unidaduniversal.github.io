@@ -1,5 +1,5 @@
 /* =========================================================
-   Expiriti - index.js (CORREGIDO)
+   Expiriti - index.js (CORREGIDO + LCP/IMÁGENES)
    ========================================================= */
 
 // Selectores abreviados
@@ -383,28 +383,54 @@ const HERO_GALLERY = {
   defaultGroup: 'contable'
 };
 
+// --- HERO GALLERY: imágenes con width/height y LCP optimizada ---
 function buildHeroGallerySlides(groupKey, sysKey) {
   const configGroup = HERO_GALLERY_DATA[groupKey];
   if (!configGroup) return;
   const sys = configGroup.systems[sysKey];
   if (!sys || !sys.images?.length) return;
-  const { carousel, titleEl } = HERO_GALLERY;
+  const { carousel, titleEl, defaultGroup } = HERO_GALLERY;
   if (!carousel) return;
+
   const track = carousel.querySelector('.carousel-track');
   const nav = carousel.querySelector('.carousel-nav');
   if (!track || !nav) return;
+
   track.innerHTML = '';
   nav.innerHTML = '';
+
   sys.images.forEach((item, idx) => {
     const slide = document.createElement('div');
     slide.className = 'carousel-slide hero-slide';
     if (idx === 0) slide.classList.add('is-active');
+
     const img = document.createElement('img');
     img.src = item.src;
-    img.loading = 'lazy';
     img.alt = item.title || sys.label;
+
+    // Dimensiones fijas para evitar CLS (ajustadas al tamaño que usas)
+    img.width = 550;
+    img.height = 550;
+    img.decoding = 'async';
+
+    // Detectar si esta imagen es la LCP real (primer grupo + sistema por defecto + primer slide)
+    const isLCP =
+      groupKey === defaultGroup &&
+      sysKey === configGroup.defaultSys &&
+      idx === 0;
+
+    if (isLCP) {
+      // Imagen principal: sin lazy + prioridad alta
+      img.loading = 'eager';
+      img.setAttribute('fetchpriority', 'high');
+    } else {
+      // Resto de imágenes: lazy
+      img.loading = 'lazy';
+    }
+
     slide.appendChild(img);
     track.appendChild(slide);
+
     const dot = document.createElement('button');
     dot.type = 'button';
     dot.className = 'dot' + (idx === 0 ? ' active' : '');
@@ -419,30 +445,38 @@ function buildHeroGallerySlides(groupKey, sysKey) {
     });
     nav.appendChild(dot);
   });
+
   if (titleEl) titleEl.textContent = sys.images[0]?.title || sys.label;
 }
 
+// Tabs de sistema (abajo del hero)
 function buildHeroSystemTabs(groupKey) {
   const configGroup = HERO_GALLERY_DATA[groupKey];
   if (!configGroup) return;
   const container = HERO_GALLERY.tabsContainer;
   if (!container) return;
   const defaultSys = configGroup.defaultSys;
+
   container.innerHTML = '';
+
   Object.entries(configGroup.systems).forEach(([sysKey, sys]) => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'hero-tab' + (sysKey === defaultSys ? ' active' : '');
     btn.dataset.group = groupKey;
     btn.dataset.sys = sysKey;
+
+    // Iconos de tabs con width/height para evitar CLS
     btn.innerHTML = `
-      <img src="${sys.icon}" alt="${sys.label}">
+      <img src="${sys.icon}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async">
       <span>${sys.label}</span>
     `;
+
     btn.addEventListener('click', () => {
       $$('.hero-tab', container).forEach(b => b.classList.toggle('active', b === btn));
       buildHeroGallerySlides(groupKey, sysKey);
     });
+
     container.appendChild(btn);
   });
 }
@@ -450,7 +484,9 @@ function buildHeroSystemTabs(groupKey) {
 function initHeroGallery() {
   const { groupNav, defaultGroup, carousel } = HERO_GALLERY;
   if (!groupNav || !carousel) return;
+
   groupNav.innerHTML = '';
+
   Object.entries(HERO_GALLERY_DATA).forEach(([groupKey, group]) => {
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -466,11 +502,14 @@ function initHeroGallery() {
     });
     groupNav.appendChild(btn);
   });
+
   const track = carousel.querySelector('.carousel-track');
   const prevBtn = carousel.querySelector('.arrowCircle.prev');
   const nextBtn = carousel.querySelector('.arrowCircle.next');
+
   const slidesFor = () => $$('.carousel-slide', track);
   const navDots = () => $$('.dot', carousel.querySelector('.carousel-nav'));
+
   const goTo = index => {
     const slides = slidesFor();
     if (!slides.length) return;
@@ -481,14 +520,17 @@ function initHeroGallery() {
     navDots().forEach((d, idx) => d.classList.toggle('active', idx === i));
     track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
   };
+
   prevBtn?.addEventListener('click', () => {
     const idx = slidesFor().findIndex(s => s.classList.contains('is-active'));
     goTo(idx - 1);
   });
+
   nextBtn?.addEventListener('click', () => {
     const idx = slidesFor().findIndex(s => s.classList.contains('is-active'));
     goTo(idx + 1);
   });
+
   const cfg = HERO_GALLERY_DATA[defaultGroup];
   buildHeroSystemTabs(defaultGroup);
   buildHeroGallerySlides(defaultGroup, cfg.defaultSys);
@@ -594,30 +636,24 @@ const REELS_DATA = {
       ]
     }
   },
- // ... dentro de const REELS_DATA = { ...
-
   servicios: {
     titleEl: $('#reelTitle-servicios'),
     carousel: $('#carouselReels-servicios'),
-    defaultSys: 'implementaciones', // CORREGIDO: Plural para coincidir con HTML
+    defaultSys: 'implementaciones',
     reelsBySys: {
-      // CORREGIDO: Key en plural para coincidir con data-sys="implementaciones"
       implementaciones: [
-        { id: 'aHGJ-TNpJ-U', title: 'Testimonio Martha: Implementación Contable' },
-        // Agrega más si tienes
+        { id: 'aHGJ-TNpJ-U', title: 'Testimonio Martha: Implementación Contable' }
       ],
-      // AGREGADO: Faltaba esta categoría que tienes en el HTML
       migraciones: [
-        { id: 'JkrDOjWV1Gs', title: 'Migración de datos a CONTPAQi' } // Video de ejemplo, cámbialo por el real
+        { id: 'JkrDOjWV1Gs', title: 'Migración de datos a CONTPAQi' }
       ],
       desarrollos: [
         { id: 'JkrDOjWV1Gs', title: 'Testimonio Sara: Soft Restaurant' },
         { id: 'uBl5UWkwbr8', title: 'Testimonio Luis: Desarrollo en Nóminas' },
         { id: 'f-F10-F6rnM', title: 'Testimonio Alex: Integración CONTPAQi API' }
       ],
-      // AGREGADO: Faltaba esta categoría que tienes en el HTML
       servidores: [
-        { id: 'Grx1woHMGsU', title: 'Servidores Virtuales para CONTPAQi' } // Video de ejemplo, cámbialo
+        { id: 'Grx1woHMGsU', title: 'Servidores Virtuales para CONTPAQi' }
       ],
       cursos: [
         { id: 'TgAkwNt4YCA', title: 'Testimonio Ana: Curso Contabilidad' }
@@ -627,24 +663,28 @@ const REELS_DATA = {
       ]
     }
   }
-
-// ... fin de REELS_DATA
 };
 
+// --- YT THUMBS: añadir width/height para bajar CLS ---
 function renderReelThumb(wrap) {
   const id = wrap.dataset.ytid;
   const title = wrap.dataset.title || '';
   if (!id) return;
+
   wrap.innerHTML = `
     <button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
       <img
         src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg"
         loading="lazy"
+        decoding="async"
+        width="480"
+        height="270"
         alt="${title}"
         onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';">
       <span class="yt-play"></span>
     </button>
   `;
+
   const btn = wrap.querySelector('.yt-thumb');
   if (!btn) return;
   btn.addEventListener('click', () => {
@@ -684,19 +724,24 @@ function buildReelsSlides(panelKey, sysKey) {
   const nav = carousel?.querySelector('.carousel-nav');
   if (!track || !nav) return;
   const reels = reelsBySys[sysKey] || [];
+
   track.innerHTML = '';
   nav.innerHTML = '';
+
   reels.forEach((reel, idx) => {
     const slide = document.createElement('div');
     slide.className = 'carousel-slide';
     if (idx === 0) slide.classList.add('is-active');
+
     const wrap = document.createElement('div');
     wrap.className = 'reel-embed';
     wrap.dataset.ytid = reel.id;
     wrap.dataset.title = reel.title;
     renderReelThumb(wrap);
+
     slide.appendChild(wrap);
     track.appendChild(slide);
+
     const dot = document.createElement('button');
     dot.type = 'button';
     dot.className = 'dot' + (idx === 0 ? ' active' : '');
@@ -712,16 +757,19 @@ function buildReelsSlides(panelKey, sysKey) {
     });
     nav.appendChild(dot);
   });
+
   if (titleEl) titleEl.textContent = reels[0]?.title || '';
 }
 
 function initReelsCarousel(panelKey) {
   const config = REELS_DATA[panelKey];
   if (!config || !config.carousel) return;
-  const { carousel, defaultSys } = config;
+  const { carousel } = config;
   const track = carousel.querySelector('.carousel-track');
+
   const slidesFor = () => $$('.carousel-slide', track);
   const navDots = () => $$('.carousel-nav .dot', carousel);
+
   const goTo = index => {
     const slides = slidesFor();
     if (!slides.length) return;
@@ -732,21 +780,27 @@ function initReelsCarousel(panelKey) {
     navDots().forEach((d, idx) => d.classList.toggle('active', idx === i));
     track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
   };
+
   const prevBtn = carousel.querySelector('.arrowCircle.prev');
   const nextBtn = carousel.querySelector('.arrowCircle.next');
+
   prevBtn?.addEventListener('click', () => {
     const idx = slidesFor().findIndex(s => s.classList.contains('is-active'));
     goTo(idx - 1);
     stopAllReels();
   });
+
   nextBtn?.addEventListener('click', () => {
     const idx = slidesFor().findIndex(s => s.classList.contains('is-active'));
     goTo(idx + 1);
     stopAllReels();
   });
-  buildReelsSlides(panelKey, defaultSys);
+
+  // Construimos con el sistema por defecto
+  buildReelsSlides(panelKey, config.defaultSys);
 }
 
+// Thumbs simples (sección Videos)
 function initSimpleThumbs() {
   $$('.yt-lite').forEach(node => {
     const id = node.dataset.ytid;
