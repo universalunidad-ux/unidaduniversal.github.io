@@ -284,30 +284,39 @@ p{margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--muted);}
   color:#e5e7eb;
 }
 
-/* =========================================================
-   Carrusel genérico (.carousel)
-   ========================================================= */
-.carousel{
-  position:relative;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  margin:6px 0;
+/* =========================================
+   Carruseles genéricos (hero + reels)
+   ========================================= */
+.carousel {
+  position: relative;
 }
-.carousel-track{
-  overflow:hidden;
-  flex:1;
-  border-radius:var(--radius-md);
+
+.carousel-track {
+  display: flex;
+  overflow: hidden;
+  scroll-behavior: smooth;
 }
-.carousel-track .carousel-slide{
-  min-width:100%;
+
+/* Cada slide ocupa todo el ancho del carrusel,
+   pero SOLO se muestra la que tenga .is-active */
+.carousel-slide {
+  flex: 0 0 100%;
+  display: none;
 }
+
+.carousel-slide.is-active {
+  display: block;
+}
+
+/* Imágenes + iframes dentro de carrusel */
+.carousel-track img,
 .carousel-track iframe,
-.carousel-track .reel-embed,
-.carousel-track img{
-  width:100%;
-  display:block;
+.carousel-track .reel-embed img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
+
 
 /* Flechas redondas */
 .arrowCircle{
