@@ -118,20 +118,30 @@ $('#contactForm')?.addEventListener('submit', e => {
   window.open(`https://wa.me/525568437918?text=${texto}`, '_blank');
 });
 
-// --- TABS PRODUCTOS ---
+// -------- TABS DE PRODUCTOS --------
 const tabsProductos = $$('.prod-tabs .tab');
 const panelsProductos = $$('.panel-productos');
 
-function activarTabProductos(btn) {
+function activarTabProductos(btn){
   const targetId = btn.dataset.target;
-  tabsProductos.forEach(t => t.classList.toggle('active', t === btn));
-  panelsProductos.forEach(p => p.classList.toggle('hidden', p.id !== targetId));
+
+  // activar/desactivar botón
+  tabsProductos.forEach(t => {
+    t.classList.toggle('active', t === btn);
+  });
+
+  // mostrar sólo el panel objetivo
+  panelsProductos.forEach(p => {
+    p.classList.toggle('hidden', p.id !== targetId);
+  });
 }
 
+// listeners
 tabsProductos.forEach(btn => {
   btn.addEventListener('click', () => activarTabProductos(btn));
 });
 
+// estado inicial: contable
 const tabInicial = document.getElementById('tab-contable');
 if (tabInicial) activarTabProductos(tabInicial);
 
