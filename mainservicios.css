@@ -284,6 +284,24 @@ p{margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--muted);}
   color:#e5e7eb;
 }
 
+/* Hero gallery: reserva altura para que no empuje todo al cargar */
+.hero-gallery-card .hero-carousel .carousel-track {
+  min-height: 360px;  /* ajusta según cómo se vea */
+}
+
+/* Reels de productos (contable/comercial/nube/productividad) */
+.reels-home-card .carousel-track {
+  min-height: 360px;  /* o 320px, prueba */
+}
+
+/* Opcional: en móviles un poco menos */
+@media (max-width: 768px) {
+  .hero-gallery-card .hero-carousel .carousel-track,
+  .reels-home-card .carousel-track {
+    min-height: 260px;
+  }
+}
+
 /* =========================================
    Carruseles genéricos (hero + reels)
    ========================================= */
