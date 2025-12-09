@@ -102,37 +102,39 @@
     <!-- ========================== -->
     <section id="productos-con">
       <div class="container">
-        <!-- Barra superior de productos -->
-        <div class="productos-inline-bar">
-          <!-- Recuadro con título + tabs -->
-          <div class="prod-tabs-shell">
-            <h2 class="prod-title">Productos <span>CONTPAQi</span></h2>
-            <!-- quitamos role="tablist" para evitar mismatch ARIA -->
-            <nav class="prod-tabs" aria-label="Productos CONTPAQi">
-              <button class="tab active" id="tab-contable" type="button" data-target="panel-contable">
-                Solución Contable
-              </button>
-              <button class="tab" id="tab-comercial" type="button" data-target="panel-comercial">
-                Solución Comercial
-              </button>
-              <button class="tab" id="tab-nube" type="button" data-target="panel-nube">
-                Productos Nube
-              </button>
-              <button class="tab" id="tab-productividad" type="button" data-target="panel-productividad">
-                Productividad
-              </button>
-            </nav>
-          </div>
 
-          <!-- CTA alineado al centro vertical -->
-          <button
-            class="prod-cta"
-            type="button"
-            onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth',block:'start'})"
-          >
-            Cotizar ahora
-          </button>
-        </div>
+        <!-- Barra superior de productos -->
+<div class="productos-inline-bar">
+  <!-- Recuadro con título + tabs -->
+  <div class="prod-tabs-shell">
+    <h2 class="prod-title">Productos <span>CONTPAQi</span></h2>
+    <!-- quitamos role="tablist" para evitar mismatch ARIA -->
+    <nav class="prod-tabs" aria-label="Productos CONTPAQi">
+      <button class="tab active" id="tab-contable" type="button" data-target="panel-contable">
+        Solución Contable
+      </button>
+      <button class="tab" id="tab-comercial" type="button" data-target="panel-comercial">
+        Solución Comercial
+      </button>
+      <button class="tab" id="tab-nube" type="button" data-target="panel-nube">
+        Productos Nube
+      </button>
+      <button class="tab" id="tab-productividad" type="button" data-target="panel-productividad">
+        Productividad
+      </button>
+    </nav>
+  </div>
+
+  <!-- CTA alineado al centro vertical -->
+  <button
+    class="prod-cta"
+    type="button"
+    onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth',block:'start'})"
+  >
+    Cotizar ahora
+  </button>
+</div>
+
 
         <!-- ========================== -->
         <!-- PANEL: SOLUCIÓN CONTABLE -->
