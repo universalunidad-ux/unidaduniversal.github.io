@@ -551,7 +551,7 @@ const REELS_DATA = {
   contable: {
     titleEl: $('#reelTitle-contable'),
     carousel: $('#carouselReels-contable'),
-    defaultSys: 'nominas',
+    defaultSys: 'contabilidad',
     reelsBySys: {
       contabilidad: [
         { id: 'yblBsFFv6bc', title: 'Contabilidad y Contabiliza te ayudan en la DIOT' },
