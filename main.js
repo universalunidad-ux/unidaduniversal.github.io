@@ -1,6 +1,6 @@
 /* =========================================================
-   Expiriti - main.js — Escritorio + Carruseles + Reels (YouTube pause)
-   [CORREGIDO, ORDENADO Y COMENTADO]
+   Expiriti - main.js — Escritorio + Carruseles + Reels
+   (YouTube pause unificado)
    ========================================================= */
 
 /* =========================================================
@@ -79,6 +79,8 @@
       i = (n + len) % len;
       const w = track.clientWidth || root.clientWidth || 1;
 
+      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+
       paint(i);
       track.scrollTo({
         left: w * i,
@@ -89,20 +91,11 @@
     }
 
     // Click en dots
-    dots.forEach((d, idx) => d.addEventListener("click", () => {
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-      set(idx);
-    }));
+    dots.forEach((d, idx) => d.addEventListener("click", () => set(idx)));
 
     // Flechas prev/next
-    prev && prev.addEventListener("click", () => {
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-      set(i - 1);
-    });
-    next && next.addEventListener("click", () => {
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-      set(i + 1);
-    });
+    prev && prev.addEventListener("click", () => set(i - 1));
+    next && next.addEventListener("click", () => set(i + 1));
 
     // Sincronizar si el usuario hace scroll manual
     track.addEventListener("scroll", () => {
@@ -153,7 +146,6 @@
       });
     });
 })();
-
 
 /* =========================================================
    4) HARD RESET DE SCROLL PARA .carouselX .track
@@ -253,7 +245,7 @@
     });
   });
 
-  // Valor inicial (fallback: "nomina")
+  // Valor inicial
   apply(pills[0]?.dataset.filter || "nomina");
 })();
 
@@ -329,10 +321,10 @@
       let touchedOnce = false; // Control de primer toque en móvil
       const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
 
-      const go = () => {
+      const goSys = () => {
         const href = it.getAttribute("data-href");
         if (!href) return;
-        // SIEMPRE abrir en nueva pestaña
+        // Siempre abrir en nueva pestaña
         window.open(href, "_blank", "noopener");
       };
 
@@ -351,14 +343,14 @@
         }
 
         // Segundo toque o escritorio → abrir página
-        go();
+        goSys();
       });
 
       // Accesibilidad: ENTER / SPACE
       it.addEventListener("keydown", e => {
         if (e.key === "Enter" || e.key === " "){
           e.preventDefault();
-          go();
+          goSys();
         }
       });
     });
@@ -381,7 +373,7 @@
         b.setAttribute("aria-label", "Ir a página " + (j + 1));
         b.addEventListener("click", () => {
           if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-          go(j); // go del carrusel (no confundir con go() de .sys)
+          go(j);
         });
         dotsWrap.appendChild(b);
         return b;
@@ -463,7 +455,7 @@
     setTimeout(resetStart, 350);
 
     // Config básica
-    track.style.overflowX     = "auto";
+    track.style.overflowX      = "auto";
     track.style.scrollBehavior = "smooth";
     toggleUI();
     go(0);
@@ -477,49 +469,67 @@
    - Pausa todos los players cuando uno empieza.
    - Inicializa iframes existentes.
    - Lazy load con .yt-wrap / .reel-embed[data-ytid].
+   - Nunca más de 1 video reproduciéndose.
    ========================================================= */
 (function(){
   // 1. Almacén global de reproductores
-  window.exPlayers = [];
+  window.exPlayers = window.exPlayers || [];
 
   // 2. Función Global de Pausa (expuesta a otros módulos)
   window.pauseAllYTIframes = function(exceptPlayer){
+    // Limpia referencias nulas por si algún iframe se destruyó
+    window.exPlayers = window.exPlayers.filter(Boolean);
+
     window.exPlayers.forEach(p => {
-      if (p && p !== exceptPlayer && typeof p.pauseVideo === "function"){
-        try {
-          const s = p.getPlayerState();
-          if (s === 1 || s === 3) p.pauseVideo(); // 1=Playing, 3=Buffering
-        } catch(e){}
+      if (!p || p === exceptPlayer) return;
+      if (typeof p.getPlayerState !== "function") return;
+      if (typeof p.pauseVideo !== "function") return;
+
+      try {
+        const state = p.getPlayerState();
+        // 1 = PLAYING, 3 = BUFFERING
+        if (state === 1 || state === 3){
+          p.pauseVideo();
+        }
+      } catch(e){
+        // Silencioso para no romper nada
       }
     });
   };
 
   // Handler de cambio de estado: pausa otros si uno reproduce
   function onPlayerStateChange(event){
-    if (event.data === 1){ 
+    const PLAYING   = (window.YT && YT.PlayerState && YT.PlayerState.PLAYING)   || 1;
+    const BUFFERING = (window.YT && YT.PlayerState && YT.PlayerState.BUFFERING) || 3;
+
+    if (event.data === PLAYING || event.data === BUFFERING){
       window.pauseAllYTIframes(event.target);
     }
   }
 
+  // Registra un iframe suelto como player de YouTube
+  function registerYTIframe(iframe){
+    if (!iframe || iframe.dataset.ytInit === "1") return;
+    iframe.dataset.ytInit = "1";
+
+    // Asegurar enablejsapi=1
+    let src = iframe.src || "";
+    if (src && !src.includes("enablejsapi=1")){
+      src += (src.includes("?") ? "&" : "?") + "enablejsapi=1";
+      iframe.src = src;
+    }
+
+    const player = new YT.Player(iframe, {
+      events: { onStateChange: onPlayerStateChange }
+    });
+    window.exPlayers.push(player);
+  }
+
   // 3. Inicializador API YouTube
   window.onYouTubeIframeAPIReady = function(){
-    // A) Inicializar iframes ya presentes en DOM
-    document.querySelectorAll('iframe[src*="youtube"]').forEach((iframe) => {
-      if (iframe.dataset.ytInit) return;
-      iframe.dataset.ytInit = "1";
-
-      // Asegurar enablejsapi=1
-      let src = iframe.src;
-      if (!src.includes("enablejsapi=1")){
-        src += (src.includes("?") ? "&" : "?") + "enablejsapi=1";
-        iframe.src = src;
-      }
-      
-      const p = new YT.Player(iframe, {
-        events: { "onStateChange": onPlayerStateChange }
-      });
-      window.exPlayers.push(p);
-    });
+    document
+      .querySelectorAll('iframe[src*="youtube"], iframe[src*="youtu.be"]')
+      .forEach(registerYTIframe);
   };
 
   // Cargar script de API si no existe
@@ -527,6 +537,29 @@
     const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
     document.head.appendChild(tag);
+  }
+
+  // MutationObserver para iframes que se agreguen dinámicamente
+  const moYT = new MutationObserver(muts => {
+    muts.forEach(m => {
+      m.addedNodes.forEach(node => {
+        if (node.nodeType !== 1) return;
+
+        if (node.tagName === "IFRAME" &&
+            (node.src.includes("youtube") || node.src.includes("youtu.be")) &&
+            window.YT && window.YT.Player){
+          registerYTIframe(node);
+        }
+
+        node.querySelectorAll?.('iframe[src*="youtube"], iframe[src*="youtu.be"]')
+            .forEach(ifr => {
+              if (window.YT && window.YT.Player) registerYTIframe(ifr);
+            });
+      });
+    });
+  });
+  if (document.body){
+    moYT.observe(document.body, { childList: true, subtree: true });
   }
 
   /* ------------------------------------------------------
@@ -565,12 +598,11 @@
       }
     }
 
-         function setActive(i){
+    function setActive(i){
       window.pauseAllYTIframes(); // Pausa todo al mover
       if (!dots.length || !slides.length) return;
 
       idx = (i + dots.length) % dots.length;
-
       const w = track.clientWidth || root.clientWidth || 1;
       track.scrollTo({ left: w * idx, behavior: "smooth" });
 
@@ -599,11 +631,10 @@
     setActive(0);
   });
 
-    /* ------------------------------------------------------
+  /* ------------------------------------------------------
      9.B) LÓGICA LAZY LOAD (.yt-wrap / .reel-embed[data-ytid])
-     - Intenta usar maxresdefault.jpg
-     - Si falla, hace fallback a sddefault/hqdefault
-     - Mantiene botón tipo YouTube centrado
+     - Usa miniatura + botón estilo YouTube.
+     - Autoplay al hacer clic.
      ------------------------------------------------------ */
   function mountLazyEmbed(wrapper){
     if (wrapper.dataset.ytMounted) return;
@@ -620,7 +651,7 @@
     // 1) Miniatura con lazy + fallback de calidad
     const thumb = document.createElement("img");
     thumb.alt = "Miniatura de video";
-    thumb.loading = "lazy"; // 👈 lazy nativo
+    thumb.loading = "lazy";
     thumb.style.cssText = [
       "position:absolute",
       "top:0",
@@ -646,11 +677,9 @@
     }
 
     thumb.addEventListener("error", () => {
-      // si alguna falla, probamos la siguiente resolución
       tryNextSrc();
     });
 
-    // primer intento: maxres
     tryNextSrc();
     wrapper.appendChild(thumb);
 
@@ -692,6 +721,9 @@
 
     // 3) Montar iframe real cuando se hace clic
     function loadIframe(){
+      // Antes de montar el nuevo player, pausamos todo lo demás
+      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+
       wrapper.dataset.ytMounted = "1";
 
       const tempId  = "yt-player-" + Math.random().toString(36).substr(2, 9);
@@ -711,7 +743,6 @@
       }, 10);
     }
 
-    // Click en miniatura o botón → cargar iframe (lazy)
     overlayBtn.addEventListener("click", loadIframe);
     thumb.addEventListener("click", loadIframe);
   }
@@ -724,7 +755,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
-   })();  
+})();
 
 /* =========================================================
    10) COMPLEMENTOS CALCULADORA ESCRITORIO
@@ -922,7 +953,7 @@
         combinedSelector:"#combined-wrap"
       });
     } else {
-      console.warn("CalculadoraContpaqi.init no disponible (asegura calculadora.js?v=13)");
+      console.warn("CalculadoraContpaqi.init no disponible (asegura calculadora.js)");
     }
   });
 })();
@@ -931,7 +962,6 @@
    11) COMPACTADOR FORMULARIO + UNIÓN “INSTALACIÓN + SERVICIOS”
    ---------------------------------------------------------
    - Reordena campos licencia/tipo/usuarios/instalación
-     a una cuadrícula .controls-grid.
    - Junta selects de instalación + servicios en un solo bloque.
    ========================================================= */
 (function () {
@@ -961,10 +991,10 @@
       return;
     }
 
-    const bLic = pickByLabel(container, /^licencia/);
+    const bLic  = pickByLabel(container, /^licencia/);
     const bTipo = pickByLabel(container, /^tipo/);
-    const bUsu = pickByLabel(container, /^usuarios?/);
-    let bInst = container.querySelector(".inst-wrap") || pickByLabel(container, /instalaci/);
+    const bUsu  = pickByLabel(container, /^usuarios?/);
+    let   bInst = container.querySelector(".inst-wrap") || pickByLabel(container, /instalaci/);
 
     if (!bInst){
       const anyChk = container.querySelector('input[type="checkbox"]');
@@ -1121,31 +1151,23 @@
 /* =========================================================
    13) 🗺️ TOC / MAPA DEL SITIO (aside#toc)
    ---------------------------------------------------------
-   ESTRUCTURA QUE USA ESTE SCRIPT:
+   ESTRUCTURA:
    <aside id="toc" class="toc collapsed">
      <button id="tocToggle" class="toc-toggle">🗺️ Mapa</button>
      <button class="toc-close">×</button>
      ...
-     <a href="#caracteristicas">...</a>
-     ...
    </aside>
-
-   - Abre/cierra el panel al hacer clic en los botones.
-   - Cierra al hacer clic en un link interno.
-   - Cierra con tecla ESC.
-   - No rompe nada si el #toc no existe.
    ========================================================= */
 (function(){
   const toc       = document.getElementById("toc");
-  if (!toc) return; // Si no hay TOC, no hacemos nada
+  if (!toc) return;
 
   const openBtn   = document.getElementById("tocToggle") || toc.querySelector(".toc-toggle");
   const closeBtn  = toc.querySelector(".toc-close");
   const tocLinks  = toc.querySelectorAll("a[href^='#']");
 
-  // La clase "collapsed" indica que está cerrado
-  const OPEN_CLASS  = "open";        // opcional, por si la usas en CSS
-  const CLOSED_CLASS = "collapsed";  // ya la tienes en el HTML
+  const OPEN_CLASS   = "open";
+  const CLOSED_CLASS = "collapsed";
 
   function openToc(){
     toc.classList.remove(CLOSED_CLASS);
@@ -1165,7 +1187,6 @@
     }
   }
 
-  // Abrir TOC al hacer clic en el botón de mapa
   if (openBtn){
     openBtn.addEventListener("click", function(e){
       e.preventDefault();
@@ -1173,7 +1194,6 @@
     });
   }
 
-  // Cerrar con el botón "x"
   if (closeBtn){
     closeBtn.addEventListener("click", function(e){
       e.preventDefault();
@@ -1181,16 +1201,12 @@
     });
   }
 
-  // Cerrar cuando el usuario hace clic en alguno de los links internos
   tocLinks.forEach(link => {
     link.addEventListener("click", () => {
-      // Dejar que el navegador haga el scroll al anchor
-      // y luego cerrar el mapa
       closeToc();
     });
   });
 
-  // Cerrar con tecla ESC
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape"){
       closeToc();
