@@ -47,6 +47,7 @@
    Estructura esperada:
    .carousel
      .carousel-track (slides horizontales)
+       .carousel-slide
      .carousel-nav .dot (puntos de paginación)
      .arrowCircle.prev / .arrowCircle.next
    NO aplica a carruseles de Reels (filtrados por id).
@@ -54,33 +55,40 @@
 (function(){
   function initCarousel(root, onChange){
     const track = root.querySelector(".carousel-track");
-    const prev  = root.querySelector(".arrowCircle.prev");
-    const next  = root.querySelector(".arrowCircle.next");
-    let dots    = [...root.querySelectorAll(".carousel-nav .dot")];
+    if (!track) return;
 
-    // Número de “páginas” = cantidad de dots o hijos del track
-    let i = 0;
-    let len = dots.length || (track?.children?.length || 0);
+    const prev   = root.querySelector(".arrowCircle.prev");
+    const next   = root.querySelector(".arrowCircle.next");
+    const dots   = Array.from(root.querySelectorAll(".carousel-nav .dot"));
+    const slides = Array.from(track.children);
 
-    // Pinta el dot activo
+    let i   = 0;
+    let len = dots.length || slides.length;
+
+    if (!len) return;
+
+    // Marca slide activo + dot activo
     function paint(idx){
-      if (!dots.length) return;
       dots.forEach((d, di) => d.classList.toggle("active", di === idx));
+      slides.forEach((s, si) => s.classList.toggle("is-active", si === idx));
     }
 
     // Mueve el carrusel al índice n
     function set(n){
       if (!track || !len) return;
       i = (n + len) % len;
+      const w = track.clientWidth || root.clientWidth || 1;
+
       paint(i);
       track.scrollTo({
-        left: track.clientWidth * i,
+        left: w * i,
         behavior: "smooth"
       });
+
       onChange && onChange(i);
     }
 
-    // Eventos sobre dots
+    // Click en dots
     dots.forEach((d, idx) => d.addEventListener("click", () => {
       if (window.pauseAllYTIframes) window.pauseAllYTIframes();
       set(idx);
@@ -96,45 +104,56 @@
       set(i + 1);
     });
 
-    // Recalcular slide activo cuando se hace scroll manual
-    track && track.addEventListener("scroll", () => {
-      const n = Math.round(track.scrollLeft / track.clientWidth);
-      if (n !== i){
-        i = n;
+    // Sincronizar si el usuario hace scroll manual
+    track.addEventListener("scroll", () => {
+      const w   = track.clientWidth || 1;
+      const pos = Math.round(track.scrollLeft / w);
+      if (pos !== i && pos >= 0 && pos < len){
+        i = pos;
         paint(i);
         onChange && onChange(i);
       }
     });
 
-    // Recalcular en resize
-    window.addEventListener("resize", () => set(i));
+    // Reajustar en resize (mantener slide actual)
+    window.addEventListener("resize", () => {
+      const current = i;
+      paint(current);
+      track.scrollTo({
+        left: (track.clientWidth || 1) * current,
+        behavior: "auto"
+      });
+    });
 
     // Estado inicial
-    set(0);
+    paint(0);
+    track.scrollLeft = 0;
   }
 
   // Vincula títulos .reel-title si existen en el mismo “scope”
-  document.querySelectorAll(".carousel:not([id^='carouselReels'])").forEach(car => {
-    const sel = car.getAttribute("data-titles");
-    let titles = null;
+  document
+    .querySelectorAll(".carousel:not([id^='carouselReels'])")
+    .forEach(car => {
+      const sel = car.getAttribute("data-titles");
+      let titles = null;
 
-    if (sel){
-      titles = [...document.querySelectorAll(sel)];
-    } else {
-      const scope = car.closest(".card, .body, aside, section, div") || document;
-      titles = [...scope.querySelectorAll(".reel-title")];
-    }
-
-    if (!titles?.length) titles = null;
-
-    // Inicializa carrusel con callback para activar títulos
-    initCarousel(car, idx => {
-      if (titles){
-        titles.forEach((t, i) => t.classList.toggle("active", i === idx));
+      if (sel){
+        titles = Array.from(document.querySelectorAll(sel));
+      } else {
+        const scope = car.closest(".card, .body, aside, section, div") || document;
+        titles = Array.from(scope.querySelectorAll(".reel-title"));
       }
+
+      if (!titles?.length) titles = null;
+
+      initCarousel(car, idx => {
+        if (titles){
+          titles.forEach((t, i) => t.classList.toggle("active", i === idx));
+        }
+      });
     });
-  });
 })();
+
 
 /* =========================================================
    4) HARD RESET DE SCROLL PARA .carouselX .track
@@ -546,13 +565,18 @@
       }
     }
 
-    function setActive(i){
+         function setActive(i){
       window.pauseAllYTIframes(); // Pausa todo al mover
       if (!dots.length || !slides.length) return;
 
       idx = (i + dots.length) % dots.length;
+
       const w = track.clientWidth || root.clientWidth || 1;
       track.scrollTo({ left: w * idx, behavior: "smooth" });
+
+      // Marcar slide activo
+      slides.forEach((sl, si) => sl.classList.toggle("is-active", si === idx));
+
       paintUI();
     }
 
