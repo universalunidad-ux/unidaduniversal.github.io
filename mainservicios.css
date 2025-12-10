@@ -303,27 +303,31 @@ p{margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--muted);}
 }
 
 /* =========================================
+  /* =========================================
    Carruseles genéricos (hero + reels)
    ========================================= */
 .carousel {
   position: relative;
 }
 
+/* Contenedor horizontal de slides */
 .carousel-track {
   display: flex;
   overflow: hidden;
   scroll-behavior: smooth;
 }
 
-/* Cada slide ocupa todo el ancho del carrusel,
-   pero SOLO se muestra la que tenga .is-active */
+/* Cada slide ocupa TODO el ancho del carrusel.
+   YA NO se ocultan; solo usamos .is-active para estilos. */
 .carousel-slide {
   flex: 0 0 100%;
-  display: none;
+  /* nada de display:none aquí */
 }
 
+/* Si quieres resaltar el slide activo (bordecito, glow, etc.) */
 .carousel-slide.is-active {
-  display: block;
+  /* opcional, muy leve para no afectar rendimiento */
+  box-shadow: 0 0 0 1px rgba(96,165,250,.7);
 }
 
 /* Imágenes + iframes dentro de carrusel */
@@ -334,7 +338,6 @@ p{margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--muted);}
   height: auto;
   display: block;
 }
-
 
 /* Flechas redondas */
 .arrowCircle{
@@ -379,6 +382,7 @@ p{margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--muted);}
   width:16px;
   background:#60a5fa;
 }
+
 
 /* =========================================================
    Productos CONTPAQi (tabs + cards + reels)
@@ -964,6 +968,68 @@ textarea{resize:vertical;}
 .toc a:hover{text-decoration:underline;}
 @media(max-width:768px){
   .toc{right:8px;bottom:10px;}
+}
+
+/* =========================================================
+   Micro-interacciones: hovers para tarjetas y sistemas
+   (ligeros para no castigar Google Speed)
+   ========================================================= */
+
+/* Tarjetas base */
+.card,
+.product-card,
+.reels-home-card,
+.reels-card,
+.svc-link,
+.sys {
+  transition:
+    transform .14s ease,
+    box-shadow .14s ease,
+    border-color .14s ease,
+    background .16s ease,
+    outline-color .14s ease;
+}
+
+/* Hover general (sube 3px y un shadow suave) */
+.card:hover,
+.product-card:hover,
+.reels-home-card:hover,
+.reels-card:hover,
+.svc-link:hover,
+.sys:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 35px rgba(15,23,42,.7);
+  border-color: rgba(148,163,184,.85);
+  background: radial-gradient(circle at top, rgba(96,165,250,.12), #020617 55%);
+}
+
+/* Estado focus para teclado (accesible) */
+.card:focus-visible,
+.product-card:focus-visible,
+.reels-home-card:focus-visible,
+.reels-card:focus-visible,
+.svc-link:focus-visible,
+.sys:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+/* Botones "Ver más" un poquito más vivos */
+.svc-pill,
+.btn,
+.prod-cta {
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease,
+    background .16s ease,
+    border-color .16s ease;
+}
+
+.svc-pill:hover,
+.btn:hover,
+.prod-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(15,23,42,.7);
 }
 
 /* =========================================================
