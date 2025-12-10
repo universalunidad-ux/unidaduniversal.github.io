@@ -553,6 +553,16 @@ p{margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--muted);}
   height:100%;
 }
 
+/* Ajuste de alineación en sección Videos */
+#videos .videos-grid {
+  align-items: flex-start;   /* todo pegado arriba */
+}
+
+#videos .videos-grid > * {
+  /* forzar que cada tarjeta se comporte como bloque */
+  display: block;
+}
+
 /* =========================================================
    Servicios (grid 2x2 + reels)
    ========================================================= */
