@@ -1,1215 +1,748 @@
-/* =========================================================
-   Expiriti - main.js — Escritorio + Carruseles + Reels
-   (YouTube pause unificado)
-   ========================================================= */
+// ==========================================
+// index.js  - Expiriti Home (COMPLETO)
+// ==========================================
+'use strict';
 
-/* =========================================================
-   1) UTILIDADES GLOBALES
-   ---------------------------------------------------------
-   - $$fmt  → formateo de moneda MXN
-   - $$     → querySelector corto
-   - $all   → querySelectorAll como array
-   ========================================================= */
-(function(){
-  const money = new Intl.NumberFormat("es-MX", {
-    style: "currency",
-    currency: "MXN",
-    maximumFractionDigits: 0
-  });
+// Helpers
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-  // Formatea número a moneda MXN (redondear)
-  window.$$fmt = v => money.format(Math.round(Number(v || 0)));
-
-  // Atajos de selección en DOM
-  window.$$   = (sel, ctx = document) => ctx.querySelector(sel);
-  window.$all = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-})();
-
-/* =========================================================
-   2) AÑO EN FOOTER + MENÚ MÓVIL (BURGEr)
-   ========================================================= */
-(function(){
-  // Año dinámico en el elemento #year
-  const y = document.getElementById("year");
-  if (y) y.textContent = new Date().getFullYear();
-
-  // Menú móvil: botón burger + contenedor menú
-  const b = document.getElementById("burger");
-  const m = document.getElementById("mobileMenu");
-  if (b && m){
-    b.addEventListener("click", () => m.classList.toggle("open"));
-  }
-})();
-
-/* =========================================================
-   3) CARRUSEL GENÉRICO
-   ---------------------------------------------------------
-   Estructura esperada:
-   .carousel
-     .carousel-track (slides horizontales)
-       .carousel-slide
-     .carousel-nav .dot (puntos de paginación)
-     .arrowCircle.prev / .arrowCircle.next
-   NO aplica a carruseles de Reels (filtrados por id).
-   ========================================================= */
-(function(){
-  function initCarousel(root, onChange){
-    const track = root.querySelector(".carousel-track");
-    if (!track) return;
-
-    const prev   = root.querySelector(".arrowCircle.prev");
-    const next   = root.querySelector(".arrowCircle.next");
-    const dots   = Array.from(root.querySelectorAll(".carousel-nav .dot"));
-    const slides = Array.from(track.children);
-
-    let i   = 0;
-    let len = dots.length || slides.length;
-
-    if (!len) return;
-
-    // Marca slide activo + dot activo
-    function paint(idx){
-      dots.forEach((d, di) => d.classList.toggle("active", di === idx));
-      slides.forEach((s, si) => s.classList.toggle("is-active", si === idx));
-    }
-
-    // Mueve el carrusel al índice n
-    function set(n){
-      if (!track || !len) return;
-      i = (n + len) % len;
-      const w = track.clientWidth || root.clientWidth || 1;
-
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-
-      paint(i);
-      track.scrollTo({
-        left: w * i,
-        behavior: "smooth"
-      });
-
-      onChange && onChange(i);
-    }
-
-    // Click en dots
-    dots.forEach((d, idx) => d.addEventListener("click", () => set(idx)));
-
-    // Flechas prev/next
-    prev && prev.addEventListener("click", () => set(i - 1));
-    next && next.addEventListener("click", () => set(i + 1));
-
-    // Sincronizar si el usuario hace scroll manual
-    track.addEventListener("scroll", () => {
-      const w   = track.clientWidth || 1;
-      const pos = Math.round(track.scrollLeft / w);
-      if (pos !== i && pos >= 0 && pos < len){
-        i = pos;
-        paint(i);
-        onChange && onChange(i);
-      }
-    });
-
-    // Reajustar en resize (mantener slide actual)
-    window.addEventListener("resize", () => {
-      const current = i;
-      paint(current);
-      track.scrollTo({
-        left: (track.clientWidth || 1) * current,
-        behavior: "auto"
-      });
-    });
-
-    // Estado inicial
-    paint(0);
-    track.scrollLeft = 0;
-  }
-
-  // Vincula títulos .reel-title si existen en el mismo “scope”
-  document
-    .querySelectorAll(".carousel:not([id^='carouselReels'])")
-    .forEach(car => {
-      const sel = car.getAttribute("data-titles");
-      let titles = null;
-
-      if (sel){
-        titles = Array.from(document.querySelectorAll(sel));
-      } else {
-        const scope = car.closest(".card, .body, aside, section, div") || document;
-        titles = Array.from(scope.querySelectorAll(".reel-title"));
-      }
-
-      if (!titles?.length) titles = null;
-
-      initCarousel(car, idx => {
-        if (titles){
-          titles.forEach((t, i) => t.classList.toggle("active", i === idx));
-        }
-      });
-    });
-})();
-
-/* =========================================================
-   4) HARD RESET DE SCROLL PARA .carouselX .track
-   ---------------------------------------------------------
-   Evita “saltos” raros cuando el navegador recuerda scroll.
-   ========================================================= */
-(function(){
-  const tracks = document.querySelectorAll(".carouselX .track");
-  if (!tracks.length) return;
-
-  function forceStart(track){
-    if (!track) return;
-    const prev = track.style.scrollBehavior;
-    track.style.scrollBehavior = "auto";
-    track.scrollLeft = 0;
-
-    requestAnimationFrame(() => {
-      track.scrollLeft = 0;
-    });
-
-    setTimeout(() => {
-      track.scrollLeft = 0;
-      track.style.scrollBehavior = prev || "";
-    }, 80);
-  }
-
-  tracks.forEach(forceStart);
-
-  // Desactivar restauración de scroll por History API
+// ------------------------------------------
+// 1) Carga de parciales (header / footer)
+// ------------------------------------------
+async function loadPartial(placeholderId, url) {
+  const root = document.getElementById(placeholderId);
+  if (!root) return;
   try {
-    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  } catch(_){}
+    const res = await fetch(url);
+    if (!res.ok) return;
+    root.innerHTML = await res.text();
+  } catch (err) {
+    console.error('Error cargando parcial', placeholderId, err);
+  }
+}
 
-  window.addEventListener("pageshow", (e) => {
-    if (e.persisted) tracks.forEach(forceStart);
+function initPartials() {
+  loadPartial('header-placeholder', 'PARTIALS/global-header.html');
+  loadPartial('footer-placeholder', 'PARTIALS/global-footer.html');
+}
+
+// ------------------------------------------
+// 2) Tarjetas clicables (productos/servicios)
+// ------------------------------------------
+function initClickableCards() {
+  $$('.product-card[data-href]').forEach(card => {
+    const href = card.dataset.href;
+    if (!href) return;
+    card.style.cursor = 'pointer';
+
+    card.addEventListener('click', e => {
+      // Si hacen click en un <a>, dejamos que siga su enlace
+      if (e.target.closest('a')) return;
+      window.location.href = href;
+    });
   });
+}
 
-  window.addEventListener("resize", () => tracks.forEach(forceStart));
-})();
+// ------------------------------------------
+// 3) Tabs de productos (contable/comercial/nube/productividad)
+// ------------------------------------------
+function initProductTabs() {
+  const tabs = $$('.prod-tabs .tab');
+  const panels = $$('.panel-productos');
 
-/* =========================================================
-   5) LIST SLIDER (“¿Por qué usar…?”)
-   ---------------------------------------------------------
-   Estructura:
-   .listSlider
-     .listTrack (hijos = ítems)
-     .arrowCircle.prev / .arrowCircle.next
-   ========================================================= */
-(function(){
-  document.querySelectorAll(".listSlider").forEach(w => {
-    const track = w.querySelector(".listTrack");
-    const prev  = w.querySelector(".arrowCircle.prev");
-    const next  = w.querySelector(".arrowCircle.next");
-    if (!track || !prev || !next) return;
+  if (!tabs.length || !panels.length) return;
 
-    let i   = 0;
-    let len = track.children.length;
+  function activarTabProductos(btn) {
+    const targetId = btn.dataset.target;
+    if (!targetId) return;
 
-    function go(n){
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-      i = (n + len) % len;
-      track.scrollTo({
-        left: w.clientWidth * i,
-        behavior: "smooth"
-      });
-    }
-
-    prev.addEventListener("click", () => go(i - 1));
-    next.addEventListener("click", () => go(i + 1));
-    window.addEventListener("resize", () => go(i));
-  });
-})();
-
-/* =========================================================
-   6) PÍLDORAS (FILTROS DE FEATURES)
-   ---------------------------------------------------------
-   Estructura:
-   .pill(data-filter="nomina")
-   .feature-grid .fcard.tag-nomina
-   ========================================================= */
-(function(){
-  const pills = [...document.querySelectorAll(".pill")];
-  const cards = [...document.querySelectorAll(".feature-grid .fcard")];
-  if (!pills.length || !cards.length) return;
-
-  function apply(tag){
-    cards.forEach(card => {
-      card.style.display = card.classList.contains("tag-" + tag) ? "" : "none";
+    tabs.forEach(t => t.classList.toggle('active', t === btn));
+    panels.forEach(p => {
+      const show = p.id === targetId;
+      p.classList.toggle('hidden', !show);
+      p.setAttribute('aria-hidden', show ? 'false' : 'true');
     });
   }
 
-  pills.forEach(p => {
-    p.addEventListener("click", () => {
-      pills.forEach(x => x.classList.remove("active"));
-      p.classList.add("active");
-      apply(p.dataset.filter);
-    });
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => activarTabProductos(btn));
   });
 
-  // Valor inicial
-  apply(pills[0]?.dataset.filter || "nomina");
-})();
+  const inicial = $('#tab-contable') || tabs[0];
+  if (inicial) activarTabProductos(inicial);
+}
 
-/* =========================================================
-   7) FAQ: SOLO UN <details> ABIERTO A LA VEZ
-   ========================================================= */
-(function(){
-  const wrap = document.getElementById("faqWrap");
-  if (!wrap) return;
+// ------------------------------------------
+// 4) Filtros de promociones
+// ------------------------------------------
+function initPromoFilters() {
+  const buttons = $$('.promo-btn');
+  const promos = $$('#promoGrid [data-type]');
 
-  [...wrap.querySelectorAll(".faq-item")].forEach(item => {
-    item.addEventListener("toggle", () => {
-      if (item.open){
-        [...wrap.querySelectorAll(".faq-item")].forEach(o => {
-          if (o !== item) o.removeAttribute("open");
-        });
-      }
+  if (!buttons.length || !promos.length) return;
+
+  function setPromoFilter(type) {
+    buttons.forEach(b => b.classList.toggle('active', b.dataset.filter === type));
+    promos.forEach(img => {
+      img.style.display = img.dataset.type === type ? '' : 'none';
     });
-  });
-})();
-
-/* =========================================================
-   8) CARRUSEL DE SISTEMAS (.carouselX)
-   ---------------------------------------------------------
-   - Auto-crea flechas y dots si no existen.
-   - Responsive: muestra 1 o 3 tarjetas según ancho.
-   - Cada .sys tiene click / teclado para ir a data-href.
-   ========================================================= */
-(function(){
-  // Asegura UI mínima (prev/next + group-dots)
-  function ensureUI(root){
-    let prev = root.querySelector(".arrowCircle.prev");
-    let next = root.querySelector(".arrowCircle.next");
-
-    if (!prev){
-      prev = document.createElement("button");
-      prev.className = "arrowCircle prev";
-      prev.setAttribute("aria-label", "Anterior");
-      prev.innerHTML = '<span class="chev">‹</span>';
-      root.appendChild(prev);
-    }
-    if (!next){
-      next = document.createElement("button");
-      next.className = "arrowCircle next";
-      next.setAttribute("aria-label", "Siguiente");
-      next.innerHTML = '<span class="chev">›</span>';
-      root.appendChild(next);
-    }
-
-    let dotsWrap = root.querySelector(".group-dots");
-    if (!dotsWrap){
-      dotsWrap = document.createElement("div");
-      dotsWrap.className = "group-dots";
-      root.appendChild(dotsWrap);
-    }
-
-    return { prev, next, dotsWrap };
   }
 
-  document.querySelectorAll(".carouselX").forEach(root => {
-    const track = root.querySelector(".track");
-    if (!track) return;
-
-    const items = [...root.querySelectorAll(".sys")];
-
-    /* -----------------------------------------------------
-       8.1) LÓGICA CLICK / DOBLE TOQUE EN CADA .sys
-       ----------------------------------------------------- */
-    items.forEach(it => {
-      it.setAttribute("role", "link");
-      it.setAttribute("tabindex", "0");
-
-      let touchedOnce = false; // Control de primer toque en móvil
-      const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
-
-      const goSys = () => {
-        const href = it.getAttribute("data-href");
-        if (!href) return;
-        // Siempre abrir en nueva pestaña
-        window.open(href, "_blank", "noopener");
-      };
-
-      // CLICK
-      it.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        // En móvil, primer toque solo muestra hover “Ver más”
-        if (isMobile()){
-          if (!touchedOnce){
-            touchedOnce = true;
-            it.classList.add("show-hover");
-            setTimeout(() => { touchedOnce = false; }, 2000);
-            return;
-          }
-        }
-
-        // Segundo toque o escritorio → abrir página
-        goSys();
-      });
-
-      // Accesibilidad: ENTER / SPACE
-      it.addEventListener("keydown", e => {
-        if (e.key === "Enter" || e.key === " "){
-          e.preventDefault();
-          goSys();
-        }
-      });
-    });
-
-    /* -----------------------------------------------------
-       8.2) LÓGICA DE PÁGINAS / DOTS DEL CARRUSEL
-       ----------------------------------------------------- */
-    const { prev, next, dotsWrap } = ensureUI(root);
-
-    const perView   = () => (window.innerWidth <= 980 ? 1 : 3);
-    const viewportW = () => track.clientWidth || root.clientWidth || 1;
-    const pageCount = () => Math.max(1, Math.ceil((track.scrollWidth - 1) / viewportW()));
-
-    function buildDots(){
-      dotsWrap.innerHTML = "";
-      const total = pageCount();
-      const arr = [...Array(total)].map((_, j) => {
-        const b = document.createElement("button");
-        b.className = "dot" + (j === 0 ? " active" : "");
-        b.setAttribute("aria-label", "Ir a página " + (j + 1));
-        b.addEventListener("click", () => {
-          if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-          go(j);
-        });
-        dotsWrap.appendChild(b);
-        return b;
-      });
-      return arr;
-    }
-
-    let dots = buildDots();
-    let idx  = 0;
-
-    function paint(j){
-      dots.forEach((d, i) => d.classList.toggle("active", i === j));
-    }
-
-    // Mover carrusel de sistemas a página j
-    function go(j){
-      const total = pageCount();
-      idx = ((j % total) + total) % total;
-
-      const startIdx = Math.min(idx * perView(), items.length - 1);
-      const first    = items[startIdx];
-
-      let baseLeft = (idx === 0)
-        ? 0
-        : (first ? first.offsetLeft - (track.firstElementChild?.offsetLeft || 0) : idx * viewportW());
-
-      const maxLeft = Math.max(0, track.scrollWidth - viewportW());
-      const left    = Math.min(Math.max(0, baseLeft), maxLeft);
-
-      track.scrollTo({ left, behavior: "smooth" });
-      paint(idx);
-      toggleUI();
-    }
-
-    // Ocultar flechas/dots si solo hay 1 página
-    function toggleUI(){
-      const multi = pageCount() > 1;
-      prev.style.display     = multi ? "" : "none";
-      next.style.display     = multi ? "" : "none";
-      dotsWrap.style.display = multi ? "" : "none";
-    }
-
-    // Eventos flechas
-    prev.addEventListener("click", () => {
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-      go(idx - 1);
-    });
-    next.addEventListener("click", () => {
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-      go(idx + 1);
-    });
-
-    // Sincronizar índice con scroll manual
-    track.addEventListener("scroll", () => {
-      const i = Math.round(track.scrollLeft / viewportW());
-      if (i !== idx){
-        idx = i;
-        paint(idx);
-      }
-    });
-
-    // Rebuild dots en resize
-    window.addEventListener("resize", () => {
-      const now = pageCount();
-      if (dots.length !== now) dots = buildDots();
-      setTimeout(() => go(idx), 0);
-    });
-
-    // Resets fuertes al inicio / load / pageshow
-    function resetStart(){
-      track.scrollLeft = 0;
-      idx = 0;
-      paint(0);
-      toggleUI();
-    }
-    requestAnimationFrame(resetStart);
-    window.addEventListener("load", () => setTimeout(resetStart, 0));
-    window.addEventListener("pageshow", resetStart);
-    setTimeout(resetStart, 350);
-
-    // Config básica
-    track.style.overflowX      = "auto";
-    track.style.scrollBehavior = "smooth";
-    toggleUI();
-    go(0);
-    setTimeout(() => track.scrollTo({ left: 0, behavior: "auto" }), 50);
-  });
-})();
-
-/* =========================================================
-   9) GESTOR UNIFICADO DE YOUTUBE
-   ---------------------------------------------------------
-   - Pausa todos los players cuando uno empieza.
-   - Inicializa iframes existentes.
-   - Lazy load con .yt-wrap / .reel-embed[data-ytid].
-   - Nunca más de 1 video reproduciéndose.
-   ========================================================= */
-(function(){
-  // 1. Almacén global de reproductores
-  window.exPlayers = window.exPlayers || [];
-
-  // 2. Función Global de Pausa (expuesta a otros módulos)
-  window.pauseAllYTIframes = function(exceptPlayer){
-    // Limpia referencias nulas por si algún iframe se destruyó
-    window.exPlayers = window.exPlayers.filter(Boolean);
-
-    window.exPlayers.forEach(p => {
-      if (!p || p === exceptPlayer) return;
-      if (typeof p.getPlayerState !== "function") return;
-      if (typeof p.pauseVideo !== "function") return;
-
-      try {
-        const state = p.getPlayerState();
-        // 1 = PLAYING, 3 = BUFFERING
-        if (state === 1 || state === 3){
-          p.pauseVideo();
-        }
-      } catch(e){
-        // Silencioso para no romper nada
-      }
-    });
-  };
-
-  // Handler de cambio de estado: pausa otros si uno reproduce
-  function onPlayerStateChange(event){
-    const PLAYING   = (window.YT && YT.PlayerState && YT.PlayerState.PLAYING)   || 1;
-    const BUFFERING = (window.YT && YT.PlayerState && YT.PlayerState.BUFFERING) || 3;
-
-    if (event.data === PLAYING || event.data === BUFFERING){
-      window.pauseAllYTIframes(event.target);
-    }
-  }
-
-  // Registra un iframe suelto como player de YouTube
-  function registerYTIframe(iframe){
-    if (!iframe || iframe.dataset.ytInit === "1") return;
-    iframe.dataset.ytInit = "1";
-
-    // Asegurar enablejsapi=1
-    let src = iframe.src || "";
-    if (src && !src.includes("enablejsapi=1")){
-      src += (src.includes("?") ? "&" : "?") + "enablejsapi=1";
-      iframe.src = src;
-    }
-
-    const player = new YT.Player(iframe, {
-      events: { onStateChange: onPlayerStateChange }
-    });
-    window.exPlayers.push(player);
-  }
-
-  // 3. Inicializador API YouTube
-  window.onYouTubeIframeAPIReady = function(){
-    document
-      .querySelectorAll('iframe[src*="youtube"], iframe[src*="youtu.be"]')
-      .forEach(registerYTIframe);
-  };
-
-  // Cargar script de API si no existe
-  if (!window.YT){
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
-  }
-
-  // MutationObserver para iframes que se agreguen dinámicamente
-  const moYT = new MutationObserver(muts => {
-    muts.forEach(m => {
-      m.addedNodes.forEach(node => {
-        if (node.nodeType !== 1) return;
-
-        if (node.tagName === "IFRAME" &&
-            (node.src.includes("youtube") || node.src.includes("youtu.be")) &&
-            window.YT && window.YT.Player){
-          registerYTIframe(node);
-        }
-
-        node.querySelectorAll?.('iframe[src*="youtube"], iframe[src*="youtu.be"]')
-            .forEach(ifr => {
-              if (window.YT && window.YT.Player) registerYTIframe(ifr);
-            });
-      });
-    });
-  });
-  if (document.body){
-    moYT.observe(document.body, { childList: true, subtree: true });
-  }
-
-  /* ------------------------------------------------------
-     9.A) LÓGICA REELS (CARRUSEL CON TÍTULO DINÁMICO)
-     ------------------------------------------------------ */
-  document.querySelectorAll('.carousel[id^="carouselReels"]').forEach(root => {
-    const scope  = root.closest("aside") || root;
-    const track  = root.querySelector(".carousel-track");
-    const slides = [...(track?.querySelectorAll(".carousel-slide") || [])];
-    const dots   = [...root.querySelectorAll(".carousel-nav .dot")];
-    const prev   = root.querySelector(".arrowCircle.prev");
-    const next   = root.querySelector(".arrowCircle.next");
-    const reelTitles = [...scope.querySelectorAll(".reel-title")];
-    let idx = 0;
-
-    // Títulos de cada slide (prioridad: data-title en .reel-embed)
-    const titles = slides.map(sl => {
-      const wrap = sl.querySelector(".reel-embed"); // Nuevo wrapper
-      const ifr  = sl.querySelector("iframe");
-      return (wrap?.dataset?.title) || (sl.dataset?.title) || (ifr?.getAttribute("title")) || "";
-    });
-
-    function paintUI(){
-      dots.forEach((d, di) => d.classList.toggle("active", di === idx));
-      reelTitles.forEach((t) => t.classList.remove("active"));
-
-      if (reelTitles.length > 0){
-        if (titles[idx]) reelTitles[0].textContent = titles[idx];
-        reelTitles[0].classList.add("active");
-
-        // Segundo título opcional para animación
-        if (reelTitles[1]){
-          const nextIdx = (idx + 1) % titles.length;
-          if (titles[nextIdx]) reelTitles[1].textContent = titles[nextIdx];
-        }
-      }
-    }
-
-    function setActive(i){
-      window.pauseAllYTIframes(); // Pausa todo al mover
-      if (!dots.length || !slides.length) return;
-
-      idx = (i + dots.length) % dots.length;
-      const w = track.clientWidth || root.clientWidth || 1;
-      track.scrollTo({ left: w * idx, behavior: "smooth" });
-
-      // Marcar slide activo
-      slides.forEach((sl, si) => sl.classList.toggle("is-active", si === idx));
-
-      paintUI();
-    }
-
-    dots.forEach((d, i) => d.addEventListener("click", () => setActive(i)));
-    prev?.addEventListener("click", () => setActive(idx - 1));
-    next?.addEventListener("click", () => setActive(idx + 1));
-    
-    track?.addEventListener("scroll", () => {
-      const w = track.clientWidth || 1;
-      const i = Math.round(track.scrollLeft / w);
-      if (i !== idx && i >= 0 && i < dots.length){
-        idx = i;
-        paintUI();
-      }
-    });
-
-    window.addEventListener("resize", () => setActive(idx));
-
-    // Estado inicial
-    setActive(0);
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => setPromoFilter(btn.dataset.filter));
   });
 
-  /* ------------------------------------------------------
-     9.B) LÓGICA LAZY LOAD (.yt-wrap / .reel-embed[data-ytid])
-     - Usa miniatura + botón estilo YouTube.
-     - Autoplay al hacer clic.
-     ------------------------------------------------------ */
-  function mountLazyEmbed(wrapper){
-    if (wrapper.dataset.ytMounted) return;
-    const ytid = wrapper.getAttribute("data-ytid");
-    if (!ytid) return;
+  const activeBtn = buttons.find(b => b.classList.contains('active')) || buttons[0];
+  if (activeBtn) setPromoFilter(activeBtn.dataset.filter);
+}
 
-    // Marco del video
-    if (!wrapper.style.position || wrapper.style.position === "static"){
-      wrapper.style.position = "relative";
+// ------------------------------------------
+// 5) Formulario → WhatsApp
+// ------------------------------------------
+function initContactForm() {
+  const form = $('#contactForm');
+  if (!form) return;
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const nombre  = form.nombre?.value?.trim() || '';
+    const correo  = form.correo?.value?.trim() || '';
+    const tel     = form.telefono?.value?.trim() || '';
+    const interes = form.interes?.value || '';
+    const detalle = form.detalle?.value?.trim() || '';
+
+    const lineas = [
+      'Hola, vengo de la página de Expiriti.',
+      nombre && `Nombre: ${nombre}`,
+      correo && `Correo: ${correo}`,
+      tel && `Teléfono / WhatsApp: ${tel}`,
+      interes && `Interesado en: ${interes}`,
+      detalle && '',
+      detalle
+    ].filter(Boolean);
+
+    const texto = encodeURIComponent(lineas.join('\n'));
+    const url = `https://wa.me/525568437918?text=${texto}`;
+    window.open(url, '_blank');
+  });
+}
+
+// ------------------------------------------
+// 6) Pausar TODOS los videos de YouTube
+// ------------------------------------------
+function pauseAllYouTubeVideos() {
+  const frames = document.querySelectorAll(
+    'iframe[src*="youtube.com/embed"], iframe[src*="youtube-nocookie.com/embed"]'
+  );
+  frames.forEach(frame => {
+    try {
+      frame.contentWindow.postMessage(
+        JSON.stringify({
+          event: 'command',
+          func: 'pauseVideo',
+          args: ''
+        }),
+        '*'
+      );
+    } catch (err) {
+      // ignoramos errores de cross-origin
     }
-    wrapper.style.overflow = "hidden";
-    wrapper.style.backgroundColor = "#000";
+  });
+}
 
-    // 1) Miniatura con lazy + fallback de calidad
-    const thumb = document.createElement("img");
-    thumb.alt = "Miniatura de video";
-    thumb.loading = "lazy";
-    thumb.style.cssText = [
-      "position:absolute",
-      "top:0",
-      "left:0",
-      "width:100%",
-      "height:100%",
-      "object-fit:cover",
-      "display:block",
-      "cursor:pointer"
-    ].join(";");
+// ------------------------------------------
+// 7) Lite YouTube (.yt-lite) + 1 solo video activo
+// ------------------------------------------
+//
+// HTML esperado:
+// <div class="yt-lite" data-ytid="VIDEO_ID" data-title="Texto accesible"></div>
+//
+function enhanceLiteEmbeds(root = document) {
+  const liteBlocks = $$('.yt-lite[data-ytid]:not([data-yt-ready="1"])', root);
+  if (!liteBlocks.length) return;
 
-    // orden de intentos: maxres → sd → hq
-    const sources = [
-      `https://i.ytimg.com/vi/${ytid}/maxresdefault.jpg`,
-      `https://i.ytimg.com/vi/${ytid}/sddefault.jpg`,
-      `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`
-    ];
-    let srcIndex = 0;
+  liteBlocks.forEach(block => {
+    const vid = block.dataset.ytid;
+    if (!vid) return;
 
-    function tryNextSrc(){
-      if (srcIndex >= sources.length) return;
-      thumb.src = sources[srcIndex++];
-    }
+    const title = block.dataset.title || 'Reproducir video';
+    const thumb = `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`;
 
-    thumb.addEventListener("error", () => {
-      tryNextSrc();
-    });
-
-    tryNextSrc();
-    wrapper.appendChild(thumb);
-
-    // 2) Overlay centrado con icono estilo YouTube
-    const overlayBtn = document.createElement("button");
-    overlayBtn.type = "button";
-    overlayBtn.setAttribute("aria-label", "Reproducir video en YouTube");
-    overlayBtn.style.cssText = [
-      "position:absolute",
-      "top:50%",
-      "left:50%",
-      "transform:translate(-50%,-50%)",
-      "border:none",
-      "background:transparent",
-      "padding:0",
-      "cursor:pointer",
-      "display:flex",
-      "align-items:center",
-      "justify-content:center"
-    ].join(";");
-
-    const iconWrap = document.createElement("div");
-    iconWrap.innerHTML = `
-      <svg viewBox="0 0 68 48" width="68" height="48" aria-hidden="true">
-        <rect x="1" y="7" width="66" height="36" rx="12" fill="#FF0000"></rect>
-        <polygon points="28,17 28,31 42,24" fill="#FFFFFF"></polygon>
-      </svg>
+    block.innerHTML = `
+      <button class="yt-lite-inner" type="button" aria-label="${title}">
+        <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
+        <span class="yt-lite-play"></span>
+      </button>
     `;
-    overlayBtn.appendChild(iconWrap);
-    wrapper.appendChild(overlayBtn);
+    block.dataset.ytReady = '1';
 
-    overlayBtn.addEventListener("mouseenter", () => {
-      iconWrap.style.transform = "scale(1.08)";
-      iconWrap.style.transition = "transform 0.15s ease-out";
+    block.addEventListener('click', () => {
+      if (block.dataset.ytLoaded === '1') return;
+
+      // Antes de reproducir, pausamos todos los demás
+      pauseAllYouTubeVideos();
+
+      const src =
+        `https://www.youtube-nocookie.com/embed/${vid}` +
+        `?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
+
+      block.innerHTML = `
+        <iframe
+          class="yt-iframe"
+          src="${src}"
+          title="${title}"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      `;
+
+      block.dataset.ytLoaded = '1';
     });
-    overlayBtn.addEventListener("mouseleave", () => {
-      iconWrap.style.transform = "scale(1)";
-    });
+  });
+}
 
-    // 3) Montar iframe real cuando se hace clic
-    function loadIframe(){
-      // Antes de montar el nuevo player, pausamos todo lo demás
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+// ------------------------------------------
+// 8) Reels por sistema (contable, comercial, nube,
+//    productividad, servicios) usando .yt-lite
+// ------------------------------------------
 
-      wrapper.dataset.ytMounted = "1";
+// Rellena con tus IDs reales
+const REELS_DATA = {
+  contable: {
+    contabilidad: [
+      { id: 'wy6jeLYnubM', title: 'Contabilidad y Contabiliza te ayudan en la DIOT' }
+    ],
+    nominas: [
+      { id: 'FDOKmJolVTM', title: 'Tips para nómina sin errores' }
+    ],
+    bancos: [
+      { id: 'FDOKmJolVTM', title: 'Conciliación bancaria más rápida' }
+    ],
+    xml: [
+      { id: 'wy6jeLYnubM', title: 'Control de CFDI con XML en Línea+' }
+    ]
+  },
+  comercial: {
+    start: [
+      { id: 'FDOKmJolVTM', title: 'Arranca ventas con Comercial Start' }
+    ],
+    pro: [
+      { id: 'wy6jeLYnubM', title: 'Control de inventarios con Comercial Pro' }
+    ],
+    premium: [
+      { id: 'FDOKmJolVTM', title: 'Comercial Premium para empresas en crecimiento' }
+    ],
+    factura: [
+      { id: 'wy6jeLYnubM', title: 'Factura electrónica fácil y rápida' }
+    ]
+  },
+  nube: {
+    analiza: [
+      { id: 'wy6jeLYnubM', title: 'Analiza: BI para tus sistemas CONTPAQi' }
+    ],
+    contabiliza: [
+      { id: 'FDOKmJolVTM', title: 'Contabiliza: contabilidad en la nube' }
+    ],
+    despachos: [
+      { id: 'wy6jeLYnubM', title: 'Despachos: controla tus clientes en la nube' }
+    ],
+    vende: [
+      { id: 'FDOKmJolVTM', title: 'Vende: punto de venta conectado' }
+    ]
+  },
+  productividad: {
+    evalua: [
+      { id: 'wy6jeLYnubM', title: 'Evalúa clima laboral y NOM-035' }
+    ],
+    colabora: [
+      { id: 'FDOKmJolVTM', title: 'Colabora: seguimiento desde tu móvil' }
+    ],
+    personia: [
+      { id: 'wy6jeLYnubM', title: 'Personia: expedientes digitales en la nube' }
+    ]
+  },
+  servicios: {
+    implementaciones: [
+      { id: 'wy6jeLYnubM', title: 'Implementaciones CONTPAQi con Expiriti' }
+    ],
+    migraciones: [
+      { id: 'FDOKmJolVTM', title: 'Migraciones desde otros sistemas' }
+    ],
+    desarrollos: [
+      { id: 'wy6jeLYnubM', title: 'Desarrollos y automatizaciones a la medida' }
+    ],
+    servidores: [
+      { id: 'FDOKmJolVTM', title: 'Servidores virtuales para tus sistemas' }
+    ],
+    cursos: [
+      { id: 'wy6jeLYnubM', title: 'Cursos por sistema CONTPAQi' }
+    ],
+    soporte: [
+      { id: 'FDOKmJolVTM', title: 'Soporte técnico remoto y pólizas' }
+    ]
+  }
+};
 
-      const tempId  = "yt-player-" + Math.random().toString(36).substr(2, 9);
-      const tempDiv = document.createElement("div");
-      tempDiv.id = tempId;
+// Estado de cada panel de reels
+const reelsState = {};
 
-      wrapper.innerHTML = "";
-      wrapper.appendChild(tempDiv);
+function setReelSystem(panel, sys) {
+  const dataPanel = REELS_DATA[panel] || {};
+  const videos = dataPanel[sys] || [];
 
-      setTimeout(() => {
-        const player = new YT.Player(tempId, {
-          videoId: ytid,
-          playerVars: { autoplay: 1, rel: 0, modestbranding: 1 },
-          events: { onStateChange: onPlayerStateChange }
-        });
-        window.exPlayers.push(player);
-      }, 10);
-    }
+  const carousel = document.getElementById(`carouselReels-${panel}`);
+  const titleEl = document.getElementById(`reelTitle-${panel}`);
+  if (!carousel) return;
 
-    overlayBtn.addEventListener("click", loadIframe);
-    thumb.addEventListener("click", loadIframe);
+  const track = $('.carousel-track', carousel);
+  const nav = $('.carousel-nav', carousel);
+  if (!track || !nav) return;
+
+  pauseAllYouTubeVideos();
+
+  track.innerHTML = '';
+  nav.innerHTML = '';
+
+  videos.forEach((item, idx) => {
+    const slide = document.createElement('div');
+    slide.className = 'reel-slide';
+    slide.dataset.index = String(idx);
+
+    slide.innerHTML = `
+      <div class="yt-lite" data-ytid="${item.id}" data-title="${item.title || ''}"></div>
+    `;
+    track.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'dot';
+    dot.setAttribute('aria-label', `Video ${idx + 1}`);
+    dot.addEventListener('click', () => goToReelSlide(panel, idx));
+    nav.appendChild(dot);
+  });
+
+  // Activamos lazy para estos nuevos .yt-lite
+  enhanceLiteEmbeds(track);
+
+  if (!reelsState[panel]) reelsState[panel] = {};
+  reelsState[panel].sys = sys;
+  reelsState[panel].idx = 0;
+  reelsState[panel].len = videos.length;
+
+  if (titleEl) {
+    titleEl.textContent = videos[0]?.title || '';
   }
 
-  // Inicializar todos los wrappers lazy de YouTube
-  function initYouTubeEmbeds(){
-    document
-      .querySelectorAll(".yt-wrap[data-ytid], .reel-embed[data-ytid]")
-      .forEach(mountLazyEmbed);
-  }
+  updateReelUI(panel);
+}
 
-  document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
-})();
+function updateReelUI(panel) {
+  const carousel = document.getElementById(`carouselReels-${panel}`);
+  const state = reelsState[panel];
+  if (!carousel || !state) return;
 
-/* =========================================================
-   10) COMPLEMENTOS CALCULADORA ESCRITORIO
-   ---------------------------------------------------------
-   - Maneja 2º y 3er sistema.
-   - Render de tabla combinada.
-   - Integra con CalculadoraContpaqi.* (calculadora.js)
-   ========================================================= */
-(function(){
-  document.addEventListener("DOMContentLoaded", function(){
-    const app = document.getElementById("app");
-    const PRIMARY = app?.dataset?.system?.trim();
-    if (!PRIMARY) return;
+  const { idx } = state;
+  const slides = $$('.reel-slide', carousel);
+  const dots = $$('.dot', carousel);
 
-    const moneyMX = new Intl.NumberFormat("es-MX", {
-      style: "currency",
-      currency: "MXN",
-      maximumFractionDigits: 0
-    });
+  slides.forEach((s, i) => {
+    const active = i === idx;
+    s.classList.toggle('active', active);
+    s.style.display = active ? '' : 'none';
+  });
 
-    const fmt = v => moneyMX.format(Math.round(Number(v || 0)));
-    const hasPrices = name => !!(window.preciosContpaqi && window.preciosContpaqi[name]);
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === idx);
+  });
+}
 
-    // Catálogo de sistemas (logos + nombres + si aplican descuentos)
-    window.CATALOG_SISTEMAS = window.CATALOG_SISTEMAS || [
-      { name: "CONTPAQi Contabilidad",        img: "../IMG/contabilidadsq.webp" },
-      { name: "CONTPAQi Bancos",              img: "../IMG/bancossq.webp" },
-      { name: "CONTPAQi Nóminas",             img: "../IMG/nominassq.webp" },
-      { name: "CONTPAQi XML en Línea",        img: "../IMG/xmlsq.webp",  noDiscount: true },
-      { name: "CONTPAQi Comercial PRO",       img: "../IMG/comercialprosq.webp" },
-      { name: "CONTPAQi Comercial PREMIUM",   img: "../IMG/comercialpremiumsq.webp" },
-      { name: "CONTPAQi Factura Electrónica", img: "../IMG/facturasq.webp" }
-    ];
+function goToReelSlide(panel, newIndex) {
+  const state = reelsState[panel];
+  if (!state || !state.len) return;
 
-    // Calcula “precio desde” en base al objeto preciosContpaqi
-    function getPrecioDesde(systemName){
-      const db = (window.preciosContpaqi && window.preciosContpaqi[systemName]) || null;
-      if (!db) return null;
+  const idx = ((newIndex % state.len) + state.len) % state.len;
+  if (idx === state.idx) return;
 
-      if (db.anual?.MultiRFC?.precio_base || db.anual?.MultiRFC?.renovacion)
-        return Number(db.anual.MultiRFC.precio_base || db.anual.MultiRFC.renovacion || 0);
+  pauseAllYouTubeVideos();
+  state.idx = idx;
+  updateReelUI(panel);
+}
 
-      if (db.anual?.MonoRFC?.precio_base || db.anual?.MonoRFC?.renovacion)
-        return Number(db.anual.MonoRFC.precio_base || db.anual.MonoRFC.renovacion || 0);
+function changeReelSlide(panel, delta) {
+  const state = reelsState[panel];
+  if (!state || !state.len) return;
+  goToReelSlide(panel, state.idx + delta);
+}
 
-      if (db.tradicional?.actualizacion?.precio_base)
-        return Number(db.tradicional.actualizacion.precio_base);
+function initReels() {
+  const tabs = $$('.reel-sys-tabs .reel-tab');
+  if (!tabs.length) return;
 
-      return null;
-    }
+  const panels = new Set();
 
-    // Render de iconos de sistemas a elegir (picker 2º / 3º)
-    function renderSistemasPicker(containerId, exclude = new Set(), activeName = null){
-      const wrap = document.getElementById(containerId);
-      if (!wrap) return;
+  tabs.forEach(tab => {
+    const panel = tab.dataset.panel;
+    if (panel) panels.add(panel);
 
-      wrap.innerHTML = "";
-      if (PRIMARY) exclude.add(PRIMARY);
+    tab.addEventListener('click', () => {
+      const p = tab.dataset.panel;
+      const s = tab.dataset.sys;
+      if (!p || !s) return;
 
-      window.CATALOG_SISTEMAS.forEach(item => {
-        if (exclude.has(item.name)) return;
-        const precio = getPrecioDesde(item.name);
-
-        const btn = document.createElement("button");
-        btn.className = "sys-icon";
-        btn.type = "button";
-        btn.dataset.sys = item.name;
-        btn.title       = item.name;
-
-        btn.innerHTML = `
-          ${item.noDiscount ? '<small class="sin15">sin -15%</small>' : ""}
-          <img src="${item.img}" alt="${item.name}">
-          <strong>${item.name.replace("CONTPAQi ","")}</strong>
-          <small class="sys-price">${precio != null ? "desde " + fmt(precio) : "precio no disp."}</small>
-        `;
-
-        if (activeName && activeName === item.name) btn.classList.add("active");
-        wrap.appendChild(btn);
-      });
-    }
-
-    // Tabla combinada de totales (primario + secundarios)
-    function renderCombinedTable(rows){
-      const wrap  = document.getElementById("combined-wrap");
-      const tbody = document.getElementById("combined-table-body");
-      if (!wrap || !tbody) return;
-
-      tbody.innerHTML = "";
-      rows.forEach(([concepto, importe]) => {
-        const tr  = document.createElement("tr");
-        const td1 = document.createElement("td");
-        const td2 = document.createElement("td");
-        td1.textContent = concepto;
-        td2.textContent = importe;
-        td2.style.textAlign = "right";
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tbody.appendChild(tr);
-      });
-      wrap.hidden = false;
-    }
-
-    // Referencias a zonas de la calculadora
-    const row    = document.getElementById("calc-row");
-    const slot2  = document.getElementById("calc-slot-2") || document.getElementById("calc-secondary");
-    const slot3  = document.getElementById("calc-tertiary");
-    const addMore = document.getElementById("add-more-panel");
-    const pick2   = document.getElementById("icons-sec-sys");
-    const pick3   = document.getElementById("icons-third-sys");
-    if (!row) return;
-
-    const selected = { secondary: null, tertiary: null };
-    const selectedSet = () => new Set([selected.secondary, selected.tertiary].filter(Boolean));
-
-    // Render inicial de pickers (excluyendo primario)
-    const initialExclude = new Set(PRIMARY ? [PRIMARY] : []);
-    renderSistemasPicker("icons-sec-sys",   initialExclude);
-    renderSistemasPicker("icons-third-sys", initialExclude);
-
-    function refreshPickers(){
-      const ex = selectedSet();
-      if (PRIMARY) ex.add(PRIMARY);
-      renderSistemasPicker("icons-sec-sys",   ex, selected.secondary);
-      renderSistemasPicker("icons-third-sys", ex, selected.tertiary);
-    }
-
-    function showAddMoreIfReady(){
-      if (addMore) addMore.style.display = selected.secondary ? "" : "none";
-    }
-
-    // Click en iconos del 2º sistema
-    pick2?.addEventListener("click", e => {
-      const btn = e.target.closest(".sys-icon");
-      if (!btn) return;
-
-      const sys = btn.dataset.sys;
-      if (!hasPrices(sys)) return;
-
-      selected.secondary = sys;
-      selected.tertiary  = (selected.tertiary === sys ? null : selected.tertiary);
-
-      if (slot2 && slot2.id === "calc-slot-2"){
-        slot2.className = "calc-container";
-        slot2.id        = "calc-secondary";
+      // marcar activo solo el tab pulsado dentro de su grupo
+      const group = tab.closest('.reel-sys-tabs');
+      if (group) {
+        $$('.reel-tab', group).forEach(t =>
+          t.classList.toggle('active', t === tab)
+        );
       }
 
-      if (window.CalculadoraContpaqi?.setSecondarySystem){
-        window.CalculadoraContpaqi.setSecondarySystem(sys, {
-          secondarySelector: "#calc-secondary",
-          combinedSelector:  "#combined-wrap",
-          onCombined:        renderCombinedTable
-        });
-      }
-
-      refreshPickers();
-      showAddMoreIfReady();
+      setReelSystem(p, s);
     });
+  });
 
-    // Click en iconos del 3er sistema
-    pick3?.addEventListener("click", e => {
-      const btn = e.target.closest(".sys-icon");
-      if (!btn) return;
+  panels.forEach(panel => {
+    const carousel = document.getElementById(`carouselReels-${panel}`);
+    if (!carousel) return;
 
-      const sys = btn.dataset.sys;
-      if (!hasPrices(sys)) return;
-      if (sys === selected.secondary) return; // No permitir duplicar
+    const prev = $('.prev', carousel);
+    const next = $('.next', carousel);
 
-      selected.tertiary = sys;
-      if (slot3) slot3.style.display = "block";
+    prev && prev.addEventListener('click', () => changeReelSlide(panel, -1));
+    next && next.addEventListener('click', () => changeReelSlide(panel, 1));
 
-      if (window.CalculadoraContpaqi?.setTertiarySystem){
-        window.CalculadoraContpaqi.setTertiarySystem(sys, {
-          tertiarySelector: "#calc-tertiary",
-          combinedSelector: "#combined-wrap",
-          onCombined:       renderCombinedTable
-        });
-      }
+    // sistema inicial = tab.active o primero
+    const initialTab =
+      $(`.reel-sys-tabs .reel-tab.active[data-panel="${panel}"]`) ||
+      $(`.reel-sys-tabs .reel-tab[data-panel="${panel}"]`);
 
-      if (addMore) addMore.style.display = "none";
-      row.classList.add("has-three");
-      refreshPickers();
-    });
-
-    // Callback externo para cuando la calculadora genere tabla combinada
-    if (window.CalculadoraContpaqi?.onCombinedSet){
-      window.CalculadoraContpaqi.onCombinedSet(renderCombinedTable);
-    }
-
-    // Inicializar calculadora primaria
-    if (window.CalculadoraContpaqi?.init){
-      document.body.setAttribute("data-calc", "escritorio");
-      window.CalculadoraContpaqi.init({
-        systemName:      PRIMARY,
-        primarySelector: "#calc-primary",
-        combinedSelector:"#combined-wrap"
-      });
-    } else {
-      console.warn("CalculadoraContpaqi.init no disponible (asegura calculadora.js)");
+    if (initialTab) {
+      setReelSystem(panel, initialTab.dataset.sys);
     }
   });
-})();
+}
 
-/* =========================================================
-   11) COMPACTADOR FORMULARIO + UNIÓN “INSTALACIÓN + SERVICIOS”
-   ---------------------------------------------------------
-   - Reordena campos licencia/tipo/usuarios/instalación
-   - Junta selects de instalación + servicios en un solo bloque.
-   ========================================================= */
-(function () {
-  function pickByLabel(container, regex){
-    const labels = [...container.querySelectorAll("label")];
-    const lb = labels.find(l => regex.test((l.textContent || "").trim().toLowerCase()));
-    if (!lb) return null;
-    return lb.closest(".field") || lb.closest(".row") || lb.closest(".instalacion-box") || lb.closest(".inst-wrap") || lb.parentElement;
-  }
-
-  function pickSelect(container, selectorList){
-    for (const sel of selectorList){
-      const el = container.querySelector(sel);
-      if (el) return el;
-    }
-    return null;
-  }
-
-  // Compactar campos en .controls-grid
-  function compactar(container){
-    if (!container) return;
-    if (container.querySelector("form.calc-form")) return;
-
-    // Si ya existe .controls-grid, sólo unir instalación+servicios
-    if (container.querySelector(".controls-grid")){
-      unirInstalacionServicios(container);
-      return;
-    }
-
-    const bLic  = pickByLabel(container, /^licencia/);
-    const bTipo = pickByLabel(container, /^tipo/);
-    const bUsu  = pickByLabel(container, /^usuarios?/);
-    let   bInst = container.querySelector(".inst-wrap") || pickByLabel(container, /instalaci/);
-
-    if (!bInst){
-      const anyChk = container.querySelector('input[type="checkbox"]');
-      bInst = anyChk ? (anyChk.closest(".instalacion-box") || anyChk.closest(".field") || anyChk.parentElement) : null;
-    }
-
-    const bloques = [bLic, bTipo, bUsu, bInst].filter(Boolean);
-    bloques.forEach(b => b?.classList?.add("field"));
-
-    // Si falta alguno de los 4, no reordenar
-    if (!bLic || !bTipo || !bUsu || !bInst) return;
-
-    const grid = document.createElement("div");
-    grid.className = "controls-grid";
-    grid.append(bLic, bTipo, bUsu, bInst);
-    container.insertBefore(grid, container.firstElementChild);
-    unirInstalacionServicios(container);
-  }
-
-  // Junta selects de instalación + servicios en .instalacion-box
-  function unirInstalacionServicios(container){
-    if (!container) return;
-    if (container.querySelector(".inst-wrap .instalacion-box")) return;
-
-    const selInst = pickSelect(container, [
-      "select#instalacion",
-      'select[name*="instal"]',
-      'select[data-field*="instal"]'
-    ]);
-    const selServ = pickSelect(container, [
-      "select#servicios",
-      "select#ervicios",
-      'select[name*="servi"]',
-      'select[data-field*="servi"]'
-    ]);
-
-    if (!selInst || !selServ) return;
-    if (selInst.closest(".instalacion-box") || selServ.closest(".instalacion-box")) return;
-
-    let wrap = container.querySelector(".inst-wrap");
-    if (!wrap){
-      wrap = document.createElement("div");
-      wrap.className = "inst-wrap";
-      const form = selInst.closest("form") || container.querySelector("form") || container;
-      form.appendChild(wrap);
-    }
-
-    const box = document.createElement("div");
-    box.className = "instalacion-box";
-
-    const instLbl = (selInst.labels && selInst.labels[0]) ? selInst.labels[0] : null;
-    const servLbl = (selServ.labels && selServ.labels[0]) ? selServ.labels[0] : null;
-
-    if (instLbl) box.appendChild(instLbl);
-    box.appendChild(selInst);
-    if (servLbl) box.appendChild(servLbl);
-    box.appendChild(selServ);
-
-    wrap.appendChild(box);
-
-    if (!wrap.querySelector(".inst-hint")){
-      const hint = document.createElement("small");
-      hint.className = "inst-hint";
-      hint.textContent = "Selecciona instalación y servicios en un solo paso.";
-      wrap.appendChild(hint);
-    }
-  }
-
-  // Punto de entrada: contenedor principal de la calculadora
-  const target = document.getElementById("calc-primary");
-  if (!target) return;
-
-  const tryCompact = () => {
-    const container = document.querySelector(".calc-container") || target;
-    if (!container) return;
-    if (container.querySelector("form.calc-form")) return;
-    compactar(container);
-  };
-
-  tryCompact();
-  requestAnimationFrame(tryCompact);
-
-  const mo = new MutationObserver(() => tryCompact());
-  mo.observe(target, { childList: true, subtree: true });
-
-  window.addEventListener("calc-recompute", tryCompact);
-  window.addEventListener("calc-render",   tryCompact);
-
-  setTimeout(tryCompact,  500);
-  setTimeout(tryCompact, 1200);
-})();
-
-/* =========================================================
-   12) 🧭 AUTODIAG: CARRUSELES / LISTAS HORIZONTALES
-   ---------------------------------------------------------
-   - No cambia nada visual, sólo lanza warnings en consola
-     para ayudarte a depurar problemas de scroll.
-   ========================================================= */
-(function(){
-  const selectors = [".carouselX .track", ".icons-wrap"];
-  const found = selectors.flatMap(sel => Array.from(document.querySelectorAll(sel)));
-
-  found.forEach((el, i) => {
-    const cs   = getComputedStyle(el);
-    const name = el.className || el.id || `track#${i}`;
-    const warn = (msg, val) => console.warn(`⚠️ [${name}] ${msg}`, val);
-
-    if (el.scrollWidth <= el.clientWidth + 2)
-      warn("No tiene scroll real (scrollWidth ≈ clientWidth)", { scrollWidth: el.scrollWidth, clientWidth: el.clientWidth });
-
-    if ((cs.scrollSnapType && cs.scrollSnapType !== "none") || el.style.scrollSnapType)
-      warn("scroll-snap-type activo → puede bloquear el primer item", cs.scrollSnapType);
-
-    if (cs.justifyContent.includes("center"))
-      warn("justify-content:center detectado → puede impedir scroll hacia la izquierda", cs.justifyContent);
-
-    if (cs.direction === "rtl")
-      warn("direction:rtl detectado → puede invertir o romper scrollLeft", cs.direction);
-
-    const rect  = el.getBoundingClientRect();
-    const probe = document.elementsFromPoint(rect.left + 10, rect.top + rect.height / 2);
-    const blocker = probe.find(n =>
-      n !== el && !el.contains(n) && getComputedStyle(n).pointerEvents !== "none"
-    );
-    if (blocker)
-      warn("Elemento sobre la orilla izquierda (posible overlay con z-index alto)", blocker);
-
-    if (el.scrollLeft > 5)
-      warn("scrollLeft inicial ≠ 0", el.scrollLeft);
-
-    // Helpers para aplicar fixes desde consola:
-    el._diagFix = {
-      noSnap: () => {
-        el.style.scrollSnapType = "none";
-        el.querySelectorAll("*").forEach(n => n.style.scrollSnapAlign = "none");
-        console.log(`✅ Snap desactivado en ${name}`);
+// ------------------------------------------
+// 9) Hero Gallery (tarjeta derecha del hero)
+// ------------------------------------------
+//
+// Estructura de datos para grupos/sistemas.
+// Usamos los mismos logos que ya tienes; puedes
+// después cambiar a imágenes de hero específicas.
+//
+const HERO_GALLERY_DATA = {
+  contable: {
+    label: 'Solución Contable',
+    systems: {
+      contabilidad: {
+        label: 'CONTPAQi Contabilidad',
+        images: [
+          { src: 'IMG/contabilidad.webp', alt: 'CONTPAQi Contabilidad' }
+        ]
       },
-      flexStart: () => {
-        el.style.justifyContent = "flex-start";
-        console.log(`✅ justify-content:flex-start aplicado en ${name}`);
+      nominas: {
+        label: 'CONTPAQi Nóminas',
+        images: [
+          { src: 'IMG/nominas.webp', alt: 'CONTPAQi Nóminas' }
+        ]
       },
-      forceLTR: () => {
-        el.style.direction = "ltr";
-        console.log(`✅ direction:ltr aplicado en ${name}`);
+      bancos: {
+        label: 'CONTPAQi Bancos',
+        images: [
+          { src: 'IMG/bancossq.webp', alt: 'CONTPAQi Bancos' }
+        ]
       },
-      resetScroll: () => {
-        el.scrollTo({ left: 0, behavior: "auto" });
-        console.log(`✅ scrollLeft restablecido en ${name}`);
+      xml: {
+        label: 'XML en Línea+',
+        images: [
+          { src: 'IMG/xml.webp', alt: 'XML en Línea+' }
+        ]
       }
-    };
-  });
-})();
-
-/* =========================================================
-   13) 🗺️ TOC / MAPA DEL SITIO (aside#toc)
-   ---------------------------------------------------------
-   ESTRUCTURA:
-   <aside id="toc" class="toc collapsed">
-     <button id="tocToggle" class="toc-toggle">🗺️ Mapa</button>
-     <button class="toc-close">×</button>
-     ...
-   </aside>
-   ========================================================= */
-(function(){
-  const toc       = document.getElementById("toc");
-  if (!toc) return;
-
-  const openBtn   = document.getElementById("tocToggle") || toc.querySelector(".toc-toggle");
-  const closeBtn  = toc.querySelector(".toc-close");
-  const tocLinks  = toc.querySelectorAll("a[href^='#']");
-
-  const OPEN_CLASS   = "open";
-  const CLOSED_CLASS = "collapsed";
-
-  function openToc(){
-    toc.classList.remove(CLOSED_CLASS);
-    if (OPEN_CLASS) toc.classList.add(OPEN_CLASS);
-  }
-
-  function closeToc(){
-    toc.classList.add(CLOSED_CLASS);
-    if (OPEN_CLASS) toc.classList.remove(OPEN_CLASS);
-  }
-
-  function toggleToc(){
-    if (toc.classList.contains(CLOSED_CLASS)){
-      openToc();
-    } else {
-      closeToc();
+    }
+  },
+  comercial: {
+    label: 'Solución Comercial',
+    systems: {
+      comercialstart: {
+        label: 'Comercial Start',
+        images: [
+          { src: 'IMG/comercialstart.webp', alt: 'CONTPAQi Comercial Start' }
+        ]
+      },
+      comercialpro: {
+        label: 'Comercial Pro',
+        images: [
+          { src: 'IMG/comercialpro.webp', alt: 'CONTPAQi Comercial Pro' }
+        ]
+      },
+      comercialpremium: {
+        label: 'Comercial Premium',
+        images: [
+          { src: 'IMG/comercialpremium.webp', alt: 'CONTPAQi Comercial Premium' }
+        ]
+      },
+      factura: {
+        label: 'Factura Electrónica',
+        images: [
+          { src: 'IMG/factura.webp', alt: 'Factura electrónica CONTPAQi' }
+        ]
+      }
+    }
+  },
+  nube: {
+    label: 'Productos en la nube',
+    systems: {
+      contabiliza: {
+        label: 'Contabiliza',
+        images: [
+          { src: 'IMG/contabiliza.webp', alt: 'Contabiliza en la nube' }
+        ]
+      },
+      analiza: {
+        label: 'Analiza',
+        images: [
+          { src: 'IMG/analiza.webp', alt: 'Analiza BI' }
+        ]
+      },
+      despachos: {
+        label: 'Despachos',
+        images: [
+          { src: 'IMG/despachos.webp', alt: 'Despachos contables en la nube' }
+        ]
+      },
+      vende: {
+        label: 'Vende',
+        images: [
+          { src: 'IMG/vende.webp', alt: 'Vende punto de venta' }
+        ]
+      }
+    }
+  },
+  productividad: {
+    label: 'Productividad y clima laboral',
+    systems: {
+      evalua: {
+        label: 'Evalúa',
+        images: [
+          { src: 'IMG/evalua.webp', alt: 'Evalúa clima laboral' }
+        ]
+      },
+      colabora: {
+        label: 'Colabora',
+        images: [
+          { src: 'IMG/colabora.webp', alt: 'Colabora app' }
+        ]
+      },
+      personia: {
+        label: 'Personia',
+        images: [
+          { src: 'IMG/personia.webp', alt: 'Personia expedientes' }
+        ]
+      }
     }
   }
+};
 
-  if (openBtn){
-    openBtn.addEventListener("click", function(e){
-      e.preventDefault();
-      toggleToc();
-    });
-  }
+const heroGalleryState = {
+  groupKey: null,
+  systemKey: null,
+  index: 0
+};
 
-  if (closeBtn){
-    closeBtn.addEventListener("click", function(e){
-      e.preventDefault();
-      closeToc();
-    });
-  }
+function renderHeroGroups() {
+  const nav = $('#heroGalleryGroups');
+  if (!nav) return;
 
-  tocLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      closeToc();
+  nav.innerHTML = '';
+
+  Object.entries(HERO_GALLERY_DATA).forEach(([key, group], idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'hero-group-btn';
+    if (idx === 0) btn.classList.add('active');
+    btn.dataset.group = key;
+    btn.textContent = group.label;
+
+    btn.addEventListener('click', () => {
+      $$('.hero-group-btn', nav).forEach(b =>
+        b.classList.toggle('active', b === btn)
+      );
+      setHeroGroup(key);
     });
+
+    nav.appendChild(btn);
+  });
+}
+
+function renderHeroSystemTabs(groupKey) {
+  const tabs = $('#heroGalleryTabs');
+  if (!tabs) return;
+
+  const group = HERO_GALLERY_DATA[groupKey];
+  if (!group) return;
+
+  tabs.innerHTML = '';
+
+  const systemsEntries = Object.entries(group.systems);
+  systemsEntries.forEach(([sysKey, sysData], idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'hero-sys-tab';
+    if (idx === 0) btn.classList.add('active');
+    btn.dataset.sys = sysKey;
+    btn.textContent = sysData.label;
+
+    btn.addEventListener('click', () => {
+      $$('.hero-sys-tab', tabs).forEach(b =>
+        b.classList.toggle('active', b === btn)
+      );
+      setHeroSystem(sysKey);
+    });
+
+    tabs.appendChild(btn);
+  });
+}
+
+function renderHeroSlides(groupKey, systemKey) {
+  const carousel = $('#heroGalleryCarousel');
+  if (!carousel) return;
+
+  const track = $('.carousel-track', carousel);
+  const nav = $('.carousel-nav', carousel);
+  const titleEl = $('#heroGalleryTitle');
+  if (!track || !nav) return;
+
+  const group = HERO_GALLERY_DATA[groupKey];
+  const sys = group?.systems?.[systemKey];
+  if (!sys) return;
+
+  heroGalleryState.index = 0;
+
+  track.innerHTML = '';
+  nav.innerHTML = '';
+
+  sys.images.forEach((imgData, idx) => {
+    const slide = document.createElement('div');
+    slide.className = 'hero-slide';
+    slide.dataset.index = String(idx);
+
+    slide.innerHTML = `
+      <img
+        src="${imgData.src}"
+        alt="${imgData.alt || sys.label}"
+        loading="lazy"
+        decoding="async"
+      />
+    `;
+    track.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'dot';
+    dot.setAttribute('aria-label', `Imagen ${idx + 1}`);
+    dot.addEventListener('click', () => setHeroSlide(idx));
+    nav.appendChild(dot);
   });
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape"){
-      closeToc();
-    }
+  if (titleEl) titleEl.textContent = sys.label;
+
+  updateHeroSlidesUI();
+}
+
+function updateHeroSlidesUI() {
+  const carousel = $('#heroGalleryCarousel');
+  const { index } = heroGalleryState;
+  if (!carousel) return;
+
+  const slides = $$('.hero-slide', carousel);
+  const dots = $$('.dot', carousel);
+
+  slides.forEach((s, i) => {
+    const active = i === index;
+    s.classList.toggle('active', active);
+    s.style.display = active ? '' : 'none';
   });
-})();
+
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === index);
+  });
+}
+
+function setHeroSlide(newIdx) {
+  const carousel = $('#heroGalleryCarousel');
+  if (!carousel) return;
+
+  const slides = $$('.hero-slide', carousel);
+  if (!slides.length) return;
+
+  const max = slides.length;
+  const idx = ((newIdx % max) + max) % max;
+  heroGalleryState.index = idx;
+  updateHeroSlidesUI();
+}
+
+function changeHeroSlide(delta) {
+  const carousel = $('#heroGalleryCarousel');
+  if (!carousel) return;
+  const slides = $$('.hero-slide', carousel);
+  if (!slides.length) return;
+  setHeroSlide(heroGalleryState.index + delta);
+}
+
+function setHeroGroup(groupKey) {
+  heroGalleryState.groupKey = groupKey;
+
+  // al cambiar de grupo, reseteamos sistema al primero
+  renderHeroSystemTabs(groupKey);
+
+  const group = HERO_GALLERY_DATA[groupKey];
+  const firstSysKey = Object.keys(group.systems)[0];
+  setHeroSystem(firstSysKey);
+}
+
+function setHeroSystem(systemKey) {
+  heroGalleryState.systemKey = systemKey;
+  renderHeroSlides(heroGalleryState.groupKey, systemKey);
+}
+
+function initHeroGallery() {
+  const carousel = $('#heroGalleryCarousel');
+  if (!carousel) return;
+
+  const prev = $('.prev', carousel);
+  const next = $('.next', carousel);
+
+  prev && prev.addEventListener('click', () => changeHeroSlide(-1));
+  next && next.addEventListener('click', () => changeHeroSlide(1));
+
+  renderHeroGroups();
+
+  // grupo inicial
+  const firstGroupKey = Object.keys(HERO_GALLERY_DATA)[0];
+  if (firstGroupKey) {
+    setHeroGroup(firstGroupKey);
+  }
+}
+
+// ------------------------------------------
+// 10) DOMContentLoaded – inicialización
+// ------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+  initPartials();
+  initClickableCards();
+  initProductTabs();
+  initPromoFilters();
+  initContactForm();
+
+  // Hero gallery del hero
+  initHeroGallery();
+
+  // Reels (con .yt-lite dentro)
+  initReels();
+
+  // Lite YouTube para la sección "Videos" + cualquier otro .yt-lite
+  enhanceLiteEmbeds(document);
+});
