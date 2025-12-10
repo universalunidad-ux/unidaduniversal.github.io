@@ -1049,3 +1049,41 @@ textarea{resize:vertical;}
 .highlight-text{color:#fbbf24;}
 .ok-text{color:#4ade80;}
 .error-text{color:#fca5a5;}
+
+
+/* ===== Reservar espacio para imágenes clave (reduce CLS) ===== */
+
+/* 1) Hero principal (Nóminas · Bitácora de operaciones)
+   Es casi cuadrado (550x550 aprox) */
+.hero-gallery-card .hero-carousel .carousel-slide img {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* 2) Logos de sistemas dentro de las tarjetas de producto
+   (aprox banner horizontal). Ajusta el ratio si cambias los diseños */
+.product-card .logo-sistema {
+  aspect-ratio: 455 / 160;   /* ratio aproximado del layout */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 3) Thumbnails de los videos (16:9) */
+.reels-home-card .carousel-slide img,
+#videos .videos-grid img {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* 4) Promos cuadradas (como 40dic.webp) */
+.promo-grid img {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
