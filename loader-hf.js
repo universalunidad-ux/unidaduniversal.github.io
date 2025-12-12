@@ -48,6 +48,7 @@
       // Sólo si no tiene src real
       if (el.tagName === "IMG" && !el.getAttribute("src")){
         el.setAttribute("src", abs(el.getAttribute("data-src")));
+         el.style.opacity = "1";
       }
     });
 
