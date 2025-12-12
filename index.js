@@ -1,4 +1,4 @@
-/* Expiriti index.js (CORREGIDO) */
+/* Expiriti index.js (CORREGIDO FINAL V2) */
 (function(){
 "use strict";
 if(window.__EXPIRITI_INIT__) return; window.__EXPIRITI_INIT__=true;
@@ -42,8 +42,6 @@ async function loadPartial(placeholderId,fileName){
    ========================= */
 function initHeaderLogic(){
   const base=getBasePath();
-
-  // hrefs en parciales
   $$('.js-abs-href[data-href]').forEach(a=>{
     const raw=a.getAttribute("data-href")||"";
     const parts=raw.split("#");
@@ -52,16 +50,12 @@ function initHeaderLogic(){
       a.href=base+path+(hash?"#"+hash:"");
     }else a.href=raw;
   });
-
-  // imgs en parciales
   $$('.js-abs-src[data-src]').forEach(img=>{
     const raw=img.getAttribute("data-src")||"";
     img.src=absAsset(raw);
     img.onload=()=>{img.style.opacity="1";};
     if(img.complete) img.style.opacity="1";
   });
-
-  // burger
   const burger=$("#gh-burger"), nav=$(".gh-nav");
   if(burger&&nav){
     burger.addEventListener("click",()=>{
@@ -69,8 +63,6 @@ function initHeaderLogic(){
       burger.textContent=nav.classList.contains("open")?"✕":"≡";
     });
   }
-
-  // activo por sección
   const P=location.pathname.toUpperCase(), H=location.hash;
   let sec="inicio";
   if(P.includes("/SISTEMAS/")) sec="sistemas";
@@ -281,6 +273,12 @@ const HERO_GALLERY_DATA={
       {src:"IMG/personiaptu.webp",title:"Personia · Expedientes de empleados"},
       {src:"IMG/persobime.webp",title:"Personia · Expedientes de empleados"}
     ]}
+  }},
+  servicios:{label:"Servicios",defaultSys:"implementaciones",systems:{
+    /* NOTA: Se ajusta la estructura para que "servicios" funcione en HERO_GALLERY
+       si fuera necesario, aunque el HTML usa una sección aparte. 
+       Para los REELS de servicios se usa REELS_DATA abajo.
+    */
   }}
 };
 
@@ -294,7 +292,7 @@ const HERO_GALLERY={
 
 function buildHeroGallerySlides(groupKey,sysKey){
   const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
-  const sys=g.systems[sysKey]; if(!sys||!sys.images?.length) return;
+  const sys=g.systems?.[sysKey]; if(!sys||!sys.images?.length) return;
   const {carousel,titleEl,defaultGroup}=HERO_GALLERY; if(!carousel) return;
   const track=carousel.querySelector(".carousel-track");
   const nav=carousel.querySelector(".carousel-nav");
@@ -339,18 +337,20 @@ function buildHeroSystemTabs(groupKey){
   c.innerHTML="";
   const def=g.defaultSys;
 
-  Object.entries(g.systems).forEach(([sysKey,sys])=>{
-    const btn=document.createElement("button");
-    btn.type="button";
-    btn.className="hero-tab"+(sysKey===def?" active":"");
-    btn.dataset.group=groupKey; btn.dataset.sys=sysKey;
-    btn.innerHTML=`<img src="${absAsset(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async"><span>${sys.label}</span>`;
-    btn.addEventListener("click",()=>{
-      $$(".hero-tab",c).forEach(b=>b.classList.toggle("active",b===btn));
-      buildHeroGallerySlides(groupKey,sysKey);
+  if(g.systems) {
+    Object.entries(g.systems).forEach(([sysKey,sys])=>{
+      const btn=document.createElement("button");
+      btn.type="button";
+      btn.className="hero-tab"+(sysKey===def?" active":"");
+      btn.dataset.group=groupKey; btn.dataset.sys=sysKey;
+      btn.innerHTML=`<img src="${absAsset(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async"><span>${sys.label}</span>`;
+      btn.addEventListener("click",()=>{
+        $$(".hero-tab",c).forEach(b=>b.classList.toggle("active",b===btn));
+        buildHeroGallerySlides(groupKey,sysKey);
+      });
+      c.appendChild(btn);
     });
-    c.appendChild(btn);
-  });
+  }
 }
 
 function initHeroGallery(){
@@ -359,6 +359,7 @@ function initHeroGallery(){
 
   groupNav.innerHTML="";
   Object.entries(HERO_GALLERY_DATA).forEach(([groupKey,group])=>{
+    if(groupKey==="servicios") return; // Servicios no va en el hero principal
     const btn=document.createElement("button");
     btn.type="button";
     btn.className="hero-group-tab"+(groupKey===defaultGroup?" active":"");
@@ -387,7 +388,7 @@ function initHeroGallery(){
     track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
     const g=HERO_GALLERY_DATA[$(".hero-group-tab.active",groupNav)?.dataset.group||defaultGroup];
     const activeSys=$(".hero-tab.active",HERO_GALLERY.tabsContainer)?.dataset.sys||g.defaultSys;
-    const title=g.systems[activeSys]?.images?.[idx]?.title;
+    const title=g.systems?.[activeSys]?.images?.[idx]?.title;
     if(HERO_GALLERY.titleEl) HERO_GALLERY.titleEl.textContent=title||"";
   };
   prev?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i-1); });
@@ -499,7 +500,8 @@ function renderReelThumb(wrap){
       alt="${title}" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';">
     <span class="yt-play"></span>
   </button>`;
-  wrap.querySelector(".yt-thumb")?.addEventListener("click",()=>{ stopAllReels(); renderReelIframe(wrap); });
+  const btn=wrap.querySelector(".yt-thumb");
+  if(btn) btn.addEventListener("click",()=>{ stopAllReels(); renderReelIframe(wrap); });
 }
 
 function renderReelIframe(wrap){
