@@ -1,4 +1,4 @@
-/* Expiriti index.js (COMPLETO + COMPACTO, con comentarios por secciones) */
+/* Expiriti index.js (CORREGIDO) */
 (function(){
 "use strict";
 if(window.__EXPIRITI_INIT__) return; window.__EXPIRITI_INIT__=true;
@@ -43,7 +43,7 @@ async function loadPartial(placeholderId,fileName){
 function initHeaderLogic(){
   const base=getBasePath();
 
-  // hrefs en parciales: <a class="js-abs-href" data-href="SISTEMAS/contabilidad.html#x">
+  // hrefs en parciales
   $$('.js-abs-href[data-href]').forEach(a=>{
     const raw=a.getAttribute("data-href")||"";
     const parts=raw.split("#");
@@ -53,7 +53,7 @@ function initHeaderLogic(){
     }else a.href=raw;
   });
 
-  // imgs en parciales: <img class="js-abs-src" data-src="IMG/logo.webp">
+  // imgs en parciales
   $$('.js-abs-src[data-src]').forEach(img=>{
     const raw=img.getAttribute("data-src")||"";
     img.src=absAsset(raw);
@@ -70,7 +70,7 @@ function initHeaderLogic(){
     });
   }
 
-  // activo por sección (si tu header usa data-section)
+  // activo por sección
   const P=location.pathname.toUpperCase(), H=location.hash;
   let sec="inicio";
   if(P.includes("/SISTEMAS/")) sec="sistemas";
@@ -131,7 +131,7 @@ promoBtns.forEach(b=>b.addEventListener("click",()=>setPromoFilter(b.dataset.fil
 if(promoBtns.length) setPromoFilter("nuevos");
 
 /* =========================
-   Cards clicables (data-href)
+   Cards clicables
    ========================= */
 $$(".card.product-card[data-href]").forEach(card=>{
   const href=card.getAttribute("data-href");
@@ -501,6 +501,7 @@ function renderReelThumb(wrap){
   </button>`;
   wrap.querySelector(".yt-thumb")?.addEventListener("click",()=>{ stopAllReels(); renderReelIframe(wrap); });
 }
+
 function renderReelIframe(wrap){
   const id = wrap.dataset.ytid;
   const title = wrap.dataset.title || "";
@@ -514,8 +515,6 @@ function renderReelIframe(wrap){
   `;
 }
 
-   
-}
 function stopAllReels(){
   document.querySelectorAll(".reel-embed").forEach(w=>{
     if(!w.dataset.ytid) return;
@@ -654,7 +653,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
     });
   });
 
-  initYTLiteVideos();     // (ANTES tenías initSimpleThumbs() y eso tronaba)
+  initYTLiteVideos();
   initFAQ();
 
   const yearSpan=document.getElementById("gf-year");
