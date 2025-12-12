@@ -510,10 +510,36 @@ function renderReelIframe(wrap){
   `;
 }
 
+/* ======================================================
+   REEMPLAZAR LA FUNCIÓN stopAllReels() POR ESTA NUEVA
+   ====================================================== */
+
 function stopAllReels(){
+  // 1. Detener REELS (Verticales)
   document.querySelectorAll(".reel-embed").forEach(w=>{
-    if(!w.dataset.ytid) return;
-    renderReelThumb(w);
+    // Si tiene un iframe dentro, significa que está sonando. Lo reseteamos.
+    if(w.querySelector("iframe")){
+      renderReelThumb(w);
+    }
+  });
+
+  // 2. Detener VIDEOS HORIZONTALES (Sección Videos .yt-lite)
+  document.querySelectorAll(".yt-lite").forEach(node => {
+    // Si la bandera dice que está cargado ("1"), lo apagamos
+    if (node.dataset.ytLoaded === "1") {
+      const id = node.dataset.ytid;
+      const title = node.dataset.title || "Video";
+      const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+      // Volvemos a poner la imagen y el botón de play
+      node.innerHTML = `<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
+        <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
+        <span class="yt-lite-play"></span>
+      </button>`;
+
+      // Reseteamos la bandera para permitir reproducirlo de nuevo después
+      node.dataset.ytLoaded = "";
+    }
   });
 }
 
