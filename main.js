@@ -4,12 +4,115 @@
    ========================================================= */
 
 /* =========================================================
+   0) PARTIALS: Header/Footer dinámicos (GitHub Pages + local)
+   ---------------------------------------------------------
+   Requisitos en HTML:
+   <div id="header-placeholder"></div>
+   ...
+   <div id="footer-placeholder"></div>
+
+   En tus parciales, para rutas:
+   - enlaces: class="js-abs-href" data-href="SISTEMAS/bancos.html"
+   - imgs:    class="js-abs-src"  data-src="IMG/logo.webp"
+   - footer:  class="js-link/js-img si los usas igual
+========================================================= */
+(function(){
+  async function exists(u){
+    try { const r = await fetch(u, { method:"HEAD", cache:"no-store" }); return r.ok; }
+    catch { return false; }
+  }
+  async function pickFirst(paths){
+    for (const p of paths) if (await exists(p)) return p;
+    return paths[0];
+  }
+
+  const isGh = location.hostname.endsWith("github.io");
+  const firstSeg = location.pathname.split("/")[1] || "";
+  const repoBase = (isGh && firstSeg) ? ("/" + firstSeg) : "";
+
+  const inSistemas  = location.pathname.includes("/SISTEMAS/");
+  const inServicios = location.pathname.includes("/SERVICIOS/");
+  const depth = (inSistemas || inServicios) ? "../" : "";
+
+  function prefix(p){
+    if (!p || /^https?:\/\//i.test(p) || p.startsWith("mailto:") || p.startsWith("tel:")) return p;
+    // En GH Pages usamos repoBase absoluto
+    if (isGh) return (repoBase + "/" + p).replace(/\/+/g, "/");
+    // En local: usamos depth
+    return (depth + p).replace(/\/+/g, "/");
+  }
+
+  async function loadPartials(){
+    const hp = document.getElementById("header-placeholder");
+    const fp = document.getElementById("footer-placeholder");
+    if (!hp && !fp) return;
+
+    const headerURL = await pickFirst([
+      prefix("PARTIALS/global-header.html"),
+      depth + "PARTIALS/global-header.html",
+      "./PARTIALS/global-header.html",
+      "/PARTIALS/global-header.html"
+    ]);
+
+    const footerURL = await pickFirst([
+      prefix("PARTIALS/global-footer.html"),
+      depth + "PARTIALS/global-footer.html",
+      "./PARTIALS/global-footer.html",
+      "/PARTIALS/global-footer.html"
+    ]);
+
+    const [hRes, fRes] = await Promise.all([
+      hp ? fetch(headerURL, { cache:"no-store" }) : Promise.resolve(null),
+      fp ? fetch(footerURL, { cache:"no-store" }) : Promise.resolve(null),
+    ]);
+
+    if (hp && hRes && hRes.ok){
+      hp.outerHTML = await hRes.text();
+    } else if (hp){
+      console.warn("Header no cargó. URL probada:", headerURL);
+    }
+
+    if (fp && fRes && fRes.ok){
+      fp.outerHTML = await fRes.text();
+    } else if (fp){
+      console.warn("Footer no cargó. URL probada:", footerURL);
+    }
+
+    // Microtick para que el DOM “asiente”
+    await Promise.resolve();
+
+    // Fix rutas en header/footer
+    document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+      img.src = prefix(img.getAttribute("data-src"));
+    });
+    document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+      const p = a.getAttribute("data-href"); if (!p) return;
+      const [path, hash] = p.split("#");
+      a.href = prefix(path) + (hash ? ("#" + hash) : "");
+    });
+
+    document.querySelectorAll(".js-img[data-src]").forEach(img=>{
+      img.src = prefix(img.getAttribute("data-src"));
+    });
+    document.querySelectorAll(".js-link[data-href]").forEach(a=>{
+      a.href = prefix(a.getAttribute("data-href"));
+    });
+
+    const y = document.getElementById("gf-year") || document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  }
+
+  document.addEventListener("DOMContentLoaded", loadPartials);
+})();
+
+/* =========================================================
    1) UTILIDADES GLOBALES
    ---------------------------------------------------------
    - $$fmt  → formateo de moneda MXN
    - $$     → querySelector corto
    - $all   → querySelectorAll como array
    ========================================================= */
+
 (function(){
   const money = new Intl.NumberFormat("es-MX", {
     style: "currency",
