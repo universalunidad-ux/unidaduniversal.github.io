@@ -557,3 +557,82 @@ textarea { resize: vertical; }
   display: flex; /* Esto pone las páginas una al lado de la otra */
 }
 
+/* =========================================================
+   CORRECCIÓN VISUAL: SLIDER DE BENEFICIOS Y FLECHAS
+   ========================================================= */
+
+/* 1. Darle aire y estructura al contenedor del slider */
+.listSlider {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* Reservamos espacio abajo para las flechas (evita que tapen texto) */
+  padding-bottom: 60px; 
+  /* Aseguramos una altura mínima para que no se vea "aplastado" */
+  min-height: 220px; 
+}
+
+/* 2. Mejorar el formato de los items (Más grandes y estilizados) */
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  /* Más separación entre icono y texto */
+  gap: 16px; 
+  padding: 10px 0;
+}
+
+/* Hacer el icono un poco más grande y centrado visualmente */
+.listItem .listIcon {
+  width: 42px;       /* Antes era 28px */
+  height: 42px;
+  flex: 0 0 42px;    /* Evita que se aplaste */
+  margin-top: 2px;
+}
+.listItem .listIcon img {
+  width: 26px;       /* Icono interno más grande */
+  height: 26px;
+}
+
+/* Estilo del Título (INVERSIÓN EFICIENTE, etc.) */
+.listItem strong {
+  display: block;
+  font-size: 15px;   /* Letra más grande */
+  margin-bottom: 6px;
+  color: #fff;       /* Blanco puro para destacar */
+  letter-spacing: 0.02em;
+}
+
+/* Estilo de la Descripción */
+.listItem div {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #cbd5e1;    /* Gris claro legible */
+}
+
+/* 3. Mover las flechas ABAJO a la derecha (sin tapar texto) */
+.listSlider .arrowCircle {
+  top: auto !important;
+  bottom: 0 !important;       /* Pegadas al fondo del contenedor */
+  transform: none !important;
+  background: rgba(30, 41, 59, 1); /* Fondo más sólido */
+  border-color: rgba(148, 163, 184, 0.4);
+}
+
+/* Ubicación exacta de Flecha Siguiente (Derecha extrema) */
+.listSlider .arrowCircle.next {
+  right: 0 !important;
+}
+
+/* Ubicación exacta de Flecha Anterior (A la izq de la siguiente) */
+.listSlider .arrowCircle.prev {
+  right: 42px !important;     /* Separada 42px del borde derecho */
+  left: auto !important;
+}
+
+/* Efecto Hover en las flechas */
+.listSlider .arrowCircle:hover {
+  background: #2dd4bf; /* Color Brand al pasar mouse */
+  color: #020617;
+  border-color: #2dd4bf;
+}
+
