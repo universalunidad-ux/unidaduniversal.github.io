@@ -1476,3 +1476,97 @@ textarea {
   border-width: 8px 0 8px 14px;
   border-color: transparent transparent transparent #fff;
 }
+
+/* =========================================
+   FIX YOUTUBE LITE (Sección Videos 16:9)
+   ========================================= */
+
+/* El contenedor base */
+.yt-lite {
+  background-color: #000;
+  position: relative;
+  display: block;
+  contain: content;
+  background-position: center center;
+  background-size: cover;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Mantiene la proporción 16:9 */
+.yt-lite::before {
+  content: "";
+  display: block;
+  padding-bottom: 56.25%;
+}
+
+/* El botón interno que envuelve todo */
+.yt-lite-inner {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* La imagen de portada (miniatura) */
+.yt-lite-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.yt-lite-inner:hover .yt-lite-thumb {
+  opacity: 1;
+}
+
+/* El botón de Play (Rectángulo rojo/gris) */
+.yt-lite-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 48px;
+  background-color: rgba(33, 33, 33, 0.8);
+  border-radius: 12px;
+  z-index: 1;
+  transition: background-color .2s cubic-bezier(0,0,.2,1);
+}
+
+/* Triángulo blanco del Play */
+.yt-lite-play::before {
+  content: "";
+  border-style: solid;
+  border-width: 11px 0 11px 19px;
+  border-color: transparent transparent transparent #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Al pasar el mouse, botón rojo */
+.yt-lite-inner:hover .yt-lite-play {
+  background-color: #f00;
+}
+
+/* El video real cuando se carga */
+.yt-iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+}
