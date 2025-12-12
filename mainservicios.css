@@ -422,3 +422,48 @@ textarea { resize: vertical; }
 .yt-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 40px; background: rgba(31, 31, 31, 0.8); border-radius: 10px; display: flex; align-items: center; justify-content: center; pointer-events: none; transition: background 0.2s; }
 .reel-embed .yt-thumb:hover .yt-play { background: #f00; }
 .yt-play::before { content: ""; display: block; border-style: solid; border-width: 8px 0 8px 14px; border-color: transparent transparent transparent #fff; }
+/* =========================================================
+   NUEVO: Layout Full Screen (Altura de Pantalla)
+   ========================================================= */
+
+/* Clase para que la sección mida mínimo el 100% de la ventana */
+.section-full {
+  min-height: 100vh;          /* Clave: Altura mínima del viewport */
+  display: flex;              /* Flexbox para manejar el contenido interno */
+  flex-direction: column;     
+  justify-content: center;    /* Centra el contenedor verticalmente en la pantalla */
+  position: relative;
+  padding: 40px 0;            /* Margen de seguridad para que no toque bordes */
+}
+
+/* Modificador para tu .grid-2 existente: Alineación Vertical */
+/* Úsalo así en el HTML: <div class="grid-2 v-center"> */
+.grid-2.v-center {
+  align-items: center; /* ESTO ES LA MAGIA: Centra Texto vs. Carrusel/Reel */
+}
+
+/* Ajuste específico para la sección Servicios (Grid de cuadros a la izq) */
+.svc-container-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Asegura que el grid de servicios esté centrado en su columna */
+}
+
+/* =========================================================
+   Responsive: En móviles quitamos la altura forzada
+   ========================================================= */
+@media (max-width: 960px) {
+  .section-full {
+    min-height: auto; /* Dejamos que crezca según el contenido */
+    padding: 60px 0;  /* Buen espacio arriba/abajo */
+    display: block;   /* Regresa a flujo normal */
+  }
+  
+  /* En móvil, el orden importa (primero texto, luego imagen) */
+  .section-full .grid-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
