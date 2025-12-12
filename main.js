@@ -21,69 +21,62 @@ function prefix(p){
 }
 
 /* =========================================================
-   Loader ÚNICO de header/footer + fix rutas
+   Loader ÚNICO de header/footer (sin HEAD) + fix rutas
+   Optimizado para PageSpeed:
+   - 2 fetch paralelos
+   - cache: force-cache
+   - rutas determinísticas (1 por contexto)
 ========================================================= */
 async function loadPartials(){
   const hp = document.getElementById('header-placeholder');
   const fp = document.getElementById('footer-placeholder');
   if (!hp && !fp) return;
 
-  const exists = async (u) => { try { const r = await fetch(u, { method:'HEAD' }); return r.ok; } catch { return false; } };
-  const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
+  // Rutas determinísticas:
+  // - En index:  PARTIALS/...
+  // - En subcarpetas: ../PARTIALS/...
+  const base = inSubdir ? '../' : '';
+  const headerURL = prefix(base + 'PARTIALS/global-header.html');
+  const footerURL = prefix(base + 'PARTIALS/global-footer.html');
 
-  const headerURL = await pickFirst([
-    prefix('PARTIALS/global-header.html'),
-    prefix('../PARTIALS/global-header.html'),
-    `${repoBase}/PARTIALS/global-header.html`,
-    '/PARTIALS/global-header.html'
+  const [h, f] = await Promise.all([
+    fetch(headerURL, { cache: 'force-cache' }).then(r => r.ok ? r.text() : ''),
+    fetch(footerURL, { cache: 'force-cache' }).then(r => r.ok ? r.text() : '')
   ]);
 
-  const footerURL = await pickFirst([
-    prefix('PARTIALS/global-footer.html'),
-    prefix('../PARTIALS/global-footer.html'),
-    `${repoBase}/PARTIALS/global-footer.html`,
-    '/PARTIALS/global-footer.html'
-  ]);
+  if (hp && h) hp.outerHTML = h;
+  if (fp && f) fp.outerHTML = f;
 
-  const [headerHTML, footerHTML] = await Promise.all([
-    fetch(headerURL).then(r => r.ok ? r.text() : ''),
-    fetch(footerURL).then(r => r.ok ? r.text() : '')
-  ]);
-
-  if (hp && headerHTML) hp.outerHTML = headerHTML;
-  if (fp && footerHTML) fp.outerHTML = footerHTML;
-
-  // Microtick para que el DOM quede
+  // microtick para que el DOM se asiente
   await Promise.resolve();
 
-  // Header/Footer: resolver rutas por data-*
-  $$('.js-abs-src[data-src]').forEach(img => { img.src = prefix(img.getAttribute('data-src')); });
+  // Resolver rutas dentro de parciales
+  $$('.js-abs-src[data-src]').forEach(img => { img.src = prefix(img.dataset.src); });
   $$('.js-abs-href[data-href]').forEach(a => {
-    const raw = a.getAttribute('data-href'); if (!raw) return;
+    const raw = a.dataset.href; if (!raw) return;
     const [path, hash] = raw.split('#');
     a.href = prefix(path) + (hash ? '#'+hash : '');
   });
 
-  $$('.js-img[data-src]').forEach(img => { img.src = prefix(img.getAttribute('data-src')); });
-  $$('.js-link[data-href]').forEach(a => { a.href = prefix(a.getAttribute('data-href')); });
+  $$('.js-img[data-src]').forEach(img => { img.src = prefix(img.dataset.src); });
+  $$('.js-link[data-href]').forEach(a => { a.href = prefix(a.dataset.href); });
 
   const y = document.getElementById('gf-year');
   if (y) y.textContent = new Date().getFullYear();
 }
 
 /* =========================================================
-   Click en cards por data-href
+   Delegación: click en [data-href] (1 listener)
 ========================================================= */
-function initClickableCards(){
-  $$('[data-href]').forEach(el => {
+function initDelegatedHref(){
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-href]');
+    if (!el) return;
+    if (e.target.closest('a,button')) return;
     const href = el.getAttribute('data-href');
     if (!href) return;
-    el.style.cursor = 'pointer';
-    el.addEventListener('click', (e) => {
-      if (e.target.closest('a,button')) return;
-      location.href = prefix(href);
-    });
-  });
+    location.href = prefix(href);
+  }, { passive: true });
 }
 
 /* =========================================================
@@ -114,17 +107,20 @@ function initPillFilters(){
 }
 
 /* =========================================================
-   YouTube Lite para .reel-embed y .yt-wrap
+   YouTube Lite (para .reel-embed y .yt-wrap)
+   Optimizado:
+   - crea botón de preview
+   - solo “prepara” cuando está cerca del viewport (IO)
 ========================================================= */
 function pauseAllYouTube(){
   $$('iframe[src*="youtube.com/embed"], iframe[src*="youtube-nocookie.com/embed"]').forEach(f => {
     try{
       f.contentWindow.postMessage(JSON.stringify({ event:'command', func:'pauseVideo', args:'' }), '*');
-    }catch{}
+    } catch {}
   });
 }
 
-function mountLiteYouTube(el){
+function buildLite(el){
   if (!el || el.dataset.ytReady === '1') return;
   const id = el.dataset.ytid;
   if (!id) return;
@@ -148,30 +144,45 @@ function mountLiteYouTube(el){
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen></iframe>`;
     el.dataset.ytLoaded = '1';
-  });
+  }, { passive: true });
 }
 
-function initVideoEmbeds(){
-  // Reels del hero
-  $$('.reel-embed[data-ytid]').forEach(mountLiteYouTube);
-  // Sección videos
-  $$('.yt-wrap[data-ytid]').forEach(mountLiteYouTube);
+function initVideoEmbedsLazy(){
+  const targets = [
+    ...$$('.reel-embed[data-ytid]'),
+    ...$$('.yt-wrap[data-ytid]')
+  ];
+  if (!targets.length) return;
+
+  // Fallback si no hay IntersectionObserver
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(buildLite);
+    return;
+  }
+
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(ent => {
+      if (!ent.isIntersecting) return;
+      buildLite(ent.target);
+      obs.unobserve(ent.target);
+    });
+  }, { root: null, rootMargin: '300px 0px', threshold: 0.01 });
+
+  targets.forEach(t => io.observe(t));
 }
 
 /* =========================================================
-   Carrusel genérico .carousel (reels + videos)
-   Estructura esperada:
-   .carousel
-     .prev / .next
-     .carousel-track
-       .carousel-slide (N)
-     .carousel-nav .dot (opcional)
+   Carrusel genérico .carousel
+   - muestra 1 slide a la vez (display none)
+   - dots autogenerados si faltan
 ========================================================= */
 function initCarousels(){
   $$('.carousel').forEach(carousel => {
     const track = $('.carousel-track', carousel);
-    const slides = track ? $$('.carousel-slide', track) : [];
-    if (!track || slides.length <= 1) return;
+    if (!track) return;
+
+    const slides = $$('.carousel-slide', track);
+    if (slides.length <= 1) return;
 
     const prev = $('.prev', carousel);
     const next = $('.next', carousel);
@@ -183,19 +194,20 @@ function initCarousels(){
       if (!nav) return [];
       let dots = $$('.dot', nav);
       if (dots.length === slides.length) return dots;
+
       nav.innerHTML = '';
       slides.forEach((_, i) => {
         const d = document.createElement('button');
         d.type = 'button';
         d.className = 'dot' + (i === 0 ? ' active' : '');
-        d.setAttribute('aria-label', `Ir al grupo ${i+1}`);
+        d.setAttribute('aria-label', `Grupo ${i+1}`);
         d.addEventListener('click', () => go(i));
         nav.appendChild(d);
       });
       return $$('.dot', nav);
     };
 
-    const dots = ensureDots();
+    let dots = ensureDots();
 
     const go = (i) => {
       idx = ((i % slides.length) + slides.length) % slides.length;
@@ -205,28 +217,29 @@ function initCarousels(){
         s.classList.toggle('active', on);
       });
       dots.forEach((d, k) => d.classList.toggle('active', k === idx));
-      pauseAllYouTube();
+
+      // Pausa videos al cambiar slide (si ya hay iframes)
+      if ($$('iframe', carousel).length) pauseAllYouTube();
     };
 
     prev && prev.addEventListener('click', () => go(idx - 1));
     next && next.addEventListener('click', () => go(idx + 1));
 
+    // Estado inicial
     go(0);
   });
 }
 
 /* =========================================================
-   listSlider (beneficios) - tu estructura:
-   .listSlider
-     .prev/.next
-     .listTrack
-       .listPage (N)
+   listSlider (beneficios)
 ========================================================= */
 function initListSliders(){
   $$('.listSlider').forEach(sl => {
     const track = $('.listTrack', sl);
-    const pages = track ? $$('.listPage', track) : [];
-    if (!track || pages.length <= 1) return;
+    if (!track) return;
+
+    const pages = $$('.listPage', track);
+    if (pages.length <= 1) return;
 
     const prev = $('.prev', sl);
     const next = $('.next', sl);
@@ -244,18 +257,15 @@ function initListSliders(){
 }
 
 /* =========================================================
-   carouselX (integraciones) - estructura:
-   .carouselX
-     .prev/.next
-     .track
-       .sys (items)
-     .group-dots (opcional)
+   carouselX (integraciones)
 ========================================================= */
 function initCarouselX(){
   $$('.carouselX').forEach(root => {
     const track = $('.track', root);
-    const items = track ? $$('.sys', track) : [];
-    if (!track || items.length <= 1) return;
+    if (!track) return;
+
+    const items = $$('.sys', track);
+    if (items.length <= 1) return;
 
     const step = Math.max(1, parseInt(root.getAttribute('data-step') || '3', 10));
     const prev = $('.prev', root);
@@ -285,14 +295,12 @@ function initCarouselX(){
       page = ((p % pageCount) + pageCount) % pageCount;
       const start = page * step;
       const end = start + step;
-
       items.forEach((it, i) => it.style.display = (i >= start && i < end) ? '' : 'none');
       dots.forEach((d, i) => d.classList.toggle('active', i === page));
     };
 
     prev && prev.addEventListener('click', () => go(page - 1));
     next && next.addEventListener('click', () => go(page + 1));
-
     go(0);
   });
 }
@@ -307,13 +315,12 @@ function initTOC(){
   const toggle = document.getElementById('tocToggle') || $('.toc-toggle', toc);
   const closeBtn = $('.toc-close', toc);
 
-  const open = () => toc.classList.remove('collapsed');
+  const open  = () => toc.classList.remove('collapsed');
   const close = () => toc.classList.add('collapsed');
 
   toggle && toggle.addEventListener('click', open);
   closeBtn && closeBtn.addEventListener('click', close);
 
-  // Cierra al dar click a un link del TOC
   $$('a[href^="#"]', toc).forEach(a => a.addEventListener('click', close));
 }
 
@@ -321,12 +328,19 @@ function initTOC(){
    INIT
 ========================================================= */
 document.addEventListener('DOMContentLoaded', async () => {
+  // 1) parciales primero (para que header/footer existan)
   await loadPartials();
-  initClickableCards();
+
+  // 2) init livianos / delegados
+  initDelegatedHref();
   initPillFilters();
-  initVideoEmbeds();
-  initCarousels();
+  initTOC();
+
+  // 3) UI con DOM ya armado
   initListSliders();
   initCarouselX();
-  initTOC();
+  initCarousels();
+
+  // 4) YouTube lite perezoso
+  initVideoEmbedsLazy();
 });
