@@ -1,55 +1,68 @@
-/* =========================================================
-   Expiriti · JS ÚNICO COMPLETO (Hero + Reels + Forms + Header)
-   - Un solo IIFE
-   - Candado anti doble init
-   ========================================================= */
+/* Expiriti index.js (COMPLETO + COMPACTO, con comentarios por secciones) */
 (function(){
 "use strict";
-if(window.__EXPIRITI_INIT__)return;window.__EXPIRITI_INIT__=true;
+if(window.__EXPIRITI_INIT__) return; window.__EXPIRITI_INIT__=true;
 
-/* ---------- Helpers ---------- */
-const $=(s,c=document)=>c.querySelector(s);
+/* =========================
+   Helpers DOM + Rutas
+   ========================= */
 const $$=(s,c=document)=>Array.from(c.querySelectorAll(s));
+const $=(s,c=document)=>c.querySelector(s);
 
-/* ---------- Base path (para páginas dentro de /SISTEMAS/ o /SERVICIOS/) ---------- */
 function getBasePath(){
   const p=location.pathname;
-  return(/\/(SISTEMAS|SERVICIOS|PDFS|CSS)\//.test(p))?"../":"./";
+  return (p.includes("/SISTEMAS/")||p.includes("/SERVICIOS/")||p.includes("/PDFS/")||p.includes("/CSS/")) ? "../" : "./";
+}
+function absAsset(path){
+  if(!path) return path;
+  if(/^https?:\/\//i.test(path)) return path;
+  if(path.startsWith("#")) return path;
+  const base=getBasePath();
+  return (base==="../" && !path.startsWith("../")) ? (base+path) : path;
 }
 
-/* ---------- Partials ---------- */
-async function loadPartial(id,file){
+/* =========================
+   Parciales (header/footer)
+   ========================= */
+async function loadPartial(placeholderId,fileName){
   try{
-    const el=document.getElementById(id); if(!el)return;
-    const url=`${getBasePath()}PARTIALS/${file}?v=${Date.now()}`;
-    const r=await fetch(url);
-    if(r.ok) el.innerHTML=await r.text();
-  }catch(e){console.error("Partial error:",file,e);}
+    const base=getBasePath();
+    const target=document.getElementById(placeholderId);
+    if(!target) return;
+    const resp=await fetch(`${base}PARTIALS/${fileName}?v=${Date.now()}`);
+    if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    target.innerHTML=await resp.text();
+  }catch(err){
+    console.error(`Error cargando parcial ${fileName}:`,err);
+  }
 }
 
-/* ---------- Header logic ---------- */
-function initHeader(){
+/* =========================
+   Header: links absolutos + burger + activo
+   ========================= */
+function initHeaderLogic(){
   const base=getBasePath();
 
-  /* data-href => href correcto según carpeta */
-  $$(".js-abs-href[data-href]").forEach(a=>{
+  // hrefs en parciales: <a class="js-abs-href" data-href="SISTEMAS/contabilidad.html#x">
+  $$('.js-abs-href[data-href]').forEach(a=>{
     const raw=a.getAttribute("data-href")||"";
-    const parts=raw.split("#"),path=parts[0],hash=parts[1];
-    if(base==="../"&&!raw.startsWith("http")&&!raw.startsWith("#")){
+    const parts=raw.split("#");
+    const path=parts[0], hash=parts[1];
+    if(base==="../" && !raw.startsWith("http") && !raw.startsWith("#")){
       a.href=base+path+(hash?"#"+hash:"");
     }else a.href=raw;
   });
 
-  /* data-src => src correcto según carpeta */
-  $$(".js-abs-src[data-src]").forEach(img=>{
+  // imgs en parciales: <img class="js-abs-src" data-src="IMG/logo.webp">
+  $$('.js-abs-src[data-src]').forEach(img=>{
     const raw=img.getAttribute("data-src")||"";
-    img.src=(base==="../"&&!raw.startsWith("http"))?base+raw:raw;
-    img.onload=()=>img.style.opacity="1";
-    if(img.complete)img.style.opacity="1";
+    img.src=absAsset(raw);
+    img.onload=()=>{img.style.opacity="1";};
+    if(img.complete) img.style.opacity="1";
   });
 
-  /* burger */
-  const burger=$("#gh-burger"),nav=$(".gh-nav");
+  // burger
+  const burger=$("#gh-burger"), nav=$(".gh-nav");
   if(burger&&nav){
     burger.addEventListener("click",()=>{
       nav.classList.toggle("open");
@@ -57,20 +70,22 @@ function initHeader(){
     });
   }
 
-  /* active state */
-  const p=location.pathname.toUpperCase(),h=location.hash;
+  // activo por sección (si tu header usa data-section)
+  const P=location.pathname.toUpperCase(), H=location.hash;
   let sec="inicio";
-  if(p.includes("/SISTEMAS/"))sec="sistemas";
-  else if(p.includes("/SERVICIOS/"))sec="servicios";
-  else if(h==="#servicios")sec="servicios";
-  else if(h==="#promociones")sec="promociones";
-  else if(h==="#productos"||h==="#productos-con")sec="sistemas";
-  else if(h==="#contacto")sec="contacto";
-  else if(p.includes("/NOSOTROS"))sec="nosotros";
+  if(P.includes("/SISTEMAS/")) sec="sistemas";
+  else if(P.includes("/SERVICIOS/")) sec="servicios";
+  else if(H==="#servicios") sec="servicios";
+  else if(H==="#promociones") sec="promociones";
+  else if(H==="#productos"||H==="#productos-con") sec="sistemas";
+  else if(H==="#contacto") sec="contacto";
+  else if(P.includes("/NOSOTROS")) sec="nosotros";
   $$("[data-section]").forEach(a=>a.classList.toggle("gh-active",a.getAttribute("data-section")===sec));
 }
 
-/* ---------- Forms (WhatsApp) ---------- */
+/* =========================
+   Formularios -> WhatsApp
+   ========================= */
 $("#quickForm")?.addEventListener("submit",e=>{
   e.preventDefault();
   const modulo=encodeURIComponent($("#modulo")?.value||"");
@@ -89,43 +104,46 @@ $("#contactForm")?.addEventListener("submit",e=>{
   window.open(`https://wa.me/525568437918?text=${texto}`,"_blank");
 });
 
-/* ---------- Product Tabs ---------- */
-(function(){
-  const tabs=$$(".prod-tabs .tab"),panels=$$(".panel-productos");
-  if(!tabs.length||!panels.length)return;
-  const go=btn=>{
-    const id=btn.dataset.target; if(!id)return;
-    tabs.forEach(t=>t.classList.toggle("active",t===btn));
-    panels.forEach(p=>p.classList.toggle("hidden",p.id!==id));
-  };
-  tabs.forEach(t=>t.addEventListener("click",()=>go(t)));
-  go(document.getElementById("tab-contable")||tabs[0]);
-})();
+/* =========================
+   Tabs Productos (4 paneles)
+   ========================= */
+const tabsProductos=$$(".prod-tabs .tab");
+const panelsProductos=$$(".panel-productos");
+function activarTabProductos(btn){
+  const targetId=btn.dataset.target;
+  tabsProductos.forEach(t=>t.classList.toggle("active",t===btn));
+  panelsProductos.forEach(p=>p.classList.toggle("hidden",p.id!==targetId));
+}
+tabsProductos.forEach(btn=>btn.addEventListener("click",()=>activarTabProductos(btn)));
+const tabInicial=document.getElementById("tab-contable");
+if(tabInicial) activarTabProductos(tabInicial);
 
-/* ---------- Promo Filter ---------- */
-(function(){
-  const btns=$$(".promo-btn"),imgs=$$('#promoGrid [data-type]');
-  if(!btns.length||!imgs.length)return;
-  const set=t=>{
-    btns.forEach(b=>b.classList.toggle("active",b.dataset.filter===t));
-    imgs.forEach(img=>img.style.display=img.dataset.type===t?"":"none");
-  };
-  btns.forEach(b=>b.addEventListener("click",()=>set(b.dataset.filter)));
-  set("nuevos");
-})();
+/* =========================
+   Promos filtro
+   ========================= */
+const promoBtns=$$(".promo-btn");
+const promoImgs=$$('#promoGrid [data-type]');
+function setPromoFilter(type){
+  promoBtns.forEach(b=>b.classList.toggle("active",b.dataset.filter===type));
+  promoImgs.forEach(img=>{img.style.display=(img.dataset.type===type)?"":"none";});
+}
+promoBtns.forEach(b=>b.addEventListener("click",()=>setPromoFilter(b.dataset.filter)));
+if(promoBtns.length) setPromoFilter("nuevos");
 
-/* ---------- Clickable cards ---------- */
-$$(".card.product-card[data-href], .product-card[data-href]").forEach(card=>{
-  const href=card.getAttribute("data-href")||card.dataset.href;
+/* =========================
+   Cards clicables (data-href)
+   ========================= */
+$$(".card.product-card[data-href]").forEach(card=>{
+  const href=card.getAttribute("data-href");
   card.addEventListener("click",e=>{
-    if(e.target.closest("a"))return;
-    if(href)location.href=href;
+    if(e.target.closest("a")) return;
+    if(href) location.href=absAsset(href);
   });
 });
 
-/* =========================================================
-   HERO GALLERY DATA (TU INFO COMPLETA)
-   ========================================================= */
+/* =========================
+   HERO GALLERY: DATA
+   ========================= */
 const HERO_GALLERY_DATA={
   contable:{label:"Contables",defaultSys:"nominas",systems:{
     contabilidad:{label:"Contabilidad",icon:"IMG/contabilidadsq.webp",images:[
@@ -170,7 +188,9 @@ const HERO_GALLERY_DATA={
     ]}
   }},
   comercial:{label:"Comerciales",defaultSys:"start",systems:{
-    start:{label:"Comercial Start",icon:"IMG/comercialstartsq.webp",images:[{src:"IMG/comercialstart.webp",title:"Start · Ventas e inventario básico"}]},
+    start:{label:"Comercial Start",icon:"IMG/comercialstartsq.webp",images:[
+      {src:"IMG/comercialstart.webp",title:"Start · Ventas e inventario básico"}
+    ]},
     pro:{label:"Comercial Pro",icon:"IMG/comercialprosq.webp",images:[
       {src:"IMG/captura%20manual.webp",title:"Pro · Operaciones de alto volumen"},
       {src:"IMG/procumple.webp",title:"Pro · Operaciones de alto volumen"},
@@ -228,7 +248,9 @@ const HERO_GALLERY_DATA={
       {src:"IMG/contabprocesos.webp",title:"Contabiliza · Contabilidad en la nube"},
       {src:"IMG/contabireal.webp",title:"Contabiliza · Contabilidad en la nube"}
     ]},
-    despachos:{label:"Despachos",icon:"IMG/despachos.webp",images:[{src:"IMG/despachos.webp",title:"Despachos · Gestión de despachos en la nube"}]},
+    despachos:{label:"Despachos",icon:"IMG/despachos.webp",images:[
+      {src:"IMG/despachos.webp",title:"Despachos · Gestión de despachos en la nube"}
+    ]},
     vende:{label:"Vende",icon:"IMG/vende.webp",images:[
       {src:"IMG/vendevendes.webp",title:"Vende · Punto de venta en la nube"},
       {src:"IMG/vendesigue.webp",title:"Vende · Punto de venta en la nube"},
@@ -262,99 +284,124 @@ const HERO_GALLERY_DATA={
   }}
 };
 
-/* =========================================================
-   HERO GALLERY (render)
-   ========================================================= */
-const HERO={nav:$("#heroGalleryGroups"),tabs:$("#heroGalleryTabs"),title:$("#heroGalleryTitle"),car:$("#heroGalleryCarousel"),def:"contable"};
-function heroSlides(groupKey,sysKey){
-  const base=getBasePath();
-  const cfg=HERO_GALLERY_DATA[groupKey]; if(!cfg)return;
-  const sys=cfg.systems[sysKey]; if(!sys||!sys.images?.length)return;
-  const track=$(".carousel-track",HERO.car),nav=$(".carousel-nav",HERO.car);
-  if(!track||!nav)return;
+const HERO_GALLERY={
+  groupNav:$("#heroGalleryGroups"),
+  tabsContainer:$("#heroGalleryTabs"),
+  titleEl:$("#heroGalleryTitle"),
+  carousel:$("#heroGalleryCarousel"),
+  defaultGroup:"contable"
+};
+
+function buildHeroGallerySlides(groupKey,sysKey){
+  const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
+  const sys=g.systems[sysKey]; if(!sys||!sys.images?.length) return;
+  const {carousel,titleEl,defaultGroup}=HERO_GALLERY; if(!carousel) return;
+  const track=carousel.querySelector(".carousel-track");
+  const nav=carousel.querySelector(".carousel-nav");
+  if(!track||!nav) return;
+
   track.innerHTML=""; nav.innerHTML="";
-  sys.images.forEach((it,i)=>{
+  sys.images.forEach((item,idx)=>{
     const slide=document.createElement("div");
-    slide.className="carousel-slide hero-slide"+(i===0?" is-active":"");
+    slide.className="carousel-slide hero-slide"+(idx===0?" is-active":"");
     const img=document.createElement("img");
-    img.src=(base==="../")?base+it.src:it.src;
-    img.alt=it.title||sys.label;
-    img.decoding="async";
-    img.loading=(i===0&&groupKey===HERO.def&&sysKey===cfg.defaultSys)?"eager":"lazy";
-    if(img.loading==="eager") img.setAttribute("fetchpriority","high");
+    img.src=absAsset(item.src);
+    img.alt=item.title||sys.label;
+    img.width=550; img.height=550; img.decoding="async";
+    const isLCP=(groupKey===defaultGroup && sysKey===g.defaultSys && idx===0);
+    if(isLCP){ img.loading="eager"; img.setAttribute("fetchpriority","high"); }
+    else img.loading="lazy";
     slide.appendChild(img);
     track.appendChild(slide);
 
     const dot=document.createElement("button");
     dot.type="button";
-    dot.className="dot"+(i===0?" active":"");
-    dot.setAttribute("aria-label","Ir a imagen "+(i+1));
+    dot.className="dot"+(idx===0?" active":"");
+    dot.setAttribute("aria-label","Ir a imagen "+(idx+1));
     dot.addEventListener("click",()=>{
-      $$(".carousel-slide",track).forEach(s=>s.classList.remove("is-active"));
-      slide.classList.add("is-active");
+      const slides=$$(".carousel-slide",track);
+      slides.forEach(s=>s.classList.remove("is-active"));
+      slides[idx]?.classList.add("is-active");
       $$(".dot",nav).forEach(d=>d.classList.remove("active"));
       dot.classList.add("active");
-      track.scrollTo({left:track.clientWidth*i,behavior:"smooth"});
+      track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
+      if(titleEl) titleEl.textContent=item.title||sys.label;
     });
     nav.appendChild(dot);
   });
-  HERO.title && (HERO.title.textContent=sys.images[0]?.title||sys.label);
+
+  if(titleEl) titleEl.textContent=sys.images[0]?.title||sys.label;
 }
-function heroTabs(groupKey){
-  const base=getBasePath();
-  const cfg=HERO_GALLERY_DATA[groupKey]; if(!cfg||!HERO.tabs)return;
-  HERO.tabs.innerHTML="";
-  Object.entries(cfg.systems).forEach(([sysKey,sys])=>{
+
+function buildHeroSystemTabs(groupKey){
+  const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
+  const c=HERO_GALLERY.tabsContainer; if(!c) return;
+  c.innerHTML="";
+  const def=g.defaultSys;
+
+  Object.entries(g.systems).forEach(([sysKey,sys])=>{
     const btn=document.createElement("button");
     btn.type="button";
-    btn.className="hero-tab"+(sysKey===cfg.defaultSys?" active":"");
-    const icon=(base==="../")?base+sys.icon:sys.icon;
-    btn.innerHTML=`<img src="${icon}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async"><span>${sys.label}</span>`;
+    btn.className="hero-tab"+(sysKey===def?" active":"");
+    btn.dataset.group=groupKey; btn.dataset.sys=sysKey;
+    btn.innerHTML=`<img src="${absAsset(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async"><span>${sys.label}</span>`;
     btn.addEventListener("click",()=>{
-      $$(".hero-tab",HERO.tabs).forEach(b=>b.classList.toggle("active",b===btn));
-      heroSlides(groupKey,sysKey);
+      $$(".hero-tab",c).forEach(b=>b.classList.toggle("active",b===btn));
+      buildHeroGallerySlides(groupKey,sysKey);
     });
-    HERO.tabs.appendChild(btn);
+    c.appendChild(btn);
   });
 }
-function initHero(){
-  if(!HERO.nav||!HERO.car)return;
-  HERO.nav.innerHTML="";
-  Object.entries(HERO_GALLERY_DATA).forEach(([g,group])=>{
+
+function initHeroGallery(){
+  const {groupNav,defaultGroup,carousel}=HERO_GALLERY;
+  if(!groupNav||!carousel) return;
+
+  groupNav.innerHTML="";
+  Object.entries(HERO_GALLERY_DATA).forEach(([groupKey,group])=>{
     const btn=document.createElement("button");
     btn.type="button";
-    btn.className="hero-group-tab"+(g===HERO.def?" active":"");
+    btn.className="hero-group-tab"+(groupKey===defaultGroup?" active":"");
+    btn.dataset.group=groupKey;
     btn.textContent=group.label;
     btn.addEventListener("click",()=>{
-      $$(".hero-group-tab",HERO.nav).forEach(b=>b.classList.toggle("active",b===btn));
-      heroTabs(g);
-      heroSlides(g,group.defaultSys);
+      $$(".hero-group-tab",groupNav).forEach(b=>b.classList.toggle("active",b===btn));
+      const cfg=HERO_GALLERY_DATA[groupKey];
+      buildHeroSystemTabs(groupKey);
+      buildHeroGallerySlides(groupKey,cfg.defaultSys);
     });
-    HERO.nav.appendChild(btn);
+    groupNav.appendChild(btn);
   });
-  heroTabs(HERO.def);
-  heroSlides(HERO.def,HERO_GALLERY_DATA[HERO.def].defaultSys);
 
-  const track=$(".carousel-track",HERO.car);
-  const prev=$(".arrowCircle.prev",HERO.car);
-  const next=$(".arrowCircle.next",HERO.car);
+  const track=carousel.querySelector(".carousel-track");
+  const prev=carousel.querySelector(".arrowCircle.prev");
+  const next=carousel.querySelector(".arrowCircle.next");
   const slidesFor=()=>$$(".carousel-slide",track);
-  const dotsFor=()=>$$(".dot",$(".carousel-nav",HERO.car));
+  const dotsFor=()=>$$(".dot",carousel.querySelector(".carousel-nav"));
   const goTo=i=>{
-    const s=slidesFor(); if(!s.length)return;
-    const idx=Math.max(0,Math.min(s.length-1,i));
-    s.forEach(x=>x.classList.remove("is-active"));
-    s[idx].classList.add("is-active");
+    const slides=slidesFor(); if(!slides.length) return;
+    const max=slides.length-1; const idx=Math.max(0,Math.min(max,i));
+    slides.forEach(s=>s.classList.remove("is-active"));
+    slides[idx].classList.add("is-active");
     dotsFor().forEach((d,k)=>d.classList.toggle("active",k===idx));
     track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
+    const g=HERO_GALLERY_DATA[$(".hero-group-tab.active",groupNav)?.dataset.group||defaultGroup];
+    const activeSys=$(".hero-tab.active",HERO_GALLERY.tabsContainer)?.dataset.sys||g.defaultSys;
+    const title=g.systems[activeSys]?.images?.[idx]?.title;
+    if(HERO_GALLERY.titleEl) HERO_GALLERY.titleEl.textContent=title||"";
   };
-  prev?.addEventListener("click",()=>goTo(slidesFor().findIndex(x=>x.classList.contains("is-active"))-1));
-  next?.addEventListener("click",()=>goTo(slidesFor().findIndex(x=>x.classList.contains("is-active"))+1));
+  prev?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i-1); });
+  next?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i+1); });
+
+  // estado inicial
+  const cfg=HERO_GALLERY_DATA[defaultGroup];
+  buildHeroSystemTabs(defaultGroup);
+  buildHeroGallerySlides(defaultGroup,cfg.defaultSys);
 }
 
-/* =========================================================
-   REELS DATA (TU INFO COMPLETA)
-   ========================================================= */
+/* =========================
+   REELS: DATA
+   ========================= */
 const REELS_DATA={
   contable:{titleEl:$("#reelTitle-contable"),carousel:$("#carouselReels-contable"),defaultSys:"contabilidad",reelsBySys:{
     contabilidad:[
@@ -374,7 +421,9 @@ const REELS_DATA={
       {id:"3YUbSEyU678",title:"Conciliación bancaria en 3 pasos con Bancos"},
       {id:"LC1Ccpv_jzo",title:"4 señales de que necesitas Bancos"}
     ],
-    xml:[{id:"nhoUDNnGQ90",title:"El día que José dejó de sufrir con el SAT descargando CFDIs"}]
+    xml:[
+      {id:"nhoUDNnGQ90",title:"El día que José dejó de sufrir con el SAT descargando CFDIs"}
+    ]
   }},
   comercial:{titleEl:$("#reelTitle-comercial"),carousel:$("#carouselReels-comercial"),defaultSys:"start",reelsBySys:{
     start:[
@@ -442,39 +491,47 @@ const REELS_DATA={
   }}
 };
 
-/* ---------- Reels rendering ---------- */
-function renderReelThumb(w){
-  const id=w.dataset.ytid,title=w.dataset.title||"";
-  w.innerHTML=`<button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
+function renderReelThumb(wrap){
+  const id=wrap.dataset.ytid; if(!id) return;
+  const title=wrap.dataset.title||"";
+  wrap.innerHTML=`<button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
     <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" loading="lazy" decoding="async" width="480" height="270"
       alt="${title}" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';">
-    <span class="yt-play"></span></button>`;
-  w.querySelector(".yt-thumb")?.addEventListener("click",()=>{stopAllReels();renderReelIframe(w);});
+    <span class="yt-play"></span>
+  </button>`;
+  wrap.querySelector(".yt-thumb")?.addEventListener("click",()=>{ stopAllReels(); renderReelIframe(wrap); });
 }
-function renderReelIframe(w){
-  const id=w.dataset.ytid,title=w.dataset.title||"";
-  w.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1"
-    title="${title}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+function renderReelIframe(wrap){
+  const id=wrap.dataset.ytid; if(!id) return;
+  const title=wrap.dataset.title||"";
+  wrap.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1"
+    title="${title}" loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
 }
 function stopAllReels(){
-  $$(".reel-embed").forEach(w=>w.dataset.ytid&&renderReelThumb(w));
+  document.querySelectorAll(".reel-embed").forEach(w=>{
+    if(!w.dataset.ytid) return;
+    renderReelThumb(w);
+  });
 }
+
 function buildReelsSlides(panelKey,sysKey){
-  const cfg=REELS_DATA[panelKey]; if(!cfg)return;
-  const {carousel,titleEl,reelsBySys}=cfg;
-  const track=carousel?.querySelector(".carousel-track");
-  const nav=carousel?.querySelector(".carousel-nav");
-  if(!track||!nav)return;
-  const reels=reelsBySys[sysKey]||[];
+  const cfg=REELS_DATA[panelKey]; if(!cfg) return;
+  const track=cfg.carousel?.querySelector(".carousel-track");
+  const nav=cfg.carousel?.querySelector(".carousel-nav");
+  if(!track||!nav) return;
+
+  const reels=(cfg.reelsBySys[sysKey]||[]);
   track.innerHTML=""; nav.innerHTML="";
+
   reels.forEach((reel,idx)=>{
     const slide=document.createElement("div");
     slide.className="carousel-slide"+(idx===0?" is-active":"");
     const wrap=document.createElement("div");
     wrap.className="reel-embed";
     wrap.dataset.ytid=reel.id;
-    wrap.dataset.title=reel.title||"";
+    wrap.dataset.title=reel.title;
     renderReelThumb(wrap);
     slide.appendChild(wrap);
     track.appendChild(slide);
@@ -485,95 +542,115 @@ function buildReelsSlides(panelKey,sysKey){
     dot.setAttribute("aria-label","Ir al reel "+(idx+1));
     dot.addEventListener("click",()=>{
       $$(".carousel-slide",track).forEach(s=>s.classList.remove("is-active"));
-      slide.classList.add("is-active");
+      $$(".carousel-slide",track)[idx]?.classList.add("is-active");
       $$(".dot",nav).forEach(d=>d.classList.remove("active"));
       dot.classList.add("active");
       track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
       stopAllReels();
+      if(cfg.titleEl) cfg.titleEl.textContent=reel.title||"";
     });
     nav.appendChild(dot);
   });
-  if(titleEl)titleEl.textContent=reels[0]?.title||"";
+
+  if(cfg.titleEl) cfg.titleEl.textContent=reels[0]?.title||"";
 }
+
 function initReelsCarousel(panelKey){
-  const cfg=REELS_DATA[panelKey]; if(!cfg||!cfg.carousel)return;
-  const car=cfg.carousel,track=$(".carousel-track",car);
+  const cfg=REELS_DATA[panelKey]; if(!cfg||!cfg.carousel) return;
+  const track=cfg.carousel.querySelector(".carousel-track");
+  const prev=cfg.carousel.querySelector(".arrowCircle.prev");
+  const next=cfg.carousel.querySelector(".arrowCircle.next");
   const slidesFor=()=>$$(".carousel-slide",track);
-  const navDots=()=>$$(".carousel-nav .dot",car);
+  const dotsFor=()=>$$(".carousel-nav .dot",cfg.carousel);
+
   const goTo=i=>{
-    const s=slidesFor(); if(!s.length)return;
-    const idx=Math.max(0,Math.min(s.length-1,i));
-    s.forEach(x=>x.classList.remove("is-active"));
-    s[idx].classList.add("is-active");
-    navDots().forEach((d,k)=>d.classList.toggle("active",k===idx));
+    const slides=slidesFor(); if(!slides.length) return;
+    const max=slides.length-1; const idx=Math.max(0,Math.min(max,i));
+    slides.forEach(s=>s.classList.remove("is-active"));
+    slides[idx].classList.add("is-active");
+    dotsFor().forEach((d,k)=>d.classList.toggle("active",k===idx));
     track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
+    stopAllReels();
   };
-  $(".arrowCircle.prev",car)?.addEventListener("click",()=>{stopAllReels();goTo(slidesFor().findIndex(x=>x.classList.contains("is-active"))-1);});
-  $(".arrowCircle.next",car)?.addEventListener("click",()=>{stopAllReels();goTo(slidesFor().findIndex(x=>x.classList.contains("is-active"))+1);});
+
+  prev?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i-1); });
+  next?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i+1); });
+
   buildReelsSlides(panelKey,cfg.defaultSys);
 }
 
-/* ---------- Videos normales tipo yt-lite (si los usas fuera de reels) ---------- */
+/* =========================
+   YT Lite (sección #videos)
+   ========================= */
 function initYTLiteVideos(){
   $$(".yt-lite").forEach(node=>{
-    if(node.dataset.ytReady==="1")return;
-    const id=node.dataset.ytid,title=node.dataset.title||"Video";
-    if(!id)return;
+    if(node.dataset.ytReady==="1") return;
+    const id=node.dataset.ytid, title=node.dataset.title||"Video";
+    if(!id) return;
+
     node.dataset.ytReady="1";
     const thumb=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
     node.innerHTML=`<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
       <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
-      <span class="yt-lite-play"></span></button>`;
+      <span class="yt-lite-play"></span>
+    </button>`;
+
     node.addEventListener("click",()=>{
-      if(node.dataset.ytLoaded==="1")return;
+      if(node.dataset.ytLoaded==="1") return;
       stopAllReels();
       node.innerHTML=`<iframe class="yt-iframe"
         src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1"
-        title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        title="${title}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
       node.dataset.ytLoaded="1";
     });
   });
 }
 
-/* ---------- FAQ ---------- */
+/* =========================
+   FAQ (solo 1 abierto)
+   ========================= */
 function initFAQ(){
-  $$(".faq-item").forEach(item=>{
+  document.querySelectorAll(".faq-item").forEach(item=>{
     item.addEventListener("toggle",()=>{
-      if(!item.open)return;
-      $$(".faq-item").forEach(o=>o!==item&&o.removeAttribute("open"));
+      if(!item.open) return;
+      document.querySelectorAll(".faq-item").forEach(other=>{
+        if(other!==item) other.removeAttribute("open");
+      });
     });
   });
 }
 
-/* =========================================================
-   INIT
-   ========================================================= */
-addEventListener("DOMContentLoaded",async()=>{
+/* =========================
+   Init principal
+   ========================= */
+window.addEventListener("DOMContentLoaded",async()=>{
   await Promise.all([
     loadPartial("header-placeholder","global-header.html"),
     loadPartial("footer-placeholder","global-footer.html")
   ]);
-  initHeader();
-  initHero();
+
+  initHeaderLogic();
+  initHeroGallery();
+
   ["contable","comercial","nube","productividad","servicios"].forEach(initReelsCarousel);
 
-  /* tabs de reels (si tienes botones .reel-tab) */
+  // tabs de reels
   $$(".reel-tab").forEach(tab=>{
     tab.addEventListener("click",()=>{
-      const panel=tab.dataset.panel,sys=tab.dataset.sys;
-      if(!panel||!sys)return;
+      const panelKey=tab.dataset.panel, sysKey=tab.dataset.sys;
+      if(!panelKey||!sysKey) return;
       stopAllReels();
-      $$(".reel-tab").forEach(t=>{
-        if(t.dataset.panel===panel)t.classList.toggle("active",t===tab);
-      });
-      buildReelsSlides(panel,sys);
+      $$(".reel-tab").forEach(t=>{ if(t.dataset.panel===panelKey) t.classList.toggle("active",t===tab); });
+      buildReelsSlides(panelKey,sysKey);
     });
   });
 
-  initYTLiteVideos();
+  initYTLiteVideos();     // (ANTES tenías initSimpleThumbs() y eso tronaba)
   initFAQ();
-  const y=$("#gf-year"); if(y)y.textContent=new Date().getFullYear();
-});
 
+  const yearSpan=document.getElementById("gf-year");
+  if(yearSpan) yearSpan.textContent=new Date().getFullYear();
+});
 })();
