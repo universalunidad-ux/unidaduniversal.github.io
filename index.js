@@ -695,16 +695,44 @@ function initReelsCarousel(panelKey){
   buildReelsSlides(panelKey,config.defaultSys);
 }
 
-function initSimpleThumbs(){
+function initYTLiteVideos(){
   $$(".yt-lite").forEach(node=>{
-    const id=node.dataset.ytid;
-    const title=node.dataset.title||"";
-    if(!id)return;
-    node.dataset.ytid=id;
-    node.dataset.title=title;
-    renderReelThumb(node);
+    if (node.dataset.ytReady === "1") return;
+    const id = node.dataset.ytid;
+    const title = node.dataset.title || "Video";
+    if(!id) return;
+
+    node.dataset.ytReady = "1";
+    const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+    node.innerHTML = `
+      <button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
+        <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
+        <span class="yt-lite-play"></span>
+      </button>
+    `;
+
+    node.addEventListener("click", ()=>{
+      if (node.dataset.ytLoaded === "1") return;
+
+      // Detén reels antes de abrir un video (para no dejar audio)
+      stopAllReels();
+
+      node.innerHTML = `
+        <iframe
+          class="yt-iframe"
+          src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1"
+          title="${title}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      `;
+      node.dataset.ytLoaded = "1";
+    });
   });
 }
+
 
 function initFAQ(){
   document.querySelectorAll(".faq-item").forEach(item=>{
