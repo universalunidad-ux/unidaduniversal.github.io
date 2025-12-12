@@ -601,9 +601,84 @@
       <a href="#sesion-guiada">Contacto</a>
     </aside>
   </main>
+<!-- Header dinámico (si lo usas) -->
+<div id="header-placeholder"></div>
 
-  <!-- Footer dinámico -->
-  <div id="footer-placeholder"></div>
+<!-- Footer dinámico -->
+<div id="footer-placeholder"></div>
+
+<script>
+(async () => {
+  // 1) Detecta si estás en GitHub Pages tipo: https://usuario.github.io/repo/...
+  const isGh = location.hostname.endsWith("github.io");
+  const firstSeg = location.pathname.split("/")[1] || "";
+  const repoBase = (isGh && firstSeg) ? ("/" + firstSeg) : "";
+
+  // 2) Helper para construir URLs absolutas (robusto aunque tengas <base href="./">)
+  const abs = (p) => (isGh ? (repoBase + "/" + p) : ("/" + p)).replace(/\/+/g, "/");
+
+  // 3) Fetch con fallback (sin HEAD)
+  const tryFetchText = async (url) => {
+    const r = await fetch(url, { cache: "no-cache" });
+    if (!r.ok) throw new Error(`${r.status} ${r.statusText} -> ${url}`);
+    return r.text();
+  };
+
+  // 4) Candidatos: primero absoluto (GitHub), luego relativo (por si pruebas local con otra estructura)
+  const headerCandidates = [
+    abs("PARTIALS/global-header.html"),
+    "../PARTIALS/global-header.html",
+    "PARTIALS/global-header.html"
+  ];
+  const footerCandidates = [
+    abs("PARTIALS/global-footer.html"),
+    "../PARTIALS/global-footer.html",
+    "PARTIALS/global-footer.html"
+  ];
+
+  const pickText = async (cands) => {
+    let lastErr = null;
+    for (const u of cands) {
+      try { return await tryFetchText(u); }
+      catch (e) { lastErr = e; }
+    }
+    throw lastErr || new Error("No se pudo cargar el partial.");
+  };
+
+  // 5) Carga e inyecta
+  const [h, f] = await Promise.all([
+    pickText(headerCandidates).catch(() => ""), // header opcional
+    pickText(footerCandidates)
+  ]);
+
+  const hp = document.getElementById("header-placeholder");
+  const fp = document.getElementById("footer-placeholder");
+  if (hp && h) hp.outerHTML = h;
+  if (fp && f) fp.outerHTML = f;
+
+  // 6) Reescritura de data-src / data-href a rutas absolutas
+  document.querySelectorAll(".js-abs-src[data-src]").forEach(el => {
+    const v = el.getAttribute("data-src");
+    if (!v) return;
+    el.src = abs(v);
+    el.addEventListener("load", () => { el.style.opacity = "1"; }, { once: true });
+  });
+
+  document.querySelectorAll(".js-abs-href[data-href]").forEach(a => {
+    const raw = a.getAttribute("data-href");
+    if (!raw) return;
+    const [pth, hash] = raw.split("#");
+    a.href = abs(pth) + (hash ? ("#" + hash) : "");
+  });
+
+  // 7) Año
+  const y = document.getElementById("gf-year");
+  if (y) y.textContent = new Date().getFullYear();
+
+})().catch(err => {
+  console.error("Error cargando partials:", err);
+});
+</script>
 
   <!-- JS global servicios (header/footer, carruseles, pills, FAQ, etc.) -->
   <script src="../mainservicios.js" defer></script>
