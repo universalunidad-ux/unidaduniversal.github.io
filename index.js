@@ -1,4 +1,4 @@
-/* Expiriti index.js (CORREGIDO FINAL V2) */
+/* Expiriti index.js (FINAL V4 - SIN TÍTULOS EN HERO) */
 (function(){
 "use strict";
 if(window.__EXPIRITI_INIT__) return; window.__EXPIRITI_INIT__=true;
@@ -97,7 +97,7 @@ $("#contactForm")?.addEventListener("submit",e=>{
 });
 
 /* =========================
-   Tabs Productos (4 paneles)
+   Tabs Productos
    ========================= */
 const tabsProductos=$$(".prod-tabs .tab");
 const panelsProductos=$$(".panel-productos");
@@ -139,147 +139,142 @@ $$(".card.product-card[data-href]").forEach(card=>{
 const HERO_GALLERY_DATA={
   contable:{label:"Contables",defaultSys:"nominas",systems:{
     contabilidad:{label:"Contabilidad",icon:"IMG/contabilidadsq.webp",images:[
-      {src:"IMG/contamate.webp",title:"Contabilidad · Auxiliares y balanza"},
-      {src:"IMG/3conta.webp",title:"Contabilidad · Pólizas y reportes"},
-      {src:"IMG/conta%20ybancos.webp",title:"Contabilidad · Auxiliares y balanza"},
-      {src:"IMG/impuestos%20sin%20estres%20conta%20y%20bancos.webp",title:"Impuestos sin estrés"},
-      {src:"IMG/1conta.webp",title:"Contabilidad · Auxiliares y balanza"},
-      {src:"IMG/conta%20y%20bancos%202.webp",title:"Contabilidad · Auxiliares y balanza"},
-      {src:"IMG/contacfdi.webp",title:"Contabilidad · Auxiliares y balanza"},
-      {src:"IMG/contadesglo.webp",title:"Contabilidad · Auxiliares y balanza"}
+      {src:"IMG/contamate.webp"},
+      {src:"IMG/3conta.webp"},
+      {src:"IMG/conta%20ybancos.webp"},
+      {src:"IMG/impuestos%20sin%20estres%20conta%20y%20bancos.webp"},
+      {src:"IMG/1conta.webp"},
+      {src:"IMG/conta%20y%20bancos%202.webp"},
+      {src:"IMG/contacfdi.webp"},
+      {src:"IMG/contadesglo.webp"}
     ]},
     nominas:{label:"Nóminas",icon:"IMG/nominassq.webp",images:[
-      {src:"IMG/primera.webp",title:"Nóminas · Bitácora de operaciones"},
-      {src:"IMG/490962328_1082897360538668_175183934644162321_n.webp",title:"Nóminas · Recibos y timbrado"},
-      {src:"IMG/NOMINAS.webp",title:"Nóminas · Recibos y timbrado"},
-      {src:"IMG/ptu.webp",title:"Nóminas · Calcula PTU con precisión"},
-      {src:"IMG/posible.webp",title:"Nóminas · Conexión INFONAVIT"},
-      {src:"IMG/COMENTARIOS%20USUARIOS.webp",title:"Nóminas · Calcula PTU con precisión"},
-      {src:"IMG/COMMENTS%20ESTRELLAS%201.webp",title:"Nóminas · Calcula PTU con precisión"},
-      {src:"IMG/nomtraza.webp",title:"Nóminas · Recibos y timbrado"},
-      {src:"IMG/nommovs.webp",title:"Nóminas · Recibos y timbrado"},
-      {src:"IMG/nomisr.webp",title:"Nóminas · Recibos y timbrado"},
-      {src:"IMG/nomiequi.webp",title:"Nóminas · Recibos y timbrado"},
-      {src:"IMG/nomentrega.webp",title:"Nóminas · Recibos y timbrado"}
+      {src:"IMG/primera.webp"},
+      {src:"IMG/490962328_1082897360538668_175183934644162321_n.webp"},
+      {src:"IMG/NOMINAS.webp"},
+      {src:"IMG/ptu.webp"},
+      {src:"IMG/posible.webp"},
+      {src:"IMG/COMENTARIOS%20USUARIOS.webp"},
+      {src:"IMG/COMMENTS%20ESTRELLAS%201.webp"},
+      {src:"IMG/nomtraza.webp"},
+      {src:"IMG/nommovs.webp"},
+      {src:"IMG/nomisr.webp"},
+      {src:"IMG/nomiequi.webp"},
+      {src:"IMG/nomentrega.webp"}
     ]},
     bancos:{label:"Bancos",icon:"IMG/bancossq.webp",images:[
-      {src:"IMG/efectivamente.webp",title:"Bancos · Conciliación bancaria"},
-      {src:"IMG/olvida.webp",title:"Bancos · Conciliación bancaria"},
-      {src:"IMG/CONTROL%20MOVIMIENTOS%20BANCARIOS.webp",title:"Bancos · Conciliación bancaria"},
-      {src:"IMG/CARRUSEL%20CONECTA%201jpg.webp",title:"Bancos · Conciliación bancaria"},
-      {src:"IMG/CARRUSEL%20CONECTA%202.webp",title:"Bancos · Conciliación bancaria"},
-      {src:"IMG/PAGARAN.webp",title:"Bancos · Conciliación bancaria"},
-      {src:"IMG/proyecta.webp",title:"Bancos · Conciliación bancaria"},
-      {src:"IMG/revisas.webp",title:"Bancos · Conciliación bancaria"},
-      {src:"IMG/bancosperso.webp",title:"Bancos · Conciliación bancaria"}
+      {src:"IMG/efectivamente.webp"},
+      {src:"IMG/olvida.webp"},
+      {src:"IMG/CONTROL%20MOVIMIENTOS%20BANCARIOS.webp"},
+      {src:"IMG/CARRUSEL%20CONECTA%201jpg.webp"},
+      {src:"IMG/CARRUSEL%20CONECTA%202.webp"},
+      {src:"IMG/PAGARAN.webp"},
+      {src:"IMG/proyecta.webp"},
+      {src:"IMG/revisas.webp"},
+      {src:"IMG/bancosperso.webp"}
     ]},
     xml:{label:"XML en Línea+",icon:"IMG/xmlsq.webp",images:[
-      {src:"IMG/dos.webp",title:"XML en Línea+ · Descarga de CFDI"},
-      {src:"IMG/SOFTWARE%20FAVORITO%201.webp",title:"XML en Línea+ · Descarga de CFDI"},
-      {src:"IMG/SOFTWARE%20FAVORITO%202.webp",title:"XML en Línea+ · Descarga de CFDI"}
+      {src:"IMG/dos.webp"},
+      {src:"IMG/SOFTWARE%20FAVORITO%201.webp"},
+      {src:"IMG/SOFTWARE%20FAVORITO%202.webp"}
     ]}
   }},
   comercial:{label:"Comerciales",defaultSys:"start",systems:{
     start:{label:"Comercial Start",icon:"IMG/comercialstartsq.webp",images:[
-      {src:"IMG/comercialstart.webp",title:"Start · Ventas e inventario básico"}
+      {src:"IMG/comercialstart.webp"}
     ]},
     pro:{label:"Comercial Pro",icon:"IMG/comercialprosq.webp",images:[
-      {src:"IMG/captura%20manual.webp",title:"Pro · Operaciones de alto volumen"},
-      {src:"IMG/procumple.webp",title:"Pro · Operaciones de alto volumen"},
-      {src:"IMG/prorenta.webp",title:"Pro · Operaciones de alto volumen"},
-      {src:"IMG/COMPRAVENTA.webp",title:"Pro · Operaciones de alto volumen"},
-      {src:"IMG/FUNCIONES%20%PRO.webp",title:"Pro · Operaciones de alto volumen"},
-      {src:"IMG/FUNCIONES%20%PRO2.webp",title:"Pro · Operaciones de alto volumen"},
-      {src:"IMG/MODULO.webp",title:"Pro · Operaciones de alto volumen"}
+      {src:"IMG/captura%20manual.webp"},
+      {src:"IMG/procumple.webp"},
+      {src:"IMG/prorenta.webp"},
+      {src:"IMG/COMPRAVENTA.webp"},
+      {src:"IMG/FUNCIONES%20%PRO.webp"},
+      {src:"IMG/FUNCIONES%20%PRO2.webp"},
+      {src:"IMG/MODULO.webp"}
     ]},
     premium:{label:"Comercial Premium",icon:"IMG/comercialpremiumsq.webp",images:[
-      {src:"IMG/desde%20compras%20ventas%20traslados.webp",title:"Premium · Políticas y listas de precio"},
-      {src:"IMG/INVENTARIO%20Y%20VENTAS.webp",title:"Premium · Políticas y listas de precio"},
-      {src:"IMG/LIGAS%20DE%20PAGO.webp",title:"Premium · Políticas y listas de precio"},
-      {src:"IMG/NOTAS%20DE%20VENTA.webp",title:"Premium · Políticas y listas de precio"},
-      {src:"IMG/COSTOS%20Y%20UTILIDADES.webp",title:"Premium · Políticas y listas de precio"},
-      {src:"IMG/INVENTARIOS,%20FINANZAS%20jpg.webp",title:"Premium · Políticas y listas de precio"},
-      {src:"IMG/STOCK.webp",title:"Premium · Políticas y listas de precio"},
-      {src:"IMG/comportamiento.webp",title:"Premium · Políticas y listas de precio"},
-      {src:"IMG/premtrans.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/premrutas.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/prempro.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/premdash.webp",title:"Factura electrónica · Timbrado CFDI 4.0"}
+      {src:"IMG/desde%20compras%20ventas%20traslados.webp"},
+      {src:"IMG/INVENTARIO%20Y%20VENTAS.webp"},
+      {src:"IMG/LIGAS%20DE%20PAGO.webp"},
+      {src:"IMG/NOTAS%20DE%20VENTA.webp"},
+      {src:"IMG/COSTOS%20Y%20UTILIDADES.webp"},
+      {src:"IMG/INVENTARIOS,%20FINANZAS%20jpg.webp"},
+      {src:"IMG/STOCK.webp"},
+      {src:"IMG/comportamiento.webp"},
+      {src:"IMG/premtrans.webp"},
+      {src:"IMG/premrutas.webp"},
+      {src:"IMG/prempro.webp"},
+      {src:"IMG/premdash.webp"}
     ]},
     factura:{label:"Factura electrónica",icon:"IMG/facturasq.webp",images:[
-      {src:"IMG/INCLUYE%201.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/INCLUYE%202.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/INCLUYE%203.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/CARACTERISTICAS%202.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/CARACTERISTICAS%203.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/carta%20porte.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/CONTROLA.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/solucion%20facil.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/facinfo.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/facpreo.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/factiemp.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/factimbra.webp",title:"Factura electrónica · Timbrado CFDI 4.0"},
-      {src:"IMG/factserv.webp",title:"Factura electrónica · Timbrado CFDI 4.0"}
+      {src:"IMG/INCLUYE%201.webp"},
+      {src:"IMG/INCLUYE%202.webp"},
+      {src:"IMG/INCLUYE%203.webp"},
+      {src:"IMG/CARACTERISTICAS%202.webp"},
+      {src:"IMG/CARACTERISTICAS%203.webp"},
+      {src:"IMG/carta%20porte.webp"},
+      {src:"IMG/CONTROLA.webp"},
+      {src:"IMG/solucion%20facil.webp"},
+      {src:"IMG/facinfo.webp"},
+      {src:"IMG/facpreo.webp"},
+      {src:"IMG/factiemp.webp"},
+      {src:"IMG/factimbra.webp"},
+      {src:"IMG/factserv.webp"}
     ]}
   }},
   nube:{label:"En la Nube",defaultSys:"analiza",systems:{
     analiza:{label:"Analiza",icon:"IMG/analiza.webp",images:[
-      {src:"IMG/04%20Analiza%20discrepancias.webp",title:"Analiza · Dashboard ejecutivo"},
-      {src:"IMG/04%20Analiza%20reportes.webp",title:"Analiza · Dashboard ejecutivo"},
-      {src:"IMG/anadecide.webp",title:"Analiza · Dashboard ejecutivo"},
-      {src:"IMG/ananocuadr.webp",title:"Analiza · Dashboard ejecutivo"},
-      {src:"IMG/analizarespues.webp",title:"Analiza · Dashboard ejecutivo"},
-      {src:"IMG/analizareportes.webp",title:"Analiza · Dashboard ejecutivo"},
-      {src:"IMG/analizadescuadr.webp",title:"Analiza · Dashboard ejecutivo"},
-      {src:"IMG/analizacorrige.webp",title:"Analiza · Dashboard ejecutivo"},
-      {src:"IMG/analizacfdi.webp",title:"Analiza · Dashboard ejecutivo"}
+      {src:"IMG/04%20Analiza%20discrepancias.webp"},
+      {src:"IMG/04%20Analiza%20reportes.webp"},
+      {src:"IMG/anadecide.webp"},
+      {src:"IMG/ananocuadr.webp"},
+      {src:"IMG/analizarespues.webp"},
+      {src:"IMG/analizareportes.webp"},
+      {src:"IMG/analizadescuadr.webp"},
+      {src:"IMG/analizacorrige.webp"},
+      {src:"IMG/analizacfdi.webp"}
     ]},
     contabiliza:{label:"Contabiliza",icon:"IMG/contabiliza.webp",images:[
-      {src:"IMG/contatranq.webp",title:"Contabiliza · Contabilidad en la nube"},
-      {src:"IMG/contaclari.webp",title:"Contabiliza · Contabilidad en la nube"},
-      {src:"IMG/contabprocesos.webp",title:"Contabiliza · Contabilidad en la nube"},
-      {src:"IMG/contabireal.webp",title:"Contabiliza · Contabilidad en la nube"}
+      {src:"IMG/contatranq.webp"},
+      {src:"IMG/contaclari.webp"},
+      {src:"IMG/contabprocesos.webp"},
+      {src:"IMG/contabireal.webp"}
     ]},
     despachos:{label:"Despachos",icon:"IMG/despachos.webp",images:[
-      {src:"IMG/despachos.webp",title:"Despachos · Gestión de despachos en la nube"}
+      {src:"IMG/despachos.webp"}
     ]},
     vende:{label:"Vende",icon:"IMG/vende.webp",images:[
-      {src:"IMG/vendevendes.webp",title:"Vende · Punto de venta en la nube"},
-      {src:"IMG/vendesigue.webp",title:"Vende · Punto de venta en la nube"},
-      {src:"IMG/vendexml.webp",title:"Vende · Punto de venta en la nube"},
-      {src:"IMG/vendesegui.webp",title:"Vende · Punto de venta en la nube"},
-      {src:"IMG/venderuta.webp",title:"Vende · Punto de venta en la nube"},
-      {src:"IMG/vendequien.webp",title:"Vende · Punto de venta en la nube"},
-      {src:"IMG/vendemarca.webp",title:"Vende · Punto de venta en la nube"},
-      {src:"IMG/vendekpis.webp",title:"Vende · Punto de venta en la nube"},
-      {src:"IMG/vendeayu.webp",title:"Vende · Punto de venta en la nube"}
+      {src:"IMG/vendevendes.webp"},
+      {src:"IMG/vendesigue.webp"},
+      {src:"IMG/vendexml.webp"},
+      {src:"IMG/vendesegui.webp"},
+      {src:"IMG/venderuta.webp"},
+      {src:"IMG/vendequien.webp"},
+      {src:"IMG/vendemarca.webp"},
+      {src:"IMG/vendekpis.webp"},
+      {src:"IMG/vendeayu.webp"}
     ]}
   }},
   productividad:{label:"Productividad",defaultSys:"evalua",systems:{
     evalua:{label:"Evalúa",icon:"IMG/evalua.webp",images:[
-      {src:"IMG/evaluaencu.webp",title:"Evalúa · Encuestas y clima laboral"},
-      {src:"IMG/evaluabien.webp",title:"Evalúa · Encuestas y clima laboral"},
-      {src:"IMG/nom37.webp",title:"Evalúa · Encuestas y clima laboral"}
+      {src:"IMG/evaluaencu.webp"},
+      {src:"IMG/evaluabien.webp"},
+      {src:"IMG/nom37.webp"}
     ]},
     colabora:{label:"Colabora",icon:"IMG/colabora.webp",images:[
-      {src:"IMG/colabacceso.webp",title:"Colabora · App sin costo para tu equipo"},
-      {src:"IMG/colabtoda.webp",title:"Colabora · App sin costo para tu equipo"},
-      {src:"IMG/colacentra.webp",title:"Colabora · App sin costo para tu equipo"},
-      {src:"IMG/colacola.webp",title:"Colabora · App sin costo para tu equipo"}
+      {src:"IMG/colabacceso.webp"},
+      {src:"IMG/colabtoda.webp"},
+      {src:"IMG/colacentra.webp"},
+      {src:"IMG/colacola.webp"}
     ]},
     personia:{label:"Personia",icon:"IMG/personia.webp",images:[
-      {src:"IMG/personiaseg.webp",title:"Personia · Expedientes de empleados"},
-      {src:"IMG/personmas.webp",title:"Personia · Expedientes de empleados"},
-      {src:"IMG/personiaptu.webp",title:"Personia · Expedientes de empleados"},
-      {src:"IMG/persobime.webp",title:"Personia · Expedientes de empleados"}
+      {src:"IMG/personiaseg.webp"},
+      {src:"IMG/personmas.webp"},
+      {src:"IMG/personiaptu.webp"},
+      {src:"IMG/persobime.webp"}
     ]}
   }},
-  servicios:{label:"Servicios",defaultSys:"implementaciones",systems:{
-    /* NOTA: Se ajusta la estructura para que "servicios" funcione en HERO_GALLERY
-       si fuera necesario, aunque el HTML usa una sección aparte. 
-       Para los REELS de servicios se usa REELS_DATA abajo.
-    */
-  }}
+  servicios:{label:"Servicios",defaultSys:"implementaciones",systems:{}}
 };
 
 const HERO_GALLERY={
@@ -292,7 +287,7 @@ const HERO_GALLERY={
 
 function buildHeroGallerySlides(groupKey,sysKey){
   const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
-  const sys=g.systems?.[sysKey]; if(!sys||!sys.images?.length) return;
+  const sys=g.systems[sysKey]; if(!sys||!sys.images?.length) return;
   const {carousel,titleEl,defaultGroup}=HERO_GALLERY; if(!carousel) return;
   const track=carousel.querySelector(".carousel-track");
   const nav=carousel.querySelector(".carousel-nav");
@@ -323,12 +318,12 @@ function buildHeroGallerySlides(groupKey,sysKey){
       $$(".dot",nav).forEach(d=>d.classList.remove("active"));
       dot.classList.add("active");
       track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
-      if(titleEl) titleEl.textContent=item.title||sys.label;
+      /* Ya NO ponemos el título aquí */
     });
     nav.appendChild(dot);
   });
 
-  if(titleEl) titleEl.textContent=sys.images[0]?.title||sys.label;
+  /* Ya NO ponemos el título inicial aquí */
 }
 
 function buildHeroSystemTabs(groupKey){
@@ -359,7 +354,7 @@ function initHeroGallery(){
 
   groupNav.innerHTML="";
   Object.entries(HERO_GALLERY_DATA).forEach(([groupKey,group])=>{
-    if(groupKey==="servicios") return; // Servicios no va en el hero principal
+    if(groupKey==="servicios") return;
     const btn=document.createElement("button");
     btn.type="button";
     btn.className="hero-group-tab"+(groupKey===defaultGroup?" active":"");
@@ -388,13 +383,11 @@ function initHeroGallery(){
     track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
     const g=HERO_GALLERY_DATA[$(".hero-group-tab.active",groupNav)?.dataset.group||defaultGroup];
     const activeSys=$(".hero-tab.active",HERO_GALLERY.tabsContainer)?.dataset.sys||g.defaultSys;
-    const title=g.systems?.[activeSys]?.images?.[idx]?.title;
-    if(HERO_GALLERY.titleEl) HERO_GALLERY.titleEl.textContent=title||"";
+    /* Ya NO ponemos el título aquí */
   };
   prev?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i-1); });
   next?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i+1); });
 
-  // estado inicial
   const cfg=HERO_GALLERY_DATA[defaultGroup];
   buildHeroSystemTabs(defaultGroup);
   buildHeroGallerySlides(defaultGroup,cfg.defaultSys);
@@ -500,7 +493,7 @@ function renderReelThumb(wrap){
       alt="${title}" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';">
     <span class="yt-play"></span>
   </button>`;
-  const btn=wrap.querySelector(".yt-thumb");
+  const btn = wrap.querySelector(".yt-thumb");
   if(btn) btn.addEventListener("click",()=>{ stopAllReels(); renderReelIframe(wrap); });
 }
 
