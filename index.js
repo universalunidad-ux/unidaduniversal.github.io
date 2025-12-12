@@ -1,3 +1,10 @@
+(function(){
+  "use strict";
+  if (window.__EXPIRITI_INIT__) return;
+  window.__EXPIRITI_INIT__ = true;
+
+  // ...resto de tu código...
+
 (function(){ 
 "use strict";
 const $$=(sel,ctx=document)=>Array.from(ctx.querySelectorAll(sel));
