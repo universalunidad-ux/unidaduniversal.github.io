@@ -502,12 +502,19 @@ function renderReelThumb(wrap){
   wrap.querySelector(".yt-thumb")?.addEventListener("click",()=>{ stopAllReels(); renderReelIframe(wrap); });
 }
 function renderReelIframe(wrap){
-  const id=wrap.dataset.ytid; if(!id) return;
-  const title=wrap.dataset.title||"";
-  wrap.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1"
-    title="${title}" loading="lazy"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  const id = wrap.dataset.ytid;
+  const title = wrap.dataset.title || "";
+  wrap.innerHTML = `
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1"
+      title="${title}"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  `;
+}
+
+   
 }
 function stopAllReels(){
   document.querySelectorAll(".reel-embed").forEach(w=>{
