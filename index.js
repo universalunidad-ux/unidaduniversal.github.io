@@ -1,4 +1,4 @@
-(function(){
+(function(){ 
 "use strict";
 const $$=(sel,ctx=document)=>Array.from(ctx.querySelectorAll(sel));
 const $=(sel,ctx=document)=>ctx.querySelector(sel);
