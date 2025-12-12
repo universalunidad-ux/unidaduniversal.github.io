@@ -207,33 +207,52 @@
     });
   })();
 
-  // =========================================================
-  // 5) List slider (“¿Por qué elegir nuestro Soporte?”)
+ // =========================================================
+  // 5) List slider (“¿Por qué elegir nuestro Soporte?”) - CORREGIDO
   // =========================================================
   (function(){
     document.querySelectorAll(".listSlider").forEach(w=>{
       const track = w.querySelector(".listTrack");
       const prev  = w.querySelector(".arrowCircle.prev");
       const next  = w.querySelector(".arrowCircle.next");
+      
+      // Validación de seguridad: si falta algo, no ejecuta nada
       if(!track || !prev || !next) return;
 
-      let i   = 0;
-      const len = track.children.length;
+      let i = 0;
+      // Forzamos el recuento de hijos directos (las páginas)
+      const pages = track.children;
+      const len = pages.length;
 
       function go(n){
         if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+        
+        // Ciclo infinito (circular)
         i = (n + len) % len;
-        track.scrollTo({left: w.clientWidth * i, behavior:"smooth"});
+        
+        // CORRECCIÓN CLAVE: Usar track.clientWidth en lugar de w.clientWidth
+        // track.clientWidth es el ancho exacto del área visible sin las flechas
+        const width = track.clientWidth; 
+        
+        track.scrollTo({
+          left: width * i, 
+          behavior: "smooth"
+        });
       }
 
-      prev.addEventListener("click",()=>go(i-1));
-      next.addEventListener("click",()=>go(i+1));
-      window.addEventListener("resize",()=>go(i));
+      prev.addEventListener("click", () => go(i - 1));
+      next.addEventListener("click", () => go(i + 1));
+      
+      // Al redimensionar la pantalla, reajustar la posición para que no quede cortado
+      window.addEventListener("resize", () => {
+         // Pequeño timeout para esperar a que el layout se asiente
+         setTimeout(() => go(i), 100);
+      });
 
+      // Iniciar en 0
       go(0);
     });
   })();
-
   // =========================================================
   // 6) Píldoras (filtros de servicios)
   // =========================================================
