@@ -468,3 +468,84 @@ textarea { resize: vertical; }
   }
 }
 
+/* =========================================================
+   AGREGADOS PARA PÁGINAS DE SERVICIOS (Update Final)
+   ========================================================= */
+
+/* 1. ESTILOS PARA TABLAS DE PRECIOS (Paquetes) */
+.pricing-table-nube {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 10px;
+  font-size: 14px;
+}
+.pricing-table-nube thead th {
+  text-align: left;
+  padding: 12px 16px;
+  color: #9ca3af;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(148, 163, 184, .2);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.pricing-table-nube tbody tr {
+  transition: background .15s ease;
+}
+.pricing-table-nube tbody tr:hover {
+  background: rgba(30, 41, 59, .5) !important; /* Highlight al pasar mouse */
+}
+.pricing-table-nube td {
+  padding: 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, .1);
+  color: #e5e7eb;
+  vertical-align: middle;
+}
+.pricing-table-nube .plan-name {
+  font-weight: 700;
+  color: #fff;
+  width: 35%;
+}
+.pricing-table-nube .price {
+  text-align: right;
+  font-weight: 700;
+  color: #60a5fa; /* Azul claro */
+  white-space: nowrap;
+}
+.pricing-table-nube tfoot td {
+  padding-top: 20px;
+  border: none;
+}
+
+/* 2. REFINAMIENTO DE FULL SCREEN PARA SERVICIOS */
+/* Esto asegura que si usas section-full en el Hero de servicios, 
+   no rompa el diseño si el contenido es mucho */
+.section-full {
+  min-height: 90vh; /* Un poco menos de 100 para dar aire al header/footer */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 40px 0;
+}
+
+/* En móviles, desactivamos la altura forzada para que puedan hacer scroll */
+@media (max-width: 960px) {
+  .section-full {
+    min-height: auto;
+    padding: 60px 0;
+    display: block;
+  }
+}
+
+/* 3. AJUSTE PARA LISTAS CON ICONOS (Checklist de Implementación) */
+/* Alinea perfectamente el icono con el texto */
+.listItem {
+  align-items: flex-start; /* Icono arriba alineado con la primera línea de texto */
+}
+.listItem .listIcon {
+  margin-top: 2px; /* Pequeño ajuste visual */
+  flex-shrink: 0;  /* Evita que el icono se aplaste */
+}
+
