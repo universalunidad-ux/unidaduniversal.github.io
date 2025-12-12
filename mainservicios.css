@@ -1570,3 +1570,49 @@ textarea {
   left: 0;
   border: 0;
 }
+
+/* =========================================
+   MOVER FLECHAS CARRUSEL ABAJO A LA DERECHA
+   ========================================= */
+
+/* 1. Aseguramos que el contenedor del carrusel tenga espacio abajo para los controles */
+.carousel {
+  padding-bottom: 50px; /* Espacio extra abajo para las flechas */
+  position: relative;
+}
+
+/* 2. Posicionamos las flechas NO en el centro vertical, sino abajo */
+.arrowCircle {
+  top: auto !important;       /* Anula el centrado vertical */
+  bottom: 10px !important;    /* Las pega al fondo */
+  transform: none !important; /* Quita la transformación de centrado */
+  background: rgba(15, 23, 42, 1); /* Fondo sólido para que se vean bien */
+  border-color: rgba(56, 189, 248, 0.5); /* Borde sutil azul */
+  z-index: 10;
+}
+
+/* 3. Posición específica: Flecha IZQUIERDA (<) */
+.arrowCircle.prev {
+  left: auto !important;  /* Ya no a la izquierda */
+  right: 50px !important; /* A la derecha, pero dejando hueco para la otra */
+}
+
+/* 4. Posición específica: Flecha DERECHA (>) */
+.arrowCircle.next {
+  right: 10px !important; /* Pegada al borde derecho */
+}
+
+/* 5. Ajuste para los puntos de paginación (dots) */
+/* Los movemos a la izquierda para que no se encimen con las flechas */
+.carousel-nav {
+  justify-content: flex-start !important; /* Alineados a la izquierda */
+  padding-left: 14px;
+  position: absolute;
+  bottom: 18px;
+  width: 100%;
+  pointer-events: none; /* Para que no bloqueen clics */
+}
+
+.carousel-nav .dot {
+  pointer-events: auto; /* Reactivamos clics solo en los puntos */
+}
