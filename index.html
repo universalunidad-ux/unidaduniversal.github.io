@@ -157,13 +157,53 @@
     </div>
   </section>
 
-  <section id="promociones">
-    <div class="container">
-      <div class="section-title"><h2 style="margin:0">Promociones</h2></div>
-      <div class="promo-filters" aria-label="Filtro de promociones"><button class="promo-btn active" data-filter="nuevos">Usuarios nuevos</button><button class="promo-btn" data-filter="renovaciones">Renovaciones</button><button class="promo-btn" data-filter="tradicional">Tradicional</button><button class="promo-btn" data-filter="mas">Más</button></div>
-      <div class="promo-grid" id="promoGrid"><img src="IMG/40dic.webp" alt="Promo usuarios nuevos diciembre" data-type="nuevos" onerror="this.style.display='none'" loading="lazy" decoding="async" width="600" height="600"><img src="IMG/15sisdic.webp" alt="Promo renovaciones diciembre" data-type="renovaciones" onerror="this.style.display='none'" loading="lazy" decoding="async" width="600" height="600"><img src="IMG/10trad.webp" alt="Promo tradicional diciembre" data-type="mas" onerror="this.style.display='none'" loading="lazy" decoding="async" width="600" height="600"><img src="IMG/20traddic.webp" alt="Más promociones diciembre" data-type="mas" onerror="this.style.display='none'" loading="lazy" decoding="async" width="600" height="600"></div>
+<section id="promociones">
+  <div class="container">
+    <div class="section-title"><h2 style="margin:0">Promociones</h2></div>
+
+    <div class="promo-filters" aria-label="Filtro de promociones">
+      <button class="promo-btn active" data-filter="nuevos">Usuarios nuevos</button>
+      <button class="promo-btn" data-filter="renovaciones">Renovaciones</button>
+      <button class="promo-btn" data-filter="tradicional">Tradicional</button>
+      <button class="promo-btn" data-filter="mas">Más</button>
+      <button class="promo-btn" data-filter="msi">Meses sin interés</button>
     </div>
-  </section>
+
+    <div class="promo-grid" id="promoGrid">
+      <!-- EXISTENTES -->
+      <img src="IMG/40dic.webp" alt="Promo usuarios nuevos diciembre"
+           data-type="nuevos" loading="lazy" decoding="async"
+           width="600" height="600" onerror="this.style.display='none'">
+
+      <img src="IMG/152sisdic.webp" alt="Promo renovaciones diciembre"
+           data-type="renovaciones" loading="lazy" decoding="async"
+           width="600" height="600" onerror="this.style.display='none'">
+
+      <img src="IMG/10trad.webp" alt="Promo tradicional diciembre"
+           data-type="mas" loading="lazy" decoding="async"
+           width="600" height="600" onerror="this.style.display='none'">
+
+      <img src="IMG/20traddic.webp" alt="Más promociones diciembre"
+           data-type="mas" loading="lazy" decoding="async"
+           width="600" height="600" onerror="this.style.display='none'">
+
+      <!-- NUEVAS MSI -->
+      <img src="IMG/msi1.webp" alt="Meses sin interés promoción 1"
+           data-type="msi" loading="lazy" decoding="async"
+           width="600" height="600" onerror="this.style.display='none'">
+
+      <img src="IMG/msi2.webp" alt="Meses sin interés promoción 2"
+           data-type="msi" loading="lazy" decoding="async"
+           width="600" height="600" onerror="this.style.display='none'">
+
+      <img src="IMG/msi3.webp" alt="Meses sin interés promoción 3"
+           data-type="msi" loading="lazy" decoding="async"
+           width="600" height="600" onerror="this.style.display='none'">
+    </div>
+
+  </div>
+</section>
+
 
   <section id="faq">
     <div class="container">
