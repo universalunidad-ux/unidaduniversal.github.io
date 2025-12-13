@@ -11,6 +11,14 @@
    ...
    <div id="footer-placeholder"></div>
 ========================================================= */
+/* =========================================================
+   0) PARTIALS + NORMALIZACIÓN DE RUTAS (GH Pages + local)
+   ---------------------------------------------------------
+   Requisitos en HTML:
+   <div id="header-placeholder"></div>
+   ...
+   <div id="footer-placeholder"></div>
+========================================================= */
 (function(){
   "use strict";
 
@@ -27,77 +35,71 @@
   const firstSeg = location.pathname.split("/")[1] || "";
   const repoBase = (isGh && firstSeg) ? ("/" + firstSeg) : "";
 
-  // Detecta subdirectorios sin importar mayúsculas
-  const inSubDir  = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
-  const depth     = inSubDir ? "../" : "";
+  // detecta /SISTEMAS/ o /SERVICIOS/ sin depender de mayúsculas
+  const inSubDir = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
+  const depth    = inSubDir ? "../" : "";
 
   function prefix(p){
     if (!p) return p;
-    if (/^https?:\/\//i.test(p) || p.startsWith("mailto:") || p.startsWith("tel:")) return p;
+    if (/^https?:\/\//i.test(p)) return p;
+    if (p.startsWith("mailto:") || p.startsWith("tel:") || p.startsWith("data:")) return p;
 
-    // Si ya viene absoluta (/...), respétala
-    if (p.startsWith("/")) return p;
-
-    // GitHub Pages: absoluto al repoBase (evita que IMG/... se vuelva /SISTEMAS/IMG/...)
+    // GH Pages: usa base absoluta del repo (esto funciona desde /SISTEMAS/ también)
     if (isGh) return (repoBase + "/" + p).replace(/\/+/g, "/");
 
-    // Local: usa depth si estás en /SISTEMAS/ o /SERVICIOS/
+    // Local: usa depth
     return (depth + p).replace(/\/+/g, "/");
   }
 
-  function normalizeDeclarativeRoutes(scope){
-    const root = scope || document;
-
-    // Imágenes declarativas
+  function normalizeRoutes(root=document){
+    // imgs con data-src -> src
     root.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
-      const d = img.getAttribute("data-src");
-      if (!d) return;
-      img.src = prefix(d);
+      const ds = img.getAttribute("data-src");
+      if (!ds) return;
+      const final = prefix(ds);
+
+      // setea src solo si falta o si sigue vacío
+      if (!img.getAttribute("src")) img.setAttribute("src", final);
       img.style.opacity = "1";
     });
 
-    // Links declarativos
+    // links con data-href -> href
     root.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
-      const p = a.getAttribute("data-href"); if (!p) return;
+      const p = a.getAttribute("data-href");
+      if (!p) return;
       const [path, hash] = p.split("#");
       a.href = prefix(path) + (hash ? ("#" + hash) : "");
     });
 
-    // Compat: otros selectores que usas
+    // compat (si usas estas clases en algún lado)
     root.querySelectorAll(".js-img[data-src]").forEach(img=>{
-      const d = img.getAttribute("data-src");
-      if (!d) return;
-      img.src = prefix(d);
+      const ds = img.getAttribute("data-src");
+      if (!ds) return;
+      if (!img.getAttribute("src")) img.setAttribute("src", prefix(ds));
     });
     root.querySelectorAll(".js-link[data-href]").forEach(a=>{
-      const p = a.getAttribute("data-href");
-      if (!p) return;
-      a.href = prefix(p);
-    });
-  }
-
-  // Fix específico footer: si por cualquier razón quedaron imgs con data-src sin src, las repara
-  function fixFooterImgs(){
-    const gf = document.querySelector(".gf");
-    if (!gf) return;
-
-    gf.querySelectorAll("img[data-src]").forEach(img=>{
-      if (!img.getAttribute("src")) {
-        img.src = prefix(img.getAttribute("data-src"));
-      }
-      img.style.opacity = "1";
+      const dh = a.getAttribute("data-href");
+      if (!dh) return;
+      if (!a.getAttribute("href")) a.setAttribute("href", prefix(dh));
     });
 
-    const y = document.getElementById("gf-year") || document.getElementById("year");
+    const y = root.getElementById?.("gf-year") || document.getElementById("gf-year") ||
+              root.getElementById?.("year")    || document.getElementById("year");
     if (y) y.textContent = new Date().getFullYear();
   }
 
   async function loadPartials(){
     const hp = document.getElementById("header-placeholder");
     const fp = document.getElementById("footer-placeholder");
-    if (!hp && !fp) return;
+
+    // Aunque NO existan placeholders, igual normaliza (por si el footer ya viene inline)
+    if (!hp && !fp){
+      normalizeRoutes(document);
+      return;
+    }
 
     const headerURL = await pickFirst([
+      // preferimos rutas “normales”
       prefix("PARTIALS/global-header.html"),
       depth + "PARTIALS/global-header.html",
       "./PARTIALS/global-header.html",
@@ -111,49 +113,44 @@
       "/PARTIALS/global-footer.html"
     ]);
 
-    let hHTML = "";
-    let fHTML = "";
+    let headerHTML = "";
+    let footerHTML = "";
+
     try{
       const [hRes, fRes] = await Promise.all([
         hp ? fetch(headerURL, { cache:"no-store" }) : Promise.resolve(null),
         fp ? fetch(footerURL, { cache:"no-store" }) : Promise.resolve(null),
       ]);
 
-      if (hp && hRes && hRes.ok) hHTML = await hRes.text();
-      if (fp && fRes && fRes.ok) fHTML = await fRes.text();
-    } catch(e){
+      if (hp && hRes && hRes.ok) headerHTML = await hRes.text();
+      if (fp && fRes && fRes.ok) footerHTML = await fRes.text();
+    }catch(e){
       console.warn("No se pudieron cargar parciales", e);
     }
 
-    if (hp && hHTML) hp.outerHTML = hHTML;
-    if (fp && fHTML) fp.outerHTML = fHTML;
+    if (hp && headerHTML) hp.outerHTML = headerHTML;
+    if (fp && footerHTML) fp.outerHTML = footerHTML;
 
-    // Normaliza DESPUÉS de insertar (frame siguiente para asegurar DOM final)
-    requestAnimationFrame(() => {
-      normalizeDeclarativeRoutes(document);
-      fixFooterImgs();
-    });
-
-    // También al cargar completo (por si alguna política de caché/rehidratación)
-    window.addEventListener("load", () => {
-      normalizeDeclarativeRoutes(document);
-      fixFooterImgs();
-    }, { once:true });
-
-    // Y al volver del bfcache (Safari/Chrome)
-    window.addEventListener("pageshow", () => {
-      normalizeDeclarativeRoutes(document);
-      fixFooterImgs();
-    });
+    // IMPORTANTE: normaliza DESPUÉS de inyectar
+    normalizeRoutes(document);
   }
 
-  // Ejecuta aunque DOMContentLoaded ya haya pasado (clave para evitar “no se ejecutó”)
-  const run = () => loadPartials().catch(console.warn);
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", run);
+  // FIX CLAVE: si DOMContentLoaded YA ocurrió, corre de inmediato
+  function boot(){
+    loadPartials();
+  }
+
+  if (document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", boot, { once:true });
   } else {
-    run();
+    boot();
   }
+
+  // BFCache / volver atrás
+  window.addEventListener("pageshow", () => {
+    // re-normaliza por si el navegador “restauró” el DOM sin re-ejecutar todo como esperas
+    try { normalizeRoutes(document); } catch(_) {}
+  });
 })();
 
 /* =========================================================
