@@ -1,6 +1,6 @@
 /* =========================================================
    Expiriti - main.js — Escritorio + Carruseles + Reels (YouTube pause)
-   [CORREGIDO: IMÁGENES FOOTER VISIBLES]
+   [CORREGIDO: IMÁGENES FOOTER VISIBLES + LOAD ROBUSTO]
    ========================================================= */
 
 /* =========================================================
@@ -12,6 +12,8 @@
    <div id="footer-placeholder"></div>
 ========================================================= */
 (function(){
+  "use strict";
+
   async function exists(u){
     try { const r = await fetch(u, { method:"HEAD", cache:"no-store" }); return r.ok; }
     catch { return false; }
@@ -21,19 +23,73 @@
     return paths[0];
   }
 
-  const isGh = location.hostname.endsWith("github.io");
+  const isGh     = location.hostname.endsWith("github.io");
   const firstSeg = location.pathname.split("/")[1] || "";
   const repoBase = (isGh && firstSeg) ? ("/" + firstSeg) : "";
 
-
-   const inSistemas  = location.pathname.includes("/SISTEMAS/"); // Solo detecta MAYÚSCULAS
-  const inServicios = location.pathname.includes("/SERVICIOS/");
-  const depth = (inSistemas || inServicios) ? "../" : "";
+  // Detecta subdirectorios sin importar mayúsculas
+  const inSubDir  = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
+  const depth     = inSubDir ? "../" : "";
 
   function prefix(p){
-    if (!p || /^https?:\/\//i.test(p) || p.startsWith("mailto:") || p.startsWith("tel:")) return p;
+    if (!p) return p;
+    if (/^https?:\/\//i.test(p) || p.startsWith("mailto:") || p.startsWith("tel:")) return p;
+
+    // Si ya viene absoluta (/...), respétala
+    if (p.startsWith("/")) return p;
+
+    // GitHub Pages: absoluto al repoBase (evita que IMG/... se vuelva /SISTEMAS/IMG/...)
     if (isGh) return (repoBase + "/" + p).replace(/\/+/g, "/");
+
+    // Local: usa depth si estás en /SISTEMAS/ o /SERVICIOS/
     return (depth + p).replace(/\/+/g, "/");
+  }
+
+  function normalizeDeclarativeRoutes(scope){
+    const root = scope || document;
+
+    // Imágenes declarativas
+    root.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+      const d = img.getAttribute("data-src");
+      if (!d) return;
+      img.src = prefix(d);
+      img.style.opacity = "1";
+    });
+
+    // Links declarativos
+    root.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+      const p = a.getAttribute("data-href"); if (!p) return;
+      const [path, hash] = p.split("#");
+      a.href = prefix(path) + (hash ? ("#" + hash) : "");
+    });
+
+    // Compat: otros selectores que usas
+    root.querySelectorAll(".js-img[data-src]").forEach(img=>{
+      const d = img.getAttribute("data-src");
+      if (!d) return;
+      img.src = prefix(d);
+    });
+    root.querySelectorAll(".js-link[data-href]").forEach(a=>{
+      const p = a.getAttribute("data-href");
+      if (!p) return;
+      a.href = prefix(p);
+    });
+  }
+
+  // Fix específico footer: si por cualquier razón quedaron imgs con data-src sin src, las repara
+  function fixFooterImgs(){
+    const gf = document.querySelector(".gf");
+    if (!gf) return;
+
+    gf.querySelectorAll("img[data-src]").forEach(img=>{
+      if (!img.getAttribute("src")) {
+        img.src = prefix(img.getAttribute("data-src"));
+      }
+      img.style.opacity = "1";
+    });
+
+    const y = document.getElementById("gf-year") || document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
   }
 
   async function loadPartials(){
@@ -55,51 +111,49 @@
       "/PARTIALS/global-footer.html"
     ]);
 
-    const [hRes, fRes] = await Promise.all([
-      hp ? fetch(headerURL, { cache:"no-store" }) : Promise.resolve(null),
-      fp ? fetch(footerURL, { cache:"no-store" }) : Promise.resolve(null),
-    ]);
+    let hHTML = "";
+    let fHTML = "";
+    try{
+      const [hRes, fRes] = await Promise.all([
+        hp ? fetch(headerURL, { cache:"no-store" }) : Promise.resolve(null),
+        fp ? fetch(footerURL, { cache:"no-store" }) : Promise.resolve(null),
+      ]);
 
-    if (hp && hRes && hRes.ok){
-      hp.outerHTML = await hRes.text();
-    } else if (hp){
-      console.warn("Header no cargó. URL probada:", headerURL);
+      if (hp && hRes && hRes.ok) hHTML = await hRes.text();
+      if (fp && fRes && fRes.ok) fHTML = await fRes.text();
+    } catch(e){
+      console.warn("No se pudieron cargar parciales", e);
     }
 
-    if (fp && fRes && fRes.ok){
-      fp.outerHTML = await fRes.text();
-    } else if (fp){
-      console.warn("Footer no cargó. URL probada:", footerURL);
-    }
+    if (hp && hHTML) hp.outerHTML = hHTML;
+    if (fp && fHTML) fp.outerHTML = fHTML;
 
-    // Microtick para que el DOM “asiente”
-    await Promise.resolve();
-
-    // Fix rutas en header/footer Y MOSTRAR IMÁGENES
-    document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
-      img.src = prefix(img.getAttribute("data-src"));
-      // CORRECCIÓN: Forzar opacidad a 1 para que se vean
-      img.style.opacity = "1";
+    // Normaliza DESPUÉS de insertar (frame siguiente para asegurar DOM final)
+    requestAnimationFrame(() => {
+      normalizeDeclarativeRoutes(document);
+      fixFooterImgs();
     });
 
-    document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
-      const p = a.getAttribute("data-href"); if (!p) return;
-      const [path, hash] = p.split("#");
-      a.href = prefix(path) + (hash ? ("#" + hash) : "");
-    });
+    // También al cargar completo (por si alguna política de caché/rehidratación)
+    window.addEventListener("load", () => {
+      normalizeDeclarativeRoutes(document);
+      fixFooterImgs();
+    }, { once:true });
 
-    document.querySelectorAll(".js-img[data-src]").forEach(img=>{
-      img.src = prefix(img.getAttribute("data-src"));
+    // Y al volver del bfcache (Safari/Chrome)
+    window.addEventListener("pageshow", () => {
+      normalizeDeclarativeRoutes(document);
+      fixFooterImgs();
     });
-    document.querySelectorAll(".js-link[data-href]").forEach(a=>{
-      a.href = prefix(a.getAttribute("data-href"));
-    });
-
-    const y = document.getElementById("gf-year") || document.getElementById("year");
-    if (y) y.textContent = new Date().getFullYear();
   }
 
-  document.addEventListener("DOMContentLoaded", loadPartials);
+  // Ejecuta aunque DOMContentLoaded ya haya pasado (clave para evitar “no se ejecutó”)
+  const run = () => loadPartials().catch(console.warn);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run);
+  } else {
+    run();
+  }
 })();
 
 /* =========================================================
@@ -311,11 +365,12 @@
     }
     return { prev, next, dotsWrap };
   }
+
   document.querySelectorAll(".carouselX").forEach(root => {
     const track = root.querySelector(".track");
     if (!track) return;
     const items = [...root.querySelectorAll(".sys")];
-    
+
     // 8.1 CLICKS
     items.forEach(it => {
       it.setAttribute("role", "link");
@@ -365,6 +420,7 @@
         return b;
       });
     }
+
     let dots = buildDots();
     let idx  = 0;
 
@@ -409,7 +465,7 @@
     window.addEventListener("pageshow", resetStart);
     setTimeout(resetStart, 350);
 
-    track.style.overflowX     = "auto";
+    track.style.overflowX      = "auto";
     track.style.scrollBehavior = "smooth";
     toggleUI();
     go(0);
@@ -432,9 +488,11 @@
       }
     });
   };
+
   function onPlayerStateChange(event){
     if (event.data === 1){ window.pauseAllYTIframes(event.target); }
   }
+
   window.onYouTubeIframeAPIReady = function(){
     document.querySelectorAll('iframe[src*="youtube"]').forEach((iframe) => {
       if (iframe.dataset.ytInit) return;
@@ -448,6 +506,7 @@
       window.exPlayers.push(p);
     });
   };
+
   if (!window.YT){
     const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
@@ -464,11 +523,13 @@
     const next   = root.querySelector(".arrowCircle.next");
     const reelTitles = [...scope.querySelectorAll(".reel-title")];
     let idx = 0;
+
     const titles = slides.map(sl => {
       const wrap = sl.querySelector(".reel-embed");
       const ifr  = sl.querySelector("iframe");
       return (wrap?.dataset?.title) || (sl.dataset?.title) || (ifr?.getAttribute("title")) || "";
     });
+
     function paintUI(){
       dots.forEach((d, di) => d.classList.toggle("active", di === idx));
       reelTitles.forEach((t) => t.classList.remove("active"));
@@ -481,6 +542,7 @@
         }
       }
     }
+
     function setActive(i){
       window.pauseAllYTIframes();
       if (!dots.length || !slides.length) return;
@@ -489,6 +551,7 @@
       track.scrollTo({ left: w * idx, behavior: "smooth" });
       paintUI();
     }
+
     dots.forEach((d, i) => d.addEventListener("click", () => setActive(i)));
     prev?.addEventListener("click", () => setActive(idx - 1));
     next?.addEventListener("click", () => setActive(idx + 1));
@@ -497,6 +560,7 @@
       const i = Math.round(track.scrollLeft / w);
       if (i !== idx && i >= 0 && i < dots.length){ idx = i; paintUI(); }
     });
+
     window.addEventListener("resize", () => setActive(idx));
     setActive(0);
   });
@@ -506,6 +570,7 @@
     if (wrapper.dataset.ytMounted) return;
     const ytid = wrapper.getAttribute("data-ytid");
     if (!ytid) return;
+
     if (!wrapper.style.position || wrapper.style.position === "static") wrapper.style.position = "relative";
     wrapper.style.overflow = "hidden";
     wrapper.style.backgroundColor = "#000";
@@ -514,11 +579,13 @@
     thumb.alt = "Miniatura de video";
     thumb.loading = "lazy";
     thumb.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;cursor:pointer";
+
     const sources = [
       `https://i.ytimg.com/vi/${ytid}/maxresdefault.jpg`,
       `https://i.ytimg.com/vi/${ytid}/sddefault.jpg`,
       `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`
     ];
+
     let srcIndex = 0;
     function tryNextSrc(){
       if (srcIndex >= sources.length) return;
@@ -532,6 +599,7 @@
     overlayBtn.type = "button";
     overlayBtn.setAttribute("aria-label", "Reproducir video en YouTube");
     overlayBtn.style.cssText = "position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:none;background:transparent;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center";
+
     const iconWrap = document.createElement("div");
     iconWrap.innerHTML = `<svg viewBox="0 0 68 48" width="68" height="48" aria-hidden="true"><rect x="1" y="7" width="66" height="36" rx="12" fill="#FF0000"></rect><polygon points="28,17 28,31 42,24" fill="#FFFFFF"></polygon></svg>`;
     overlayBtn.appendChild(iconWrap);
@@ -547,6 +615,7 @@
       tempDiv.id = tempId;
       wrapper.innerHTML = "";
       wrapper.appendChild(tempDiv);
+
       setTimeout(() => {
         const player = new YT.Player(tempId, {
           videoId: ytid,
@@ -556,12 +625,15 @@
         window.exPlayers.push(player);
       }, 10);
     }
+
     overlayBtn.addEventListener("click", loadIframe);
     thumb.addEventListener("click", loadIframe);
   }
+
   function initYouTubeEmbeds(){
     document.querySelectorAll(".yt-wrap[data-ytid], .reel-embed[data-ytid]").forEach(mountLazyEmbed);
   }
+
   document.addEventListener("DOMContentLoaded", initYouTubeEmbeds);
 })();
 
