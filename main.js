@@ -25,7 +25,8 @@
   const firstSeg = location.pathname.split("/")[1] || "";
   const repoBase = (isGh && firstSeg) ? ("/" + firstSeg) : "";
 
-  const inSistemas  = location.pathname.includes("/SISTEMAS/");
+
+   const inSistemas  = location.pathname.includes("/SISTEMAS/"); // Solo detecta MAYÚSCULAS
   const inServicios = location.pathname.includes("/SERVICIOS/");
   const depth = (inSistemas || inServicios) ? "../" : "";
 
