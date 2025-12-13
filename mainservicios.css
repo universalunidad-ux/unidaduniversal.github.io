@@ -375,13 +375,67 @@ input:focus, select:focus, textarea:focus { border-color: #38bdf8; box-shadow: 0
 textarea { resize: vertical; }
 
 /* Promociones */
-#promociones{padding:10px 0 14px}
-.promo-filters{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
-.promo-btn{border-radius:999px;border:1px solid rgba(148,163,184,.7);background:#020617;color:#e5e7eb;font-size:12px;padding:4px 10px;cursor:pointer;transition:background .15s ease,border-color .15s ease,transform .12s ease}
-.promo-btn.active{background:linear-gradient(135deg,#2dd4bf,#60a5fa);border-color:#38bdf8;color:#020617}
-.promo-btn:hover{transform:translateY(-1px)}
-.promo-grid{display:grid;grid-template-columns:1fr;gap:20px}
-.promo-grid img{width:100%;height:auto;display:block;border-radius:var(--radius-md);border:1px solid rgba(30,64,175,.7);background:#020617}
+/* =========================
+   Promociones (FIX tamaño)
+   ========================= */
+#promociones { padding: 10px 0 14px; }
+
+.promo-filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:4px 0 10px;
+}
+
+.promo-btn{
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.7);
+  background:#020617;
+  color:#e5e7eb;
+  font-size:12px;
+  padding:4px 10px;
+  cursor:pointer;
+  transition:background .15s ease,border-color .15s ease,transform .12s ease;
+}
+.promo-btn.active{
+  background:linear-gradient(135deg,#2dd4bf,#60a5fa);
+  border-color:#38bdf8;
+  color:#020617;
+}
+.promo-btn:hover{ transform:translateY(-1px); }
+
+/* GRID RESPONSIVE (no gigantes) */
+.promo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+  gap:14px;
+  align-items:start;
+}
+
+/* “Card” fija: limita tamaño aunque haya espacio */
+#promoGrid img{
+  width:100%;
+  max-width:600px;          /* CLAVE: ya no crece infinito */
+  height:auto;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 16px 40px rgba(0,0,0,.35);
+  background:rgba(2,6,23,.35);
+  justify-self:center;      /* centra dentro de la celda */
+  display:block;
+
+  /* look consistente tipo imagen 1 */
+  aspect-ratio:1 / 1;
+  object-fit:cover;
+}
+
+/* MSI: un poco vertical -> NO se hace gigante y respeta proporción */
+#promoGrid img[data-type="msi"]{
+  aspect-ratio:4 / 5;       /* “un poco vertical” */
+  object-fit:contain;       /* logos/texto no se recortan */
+  background:#0b1220;
+  padding:10px;
+}
 
 
 /* TOC */
@@ -637,11 +691,4 @@ textarea { resize: vertical; }
   border-color: #2dd4bf;
 }
 
-
-/* FIX: Promociones a ancho completo */
-#promociones .promo-grid img{
-  aspect-ratio: auto !important;
-  height: auto !important;
-  object-fit: contain;
-}
 
