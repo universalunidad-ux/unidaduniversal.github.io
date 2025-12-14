@@ -692,44 +692,24 @@ textarea { resize: vertical; }
 }
 
 /* =========================================================
-   FIX: Separador (línea) y header consistente en cards Comerciales
-   (Implementaciones / tag-comerciales)
+   HOMOLOGAR TAMAÑO DE LOGOS (Cursos Nube)
    ========================================================= */
-.fcard.tag-comerciales .fhead{
+
+/* Contenedor del header con altura fija */
+.fcard.tag-nube .fhead{
   display:flex;
   align-items:center;
-  gap:10px;
-
-  /* consistente */
-  padding: 2px 0 10px;
-  margin: 0 0 10px;
-
-  /* LA “LÍNEA BLANCA” */
-  border-bottom: 1px solid rgba(255,255,255,.10);
+  justify-content:center;
+  min-height: 96px;        /* ALTURA UNIFORME DEL HEADER */
+  margin-bottom: 8px;
 }
 
-/* Si tus banners son anchos, evita que desborden o rompan el header */
-.fcard.tag-comerciales .fhead .logo-sistema{
-  width: 100%;
-  max-width: 520px;     /* ajusta si quieres más/menos ancho */
+/* Logo normalizado */
+.fcard.tag-nube .logo-sistema{
+  max-width: 220px;        /* ancho visual uniforme */
+  max-height: 72px;        /* alto máximo */
+  width: auto;
   height: auto;
-  object-fit: contain;
-  border-radius: 12px;
-  display:block;
+  object-fit: contain;     /* CLAVE: no deforma */
+  display: block;
 }
-
-/* Si algunas cards traen h4, que no empuje raro */
-.fcard.tag-comerciales .fhead h4{
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.2;
-  color: #e5e7eb;
-}
-
-/* En móviles, baja un poco el banner para que no se vea enorme */
-@media (max-width: 640px){
-  .fcard.tag-comerciales .fhead .logo-sistema{
-    max-width: 420px;
-  }
-}
-
