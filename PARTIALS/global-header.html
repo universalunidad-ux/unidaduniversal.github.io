@@ -1,3 +1,4 @@
+<!-- /PARTIALS/global-header.html -->
 <header class="gh" role="banner">
 <style>
 /* === ESTILOS BASE HEADER === */
@@ -24,47 +25,45 @@
 /* Dropdown wrapper */
 .gh-has-dd{position:relative}
 
-/* === CORRECCIÓN: Dropdown más robusto (No se cierra fácil) === */
-.gh-dd {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0; 
-  background: rgba(10,14,23,.98);
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: 0 18px 45px rgba(0,0,0,.6);
-  border-radius: 18px;
-  min-width: 240px;
-  padding: 14px;
-  z-index: 1000;
+/* === Dropdown más robusto (No se cierra fácil) === */
+.gh-dd{
+  position:absolute;
+  top:calc(100% + 10px);
+  left:0;
+  background:rgba(10,14,23,.98);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 18px 45px rgba(0,0,0,.6);
+  border-radius:18px;
+  min-width:240px;
+  padding:14px;
+  z-index:1000;
 
-  /* Lógica de retardo para que no desaparezca al instante */
-  visibility: hidden;
-  opacity: 0;
-  transform: translateY(10px);
-  
-  /* Cuando quitas el mouse, espera 0.3s antes de desaparecer */
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.3s; 
+  visibility:hidden;
+  opacity:0;
+  transform:translateY(10px);
+
+  /* retardo de salida */
+  transition:opacity .2s ease, transform .2s ease, visibility 0s linear .3s;
 }
 
-/* PUENTE INVISIBLE: Evita el hueco entre el botón y el menú */
-.gh-dd::before {
-  content: "";
-  position: absolute;
-  top: -20px;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  background: transparent;
+/* Puente invisible: evita “hueco” entre botón y menú */
+.gh-dd::before{
+  content:"";
+  position:absolute;
+  top:-20px;
+  left:0;
+  width:100%;
+  height:20px;
+  background:transparent;
 }
 
-/* Mostrar dropdown al Hover */
+/* Mostrar dropdown */
 .gh-has-dd:focus-within .gh-dd,
-.gh-has-dd:hover .gh-dd {
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(0);
-  /* Al entrar, aparece al instante */
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0s;
+.gh-has-dd:hover .gh-dd{
+  visibility:visible;
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity .2s ease, transform .2s ease, visibility 0s linear 0s;
 }
 
 /* === MEGA MENU SISTEMAS === */
@@ -75,7 +74,6 @@
   padding:24px;
   box-sizing:border-box;
 }
-
 .gh-mega{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 
 /* Columnas */
@@ -145,240 +143,182 @@ html,body{overflow-x:hidden}
       <ul>
         <li><a class="js-abs-href" data-href="index.html">Inicio</a></li>
 
+        <!-- ===== SISTEMAS (ORDENADO EXACTO A #productos-con) ===== -->
         <li class="gh-has-dd">
-  <a class="js-abs-href" data-href="index.html#productos-con" aria-haspopup="true" aria-expanded="false">Sistemas</a>
+          <a class="js-abs-href" data-href="index.html#productos-con" aria-haspopup="true" aria-expanded="false">Sistemas</a>
 
-  <div class="gh-dd mega" role="menu">
-    <div class="gh-mega">
+          <div class="gh-dd mega" role="menu">
+            <div class="gh-mega">
 
-      <!-- =======================
-           CONTABLES (Desktop)
-           ======================= -->
-      <div class="gh-col">
-        <h4>Contables</h4>
-        <div class="gh-subhead">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/>
-          </svg>
-          Desktop
-        </div>
-        <ul>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/contabilidad.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Contabilidad</strong>
-                <span class="gh-desc">Pólizas, IVA y contabilidad electrónica.</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/nominas.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Nóminas</strong>
-                <span class="gh-desc">Cálculo, incidencias y timbrado.</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/bancos.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Bancos</strong>
-                <span class="gh-desc">Conciliación y tesorería.</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/xml.webp" alt="">
-              <div class="gh-link-content">
-                <strong>XML en Línea+</strong>
-                <span class="gh-desc">CFDI del SAT para tu contabilidad.</span>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
+              <!-- CONTABLES -->
+              <div class="gh-col">
+                <h4>Contables</h4>
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/>
+                  </svg>
+                  Desktop
+                </div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/contabilidad.webp" alt="">
+                    <div class="gh-link-content"><strong>Contabilidad</strong><span class="gh-desc">Pólizas, IVA y contabilidad electrónica.</span></div>
+                  </a></li>
 
-      <!-- =======================
-           COMERCIALES (Desktop)
-           ======================= -->
-      <div class="gh-col">
-        <h4>Comerciales</h4>
-        <div class="gh-subhead">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/>
-          </svg>
-          Desktop
-        </div>
-        <ul>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/comercialstart.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Comercial Start</strong>
-                <span class="gh-desc">Ventas e inventario para arrancar.</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/comercialpro.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Comercial Pro</strong>
-                <span class="gh-desc">Operación con alto volumen.</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/comercialpremium.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Comercial Premium</strong>
-                <span class="gh-desc">Control avanzado y reportes.</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/factura.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Factura Electrónica</strong>
-                <span class="gh-desc">Timbrado y CFDI 4.0 listo.</span>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/nominas.webp" alt="">
+                    <div class="gh-link-content"><strong>Nóminas</strong><span class="gh-desc">Cálculo, incidencias y timbrado.</span></div>
+                  </a></li>
 
-      <!-- =======================
-           NUBE
-           ======================= -->
-      <div class="gh-col">
-        <h4>Nube</h4>
-        <div class="gh-subhead">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/>
-          </svg>
-          Soluciones nube
-        </div>
-        <ul>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/contabiliza.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Contabiliza</strong>
-                <span class="gh-desc">Contabilidad en la nube.</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/analiza.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Analiza</strong>
-                <span class="gh-desc">Dashboards y BI para tus datos.</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/despachos.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Despachos</strong>
-                <span class="gh-desc">Gestión integral en la nube.</span>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/vende.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Vende</strong>
-                <span class="gh-desc">Punto de venta en la nube.</span>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/bancos.webp" alt="">
+                    <div class="gh-link-content"><strong>Bancos</strong><span class="gh-desc">Conciliación y tesorería.</span></div>
+                  </a></li>
 
-      <!-- =======================
-           PRODUCTIVIDAD + PROMOCIONES
-           ======================= -->
-      <div class="gh-col">
-        <h4>Productividad</h4>
-        <div class="gh-subhead">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/>
-          </svg>
-          Productividad
-        </div>
-        <ul>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/evalua.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Evalúa</strong>
-                <span class="gh-desc">Clima laboral y NOM-035.</span>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/xml.webp" alt="">
+                    <div class="gh-link-content"><strong>XML en Línea+</strong><span class="gh-desc">CFDI del SAT para tu contabilidad.</span></div>
+                  </a></li>
+                </ul>
               </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/colabora.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Colabora</strong>
-                <span class="gh-desc">App para colaboración móvil.</span>
+
+              <!-- COMERCIALES -->
+              <div class="gh-col">
+                <h4>Comerciales</h4>
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/>
+                  </svg>
+                  Desktop
+                </div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/comercialstart.webp" alt="">
+                    <div class="gh-link-content"><strong>Comercial Start</strong><span class="gh-desc">Entrada ideal para ventas e inventario.</span></div>
+                  </a></li>
+
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/comercialpro.webp" alt="">
+                    <div class="gh-link-content"><strong>Comercial Pro</strong><span class="gh-desc">Para operación con alto volumen.</span></div>
+                  </a></li>
+
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/comercialpremium.webp" alt="">
+                    <div class="gh-link-content"><strong>Comercial Premium</strong><span class="gh-desc">Control avanzado y reportes.</span></div>
+                  </a></li>
+
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/factura.webp" alt="">
+                    <div class="gh-link-content"><strong>Factura Electrónica</strong><span class="gh-desc">Timbrado y CFDI 4.0 listo.</span></div>
+                  </a></li>
+                </ul>
               </div>
-            </a>
-          </li>
-          <li>
-            <a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/personia.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Personia</strong>
-                <span class="gh-desc">Expedientes y gestión de personal.</span>
+
+              <!-- NUBE -->
+              <div class="gh-col">
+                <h4>Nube</h4>
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/>
+                  </svg>
+                  Soluciones nube
+                </div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/contabiliza.webp" alt="">
+                    <div class="gh-link-content"><strong>Contabiliza</strong><span class="gh-desc">Contabilidad en la nube.</span></div>
+                  </a></li>
+
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/analiza.webp" alt="">
+                    <div class="gh-link-content"><strong>Analiza</strong><span class="gh-desc">Dashboards y BI para tu operación.</span></div>
+                  </a></li>
+
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/despachos.webp" alt="">
+                    <div class="gh-link-content"><strong>Despachos</strong><span class="gh-desc">Gestión integral en la nube.</span></div>
+                  </a></li>
+
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/vende.webp" alt="">
+                    <div class="gh-link-content"><strong>Vende</strong><span class="gh-desc">Punto de venta en la nube.</span></div>
+                  </a></li>
+                </ul>
               </div>
-            </a>
-          </li>
-        </ul>
 
-        <div class="gh-subhead">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/>
-          </svg>
-          Promociones
-        </div>
-        <ul>
-          <li>
-            <a class="gh-link js-abs-href" data-href="index.html#promociones">
-              <img class="gh-ico32 js-abs-src" data-src="IMG/promo.webp" alt="">
-              <div class="gh-link-content">
-                <strong>Promociones</strong>
-                <span class="gh-desc">Ver descuentos activos.</span>
+              <!-- PRODUCTIVIDAD + PROMOCIONES -->
+              <div class="gh-col">
+                <h4>Productividad</h4>
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/>
+                  </svg>
+                  Productividad
+                </div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/evalua.webp" alt="">
+                    <div class="gh-link-content"><strong>Evalúa</strong><span class="gh-desc">Clima laboral y NOM-035.</span></div>
+                  </a></li>
+
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/colabora.webp" alt="">
+                    <div class="gh-link-content"><strong>Colabora</strong><span class="gh-desc">Colaboración y seguimiento móvil.</span></div>
+                  </a></li>
+
+                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/personia.webp" alt="">
+                    <div class="gh-link-content"><strong>Personia</strong><span class="gh-desc">Gestión de personal en la nube.</span></div>
+                  </a></li>
+                </ul>
+
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/>
+                  </svg>
+                  Promociones
+                </div>
+                <ul>
+                  <li><a class="gh-link js-abs-href" data-href="index.html#promociones">
+                    <img class="gh-ico32 js-abs-src" data-src="IMG/promo.webp" alt="">
+                    <div class="gh-link-content"><strong>Promociones</strong><span class="gh-desc">Ver descuentos activos.</span></div>
+                  </a></li>
+                </ul>
               </div>
-            </a>
-          </li>
-        </ul>
-      </div>
 
-    </div>
-  </div>
-</li>
+            </div>
+          </div>
+        </li>
 
-
+        <!-- ===== SERVICIOS ===== -->
         <li class="gh-has-dd">
           <a class="js-abs-href" data-href="index.html#servicios" aria-haspopup="true" aria-expanded="false">Servicios</a>
           <div class="gh-dd" role="menu">
             <div class="gh-list" role="group" aria-label="Servicios">
-              <a class="js-abs-href" data-href="SERVICIOS/cursos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M8 5h8v10H8z"/></svg>Cursos</a>
-              <a class="js-abs-href" data-href="SERVICIOS/implementaciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>Implementaciones</a>
-              <a class="js-abs-href" data-href="SERVICIOS/migraciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 4l8 8-8 8"/></svg>Migraciones</a>
-              <a class="js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10H7z"/></svg>Servidores virtuales</a>
-              <a class="js-abs-href" data-href="SERVICIOS/soporte.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6a6 6 0 0 0-6 6v4h12v-4a6 6 0 0 0-6-6z"/></svg>Soporte técnico</a>
-              <a class="js-abs-href" data-href="SERVICIOS/desarrollos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>Desarrollos a la medida</a>
+              <a class="js-abs-href" data-href="SERVICIOS/cursos.html">
+                <svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M8 5h8v10H8z"/></svg>
+                Cursos
+              </a>
+              <a class="js-abs-href" data-href="SERVICIOS/implementaciones.html">
+                <svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>
+                Implementaciones
+              </a>
+              <a class="js-abs-href" data-href="SERVICIOS/migraciones.html">
+                <svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 4l8 8-8 8"/></svg>
+                Migraciones
+              </a>
+              <a class="js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html">
+                <svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10H7z"/></svg>
+                Servidores virtuales
+              </a>
+              <a class="js-abs-href" data-href="SERVICIOS/soporte.html">
+                <svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6a6 6 0 0 0-6 6v4h12v-4a6 6 0 0 0-6-6z"/></svg>
+                Soporte técnico
+              </a>
+              <a class="js-abs-href" data-href="SERVICIOS/desarrollos.html">
+                <svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>
+                Desarrollos a la medida
+              </a>
             </div>
           </div>
         </li>
@@ -443,7 +383,7 @@ html,body{overflow-x:hidden}
     else if(t==="inicio" && (p.endsWith("index.html") || p.endsWith("/") )) a.classList.add("active-parent");
   });
 
-  // Subnav dinámico
+  // Subnav dinámico (solo si existen secciones en la página)
   const subnav = $("#gh-subnav");
   const subinner = $("#gh-subinner");
   const items = [
@@ -461,7 +401,7 @@ html,body{overflow-x:hidden}
     subinner.innerHTML = items.map(([href, label])=>`<a href="${href}">${label}</a>`).join("");
   }
 
-  // Accesibilidad
+  // Accesibilidad: flecha abajo abre menú
   $$(".gh-has-dd > a").forEach(a=>{
     const dd = a.parentElement.querySelector(".gh-dd");
     a.addEventListener("keydown", (e)=>{
