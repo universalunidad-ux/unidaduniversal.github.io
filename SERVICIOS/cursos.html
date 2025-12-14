@@ -25,7 +25,23 @@
   <link rel="icon" href="../IMG/favicon.ico">
   <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
+
+  <!-- ================================
+       HOTFIX: ocultar etiqueta visual "Nube"
+       (sin romper filtro por clase tag-nube)
+       ================================ -->
+  <style>
+    /* Si tu CSS genera el badge "Nube" con ::before/::after, esto lo apaga. */
+    .fcard.tag-nube::before,
+    .fcard.tag-nube::after{
+      content:none !important;
+      display:none !important;
+    }
+    /* Si existe algún span .tag-nube dentro del card, también lo oculta */
+    .fcard .tag-nube{ display:none !important; }
+  </style>
 </head>
+
 <body id="top">
   <!-- Header dinámico -->
   <div id="header-placeholder"></div>
@@ -34,13 +50,17 @@
     <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#servicios">← Volver a servicios</a>
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
-    <h1>Cursos CONTPAQi <span class="badge" style="background:rgba(59,130,246,.18);border-color:#3b82f6;color:#bfdbfe;">Servicio</span></h1>
+    <h1>
+      Cursos CONTPAQi
+      <span class="badge" style="background:rgba(59,130,246,.18);border-color:#3b82f6;color:#bfdbfe;">Servicio</span>
+    </h1>
 
     <div class="badges">
       <span class="badge">Niveles Básico, Intermedio y Avanzado</span>
       <span class="badge">Cursos por sistema y rol</span>
       <span class="badge" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">10 días para resolver dudas después del curso</span>
     </div>
+
     <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
 
     <!-- ===== Beneficios + Reels en hero ===== -->
@@ -62,7 +82,7 @@
           <div class="card">
             <div class="body">
               <div class="listSlider">
-                <button class="arrowCircle prev" aria-label="Anterior">
+                <button class="arrowCircle prev" aria-label="Anterior" type="button">
                   <span class="chev">‹</span>
                 </button>
 
@@ -134,7 +154,7 @@
                   </div>
                 </div>
 
-                <button class="arrowCircle next" aria-label="Siguiente">
+                <button class="arrowCircle next" aria-label="Siguiente" type="button">
                   <span class="chev">›</span>
                 </button>
               </div>
@@ -159,14 +179,13 @@
               <!-- Reel 1 -->
               <div class="carousel-slide is-active">
                 <div class="reel-embed">
-<iframe
-  src="https://www.youtube-nocookie.com/embed/TgAkwNt4YCA?rel=0&modestbranding=1&controls=1&fs=1"
-  title="Testimonio Ana: Curso Contabilidad"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  loading="lazy"
-  allowfullscreen>
-</iframe>
-
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/TgAkwNt4YCA?rel=0&modestbranding=1&controls=1&fs=1"
+                    title="Testimonio Ana: Curso Contabilidad"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    loading="lazy"
+                    allowfullscreen>
+                  </iframe>
                 </div>
               </div>
 
@@ -194,12 +213,14 @@
             </div>
           </div>
         </aside>
+
       </div>
     </section>
 
     <!-- ===== Catálogo de cursos ===== -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
       <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
+
       <div class="card body">
         <h3 id="caracteristicas-title" class="title-gradient">Catálogo de Cursos CONTPAQi</h3>
         <p class="hint" style="margin:4px 0 10px;">
@@ -207,299 +228,259 @@
           oficiales o armar una agenda personalizada con los temas que más te interesen.
         </p>
 
- <div class="pillbar" role="tablist" aria-label="Filtrar cursos">
-  <button class="pill active" data-filter="escritorio">Sistemas de Escritorio</button>
-  <button class="pill" data-filter="nube">Sistemas en la Nube</button>
-  <button class="pill" data-filter="roles">Cursos por Rol</button>
-</div>
+        <div class="pillbar" role="tablist" aria-label="Filtrar cursos">
+          <button class="pill active" data-filter="escritorio" type="button">Sistemas de Escritorio</button>
+          <button class="pill" data-filter="nube" type="button">Sistemas en la Nube</button>
+          <button class="pill" data-filter="roles" type="button">Cursos por Rol</button>
+        </div>
 
-<div class="grid-3 feature-grid" id="cursosGrid">
-  <!-- ===== ESCRITORIO ===== -->
-  <article class="fcard tag-escritorio">
-    <div class="fhead">
-      <img class="logo-sistema" src="../IMG/contabilidad.webp" alt="Curso Contabilidad">
-    </div>
-    <p>Desde la creación de la empresa y catálogos hasta cierres, pólizas recurrentes y reportes fiscales.</p>
-    <ul class="imp-list">
-      <li>Niveles: Básico, Intermedio y Avanzado.</li>
-      <li>Podemos partir de nuestro temario oficial o enfocarlo en cierres y papeles de trabajo.</li>
-      <li>Usamos tus propios catálogos y XML de ejemplo si lo prefieres.</li>
-    </ul>
-    <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Contabilidad."
-       target="_blank" rel="noopener">
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-        Pedir info por WhatsApp
-      </span>
-    </a>
-  </article>
+        <div class="grid-3 feature-grid" id="cursosGrid">
+          <!-- ===== ESCRITORIO ===== -->
+          <article class="fcard tag-escritorio">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/contabilidad.webp" alt="Curso Contabilidad">
+            </div>
+            <p>Desde la creación de la empresa y catálogos hasta cierres, pólizas recurrentes y reportes fiscales.</p>
+            <ul class="imp-list">
+              <li>Niveles: Básico, Intermedio y Avanzado.</li>
+              <li>Podemos partir de nuestro temario oficial o enfocarlo en cierres y papeles de trabajo.</li>
+              <li>Usamos tus propios catálogos y XML de ejemplo si lo prefieres.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Contabilidad."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-  <article class="fcard tag-escritorio">
-    <div class="fhead">
-      <img class="logo-sistema" src="../IMG/bancos.webp" alt="Curso Bancos">
-    </div>
-    <p>Diseñado para tesorería y administración: conciliaciones, flujo de efectivo y conexión contable.</p>
-    <ul class="imp-list">
-      <li>Desde lo básico hasta conciliaciones avanzadas.</li>
-      <li>Casos prácticos con tus estados de cuenta reales.</li>
-      <li>Recomendado para responsables de pagos y cobranza.</li>
-    </ul>
-    <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Bancos."
-       target="_blank" rel="noopener">
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-        Pedir info por WhatsApp
-      </span>
-    </a>
-  </article>
+          <article class="fcard tag-escritorio">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/bancos.webp" alt="Curso Bancos">
+            </div>
+            <p>Diseñado para tesorería y administración: conciliaciones, flujo de efectivo y conexión contable.</p>
+            <ul class="imp-list">
+              <li>Desde lo básico hasta conciliaciones avanzadas.</li>
+              <li>Casos prácticos con tus estados de cuenta reales.</li>
+              <li>Recomendado para responsables de pagos y cobranza.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Bancos."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-  <article class="fcard tag-escritorio">
-    <div class="fhead">
-      <img class="logo-sistema" src="../IMG/nominas.webp" alt="Curso Nóminas">
-    </div>
-    <p>Ideal para responsables de nómina: configuración, cálculo, timbrado y obligaciones ante SAT/IMSS.</p>
-    <ul class="imp-list">
-      <li>Temario por nivel: Básico, Intermedio y Avanzado.</li>
-      <li>Incluye manejo de incidencias, finiquitos y aguinaldos.</li>
-      <li>Podemos enfocarlo a un solo tipo de nómina (semanal, quincenal, etc.).</li>
-    </ul>
-    <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20N%C3%B3minas."
-       target="_blank" rel="noopener">
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-        Pedir info por WhatsApp
-      </span>
-    </a>
-  </article>
+          <article class="fcard tag-escritorio">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/nominas.webp" alt="Curso Nóminas">
+            </div>
+            <p>Ideal para responsables de nómina: configuración, cálculo, timbrado y obligaciones ante SAT/IMSS.</p>
+            <ul class="imp-list">
+              <li>Temario por nivel: Básico, Intermedio y Avanzado.</li>
+              <li>Incluye manejo de incidencias, finiquitos y aguinaldos.</li>
+              <li>Podemos enfocarlo a un solo tipo de nómina (semanal, quincenal, etc.).</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20N%C3%B3minas."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-  <article class="fcard tag-escritorio">
-    <div class="fhead">
-      <img class="logo-sistema" src="../IMG/comercialstart.webp" alt="Curso Comercial">
-    </div>
-    <p>Enfoque en ventas, facturación, addendas, inventarios y reportes comerciales.</p>
-    <ul class="imp-list">
-      <li>Niveles: Básico, Intermedio y Avanzado.</li>
-      <li>Temarios separados para facturistas y jefes de área.</li>
-      <li>Incluye mejores prácticas de inventario y flujo de ventas.</li>
-    </ul>
-    <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Comercial."
-       target="_blank" rel="noopener">
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-        Pedir info por WhatsApp
-      </span>
-    </a>
-  </article>
+          <article class="fcard tag-escritorio">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/comercialstart.webp" alt="Curso Comercial">
+            </div>
+            <p>Enfoque en ventas, facturación, addendas, inventarios y reportes comerciales.</p>
+            <ul class="imp-list">
+              <li>Niveles: Básico, Intermedio y Avanzado.</li>
+              <li>Temarios separados para facturistas y jefes de área.</li>
+              <li>Incluye mejores prácticas de inventario y flujo de ventas.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Comercial."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-  <article class="fcard tag-escritorio">
-    <div class="fhead">
-      <img class="logo-sistema" src="../IMG/comercialpremium.webp" alt="Curso Comercial Premium">
-    </div>
-    <p>Control de almacenes, costos, traspasos, políticas de inventario y reportes clave.</p>
-    <ul class="imp-list">
-      <li>Temarios separados para almacén, compras y ventas.</li>
-      <li>Incluye flujo completo de entrada/salida y devoluciones.</li>
-      <li>Ideal para empresas con alto volumen de movimientos.</li>
-    </ul>
-    <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20Comercial%20Premium%20o%20Start."
-       target="_blank" rel="noopener">
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-        Pedir info por WhatsApp
-      </span>
-    </a>
-  </article>
-  
-  <article class="fcard tag-escritorio">
-  <div class="fhead">
-    <img class="logo-sistema" src="../IMG/comercialpro.webp" alt="Curso Comercial Pro">
-  </div>
-  <p>Curso enfocado en el uso administrativo y operativo de Comercial Pro: catálogos, costos, almacenes y reportes clave.</p>
-  <ul class="imp-list">
-    <li>Niveles: Básico, Intermedio y Avanzado.</li>
-    <li>Configuración de catálogos (clientes, proveedores, agentes, almacenes y listas de precios).</li>
-    <li>Flujos de compras, ventas, existencias y políticas de inventario.</li>
-    <li>Reportes para seguimiento de ventas, clientes y rotación de inventario.</li>
-  </ul>
-  <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Comercial%20Pro."
-     target="_blank" rel="noopener">
-    <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-      Pedir info por WhatsApp
-    </span>
-  </a>
-</article>
+          <article class="fcard tag-escritorio">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/comercialpremium.webp" alt="Curso Comercial Premium">
+            </div>
+            <p>Control de almacenes, costos, traspasos, políticas de inventario y reportes clave.</p>
+            <ul class="imp-list">
+              <li>Temarios separados para almacén, compras y ventas.</li>
+              <li>Incluye flujo completo de entrada/salida y devoluciones.</li>
+              <li>Ideal para empresas con alto volumen de movimientos.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20Comercial%20Premium%20o%20Start."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
+          <article class="fcard tag-escritorio">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/comercialpro.webp" alt="Curso Comercial Pro">
+            </div>
+            <p>Curso enfocado en el uso administrativo y operativo de Comercial Pro: catálogos, costos, almacenes y reportes clave.</p>
+            <ul class="imp-list">
+              <li>Niveles: Básico, Intermedio y Avanzado.</li>
+              <li>Configuración de catálogos (clientes, proveedores, agentes, almacenes y listas de precios).</li>
+              <li>Flujos de compras, ventas, existencias y políticas de inventario.</li>
+              <li>Reportes para seguimiento de ventas, clientes y rotación de inventario.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Comercial%20Pro."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-  <article class="fcard tag-escritorio">
-    <div class="fhead">
-      <img class="logo-sistema" src="../IMG/factura.webp" alt="Curso Factura">
-    </div>
-    <p>Uso correcto del sistema de facturación para ventas simples, servicios y manejo de complementos.</p>
-    <ul class="imp-list">
-      <li>Niveles según experiencia del equipo.</li>
-      <li>Temas opcionales: carta porte, REP, Carta Porte y facturación global.</li>
-      <li>Perfecto para facturistas y auxiliares administrativos.</li>
-    </ul>
-    <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20Factura%20Electr%C3%B3nica."
-       target="_blank" rel="noopener">
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-        Pedir info por WhatsApp
-      </span>
-    </a>
-  </article>
+          <article class="fcard tag-escritorio">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/factura.webp" alt="Curso Factura">
+            </div>
+            <p>Uso correcto del sistema de facturación para ventas simples, servicios y manejo de complementos.</p>
+            <ul class="imp-list">
+              <li>Niveles según experiencia del equipo.</li>
+              <li>Temas opcionales: carta porte, REP, Carta Porte y facturación global.</li>
+              <li>Perfecto para facturistas y auxiliares administrativos.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20Factura%20Electr%C3%B3nica."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-  <!-- ===== NUBE ===== -->
+          <!-- ===== NUBE (filtro funcional, etiqueta visual apagada por CSS) ===== -->
+          <article class="fcard tag-nube">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/personia.webp" alt="Curso Personia">
+              <span class="tag-nube"></span>
+            </div>
+            <p>Todo el flujo de nómina en la nube, desde la configuración inicial hasta el timbrado y reportes.</p>
+            <ul class="imp-list">
+              <li>Niveles por experiencia y tamaño de nómina.</li>
+              <li>Podemos basarnos en nuestro temario oficial o centrarnos en portal de colaboradores.</li>
+              <li>Se puede ligar con un curso de nómina tradicional en escritorio.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Personia."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-<article class="fcard tag-nube">
-  <div class="fhead">
-    <img class="logo-sistema" src="../IMG/personia.webp" alt="Curso Personia">
-    <span class="tag-nube">Nube</span>
-  </div>
-  <p>Todo el flujo de nómina en la nube, desde la configuración inicial hasta el timbrado y reportes.</p>
-  <ul class="imp-list">
-    <li>Niveles por experiencia y tamaño de nómina.</li>
-    <li>Podemos basarnos en nuestro temario oficial o centrarnos en portal de colaboradores.</li>
-    <li>Se puede ligar con un curso de nómina tradicional en escritorio.</li>
-  </ul>
-  <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Personia."
-     target="_blank" rel="noopener">
-    <span class="badge" role="listitem" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">
-      Pedir info por WhatsApp
-    </span>
-  </a>
-</article>
+          <article class="fcard tag-nube">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/vende.webp" alt="Curso Vende">
+              <span class="tag-nube"></span>
+            </div>
+            <p>Configuración, ventas en línea, inventarios y timbrado desde la nube.</p>
+            <ul class="imp-list">
+              <li>Enfocado en puntos de venta y comercio electrónico.</li>
+              <li>Flujos de venta, cancelaciones y notas de crédito.</li>
+              <li>Uso de reportes para toma de decisiones rápida.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Vende."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-<article class="fcard tag-nube">
-  <div class="fhead">
-    <img class="logo-sistema" src="../IMG/vende.webp" alt="Curso Vende">
-    <span class="tag-nube">Nube</span>
-  </div>
-  <p>Configuración, ventas en línea, inventarios y timbrado desde la nube.</p>
-  <ul class="imp-list">
-    <li>Enfocado en puntos de venta y comercio electrónico.</li>
-    <li>Flujos de venta, cancelaciones y notas de crédito.</li>
-    <li>Uso de reportes para toma de decisiones rápida.</li>
-  </ul>
-  <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Vende."
-     target="_blank" rel="noopener">
-    <span class="badge" role="listitem" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">
-      Pedir info por WhatsApp
-    </span>
-  </a>
-</article>
+          <article class="fcard tag-nube">
+            <div class="fhead">
+              <img class="logo-sistema" src="../IMG/contabiliza.webp" alt="Curso Contabiliza">
+              <span class="tag-nube"></span>
+            </div>
+            <p>Curso para interpretar tableros, indicadores y vistas financieras en la nube.</p>
+            <ul class="imp-list">
+              <li>Ideal para socios, dirección y gerencias financieras.</li>
+              <li>Lectura de indicadores clave y decisiones rápidas.</li>
+              <li>Se puede complementar con sesiones estratégicas.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Contabiliza."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-<article class="fcard tag-nube">
-  <div class="fhead">
-    <img class="logo-sistema" src="../IMG/contabiliza.webp" alt="Curso Contabiliza">
-    <span class="tag-nube">Nube</span>
-  </div>
-  <p>Curso para interpretar tableros, indicadores y vistas financieras en la nube.</p>
-  <ul class="imp-list">
-    <li>Ideal para socios, dirección y gerencias financieras.</li>
-    <li>Lectura de indicadores clave y decisiones rápidas.</li>
-    <li>Se puede complementar con sesión de estrategia.</li>
-  </ul>
-  <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Contabiliza."
-     target="_blank" rel="noopener">
-    <span class="badge" role="listitem" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">
-      Pedir info por WhatsApp
-    </span>
-  </a>
-</article>
+          <!-- ===== ROLES ===== -->
+          <article class="fcard tag-roles">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/026-persona.webp" alt="Curso para dueños">
+              <h4>Curso para Dueños y Dirección</h4>
+            </div>
+            <p>Visión ejecutiva de indicadores, reportes y controles mínimos que debes exigir a tu equipo.</p>
+            <ul class="imp-list">
+              <li>Enfocado en toma de decisiones, no en botones.</li>
+              <li>Seleccionamos módulos clave de Contabiliza, Analiza y Comercial.</li>
+              <li>Ideal para una sesión corta y muy estratégica.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20para%20Due%C3%B1os%20y%20Direcci%C3%B3n."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-<article class="fcard tag-nube">
-  <div class="fhead">
-    <img class="logo-sistema" src="../IMG/analiza.webp" alt="Curso Analiza">
-    <span class="tag-nube">Nube</span>
-  </div>
-  <p>Enfoque en construcción de dashboards y análisis de información integrada.</p>
-  <ul class="imp-list">
-    <li>Niveles desde lectura básica hasta diseño de vistas.</li>
-    <li>Incluye ejemplos de tableros por área (ventas, finanzas, dirección).</li>
-    <li>Perfecto para empresas que ya consolidan información en la nube.</li>
-  </ul>
-  <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Analiza."
-     target="_blank" rel="noopener">
-    <span class="badge" role="listitem" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">
-      Pedir info por WhatsApp
-    </span>
-  </a>
-</article>
+          <article class="fcard tag-roles">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/119-conexion.webp" alt="Curso facturistas">
+              <h4>Curso para Facturistas / Auxiliares</h4>
+            </div>
+            <p>Curso práctico para quien factura, cobra y atiende clientes todos los días.</p>
+            <ul class="imp-list">
+              <li>Temarios recortados para que apliquen rápido.</li>
+              <li>Enfoque en errores comunes y cómo evitarlos.</li>
+              <li>Podemos incluir simulación de casos de tus clientes.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20para%20facturistas."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-<article class="fcard tag-nube">
-  <div class="fhead">
-    <img class="logo-sistema" src="../IMG/despachos.webp" alt="Curso Despachos">
-    <span class="tag-nube">Nube</span>
-  </div>
-  <p>Gestión de clientes, obligaciones, tareas y seguimiento para despachos contables.</p>
-  <ul class="imp-list">
-    <li>Ideal para socios y coordinadores de despachos.</li>
-    <li>Podemos enfocarlo en control interno y productividad del equipo.</li>
-    <li>Incluye ejemplos de flujos mes a mes.</li>
-  </ul>
-  <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20CONTPAQi%20Despachos."
-     target="_blank" rel="noopener">
-    <span class="badge" role="listitem" style="background:rgba(34,197,94,.15);border-color:#22c55e;color:#86efac;">
-      Pedir info por WhatsApp
-    </span>
-  </a>
-</article>
+          <article class="fcard tag-roles">
+            <div class="fhead">
+              <img class="ficon" src="../IMG/002-pieza-de-puzzle.webp" alt="Curso personalizado">
+              <h4>Curso 100% Personalizado</h4>
+            </div>
+            <p>Nos indicas qué temas de nuestros temarios quieres ver y armamos un programa a la medida.</p>
+            <ul class="imp-list">
+              <li>Puedes mezclar temas de varios sistemas.</li>
+              <li>Definimos duración y nivel ideal (Básico, Intermedio o Avanzado) en una llamada breve.</li>
+              <li>Recomendado para empresas con procesos muy particulares.</li>
+            </ul>
+            <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20un%20curso%20personalizado%20con%20sus%20temarios."
+               target="_blank" rel="noopener">
+              <span class="badge" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
+                Pedir info por WhatsApp
+              </span>
+            </a>
+          </article>
 
-
-
-  <!-- ===== ROLES ===== -->
-  <article class="fcard tag-roles">
-    <div class="fhead">
-      <img class="ficon" src="../IMG/026-persona.webp" alt="Curso para dueños">
-      <h4>Curso para Dueños y Dirección</h4>
-    </div>
-    <p>Visión ejecutiva de indicadores, reportes y controles mínimos que debes exigir a tu equipo.</p>
-    <ul class="imp-list">
-      <li>Enfocado en toma de decisiones, no en botones.</li>
-      <li>Seleccionamos módulos clave de Contabiliza, Analiza y Comercial.</li>
-      <li>Ideal para una sesión corta y muy estratégica.</li>
-    </ul>
-    <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20para%20Due%C3%B1os%20y%20Direcci%C3%B3n."
-       target="_blank" rel="noopener">
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-        Pedir info por WhatsApp
-      </span>
-    </a>
-  </article>
-
-  <article class="fcard tag-roles">
-    <div class="fhead">
-      <img class="ficon" src="../IMG/119-conexion.webp" alt="Curso facturistas">
-      <h4>Curso para Facturistas / Auxiliares</h4>
-    </div>
-    <p>Curso práctico para quien factura, cobra y atiende clientes todos los días.</p>
-    <ul class="imp-list">
-      <li>Temarios recortados para que apliquen rápido.</li>
-      <li>Enfoque en errores comunes y cómo evitarlos.</li>
-      <li>Podemos incluir simulación de casos de tus clientes.</li>
-    </ul>
-    <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20del%20curso%20para%20facturistas."
-       target="_blank" rel="noopener">
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-        Pedir info por WhatsApp
-      </span>
-    </a>
-  </article>
-
-  <article class="fcard tag-roles">
-    <div class="fhead">
-      <img class="ficon" src="../IMG/002-pieza-de-puzzle.webp" alt="Curso personalizado">
-      <h4>Curso 100% Personalizado</h4>
-    </div>
-    <p>Nos indicas qué temas de nuestros temarios quieres ver y armamos un programa a la medida.</p>
-    <ul class="imp-list">
-      <li>Puedes mezclar temas de varios sistemas.</li>
-      <li>Definimos duración y nivel ideal (Básico, Intermedio o Avanzado) en una llamada breve.</li>
-      <li>Recomendado para empresas con procesos muy particulares.</li>
-    </ul>
-    <a href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20un%20curso%20personalizado%20con%20sus%20temarios."
-       target="_blank" rel="noopener">
-      <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
-        Pedir info por WhatsApp
-      </span>
-    </a>
-  </article>
-</div>
+        </div>
+      </div>
     </section>
 
     <!-- ===== Modalidades y precios ===== -->
@@ -607,7 +588,7 @@
       </div>
     </section>
 
-<!-- ===== Servicios Complementarios (reutilizable) ===== -->
+    <!-- ===== Servicios Complementarios (reutilizable) ===== -->
     <section id="servicios-complementarios" aria-labelledby="relacionados">
       <h3 id="relacionados" class="title-gradient">Servicios complementarios</h3>
       <p class="hint" style="margin-top:4px;margin-bottom:10px;">
@@ -618,8 +599,7 @@
         <div class="svc-grid">
           <!-- Columna 1 -->
           <ul class="svc-list">
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
               <div class="svc-text">
                 <span class="svc-title">Pólizas de Soporte Técnico Mensual</span>
                 <span class="svc-sub">Soporte y cursos ilimitados, desarrollos y más. Todo firmado por contrato.</span>
@@ -627,17 +607,15 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
               <div class="svc-text">
                 <span class="svc-title">Hora de soporte y soporte sin costo</span>
                 <span class="svc-sub">Atención por evento vía AnyDesk.</span>
               </div>
               <span class="svc-pill">Ver más →</span>
             </li>
-            
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
               <div class="svc-text">
                 <span class="svc-title">Cursos por sistema CONTPAQi</span>
                 <span class="svc-sub">Contabilidad, Bancos, Nóminas, Comercial, nube, etc.</span>
@@ -645,17 +623,15 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
               <div class="svc-text">
                 <span class="svc-title">Instalaciones</span>
                 <span class="svc-sub">En otro equipo o nuevas versiones.</span>
               </div>
               <span class="svc-pill">Ver más →</span>
             </li>
-            
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
               <div class="svc-text">
                 <span class="svc-title">Migración de equipo</span>
                 <span class="svc-sub">Mueve tu sistema CONTPAQi a otro equipo.</span>
@@ -663,8 +639,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
               <div class="svc-text">
                 <span class="svc-title">Migración y conversión de datos a CONTPAQi</span>
                 <span class="svc-sub">De otros sistemas a CONTPAQi.</span>
@@ -675,8 +650,7 @@
 
           <!-- Columna 2 -->
           <ul class="svc-list">
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
               <div class="svc-text">
                 <span class="svc-title">Contabilización por empresa</span>
                 <span class="svc-sub">Procesos contables recurrentes por compañía.</span>
@@ -684,8 +658,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
               <div class="svc-text">
                 <span class="svc-title">Adecuación de formatos PDF</span>
                 <span class="svc-sub">Formatos amigables de facturas, cotizaciones, tickets, etc.</span>
@@ -693,8 +666,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
               <div class="svc-text">
                 <span class="svc-title">Reportes personalizados</span>
                 <span class="svc-sub">Indicadores y listados hechos a tu medida.</span>
@@ -702,8 +674,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
               <div class="svc-text">
                 <span class="svc-title">Capacitaciones por rol</span>
                 <span class="svc-sub">Sesiones por persona o equipo según funciones.</span>
@@ -711,8 +682,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link"
-                data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
+            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
               <div class="svc-text">
                 <span class="svc-title">Desarrollos a tu medida</span>
                 <span class="svc-sub">Soluciones específicas sobre el ecosistema CONTPAQi.</span>
@@ -720,8 +690,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-           <li class="svc-link"
-                data-url="https://wa.me/5568437918?text=Hola%21%20Estoy%20buscando%20un%20servicio%20que%20no%20encontr%C3%A9%20en%20su%20p%C3%A1gina.%20Necesito%3A">
+            <li class="svc-link" data-url="https://wa.me/5568437918?text=Hola%21%20Estoy%20buscando%20un%20servicio%20que%20no%20encontr%C3%A9%20en%20su%20p%C3%A1gina.%20Necesito%3A">
               <div class="svc-text">
                 <span class="svc-title">¿No ves lo que buscas?</span>
                 <span class="svc-sub">Cuéntanos tu caso específico en CONTPAQi.</span>
@@ -732,11 +701,12 @@
         </div>
       </div>
     </section>
-    
+
     <!-- ===== FAQ ===== -->
     <section id="faq" aria-labelledby="faq-title">
       <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <h3 id="faq-title" class="title-gradient">Preguntas frecuentes sobre cursos</h3>
+
       <div class="faq-wrap" id="faqWrap">
         <details class="faq-item" open>
           <summary>¿Cómo definen el temario de mi curso?</summary>
@@ -788,6 +758,7 @@
       <div class="lock-note">no borrar esta sección, no tocar, respetar y mantener integro</div>
       <h3 class="title-gradient">¿Listo para agendar tu curso CONTPAQi?</h3>
       <p>Cuéntanos qué sistemas usas, qué nivel buscas y para cuántas personas. Te proponemos el temario ideal.</p>
+
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
         <a class="btn btn-grad-green"
            href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20programar%20un%20curso%20CONTPAQi.%20Estos%20son%20los%20sistemas%20que%20uso%20y%20los%20temas%20que%20me%20interesan:"
@@ -795,7 +766,6 @@
         <a class="btn btn-grad-blue" href="tel:+525568437918" target="_blank" rel="noopener">Llamar (55 6843 7918)</a>
       </div>
     </section>
-
 
     <!-- TOC -->
     <aside class="toc collapsed" id="toc" aria-live="polite">
