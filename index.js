@@ -279,7 +279,7 @@ const HERO_GALLERY_DATA={
       {src:"IMG/persobime.webp"}
     ]}
   }},
-  servicios:{label:"Servicios",defaultSys:"implementaciones",systems:{}}
+  servicios:{label:"Servicios",defaultSys:"polizas",systems:{}}
 };
 
 const HERO_GALLERY={
