@@ -1,7 +1,9 @@
 // =========================================================
-// Expiriti - mainservicios.js
+// Expiriti - mainservicios.js (REEMPLAZO COMPLETO)
 // Servicios (Soporte, Pólizas, Cursos, Migraciones, etc.)
 // Parciales + TOC + Carruseles + Filtros + FAQ + YouTube pause
+// + FIX: Reels títulos 1-línea + ocultar flechas si no aplica
+// + FIX: carouselX solo link si existe data-href
 // =========================================================
 
 (function(){
@@ -34,22 +36,6 @@
   // 2) Carga de parciales (header/footer) + normalización rutas
   // =========================================================
   (async function loadPartials(){
-    const exists = async (u) => {
-      try {
-        const r = await fetch(u, { method:"HEAD" });
-        return r.ok;
-      } catch {
-        return false;
-      }
-    };
-
-    const pickFirst = async (paths) => {
-      for (const p of paths){
-        if (await exists(p)) return p;
-      }
-      return paths[0];
-    };
-
     const isGh      = location.hostname.endsWith("github.io");
     const firstSeg  = location.pathname.split("/")[1] || "";
     const repoBase  = (isGh && firstSeg) ? ("/" + firstSeg) : "";
@@ -62,28 +48,45 @@
       return (depth + p).replace(/\/+/g, "/");
     }
 
-    const headerURL = await pickFirst([
+    const tryFetchText = async (url) => {
+      const r = await fetch(url, { cache: "no-cache" });
+      if (!r.ok) throw new Error(`${r.status} ${r.statusText} -> ${url}`);
+      return r.text();
+    };
+
+    const pickText = async (cands) => {
+      let lastErr = null;
+      for (const u of cands) {
+        try { return await tryFetchText(u); }
+        catch(e){ lastErr = e; }
+      }
+      throw lastErr || new Error("No se pudo cargar partial.");
+    };
+
+    const headerCandidates = [
+      prefix("PARTIALS/global-header.html"),
       "../PARTIALS/global-header.html",
       "./PARTIALS/global-header.html",
       `${repoBase}/PARTIALS/global-header.html`,
       "/PARTIALS/global-header.html"
-    ]);
-    const footerURL = await pickFirst([
+    ];
+    const footerCandidates = [
+      prefix("PARTIALS/global-footer.html"),
       "../PARTIALS/global-footer.html",
       "./PARTIALS/global-footer.html",
       `${repoBase}/PARTIALS/global-footer.html`,
       "/PARTIALS/global-footer.html"
-    ]);
+    ];
 
     let headerHTML = "";
     let footerHTML = "";
     try{
       [headerHTML, footerHTML] = await Promise.all([
-        fetch(headerURL).then(r=>r.text()),
-        fetch(footerURL).then(r=>r.text())
+        pickText(headerCandidates).catch(()=> ""),
+        pickText(footerCandidates).catch(()=> "")
       ]);
     }catch(e){
-      console.warn("No se pudieron cargar parciales de header/footer", e);
+      console.warn("No se pudieron cargar parciales:", e);
     }
 
     const hp = $("#header-placeholder");
@@ -93,20 +96,15 @@
 
     // Normalización de rutas declarativas dentro de parciales
     $$(".js-abs-src[data-src]").forEach(img=>{
-      img.src = prefix(img.getAttribute("data-src"));
+      const v = img.getAttribute("data-src");
+      if (!v) return;
+      img.src = prefix(v);
     });
     $$(".js-abs-href[data-href]").forEach(a=>{
-      const p = a.getAttribute("data-href");
-      if (!p) return;
-      const [path, hash] = p.split("#");
+      const raw = a.getAttribute("data-href");
+      if (!raw) return;
+      const [path, hash] = raw.split("#");
       a.href = prefix(path) + (hash ? ("#" + hash) : "");
-    });
-
-    $$(".js-img[data-src]").forEach(img=>{
-      img.src = prefix(img.getAttribute("data-src"));
-    });
-    $$(".js-link[data-href]").forEach(a=>{
-      a.href = prefix(a.getAttribute("data-href"));
     });
 
     const y = $("#gf-year");
@@ -141,74 +139,10 @@
   })();
 
   // =========================================================
-  // 4) Carrusel genérico (.carousel) — dots + flechas
-  //    EXCLUYE reels (id^="carouselReels") y NO toca .reel-title
+  // 4) List slider (“beneficios”) - estable
   // =========================================================
   (function(){
-    function initCarousel(root){
-      const track = root.querySelector(".carousel-track");
-      const prev  = root.querySelector(".arrowCircle.prev");
-      const next  = root.querySelector(".arrowCircle.next");
-      let dots    = [...root.querySelectorAll(".carousel-nav .dot")];
-      let i = 0;
-      let len = dots.length || (track?.children?.length || 0);
-
-      if(!track || !len) return;
-
-      function paint(idx){
-        dots.forEach((d,di)=>d.classList.toggle("active",di===idx));
-      }
-
-      function toggleUI(){
-        const multi = len > 1;
-        if (prev) prev.style.display = multi ? "" : "none";
-        if (next) next.style.display = multi ? "" : "none";
-        const nav = root.querySelector(".carousel-nav");
-        if (nav) nav.style.display = multi ? "" : "none";
-      }
-
-      function set(n){
-        i = (n + len) % len;
-        const w = track.clientWidth || root.clientWidth || 1;
-        paint(i);
-        track.scrollTo({left:w * i, behavior:"smooth"});
-        toggleUI();
-      }
-
-      dots.forEach((d,idx)=>d.addEventListener("click",()=>{
-        if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-        set(idx);
-      }));
-      prev && prev.addEventListener("click",()=>{
-        if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-        set(i-1);
-      });
-      next && next.addEventListener("click",()=>{
-        if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-        set(i+1);
-      });
-
-      track.addEventListener("scroll",()=>{
-        const w = track.clientWidth || 1;
-        const n = Math.round(track.scrollLeft / w);
-        if(n!==i){
-          i=n;
-          paint(i);
-        }
-      });
-
-      window.addEventListener("resize",()=>set(i));
-      set(0);
-    }
-
-    document.querySelectorAll('.carousel:not([id^="carouselReels"])').forEach(initCarousel);
-  })();
-
-  // =========================================================
-  // 5) List slider (“beneficios”) - CORREGIDO
-  // =========================================================
-  (function(){
-    document.querySelectorAll(".listSlider").forEach(w=>{
+    $$(".listSlider").forEach(w=>{
       const track = w.querySelector(".listTrack");
       const prev  = w.querySelector(".arrowCircle.prev");
       const next  = w.querySelector(".arrowCircle.next");
@@ -216,30 +150,30 @@
 
       let i = 0;
       const pages = track.children;
-      const len = pages.length;
+      const len = pages.length || 0;
+      if (!len) return;
 
       function go(n){
         if (window.pauseAllYTIframes) window.pauseAllYTIframes();
         i = (n + len) % len;
-
-        // ancho visible real del track
         const width = track.clientWidth || 1;
         track.scrollTo({ left: width * i, behavior: "smooth" });
       }
 
       prev.addEventListener("click", () => go(i - 1));
       next.addEventListener("click", () => go(i + 1));
-      window.addEventListener("resize", () => setTimeout(() => go(i), 100));
+
+      window.addEventListener("resize", () => setTimeout(() => go(i), 80));
       go(0);
     });
   })();
 
   // =========================================================
-  // 6) Píldoras (filtros de servicios)
+  // 5) Píldoras (filtros de servicios)
   // =========================================================
   (function(){
-    const pills = [...document.querySelectorAll(".pill")];
-    const cards = [...document.querySelectorAll(".feature-grid .fcard")];
+    const pills = $$(".pill");
+    const cards = $$(".feature-grid .fcard");
     if(!pills.length || !cards.length) return;
 
     function apply(tag){
@@ -265,15 +199,15 @@
   })();
 
   // =========================================================
-  // 7) FAQ: solo uno abierto a la vez
+  // 6) FAQ: solo uno abierto a la vez
   // =========================================================
   (function(){
-    const wrap = document.getElementById("faqWrap");
+    const wrap = $("#faqWrap");
     if(!wrap) return;
-    [...wrap.querySelectorAll(".faq-item")].forEach(item=>{
+    $$(".faq-item", wrap).forEach(item=>{
       item.addEventListener("toggle",()=>{
         if(item.open){
-          [...wrap.querySelectorAll(".faq-item")].forEach(o=>{
+          $$(".faq-item", wrap).forEach(o=>{
             if(o !== item) o.removeAttribute("open");
           });
         }
@@ -282,8 +216,7 @@
   })();
 
   // =========================================================
-  // 8) Carrusel de tarjetas horizontales (.carouselX) — dots + flechas
-  //    (Esto corrige “Plataformas que Integramos” y “Sistemas que Soportamos”)
+  // 7) Carrusel de sistemas (.carouselX) — UI + dots + FIX links
   // =========================================================
   (function(){
     function ensureUI(root){
@@ -312,20 +245,21 @@
       return { prev, next, dotsWrap };
     }
 
-    document.querySelectorAll(".carouselX").forEach(root=>{
+    $$(".carouselX").forEach(root=>{
       const track = root.querySelector(".track");
       if(!track) return;
 
-      const items = [...root.querySelectorAll(".sys")];
+      const items = $$(".sys", root);
       if (!items.length) return;
 
-      // Si un .sys tiene data-href → se vuelve clicable
+      // FIX: SOLO hacer click-link si existe data-href
       items.forEach(it=>{
         const href = it.getAttribute("data-href");
-        if(!href) return;
+        if (!href) return; // plataformas puede no tener links
+
         it.setAttribute("role","link");
         it.setAttribute("tabindex","0");
-        const go = () => window.open(href,"_blank","noopener");
+        const go = () => window.open(href, "_blank", "noopener");
         it.addEventListener("click", go);
         it.addEventListener("keydown", e=>{
           if(e.key === "Enter" || e.key === " "){
@@ -337,16 +271,9 @@
 
       const { prev, next, dotsWrap } = ensureUI(root);
 
-      const stepDesktop = parseInt(root.getAttribute("data-step") || "3", 10) || 3;
-      const perView = () => (window.innerWidth <= 980 ? 1 : stepDesktop);
+      const perView   = () => (window.innerWidth <= 980 ? 1 : 3);
       const viewportW = () => track.clientWidth || root.clientWidth || 1;
-
-      const pageCount = () => {
-        const w = viewportW();
-        const total = Math.ceil(items.length / Math.max(1, perView()));
-        // fallback por si el layout todavía no mide bien:
-        return Math.max(1, total || 1);
-      };
+      const pageCount = () => Math.max(1, Math.ceil((track.scrollWidth - 1) / viewportW()));
 
       function buildDots(){
         dotsWrap.innerHTML = "";
@@ -383,10 +310,12 @@
         const total = pageCount();
         idx = ((j % total) + total) % total;
 
-        // mover por “páginas” (en escritorio avanza de step en step)
         const startIdx = Math.min(idx * perView(), items.length - 1);
         const first    = items[startIdx];
-        const baseLeft = first ? first.offsetLeft - (items[0]?.offsetLeft || 0) : 0;
+        let baseLeft = (idx === 0)
+          ? 0
+          : (first ? first.offsetLeft - (track.firstElementChild?.offsetLeft || 0)
+                   : idx * viewportW());
 
         const maxLeft = Math.max(0, track.scrollWidth - viewportW());
         const left    = Math.min(Math.max(0, baseLeft), maxLeft);
@@ -405,33 +334,41 @@
         go(idx+1);
       });
 
-      // Ajustes robustos
-      function hardRefresh(){
-        dots = buildDots();
+      track.addEventListener("scroll",()=>{
+        const i = Math.round(track.scrollLeft / viewportW());
+        if(i !== idx){
+          idx = i;
+          paint(idx);
+        }
+      });
+
+      window.addEventListener("resize",()=>{
+        const nowPages = pageCount();
+        if(dots.length !== nowPages) dots = buildDots();
+        setTimeout(()=>go(idx), 0);
+      });
+
+      function resetStart(){
+        track.scrollLeft = 0;
         idx = 0;
-        track.scrollTo({ left: 0, behavior: "auto" });
         paint(0);
         toggleUI();
       }
 
-      window.addEventListener("resize",()=>{
-        // recalcula páginas y mantiene idx dentro
-        dots = buildDots();
-        setTimeout(()=>go(Math.min(idx, pageCount()-1)), 0);
-      });
+      requestAnimationFrame(resetStart);
+      window.addEventListener('load', ()=> setTimeout(resetStart, 0));
+      window.addEventListener('pageshow', resetStart);
 
-      window.addEventListener("load", ()=> setTimeout(hardRefresh, 0));
-      window.addEventListener("pageshow", ()=> setTimeout(hardRefresh, 0));
-      setTimeout(hardRefresh, 350);
+      track.style.overflowX      = "auto";
+      track.style.scrollBehavior = "smooth";
 
-      // Estado inicial
       toggleUI();
       go(0);
     });
   })();
 
   // =========================================================
-  // 9) GESTOR YOUTUBE — pausa reels al cambiar
+  // 8) GESTOR YOUTUBE — pausa reels al cambiar
   // =========================================================
   (function(){
     if (!window.exPlayers) window.exPlayers = [];
@@ -461,12 +398,12 @@
     window.onYouTubeIframeAPIReady = function(){
       if (typeof prevOnReady === "function") prevOnReady();
 
-      document.querySelectorAll('iframe[src*="youtube"]').forEach(iframe=>{
+      $$('iframe[src*="youtube"]').forEach(iframe=>{
         if (iframe.dataset.ytInit) return;
         iframe.dataset.ytInit = "1";
 
-        let src = iframe.src;
-        if (!src.includes("enablejsapi=1")){
+        let src = iframe.src || "";
+        if (src && !src.includes("enablejsapi=1")){
           src += (src.includes("?") ? "&" : "?") + "enablejsapi=1";
           iframe.src = src;
         }
@@ -490,79 +427,93 @@
   })();
 
   // =========================================================
-  // 10) Carrusel de REELS (título único + oculta flechas si 1 reel)
-  //      - Siempre deja 1 solo .reel-title visible
-  //      - Si no hay reels o hay 1 → oculta flechas y dots
+  // 9) Carrusel de REELS (título 1-línea + ocultar flechas si no aplica)
   // =========================================================
   (function(){
-    function ensureDots(root, slides){
-      const nav = root.querySelector(".carousel-nav");
-      if (!nav) return [];
-      // Si ya hay dots en HTML, respeta; si no, los crea.
-      let dots = [...nav.querySelectorAll(".dot")];
-      if (dots.length === slides.length) return dots;
-
+    function ensureDots(root, count){
+      let nav = root.querySelector(".carousel-nav");
+      if (!nav){
+        nav = document.createElement("div");
+        nav.className = "carousel-nav";
+        nav.setAttribute("aria-label", "Paginación de reels");
+        root.appendChild(nav);
+      }
       nav.innerHTML = "";
-      dots = slides.map((_,i)=>{
+      for (let i=0;i<count;i++){
         const b = document.createElement("button");
         b.className = "dot" + (i===0 ? " active" : "");
         b.type = "button";
-        b.setAttribute("aria-label", "Ir al reel " + (i+1));
+        b.setAttribute("aria-label", `Ir al reel ${i+1}`);
         nav.appendChild(b);
-        return b;
-      });
-      return dots;
+      }
+      return [...nav.querySelectorAll(".dot")];
     }
 
-    document.querySelectorAll('.carousel[id^="carouselReels"]').forEach(root => {
-      const scope  = root.closest('aside') || root;
-      const track  = root.querySelector('.carousel-track');
-      const slides = [...(track?.querySelectorAll('.carousel-slide') || [])];
-      const prev   = root.querySelector('.arrowCircle.prev');
-      const next   = root.querySelector('.arrowCircle.next');
-      const nav    = root.querySelector('.carousel-nav');
+    function findTitleEl(scope){
+      // Preferido: el que tenga data-reel-title
+      let t = scope.querySelector("[data-reel-title]");
+      if (t) return t;
 
-      if(!track || !slides.length){
-        // No hay reels → oculta UI
+      // Fallback: primer .reel-title
+      const all = [...scope.querySelectorAll(".reel-title")];
+      if (!all.length) return null;
+
+      // Oculta extras por seguridad
+      all.slice(1).forEach(x => x.style.display = "none");
+      return all[0];
+    }
+
+    $$('.carousel[id^="carouselReels"]').forEach(root => {
+      const scope  = root.closest("aside") || root;
+      const track  = root.querySelector(".carousel-track");
+      const slides = [...(track?.querySelectorAll(".carousel-slide") || [])];
+      const prev   = root.querySelector(".arrowCircle.prev");
+      const next   = root.querySelector(".arrowCircle.next");
+
+      if (!track || !slides.length) {
+        // Sin slides: oculta UI
         if (prev) prev.style.display = "none";
         if (next) next.style.display = "none";
-        if (nav)  nav.style.display  = "none";
+        const nav = root.querySelector(".carousel-nav");
+        if (nav) nav.style.display = "none";
+        const t = findTitleEl(scope);
+        if (t) t.textContent = "";
         return;
       }
 
-      // TÍTULO ÚNICO: usa el primero y oculta el resto
-      const reelTitles = [...scope.querySelectorAll('.reel-title')];
-      let titleEl = reelTitles[0] || null;
-      if (reelTitles.length > 1){
-        reelTitles.slice(1).forEach(el => { el.style.display = "none"; });
-      }
-      if (titleEl){
-        titleEl.style.display = "";
-        titleEl.classList.add("active");
-      }
-
-      // Dots: asegurar que coincidan con cantidad de slides
-      const dots = ensureDots(root, slides);
-
-      // Extraer títulos desde: data-title (reel-embed o slide) o title del iframe
+      // Títulos por slide
       const titles = slides.map(sl => {
-        const wrap = sl.querySelector('.reel-embed');
-        const ifr  = sl.querySelector('iframe');
-        return (wrap?.dataset?.title) || (sl.dataset?.title) || (ifr?.getAttribute('title')) || '';
+        const dt = sl.getAttribute("data-title");
+        if (dt) return dt.trim();
+        const wrap = sl.querySelector(".reel-embed");
+        const wdt = wrap?.getAttribute("data-title");
+        if (wdt) return wdt.trim();
+        const ifr = sl.querySelector("iframe");
+        const it  = ifr?.getAttribute("title");
+        return (it || "").trim();
       });
+
+      // Dots: si no existen o no coinciden, crear
+      let dots = [...root.querySelectorAll(".carousel-nav .dot")];
+      if (dots.length !== slides.length){
+        dots = ensureDots(root, slides.length);
+      }
+
+      // UI: si solo hay 1 reel, no muestres flechas ni dots
+      const multi = slides.length > 1;
+      if (prev) prev.style.display = multi ? "" : "none";
+      if (next) next.style.display = multi ? "" : "none";
+      const nav = root.querySelector(".carousel-nav");
+      if (nav) nav.style.display = multi ? "" : "none";
+
+      // Título 1-línea (estilo index)
+      const titleEl = findTitleEl(scope);
 
       let idx = 0;
 
-      function toggleUI(){
-        const multi = slides.length > 1;
-        if (prev) prev.style.display = multi ? "" : "none";
-        if (next) next.style.display = multi ? "" : "none";
-        if (nav)  nav.style.display  = multi ? "" : "none";
-      }
-
       function paint(){
-        dots.forEach((d, di) => d.classList.toggle('active', di === idx));
-        slides.forEach((sl, si) => sl.classList.toggle('is-active', si === idx));
+        dots.forEach((d, di)=> d.classList.toggle("active", di===idx));
+        slides.forEach((sl, si)=> sl.classList.toggle("is-active", si===idx));
         if (titleEl){
           titleEl.textContent = titles[idx] || "";
         }
@@ -570,30 +521,29 @@
 
       function setActive(i){
         if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+
         idx = (i + slides.length) % slides.length;
         const w = track.clientWidth || root.clientWidth || 1;
-        track.scrollTo({ left: w * idx, behavior: 'smooth' });
+        track.scrollTo({ left: w * idx, behavior: "smooth" });
         paint();
-        toggleUI();
       }
 
-      dots.forEach((d, i) => d.addEventListener('click', () => setActive(i)));
-      prev?.addEventListener('click', () => setActive(idx - 1));
-      next?.addEventListener('click', () => setActive(idx + 1));
+      dots.forEach((d,i)=> d.addEventListener("click", ()=> setActive(i)));
+      prev?.addEventListener("click", ()=> setActive(idx-1));
+      next?.addEventListener("click", ()=> setActive(idx+1));
 
-      track.addEventListener('scroll', () => {
+      track.addEventListener("scroll", ()=>{
         const w = track.clientWidth || 1;
         const i = Math.round(track.scrollLeft / w);
-        if (i !== idx && i >= 0 && i < slides.length) {
+        if (i !== idx && i >= 0 && i < slides.length){
           idx = i;
           paint();
         }
       });
 
-      window.addEventListener('resize', () => setActive(idx));
+      window.addEventListener("resize", ()=> setActive(idx));
 
-      // Estado inicial
-      toggleUI();
+      // Init
       setActive(0);
     });
   })();
