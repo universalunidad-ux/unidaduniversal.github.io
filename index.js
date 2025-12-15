@@ -471,19 +471,51 @@ const REELS_DATA={
     ],
     personia:[{id:"gae67GDse30",title:"Nóminas y Personia | Checador por GPS"}]
   }},
-  servicios:{titleEl:$("#reelTitle-servicios"),carousel:$("#carouselReels-servicios"),defaultSys:"implementaciones",reelsBySys:{
-    implementaciones:[{id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"}],
-    migraciones:[{id:"JkrDOjWV1Gs",title:"Migración de datos a CONTPAQi"}],
+servicios:{
+  titleEl:$("#reelTitle-servicios"),
+  carousel:$("#carouselReels-servicios"),
+  defaultSys:"implementaciones",
+  reelsBySys:{
+    implementaciones:[
+      {id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"}
+    ],
+
+    migraciones:[
+      {id:"JkrDOjWV1Gs",title:"Migración de datos a CONTPAQi"}
+    ],
+
     desarrollos:[
       {id:"JkrDOjWV1Gs",title:"Testimonio Sara: Soft Restaurant"},
       {id:"uBl5UWkwbr8",title:"Testimonio Luis: Desarrollo en Nóminas"},
       {id:"f-F10-F6rnM",title:"Testimonio Alex: Integración CONTPAQi API"}
     ],
-    servidores:[{id:"Grx1woHMGsU",title:"Servidores Virtuales para CONTPAQi"}],
-    cursos:[{id:"TgAkwNt4YCA",title:"Testimonio Ana: Curso Contabilidad"}],
-    soporte:[{id:"IoHjV2QG_3U",title:"Testimonio Marco: Soporte eficaz"}]
-  }}
-};
+
+    servidores:[
+      {id:"Grx1woHMGsU",title:"Servidores Virtuales para CONTPAQi"}
+    ],
+
+    cursos:[
+      {id:"TgAkwNt4YCA",title:"Testimonio Ana: Curso Contabilidad"}
+    ],
+
+    soporte:[
+      {id:"IoHjV2QG_3U",title:"Testimonio Marco: Soporte eficaz"}
+    ],
+
+    /* ✅ NUEVO: PÓLIZAS */
+    polizas:[
+      {
+        id:"REEMPLAZAR_ID_POLIZA_1",
+        title:"¿Qué incluye una póliza anual de soporte Expiriti?"
+      },
+      {
+        id:"REEMPLAZAR_ID_POLIZA_2",
+        title:"Cómo se cotiza una póliza: usuarios, sistemas y empresas"
+      }
+    ]
+  }
+}
+
 
 function renderReelThumb(wrap){
   const id=wrap.dataset.ytid; if(!id) return;
