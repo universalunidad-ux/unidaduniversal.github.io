@@ -512,10 +512,10 @@ servicios:{
         id:"REEMPLAZAR_ID_POLIZA_2",
         title:"Cómo se cotiza una póliza: usuarios, sistemas y empresas"
       }
-    ]
+  ]
+    }
   }
-}
-
+}; // ✅ CIERRE OBLIGATORIO de REELS_DATA
 
 function renderReelThumb(wrap){
   const id=wrap.dataset.ytid; if(!id) return;
