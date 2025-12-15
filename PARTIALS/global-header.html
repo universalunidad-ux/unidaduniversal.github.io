@@ -1,133 +1,349 @@
 <!-- /PARTIALS/global-header.html -->
 <header class="gh" role="banner">
 <style>
-/* === ESTILOS BASE HEADER === */
-.gh{position:sticky;top:0;z-index:999;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(7,10,16,.92);border-bottom:1px solid rgba(255,255,255,.06)}
-.gh-container{max-width:var(--maxw,1200px);margin:0 auto;padding:12px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}
-.gh-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text,#e8eef6);padding:4px 6px;border-radius:999px;transition:.22s ease}
-.gh-brand:hover{background:rgba(255,255,255,.04);transform:translateY(-1px)}
+/* =========================================================
+   Expiriti - Global Header (Responsive + MegaMenu + Mobile Drawer)
+   - Desktop: mega menú robusto (no se cierra fácil)
+   - Mobile: drawer con acordeones (hamburguesa funciona)
+   - Performance: CSS/JS simples, sin dependencias
+   ========================================================= */
+
+/* --- Tokens mínimos (usa tus :root globales si existen) --- */
+:root{
+  --gh-bg: rgba(7,10,16,.92);
+  --gh-border: rgba(255,255,255,.06);
+  --gh-panel: rgba(10,14,23,.98);
+  --gh-text: var(--text,#e8eef6);
+  --gh-muted: var(--muted,#95a2b3);
+  --gh-brand: var(--brand,#2dd4bf);
+  --gh-brand2: var(--brand-2,#60a5fa);
+  --gh-maxw: var(--maxw,1200px);
+}
+
+/* --- Base --- */
+.gh{
+  position:sticky; top:0; z-index:999;
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  background:var(--gh-bg);
+  border-bottom:1px solid var(--gh-border);
+}
+.gh *{box-sizing:border-box}
+.gh-container{
+  max-width:var(--gh-maxw);
+  margin:0 auto;
+  padding:12px clamp(12px, 2vw, 18px);
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:14px;
+  align-items:center;
+  min-width:0;
+}
+
+/* --- Brand --- */
+.gh-brand{
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; color:var(--gh-text);
+  padding:4px 6px; border-radius:999px;
+  transition:.2s ease;
+  min-width:0;
+}
+.gh-brand:hover{background:rgba(255,255,255,.04); transform:translateY(-1px)}
 .gh-brand img{width:44px;height:44px;border-radius:12px;flex:0 0 44px}
-.gh-brand-title{display:flex;flex-direction:column;line-height:1.1;white-space:nowrap}
-.gh-brand-title .name{font-size:16px;font-weight:600;letter-spacing:.02em;color:#fff}
-.gh-brand-title .sub{font-size:13px;color:var(--muted,#95a2b3)}
+.gh-brand-title{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+.gh-brand-title .name{font-size:16px;font-weight:650;letter-spacing:.02em;color:#fff;white-space:nowrap}
+.gh-brand-title .sub{font-size:13px;color:var(--gh-muted);white-space:nowrap}
 
-.gh-nav{justify-self:center}
-.gh-nav>ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;align-items:center}
-.gh-nav>ul>li{display:flex;align-items:center}
+/* --- Desktop Nav --- */
+.gh-nav{justify-self:center; min-width:0}
+.gh-nav > ul{
+  display:flex; gap:18px;
+  list-style:none; margin:0; padding:0;
+  align-items:center; min-width:0;
+}
+.gh-nav > ul > li{display:flex; align-items:center}
 
-/* Enlaces del menú */
-.gh-nav a{position:relative;color:var(--text,#e8eef6);text-decoration:none;font-weight:500;font-size:14px;padding:6px 2px;border-radius:0;line-height:1;transition:color .2s ease}
-.gh-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));transform:scaleX(0);transform-origin:center;transition:.22s ease;opacity:0}
-.gh-nav a:hover::after{transform:scaleX(1);opacity:1}
-.gh-nav a.active-parent{color:var(--brand,#2dd4bf)}
-.gh-nav a.active-parent::after{transform:scaleX(1);opacity:1}
+/* Links top */
+.gh-nav a{
+  position:relative;
+  color:var(--gh-text);
+  text-decoration:none;
+  font-weight:520;
+  font-size:14px;
+  padding:6px 2px;
+  line-height:1;
+  transition:color .2s ease;
+  white-space:nowrap;
+}
+.gh-nav a::after{
+  content:"";
+  position:absolute; left:0; right:0; bottom:-4px;
+  height:2px; border-radius:999px;
+  background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));
+  transform:scaleX(0); transform-origin:center;
+  opacity:0; transition:.2s ease;
+}
+.gh-nav a:hover::after{transform:scaleX(1); opacity:1}
+.gh-nav a.active-parent{color:var(--gh-brand)}
+.gh-nav a.active-parent::after{transform:scaleX(1); opacity:1}
 
-/* Dropdown wrapper */
+/* --- Dropdown wrapper --- */
 .gh-has-dd{position:relative}
 
-/* === Dropdown más robusto (No se cierra fácil) === */
+/* Dropdown base (robusto) */
 .gh-dd{
   position:absolute;
   top:calc(100% + 10px);
   left:0;
-  background:rgba(10,14,23,.98);
+  background:var(--gh-panel);
   border:1px solid rgba(255,255,255,.08);
   box-shadow:0 18px 45px rgba(0,0,0,.6);
   border-radius:18px;
-  min-width:240px;
   padding:14px;
   z-index:1000;
 
   visibility:hidden;
   opacity:0;
   transform:translateY(10px);
-
-  /* retardo de salida */
-  transition:opacity .2s ease, transform .2s ease, visibility 0s linear .3s;
+  transition:opacity .18s ease, transform .18s ease, visibility 0s linear .22s;
 }
 
-/* Puente invisible: evita “hueco” entre botón y menú */
+/* Puente invisible: evita hueco entre botón y menú */
 .gh-dd::before{
   content:"";
   position:absolute;
-  top:-20px;
-  left:0;
-  width:100%;
-  height:20px;
+  top:-18px; left:0;
+  width:100%; height:18px;
   background:transparent;
 }
 
-/* Mostrar dropdown */
+/* Mostrar dropdown (hover + focus-within) */
 .gh-has-dd:focus-within .gh-dd,
 .gh-has-dd:hover .gh-dd{
   visibility:visible;
   opacity:1;
   transform:translateY(0);
-  transition:opacity .2s ease, transform .2s ease, visibility 0s linear 0s;
+  transition:opacity .18s ease, transform .18s ease, visibility 0s linear 0s;
 }
 
-/* === MEGA MENU SISTEMAS === */
+/* --- MEGA MENU SISTEMAS: centrado y nunca se sale --- */
 .gh-dd.mega{
-  left:0;
-  width:980px;
-  max-width:calc(100vw - 32px);
-  padding:24px;
-  box-sizing:border-box;
+  left:50%;
+  transform:translate(-50%, 10px);
+  width:min(980px, calc(100vw - 24px));
+  padding:20px;
 }
-.gh-mega{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.gh-has-dd:hover .gh-dd.mega,
+.gh-has-dd:focus-within .gh-dd.mega{
+  transform:translate(-50%, 0);
+}
+
+.gh-mega{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:16px;
+}
 
 /* Columnas */
-.gh-col{border-radius:16px;padding:12px;background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);border:1px solid rgba(255,255,255,.06);min-width:0}
-.gh-col h4{margin:0 0 8px;font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;opacity:.7}
+.gh-col{
+  border-radius:16px;
+  padding:12px;
+  background:radial-gradient(circle at top left, rgba(255,255,255,.03), transparent 55%);
+  border:1px solid rgba(255,255,255,.06);
+  min-width:0;
+}
+.gh-col h4{
+  margin:0 0 8px;
+  font-size:12px;
+  letter-spacing:.14em;
+  color:var(--gh-muted);
+  text-transform:uppercase;
+  opacity:.75;
+}
 
-.gh-subhead{display:flex;align-items:center;gap:6px;margin:12px 0 8px;font-weight:600;font-size:11px;color:#fff;text-transform:uppercase;letter-spacing:.05em}
-.gh-subhead svg{width:14px;height:14px;opacity:.9;color:var(--brand,#2dd4bf)}
+.gh-subhead{
+  display:flex; align-items:center; gap:6px;
+  margin:12px 0 8px;
+  font-weight:650; font-size:11px;
+  color:#fff; text-transform:uppercase; letter-spacing:.05em;
+}
+.gh-subhead svg{width:14px;height:14px;opacity:.9;color:var(--gh-brand)}
 
-.gh-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.gh-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 
 /* Links sistema */
 .gh-col a.gh-link{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:10px 12px;
+  display:flex; align-items:center; gap:12px;
+  padding:10px 10px;
   border-radius:12px;
   text-decoration:none;
-  color:var(--text);
+  color:var(--gh-text);
   border:1px solid transparent;
-  transition:.2s ease;
+  transition:.18s ease;
+  min-width:0;
 }
 .gh-col a.gh-link:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
 
-/* Iconos sistemas */
-.gh-ico32{width:60px;height:60px;object-fit:contain;display:block;flex:0 0 60px}
-@media(min-width:1200px){.gh-ico32{width:70px;height:70px;flex-basis:70px}}
+/* Iconos */
+.gh-ico32{
+  width:56px; height:56px;
+  object-fit:contain;
+  display:block;
+  flex:0 0 56px;
+}
+@media(min-width:1200px){
+  .gh-ico32{width:64px;height:64px;flex-basis:64px}
+}
 
-/* Texto descriptivo */
+/* Texto */
 .gh-link-content{display:flex;flex-direction:column;gap:2px;min-width:0}
-.gh-link strong{font-size:13px;font-weight:500;color:#fff}
-.gh-desc{margin:0;font-size:11px;line-height:1.3;color:var(--muted,#94a3b8);white-space:normal;overflow:visible}
+.gh-link strong{font-size:13px;font-weight:600;color:#fff}
+.gh-desc{margin:0;font-size:11px;line-height:1.3;color:var(--gh-muted);white-space:normal}
 
-/* Menú Servicios */
-.gh-list{display:flex;flex-direction:column;gap:6px;min-width:260px}
-.gh-list a{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;color:var(--text);text-decoration:none;background:rgba(17,23,35,.5);border:1px solid rgba(255,255,255,.06);font-size:13px;transition:.22s ease}
+/* Menú Servicios (desktop) */
+.gh-list{display:flex;flex-direction:column;gap:8px;min-width:260px}
+.gh-list a{
+  display:flex;gap:10px;align-items:center;
+  padding:10px 12px;border-radius:12px;
+  color:var(--gh-text);text-decoration:none;
+  background:rgba(17,23,35,.5);
+  border:1px solid rgba(255,255,255,.06);
+  font-size:13px; transition:.18s ease;
+}
 .gh-list a:hover{border-color:rgba(255,255,255,.18);background:rgba(27,33,48,1);transform:translateY(-1px)}
 .gh-ico{width:18px;height:18px;opacity:.9}
 
+/* CTA */
 .gh-cta{display:flex;gap:8px;align-items:center}
-.gh-btn{border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--text);padding:8px 14px;border-radius:999px;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:6px;transition:.2s ease}
-.gh-btn:hover{background:linear-gradient(90deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));color:#020617;border-color:transparent;transform:translateY(-1px)}
-.gh-burger{display:none;border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--text);padding:8px 10px;border-radius:12px;font-size:18px}
+.gh-btn{
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(15,23,42,.9);
+  color:var(--gh-text);
+  padding:8px 14px;
+  border-radius:999px;
+  text-decoration:none;
+  font-size:13px;
+  display:inline-flex;align-items:center;gap:6px;
+  transition:.18s ease;
+}
+.gh-btn:hover{
+  background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));
+  color:#020617;border-color:transparent;transform:translateY(-1px)
+}
 
-/* Subnav */
-.gh-subnav{display:none;border-top:1px solid rgba(255,255,255,.06);background:rgba(5,8,14,.96)}
-.gh-subinner{max-width:var(--maxw,1200px);margin:0 auto;padding:8px 18px;display:flex;gap:8px;flex-wrap:wrap}
+.gh-burger{
+  display:none;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(15,23,42,.9);
+  color:var(--gh-text);
+  padding:8px 10px;
+  border-radius:12px;
+  font-size:18px;
+  line-height:1;
+}
 
-/* Responsive */
-@media(max-width:1100px){.gh-dd.mega{width:calc(100vw - 24px)}.gh-mega{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.gh-mega{grid-template-columns:1fr}}
-@media(max-width:980px){.gh-container{grid-template-columns:1fr auto;gap:8px}.gh-nav{display:none}.gh-burger{display:inline-flex}.gh-cta .gh-btn:first-child{display:none}}
+/* ---------------------------------------------------------
+   MOBILE DRAWER
+--------------------------------------------------------- */
+.gh-dim{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.55);
+  opacity:0; visibility:hidden;
+  transition:.18s ease;
+  z-index:998;
+}
+.gh-drawer{
+  position:fixed; top:0; right:0; height:100vh;
+  width:min(92vw, 420px);
+  background:rgba(8,11,18,.98);
+  border-left:1px solid rgba(255,255,255,.08);
+  transform:translateX(105%);
+  transition:.2s ease;
+  z-index:999;
+  display:flex; flex-direction:column;
+}
+.gh-drawer-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.gh-drawer-title{color:#fff;font-weight:700;letter-spacing:.02em}
+.gh-close{
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(15,23,42,.9);
+  color:var(--gh-text);
+  border-radius:12px;
+  padding:8px 10px;
+  font-size:16px;
+  line-height:1;
+}
+.gh-drawer-body{padding:12px 14px; overflow:auto}
+.gh-mnav{display:flex;flex-direction:column;gap:10px}
+.gh-mnav a{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px;
+  padding:12px 12px;
+  border-radius:14px;
+  text-decoration:none;
+  color:var(--gh-text);
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+}
+.gh-mnav a:active{transform:scale(.99)}
+.gh-msec{margin-top:10px}
+.gh-acc{
+  border:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.03);
+  border-radius:16px;
+  overflow:hidden;
+}
+.gh-acc summary{
+  list-style:none;
+  cursor:pointer;
+  padding:12px 12px;
+  color:#fff;
+  font-weight:700;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.gh-acc summary::-webkit-details-marker{display:none}
+.gh-acc .gh-acc-in{padding:10px 10px 12px; display:flex; flex-direction:column; gap:8px}
+.gh-acc .gh-acc-in a{
+  padding:10px 10px;
+  border-radius:12px;
+  background:rgba(17,23,35,.55);
+  border:1px solid rgba(255,255,255,.06);
+}
+.gh-mcta{display:flex; gap:10px; margin-top:12px}
+.gh-mcta a{flex:1; justify-content:center}
+
+/* Estado abierto del drawer */
+html.gh-open .gh-dim{opacity:1; visibility:visible}
+html.gh-open .gh-drawer{transform:translateX(0)}
+
+/* ---------------------------------------------------------
+   Responsive breakpoints
+--------------------------------------------------------- */
+@media(max-width:1100px){
+  .gh-mega{grid-template-columns:repeat(2, minmax(0, 1fr))}
+}
+@media(max-width:980px){
+  .gh-container{grid-template-columns:1fr auto; gap:8px}
+  .gh-nav{display:none}
+  .gh-burger{display:inline-flex}
+  .gh-cta .gh-btn:first-child{display:none} /* oculta teléfono en header si quieres */
+  .gh-brand-title .sub{display:none}       /* reduce altura en mobile */
+}
+@media(max-width:420px){
+  .gh-brand-title .name{font-size:15px}
+  .gh-brand img{width:40px;height:40px;flex-basis:40px}
+}
+
+/* Evita “cortado” por overflow accidental */
 html,body{overflow-x:hidden}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .gh-brand, .gh-nav a::after, .gh-dd, .gh-btn, .gh-dim, .gh-drawer{transition:none !important}
+}
 </style>
 
   <div class="gh-container">
@@ -139,15 +355,16 @@ html,body{overflow-x:hidden}
       </div>
     </a>
 
+    <!-- Desktop nav -->
     <nav class="gh-nav" aria-label="Principal">
       <ul>
         <li><a class="js-abs-href" data-href="index.html">Inicio</a></li>
 
-        <!-- ===== SISTEMAS (ORDENADO EXACTO A #productos-con) ===== -->
+        <!-- SISTEMAS -->
         <li class="gh-has-dd">
           <a class="js-abs-href" data-href="index.html#productos-con" aria-haspopup="true" aria-expanded="false">Sistemas</a>
 
-          <div class="gh-dd mega" role="menu">
+          <div class="gh-dd mega" role="menu" aria-label="Sistemas">
             <div class="gh-mega">
 
               <!-- CONTABLES -->
@@ -246,7 +463,7 @@ html,body{overflow-x:hidden}
                 </ul>
               </div>
 
-              <!-- PRODUCTIVIDAD + PROMOCIONES -->
+              <!-- PRODUCTIVIDAD + PROMOS -->
               <div class="gh-col">
                 <h4>Productividad</h4>
                 <div class="gh-subhead">
@@ -290,11 +507,11 @@ html,body{overflow-x:hidden}
           </div>
         </li>
 
-        <!-- ===== SERVICIOS ===== -->
+        <!-- SERVICIOS -->
         <li class="gh-has-dd">
           <a class="js-abs-href" data-href="index.html#servicios" aria-haspopup="true" aria-expanded="false">Servicios</a>
-          <div class="gh-dd" role="menu">
-            <div class="gh-list" role="group" aria-label="Servicios">
+          <div class="gh-dd" role="menu" aria-label="Servicios">
+            <div class="gh-list" role="group">
               <a class="js-abs-href" data-href="SERVICIOS/cursos.html">
                 <svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M8 5h8v10H8z"/></svg>
                 Cursos
@@ -333,19 +550,81 @@ html,body{overflow-x:hidden}
     <div class="gh-cta">
       <a class="gh-btn" href="tel:+525568437918">55 6843 7918</a>
       <a class="gh-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
-      <button class="gh-burger" id="gh-burger" aria-label="Abrir menú">≡</button>
+      <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
     </div>
   </div>
 
-  <div class="gh-subnav" id="gh-subnav" aria-label="Accesos rápidos">
-    <div class="gh-subinner" id="gh-subinner"></div>
-  </div>
+  <!-- Mobile overlay + drawer -->
+  <div class="gh-dim" id="gh-dim" hidden></div>
+
+  <aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true">
+    <div class="gh-drawer-head">
+      <div class="gh-drawer-title">Menú</div>
+      <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <div class="gh-drawer-body">
+      <nav class="gh-mnav" aria-label="Navegación móvil">
+        <a class="js-abs-href" data-href="index.html">Inicio</a>
+        <a class="js-abs-href" data-href="nosotros.html">Nosotros</a>
+        <a class="js-abs-href" data-href="index.html#promociones">Promociones</a>
+        <a class="js-abs-href" data-href="index.html#eventos">Eventos</a>
+        <a class="js-abs-href" data-href="index.html#contacto">Contacto</a>
+
+        <div class="gh-msec"></div>
+
+        <details class="gh-acc">
+          <summary>Sistemas <span aria-hidden="true">▾</span></summary>
+          <div class="gh-acc-in">
+            <a class="js-abs-href" data-href="SISTEMAS/contabilidad.html">Contabilidad</a>
+            <a class="js-abs-href" data-href="SISTEMAS/nominas.html">Nóminas</a>
+            <a class="js-abs-href" data-href="SISTEMAS/bancos.html">Bancos</a>
+            <a class="js-abs-href" data-href="SISTEMAS/xmlenlinea.html">XML en Línea+</a>
+
+            <a class="js-abs-href" data-href="SISTEMAS/comercialstart.html">Comercial Start</a>
+            <a class="js-abs-href" data-href="SISTEMAS/comercialpro.html">Comercial Pro</a>
+            <a class="js-abs-href" data-href="SISTEMAS/comercialpremium.html">Comercial Premium</a>
+            <a class="js-abs-href" data-href="SISTEMAS/facturaelectronica.html">Factura Electrónica</a>
+
+            <a class="js-abs-href" data-href="SISTEMAS/contabiliza.html">Contabiliza</a>
+            <a class="js-abs-href" data-href="SISTEMAS/analiza.html">Analiza</a>
+            <a class="js-abs-href" data-href="SISTEMAS/despachos.html">Despachos</a>
+            <a class="js-abs-href" data-href="SISTEMAS/vende.html">Vende</a>
+
+            <a class="js-abs-href" data-href="SISTEMAS/evalua.html">Evalúa</a>
+            <a class="js-abs-href" data-href="SISTEMAS/colabora.html">Colabora</a>
+            <a class="js-abs-href" data-href="SISTEMAS/personia.html">Personia</a>
+          </div>
+        </details>
+
+        <details class="gh-acc">
+          <summary>Servicios <span aria-hidden="true">▾</span></summary>
+          <div class="gh-acc-in">
+            <a class="js-abs-href" data-href="SERVICIOS/cursos.html">Cursos</a>
+            <a class="js-abs-href" data-href="SERVICIOS/implementaciones.html">Implementaciones</a>
+            <a class="js-abs-href" data-href="SERVICIOS/migraciones.html">Migraciones</a>
+            <a class="js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html">Servidores virtuales</a>
+            <a class="js-abs-href" data-href="SERVICIOS/soporte.html">Soporte técnico</a>
+            <a class="js-abs-href" data-href="SERVICIOS/desarrollos.html">Desarrollos a la medida</a>
+          </div>
+        </details>
+
+        <div class="gh-mcta">
+          <a class="gh-btn" href="tel:+525568437918">Llamar</a>
+          <a class="gh-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </nav>
+    </div>
+  </aside>
 
 <script>
 (()=> {
-  const $ = (s, ctx=document)=>ctx.querySelector(s);
+  const $  = (s, ctx=document)=>ctx.querySelector(s);
   const $$ = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
 
+  /* -------------------------
+     1) Rutas absolutas (GitHub Pages)
+  ------------------------- */
   const isGh = location.hostname.endsWith("github.io");
   const firstSeg = location.pathname.split("/")[1] || "";
   const repoBase = (isGh && firstSeg) ? ("/" + firstSeg) : "";
@@ -358,7 +637,6 @@ html,body{overflow-x:hidden}
     return out.replace(/\/+/g,"/");
   };
 
-  // Fix href + img en header
   $$(".js-abs-href[data-href]").forEach(a=>{
     const raw = a.getAttribute("data-href") || "";
     const [path, hash] = raw.split("#");
@@ -368,8 +646,10 @@ html,body{overflow-x:hidden}
     img.src = abs(img.getAttribute("data-src"));
   });
 
-  // Active state (resalta parent)
-  const p = window.location.pathname.toLowerCase();
+  /* -------------------------
+     2) Active state (top)
+  ------------------------- */
+  const p = location.pathname.toLowerCase();
   const topLinks = $$(".gh-nav > ul > li > a");
   topLinks.forEach(a=>{
     a.classList.remove("active-parent");
@@ -377,40 +657,56 @@ html,body{overflow-x:hidden}
     if(t==="sistemas" && p.includes("/sistemas/")) a.classList.add("active-parent");
     else if(t==="servicios" && p.includes("/servicios/")) a.classList.add("active-parent");
     else if(t==="nosotros" && p.includes("nosotros")) a.classList.add("active-parent");
-    else if(t==="contacto" && (p.includes("contacto") || location.hash==="#contacto")) a.classList.add("active-parent");
-    else if(t==="promociones" && (p.includes("promociones") || location.hash==="#promociones")) a.classList.add("active-parent");
-    else if(t==="eventos" && (p.includes("eventos") || location.hash==="#eventos")) a.classList.add("active-parent");
-    else if(t==="inicio" && (p.endsWith("index.html") || p.endsWith("/") )) a.classList.add("active-parent");
+    else if(t==="inicio" && (p.endsWith("index.html") || p.endsWith("/"))) a.classList.add("active-parent");
   });
 
-  // Subnav dinámico (solo si existen secciones en la página)
-  const subnav = $("#gh-subnav");
-  const subinner = $("#gh-subinner");
-  const items = [
-    ["#caracteristicas","Funcionalidades"],
-    ["#videos","Vídeos"],
-    ["#integra","Integraciones"],
-    ["#calculadora-section","Precio"],
-    ["#comparativa","Comparativa"],
-    ["#faq","Preguntas frecuentes"],
-    ["#sesion-guiada","Demo"]
-  ].filter(([sel])=>document.querySelector(sel));
+  /* -------------------------
+     3) Mobile drawer (hamburguesa)
+  ------------------------- */
+  const burger = $("#gh-burger");
+  const dim    = $("#gh-dim");
+  const drawer = $("#gh-drawer");
+  const close  = $("#gh-close");
 
-  if(items.length && subnav && subinner){
-    subnav.style.display = "block";
-    subinner.innerHTML = items.map(([href, label])=>`<a href="${href}">${label}</a>`).join("");
-  }
+  const setHidden = (el, v)=> { if(!el) return; el.hidden = !!v; };
 
-  // Accesibilidad: flecha abajo abre menú
-  $$(".gh-has-dd > a").forEach(a=>{
-    const dd = a.parentElement.querySelector(".gh-dd");
-    a.addEventListener("keydown", (e)=>{
-      if(e.key==="ArrowDown"){
-        e.preventDefault();
-        dd && dd.querySelector("a,button,summary")?.focus();
-      }
-    });
+  const openDrawer = ()=>{
+    document.documentElement.classList.add("gh-open");
+    burger?.setAttribute("aria-expanded","true");
+    drawer?.setAttribute("aria-hidden","false");
+    setHidden(dim, false);
+    // evita scroll del body
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeDrawer = ()=>{
+    document.documentElement.classList.remove("gh-open");
+    burger?.setAttribute("aria-expanded","false");
+    drawer?.setAttribute("aria-hidden","true");
+    // espera el fin de transición para ocultar overlay (evita flash)
+    setTimeout(()=>setHidden(dim, true), 200);
+    document.body.style.overflow = "";
+  };
+
+  burger?.addEventListener("click", (e)=>{
+    e.preventDefault();
+    if(document.documentElement.classList.contains("gh-open")) closeDrawer();
+    else openDrawer();
   });
+
+  close?.addEventListener("click", (e)=>{ e.preventDefault(); closeDrawer(); });
+  dim?.addEventListener("click", closeDrawer);
+
+  document.addEventListener("keydown", (e)=>{
+    if(e.key==="Escape" && document.documentElement.classList.contains("gh-open")) closeDrawer();
+  });
+
+  // Cerrar drawer al navegar (mejor UX)
+  drawer?.addEventListener("click", (e)=>{
+    const a = e.target.closest("a");
+    if(a) closeDrawer();
+  });
+
 })();
 </script>
 </header>
