@@ -780,3 +780,75 @@ textarea { resize: vertical; }
     0 0 0 1px rgba(96,165,250,.22) inset;
 }
 
+/* =========================================================
+   REELS – AJUSTES UNIFICADOS (Soporte + Desarrollos)
+   ========================================================= */
+
+/* --- Contenedor del bloque de reels --- */
+.reels-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- TÍTULO PRINCIPAL DEL REEL (UNA SOLA LÍNEA) --- */
+/* Usamos el mismo estilo visual que title-gradient */
+.reels-card > .title-gradient {
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+/* --- OCULTAR TÍTULOS DUPLICADOS DE APOYO --- */
+/* (los <h4 class="reel-title"> ya no se usan visualmente) */
+.reels-card .reel-title {
+  display: none !important;
+}
+
+/* --- AJUSTE DEL CARRUSEL --- */
+.reels-card .carousel {
+  position: relative;
+}
+
+/* --- Flechas base --- */
+.reels-card .arrowCircle {
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+/* --- OCULTAR FLECHAS CUANDO NO APLICA --- */
+/* mainservicios.js ya agrega .is-single cuando hay 1 reel */
+.reels-card .carousel.is-single .arrowCircle {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(.85);
+}
+
+/* --- Paginación (dots) --- */
+.reels-card .carousel-nav {
+  margin-top: 8px;
+}
+
+/* Ocultar dots si solo hay 1 reel */
+.reels-card .carousel.is-single .carousel-nav {
+  display: none;
+}
+
+/* --- Slide activo --- */
+.reels-card .carousel-slide {
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.reels-card .carousel-slide.is-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* --- Responsive fino --- */
+@media (max-width: 768px) {
+  .reels-card > .title-gradient {
+    text-align: center;
+  }
+}
+
+
