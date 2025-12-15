@@ -1,4 +1,4 @@
-/* Expiriti index.js (FINAL V4 - SIN TÍTULOS EN HERO) */
+/* Expiriti index.js (FINAL V5 - 1 LÍNEA EN TÍTULO REELS + FLECHAS LOOP/DISABLE + SERVICIOS DEFAULT PÓLIZAS) */
 (function(){
 "use strict";
 if(window.__EXPIRITI_INIT__) return; window.__EXPIRITI_INIT__=true;
@@ -7,7 +7,7 @@ if(window.__EXPIRITI_INIT__) return; window.__EXPIRITI_INIT__=true;
    Helpers DOM + Rutas
    ========================= */
 const $$=(s,c=document)=>Array.from(c.querySelectorAll(s));
-const $=(s,c=document)=>c.querySelector(s);
+const $ =(s,c=document)=>c.querySelector(s);
 
 function getBasePath(){
   const p=location.pathname;
@@ -42,6 +42,7 @@ async function loadPartial(placeholderId,fileName){
    ========================= */
 function initHeaderLogic(){
   const base=getBasePath();
+
   $$('.js-abs-href[data-href]').forEach(a=>{
     const raw=a.getAttribute("data-href")||"";
     const parts=raw.split("#");
@@ -50,12 +51,14 @@ function initHeaderLogic(){
       a.href=base+path+(hash?"#"+hash:"");
     }else a.href=raw;
   });
+
   $$('.js-abs-src[data-src]').forEach(img=>{
     const raw=img.getAttribute("data-src")||"";
     img.src=absAsset(raw);
     img.onload=()=>{img.style.opacity="1";};
     if(img.complete) img.style.opacity="1";
   });
+
   const burger=$("#gh-burger"), nav=$(".gh-nav");
   if(burger&&nav){
     burger.addEventListener("click",()=>{
@@ -63,6 +66,7 @@ function initHeaderLogic(){
       burger.textContent=nav.classList.contains("open")?"✕":"≡";
     });
   }
+
   const P=location.pathname.toUpperCase(), H=location.hash;
   let sec="inicio";
   if(P.includes("/SISTEMAS/")) sec="sistemas";
@@ -72,6 +76,7 @@ function initHeaderLogic(){
   else if(H==="#productos"||H==="#productos-con") sec="sistemas";
   else if(H==="#contacto") sec="contacto";
   else if(P.includes("/NOSOTROS")) sec="nosotros";
+
   $$("[data-section]").forEach(a=>a.classList.toggle("gh-active",a.getAttribute("data-section")===sec));
 }
 
@@ -288,7 +293,7 @@ const HERO_GALLERY={
 function buildHeroGallerySlides(groupKey,sysKey){
   const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
   const sys=g.systems[sysKey]; if(!sys||!sys.images?.length) return;
-  const {carousel,titleEl,defaultGroup}=HERO_GALLERY; if(!carousel) return;
+  const {carousel,defaultGroup}=HERO_GALLERY; if(!carousel) return;
   const track=carousel.querySelector(".carousel-track");
   const nav=carousel.querySelector(".carousel-nav");
   if(!track||!nav) return;
@@ -318,12 +323,9 @@ function buildHeroGallerySlides(groupKey,sysKey){
       $$(".dot",nav).forEach(d=>d.classList.remove("active"));
       dot.classList.add("active");
       track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
-      /* Ya NO ponemos el título aquí */
     });
     nav.appendChild(dot);
   });
-
-  /* Ya NO ponemos el título inicial aquí */
 }
 
 function buildHeroSystemTabs(groupKey){
@@ -373,18 +375,17 @@ function initHeroGallery(){
   const prev=carousel.querySelector(".arrowCircle.prev");
   const next=carousel.querySelector(".arrowCircle.next");
   const slidesFor=()=>$$(".carousel-slide",track);
-  const dotsFor=()=>$$(".dot",carousel.querySelector(".carousel-nav"));
+
   const goTo=i=>{
     const slides=slidesFor(); if(!slides.length) return;
-    const max=slides.length-1; const idx=Math.max(0,Math.min(max,i));
+    const max=slides.length-1;
+    const idx=Math.max(0,Math.min(max,i));
     slides.forEach(s=>s.classList.remove("is-active"));
     slides[idx].classList.add("is-active");
-    dotsFor().forEach((d,k)=>d.classList.toggle("active",k===idx));
+    $$(".dot",carousel.querySelector(".carousel-nav")).forEach((d,k)=>d.classList.toggle("active",k===idx));
     track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
-    const g=HERO_GALLERY_DATA[$(".hero-group-tab.active",groupNav)?.dataset.group||defaultGroup];
-    const activeSys=$(".hero-tab.active",HERO_GALLERY.tabsContainer)?.dataset.sys||g.defaultSys;
-    /* Ya NO ponemos el título aquí */
   };
+
   prev?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i-1); });
   next?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i+1); });
 
@@ -395,128 +396,194 @@ function initHeroGallery(){
 
 /* =========================
    REELS: DATA
+   - OJO: "titleEl" aquí es el ELEMENTO DE LA 2DA LÍNEA actual (#reelTitle-...)
+     y lo vamos a ocultar para que solo quede 1 línea (la de arriba) pero dinámica.
    ========================= */
 const REELS_DATA={
-  contable:{titleEl:$("#reelTitle-contable"),carousel:$("#carouselReels-contable"),defaultSys:"contabilidad",reelsBySys:{
-    contabilidad:[
-      {id:"yblBsFFv6bc",title:"Contabilidad y Contabiliza te ayudan en la DIOT"},
-      {id:"BIhYNn2O0og",title:"Evita errores en la DIOT con Contabilidad"},
-      {id:"rESYB37TP-M",title:"Declaración anual en 5 pasos con Contabilidad"},
-      {id:"LqptaBOF7h4",title:"Fernanda redujo su carga contable con Contabilidad"}
-    ],
-    nominas:[
-      {id:"gae67GDse30",title:"Nóminas y Personia | Checador por GPS"},
-      {id:"8-2rT99euog",title:"Nóminas | Software #1 en México"},
-      {id:"2eVOzoBoP6s",title:"Nóminas | Automatiza tus procesos"},
-      {id:"nLRgiOPQM80",title:"App Colabora gratis con Nóminas"},
-      {id:"MfiiX1La2vQ",title:"Qué hace CONTPAQi Nóminas por ti"}
-    ],
-    bancos:[
-      {id:"3YUbSEyU678",title:"Conciliación bancaria en 3 pasos con Bancos"},
-      {id:"LC1Ccpv_jzo",title:"4 señales de que necesitas Bancos"}
-    ],
-    xml:[
-      {id:"nhoUDNnGQ90",title:"El día que José dejó de sufrir con el SAT descargando CFDIs"}
-    ]
-  }},
-  comercial:{titleEl:$("#reelTitle-comercial"),carousel:$("#carouselReels-comercial"),defaultSys:"start",reelsBySys:{
-    start:[
-      {id:"dQw4w9WgXcQ",title:"Comercial Start | Reel 1"},
-      {id:"9bZkp7q19f0",title:"Comercial Start | Reel 2"},
-      {id:"3JZ_D3ELwOQ",title:"Comercial Start | Reel 3"}
-    ],
-    pro:[
-      {id:"rEYzPXOX1_Y",title:"Comercial Pro: control total de inventario"},
-      {id:"-SJq6t2SM7c",title:"Flujo completo con Comercial Pro"},
-      {id:"5AowfYsAm4E",title:"Trazabilidad avanzada en inventarios"}
-    ],
-    premium:[
-      {id:"IYwNBfmWxJU",title:"Controla tus inventarios con Comercial Premium"},
-      {id:"_Krv5nTyFuY",title:"Notas de venta más rápido en Comercial Premium"},
-      {id:"HmgOQrasCVw",title:"Notas de venta en Comercial Premium"},
-      {id:"WGPOzQ1GsSE",title:"Documentos por WhatsApp en Comercial Premium"}
-    ],
-    factura:[
-      {id:"nMEgM_BvxTs",title:"Factura Electrónica v13 | Novedades"},
-      {id:"IA5-tguZzCc",title:"Carta Porte CFDI 3.1 en Factura Electrónica"},
-      {id:"2uBSGZHLsGs",title:"Factura Electrónica para sector notarial"}
-    ]
-  }},
-  nube:{titleEl:$("#reelTitle-nube"),carousel:$("#carouselReels-nube"),defaultSys:"analiza",reelsBySys:{
-    analiza:[
-      {id:"wr-eeR3eE7w",title:"Analiza | Conciliación fiscal y bancaria"},
-      {id:"gAIGxMHaCLQ",title:"Analiza | Identifica descuadres CFDIs y Nóminas"},
-      {id:"iEQM_21OmBI",title:"Conciliación fiscal y contable con Analiza"}
-    ],
-    contabiliza:[{id:"yblBsFFv6bc",title:"Contabilidad y Contabiliza te ayudan en la DIOT"}],
-    despachos:[
-      {id:"KBEOTwnFXQ4",title:"Gestión de Despachos en la nube"},
-      {id:"aqz-KE-bpKQ",title:"Control de obligaciones con Despachos"}
-    ],
-    vende:[
-      {id:"2Ty_SD8B_FU",title:"Vende | Carta Porte fácil y rápida"},
-      {id:"UPyufjDByNc",title:"Testimonio CONTPAQi Vende"},
-      {id:"Grx1woHMGsU",title:"Vende en la nube"}
-    ]
-  }},
-  productividad:{titleEl:$("#reelTitle-productividad"),carousel:$("#carouselReels-productividad"),defaultSys:"evalua",reelsBySys:{
-    evalua:[
-      {id:"REEMPLAZAR_ID_1",title:"Reel Evalúa 1"},
-      {id:"REEMPLAZAR_ID_2",title:"Reel Evalúa 2"},
-      {id:"REEMPLAZAR_ID_3",title:"Reel Evalúa 3"}
-    ],
-    colabora:[
-      {id:"XJQDFDowH0U",title:"Colabora, app sin costo con Nóminas"},
-      {id:"nLRgiOPQM80",title:"App Colabora gratis con Nóminas"}
-    ],
-    personia:[{id:"gae67GDse30",title:"Nóminas y Personia | Checador por GPS"}]
-  }},
-servicios:{
-  titleEl:$("#reelTitle-servicios"),
-  carousel:$("#carouselReels-servicios"),
-  defaultSys:"implementaciones",
-  reelsBySys:{
-    implementaciones:[
-      {id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"}
-    ],
+  contable:{
+    titleEl:$("#reelTitle-contable"),
+    carousel:$("#carouselReels-contable"),
+    defaultSys:"contabilidad",
+    reelsBySys:{
+      contabilidad:[
+        {id:"yblBsFFv6bc",title:"Contabilidad y Contabiliza te ayudan en la DIOT"},
+        {id:"BIhYNn2O0og",title:"Evita errores en la DIOT con Contabilidad"},
+        {id:"rESYB37TP-M",title:"Declaración anual en 5 pasos con Contabilidad"},
+        {id:"LqptaBOF7h4",title:"Fernanda redujo su carga contable con Contabilidad"}
+      ],
+      nominas:[
+        {id:"gae67GDse30",title:"Nóminas y Personia | Checador por GPS"},
+        {id:"8-2rT99euog",title:"Nóminas | Software #1 en México"},
+        {id:"2eVOzoBoP6s",title:"Nóminas | Automatiza tus procesos"},
+        {id:"nLRgiOPQM80",title:"App Colabora gratis con Nóminas"},
+        {id:"MfiiX1La2vQ",title:"Qué hace CONTPAQi Nóminas por ti"}
+      ],
+      bancos:[
+        {id:"3YUbSEyU678",title:"Conciliación bancaria en 3 pasos con Bancos"},
+        {id:"LC1Ccpv_jzo",title:"4 señales de que necesitas Bancos"}
+      ],
+      xml:[
+        {id:"nhoUDNnGQ90",title:"El día que José dejó de sufrir con el SAT descargando CFDIs"}
+      ]
+    }
+  },
 
-    migraciones:[
-      {id:"JkrDOjWV1Gs",title:"Migración de datos a CONTPAQi"}
-    ],
+  comercial:{
+    titleEl:$("#reelTitle-comercial"),
+    carousel:$("#carouselReels-comercial"),
+    defaultSys:"start",
+    reelsBySys:{
+      start:[
+        {id:"dQw4w9WgXcQ",title:"Comercial Start | Reel 1"},
+        {id:"9bZkp7q19f0",title:"Comercial Start | Reel 2"},
+        {id:"3JZ_D3ELwOQ",title:"Comercial Start | Reel 3"}
+      ],
+      pro:[
+        {id:"rEYzPXOX1_Y",title:"Comercial Pro: control total de inventario"},
+        {id:"-SJq6t2SM7c",title:"Flujo completo con Comercial Pro"},
+        {id:"5AowfYsAm4E",title:"Trazabilidad avanzada en inventarios"}
+      ],
+      premium:[
+        {id:"IYwNBfmWxJU",title:"Controla tus inventarios con Comercial Premium"},
+        {id:"_Krv5nTyFuY",title:"Notas de venta más rápido en Comercial Premium"},
+        {id:"HmgOQrasCVw",title:"Notas de venta en Comercial Premium"},
+        {id:"WGPOzQ1GsSE",title:"Documentos por WhatsApp en Comercial Premium"}
+      ],
+      factura:[
+        {id:"nMEgM_BvxTs",title:"Factura Electrónica v13 | Novedades"},
+        {id:"IA5-tguZzCc",title:"Carta Porte CFDI 3.1 en Factura Electrónica"},
+        {id:"2uBSGZHLsGs",title:"Factura Electrónica para sector notarial"}
+      ]
+    }
+  },
 
-    desarrollos:[
-      {id:"JkrDOjWV1Gs",title:"Testimonio Sara: Soft Restaurant"},
-      {id:"uBl5UWkwbr8",title:"Testimonio Luis: Desarrollo en Nóminas"},
-      {id:"f-F10-F6rnM",title:"Testimonio Alex: Integración CONTPAQi API"}
-    ],
+  nube:{
+    titleEl:$("#reelTitle-nube"),
+    carousel:$("#carouselReels-nube"),
+    defaultSys:"analiza",
+    reelsBySys:{
+      analiza:[
+        {id:"wr-eeR3eE7w",title:"Analiza | Conciliación fiscal y bancaria"},
+        {id:"gAIGxMHaCLQ",title:"Analiza | Identifica descuadres CFDIs y Nóminas"},
+        {id:"iEQM_21OmBI",title:"Conciliación fiscal y contable con Analiza"}
+      ],
+      contabiliza:[{id:"yblBsFFv6bc",title:"Contabilidad y Contabiliza te ayudan en la DIOT"}],
+      despachos:[
+        {id:"KBEOTwnFXQ4",title:"Gestión de Despachos en la nube"},
+        {id:"aqz-KE-bpKQ",title:"Control de obligaciones con Despachos"}
+      ],
+      vende:[
+        {id:"2Ty_SD8B_FU",title:"Vende | Carta Porte fácil y rápida"},
+        {id:"UPyufjDByNc",title:"Testimonio CONTPAQi Vende"},
+        {id:"Grx1woHMGsU",title:"Vende en la nube"}
+      ]
+    }
+  },
 
-    servidores:[
-      {id:"Grx1woHMGsU",title:"Servidores Virtuales para CONTPAQi"}
-    ],
+  productividad:{
+    titleEl:$("#reelTitle-productividad"),
+    carousel:$("#carouselReels-productividad"),
+    defaultSys:"evalua",
+    reelsBySys:{
+      evalua:[
+        {id:"REEMPLAZAR_ID_1",title:"Reel Evalúa 1"},
+        {id:"REEMPLAZAR_ID_2",title:"Reel Evalúa 2"},
+        {id:"REEMPLAZAR_ID_3",title:"Reel Evalúa 3"}
+      ],
+      colabora:[
+        {id:"XJQDFDowH0U",title:"Colabora, app sin costo con Nóminas"},
+        {id:"nLRgiOPQM80",title:"App Colabora gratis con Nóminas"}
+      ],
+      personia:[{id:"gae67GDse30",title:"Nóminas y Personia | Checador por GPS"}]
+    }
+  },
 
-    cursos:[
-      {id:"TgAkwNt4YCA",title:"Testimonio Ana: Curso Contabilidad"}
-    ],
-
-    soporte:[
-      {id:"IoHjV2QG_3U",title:"Testimonio Marco: Soporte eficaz"}
-    ],
-
-    /* ✅ NUEVO: PÓLIZAS */
-    polizas:[
-      {
-        id:"REEMPLAZAR_ID_POLIZA_1",
-        title:"¿Qué incluye una póliza anual de soporte Expiriti?"
-      },
-      {
-        id:"REEMPLAZAR_ID_POLIZA_2",
-        title:"Cómo se cotiza una póliza: usuarios, sistemas y empresas"
-      }
-  ]
+  servicios:{
+    titleEl:$("#reelTitle-servicios"),
+    carousel:$("#carouselReels-servicios"),
+    defaultSys:"polizas", /* ✅ DEFAULT: PÓLIZAS */
+    reelsBySys:{
+      implementaciones:[{id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"}],
+      migraciones:[{id:"JkrDOjWV1Gs",title:"Migración de datos a CONTPAQi"}],
+      desarrollos:[
+        {id:"JkrDOjWV1Gs",title:"Testimonio Sara: Soft Restaurant"},
+        {id:"uBl5UWkwbr8",title:"Testimonio Luis: Desarrollo en Nóminas"},
+        {id:"f-F10-F6rnM",title:"Testimonio Alex: Integración CONTPAQi API"}
+      ],
+      servidores:[{id:"Grx1woHMGsU",title:"Servidores Virtuales para CONTPAQi"}],
+      cursos:[{id:"TgAkwNt4YCA",title:"Testimonio Ana: Curso Contabilidad"}],
+      soporte:[{id:"IoHjV2QG_3U",title:"Testimonio Marco: Soporte eficaz"}],
+      polizas:[ /* ✅ NUEVO */
+        {id:"REEMPLAZAR_ID_POLIZA_1",title:"¿Qué incluye una póliza anual de soporte Expiriti?"},
+        {id:"REEMPLAZAR_ID_POLIZA_2",title:"Cómo se cotiza una póliza: usuarios, sistemas y empresas"}
+      ]
     }
   }
-}; // ✅ CIERRE OBLIGATORIO de REELS_DATA
+};
 
+/* =========================
+   REELS: utilidades de UI
+   - 1 sola línea: el título del reel se pinta en la línea 1
+   - la línea 2 (#reelTitle-...) se oculta
+   ========================= */
+function setArrowsEnabled(prev,next,enabled){
+  [prev,next].forEach(btn=>{
+    if(!btn) return;
+    btn.style.pointerEvents = enabled ? "" : "none";
+    btn.style.opacity = enabled ? "" : "0.35";
+    btn.setAttribute("aria-disabled", enabled ? "false" : "true");
+    btn.classList.toggle("is-disabled", !enabled);
+    // Por si el botón tiene disabled real (depende de tu HTML)
+    if("disabled" in btn) btn.disabled = !enabled;
+  });
+}
+
+function setSingleLineReelTitle(cfg, title){
+  const t = (title || "").trim();
+  if(!t) return;
+
+  // Queremos poner el título en la "línea 1" (con el estilo que hoy dice "Reels por ...")
+  // y ocultar la "línea 2" (cfg.titleEl).
+  const subtitle = cfg?.titleEl || null;
+
+  // Cachear el heading una vez que lo encontremos
+  if(!cfg._headingEl){
+    let heading = null;
+
+    // Caso ideal: subtitle existe y su anterior sibling es la línea 1 (lo más común en tu layout)
+    if(subtitle && subtitle.previousElementSibling){
+      heading = subtitle.previousElementSibling;
+    }
+
+    // Fallback: buscar algo razonable en el contenedor inmediato
+    if(!heading && subtitle && subtitle.parentElement){
+      heading = subtitle.parentElement.querySelector(".reels-kicker, .reels-heading, h2, h3");
+    }
+
+    // Último fallback: buscar cerca del carrusel
+    if(!heading && cfg.carousel){
+      const host = cfg.carousel.parentElement || cfg.carousel;
+      heading = host.querySelector(".reels-kicker, .reels-heading, h2, h3");
+    }
+
+    cfg._headingEl = heading || null;
+  }
+
+  if(cfg._headingEl){
+    cfg._headingEl.textContent = t;
+  }
+
+  // Ocultar la 2da línea si existe
+  if(subtitle){
+    subtitle.textContent = "";
+    subtitle.style.display = "none";
+    subtitle.setAttribute("aria-hidden","true");
+  }
+}
+
+/* =========================
+   REELS: render thumb/iframe
+   ========================= */
 function renderReelThumb(wrap){
   const id=wrap.dataset.ytid; if(!id) return;
   const title=wrap.dataset.title||"";
@@ -542,47 +609,52 @@ function renderReelIframe(wrap){
   `;
 }
 
-/* ======================================================
-   REEMPLAZAR LA FUNCIÓN stopAllReels() POR ESTA NUEVA
-   ====================================================== */
-
+/* =========================
+   stopAllReels() (reels + yt-lite)
+   ========================= */
 function stopAllReels(){
-  // 1. Detener REELS (Verticales)
+  // 1) Detener REELS (verticales)
   document.querySelectorAll(".reel-embed").forEach(w=>{
-    // Si tiene un iframe dentro, significa que está sonando. Lo reseteamos.
     if(w.querySelector("iframe")){
       renderReelThumb(w);
     }
   });
 
-  // 2. Detener VIDEOS HORIZONTALES (Sección Videos .yt-lite)
-  document.querySelectorAll(".yt-lite").forEach(node => {
-    // Si la bandera dice que está cargado ("1"), lo apagamos
-    if (node.dataset.ytLoaded === "1") {
+  // 2) Detener videos horizontales (.yt-lite)
+  document.querySelectorAll(".yt-lite").forEach(node=>{
+    if(node.dataset.ytLoaded === "1"){
       const id = node.dataset.ytid;
       const title = node.dataset.title || "Video";
       const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-      // Volvemos a poner la imagen y el botón de play
       node.innerHTML = `<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
         <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
         <span class="yt-lite-play"></span>
       </button>`;
 
-      // Reseteamos la bandera para permitir reproducirlo de nuevo después
       node.dataset.ytLoaded = "";
     }
   });
 }
 
-function buildReelsSlides(panelKey,sysKey){
+/* =========================
+   REELS: construir slides + dots
+   (Actualiza título 1-línea + habilita/deshabilita flechas)
+   ========================= */
+function buildReelsSlides(panelKey, sysKey){
   const cfg=REELS_DATA[panelKey]; if(!cfg) return;
   const track=cfg.carousel?.querySelector(".carousel-track");
   const nav=cfg.carousel?.querySelector(".carousel-nav");
   if(!track||!nav) return;
 
-  const reels=(cfg.reelsBySys[sysKey]||[]);
+  const prev = cfg.carousel.querySelector(".arrowCircle.prev");
+  const next = cfg.carousel.querySelector(".arrowCircle.next");
+
+  const reels = (cfg.reelsBySys[sysKey] || []);
   track.innerHTML=""; nav.innerHTML="";
+
+  // Habilitar/Deshabilitar flechas según cantidad
+  setArrowsEnabled(prev, next, reels.length > 1);
 
   reels.forEach((reel,idx)=>{
     const slide=document.createElement("div");
@@ -606,36 +678,68 @@ function buildReelsSlides(panelKey,sysKey){
       dot.classList.add("active");
       track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
       stopAllReels();
-      if(cfg.titleEl) cfg.titleEl.textContent=reel.title||"";
+      setSingleLineReelTitle(cfg, reel.title || "");
     });
     nav.appendChild(dot);
   });
 
-  if(cfg.titleEl) cfg.titleEl.textContent=reels[0]?.title||"";
+  // Set título inicial (1 sola línea)
+  if(reels[0]?.title) setSingleLineReelTitle(cfg, reels[0].title);
 }
 
+/* =========================
+   REELS: init carrusel con loop infinito
+   ========================= */
 function initReelsCarousel(panelKey){
   const cfg=REELS_DATA[panelKey]; if(!cfg||!cfg.carousel) return;
+
   const track=cfg.carousel.querySelector(".carousel-track");
   const prev=cfg.carousel.querySelector(".arrowCircle.prev");
   const next=cfg.carousel.querySelector(".arrowCircle.next");
+  if(!track) return;
+
   const slidesFor=()=>$$(".carousel-slide",track);
   const dotsFor=()=>$$(".carousel-nav .dot",cfg.carousel);
 
-  const goTo=i=>{
-    const slides=slidesFor(); if(!slides.length) return;
-    const max=slides.length-1; const idx=Math.max(0,Math.min(max,i));
+  const goTo=(i)=>{
+    const slides=slidesFor();
+    const len=slides.length;
+    if(!len) return;
+
+    // Si solo hay 1, no hacer nada
+    if(len <= 1) return;
+
+    // Loop infinito
+    const idx = ((i % len) + len) % len;
+
     slides.forEach(s=>s.classList.remove("is-active"));
     slides[idx].classList.add("is-active");
     dotsFor().forEach((d,k)=>d.classList.toggle("active",k===idx));
     track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
+
+    // Título 1-línea
+    const sys = cfg._activeSys || cfg.defaultSys;
+    const reels = (cfg.reelsBySys[sys] || []);
+    setSingleLineReelTitle(cfg, reels[idx]?.title || "");
     stopAllReels();
   };
 
-  prev?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i-1); });
-  next?.addEventListener("click",()=>{ const i=slidesFor().findIndex(s=>s.classList.contains("is-active")); goTo(i+1); });
+  prev?.addEventListener("click",()=>{
+    const slides=slidesFor();
+    if(slides.length <= 1) return;
+    const i=slides.findIndex(s=>s.classList.contains("is-active"));
+    goTo(i-1);
+  });
 
-  buildReelsSlides(panelKey,cfg.defaultSys);
+  next?.addEventListener("click",()=>{
+    const slides=slidesFor();
+    if(slides.length <= 1) return;
+    const i=slides.findIndex(s=>s.classList.contains("is-active"));
+    goTo(i+1);
+  });
+
+  cfg._activeSys = cfg.defaultSys;
+  buildReelsSlides(panelKey, cfg.defaultSys);
 }
 
 /* =========================
@@ -693,6 +797,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
   initHeaderLogic();
   initHeroGallery();
 
+  // init carouseles de reels
   ["contable","comercial","nube","productividad","servicios"].forEach(initReelsCarousel);
 
   // tabs de reels
@@ -700,9 +805,18 @@ window.addEventListener("DOMContentLoaded",async()=>{
     tab.addEventListener("click",()=>{
       const panelKey=tab.dataset.panel, sysKey=tab.dataset.sys;
       if(!panelKey||!sysKey) return;
+
+      const cfg = REELS_DATA[panelKey];
+      if(cfg) cfg._activeSys = sysKey;
+
       stopAllReels();
-      $$(".reel-tab").forEach(t=>{ if(t.dataset.panel===panelKey) t.classList.toggle("active",t===tab); });
-      buildReelsSlides(panelKey,sysKey);
+
+      // active tab por panel
+      $$(".reel-tab").forEach(t=>{
+        if(t.dataset.panel===panelKey) t.classList.toggle("active",t===tab);
+      });
+
+      buildReelsSlides(panelKey, sysKey);
     });
   });
 
