@@ -208,7 +208,19 @@ p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: var(--muted); }
   cursor: pointer;
   transition: all .2s ease;
   z-index: 10;
-  
+  /* Solo carrusel .carousel */
+.carousel{ position:relative; padding-bottom:46px; }
+.carousel .arrowCircle{ position:absolute; bottom:8px; top:auto; transform:none; }
+.carousel .arrowCircle.prev{ right:52px; left:auto; }
+.carousel .arrowCircle.next{ right:12px; }
+.carousel .carousel-nav{ position:absolute; bottom:16px; left:14px; }
+
+/* Solo carrusel .carouselX */
+.carouselX{ position:relative; }
+.carouselX .arrowCircle{ position:absolute; top:50%; transform:translateY(-50%); }
+.carouselX .arrowCircle.prev{ left:10px; }
+.carouselX .arrowCircle.next{ right:10px; }
+
   position: absolute !important;
   top: auto !important;       
   bottom: 8px !important;     
