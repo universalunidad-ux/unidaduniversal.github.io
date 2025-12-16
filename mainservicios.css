@@ -851,4 +851,60 @@ textarea { resize: vertical; }
   }
 }
 
+/* =========================================
+   Plataformas que Integramos -> GRID 2 COL
+   (usa tu HTML actual, sin borrar nada)
+   ========================================= */
+#plataformas .carouselX{
+  position: relative;
+  padding: 0;               /* ya no reservamos espacio para controles */
+}
+
+#plataformas .carouselX > .arrowCircle,
+#plataformas .carouselX > .group-dots{
+  display: none !important; /* ocultar controles del carrusel */
+}
+
+/* Track pasa a grid */
+#plataformas .carouselX .track{
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  overflow: visible !important;
+}
+
+/* Card interna */
+#plataformas .carouselX .sys{
+  background: rgba(2,6,23,.35);
+  border: 1px solid rgba(148,163,184,.35);
+  border-radius: 14px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 120px 1fr; /* imagen | texto */
+  gap: 12px;
+  align-items: center;
+  min-height: 120px;
+}
+
+/* Imagen: cuidando marco (no se deforma) */
+#plataformas .carouselX .sys img{
+  width: 120px;
+  height: 72px;
+  border-radius: 12px;
+  background: #020617;
+  border: 1px solid rgba(255,255,255,.08);
+  object-fit: contain;      /* CLAVE: no recorta ni estira */
+  padding: 8px;             /* aire para logos horizontales */
+}
+
+/* Texto */
+#plataformas .carouselX .sys h4{
+  margin: 0 0 4px;
+  font-size: 14px;
+  line-height: 1.25;
+  color: #f9fafb;
+}
+#plataformas .carouselX
+
+
 
