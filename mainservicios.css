@@ -459,6 +459,28 @@ textarea { resize: vertical; }
   background: rgba(2, 6, 23, .35); justify-self: center; display: block; aspect-ratio: 1/1; object-fit: cover;
 }
 #promoGrid img[data-type="msi"] { aspect-ratio: 4/5; object-fit: contain; background: #0b1220; padding: 10px; }
+/* =========================================================
+   PROMOS MSI: mostrar imagen COMPLETA (sin recorte)
+   ========================================================= */
+
+/* El contenedor define el alto (para que object-fit funcione) */
+#promoGrid .promo-item[data-type="msi"]{
+  width: 100%;
+  max-width: 600px;
+  justify-self: center;
+  aspect-ratio: 4/5;                 /* vertical tipo "lista de bancos" */
+  background: #0b1220;
+}
+
+/* Anula la regla global #promoGrid img (1/1 + cover) SOLO para MSI */
+#promoGrid .promo-item[data-type="msi"] > img{
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;    /* clave: NO recorta */
+  padding: 14px;                     /* aire interno para que no pegue al borde */
+  background: transparent;
+}
 
 /* TOC */
 .toc {
@@ -620,4 +642,7 @@ textarea { resize: vertical; }
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+
+/* MSI: quitar badge "6 y 12 MSI" */
+#promoGrid .promo-item .promo-badge{ display:none !important; }
 
