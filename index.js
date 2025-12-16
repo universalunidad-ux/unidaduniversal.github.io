@@ -117,15 +117,24 @@ if(tabInicial) activarTabProductos(tabInicial);
 
 /* =========================
    Promos filtro
+/* =========================
+   Promos filtro (img + figure)
    ========================= */
-const promoBtns=$$(".promo-btn");
-const promoImgs=$$('#promoGrid [data-type]');
-function setPromoFilter(type){
-  promoBtns.forEach(b=>b.classList.toggle("active",b.dataset.filter===type));
-  promoImgs.forEach(img=>{img.style.display=(img.dataset.type===type)?"":"none";});
+const promoBtns = $$(".promo-btn");
+const promoItems = $$("#promoGrid [data-type]");
+
+function setPromoFilter(filter){
+  promoBtns.forEach(b => b.classList.toggle("active", b.dataset.filter === filter));
+
+  promoItems.forEach(el => {
+    const ok = (filter === "all") || (el.dataset.type === filter);
+    el.style.display = ok ? "" : "none";
+  });
 }
-promoBtns.forEach(b=>b.addEventListener("click",()=>setPromoFilter(b.dataset.filter)));
+
+promoBtns.forEach(b => b.addEventListener("click", () => setPromoFilter(b.dataset.filter)));
 if(promoBtns.length) setPromoFilter("nuevos");
+
 
 /* =========================
    Cards clicables
