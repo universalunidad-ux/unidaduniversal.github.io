@@ -906,5 +906,97 @@ textarea { resize: vertical; }
 }
 #plataformas .carouselX
 
+/* =========================================
+   Sistemas que Soportamos -> CARRUSEL HORIZONTAL
+   (banners horizontales, marco cuidado)
+   ========================================= */
+#sistemas-soportados .carouselX{
+  position: relative;
+  padding-bottom: 44px; /* espacio para dots + flechas abajo */
+}
+
+/* Track como carrusel (scroll) */
+#sistemas-soportados .carouselX .track{
+  display: flex;
+  gap: 12px;
+  overflow: hidden;          /* no se desborda */
+  scroll-behavior: smooth;
+  padding: 2px;
+}
+
+/* Cada item: “card” fija dentro del carrusel */
+#sistemas-soportados .carouselX .sys{
+  flex: 0 0 calc((100% - 24px) / 3); /* 3 visibles en desktop (data-step=3) */
+  background: rgba(2,6,23,.35);
+  border: 1px solid rgba(148,163,184,.35);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 220px;
+}
+
+/* Marco para banner horizontal */
+#sistemas-soportados .carouselX .sys img{
+  width: 100%;
+  height: 92px;              /* altura fija de banner */
+  border-radius: 12px;
+  background: #020617;
+  border: 1px solid rgba(255,255,255,.08);
+  object-fit: contain;       /* CLAVE: no recorta ni estira */
+  padding: 10px;             /* aire para logos horizontales */
+}
+
+/* Texto */
+#sistemas-soportados .carouselX .sys h4{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.25;
+  color: #f9fafb;
+}
+#sistemas-soportados .carouselX .sys p{
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* Flechas (abajo derecha) + dots (abajo izquierda) */
+#sistemas-soportados .carouselX > .arrowCircle{
+  position: absolute !important;
+  top: auto !important;
+  bottom: 8px !important;
+  transform: none !important;
+}
+#sistemas-soportados .carouselX > .arrowCircle.prev{
+  left: auto !important;
+  right: 52px !important;
+}
+#sistemas-soportados .carouselX > .arrowCircle.next{
+  right: 12px !important;
+}
+#sistemas-soportados .carouselX > .group-dots{
+  position: absolute;
+  left: 14px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+}
+
+/* Responsive: 2 visibles */
+@media (max-width: 960px){
+  #sistemas-soportados .carouselX .sys{
+    flex: 0 0 calc((100% - 12px) / 2);
+  }
+}
+/* Mobile: 2 visibles */
+@media (max-width: 640px){
+  #sistemas-soportados .carouselX .sys{
+    flex: 0 0 calc((100% - 12px) / 2);
+  }
+}
+
+
 
 
