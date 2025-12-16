@@ -361,14 +361,34 @@ p{margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--muted)}
   flex: 1;
   display: flex;
 }
+.listPage{min-width:100%;display:flex;flex-direction:column;gap:12px}
 
-.listPage{min-width:100%;display:flex;flex-direction:column;gap:8px}
-.listItem{display:flex;align-items:flex-start;gap:16px;padding:10px 0}
-.listIcon{width:42px;height:42px;flex:0 0 42px;border-radius:999px;background:rgba(15,23,42,.95);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-top:2px}
-.listIcon img{width:26px;height:26px}
-.listItem strong{display:block;font-size:15px;margin-bottom:6px;color:#fff;letter-spacing:.02em}
+.listItem{
+  display:flex;
+  align-items:center; /* Centra el texto verticalmente con el icono grande */
+  gap:20px;           /* Más espacio entre icono y texto */
+  padding:10px 0;
+}
+
+.listIcon{
+  width:84px;
+  height:84px;
+  flex:0 0 84px;      /* IMPORTANTE: Esto debe coincidir con el width para que sea un círculo perfecto */
+  border-radius:999px;
+  background:rgba(15,23,42,.95);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.listIcon img{
+  width:45px;         /* Aumentado para que se vea bien dentro del círculo de 84px */
+  height:45px;
+}
+
+.listItem strong{display:block;font-size:16px;margin-bottom:4px;color:#fff;letter-spacing:.02em}
 .listItem div{font-size:14px;line-height:1.6;color:#cbd5e1}
-
 /* FLECHAS ABAJO A LA DERECHA */
 .listSlider .arrowCircle {
   position: absolute !important;
