@@ -503,22 +503,38 @@ const REELS_DATA={
     carousel:$("#carouselReels-servicios"),
     defaultSys:"polizas", /* ✅ DEFAULT: PÓLIZAS */
     reelsBySys:{
-      implementaciones:[{id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"}],
-      migraciones:[{id:"JkrDOjWV1Gs",title:"Migración de datos a CONTPAQi"}],
+      implementaciones:[
+        {id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"},
+        {id:"IYn-rGHEfqg",title:"Implementación Lucía: CONTPAQi"}
+      ],
+      migraciones:[
+        {id:"JkrDOjWV1Gs",title:"Migración de datos a CONTPAQi"},
+        {id:"4QqrKkTPZ6U",title:"Testimonio Uriel: Migración a CONTPAQi"}
+      ],
       desarrollos:[
         {id:"JkrDOjWV1Gs",title:"Testimonio Sara: Soft Restaurant"},
         {id:"uBl5UWkwbr8",title:"Testimonio Luis: Desarrollo en Nóminas"},
         {id:"f-F10-F6rnM",title:"Testimonio Alex: Integración CONTPAQi API"}
       ],
-      servidores:[{id:"Grx1woHMGsU",title:"Servidores Virtuales para CONTPAQi"}],
-      cursos:[{id:"TgAkwNt4YCA",title:"Testimonio Ana: Curso Contabilidad"}],
-      soporte:[{id:"IoHjV2QG_3U",title:"Testimonio Marco: Soporte eficaz"}],
-      polizas:[ /* ✅ NUEVO */
-        {id:"REEMPLAZAR_ID_POLIZA_1",title:"¿Qué incluye una póliza anual de soporte Expiriti?"},
-        {id:"REEMPLAZAR_ID_POLIZA_2",title:"Cómo se cotiza una póliza: usuarios, sistemas y empresas"}
+      servidores:[
+        {id:"Grx1woHMGsU",title:"Servidores Virtuales para CONTPAQi"},
+        {id:"Vmf2CcSd8G4",title:"Testimonio Erika: Servidores Virtuales"}
+      ],
+      cursos:[
+        {id:"TgAkwNt4YCA",title:"Testimonio Ana: Curso Contabilidad"}
+      ],
+      soporte:[
+        {id:"IoHjV2QG_3U",title:"Testimonio Marco: Soporte eficaz"},
+        {id:"inPKGICgxLc",title:"Testimonio Jaquie: Soporte Técnico"}
+      ],
+      polizas:[
+        {id:"sTvwf2ISsJU",title:"Póliza: ¿Qué incluye una póliza anual de soporte Expiriti?"}
+        // Si luego me pasas otro link de póliza, lo agrego aquí como 2do reel
+        // {id:"REEMPLAZAR_ID_POLIZA_2",title:"Cómo se cotiza una póliza: usuarios, sistemas y empresas"}
       ]
     }
   }
+
 };
 
 /* =========================
