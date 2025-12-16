@@ -783,3 +783,17 @@ textarea{resize:vertical}
 @media(max-width:640px){
   #sistemas-soportados .carouselX .sys{flex:0 0 calc((100% - 12px)/2)}
 }
+
+/* =========================================================
+   FIX DEFINITIVO: evitar ---- o texto en dots
+   ========================================================= */
+.carousel-nav,
+.group-dots{
+  font-size:0;          /* evita que aparezcan ---- */
+}
+
+.carousel-nav .dot,
+.group-dots button{
+  font-size:0;          /* asegura que solo se vea el punto */
+}
+
