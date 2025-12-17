@@ -750,4 +750,15 @@ textarea { resize: vertical; }
   display: none !important;
 }
 
+/* =========================================================
+   SISTEMAS SOPORTADOS – ocultar scrollbar nativo
+   ========================================================= */
+#sistemas-soportados .carouselX .track{
+  scrollbar-width: none;          /* Firefox */
+  -ms-overflow-style: none;       /* IE / Edge viejo */
+}
+
+#sistemas-soportados .carouselX .track::-webkit-scrollbar{
+  display: none;                  /* Chrome / Safari */
+}
 
