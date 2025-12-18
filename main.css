@@ -112,3 +112,16 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}.footer-
 .reel-embed.has-iframe::before,.reel-embed.has-iframe::after{display:none!important;opacity:0!important}
 .yt-wrap.has-iframe iframe,.reel-embed.has-iframe iframe{opacity:1!important}
 
+
+/* =========================================================
+   FIX: Quitar play duplicado (CSS pseudo-overlay)
+   Deja SOLO el botón rojo que inyecta el JS lazy
+   ========================================================= */
+.yt-wrap::before,.yt-wrap::after,.reel-embed::before,.reel-embed::after{content:none!important;display:none!important}
+
+/* =========================================================
+   Reels: más ancho en desktop para forzar mejor vq inicial
+   ========================================================= */
+.reel-embed{width:min(460px,100%)!important;max-width:460px!important}
+@media(max-width:768px){.reel-embed{width:100%!important;max-width:520px!important}}
+
