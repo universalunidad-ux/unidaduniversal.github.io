@@ -194,57 +194,55 @@ const HERO_GALLERY_DATA={
       {src:"IMG/SOFTWARE%20FAVORITO%202.webp"}
     ]}
   }},
-  comercial:{label:"Comerciales",defaultSys:"start",systems:{
-    start:{label:"Comercial Start",icon:"IMG/comercialstartsq.webp",images:[
-      {src:"IMG/comercialstart.webp"}
-    ]},
-    pro:{label:"Comercial Pro",icon:"IMG/comercialprosq.webp",images:[
-      {src:"IMG/captura%20manual.webp"},
-      {src:"IMG/procumple.webp"},
-      {src:"IMG/prorenta.webp"},
-      {src:"IMG/COMPRAVENTA.webp"},
-      {src:"IMG/FUNCIONES%20PRO.webp"},
-      {src:"IMG/FUNCIONES%20PRO2.webp"},
-      {src:"IMG/MODULO.webp"}
-    ]},
-    premium:{label:"Comercial Premium",icon:"IMG/comercialpremiumsq.webp",images:[
-      {src:"IMG/desde%20compras%20ventas%20traslados.webp"},
-      {src:"IMG/INVENTARIO%20Y%20VENTAS.webp"},
-      {src:"IMG/LIGAS%20DE%20PAGO.webp"},
-      {src:"IMG/NOTAS%20DE%20VENTA.webp"},
-      {src:"IMG/COSTOS%20Y%20UTILIDADES.webp"},
-      {src:"IMG/INVENTARIOS,%20FINANZAS%20jpg.webp"},
-      {src:"IMG/STOCK.webp"},
-      {src:"IMG/comportamiento.webp"},
-      {src:"IMG/premtrans.webp"},
-      {src:"IMG/premrutas.webp"},
-      {src:"IMG/prempro.webp"},
-      {src:"IMG/premdash.webp"}
-    ]},
-    factura:{label:"Factura electrónica",icon:"IMG/facturasq.webp",images:[
-      {src:"IMG/INCLUYE%201.webp"},
-      {src:"IMG/INCLUYE%202.webp"},
-      {src:"IMG/INCLUYE%203.webp"},
-      {src:"IMG/CARACTERISTICAS%202.webp"},
-      {src:"IMG/CARACTERISTICAS%203.webp"},
-      {src:"IMG/carta%20porte.webp"},
-      {src:"IMG/CONTROLA.webp"},
-      {src:"IMG/solucion%20facil.webp"},
-      {src:"IMG/facinfo.webp"},
-      {src:"IMG/facpreo.webp"},
-      {src:"IMG/factiemp.webp"},
-      {src:"IMG/factimbra.webp"},
-      {src:"IMG/factserv.webp"}
-    ]}
-  }},
-  nube:{label:"En la Nube",defaultSys:"analiza",systems:{
+
+comercial:{label:"Comerciales",defaultSys:"pro",systems:{
+  pro:{label:"Comercial Pro",icon:"IMG/comercialprosq.webp",images:[
+    {src:"IMG/captura%20manual.webp"},
+    {src:"IMG/procumple.webp"},
+    {src:"IMG/prorenta.webp"},
+    {src:"IMG/COMPRAVENTA.webp"},
+    {src:"IMG/FUNCIONES%20PRO.webp"},
+    {src:"IMG/FUNCIONES%20PRO2.webp"},
+    {src:"IMG/MODULO.webp"}
+  ]},
+  premium:{label:"Comercial Premium",icon:"IMG/comercialpremiumsq.webp",images:[
+    {src:"IMG/desde%20compras%20ventas%20traslados.webp"},
+    {src:"IMG/INVENTARIO%20Y%20VENTAS.webp"},
+    {src:"IMG/LIGAS%20DE%20PAGO.webp"},
+    {src:"IMG/NOTAS%20DE%20VENTA.webp"},
+    {src:"IMG/COSTOS%20Y%20UTILIDADES.webp"},
+    {src:"IMG/INVENTARIOS,%20FINANZAS%20jpg.webp"},
+    {src:"IMG/STOCK.webp"},
+    {src:"IMG/comportamiento.webp"},
+    {src:"IMG/premtrans.webp"},
+    {src:"IMG/premrutas.webp"},
+    {src:"IMG/prempro.webp"},
+    {src:"IMG/premdash.webp"}
+  ]},
+  factura:{label:"Factura electrónica",icon:"IMG/facturasq.webp",images:[
+    {src:"IMG/INCLUYE%201.webp"},
+    {src:"IMG/INCLUYE%202.webp"},
+    {src:"IMG/INCLUYE%203.webp"},
+    {src:"IMG/CARACTERISTICAS%202.webp"},
+    {src:"IMG/CARACTERISTICAS%203.webp"},
+    {src:"IMG/carta%20porte.webp"},
+    {src:"IMG/CONTROLA.webp"},
+    {src:"IMG/solucion%20facil.webp"},
+    {src:"IMG/facinfo.webp"},
+    {src:"IMG/facpreo.webp"},
+    {src:"IMG/factiemp.webp"},
+    {src:"IMG/factimbra.webp"},
+    {src:"IMG/factserv.webp"}
+  ]}
+}},
+
+   
+   nube:{label:"En la Nube",defaultSys:"analiza",systems:{
     analiza:{label:"Analiza",icon:"IMG/analiza.webp",images:[
-      {src:"IMG/04%20Analiza%20discrepancias.webp"},
-      {src:"IMG/04%20Analiza%20reportes.webp"},
-      {src:"IMG/anadecide.webp"},
+           {src:"IMG/analizareportes.webp"},
+       {src:"IMG/anadecide.webp"},
       {src:"IMG/ananocuadr.webp"},
       {src:"IMG/analizarespues.webp"},
-      {src:"IMG/analizareportes.webp"},
       {src:"IMG/analizadescuadr.webp"},
       {src:"IMG/analizacorrige.webp"},
       {src:"IMG/analizacfdi.webp"}
@@ -255,9 +253,7 @@ const HERO_GALLERY_DATA={
       {src:"IMG/contabprocesos.webp"},
       {src:"IMG/contabireal.webp"}
     ]},
-    despachos:{label:"Despachos",icon:"IMG/despachos.webp",images:[
-      {src:"IMG/despachos.webp"}
-    ]},
+
     vende:{label:"Vende",icon:"IMG/vende.webp",images:[
       {src:"IMG/vendevendes.webp"},
       {src:"IMG/vendesigue.webp"},
@@ -283,7 +279,8 @@ const HERO_GALLERY_DATA={
       {src:"IMG/colacola.webp"}
     ]},
     personia:{label:"Personia",icon:"IMG/personia.webp",images:[
-      {src:"IMG/personiaseg.webp"},
+      {src:"IMG/personiasbc.webp"},
+      {src:"IMG/persoseg.webp"},
       {src:"IMG/personmas.webp"},
       {src:"IMG/personiaptu.webp"},
       {src:"IMG/persobime.webp"}
