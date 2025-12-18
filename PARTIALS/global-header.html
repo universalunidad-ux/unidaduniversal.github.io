@@ -1,7 +1,8 @@
 <header class="gh" role="banner">
-<style>
+   <style>
 /* =========================================================
    Expiriti - Global Header (Responsive + MegaMenu + Mobile Drawer)
+   + MegaMenu “mixto”: Desktop horizontal / Tablets vertical
    ========================================================= */
 
 /* --- Tokens mínimos --- */
@@ -124,14 +125,29 @@
   border:1px solid rgba(255,255,255,.06);
   min-width:0;
 }
-.gh-col h4{margin:0 0 8px; font-size:12px; letter-spacing:.14em; color:var(--gh-muted); text-transform:uppercase; opacity:.75;}
+.gh-col h4{
+  margin:0 0 8px;
+  font-size:12px;
+  letter-spacing:.14em;
+  color:var(--gh-muted);
+  text-transform:uppercase;
+  opacity:.75;
+}
 .gh-subhead{
   display:flex; align-items:center; gap:6px; margin:12px 0 8px;
-  font-weight:650; font-size:11px; color:#fff; text-transform:uppercase; letter-spacing:.05em;
+  font-weight:650; font-size:11px; color:#fff;
+  text-transform:uppercase; letter-spacing:.05em;
 }
 .gh-subhead svg{width:14px;height:14px;opacity:.9;color:var(--gh-brand)}
 .gh-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 
+/* =========================================================
+   ITEMS DEL MEGAMENU (MIXTO)
+   - Desktop/Grande: horizontal (logo izq + texto der)
+   - <= 1100px: vertical (logo arriba + texto abajo)
+   ========================================================= */
+
+/* Default = HORIZONTAL (desktop) */
 .gh-col a.gh-link{
   display:flex;
   align-items:center;
@@ -144,35 +160,45 @@
   transition:.18s ease;
   min-width:0;
 }
+.gh-col a.gh-link:hover{
+  background:rgba(255,255,255,.05);
+  border-color:rgba(255,255,255,.1);
+}
 
-   
-.gh-col a.gh-link:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
-
-   /* Logos horizontales dentro del MegaMenu */
-/* Logos horizontales (600x210) dentro del MegaMenu */
+/* Logos horizontales (600x210) */
 .gh-ico32{
-  width: clamp(92px, 10vw, 128px); /* antes 140; esto evita que se vean gigantes */
-  aspect-ratio: 20 / 7;            /* 600x210 */
-  height: auto;
-  object-fit: contain;
-  display: block;
-  flex: 0 0 auto;
+  width: clamp(96px, 10vw, 132px); /* controlado en desktop */
+  aspect-ratio: 20 / 7;
+  height:auto;
+  object-fit:contain;
+  display:block;
+  flex:0 0 auto;
   filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
-  opacity: .95;
+  opacity:.95;
 }
 
+.gh-link-content{display:flex;flex-direction:column;gap:4px;min-width:0}
+.gh-link strong{font-size:13px;font-weight:650;color:#fff;line-height:1.15}
+.gh-desc{margin:0;font-size:11px;line-height:1.35;color:var(--gh-muted);white-space:normal}
 
-/* Ajustes responsive */
-@media (max-width:1100px){
-  .gh-ico32{ width: 128px; height: calc(128px * 7/20); flex-basis:128px; }
-}
-@media (min-width:1200px){
-  .gh-ico32{ width: 156px; height: calc(156px * 7/20); flex-basis:156px; }
+/* <=1100px: vuelve VERTICAL para que se vea limpio en 2 columnas */
+@media(max-width:1100px){
+  .gh-mega{grid-template-columns:repeat(2, minmax(0, 1fr))}
+  .gh-col a.gh-link{
+    flex-direction:column;
+    align-items:flex-start; /* cambia a center si lo quieres centrado */
+    gap:10px;
+  }
+  .gh-ico32{
+    width: clamp(140px, 18vw, 190px); /* más grande porque va arriba */
+    aspect-ratio: 20 / 7;
+  }
 }
 
-.gh-link-content{display:flex;flex-direction:column;gap:2px;min-width:0}
-.gh-link strong{font-size:13px;font-weight:600;color:#fff}
-.gh-desc{margin:0;font-size:11px;line-height:1.3;color:var(--gh-muted);white-space:normal}
+/* >=1200px: un poco más de presencia en desktop grande */
+@media(min-width:1200px){
+  .gh-ico32{ width: clamp(110px, 9vw, 150px); }
+}
 
 /* Menú Servicios (desktop) */
 .gh-list{display:flex;flex-direction:column;gap:8px;min-width:260px}
@@ -184,66 +210,117 @@
   border:1px solid rgba(255,255,255,.06);
   font-size:13px; transition:.18s ease;
 }
-.gh-list a:hover{border-color:rgba(255,255,255,.18);background:rgba(27,33,48,1);transform:translateY(-1px)}
+.gh-list a:hover{
+  border-color:rgba(255,255,255,.18);
+  background:rgba(27,33,48,1);
+  transform:translateY(-1px)
+}
 .gh-ico{width:18px;height:18px;opacity:.9}
 
 /* CTA */
 .gh-cta{display:flex;gap:8px;align-items:center}
 .gh-btn{
-  border:1px solid rgba(255,255,255,.22); background:rgba(15,23,42,.9);
-  color:var(--gh-text); padding:8px 14px; border-radius:999px;
-  text-decoration:none; font-size:13px; display:inline-flex;align-items:center;gap:6px;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(15,23,42,.9);
+  color:var(--gh-text);
+  padding:8px 14px;
+  border-radius:999px;
+  text-decoration:none;
+  font-size:13px;
+  display:inline-flex;align-items:center;gap:6px;
   transition:.18s ease;
 }
 .gh-btn:hover{
   background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));
-  color:#020617;border-color:transparent;transform:translateY(-1px)
+  color:#020617;
+  border-color:transparent;
+  transform:translateY(-1px)
 }
 .gh-burger{
-  display:none; border:1px solid rgba(255,255,255,.22); background:rgba(15,23,42,.9);
-  color:var(--gh-text); padding:8px 10px; border-radius:12px; font-size:18px; line-height:1; cursor: pointer;
+  display:none;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(15,23,42,.9);
+  color:var(--gh-text);
+  padding:8px 10px;
+  border-radius:12px;
+  font-size:18px;
+  line-height:1;
+  cursor:pointer;
 }
 
 /* --- MOBILE DRAWER --- */
 .gh-dim{
-  position:fixed; inset:0; background:rgba(0,0,0,.55);
-  opacity:0; visibility:hidden; transition:.18s ease; z-index:998;
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.55);
+  opacity:0; visibility:hidden;
+  transition:.18s ease;
+  z-index:998;
 }
 .gh-drawer{
-  position:fixed; top:0; right:0; height:100vh; width:min(92vw, 420px);
-  background:rgba(8,11,18,.98); border-left:1px solid rgba(255,255,255,.08);
-  transform:translateX(105%); transition:.2s ease; z-index:999;
+  position:fixed; top:0; right:0;
+  height:100vh; width:min(92vw, 420px);
+  background:rgba(8,11,18,.98);
+  border-left:1px solid rgba(255,255,255,.08);
+  transform:translateX(105%);
+  transition:.2s ease;
+  z-index:999;
   display:flex; flex-direction:column;
 }
 .gh-drawer-head{
   display:flex; align-items:center; justify-content:space-between;
-  padding:14px 14px; border-bottom:1px solid rgba(255,255,255,.06);
+  padding:14px 14px;
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
 .gh-drawer-title{color:#fff;font-weight:700;letter-spacing:.02em}
 .gh-close{
-  border:1px solid rgba(255,255,255,.18); background:rgba(15,23,42,.9); color:var(--gh-text);
-  border-radius:12px; padding:8px 10px; font-size:16px; line-height:1; cursor: pointer;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(15,23,42,.9);
+  color:var(--gh-text);
+  border-radius:12px;
+  padding:8px 10px;
+  font-size:16px;
+  line-height:1;
+  cursor:pointer;
 }
 .gh-drawer-body{padding:12px 14px; overflow:auto}
 .gh-mnav{display:flex;flex-direction:column;gap:10px}
 .gh-mnav a{
   display:flex; align-items:center; justify-content:space-between; gap:10px;
-  padding:12px 12px; border-radius:14px; text-decoration:none; color:var(--gh-text);
-  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06);
+  padding:12px 12px;
+  border-radius:14px;
+  text-decoration:none;
+  color:var(--gh-text);
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
 }
 .gh-mnav a:active{transform:scale(.99)}
 .gh-msec{margin-top:10px}
 .gh-acc{
-  border:1px solid rgba(255,255,255,.06); background:rgba(255,255,255,.03); border-radius:16px; overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.03);
+  border-radius:16px;
+  overflow:hidden;
 }
 .gh-acc summary{
-  list-style:none; cursor:pointer; padding:12px 12px; color:#fff; font-weight:700;
+  list-style:none;
+  cursor:pointer;
+  padding:12px 12px;
+  color:#fff;
+  font-weight:700;
   display:flex; align-items:center; justify-content:space-between;
 }
 .gh-acc summary::-webkit-details-marker{display:none}
-.gh-acc .gh-acc-in{padding:10px 10px 12px; display:flex; flex-direction:column; gap:8px}
+.gh-acc .gh-acc-in{
+  padding:10px 10px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px
+}
 .gh-acc .gh-acc-in a{
-  padding:10px 10px; border-radius:12px; background:rgba(17,23,35,.55); border:1px solid rgba(255,255,255,.06);
+  padding:10px 10px;
+  border-radius:12px;
+  background:rgba(17,23,35,.55);
+  border:1px solid rgba(255,255,255,.06);
 }
 .gh-mcta{display:flex; gap:10px; margin-top:12px}
 .gh-mcta a{flex:1; justify-content:center}
@@ -252,8 +329,7 @@
 html.gh-open .gh-dim{opacity:1; visibility:visible}
 html.gh-open .gh-drawer{transform:translateX(0)}
 
-/* Responsive */
-@media(max-width:1100px){ .gh-mega{grid-template-columns:repeat(2, minmax(0, 1fr))} }
+/* Responsive general */
 @media(max-width:980px){
   .gh-container{grid-template-columns:1fr auto; gap:8px}
   .gh-nav{display:none}
@@ -265,12 +341,15 @@ html.gh-open .gh-drawer{transform:translateX(0)}
   .gh-brand-title .name{font-size:15px}
   .gh-brand img{width:40px;height:40px;flex-basis:40px}
 }
+
 html,body{overflow-x:hidden}
 @media (prefers-reduced-motion: reduce){
-  .gh-brand, .gh-nav a::after, .gh-dd, .gh-btn, .gh-dim, .gh-drawer{transition:none !important}
+  .gh-brand, .gh-nav a::after, .gh-dd, .gh-btn, .gh-dim, .gh-drawer{
+    transition:none !important
+  }
 }
 </style>
-
+   
   <div class="gh-container">
     <a class="gh-brand js-abs-href" data-href="index.html" aria-label="Inicio Expiriti">
       <img class="js-abs-src" data-src="IMG/expiritilogo.webp" alt="Expiriti">
