@@ -154,16 +154,18 @@ const HERO_GALLERY_DATA={
   contable:{label:"Contables",defaultSys:"nominas",systems:{
     contabilidad:{label:"Contabilidad",icon:"IMG/contabilidadsq.webp",images:[
       {src:"IMG/contamate.webp"},
-      {src:"IMG/3conta.webp"},
-      {src:"IMG/conta%20ybancos.webp"},
+       {src:"IMG/contadesglo.webp"},
+       {src:"IMG/conta%20y%20bancos.webp"},
+       {src:"IMG/conta%20y%20bancos%20.webp"},
       {src:"IMG/impuestos%20sin%20estres%20conta%20y%20bancos.webp"},
       {src:"IMG/1conta.webp"},
       {src:"IMG/conta%20y%20bancos%202.webp"},
-      {src:"IMG/contacfdi.webp"},
-      {src:"IMG/contadesglo.webp"}
+      {src:"IMG/contacfdi.webp"}
+     
     ]},
     nominas:{label:"Nóminas",icon:"IMG/nominassq.webp",images:[
       {src:"IMG/primera.webp"},
+             {src:"IMG/nomisr.webp"},
       {src:"IMG/490962328_1082897360538668_175183934644162321_n.webp"},
       {src:"IMG/NOMINAS.webp"},
       {src:"IMG/ptu.webp"},
@@ -172,7 +174,6 @@ const HERO_GALLERY_DATA={
       {src:"IMG/COMMENTS%20ESTRELLAS%201.webp"},
       {src:"IMG/nomtraza.webp"},
       {src:"IMG/nommovs.webp"},
-      {src:"IMG/nomisr.webp"},
       {src:"IMG/nomiequi.webp"},
       {src:"IMG/nomentrega.webp"}
     ]},
@@ -202,8 +203,8 @@ const HERO_GALLERY_DATA={
       {src:"IMG/procumple.webp"},
       {src:"IMG/prorenta.webp"},
       {src:"IMG/COMPRAVENTA.webp"},
-      {src:"IMG/FUNCIONES%20%PRO.webp"},
-      {src:"IMG/FUNCIONES%20%PRO2.webp"},
+      {src:"IMG/FUNCIONES%20PRO.webp"},
+      {src:"IMG/FUNCIONES%20PRO2.webp"},
       {src:"IMG/MODULO.webp"}
     ]},
     premium:{label:"Comercial Premium",icon:"IMG/comercialpremiumsq.webp",images:[
