@@ -106,42 +106,6 @@
     ph.outerHTML = html;
   }
 
-  /* =========================
-     Header logic
-     - Burger + activo (por ruta/hash)
-     - Se ejecuta DESPUÉS de cargar parciales
-     ========================= */
-  function initHeaderLogicOnce() {
-    if (window.__EXPIRITI_HEADER_WIRED__) return;
-    window.__EXPIRITI_HEADER_WIRED__ = true;
-
-    // Burger del header global
-    const burger = document.getElementById("gh-burger") || Q("#gh-burger");
-    const nav    = Q(".gh-nav");
-    if (burger && nav) {
-      burger.addEventListener("click", () => {
-        nav.classList.toggle("open");
-        burger.textContent = nav.classList.contains("open") ? "✕" : "≡";
-      });
-    }
-
-    // Activo por sección
-    const P = location.pathname.toUpperCase();
-    const H = (location.hash || "").toLowerCase();
-
-    let sec = "inicio";
-    if (P.includes("/SISTEMAS/")) sec = "sistemas";
-    else if (P.includes("/SERVICIOS/")) sec = "servicios";
-    else if (H === "#servicios") sec = "servicios";
-    else if (H === "#promociones") sec = "promociones";
-    else if (H === "#productos" || H === "#productos-con") sec = "sistemas";
-    else if (H === "#contacto") sec = "contacto";
-    else if (P.includes("/NOSOTROS")) sec = "nosotros";
-
-    QA("[data-section]").forEach((a) => {
-      a.classList.toggle("gh-active", (a.getAttribute("data-section") || "") === sec);
-    });
-  }
 
   /* =========================
      Formularios -> WhatsApp
@@ -1003,8 +967,6 @@
     // 2) Normalizar rutas dentro de parciales y página
     normalizeRoutes(document);
 
-    // 3) Header (burger + active)
-    initHeaderLogicOnce();
 
     // 4) Secciones
     initForms();
