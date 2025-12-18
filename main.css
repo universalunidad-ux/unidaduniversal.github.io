@@ -106,3 +106,9 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}.footer-
 
 /* Botón "Ver más" dentro de cada sistema */
 .carouselX .hoverMore{margin-top:18px;opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease;pointer-events:none}.carouselX .sys:hover .hoverMore{opacity:1;transform:translateY(0);pointer-events:auto}.chip{display:inline-flex;align-items:center;justify-content:center;padding:6px 14px;border-radius:999px;background:rgba(15,23,42,.9);border:1px solid #1c2533;font-size:14px;font-weight:600;color:#e5f0ff}.carouselX .sys.show-hover .hoverMore{opacity:1 !important;transform:translateY(0) !important;pointer-events:auto}
+
+/* ===== FIX: si ya hay iframe, NO mostrar overlay gris y asegurar video visible ===== */
+.yt-wrap.has-iframe::before,.yt-wrap.has-iframe::after,
+.reel-embed.has-iframe::before,.reel-embed.has-iframe::after{display:none!important;opacity:0!important}
+.yt-wrap.has-iframe iframe,.reel-embed.has-iframe iframe{opacity:1!important}
+
