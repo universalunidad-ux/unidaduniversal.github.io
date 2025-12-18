@@ -184,72 +184,144 @@
   }
 })();
 
+
 /* =========================================================
-   3) CARRUSEL GENÉRICO
+   CARRUSEL UNIVERSAL (Reels + Videos + Cualquier Carousel)
+   - Len = #slides reales
+   - Dots auto-sync (crea/recorta)
+   - Flechas/dots se ocultan si <= 1
    ========================================================= */
-(function(){
-  function initCarousel(root, onChange){
+(function () {
+  const pauseAll = () => { if (window.pauseAllYTIframes) window.pauseAllYTIframes(); };
+
+  function syncDots(root, len) {
+    const nav = root.querySelector(".carousel-nav");
+    if (!nav) return [];
+
+    let dots = Array.from(nav.querySelectorAll(".dot"));
+
+    // Asegura exactamente "len" dots
+    // 0/1: no importa, luego lo ocultamos con hideControls
+    while (dots.length < len) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "dot";
+      b.setAttribute("aria-label", `Ir al reel ${dots.length + 1}`);
+      nav.appendChild(b);
+      dots.push(b);
+    }
+    while (dots.length > len) {
+      const last = dots.pop();
+      last && last.remove();
+    }
+
+    return dots;
+  }
+
+  function hideControlsIfSingle(root, len) {
+    const prev = root.querySelector(".arrowCircle.prev");
+    const next = root.querySelector(".arrowCircle.next");
+    const nav  = root.querySelector(".carousel-nav");
+
+    const single = len <= 1;
+
+    if (prev) { prev.disabled = single; prev.style.display = single ? "none" : ""; }
+    if (next) { next.disabled = single; next.style.display = single ? "none" : ""; }
+    if (nav)  { nav.style.display = single ? "none" : ""; }
+
+    root.toggleAttribute("data-single", single);
+  }
+
+  function initCarousel(root, onChange) {
     const track = root.querySelector(".carousel-track");
+    if (!track) return;
+
     const prev  = root.querySelector(".arrowCircle.prev");
     const next  = root.querySelector(".arrowCircle.next");
-    let dots    = [...root.querySelectorAll(".carousel-nav .dot")];
-    let i = 0;
-    let len = dots.length || (track?.children?.length || 0);
 
-    function paint(idx){
-      if (!dots.length) return;
+    // Slides reales
+    const slides = Array.from(track.querySelectorAll(":scope > .carousel-slide"));
+    const len = slides.length;
+
+    // Dots sincronizados a slides
+    let dots = syncDots(root, len);
+
+    // Oculta controles si 0/1
+    hideControlsIfSingle(root, len);
+
+    // Si no hay nada o solo 1, no hace falta listeners
+    if (len <= 1) {
+      // Asegura que quede “active” el primer dot si existe
+      if (dots[0]) dots[0].classList.add("active");
+      onChange && onChange(0);
+      return;
+    }
+
+    let i = 0;
+
+    function paint(idx) {
       dots.forEach((d, di) => d.classList.toggle("active", di === idx));
     }
-    function set(n){
-      if (!track || !len) return;
+
+    function set(n, behavior = "smooth") {
       i = (n + len) % len;
       paint(i);
-      track.scrollTo({
-        left: track.clientWidth * i,
-        behavior: "smooth"
-      });
+      track.scrollTo({ left: track.clientWidth * i, behavior });
       onChange && onChange(i);
     }
+
+    // Click dots
     dots.forEach((d, idx) => d.addEventListener("click", () => {
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+      pauseAll();
       set(idx);
     }));
-    prev && prev.addEventListener("click", () => {
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-      set(i - 1);
-    });
-    next && next.addEventListener("click", () => {
-      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-      set(i + 1);
-    });
-    track && track.addEventListener("scroll", () => {
+
+    // Flechas
+    prev && prev.addEventListener("click", () => { pauseAll(); set(i - 1); });
+    next && next.addEventListener("click", () => { pauseAll(); set(i + 1); });
+
+    // Scroll (swipe)
+    track.addEventListener("scroll", () => {
+      if (!track.clientWidth) return;
       const n = Math.round(track.scrollLeft / track.clientWidth);
-      if (n !== i){
-        i = n;
+      if (n !== i) {
+        i = Math.max(0, Math.min(len - 1, n));
         paint(i);
         onChange && onChange(i);
       }
     });
-    window.addEventListener("resize", () => set(i));
-    set(0);
+
+    // Resize
+    window.addEventListener("resize", () => set(i, "auto"));
+
+    // Init
+    set(0, "auto");
   }
 
-  document.querySelectorAll(".carousel:not([id^='carouselReels'])").forEach(car => {
+  function getTitlesForCarousel(car) {
+    // Si defines data-titles="#id1,#id2..." úsalo; si no, busca .reel-title cerca
     const sel = car.getAttribute("data-titles");
-    let titles = null;
-    if (sel){
-      titles = [...document.querySelectorAll(sel)];
-    } else {
-      const scope = car.closest(".card, .body, aside, section, div") || document;
-      titles = [...scope.querySelectorAll(".reel-title")];
+    if (sel) {
+      const nodes = Array.from(document.querySelectorAll(sel));
+      return nodes.length ? nodes : null;
     }
-    if (!titles?.length) titles = null;
-    initCarousel(car, idx => {
-      if (titles){
-        titles.forEach((t, i) => t.classList.toggle("active", i === idx));
-      }
+    const scope = car.closest(".card, .body, aside, section, div") || document;
+    const titles = Array.from(scope.querySelectorAll(".reel-title"));
+    return titles.length ? titles : null;
+  }
+
+  function boot() {
+    document.querySelectorAll(".carousel").forEach(car => {
+      const titles = getTitlesForCarousel(car);
+
+      initCarousel(car, (idx) => {
+        if (titles) titles.forEach((t, k) => t.classList.toggle("active", k === idx));
+      });
     });
-  });
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
 })();
 
 /* =========================================================
