@@ -601,8 +601,9 @@ html,body{overflow-x:hidden}
    - Corrige problemas de "botón no encontrado" en carga dinámica.
 */
 (() => {
-  const $  = (s, ctx=document)=>ctx.querySelector(s);
-  const $$ = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
+const gh$  = (s, ctx=document)=>ctx.querySelector(s);
+const gh$$ = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
+
 
   // --- 1. Rutas absolutas (Para GitHub Pages o Subcarpetas) ---
   const fixPaths = () => {
