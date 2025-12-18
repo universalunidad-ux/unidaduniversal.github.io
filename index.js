@@ -6,8 +6,13 @@ if(window.__EXPIRITI_INIT__) return; window.__EXPIRITI_INIT__=true;
 /* =========================
    Helpers DOM + Rutas
    ========================= */
-const $$=(s,c=document)=>Array.from(c.querySelectorAll(s));
-const $ =(s,c=document)=>c.querySelector(s);
+const qa=(s,c=document)=>Array.from(c.querySelectorAll(s));
+const q =(s,c=document)=>c.querySelector(s);
+// ✅ Alias para tu código existente (porque usas $ y $$ en todo el archivo)
+const $  = q;
+const $$ = qa;
+   
+   
 
 function getBasePath(){
   const p=location.pathname;
@@ -114,12 +119,10 @@ function activarTabProductos(btn){
 tabsProductos.forEach(btn=>btn.addEventListener("click",()=>activarTabProductos(btn)));
 const tabInicial=document.getElementById("tab-contable");
 if(tabInicial) activarTabProductos(tabInicial);
-
-/* =========================
-   Promos filtro
 /* =========================
    Promos filtro (img + figure)
    ========================= */
+
 const promoBtns = $$(".promo-btn");
 const promoItems = $$("#promoGrid [data-type]");
 
@@ -812,9 +815,9 @@ window.addEventListener("DOMContentLoaded",async()=>{
     loadPartial("header-placeholder","global-header.html"),
     loadPartial("footer-placeholder","global-footer.html")
   ]);
-
-  initHeaderLogic();
+  // initHeaderLogic(); // NO: el header partial ya lo hace
   initHeroGallery();
+
 
   // init carouseles de reels
   ["contable","comercial","nube","productividad","servicios"].forEach(initReelsCarousel);
