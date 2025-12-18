@@ -154,7 +154,7 @@
 })();
 
 /* =========================================================
-   1) UTILIDADES GLOBALES
+   1) UTILIDADES LOCALES (sin $/$$ global) — AISLADAS
    ========================================================= */
 (function(){
   const money = new Intl.NumberFormat("es-MX", {
@@ -163,8 +163,11 @@
     maximumFractionDigits: 0
   });
   window.$$fmt = v => money.format(Math.round(Number(v || 0)));
-  window.$$   = (sel, ctx = document) => ctx.querySelector(sel);
-  window.$all = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+  // Si quieres usar Q/QA dentro de este archivo SIN globales:
+  // crea aliases en window solo si NO existen (opcional)
+  if (!window.Q)  window.Q  = (sel, ctx=document) => ctx.querySelector(sel);
+  if (!window.QA) window.QA = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
 })();
 
 /* =========================================================
