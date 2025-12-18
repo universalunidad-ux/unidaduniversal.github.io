@@ -147,11 +147,15 @@
    - <= 1100px: vertical (logo arriba + texto abajo)
    ========================================================= */
 
-/* Default = HORIZONTAL (desktop) */
+/* =========================================================
+   MEGAMENU: Logo arriba + texto abajo (siempre)
+   ========================================================= */
+
 .gh-col a.gh-link{
   display:flex;
-  align-items:center;
-  gap:14px;
+  flex-direction:column;        /* <- clave: logo arriba, texto abajo */
+  align-items:flex-start;       /* usa center si lo quieres centrado */
+  gap:10px;
   padding:12px 12px;
   border-radius:12px;
   text-decoration:none;
@@ -165,10 +169,10 @@
   border-color:rgba(255,255,255,.1);
 }
 
-/* Logos horizontales (600x210) */
+/* Logos horizontales (600x210 aprox) */
 .gh-ico32{
-  width: clamp(96px, 10vw, 132px); /* controlado en desktop */
-  aspect-ratio: 20 / 7;
+  width: min(220px, 100%);      /* <- nunca más grande que 220px y respeta la tarjeta */
+  aspect-ratio: 20 / 7;         /* 600x210 */
   height:auto;
   object-fit:contain;
   display:block;
@@ -177,23 +181,27 @@
   opacity:.95;
 }
 
-.gh-link-content{display:flex;flex-direction:column;gap:4px;min-width:0}
-.gh-link strong{font-size:13px;font-weight:650;color:#fff;line-height:1.15}
-.gh-desc{margin:0;font-size:11px;line-height:1.35;color:var(--gh-muted);white-space:normal}
-
-/* <=1100px: vuelve VERTICAL para que se vea limpio en 2 columnas */
-@media(max-width:1100px){
-  .gh-mega{grid-template-columns:repeat(2, minmax(0, 1fr))}
-  .gh-col a.gh-link{
-    flex-direction:column;
-    align-items:flex-start; /* cambia a center si lo quieres centrado */
-    gap:10px;
-  }
-  .gh-ico32{
-    width: clamp(140px, 18vw, 190px); /* más grande porque va arriba */
-    aspect-ratio: 20 / 7;
-  }
+/* Texto */
+.gh-link-content{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width:0;
 }
+.gh-link strong{
+  font-size:13px;
+  font-weight:650;
+  color:#fff;
+  line-height:1.15;
+}
+.gh-desc{
+  margin:0;
+  font-size:11px;
+  line-height:1.35;
+  color:var(--gh-muted);
+  white-space:normal;
+}
+
 
 /* >=1200px: un poco más de presencia en desktop grande */
 @media(min-width:1200px){
