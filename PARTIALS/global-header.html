@@ -149,15 +149,18 @@
 .gh-col a.gh-link:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
 
    /* Logos horizontales dentro del MegaMenu */
+/* Logos horizontales (600x210) dentro del MegaMenu */
 .gh-ico32{
-  width: 140px;              /* ancho visible del banner */
-  height: calc(140px * 7/20);/* mantiene ratio 20:7 (600x210) */
+  width: clamp(92px, 10vw, 128px); /* antes 140; esto evita que se vean gigantes */
+  aspect-ratio: 20 / 7;            /* 600x210 */
+  height: auto;
   object-fit: contain;
   display: block;
-  flex: 0 0 140px;
+  flex: 0 0 auto;
   filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
   opacity: .95;
 }
+
 
 /* Ajustes responsive */
 @media (max-width:1100px){
