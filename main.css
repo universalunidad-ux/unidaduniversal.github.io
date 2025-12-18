@@ -63,8 +63,11 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
    ========================================================= */
 .reel-embed{position:relative;width:min(380px,100%) !important;max-width:380px !important;aspect-ratio:9/16;border-radius:12px;overflow:hidden;border:1px solid #1c2533;background:#0e1724;margin:0 auto;flex:0 0 auto;justify-self:center}.reel-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.reel-title{margin-bottom:8px;text-align:center;color:#fff;font-weight:700;display:none}.reel-title.active{display:block}
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;align-items:start}@media (max-width:768px){.yt-grid{grid-template-columns:1fr}}.yt{width:100%}
+
+
 /* --- Wrapper universal para embeds YouTube --- */
-.yt-wrap, .reel-embed{
+/* Videos normales (16:9) */
+.yt-wrap{
   position: relative;
   border-radius: 16px;
   overflow: hidden;
@@ -72,18 +75,37 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
   aspect-ratio: 16 / 9;
 }
 
+/* Reels (9:16) — NO lo mezcles con yt-wrap */
+.reel-embed{
+  position: relative;
+  width: min(380px,100%) !important;
+  max-width: 380px !important;
+  aspect-ratio: 9 / 16;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #1c2533;
+  background: #0e1724;
+  margin: 0 auto;
+  flex: 0 0 auto;
+  justify-self: center;
+}
+
 /* Poster visible mientras carga el iframe */
-.yt-wrap[data-poster], .reel-embed[data-poster]{
+.yt-wrap[data-poster],
+.reel-embed[data-poster]{
   background-image: var(--yt-poster);
   background-size: cover;
   background-position: center;
 }
 
-/* El iframe entra “suave” cuando está listo */
-.yt-wrap iframe, .reel-embed iframe{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  border:0;
+/* Iframe fade-in */
+.yt-wrap iframe,
+.reel-embed iframe{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
   opacity: 0;
   transition: opacity .18s ease;
 }
@@ -92,10 +114,11 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
   opacity: 1;
 }
 
-/* Botón play (solo visual; no obliga click) */
-.yt-wrap::after, .reel-embed::after{
+/* Botón play (solo visual) */
+.yt-wrap::after,
+.reel-embed::after{
   content:"";
-  position:absolute; inset:auto;
+  position:absolute;
   width:68px; height:48px;
   left:50%; top:50%;
   transform:translate(-50%,-50%);
@@ -104,7 +127,8 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
   box-shadow: 0 10px 28px rgba(0,0,0,.35);
   pointer-events:none;
 }
-.yt-wrap::before, .reel-embed::before{
+.yt-wrap::before,
+.reel-embed::before{
   content:"";
   position:absolute;
   left:50%; top:50%;
@@ -117,12 +141,13 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
   z-index:2;
 }
 
-/* Cuando el iframe ya cargó, quita el “play visual” (opcional) */
+/* Al cargar, ocultar play */
 .yt-wrap.is-ready::before, .yt-wrap.is-ready::after,
 .reel-embed.is-ready::before, .reel-embed.is-ready::after{
   opacity: 0;
   transition: opacity .18s ease;
 }
+
 
 .yt-title{font-size:15px;font-weight:600;color:#e8eef6;margin-bottom:10px;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center}.yt-grid-single{grid-template-columns:minmax(0,480px);justify-content:center}@media (max-width:768px){.yt-grid-single{grid-template-columns:1fr}}
 #carouselVideos .carousel-slide{padding:0 50px;box-sizing:border-box}@media (max-width:768px){#carouselVideos .carousel-slide{padding:0 10px}}
