@@ -596,45 +596,42 @@ html,body{overflow-x:hidden}
   </aside>
 
 <script>
-/* Expiriti Header Script (Robust & Delegated)
-   - Usa delegación de eventos en 'document' para funcionar aunque el HTML se inyecte vía AJAX/JS.
-   - Corrige problemas de "botón no encontrado" en carga dinámica.
-*/
 (() => {
-const gh$  = (s, ctx=document)=>ctx.querySelector(s);
-const gh$$ = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
+  const gh$  = (s, ctx=document)=>ctx.querySelector(s);
+  const gh$$ = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
 
-
-  // --- 1. Rutas absolutas (Para GitHub Pages o Subcarpetas) ---
+  // --- 1) Rutas absolutas (GitHub Pages / subcarpetas) ---
   const fixPaths = () => {
     const isGh = location.hostname.endsWith("github.io");
     const firstSeg = location.pathname.split("/")[1] || "";
     const repoBase = (isGh && firstSeg) ? ("/" + firstSeg) : "";
+
     const abs = (p) => {
       if(!p) return "#";
-      if(/^https?:\/\//i.test(p) || p.startsWith("mailto:") || p.startsWith("tel:") || p.startsWith("#")) return p;
-      const out = (p.startsWith("/") ? (repoBase + p) : (repoBase + "/" + p));
-      return out.replace(/\/+/g,"/");
+      if (/^https?:\/\//i.test(p) || p.startsWith("mailto:") || p.startsWith("tel:") || p.startsWith("#")) return p;
+      const out = p.startsWith("/") ? (repoBase + p) : (repoBase + "/" + p);
+      return out.replace(/\/+/g, "/");
     };
-    
-    $$(".js-abs-href[data-href]").forEach(a => {
-      if(a.dataset.fixed) return; // Evita doble proceso
+
+    gh$$(".js-abs-href[data-href]").forEach(a => {
+      if(a.dataset.fixed) return;
       const raw = a.getAttribute("data-href") || "";
       const [path, hash] = raw.split("#");
       a.href = abs(path) + (hash ? ("#" + hash) : "");
       a.dataset.fixed = "true";
     });
-    $$(".js-abs-src[data-src]").forEach(img => {
+
+    gh$$(".js-abs-src[data-src]").forEach(img => {
       if(img.dataset.fixed) return;
       img.src = abs(img.getAttribute("data-src"));
       img.dataset.fixed = "true";
     });
   };
 
-  // --- 2. Active Links (Top Menu) ---
+  // --- 2) Active links ---
   const setActiveLinks = () => {
     const p = location.pathname.toLowerCase();
-    $$(".gh-nav > ul > li > a").forEach(a => {
+    gh$$(".gh-nav > ul > li > a").forEach(a => {
       a.classList.remove("active-parent");
       const t = (a.innerText || "").trim().toLowerCase();
       if(t === "sistemas" && p.includes("/sistemas/")) a.classList.add("active-parent");
@@ -644,23 +641,18 @@ const gh$$ = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
     });
   };
 
-  // Ejecutar lógica de rutas e inicialización
   const init = () => { fixPaths(); setActiveLinks(); };
-  
-  // Si el documento ya cargó, ejecuta. Si no, espera.
+
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
-  // Por si se inyecta tarde, un pequeño delay de seguridad
   setTimeout(init, 100);
 
-  // --- 3. Mobile Drawer Logic (Event Delegation Fix) ---
-  // Usamos 'document' para escuchar clicks, así no importa cuándo aparezca el botón en el DOM.
-  
+  // --- 3) Drawer ---
   const toggleDrawer = (show) => {
-    const drawer = $("#gh-drawer");
-    const dim = $("#gh-dim");
-    const burger = $("#gh-burger");
-    
+    const drawer = gh$("#gh-drawer");
+    const dim = gh$("#gh-dim");
+    const burger = gh$("#gh-burger");
+
     if (show) {
       document.documentElement.classList.add("gh-open");
       if(drawer) drawer.setAttribute("aria-hidden", "false");
@@ -677,7 +669,6 @@ const gh$$ = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
   };
 
   document.addEventListener("click", (e) => {
-    // 1. Botón Hamburguesa
     const burgerBtn = e.target.closest("#gh-burger");
     if (burgerBtn) {
       e.preventDefault();
@@ -686,27 +677,21 @@ const gh$$ = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
       return;
     }
 
-    // 2. Botón Cerrar o Fondo Oscuro (Dim)
     if (e.target.closest("#gh-close") || e.target.matches("#gh-dim")) {
       e.preventDefault();
       toggleDrawer(false);
       return;
     }
 
-    // 3. Click en enlace dentro del drawer (para cerrar automáticamente)
     const drawerLink = e.target.closest(".gh-drawer a");
-    if (drawerLink) {
-      toggleDrawer(false);
-    }
+    if (drawerLink) toggleDrawer(false);
   });
 
-  // Cerrar con tecla Escape
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && document.documentElement.classList.contains("gh-open")) {
-      toggleDrawer(false);
-    }
+    if (e.key === "Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
   });
-
 })();
 </script>
+
+   
 </header>
