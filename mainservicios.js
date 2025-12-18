@@ -10,14 +10,15 @@
   "use strict";
 
   // -------- Helpers básicos --------
-  const $  = (sel, ctx=document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+const Q  = (sel, ctx=document) => ctx.querySelector(sel);
+const QA = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
 
   // =========================================================
   // 1) Servicios complementarios: <li> completo como link
   // =========================================================
   (function(){
-    $$('#servicios-complementarios .svc-link[data-url]').forEach(li=>{
+    QA('#servicios-complementarios .svc-link[data-url]').forEach(li=>{
       const go = () => {
         const url = li.getAttribute('data-url');
         if (url) window.location.href = url;
@@ -89,25 +90,26 @@
       console.warn("No se pudieron cargar parciales:", e);
     }
 
-    const hp = $("#header-placeholder");
-    const fp = $("#footer-placeholder");
+const hp = Q("#header-placeholder");
+const fp = Q("#footer-placeholder");
+
     if (hp && headerHTML) hp.outerHTML = headerHTML;
     if (fp && footerHTML) fp.outerHTML = footerHTML;
 
     // Normalización de rutas declarativas dentro de parciales
-    $$(".js-abs-src[data-src]").forEach(img=>{
+    QA(".js-abs-src[data-src]").forEach(img=>{
       const v = img.getAttribute("data-src");
       if (!v) return;
       img.src = prefix(v);
     });
-    $$(".js-abs-href[data-href]").forEach(a=>{
+    QA(".js-abs-href[data-href]").forEach(a=>{
       const raw = a.getAttribute("data-href");
       if (!raw) return;
       const [path, hash] = raw.split("#");
       a.href = prefix(path) + (hash ? ("#" + hash) : "");
     });
 
-    const y = $("#gf-year");
+    const y = Q("#gf-year");
     if (y) y.textContent = new Date().getFullYear();
   })();
 
@@ -115,8 +117,9 @@
   // 3) TOC flotante (índice) — mapa del sitio
   // =========================================================
   (function(){
-    const toc      = $("#toc");
-    const openBtn  = $("#tocToggle");
+const toc      = Q("#toc");
+const openBtn  = Q("#tocToggle");
+
     const closeBtn = toc?.querySelector(".toc-close");
     if (!toc || !openBtn || !closeBtn) return;
 
@@ -142,7 +145,7 @@
   // 4) List slider (“beneficios”) - estable
   // =========================================================
   (function(){
-    $$(".listSlider").forEach(w=>{
+    QA(".listSlider").forEach(w=>{
       const track = w.querySelector(".listTrack");
       const prev  = w.querySelector(".arrowCircle.prev");
       const next  = w.querySelector(".arrowCircle.next");
@@ -172,8 +175,8 @@
   // 5) Píldoras (filtros de servicios)
   // =========================================================
   (function(){
-    const pills = $$(".pill");
-    const cards = $$(".feature-grid .fcard");
+    const pills = QA(".pill");
+    const cards = QA(".feature-grid .fcard");
     if(!pills.length || !cards.length) return;
 
     function apply(tag){
@@ -202,12 +205,12 @@
   // 6) FAQ: solo uno abierto a la vez
   // =========================================================
   (function(){
-    const wrap = $("#faqWrap");
+    const wrap = Q("#faqWrap");
     if(!wrap) return;
-    $$(".faq-item", wrap).forEach(item=>{
+    QA(".faq-item", wrap).forEach(item=>{
       item.addEventListener("toggle",()=>{
         if(item.open){
-          $$(".faq-item", wrap).forEach(o=>{
+          QA(".faq-item", wrap).forEach(o=>{
             if(o !== item) o.removeAttribute("open");
           });
         }
@@ -245,11 +248,11 @@
       return { prev, next, dotsWrap };
     }
 
-    $$(".carouselX").forEach(root=>{
+    QA(".carouselX").forEach(root=>{
       const track = root.querySelector(".track");
       if(!track) return;
 
-      const items = $$(".sys", root);
+      const items = QA(".sys", root);
       if (!items.length) return;
 
       // FIX: SOLO hacer click-link si existe data-href
@@ -398,7 +401,7 @@
     window.onYouTubeIframeAPIReady = function(){
       if (typeof prevOnReady === "function") prevOnReady();
 
-      $$('iframe[src*="youtube"]').forEach(iframe=>{
+      QA('iframe[src*="youtube"]').forEach(iframe=>{
         if (iframe.dataset.ytInit) return;
         iframe.dataset.ytInit = "1";
 
@@ -463,7 +466,7 @@
       return all[0];
     }
 
-    $$('.carousel[id^="carouselReels"]').forEach(root => {
+    QA('.carousel[id^="carouselReels"]').forEach(root => {
       const scope  = root.closest("aside") || root;
       const track  = root.querySelector(".carousel-track");
       const slides = [...(track?.querySelectorAll(".carousel-slide") || [])];
