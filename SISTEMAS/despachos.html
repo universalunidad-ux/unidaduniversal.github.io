@@ -153,48 +153,40 @@
             </div>
           </div>
 
-          <!-- Columna 2: Reels (mismo estilo que Nóminas) -->
-          <div>
-            <aside class="card body" aria-label="Reels destacados" style="margin-bottom:0;">
-              <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Despachos</h4>
+<!-- Columna 2: Reels -->
+<div>
+  <aside class="card body" aria-label="Reels destacados" style="margin-bottom:0;">
+    <h4 class="title-gradient" style="margin-bottom:8px;">
+      Reels Destacados: Despachos
+    </h4>
 
-              <h4 class="reel-title active">Gestión de Despachos en la Nube</h4>
-              <h4 class="reel-title">CONTPAQi Despachos</h4>
+    <!-- SOLO 1 título -->
+    <h4 class="reel-title active">CONTPAQi Despachos</h4>
 
-              <div class="carousel" id="carouselReelsDespachos" aria-label="Reels Despachos">
-                <button class="arrowCircle prev" aria-label="Anterior" type="button">
-                  <span class="chev">‹</span>
-                </button>
+    <div class="carousel" id="carouselReelsDespachos" aria-label="Reels Despachos">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button">
+        <span class="chev">‹</span>
+      </button>
 
-                <div class="carousel-track">
-                  <!-- Reel 1 -->
-                  <div class="carousel-slide">
-                    <div class="reel-embed"
-                         data-ytid="KBEOTwnFXQ4"
-                         data-title="Gestión de Despachos en la Nube">
-                    </div>
-                  </div>
-
-                  <!-- Reel 2 -->
-                  <div class="carousel-slide">
-                    <div class="reel-embed"
-                         data-ytid="TsyBKkhwvew"
-                         data-title="Despachos">
-                    </div>
-                  </div>
-                </div>
-
-                <button class="arrowCircle next" aria-label="Siguiente" type="button">
-                  <span class="chev">›</span>
-                </button>
-
-                <div class="carousel-nav" aria-label="Paginación de reels">
-                  <button class="dot active" aria-label="Ir al reel 1"></button>
-                  <button class="dot" aria-label="Ir al reel 2"></button>
-                </div>
-              </div>
-            </aside>
+      <div class="carousel-track">
+        <!-- SOLO Reel 2 -->
+        <div class="carousel-slide">
+          <div class="reel-embed"
+               data-ytid="TsyBKkhwvew"
+               data-title="CONTPAQi Despachos">
           </div>
+        </div>
+      </div>
+
+      <button class="arrowCircle next" aria-label="Siguiente" type="button">
+        <span class="chev">›</span>
+      </button>
+
+      <!-- Déjalo vacío: el JS lo ocultará automáticamente -->
+      <div class="carousel-nav" aria-label="Paginación de reels"></div>
+    </div>
+  </aside>
+</div>
 
         </div>
       </div>
