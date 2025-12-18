@@ -449,8 +449,7 @@ const REELS_DATA={
        
       pro:[
         {id:"-SJq6t2SM7c",title:"Flujo completo con Comercial Pro"},
-         {id:"rEYzPXOX1_Y",title:"Comercial Pro: control total de inventario"},
-        {id:"5AowfYsAm4E",title:"Trazabilidad avanzada en inventarios"}
+         {id:"rEYzPXOX1_Y",title:"Comercial Pro: control total de inventario"}
       ],
       premium:[
         {id:"IYwNBfmWxJU",title:"Controla tus inventarios con Comercial Premium"},
@@ -512,27 +511,23 @@ reelsBySys: {
     defaultSys:"polizas", /* ✅ DEFAULT: PÓLIZAS */
     reelsBySys:{
       implementaciones:[
-        {id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"},
-        {id:"IYn-rGHEfqg",title:"Implementación Lucía: CONTPAQi"}
+        {id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"}
       ],
       migraciones:[
-        {id:"JkrDOjWV1Gs",title:"Migración de datos a CONTPAQi"},
         {id:"4QqrKkTPZ6U",title:"Testimonio Uriel: Migración a CONTPAQi"}
       ],
       desarrollos:[
         {id:"JkrDOjWV1Gs",title:"Testimonio Sara: Soft Restaurant"},
-        {id:"uBl5UWkwbr8",title:"Testimonio Luis: Desarrollo en Nóminas"},
-        {id:"f-F10-F6rnM",title:"Testimonio Alex: Integración CONTPAQi API"}
+        {id:"uBl5UWkwbr8",title:"Testimonio Luis: Desarrollo en Nóminas"}
+
       ],
       servidores:[
-        {id:"Grx1woHMGsU",title:"Servidores Virtuales para CONTPAQi"},
         {id:"Vmf2CcSd8G4",title:"Testimonio Erika: Servidores Virtuales"}
       ],
       cursos:[
         {id:"TgAkwNt4YCA",title:"Testimonio Ana: Curso Contabilidad"}
       ],
       soporte:[
-        {id:"IoHjV2QG_3U",title:"Testimonio Marco: Soporte eficaz"},
         {id:"inPKGICgxLc",title:"Testimonio Jaquie: Soporte Técnico"}
       ],
       polizas:[
