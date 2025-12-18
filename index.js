@@ -438,16 +438,18 @@ const REELS_DATA={
   comercial:{
     titleEl:$("#reelTitle-comercial"),
     carousel:$("#carouselReels-comercial"),
-    defaultSys:"start",
+    defaultSys:"pro",
     reelsBySys:{
-      start:[
-        {id:"dQw4w9WgXcQ",title:"Comercial Start | Reel 1"},
-        {id:"9bZkp7q19f0",title:"Comercial Start | Reel 2"},
-        {id:"3JZ_D3ELwOQ",title:"Comercial Start | Reel 3"}
+
+  start:[
+        {id:"XvBHmrMRv64",title:"Trazabilidad avanzada en inventarios"}
       ],
+
+     
+       
       pro:[
-        {id:"rEYzPXOX1_Y",title:"Comercial Pro: control total de inventario"},
         {id:"-SJq6t2SM7c",title:"Flujo completo con Comercial Pro"},
+         {id:"rEYzPXOX1_Y",title:"Comercial Pro: control total de inventario"},
         {id:"5AowfYsAm4E",title:"Trazabilidad avanzada en inventarios"}
       ],
       premium:[
@@ -476,26 +478,25 @@ const REELS_DATA={
       ],
       contabiliza:[{id:"yblBsFFv6bc",title:"Contabilidad y Contabiliza te ayudan en la DIOT"}],
       despachos:[
-        {id:"KBEOTwnFXQ4",title:"Gestión de Despachos en la nube"},
-        {id:"aqz-KE-bpKQ",title:"Control de obligaciones con Despachos"}
+{id:"TsyBKkhwvew", title:"CONTPAQi Despachos"},
       ],
       vende:[
-        {id:"2Ty_SD8B_FU",title:"Vende | Carta Porte fácil y rápida"},
-        {id:"UPyufjDByNc",title:"Testimonio CONTPAQi Vende"},
-        {id:"Grx1woHMGsU",title:"Vende en la nube"}
+                    {id:"AxadLJcVo4M",title:"Caso de éxito CONTPAQi Vende"},
+         {id:"UPyufjDByNc",title:"Testimonio CONTPAQi Vende"},
+        {id:"Grx1woHMGsU",title:"Vende en la nube"},
+        {id:"2Ty_SD8B_FU",title:"Vende | Carta Porte fácil y rápida"}
+
       ]
     }
   },
 
   productividad:{
-    titleEl:$("#reelTitle-productividad"),
-    carousel:$("#carouselReels-productividad"),
-    defaultSys:"evalua",
-    reelsBySys:{
-      evalua:[
-        {id:"REEMPLAZAR_ID_1",title:"Reel Evalúa 1"},
-        {id:"REEMPLAZAR_ID_2",title:"Reel Evalúa 2"},
-        {id:"REEMPLAZAR_ID_3",title:"Reel Evalúa 3"}
+titleEl: $("#reelTitle-productividad"),
+carousel: $("#carouselReels-productividad"),
+defaultSys: "evalua",
+reelsBySys: {
+  evalua: [
+    { id: "Cn1A4-GJiNs", title: "Evalúa" },
       ],
       colabora:[
         {id:"XJQDFDowH0U",title:"Colabora, app sin costo con Nóminas"},
