@@ -438,3 +438,33 @@ section{padding:20px 0}
 
 /* Opcional: “Videos del sistema” (h3) ya existe; no tocarlo */
 
+
+/* (B) VIDEOS: barra SOLO TEXTO (sin rectángulo/fondo) */
+.yt-titlesbar{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  padding:0;                 /* sin padding */
+  margin:0 0 10px;           /* separa del carrusel */
+  border:0!important;        /* sin borde */
+  background:transparent!important;
+  box-shadow:none!important; /* sin sombra */
+  border-radius:0!important;
+}
+
+/* texto tipo “Reels Destacados: Bancos” */
+.yt-tab{
+  text-align:left;
+  color:var(--brand);
+  font-weight:800;
+  font-size:16px;
+  line-height:1.2;
+  background:transparent!important;
+  padding:0!important;
+}
+
+/* 1 columna si solo hay 1 video */
+@media(max-width:768px){
+  .yt-titlesbar{grid-template-columns:1fr}
+}
+
