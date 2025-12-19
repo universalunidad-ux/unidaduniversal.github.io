@@ -55,8 +55,36 @@ nav a{opacity:.9}nav a:hover{opacity:1}
 .btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#0b0f14;border:none}
 .btn-grad-purple{background:linear-gradient(145deg,#7c3aed,#a855f7);color:#fff;border:none}
 .btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
-.btn-outline-gradient{color:#cfe9ff;background:transparent;border:1px solid transparent;position:relative;overflow:hidden}
-.btn-outline-gradient::before{content:"";position:absolute;inset:0;padding:1px;border-radius:12px;background:linear-gradient(145deg,var(--brand),var(--brand-2));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+/* ===== FIX CI: outline gradient sin mask-composite ===== */
+.btn-outline-gradient{
+  color:#cfe9ff;
+  background:#0f1622;            /* fallback sólido */
+  border:1px solid #2b3c56;      /* fallback borde */
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+}
+
+/* Si el navegador soporta máscaras, entonces sí usamos el borde “perfecto” */
+@supports ((-webkit-mask-composite:xor) or (mask-composite:exclude)){
+  .btn-outline-gradient{
+    background:transparent;
+    border:1px solid transparent;
+  }
+  .btn-outline-gradient::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    padding:1px;
+    border-radius:12px;
+    background:linear-gradient(145deg,var(--brand),var(--brand-2));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    pointer-events:none;
+  }
+}
+
 .hero-btn,#sesion-guiada .btn.btn-grad-green,#sesion-guiada .btn.btn-grad-blue{transition:transform .16s ease,box-shadow .16s ease,filter .16s ease,background .16s ease,border-color .16s ease}
 .hero-btn:hover,#sesion-guiada .btn.btn-grad-green:hover,#sesion-guiada .btn.btn-grad-blue:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.45);filter:brightness(1.05)}
 
@@ -125,28 +153,54 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .carouselX .sys.show-hover .hoverMore{opacity:1!important;transform:translateY(0)!important;pointer-events:auto}
 
 /* =========================================================
-   REELS & YOUTUBE (UNIFICADO + LAZY)
+   REELS & YOUTUBE (UNIFICADO + LAZY) — CI FRIENDLY
    ========================================================= */
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;align-items:start}
 @media(max-width:768px){.yt-grid{grid-template-columns:1fr}}
 .yt{width:100%}
 .reel-title{margin:0 0 8px;text-align:center;color:#fff;font-weight:700;display:none}
 .reel-title.active{display:block}
-.yt-wrap{position:relative;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.06);aspect-ratio:16/9}
-.reel-embed{position:relative;width:min(460px,100%)!important;max-width:460px!important;aspect-ratio:9/16;border-radius:12px;overflow:hidden;border:1px solid #1c2533;background:#0e1724;margin:0 auto;flex:0 0 auto;justify-self:center}
+
+/* WRAPS base */
+.yt-wrap,.reel-embed{position:relative;overflow:hidden;background:rgba(255,255,255,.06)}
+
+/* YouTube 16:9 fallback */
+.yt-wrap{width:100%;border-radius:16px}
+.yt-wrap::before{content:"";display:block;padding-top:56.25%}
+
+/* Reels 9:16 fallback */
+.reel-embed{width:min(460px,100%)!important;max-width:460px!important;border-radius:12px;border:1px solid #1c2533;background:#0e1724;margin:0 auto;flex:0 0 auto;justify-self:center}
+.reel-embed::before{content:"";display:block;padding-top:177.78%}
 @media(max-width:768px){.reel-embed{width:100%!important;max-width:520px!important}}
+
+/* Si soporta aspect-ratio, úsalo */
+@supports (aspect-ratio:16/9){
+  .yt-wrap{aspect-ratio:16/9}
+  .yt-wrap::before{display:none}
+  .reel-embed{aspect-ratio:9/16}
+  .reel-embed::before{display:none}
+}
+
+/* Poster por CSS var */
 .yt-wrap[data-poster],.reel-embed[data-poster]{background-image:var(--yt-poster);background-size:cover;background-position:center}
-.yt-wrap iframe,.reel-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:1;transition:opacity .18s ease}
 
-/* Quitar overlay gris (doble play) — deja SOLO el botón que inyecta tu JS */
-.yt-wrap::before,.yt-wrap::after,.reel-embed::before,.reel-embed::after{content:none!important;display:none!important}
+/* Fill */
+.yt-wrap iframe,.reel-embed iframe,
+.yt-wrap img,.reel-embed img,
+.yt-wrap button,.reel-embed button{position:absolute;inset:0;width:100%;height:100%}
 
-/* Lazy: miniatura + botón */
-.yt-wrap button,.reel-embed button{position:absolute;inset:0;display:grid;place-items:center;z-index:5;background:transparent;border:0;padding:0;cursor:pointer}
-.yt-wrap img,.reel-embed img{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
+/* Iframe */
+.yt-wrap iframe,.reel-embed iframe{border:0;opacity:1;transition:opacity .18s ease}
 
-/* Cuando ya existe iframe (tu JS puede agregar .has-iframe) */
-.yt-wrap.has-iframe::before,.yt-wrap.has-iframe::after,.reel-embed.has-iframe::before,.reel-embed.has-iframe::after{display:none!important;opacity:0!important}
+/* Evitar overlays dobles */
+.yt-wrap::after,.reel-embed::after{content:none!important;display:none!important}
+
+/* Lazy: poster + botón */
+.yt-wrap button,.reel-embed button{display:grid;place-items:center;z-index:5;background:transparent;border:0;padding:0;cursor:pointer}
+.yt-wrap img,.reel-embed img{z-index:1;object-fit:cover;display:block}
+
+/* Cuando ya existe iframe */
+.yt-wrap.has-iframe::after,.reel-embed.has-iframe::after{display:none!important;opacity:0!important}
 .yt-wrap.has-iframe iframe,.reel-embed.has-iframe iframe{opacity:1!important}
 
 /* Título opcional */
@@ -155,6 +209,8 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 /* Single grid */
 .yt-grid-single{grid-template-columns:minmax(0,480px);justify-content:center}
 @media(max-width:768px){.yt-grid-single{grid-template-columns:1fr}}
+
+
 
 /* Carrusel videos */
 #carouselVideos{min-height:auto}
