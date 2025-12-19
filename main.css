@@ -393,3 +393,87 @@ aside[aria-label^="Reels"]>h4.title-gradient{display:none!important}
   #calc-slot-2{justify-content:flex-start;height:auto}
   #calc-slot-2.placeholder{height:auto!important}
 }
+
+
+/* =========================================================
+   EXPIRITI PATCH (FLECHAS + TITULOS REELS/VIDEOS)
+   Pegar AL FINAL de main.css
+========================================================= */
+
+/* 1) Asegura que las flechas SIEMPRE se anclen a su bloque */
+.carousel,
+.carouselX,
+.listSlider,
+.icons-carousel,
+.yt-wrap,
+.reel-embed{position:relative}
+
+/* Flechas: solo dentro de carruseles (evita “flechas sueltas” en el body) */
+.carousel .arrowCircle,
+.carouselX .arrowCircle,
+.listSlider .arrowCircle,
+.icons-carousel .arrowCircle{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:6;
+}
+
+/* Si por cualquier razón quedó alguna flecha fuera del carrusel: ocúltala */
+body>.arrowCircle{display:none!important}
+
+/* 2) REELS: solo mostrar el título activo (los demás NO) */
+aside[aria-label^="Reels"] .reel-title{
+  display:none;                 /* oculta todos */
+  margin:10px 0 12px!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  color:var(--brand)!important;
+  font-weight:900!important;
+  font-size:15px!important;
+  line-height:1.2!important;
+  text-align:center!important;
+}
+aside[aria-label^="Reels"] .reel-title.active{display:block}
+
+/* 3) VIDEOS (barra/tabs): quitar barra y mostrar SOLO el “tab” activo */
+.yt-titlesbar{
+  display:flex!important;
+  justify-content:center!important;
+  gap:14px!important;
+  margin:0 0 12px!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+}
+
+/* Oculta todos los tabs por defecto */
+.yt-titlesbar .yt-tab{
+  display:none!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  color:var(--brand)!important;
+  font-weight:900!important;
+  font-size:15px!important;
+  line-height:1.2!important;
+  text-align:center!important;
+}
+
+/* Muestra solo el activo (según tu JS/HTML) */
+.yt-titlesbar .yt-tab.active,
+.yt-titlesbar .yt-tab[aria-selected="true"]{
+  display:inline-flex!important;
+}
+
+/* Mobile: alineación normal a la izquierda si lo prefieres */
+@media(max-width:768px){
+  .yt-titlesbar{justify-content:flex-start!important}
+  .yt-titlesbar .yt-tab{text-align:left!important}
+}
