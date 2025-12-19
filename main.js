@@ -115,11 +115,27 @@ const hideUI=(root,len)=>{const prev=root.querySelector(".arrowCircle.prev"),nex
 const single=len<=1;if(prev){prev.disabled=single;prev.style.display=single?"none":""}if(next){next.disabled=single;next.style.display=single?"none":""}
 if(nav)nav.style.display=single?"none":"";root.toggleAttribute("data-single",single)};
 
-/* Reels: títulos asociados (por data-titles o por cercanía) */
-const titlesFor=(car)=>{const sel=car.getAttribute("data-titles");
-if(sel){const n=[...D.querySelectorAll(sel)];if(n.length)return n}
-const scope=car.closest(".card,.body,aside,section,div")||D;const t=[...scope.querySelectorAll(".reel-title")];
-return t.length?t:null};
+/* Reels: títulos asociados (por data-titles o por ASIDE actual) */
+const titlesFor=(car)=>{
+  const sel=car.getAttribute("data-titles");
+  if(sel){
+    const n=[...D.querySelectorAll(sel)];
+    if(n.length) return n;
+  }
+
+  /* clave: amarrar al ASIDE de este carrusel */
+  const aside=car.closest("aside");
+  if(aside){
+    const t=[...aside.querySelectorAll(":scope > .reel-title")]; // solo los h4 hijos directos
+    return t.length ? t : null;
+  }
+
+  /* fallback ultra conservador */
+  const parent=car.parentElement || D;
+  const t=[...parent.querySelectorAll(".reel-title")];
+  return t.length ? t : null;
+};
+
 
 /* Reels: obtiene título del slide activo */
 const slideReelTitle=(slide)=>{if(!slide)return"";
