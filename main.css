@@ -124,31 +124,31 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}.footer-
 /* =========================================================
    Responsive global
    ========================================================= */
-@media(max-width:980px){nav ul{display:none}.burger{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;border:1px solid #1c2533;background:#101722}.mobile{display:none}.mobile.open{display:block}.mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}.toc{right:10px;bottom:10px;width:86vw}.footer-grid{grid-template-columns:1fr}.carousel{min-height:280px}.calc-container,.placeholder{height:auto}}@media(max-width:768px){.calc-container form{grid-template-columns:1fr !important}.calc-container .field.lic,.calc-container .field.rfc,.calc-container .field.usr,.calc-container .op-label,.calc-container .inst-wrap{grid-column:1 !important}.calc-container .instalacion-box{flex-wrap:wrap}}
+@media(max-width:980px){nav ul{display:none}.burger{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;border:1px solid #1c2533;background:#101722}.mobile{display:none}.mobile.open{display:block}.mobile a{display:block;padding:12px 0;border-bottom:1px solid #1c2533}.toc{right:10px;bottom:10px;width:86vw}.footer-grid{grid-template-columns:1fr}.carousel{min-height:280px}.calc-container,.placeholder{height:auto}}
+@media(max-width:768px){.calc-container form{grid-template-columns:1fr !important}.calc-container .field.lic,.calc-container .field.rfc,.calc-container .field.usr,.calc-container .op-label,.calc-container .inst-wrap{grid-column:1 !important}.calc-container .instalacion-box{flex-wrap:wrap}}
 
 /* =========================================================
    Ajustes extra responsive — mobile / tablet
    ========================================================= */
-@media(min-width:1280px){.container{max-width:1200px;padding-inline:40px}}@media(max-width:1024px){body{scroll-padding-top:76px}.container{padding-inline:24px}.hero{padding-top:20px}.lead{max-width:60ch}.card .body{padding:14px}}@media(max-width:768px){body{scroll-padding-top:68px}.container{padding-inline:16px}h1{font-size:clamp(24px,7vw,30px)}h2{font-size:clamp(18px,5.5vw,24px)}section{padding:20px 0}.grid-2,.grid-3,.feature-grid{grid-template-columns:1fr}.listItem{grid-template-columns:1fr;text-align:left}.listIcon{justify-self:flex-start}.reel-embed{width:100%;max-width:420px}.yt{max-width:100%}.toc{right:10px;bottom:10px;width:86vw}}@media(max-width:520px){.btn{width:100%;justify-content:center}.pillbar{gap:8px}.pill{font-size:12px;padding:7px 10px}.card .body{padding:10px}}
+@media(min-width:1280px){.container{max-width:1200px;padding-inline:40px}}
+@media(max-width:1024px){body{scroll-padding-top:76px}.container{padding-inline:24px}.hero{padding-top:20px}.lead{max-width:60ch}.card .body{padding:14px}}
+@media(max-width:768px){
+  body{scroll-padding-top:68px}
+  .container{padding-inline:16px}
+  h1{font-size:clamp(24px,7vw,30px)}
+  h2{font-size:clamp(18px,5.5vw,24px)}
+  section{padding:20px 0}
+  .grid-2,.grid-3,.feature-grid{grid-template-columns:1fr}
+  .listItem{grid-template-columns:1fr;text-align:left}
+  .listIcon{justify-self:flex-start}
+  /* OJO: NO poner .reel-embed max-width aquí (ya lo controla el bloque de Reels) */
+  .yt{max-width:100%}
+  .toc{right:10px;bottom:10px;width:86vw}
+}
+@media(max-width:520px){.btn{width:100%;justify-content:center}.pillbar{gap:8px}.pill{font-size:12px;padding:7px 10px}.card .body{padding:10px}}
 
 /* Botón "Ver más" dentro de cada sistema */
-.carouselX .hoverMore{margin-top:18px;opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease;pointer-events:none}.carouselX .sys:hover .hoverMore{opacity:1;transform:translateY(0);pointer-events:auto}.chip{display:inline-flex;align-items:center;justify-content:center;padding:6px 14px;border-radius:999px;background:rgba(15,23,42,.9);border:1px solid #1c2533;font-size:14px;font-weight:600;color:#e5f0ff}.carouselX .sys.show-hover .hoverMore{opacity:1 !important;transform:translateY(0) !important;pointer-events:auto}
-
-/* ===== FIX: si ya hay iframe, NO mostrar overlay gris y asegurar video visible ===== */
-.yt-wrap.has-iframe::before,.yt-wrap.has-iframe::after,
-.reel-embed.has-iframe::before,.reel-embed.has-iframe::after{display:none!important;opacity:0!important}
-.yt-wrap.has-iframe iframe,.reel-embed.has-iframe iframe{opacity:1!important}
-
-
-/* =========================================================
-   FIX: Quitar play duplicado (CSS pseudo-overlay)
-   Deja SOLO el botón rojo que inyecta el JS lazy
-   ========================================================= */
-.yt-wrap::before,.yt-wrap::after,.reel-embed::before,.reel-embed::after{content:none!important;display:none!important}
-
-/* =========================================================
-   Reels: más ancho en desktop para forzar mejor vq inicial
-   ========================================================= */
-.reel-embed{width:min(460px,100%)!important;max-width:460px!important}
-@media(max-width:768px){.reel-embed{width:100%!important;max-width:520px!important}}
-
+.carouselX .hoverMore{margin-top:18px;opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease;pointer-events:none}
+.carouselX .sys:hover .hoverMore{opacity:1;transform:translateY(0);pointer-events:auto}
+.chip{display:inline-flex;align-items:center;justify-content:center;padding:6px 14px;border-radius:999px;background:rgba(15,23,42,.9);border:1px solid #1c2533;font-size:14px;font-weight:600;color:#e5f0ff}
+.carouselX .sys.show-hover .hoverMore{opacity:1 !important;transform:translateY(0) !important;pointer-events:auto}
