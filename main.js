@@ -354,10 +354,4 @@ if(closeBtn)closeBtn.addEventListener("click",e=>{e.preventDefault();close()});
 links.forEach(a=>a.addEventListener("click",close));
 D.addEventListener("keydown",e=>{if(e.key==="Escape")close()})})();
 
-})();```
-
-### Importante (1 línea para que no se te rompa)
-En tu CSS asegúrate de tener esto (si no existe, agrégalo):
-
-```css
-.yt-title--hidden{display:none!important}
+})();
