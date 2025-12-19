@@ -431,3 +431,54 @@ body[data-calc="escritorio"] #calc-slot-2,body[data-calc="escritorio"] #calc-sec
    ========================================================= */
 .reel-title{margin:0 0 10px;padding:10px 12px;border-radius:12px;border:1px solid #1c2533;background:linear-gradient(180deg,#0e1826,#0f1622);color:#dce8ff;font-weight:900;text-align:left;display:none}
 .reel-title.active{display:block}
+
+/* =========================================================
+   TITULOS “BARRA” (Reels + Videos) — como tus capturas
+   - Solo se muestra el activo (ya lo hace tu JS)
+   ========================================================= */
+.reel-title,
+.yt-title{
+  margin:0 0 10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid #1e2b3c;
+  background:linear-gradient(180deg,#0f1c2c,#0e1724);
+  color:#eaf2ff;
+  font-weight:800;
+  letter-spacing:.2px;
+  line-height:1.2;
+  text-align:left;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+
+/* Reels: por default oculto y solo el activo visible (como querías) */
+.reel-title{display:none}
+.reel-title.active{display:block}
+
+/* Videos: si quieres que funcione igual (solo 1 visible), usa .active también */
+.yt-title{display:none}
+.yt-title.active{display:block}
+
+/* Si NO quieres ocultar títulos de videos, comenta las 2 líneas de arriba y deja yt-title normal. */
+
+
+/* =========================================================
+   PANEL -15%: centrado vertical real (cuando es placeholder)
+   ========================================================= */
+#calc-slot-2.placeholder .note.note-center{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:10px;
+  min-height:220px;
+}
+
+/* =========================================================
+   ICONS CAROUSEL (flechas + scroll) — no rompe trackpad
+   ========================================================= */
+.icons-carousel{position:relative;display:block;margin-top:10px}
+.icons-carousel .icons-wrap{padding:10px 52px;gap:14px}
+.icons-carousel .arrowCircle{top:50%;transform:translateY(-50%);z-index:6}
+.icons-carousel .arrowCircle.prev{left:8px}
+.icons-carousel .arrowCircle.next{right:8px}
+
