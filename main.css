@@ -568,3 +568,46 @@ body[data-calc="escritorio"] #calc-slot-2,body[data-calc="escritorio"] #calc-sec
   #calc-slot-2{align-self:stretch}
 }
 
+
+/* =========================================================
+   REELS — Título tipo “barra” (solo 1 visible vía .active)
+   ========================================================= */
+.reel-title{
+  display:none;               /* ya lo tienes, lo dejo explícito */
+  margin:10px 0 12px;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid #1c2533;
+  background:linear-gradient(180deg,#0f1c2c,#0e1724);
+  color:#e8eef6;
+  font-weight:800;
+  text-align:left;
+  box-shadow:0 10px 22px rgba(0,0,0,.25);
+}
+.reel-title.active{display:block}
+
+
+/* =========================================================
+   VIDEOS — Barra de títulos (2 columnas)
+   ========================================================= */
+.yt-titlesbar{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid #1c2533;
+  background:linear-gradient(180deg,#0f1c2c,#0e1724);
+  margin:0 0 12px;
+}
+.yt-tab{
+  text-align:center;
+  color:#e8eef6;
+  font-weight:800;
+  font-size:14px;
+}
+@media(max-width:768px){
+  .yt-titlesbar{grid-template-columns:1fr}
+}
+
+.yt-title--hidden{display:none!important}
