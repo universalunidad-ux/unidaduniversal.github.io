@@ -98,59 +98,106 @@ D.readyState==="loading"?D.addEventListener("DOMContentLoaded",init,{once:!0}):i
 
 /* =========================================================
  4) CARRUSEL UNIVERSAL (.carousel)
- - Reels: alterna .reel-title.active
- - Videos: barra verde con títulos (sin blancos)
+ - Reels: alterna .reel-title.active (solo uno visible)
+ - Videos: crea barra superior (.yt-titlesbar) y OCULTA .yt-title blancos
+ - Quita el encabezado “Reels Destacados: …” SOLO en reels
 ========================================================= */
 (()=>{const pause=()=>{if(W.pauseAllYTIframes)W.pauseAllYTIframes()};
-const syncDots=(root,len)=>{const nav=root.querySelector(".carousel-nav");if(!nav)return[];
-let dots=Array.from(nav.querySelectorAll(".dot"));
-while(dots.length<len){const b=D.createElement("button");b.type="button";b.className="dot";b.setAttribute("aria-label",`Ir al slide ${dots.length+1}`);nav.appendChild(b);dots.push(b)}
-while(dots.length>len){const x=dots.pop();if(x)x.remove()}return dots};
-const hide=(root,len)=>{const prev=root.querySelector(".arrowCircle.prev"),next=root.querySelector(".arrowCircle.next"),nav=root.querySelector(".carousel-nav");
+
+/* Dots dinámicos según #slides */
+const syncDots=(root,len)=>{const nav=root.querySelector(".carousel-nav");if(!nav)return[];let dots=[...nav.querySelectorAll(".dot")];
+for(;dots.length<len;){const b=D.createElement("button");b.type="button";b.className="dot";b.setAttribute("aria-label",`Ir al slide ${dots.length+1}`);nav.appendChild(b);dots.push(b)}
+for(;dots.length>len;){const x=dots.pop();x&&x.remove()}return dots};
+
+/* Oculta flechas/dots si solo hay 1 slide */
+const hideUI=(root,len)=>{const prev=root.querySelector(".arrowCircle.prev"),next=root.querySelector(".arrowCircle.next"),nav=root.querySelector(".carousel-nav");
 const single=len<=1;if(prev){prev.disabled=single;prev.style.display=single?"none":""}if(next){next.disabled=single;next.style.display=single?"none":""}
 if(nav)nav.style.display=single?"none":"";root.toggleAttribute("data-single",single)};
-/* REELS: títulos asociados */
-const titlesFor=(car)=>{const sel=car.getAttribute("data-titles");if(sel){const n=Array.from(D.querySelectorAll(sel));if(n.length)return n}
-const scope=car.closest(".card,.body,aside,section,div")||D;const t=Array.from(scope.querySelectorAll(".reel-title"));return t.length?t:null};
-/* VIDEOS: barra superior */
+
+/* Reels: títulos asociados (por data-titles o por cercanía) */
+const titlesFor=(car)=>{const sel=car.getAttribute("data-titles");
+if(sel){const n=[...D.querySelectorAll(sel)];if(n.length)return n}
+const scope=car.closest(".card,.body,aside,section,div")||D;const t=[...scope.querySelectorAll(".reel-title")];
+return t.length?t:null};
+
+/* Videos: inyecta barra superior 2-cols */
 const ensureVideosBar=(car)=>{if(!car||car.dataset.vbarInit==="1")return;car.dataset.vbarInit="1";
 const track=car.querySelector(".carousel-track");if(!track)return;
 const bar=D.createElement("div");bar.className="yt-titlesbar";bar.setAttribute("role","presentation");
-const left=D.createElement("div"),right=D.createElement("div");left.className="yt-tab";right.className="yt-tab";bar.appendChild(left);bar.appendChild(right);
-track.parentElement.insertBefore(bar,track);car._vbar={bar,left,right}};
+const left=D.createElement("div"),right=D.createElement("div");left.className="yt-tab";right.className="yt-tab";
+bar.append(left,right);track.parentElement.insertBefore(bar,track);car._vbar={bar,left,right}};
+
+/* Obtiene títulos de videos dentro del slide */
 const slideVideoTitles=(slide)=>{if(!slide)return[];
-const h=Array.from(slide.querySelectorAll(".yt-title")).map(x=>(x.textContent||"").trim()).filter(Boolean);if(h.length)return h;
-const d=Array.from(slide.querySelectorAll(".yt-wrap[data-title],.reel-embed[data-title]")).map(x=>(x.getAttribute("data-title")||"").trim()).filter(Boolean);if(d.length)return d;
-const f=Array.from(slide.querySelectorAll("iframe[title]")).map(x=>(x.getAttribute("title")||"").trim()).filter(Boolean);if(f.length)return f;return[]};
-/* IMPORTANTE: aquí NO hay recursión */
-const updateVideosBar=(car,idx)=>{if(!car||car.id!=="carouselVideos")return;ensureVideosBar(car);
+const h=[...slide.querySelectorAll(".yt-title")].map(x=>(x.textContent||"").trim()).filter(Boolean);if(h.length)return h;
+const d=[...slide.querySelectorAll(".yt-wrap[data-title],.reel-embed[data-title]")].map(x=>(x.getAttribute("data-title")||"").trim()).filter(Boolean);if(d.length)return d;
+const f=[...slide.querySelectorAll("iframe[title]")].map(x=>(x.getAttribute("title")||"").trim()).filter(Boolean);if(f.length)return f;return[]};
+
+/* Videos: pinta barra + oculta blancos (SIN recursión) */
+const updateVideosBar=(car,idx)=>{if(!car||car.id!=="carouselVideos")return;
+ensureVideosBar(car);
+
+/* Oculta h4 blancos 1 vez (o las veces que haga falta; es barato) */
+car.querySelectorAll(".yt-title").forEach(h=>h.classList.add("yt-title--hidden"));
+
 const track=car.querySelector(".carousel-track");
-const slides=track?Array.from(track.querySelectorAll(":scope > .carousel-slide")):[];if(!slides.length)return;
+const slides=track?[...track.querySelectorAll(":scope > .carousel-slide")]:[];
+if(!slides.length)return;
+
 const slide=slides[idx]||slides[0];
-const titles=slideVideoTitles(slide);const a=titles[0]||"",b=titles[1]||"";
-const v=car._vbar;if(!v)return;v.left.textContent=a;v.right.textContent=b;v.right.style.display=b?"":"none";v.bar.style.gridTemplateColumns=b?"1fr 1fr":"1fr"};
+const titles=slideVideoTitles(slide);
+const a=titles[0]||"",b=titles[1]||"";
+const v=car._vbar;if(!v)return;
+
+v.left.textContent=a;
+v.right.textContent=b;
+v.right.style.display=b?"":"none";
+v.bar.style.gridTemplateColumns=b?"1fr 1fr":"1fr"};
+
+/* Carrusel base (scroll-snap) */
 const initCar=(root,onChange)=>{const track=root.querySelector(".carousel-track");if(!track||root.dataset.cInit==="1")return;root.dataset.cInit="1";
 const prev=root.querySelector(".arrowCircle.prev"),next=root.querySelector(".arrowCircle.next");
-const slides=Array.from(track.querySelectorAll(":scope > .carousel-slide"));const len=slides.length;
-let dots=syncDots(root,len);hide(root,len);
-if(len<=1){if(dots[0])dots[0].classList.add("active");if(onChange)onChange(0);return}
-let i=0;const paint=idx=>dots.forEach((d,di)=>d.classList.toggle("active",di===idx));
-const set=(n,behavior)=>{const beh=behavior||"smooth";i=(n+len)%len;paint(i);track.scrollTo({left:track.clientWidth*i,behavior:beh});if(onChange)onChange(i)};
+const slides=[...track.querySelectorAll(":scope > .carousel-slide")];const len=slides.length;
+let dots=syncDots(root,len);hideUI(root,len);
+
+let i=0,paint=(n)=>dots.forEach((d,di)=>d.classList.toggle("active",di===n));
+const set=(n,beh)=>{i=(n+len)%len;paint(i);track.scrollTo({left:track.clientWidth*i,behavior:beh||"smooth"});onChange&&onChange(i)};
+
+if(len<=1){paint(0);onChange&&onChange(0);return}
+
 dots.forEach((d,idx)=>d.addEventListener("click",()=>{pause();set(idx)}));
-if(prev)prev.addEventListener("click",()=>{pause();set(i-1)});if(next)next.addEventListener("click",()=>{pause();set(i+1)});
-track.addEventListener("scroll",()=>{if(!track.clientWidth)return;const n=Math.round(track.scrollLeft/track.clientWidth);
-if(n!==i){i=Math.max(0,Math.min(len-1,n));paint(i);if(onChange)onChange(i)}});
-W.addEventListener("resize",()=>set(i,"auto"));set(0,"auto")};
-const boot=()=>{D.querySelectorAll(".carousel").forEach(car=>{const titles=titlesFor(car);
-/* Quita SOLO el encabezado de reels (no videos) */
-if(titles&&titles.length&&car.id!=="carouselVideos"){const aside=car.closest("aside");if(aside){const h=aside.querySelector(":scope > h4.title-gradient");if(h)h.style.display="none"}}
-initCar(car,(idx)=>{if(titles)titles.forEach((t,k)=>t.classList.toggle("active",k===idx));
-if(car.id==="carouselVideos")updateVideosBar(car,idx)});
-/* Videos: oculta blancos 1 vez + pinta barra inicial */
-if(car.id==="carouselVideos"&&car.dataset.ytTitlesHidden!=="1"){car.dataset.ytTitlesHidden="1";
-car.querySelectorAll(".yt-title").forEach(h=>h.classList.add("yt-title--hidden"))}
-if(car.id==="carouselVideos")updateVideosBar(car,0)})};
-D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot()})();
+prev&&prev.addEventListener("click",()=>{pause();set(i-1)});
+next&&next.addEventListener("click",()=>{pause();set(i+1)});
+
+track.addEventListener("scroll",()=>{if(!track.clientWidth)return;
+const n=Math.round(track.scrollLeft/track.clientWidth);
+if(n!==i){i=Math.max(0,Math.min(len-1,n));paint(i);onChange&&onChange(i)}});
+
+W.addEventListener("resize",()=>set(i,"auto"));
+set(0,"auto")};
+
+/* Boot */
+const boot=()=>{D.querySelectorAll(".carousel").forEach(car=>{
+const titles=titlesFor(car);
+
+/* Oculta encabezado “Reels Destacados: …” SOLO en reels */
+if(titles&&titles.length&&car.id!=="carouselVideos"){
+const aside=car.closest("aside");
+if(aside){const h=aside.querySelector(":scope > h4.title-gradient");if(h)h.style.display="none"}
+}
+
+initCar(car,(idx)=>{
+/* Reels */
+if(titles)titles.forEach((t,k)=>t.classList.toggle("active",k===idx));
+/* Videos */
+if(car.id==="carouselVideos")updateVideosBar(car,idx)
+});
+
+/* Inicial */
+if(car.id==="carouselVideos")updateVideosBar(car,0)
+})};
+
+D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:true}):boot()})();
 
 /* =========================================================
  5) HARD RESET .carouselX .track (scrollLeft = 0)
