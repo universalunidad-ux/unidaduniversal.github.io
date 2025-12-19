@@ -96,9 +96,10 @@ if(wrap){ifr.addEventListener("load",()=>markReady(wrap),{once:!0});setTimeout((
 W.onYouTubeIframeAPIReady=function(){D.querySelectorAll('iframe[src*="youtube"],iframe[src*="youtube-nocookie"]').forEach(registerIframe)};
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",init,{once:!0}):init()})();
 
-/* =========================================================
+
+      /* =========================================================
  4) CARRUSEL UNIVERSAL (.carousel)
- - Reels: alterna .reel-title.active (solo uno visible)
+ - Reels: alterna .reel-title.active (si hay varios) O actualiza texto (si hay 1)
  - Videos: crea barra superior (.yt-titlesbar) y OCULTA .yt-title blancos
  - Quita el encabezado “Reels Destacados: …” SOLO en reels
 ========================================================= */
@@ -120,6 +121,18 @@ if(sel){const n=[...D.querySelectorAll(sel)];if(n.length)return n}
 const scope=car.closest(".card,.body,aside,section,div")||D;const t=[...scope.querySelectorAll(".reel-title")];
 return t.length?t:null};
 
+/* Reels: obtiene título del slide activo */
+const slideReelTitle=(slide)=>{if(!slide)return"";
+/* 1) data-title (recomendado) */
+const w=slide.querySelector(".reel-embed[data-title],.yt-wrap[data-title]");
+if(w){const s=(w.getAttribute("data-title")||"").trim();if(s)return s}
+/* 2) iframe title */
+const ifr=slide.querySelector("iframe[title]");
+if(ifr){const s=(ifr.getAttribute("title")||"").trim();if(s)return s}
+/* 3) fallback: algún heading dentro del slide */
+const h=slide.querySelector("h4,h3");
+return h?(h.textContent||"").trim():""};
+
 /* Videos: inyecta barra superior 2-cols */
 const ensureVideosBar=(car)=>{if(!car||car.dataset.vbarInit==="1")return;car.dataset.vbarInit="1";
 const track=car.querySelector(".carousel-track");if(!track)return;
@@ -136,19 +149,14 @@ const f=[...slide.querySelectorAll("iframe[title]")].map(x=>(x.getAttribute("tit
 /* Videos: pinta barra + oculta blancos (SIN recursión) */
 const updateVideosBar=(car,idx)=>{if(!car||car.id!=="carouselVideos")return;
 ensureVideosBar(car);
-
-/* Oculta h4 blancos 1 vez (o las veces que haga falta; es barato) */
 car.querySelectorAll(".yt-title").forEach(h=>h.classList.add("yt-title--hidden"));
-
 const track=car.querySelector(".carousel-track");
 const slides=track?[...track.querySelectorAll(":scope > .carousel-slide")]:[];
 if(!slides.length)return;
-
 const slide=slides[idx]||slides[0];
 const titles=slideVideoTitles(slide);
 const a=titles[0]||"",b=titles[1]||"";
 const v=car._vbar;if(!v)return;
-
 v.left.textContent=a;
 v.right.textContent=b;
 v.right.style.display=b?"":"none";
@@ -159,20 +167,15 @@ const initCar=(root,onChange)=>{const track=root.querySelector(".carousel-track"
 const prev=root.querySelector(".arrowCircle.prev"),next=root.querySelector(".arrowCircle.next");
 const slides=[...track.querySelectorAll(":scope > .carousel-slide")];const len=slides.length;
 let dots=syncDots(root,len);hideUI(root,len);
-
 let i=0,paint=(n)=>dots.forEach((d,di)=>d.classList.toggle("active",di===n));
 const set=(n,beh)=>{i=(n+len)%len;paint(i);track.scrollTo({left:track.clientWidth*i,behavior:beh||"smooth"});onChange&&onChange(i)};
-
 if(len<=1){paint(0);onChange&&onChange(0);return}
-
 dots.forEach((d,idx)=>d.addEventListener("click",()=>{pause();set(idx)}));
 prev&&prev.addEventListener("click",()=>{pause();set(i-1)});
 next&&next.addEventListener("click",()=>{pause();set(i+1)});
-
 track.addEventListener("scroll",()=>{if(!track.clientWidth)return;
 const n=Math.round(track.scrollLeft/track.clientWidth);
 if(n!==i){i=Math.max(0,Math.min(len-1,n));paint(i);onChange&&onChange(i)}});
-
 W.addEventListener("resize",()=>set(i,"auto"));
 set(0,"auto")};
 
@@ -188,12 +191,30 @@ if(aside){const h=aside.querySelector(":scope > h4.title-gradient");if(h)h.style
 
 initCar(car,(idx)=>{
 /* Reels */
-if(titles)titles.forEach((t,k)=>t.classList.toggle("active",k===idx));
+if(titles && car.id!=="carouselVideos"){
+const track=car.querySelector(".carousel-track");
+const slides=track?[...track.querySelectorAll(":scope > .carousel-slide")]:[];
+const slide=slides[idx]||slides[0];
+if(titles.length===1){
+const txt=slideReelTitle(slide);
+if(txt)titles[0].textContent=txt;
+titles[0].classList.add("active");
+}else{
+titles.forEach((t,k)=>t.classList.toggle("active",k===idx));
+}
+}
 /* Videos */
 if(car.id==="carouselVideos")updateVideosBar(car,idx)
 });
 
 /* Inicial */
+if(titles && car.id!=="carouselVideos" && titles.length===1){
+const track=car.querySelector(".carousel-track");
+const slides=track?[...track.querySelectorAll(":scope > .carousel-slide")]:[];
+const txt=slideReelTitle(slides[0]);
+if(txt)titles[0].textContent=txt;
+titles[0].classList.add("active");
+}
 if(car.id==="carouselVideos")updateVideosBar(car,0)
 })};
 
