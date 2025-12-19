@@ -540,4 +540,19 @@ body[data-calc="escritorio"] #calc-slot-2,body[data-calc="escritorio"] #calc-sec
   }
 }
 
+/* =========================================================
+   PANEL -15% — centrado vertical respecto a calculadora
+   ========================================================= */
+.grid-2 > .align-center-vert{
+  align-self:center;   /* 🔑 esto lo centra verticalmente */
+}
+
+/* En mobile NO centramos (stack natural) */
+@media (max-width: 980px){
+  .grid-2 > .align-center-vert{
+    align-self:stretch;
+  }
+}
+
+
 
