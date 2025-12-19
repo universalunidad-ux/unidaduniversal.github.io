@@ -1,18 +1,16 @@
 /* =========================================================
- Expiriti - main.css v5.1.1 (COMPLETO + MINIFICADO)
- - CI friendly: SIN :has()
- - Reels/YouTube: lazy + sin overlays duplicados + .has-iframe
- - #carouselReelsBancos: sin heights forzados
- - Nóminas: banners horizontales + panel -15% compacto/centrado + flechas
- - FIX: TITULOS REELS + VIDEOS estilo VERDE (imagen 1)
+ Expiriti - main.css (COMPLETO + COMPACTO)
+ - CI friendly (sin :has())
+ - Carruseles: .carousel / .carouselX
+ - Reels/YouTube: wrappers + lazy friendly + sin overlays
+ - Calculadoras: escritorio/nube + panel -15%
+ - FIX: Videos (títulos estilo verde y centrado) + Panel -15% (marco tipo card)
 ========================================================= */
 
-/* ---------- TOKENS ---------- */
+/* ============ TOKENS ============ */
 :root{--bg:#0b0f14;--bg-2:#0d1219;--card:#111723;--muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25);--gap:14px;--bp-lg:1200px;--bp-md:980px;--bp-sm:768px;--bp-xs:520px}
 
-/* =========================================================
- BASE
-========================================================= */
+/* ============ BASE ============ */
 *{box-sizing:border-box}html,body{margin:0}html{scroll-behavior:smooth}
 body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);color:var(--text);scroll-padding-top:84px;overflow-x:hidden}
 img,video,iframe{max-width:100%;display:block;height:auto}a{color:inherit;text-decoration:none}
@@ -36,9 +34,7 @@ section{padding:26px 0;border-top:1px solid #11182725}
 .stack{display:grid;gap:calc(var(--gap)*.85)}
 @media(max-width:980px){.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}}
 
-/* =========================================================
- HEADER / NAV
-========================================================= */
+/* ============ HEADER / NAV ============ */
 header{position:sticky;top:0;z-index:1000;width:100%;background:rgba(11,15,20,.75);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid #19202b}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700}
@@ -65,14 +61,10 @@ nav a{opacity:.9}nav a:hover{opacity:1}
 .hero-btn,#sesion-guiada .btn.btn-grad-green,#sesion-guiada .btn.btn-grad-blue{transition:transform .16s ease,box-shadow .16s ease,filter .16s ease,background .16s ease,border-color .16s ease}
 .hero-btn:hover,#sesion-guiada .btn.btn-grad-green:hover,#sesion-guiada .btn.btn-grad-blue:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.45);filter:brightness(1.05)}
 
-/* =========================================================
- FOCUS (ACCESIBLE)
-========================================================= */
+/* ============ FOCUS (ACCESIBLE) ============ */
 button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-visible,.pill:focus-visible,.svc-link:focus-visible,.dot:focus-visible,.arrowCircle:focus-visible,.fcard:focus-visible,.sys-icon:focus-visible{outline:2px solid var(--brand);outline-offset:2px;box-shadow:0 0 0 1px var(--brand)}
 
-/* =========================================================
- HERO + PDF
-========================================================= */
+/* ============ HERO + PDF ============ */
 .hero{padding:26px 0 0}
 .hero-3col{display:grid;grid-template-columns:280px 1.55fr 1.05fr;column-gap:8px;align-items:start}
 @media(max-width:1200px){.hero-3col{grid-template-columns:270px 1.45fr 1.05fr}}
@@ -82,15 +74,11 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .pdf-frame{width:100%;height:68vh;border:0}
 @media(max-width:980px){.pdf-frame{height:56vh}}
 
-/* =========================================================
- CARDS BASE
-========================================================= */
+/* ============ CARDS BASE ============ */
 .card{background:linear-gradient(135deg,#0f1622,#0f1724);border:1px solid #1c2533;border-radius:16px;overflow:hidden}
 .card .body{padding:12px;color:#c8d3e5}
 
-/* =========================================================
- CARRUSEL GENÉRICO (.carousel)
-========================================================= */
+/* ============ CARRUSEL GENÉRICO (.carousel) ============ */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid #1c2533;background:#0f1622;min-height:320px}
 .carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;height:calc(100% - 38px)}
 .carousel-track,.carouselX .track,.icons-wrap,.listTrack{scrollbar-width:thin;scrollbar-color:#1e2b3c transparent}
@@ -105,9 +93,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .arrowCircle.prev{left:8px}.arrowCircle.next{right:8px}
 .arrowCircle .chev{font-size:24px;line-height:1}
 
-/* =========================================================
- CARRUSEL DE SISTEMAS (.carouselX)
-========================================================= */
+/* ============ CARRUSEL DE SISTEMAS (.carouselX) ============ */
 .carouselX{position:relative}
 .carouselX .track{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:6px 36px;min-height:240px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 .carouselX .sys{flex:0 0 calc((100% - 28px)/3);background:linear-gradient(135deg,#0f1622,#0f1724);border:1px solid #1c2533;border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;cursor:pointer;transition:background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .12s ease}
@@ -127,9 +113,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .chip{display:inline-flex;align-items:center;justify-content:center;padding:6px 14px;border-radius:999px;background:rgba(15,23,42,.9);border:1px solid #1c2533;font-size:14px;font-weight:600;color:#e5f0ff}
 .carouselX .sys.show-hover .hoverMore{opacity:1!important;transform:translateY(0)!important;pointer-events:auto}
 
-/* =========================================================
- REELS & YOUTUBE (UNIFICADO + LAZY) — CI FRIENDLY
-========================================================= */
+/* ============ REELS & YOUTUBE (WRAPPERS) ============ */
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;align-items:start}
 @media(max-width:768px){.yt-grid{grid-template-columns:1fr}}
 .yt{width:100%}
@@ -162,9 +146,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 #carouselReelsBancos .carousel-track{height:auto}
 #carouselReelsBancos .carousel-slide{height:auto;align-items:flex-start;justify-content:center}
 
-/* =========================================================
- LISTSLIDER
-========================================================= */
+/* ============ LISTSLIDER ============ */
 .listSlider{position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);border:1px solid #1c2533;padding:8px;overflow:hidden}
 .listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
 .listPage{min-width:100%;padding:8px}
@@ -175,9 +157,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .listItem strong{font-size:14px}
 .listItem div>div{font-size:13px;color:#b9c8de;line-height:1.35}
 
-/* =========================================================
- PILLS + FEATURE GRID
-========================================================= */
+/* ============ PILLS + FEATURE GRID ============ */
 .pillbar{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 10px}
 .pill{padding:6px 10px;border-radius:999px;border:1px solid #1e2b3c;background:linear-gradient(180deg,#0f1c2c,#0e1724);color:#cfe3ff;cursor:pointer;font-weight:700;font-size:12px;transition:transform .12s ease,box-shadow .12s ease,background .2s ease}
 .pill:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.22)}
@@ -192,9 +172,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .fcard h4{margin:0;font-size:14px;color:#e3ecf9}
 .fcard p{margin:0;color:#bcd0ea;font-size:13px;line-height:1.3}
 
-/* =========================================================
- TABLAS
-========================================================= */
+/* ============ TABLAS ============ */
 .pricing-table-nube{width:100%;max-width:960px;margin:20px auto;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
 .pricing-table-nube th,.pricing-table-nube td{padding:14px 16px;border-bottom:1px solid #1e2b3c;text-align:left;vertical-align:middle}
 .pricing-table-nube thead th{background:#0e1724;color:#dce8ff;font-size:16px}
@@ -210,9 +188,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .table-like tbody tr{transition:background .16s ease,box-shadow .16s ease,transform .12s ease}
 .table-like tbody tr:hover{background:radial-gradient(circle at top left,rgba(96,165,250,.13),#020617);box-shadow:0 10px 24px rgba(0,0,0,.35);transform:translateY(-1px)}
 
-/* =========================================================
- FAQ
-========================================================= */
+/* ============ FAQ ============ */
 .faq-wrap{display:grid;gap:10px}
 .faq-item{border:1px solid #1e2b3c;border-radius:12px;background:#0f1622;overflow:hidden}
 .faq-item>summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:700;display:flex;align-items:center;gap:8px;transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .12s ease}
@@ -221,9 +197,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .faq-item[open]>summary{background:#0e1724;border-bottom:1px solid #1e2b3c}
 .faq-item p{padding:12px 14px;margin:0;color:#cfe3ff}
 
-/* =========================================================
- TOC
-========================================================= */
+/* ============ TOC ============ */
 .toc{position:fixed;right:16px;bottom:16px;max-height:48vh;overflow:auto;background:rgba(15,24,38,.75);border:1px solid #1c2533;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;z-index:900;box-shadow:0 10px 24px rgba(0,0,0,.35);backdrop-filter:blur(6px);transition:all .2s ease}
 .toc.collapsed{width:auto;max-height:none;padding:6px 10px;border-radius:999px;gap:0}
 .toc.collapsed .toc-title,.toc.collapsed a,.toc.collapsed .toc-close{display:none}
@@ -231,9 +205,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .toc a{padding:6px 8px;border-radius:10px;color:#cfe3ff;border:1px solid transparent}
 .toc a:hover{border-color:#233347;background:#101b2a}
 
-/* =========================================================
- FOOTER
-========================================================= */
+/* ============ FOOTER ============ */
 footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .footer-grid{display:grid;gap:18px;grid-template-columns:1.6fr 1.2fr 1.2fr 1fr}
 .footer-title{font-weight:700;color:#d8e3f6;margin:0 0 10px}
@@ -247,9 +219,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .ally-col img{height:46px;object-fit:contain;background:#0e1520;border:1px solid #1c2533;border-radius:10px;padding:8px}
 .footer-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:20px;padding-top:12px;border-top:1px solid #1c2533}
 
-/* =========================================================
- CALCULADORA NUBE
-========================================================= */
+/* ============ CALC NUBE ============ */
 .calc-nube .grid-nube{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:10px}
 @media(max-width:980px){.calc-nube .grid-nube{grid-template-columns:1fr}}
 .calc-nube select,.calc-nube input[type="number"]{width:100%;display:block;padding:8px 10px;border-radius:10px;border:1px solid #243248;background:#0e1724;color:#e8eef6}
@@ -258,9 +228,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .calc-nube-table th,.calc-nube-table td{padding:10px 12px;border-bottom:1px solid #1e2b3c}
 .calc-nube-table tr:last-child td{border-bottom:none}
 
-/* =========================================================
- CALCULADORA ESCRITORIO (SIN :has())
-========================================================= */
+/* ============ CALC ESCRITORIO (sin :has) ============ */
 .calc-strip{display:grid;gap:14px}
 .calc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
 .calc-row.has-three{grid-template-columns:1fr 1fr 1fr}
@@ -314,14 +282,10 @@ body[data-calc="escritorio"] .desk-only{display:initial}
 body[data-calc="escritorio"] .pricing-table-nube{display:none!important}
 body[data-calc="escritorio"] #calc-slot-2,body[data-calc="escritorio"] #calc-secondary,body[data-calc="escritorio"] #calc-tertiary,body[data-calc="escritorio"] #add-more-panel,body[data-calc="escritorio"] #combined-wrap,body[data-calc="escritorio"] .icons-wrap{display:initial}
 
-/* =========================================================
- INTERACCIÓN: SCROLL SUAVE
-========================================================= */
+/* ============ INTERACCIÓN (scroll suave) ============ */
 .carousel-track,.carouselX .track,.icons-wrap{-webkit-overflow-scrolling:touch;scroll-behavior:smooth;overscroll-behavior-x:contain}
 
-/* =========================================================
- RESPONSIVE GLOBAL
-========================================================= */
+/* ============ RESPONSIVE GLOBAL ============ */
 @media(max-width:980px){
 nav ul{display:none}
 .burger{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;border:1px solid #1c2533;background:#101722}
@@ -338,10 +302,6 @@ nav ul{display:none}
 .calc-container .field.lic,.calc-container .field.rfc,.calc-container .field.usr,.calc-container .op-label,.calc-container .inst-wrap{grid-column:1!important}
 .calc-container .instalacion-box{flex-wrap:wrap}
 }
-
-/* =========================================================
- AJUSTES EXTRA
-========================================================= */
 @media(min-width:1280px){.container{max-width:1200px;padding-inline:40px}}
 @media(max-width:1024px){body{scroll-padding-top:76px}.container{padding-inline:24px}.hero{padding-top:20px}.lead{max-width:60ch}.card .body{padding:14px}}
 @media(max-width:768px){
@@ -363,24 +323,31 @@ section{padding:20px 0}
 .card .body{padding:10px}
 }
 
-/* =========================================================
- NOMINAS — Integraciones (#integra) | banners horizontales + sombra
-========================================================= */
+/* ============ NOMINAS — Integraciones (#integra) ============ */
 #integra .carouselX .track{padding:10px 46px}
 #integra .carouselX .sys{background:linear-gradient(180deg,#0f1622,#0b1220);border:1px solid rgba(43,60,86,.75);box-shadow:0 14px 32px rgba(0,0,0,.35)}
 #integra .carouselX .sys:hover{box-shadow:0 18px 44px rgba(0,0,0,.45)}
 #integra .carouselX .sys img{width:min(220px,88%);height:56px;object-fit:contain;border-radius:12px;background:transparent;border:none;margin:6px auto 10px}
 @media(max-width:980px){#integra .carouselX .sys img{height:62px}}
 
+/* ============ TITULOS REELS (estilo limpio/verde) ============ */
+.reel-title{margin:10px 0 12px!important;color:var(--brand)!important;font-weight:900!important;font-size:15px!important;line-height:1.2!important;text-align:left}
+.reel-title.active{color:var(--brand)!important}
+
+/* (Opcional) si tu H4 de reels viene con estilos viejos tipo “badge”, esto lo neutraliza */
+.reel-title{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important}
+
+/* ============ OCULTAR ENCABEZADOS (si aplica en tu UI) ============ */
+#videos-title{display:none!important}
+aside[aria-label^="Reels"]>h4.title-gradient{display:none!important}
 
 /* =========================================================
- EXPIRITI FINAL (UNICO) — VIDEOS + PANEL -15%
- Pegar AL FINAL y NO repetir otros fixes.
+ FIX FINAL (UNICO) — VIDEOS + PANEL -15% (como img4)
+ - Videos: barra/títulos estilo verde + centrado (como reels)
+ - Panel -15%: conserva marco/fondo (evita “perdió el marco”)
 ========================================================= */
 
-/* -----------------------------------------
-1) VIDEOS: tipografía como Reels + centrado
------------------------------------------ */
+/* 1) VIDEOS: estilo verde + centrado */
 .yt-titlesbar{
   display:flex!important;
   justify-content:center!important;
@@ -406,38 +373,23 @@ section{padding:20px 0}
   .yt-titlesbar{justify-content:flex-start!important}
   .yt-tab{text-align:left!important}
 }
-.yt-titlesbar .yt-tab:empty{display:none}
+.yt-titlesbar .yt-tab:empty{display:none!important}
 .yt-title.yt-title--hidden,.yt-title--hidden{display:none!important}
 
-/* -----------------------------------------
-2) PANEL -15%: conservar marco/fondo (como img4)
-   + centrado vs calculadora sin tarjeta gigante
------------------------------------------ */
-#calc-slot-2{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  height:100%;
-}
+/* 2) PANEL -15%: marco tipo card (como img4) */
+#calc-slot-2{display:flex;flex-direction:column;justify-content:center;height:100%}
 #calc-slot-2.placeholder{
   background:linear-gradient(180deg,#0e1826,#0f1622)!important;
   border:1px solid #1c2533!important;
   border-radius:16px!important;
   box-shadow:0 10px 30px rgba(0,0,0,.25)!important;
   padding:18px 20px!important;
-
-  /* evita “aire” heredado de .placeholder */
   min-height:0!important;
-  height:auto!important;
+  height:auto!important; /* CLAVE: no 100% aquí */
   text-align:center;
 }
-#calc-slot-2 .note.note-center{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
+#calc-slot-2 .note.note-center{display:flex;flex-direction:column;gap:12px}
 @media(max-width:980px){
   #calc-slot-2{justify-content:flex-start;height:auto}
   #calc-slot-2.placeholder{height:auto!important}
 }
-
