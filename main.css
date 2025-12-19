@@ -383,29 +383,37 @@ section{padding:20px 0}
   box-shadow:none!important;
   padding:0!important;
   border-radius:0!important;
-  margin:10px 0 12px!important; /* ajusta si quieres menos */
+  margin:10px 0 12px!important;
   color:var(--brand)!important;
 }
 
 /* Videos (tabs) */
 .yt-titlesbar{
+  display:grid; /* asegura layout */
   background:transparent!important;
   border:0!important;
   box-shadow:none!important;
   padding:0!important;
   border-radius:0!important;
   margin:0 0 12px!important;
-  gap:14px; /* puedes bajar a 10px */
-}
-.yt-tab{
-  color:var(--brand)!important;
+  gap:14px;
 }
 
-@media(max-width:768px){.yt-titlesbar{grid-template-columns:1fr}.yt-tab{text-align:left}}
+.yt-tab{
+  color:var(--brand)!important;
+  padding:0!important; /* evita que se sienta badge */
+  background:transparent!important;
+}
+
+@media(max-width:768px){
+  .yt-titlesbar{grid-template-columns:1fr}
+  .yt-tab{text-align:left}
+}
 .yt-titlesbar .yt-tab:empty{display:none}
 
 /* Oculta H4 blancos originales cuando el JS los marque */
 .yt-title.yt-title--hidden,.yt-title--hidden{display:none!important}
+
 
 /* =========================================================
  PANEL -15%: QUITAR TARJETA GRANDE + CENTRAR CONTENIDO
