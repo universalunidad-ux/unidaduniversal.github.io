@@ -405,3 +405,36 @@ section{padding:20px 0}
 #calc-slot-2 .sys-icon strong{font-size:13px}
 #calc-slot-2 .sys-icon .sys-price{font-size:11px}
 @media(min-width:1024px){#calc-slot-2{align-self:start}}
+
+/* =========================
+   TITULOS REELS/VIDEOS (VERDE) + OCULTAR DUPLICADOS
+   ========================= */
+
+/* Título “chip” verde (igual vibe de tu reel) */
+.reel-title,.yt-titlesbar .yt-tab{
+  margin:8px 0 12px;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(45,212,191,.45);
+  background:linear-gradient(180deg,rgba(3,18,22,.78),rgba(2,12,16,.55));
+  color:var(--brand,#2dd4bf);
+  font-weight:700;
+  letter-spacing:.2px;
+  box-shadow:0 0 0 1px rgba(45,212,191,.08) inset;
+}
+
+/* Barra superior de videos (2 tabs) */
+.yt-titlesbar{
+  display:grid;
+  gap:10px;
+  margin:10px 0 14px;
+}
+
+/* Si el JS decide que solo hay 1 título visible */
+.yt-titlesbar .yt-tab:empty{display:none}
+
+/* Oculta H4 blancos originales cuando el JS los marque */
+.yt-title.yt-title--hidden{display:none !important}
+
+/* Opcional: “Videos del sistema” (h3) ya existe; no tocarlo */
+
