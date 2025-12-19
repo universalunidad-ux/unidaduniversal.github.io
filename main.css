@@ -1,10 +1,10 @@
 /* =========================================================
- Expiriti - main.css v5.1 FINAL (COMPLETO + COMPACTO)
+ Expiriti - main.css v5.1.1 (COMPLETO + MINIFICADO)
  - CI friendly: SIN :has()
  - Reels/YouTube: lazy + sin overlays duplicados + .has-iframe
  - #carouselReelsBancos: sin heights forzados
- - Nóminas: banners horizontales + panel -15% compacto/centrado + flechas
- - TITULOS BARRA: Reels + Videos (oculta "Videos del sistema")
+ - Nóminas: integra banners horizontales + panel -15% compacto/centrado + flechas
+ - FIX: TITULOS REELS + VIDEOS estilo VERDE (imagen 1)
 ========================================================= */
 
 /* ---------- TOKENS ---------- */
@@ -128,7 +128,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .carouselX .sys.show-hover .hoverMore{opacity:1!important;transform:translateY(0)!important;pointer-events:auto}
 
 /* =========================================================
- REELS & YOUTUBE (UNIFICADO + LAZY)
+ REELS & YOUTUBE (UNIFICADO + LAZY) — CI FRIENDLY
 ========================================================= */
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;align-items:start}
 @media(max-width:768px){.yt-grid{grid-template-columns:1fr}}
@@ -338,6 +338,10 @@ nav ul{display:none}
 .calc-container .field.lic,.calc-container .field.rfc,.calc-container .field.usr,.calc-container .op-label,.calc-container .inst-wrap{grid-column:1!important}
 .calc-container .instalacion-box{flex-wrap:wrap}
 }
+
+/* =========================================================
+ AJUSTES EXTRA
+========================================================= */
 @media(min-width:1280px){.container{max-width:1200px;padding-inline:40px}}
 @media(max-width:1024px){body{scroll-padding-top:76px}.container{padding-inline:24px}.hero{padding-top:20px}.lead{max-width:60ch}.card .body{padding:14px}}
 @media(max-width:768px){
@@ -360,7 +364,7 @@ section{padding:20px 0}
 }
 
 /* =========================================================
- NOMINAS — Integraciones (#integra)
+ NOMINAS — Integraciones (#integra) | banners horizontales + sombra
 ========================================================= */
 #integra .carouselX .track{padding:10px 46px}
 #integra .carouselX .sys{background:linear-gradient(180deg,#0f1622,#0b1220);border:1px solid rgba(43,60,86,.75);box-shadow:0 14px 32px rgba(0,0,0,.35)}
@@ -369,28 +373,23 @@ section{padding:20px 0}
 @media(max-width:980px){#integra .carouselX .sys img{height:62px}}
 
 /* =========================================================
- TITULOS “BARRA” — Reels + Videos (SIN DUPLICADOS)
- - Reels: solo 1 visible con .active
- - Videos: .yt-titlesbar (JS) + oculta h4.yt-title en #carouselVideos
- - Oculta el h3 "Videos del sistema"
+ TITULOS “BARRA” — Reels + Videos
+ - Reels: .reel-title (1 visible con .active)
+ - Videos: .yt-titlesbar (tu JS la crea y la actualiza)
 ========================================================= */
-#videos-title{display:none!important}
 
-/* Reels (solo activo) */
-.reel-title{display:none;margin:10px 0 12px;padding:10px 14px;border-radius:12px;border:1px solid #1c2533;background:linear-gradient(180deg,#0f1c2c,#0e1724);color:#e8eef6;font-weight:800;text-align:left;box-shadow:0 10px 22px rgba(0,0,0,.25)}
+/* (A) REELS: estilo “verde” como imagen 1 */
+.reel-title{display:none;margin:10px 0 12px;padding:10px 14px;border-radius:12px;border:1px solid rgba(45,212,191,.55);background:linear-gradient(180deg,rgba(45,212,191,.14),rgba(15,28,44,.65));color:var(--brand);font-weight:900;text-align:left;box-shadow:0 10px 22px rgba(0,0,0,.25)}
 .reel-title.active{display:block}
 
-/* Videos: barra superior (JS) */
-.yt-titlesbar{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:10px 14px;border-radius:12px;border:1px solid #1c2533;background:linear-gradient(180deg,#0f1c2c,#0e1724);margin:0 0 12px}
-.yt-tab{text-align:center;color:#e8eef6;font-weight:800;font-size:14px}
-@media(max-width:768px){.yt-titlesbar{grid-template-columns:1fr}}
-#carouselVideos .yt-title{display:none!important}
-
-/* Si algún día quieres ocultar títulos “clásicos” sin limitar a #carouselVideos, usa esta clase */
+/* (B) VIDEOS: barra “verde” por slide (2 columnas si hay 2 videos) */
+.yt-titlesbar{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:10px 14px;border-radius:12px;border:1px solid rgba(45,212,191,.55);background:linear-gradient(180deg,rgba(45,212,191,.12),rgba(15,28,44,.65));margin:0 0 12px;box-shadow:0 10px 22px rgba(0,0,0,.25)}
+.yt-tab{text-align:center;color:var(--brand);font-weight:900;font-size:14px;line-height:1.2}
+@media(max-width:768px){.yt-titlesbar{grid-template-columns:1fr}.yt-tab{text-align:left}}
 .yt-title--hidden{display:none!important}
 
 /* =========================================================
- PANEL -15% (calc-slot-2) — COMPACTO + centrado + flechas
+ PANEL -15% (calc-slot-2) — COMPACTO + centrado vertical vs calculadora
 ========================================================= */
 #calc-slot-2{align-self:center}
 @media(max-width:980px){#calc-slot-2{align-self:stretch}}
