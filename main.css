@@ -373,16 +373,34 @@ section{padding:20px 0}
 @media(max-width:980px){#integra .carouselX .sys img{height:62px}}
 
 /* =========================================================
- TITULOS “BARRA VERDE” — Reels + Videos (SIN DUPLICADOS)
- - Reels: .reel-title (solo 1 visible con .active)
- - Videos: .yt-titlesbar (tu JS la crea y la actualiza)
+ TITULOS SIN BADGE (solo texto, conserva color)
 ========================================================= */
-.reel-title{display:none;margin:10px 0 12px;padding:10px 14px;border-radius:12px;border:1px solid rgba(45,212,191,.55);background:linear-gradient(180deg,rgba(45,212,191,.14),rgba(15,28,44,.65));color:var(--brand);font-weight:900;text-align:left;box-shadow:0 10px 22px rgba(0,0,0,.25)}
-.reel-title.active{display:block}
 
-/* Barra verde por slide (2 tabs si hay 2 videos) */
-.yt-titlesbar{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:10px 14px;border-radius:12px;border:1px solid rgba(45,212,191,.55);background:linear-gradient(180deg,rgba(45,212,191,.12),rgba(15,28,44,.65));margin:0 0 12px;box-shadow:0 10px 22px rgba(0,0,0,.25)}
-.yt-tab{text-align:center;color:var(--brand);font-weight:900;font-size:14px;line-height:1.2}
+/* Reels */
+.reel-title{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  padding:0!important;
+  border-radius:0!important;
+  margin:10px 0 12px!important; /* ajusta si quieres menos */
+  color:var(--brand)!important;
+}
+
+/* Videos (tabs) */
+.yt-titlesbar{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  padding:0!important;
+  border-radius:0!important;
+  margin:0 0 12px!important;
+  gap:14px; /* puedes bajar a 10px */
+}
+.yt-tab{
+  color:var(--brand)!important;
+}
+
 @media(max-width:768px){.yt-titlesbar{grid-template-columns:1fr}.yt-tab{text-align:left}}
 .yt-titlesbar .yt-tab:empty{display:none}
 
@@ -390,53 +408,43 @@ section{padding:20px 0}
 .yt-title.yt-title--hidden,.yt-title--hidden{display:none!important}
 
 /* =========================================================
- PANEL -15% — CENTRADO VERTICAL VS CALCULADORA
+ PANEL -15%: QUITAR TARJETA GRANDE + CENTRAR CONTENIDO
 ========================================================= */
+
+/* El slot se estira a la altura de la fila (igual que la calculadora),
+   pero el fondo grande desaparece */
 #calc-slot-2{
   display:flex;
   flex-direction:column;
-  justify-content:center;
+  justify-content:center; /* centra vertical el contenido */
   height:100%;
 }
 
+/* Mata el “placeholder card” SOLO en este slot */
+#calc-slot-2.placeholder{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  padding:0!important;
+  min-height:0!important;
+  height:100%!important; /* mantiene referencia de altura vs calculadora */
+}
+
+/* Si quieres un leve “marco” SOLO alrededor del contenido real, úsalo aquí.
+   Si NO lo quieres, borra este bloque. */
+#calc-slot-2 .note.note-center{
+  padding:0; /* ya no necesitamos padding de la tarjeta grande */
+}
+
+/* Mobile: flujo normal */
 @media(max-width:980px){
   #calc-slot-2{
     justify-content:flex-start;
+    height:auto;
   }
-}
-
-#calc-slot-2.placeholder{
-  padding:18px 20px;
-}
-
-#calc-slot-2 .note.note-center{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-#calc-slot-2 .icons-carousel{
-  position:relative;
-  margin-top:10px;
-}
-
-#calc-slot-2 .icons-carousel .icons-wrap{
-  padding:10px 52px;
-  gap:14px;
-}
-
-#calc-slot-2 .icons-carousel .arrowCircle{
-  top:50%;
-  transform:translateY(-50%);
-  z-index:6;
-  width:38px;
-  height:38px;
-}
-
-#calc-slot-2 .sys-icon{
-  min-height:160px;
-  max-width:180px;
-  padding:12px;
+  #calc-slot-2.placeholder{
+    height:auto!important;
+  }
 }
 
 
