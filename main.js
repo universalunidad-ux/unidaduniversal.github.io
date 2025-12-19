@@ -204,7 +204,7 @@
       `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
     ];
 
-    const markReady = (wrap) => { if (wrap && wrap.classList) wrap.classList.add("is-ready"); };
+    const markReady = (wrap) => { if (wrap && wrap.classList) wrap.classList.add("is-ready");   wrap.classList.add("has-iframe"); };
 
     const mountLazy = (wrap) => {
       if (!wrap || wrap.dataset.ytMounted) return;
@@ -213,6 +213,7 @@
       const existing = wrap.querySelector("iframe");
       if (existing) {
         wrap.dataset.ytMounted = "1";
+          wrap.classList.add("has-iframe"); 
         existing.addEventListener("load", () => markReady(wrap), { once: true });
         setTimeout(() => markReady(wrap), 120);
         whenYT(() => registerIframe(existing));
@@ -259,7 +260,9 @@
         ifr.title = wrap.getAttribute("data-title") || "YouTube video";
         ifr.src = `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1&autoplay=1&enablejsapi=1&vq=hd1080`;
         wrap.appendChild(ifr);
+wrap.classList.add("has-iframe"); // <<--- AÑADE ESTO
 
+        
         ifr.addEventListener("load", () => markReady(wrap), { once: true });
         setTimeout(() => markReady(wrap), 200);
         whenYT(() => registerIframe(ifr));
@@ -453,6 +456,37 @@
       W.addEventListener("resize", () => go(i));
     });
   })();
+
+
+  /* =========================================================
+   X) ICONS-CAROUSEL (panel -15%): flechas scroll
+   ========================================================= */
+(() => {
+  const boot = () => {
+    D.querySelectorAll(".icons-carousel").forEach((wrap) => {
+      const track = wrap.querySelector(".icons-wrap");
+      const prev = wrap.querySelector(".arrowCircle.prev");
+      const next = wrap.querySelector(".arrowCircle.next");
+      if (!track || !prev || !next) return;
+
+      const step = () => Math.max(220, Math.floor(track.clientWidth * 0.8));
+
+      prev.addEventListener("click", () => {
+        if (W.pauseAllYTIframes) W.pauseAllYTIframes();
+        track.scrollBy({ left: -step(), behavior: "smooth" });
+      });
+
+      next.addEventListener("click", () => {
+        if (W.pauseAllYTIframes) W.pauseAllYTIframes();
+        track.scrollBy({ left: step(), behavior: "smooth" });
+      });
+    });
+  };
+
+  D.readyState === "loading"
+    ? D.addEventListener("DOMContentLoaded", boot, { once: true })
+    : boot();
+})();
 
   /* =========================================================
      7) PÍLDORAS (filtros cards)
