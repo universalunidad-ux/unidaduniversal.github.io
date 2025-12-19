@@ -466,5 +466,57 @@ section{padding:20px 0}
 /* 1 columna si solo hay 1 video */
 @media(max-width:768px){
   .yt-titlesbar{grid-template-columns:1fr}
+
+
+ /* =========================================================
+   TITULOS “SOLO TEXTO” (sin badge/rectángulo)
+   - Videos: barra superior sin fondo/borde
+   - Reels: título activo sin pastilla
+========================================================= */
+
+/* (A) VIDEOS: quita rectángulo y deja solo letras */
+.yt-titlesbar{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  margin:0 0 10px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
 }
+.yt-tab{
+  color:var(--brand);
+  font-weight:900;
+  font-size:15px;
+  line-height:1.2;
+  text-align:left;
+  padding:0;
+  margin:0;
+}
+@media(max-width:768px){
+  .yt-titlesbar{grid-template-columns:1fr}
+}
+
+/* oculta los h4 blancos originales dentro del slide */
+.yt-title--hidden{display:none!important}
+
+/* (B) REELS: quita la “pastilla” del título del reel */
+.reel-title{
+  margin:10px 0 10px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  color:var(--brand);
+  font-weight:900;
+  letter-spacing:.2px;
+}
+
+/* (C) Ocultar textos que NO quieres ver */
+#videos-title{display:none!important;}                 /* “Videos del sistema” */
+aside[aria-label*="Reels"] > h4.title-gradient{display:none!important;} 
+/* si tu h4 de “Reels Destacados: …” está dentro del aside */
 
