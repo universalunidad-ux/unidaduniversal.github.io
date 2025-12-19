@@ -487,6 +487,91 @@ wrap.classList.add("has-iframe"); // <<--- AÑADE ESTO
     ? D.addEventListener("DOMContentLoaded", boot, { once: true })
     : boot();
 })();
+  /* =========================================================
+   10.5) ICONS CAROUSEL (-15%) + CENTRADO VERTICAL
+   - Inyecta flechas a #icons-sec-sys / #icons-third-sys
+   - Mantiene scroll manual (trackpad/mouse) + flechas scrollBy
+   - Aplica .note-center y .has-icons (reemplazo de :has())
+   ========================================================= */
+(() => {
+  const D = document, W = window;
+
+  const enhanceOne = (wrap) => {
+    if (!wrap || wrap.dataset.icInit === "1") return;
+    wrap.dataset.icInit = "1";
+
+    // 1) Centrado vertical del panel placeholder
+    const slot = wrap.closest("#calc-slot-2, .calc-container, .placeholder") || wrap.parentElement;
+    const note = (slot && slot.querySelector) ? slot.querySelector(".note") : null;
+    if (note) note.classList.add("note-center");
+
+    // 2) Envolver en .icons-carousel si no existe
+    let host = wrap.closest(".icons-carousel");
+    if (!host) {
+      host = D.createElement("div");
+      host.className = "icons-carousel";
+      wrap.parentElement.insertBefore(host, wrap);
+      host.appendChild(wrap);
+    }
+
+    // 3) Crear flechas si no existen (reusa estilos .arrowCircle)
+    const mkBtn = (cls, label, chev) => {
+      const b = D.createElement("button");
+      b.type = "button";
+      b.className = `arrowCircle ${cls}`;
+      b.setAttribute("aria-label", label);
+      b.innerHTML = `<span class="chev">${chev}</span>`;
+      return b;
+    };
+
+    let prev = host.querySelector(".arrowCircle.prev");
+    let next = host.querySelector(".arrowCircle.next");
+    if (!prev) { prev = mkBtn("prev", "Anterior", "‹"); host.appendChild(prev); }
+    if (!next) { next = mkBtn("next", "Siguiente", "›"); host.appendChild(next); }
+
+    // 4) Scroll con flechas sin romper el scroll manual
+    const step = () => {
+      // ancho aproximado de tarjeta + gap (ajusta si cambias sys-icon)
+      return Math.max(220, Math.round((wrap.querySelector(".sys-icon")?.offsetWidth || 200) + 18));
+    };
+
+    const scrollByX = (dir) => {
+      const dx = step() * dir;
+      wrap.scrollBy({ left: dx, behavior: "smooth" });
+    };
+
+    prev.addEventListener("click", () => scrollByX(-1));
+    next.addEventListener("click", () => scrollByX(1));
+
+    // 5) Mostrar/ocultar flechas si no hay scroll real
+    const paint = () => {
+      const canScroll = wrap.scrollWidth > wrap.clientWidth + 4;
+      prev.style.display = canScroll ? "" : "none";
+      next.style.display = canScroll ? "" : "none";
+
+      // Clase has-icons en el contenedor (reemplazo CI-friendly de :has)
+      const c = wrap.closest(".calc-container") || slot;
+      if (c) c.classList.toggle("has-icons", wrap.children.length > 0);
+    };
+
+    paint();
+    W.addEventListener("resize", paint);
+
+    // Si el render de iconos llega después, re-evalúa
+    new MutationObserver(paint).observe(wrap, { childList: true, subtree: false });
+  };
+
+  const boot = () => {
+    // Panel secundario y terciario (si existen)
+    enhanceOne(D.getElementById("icons-sec-sys"));
+    enhanceOne(D.getElementById("icons-third-sys"));
+  };
+
+  D.readyState === "loading"
+    ? D.addEventListener("DOMContentLoaded", boot, { once: true })
+    : boot();
+})();
+
 
   /* =========================================================
      7) PÍLDORAS (filtros cards)
