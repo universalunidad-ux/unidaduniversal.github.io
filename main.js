@@ -340,28 +340,36 @@ const D=document,W=window;
     return [];
   };
 
-  const updateVideosBar=(car,idx)=>{
-    if(!car || car.id!=="carouselVideos") return;
-    ensureVideosBar(car);
+const updateVideosBar=(car,idx)=>{
+  if(!car || car.id!=="carouselVideos") return;
+  ensureVideosBar(car);
 
-    const track=car.querySelector(".carousel-track");
-    const slides=track?Array.from(track.querySelectorAll(":scope > .carousel-slide")):[];
-    const slide=slides[idx]||slides[0];
+  const track=car.querySelector(".carousel-track");
+  const slides=track?Array.from(track.querySelectorAll(":scope > .carousel-slide")):[];
+  if(!slides.length) return;
 
-    const titles=slideVideoTitles(slide);
-    const a=titles[0]||"";
-    const b=titles[1]||"";
-    const v=car._vbar;
-    if(!v) return;
+  /* Oculta títulos blancos (evita duplicado con la barra verde) */
+if(car.id==="carouselVideos"){
+  car.querySelectorAll(".yt-title").forEach(h=>h.classList.add("yt-title--hidden"));
+  updateVideosBar(car,0);
+}
 
-    /* Solo títulos (sin texto extra) */
-    v.left.textContent=a;
-    v.right.textContent=b;
+  const slide=slides[idx]||slides[0];
 
-    /* Si solo hay 1, oculta el segundo “cuadro” */
-    v.right.style.display=b?"":"none";
-    v.bar.style.gridTemplateColumns=b?"1fr 1fr":"1fr";
-  };
+  const titles=slideVideoTitles(slide);
+  const a=titles[0]||"";
+  const b=titles[1]||"";
+
+  const v=car._vbar;
+  if(!v) return;
+
+  v.left.textContent=a;
+  v.right.textContent=b;
+
+  v.right.style.display=b?"":"none";
+  v.bar.style.gridTemplateColumns=b?"1fr 1fr":"1fr";
+};
+
 
   const initCar=(root,onChange)=>{
     const track=root.querySelector(".carousel-track");
@@ -414,6 +422,15 @@ const D=document,W=window;
   const boot=()=>{
     D.querySelectorAll(".carousel").forEach(car=>{
       const titles=titlesFor(car);
+
+if(titles && titles.length && car.id!=="carouselVideos"){
+  const aside=car.closest("aside");
+  if(aside){
+    const h=aside.querySelector(":scope > h4.title-gradient");
+    if(h) h.style.display="none";
+  }
+}
+
 
       initCar(car,(idx)=>{
         /* REELS */
