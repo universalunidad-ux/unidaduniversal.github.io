@@ -518,5 +518,14 @@ section{padding:20px 0}
 /* (C) Ocultar textos que NO quieres ver */
 #videos-title{display:none!important;}                 /* “Videos del sistema” */
 aside[aria-label*="Reels"] > h4.title-gradient{display:none!important;} 
-/* si tu h4 de “Reels Destacados: …” está dentro del aside */
+
+ /* =========================
+   OCULTAR ENCABEZADOS (solo texto, sin afectar carruseles)
+   ========================= */
+
+/* Quita “Videos del sistema” */
+#videos-title{display:none!important}
+
+/* Quita “Reels Destacados: Bancos” (el h4 title-gradient dentro del aside de reels) */
+aside[aria-label^="Reels"] > h4.title-gradient{display:none!important}
 
