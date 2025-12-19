@@ -1,9 +1,9 @@
- /* =========================================================
+/* =========================================================
  Expiriti - main.css v5.1.1 (COMPLETO + MINIFICADO)
  - CI friendly: SIN :has()
  - Reels/YouTube: lazy + sin overlays duplicados + .has-iframe
  - #carouselReelsBancos: sin heights forzados
- - Nóminas: integra banners horizontales + panel -15% compacto/centrado + flechas
+ - Nóminas: banners horizontales + panel -15% compacto/centrado + flechas
  - FIX: TITULOS REELS + VIDEOS estilo VERDE (imagen 1)
 ========================================================= */
 
@@ -373,20 +373,21 @@ section{padding:20px 0}
 @media(max-width:980px){#integra .carouselX .sys img{height:62px}}
 
 /* =========================================================
- TITULOS “BARRA” — Reels + Videos
- - Reels: .reel-title (1 visible con .active)
+ TITULOS “BARRA VERDE” — Reels + Videos (SIN DUPLICADOS)
+ - Reels: .reel-title (solo 1 visible con .active)
  - Videos: .yt-titlesbar (tu JS la crea y la actualiza)
 ========================================================= */
-
-/* (A) REELS: estilo “verde” como imagen 1 */
 .reel-title{display:none;margin:10px 0 12px;padding:10px 14px;border-radius:12px;border:1px solid rgba(45,212,191,.55);background:linear-gradient(180deg,rgba(45,212,191,.14),rgba(15,28,44,.65));color:var(--brand);font-weight:900;text-align:left;box-shadow:0 10px 22px rgba(0,0,0,.25)}
 .reel-title.active{display:block}
 
-/* (B) VIDEOS: barra “verde” por slide (2 columnas si hay 2 videos) */
+/* Barra verde por slide (2 tabs si hay 2 videos) */
 .yt-titlesbar{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:10px 14px;border-radius:12px;border:1px solid rgba(45,212,191,.55);background:linear-gradient(180deg,rgba(45,212,191,.12),rgba(15,28,44,.65));margin:0 0 12px;box-shadow:0 10px 22px rgba(0,0,0,.25)}
 .yt-tab{text-align:center;color:var(--brand);font-weight:900;font-size:14px;line-height:1.2}
 @media(max-width:768px){.yt-titlesbar{grid-template-columns:1fr}.yt-tab{text-align:left}}
-.yt-title--hidden{display:none!important}
+.yt-titlesbar .yt-tab:empty{display:none}
+
+/* Oculta H4 blancos originales cuando el JS los marque */
+.yt-title.yt-title--hidden,.yt-title--hidden{display:none!important}
 
 /* =========================================================
  PANEL -15% (calc-slot-2) — COMPACTO + centrado vertical vs calculadora
@@ -406,126 +407,10 @@ section{padding:20px 0}
 #calc-slot-2 .sys-icon .sys-price{font-size:11px}
 @media(min-width:1024px){#calc-slot-2{align-self:start}}
 
-/* =========================
-   TITULOS REELS/VIDEOS (VERDE) + OCULTAR DUPLICADOS
-   ========================= */
-
-/* Título “chip” verde (igual vibe de tu reel) */
-.reel-title,.yt-titlesbar .yt-tab{
-  margin:8px 0 12px;
-  padding:10px 14px;
-  border-radius:999px;
-  border:1px solid rgba(45,212,191,.45);
-  background:linear-gradient(180deg,rgba(3,18,22,.78),rgba(2,12,16,.55));
-  color:var(--brand,#2dd4bf);
-  font-weight:700;
-  letter-spacing:.2px;
-  box-shadow:0 0 0 1px rgba(45,212,191,.08) inset;
-}
-
-/* Barra superior de videos (2 tabs) */
-.yt-titlesbar{
-  display:grid;
-  gap:10px;
-  margin:10px 0 14px;
-}
-
-/* Si el JS decide que solo hay 1 título visible */
-.yt-titlesbar .yt-tab:empty{display:none}
-
-/* Oculta H4 blancos originales cuando el JS los marque */
-.yt-title.yt-title--hidden{display:none !important}
-
-/* Opcional: “Videos del sistema” (h3) ya existe; no tocarlo */
-
-
-/* (B) VIDEOS: barra SOLO TEXTO (sin rectángulo/fondo) */
-.yt-titlesbar{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  padding:0;                 /* sin padding */
-  margin:0 0 10px;           /* separa del carrusel */
-  border:0!important;        /* sin borde */
-  background:transparent!important;
-  box-shadow:none!important; /* sin sombra */
-  border-radius:0!important;
-}
-
-/* texto tipo “Reels Destacados: Bancos” */
-.yt-tab{
-  text-align:left;
-  color:var(--brand);
-  font-weight:800;
-  font-size:16px;
-  line-height:1.2;
-  background:transparent!important;
-  padding:0!important;
-}
-
-/* 1 columna si solo hay 1 video */
-@media(max-width:768px){
-  .yt-titlesbar{grid-template-columns:1fr}
-
-
- /* =========================================================
-   TITULOS “SOLO TEXTO” (sin badge/rectángulo)
-   - Videos: barra superior sin fondo/borde
-   - Reels: título activo sin pastilla
+/* =========================================================
+ OCULTAR ENCABEZADOS (solo si los quieres fuera de la UI)
 ========================================================= */
-
-/* (A) VIDEOS: quita rectángulo y deja solo letras */
-.yt-titlesbar{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:24px;
-  margin:0 0 10px;
-  padding:0;
-  border:0;
-  border-radius:0;
-  background:transparent;
-  box-shadow:none;
-}
-.yt-tab{
-  color:var(--brand);
-  font-weight:900;
-  font-size:15px;
-  line-height:1.2;
-  text-align:left;
-  padding:0;
-  margin:0;
-}
-@media(max-width:768px){
-  .yt-titlesbar{grid-template-columns:1fr}
-}
-
-/* oculta los h4 blancos originales dentro del slide */
-.yt-title--hidden{display:none!important}
-
-/* (B) REELS: quita la “pastilla” del título del reel */
-.reel-title{
-  margin:10px 0 10px;
-  padding:0;
-  border:0;
-  border-radius:0;
-  background:transparent;
-  box-shadow:none;
-  color:var(--brand);
-  font-weight:900;
-  letter-spacing:.2px;
-}
-
-/* (C) Ocultar textos que NO quieres ver */
-#videos-title{display:none!important;}                 /* “Videos del sistema” */
-aside[aria-label*="Reels"] > h4.title-gradient{display:none!important;} 
-
- /* =========================
-   OCULTAR ENCABEZADOS (solo texto, sin afectar carruseles)
-   ========================= */
-
-/* Quita “Videos del sistema” */
+/* Quita “Videos del sistema” si existe con ese id */
 #videos-title{display:none!important}
-
-/* Quita “Reels Destacados: Bancos” (el h4 title-gradient dentro del aside de reels) */
-aside[aria-label^="Reels"] > h4.title-gradient{display:none!important}
-
+/* Quita el h4 title-gradient del aside de reels (si lo estás duplicando con .reel-title) */
+aside[aria-label^="Reels"]>h4.title-gradient{display:none!important}
