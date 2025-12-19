@@ -1,10 +1,10 @@
 /* =========================================================
-   Expiriti - main.css v5 (MINIFICADO + COMPLETO + FIX ACTIONS)
-   - FIX GitHub Actions: elimina :has() (rompe stylelint/postcss en CI)
-   - Reels/YouTube: sin overlays duplicados + soporte lazy + has-iframe
+   Expiriti - main.css v5.1 (MINIFICADO + COMPLETO + FIX + NOMINAS)
+   - CI friendly: SIN :has()
+   - Reels/YouTube: lazy + sin overlays duplicados + has-iframe
    - #carouselReelsBancos: sin heights forzados
-   - Mantiene estructura “compacta” pero con comentarios por sección
-    ========================================================= */
+   - Nóminas: sombra + banners horizontales (integra) + panel -15% centrado + flechas
+   ========================================================= */
 
 /* ---------- TOKENS ---------- */
 :root{--bg:#0b0f14;--bg-2:#0d1219;--card:#111723;--muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--maxw:1200px;--radius:14px;--shadow:0 10px 30px rgba(0,0,0,.25);--gap:14px;--bp-lg:1200px;--bp-md:980px;--bp-sm:768px;--bp-xs:520px}
@@ -26,7 +26,6 @@ h4{margin:0 0 8px}
 .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1c2c;border:1px solid #203044;color:#cfe3ff;font-size:12px}
 .title-gradient{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .lock-note{margin:8px 0 0;font-size:12px;color:#94a8c6;display:inline-flex;gap:6px;align-items:center}
-/* Si tu CI se queja por emojis/encoding, cambia "!" por el símbolo */
 .lock-note::before{content:"!"}
 section{padding:26px 0;border-top:1px solid #11182725}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -55,41 +54,18 @@ nav a{opacity:.9}nav a:hover{opacity:1}
 .btn-grad-green{background:linear-gradient(145deg,#16a34a,#22c55e);color:#0b0f14;border:none}
 .btn-grad-purple{background:linear-gradient(145deg,#7c3aed,#a855f7);color:#fff;border:none}
 .btn-grad-blue{background:linear-gradient(145deg,#2563eb,#3b82f6);color:#fff;border:none}
-/* ===== FIX CI: outline gradient sin mask-composite ===== */
-.btn-outline-gradient{
-  color:#cfe9ff;
-  background:#0f1622;            /* fallback sólido */
-  border:1px solid #2b3c56;      /* fallback borde */
-  position:relative;
-  overflow:hidden;
-  border-radius:12px;
-}
 
-/* Si el navegador soporta máscaras, entonces sí usamos el borde “perfecto” */
+/* Outline gradient CI-friendly */
+.btn-outline-gradient{color:#cfe9ff;background:#0f1622;border:1px solid #2b3c56;position:relative;overflow:hidden;border-radius:12px}
 @supports ((-webkit-mask-composite:xor) or (mask-composite:exclude)){
-  .btn-outline-gradient{
-    background:transparent;
-    border:1px solid transparent;
-  }
-  .btn-outline-gradient::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    padding:1px;
-    border-radius:12px;
-    background:linear-gradient(145deg,var(--brand),var(--brand-2));
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;
-    mask-composite:exclude;
-    pointer-events:none;
-  }
+  .btn-outline-gradient{background:transparent;border:1px solid transparent}
+  .btn-outline-gradient::before{content:"";position:absolute;inset:0;padding:1px;border-radius:12px;background:linear-gradient(145deg,var(--brand),var(--brand-2));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
 }
-
 .hero-btn,#sesion-guiada .btn.btn-grad-green,#sesion-guiada .btn.btn-grad-blue{transition:transform .16s ease,box-shadow .16s ease,filter .16s ease,background .16s ease,border-color .16s ease}
 .hero-btn:hover,#sesion-guiada .btn.btn-grad-green:hover,#sesion-guiada .btn.btn-grad-blue:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.45);filter:brightness(1.05)}
 
 /* =========================================================
-   FOCUS STATES (ACCESIBLE)
+   FOCUS (ACCESIBLE)
    ========================================================= */
 button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-visible,.pill:focus-visible,.svc-link:focus-visible,.dot:focus-visible,.arrowCircle:focus-visible,.fcard:focus-visible,.sys-icon:focus-visible{outline:2px solid var(--brand);outline-offset:2px;box-shadow:0 0 0 1px var(--brand)}
 
@@ -146,7 +122,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .carouselX .arrowCircle .chev{font-size:24px;line-height:1}
 @media(max-width:980px){.carouselX .sys{flex:0 0 100%}}
 
-/* Botón "Ver más" dentro de cada sistema */
+/* Hover “Ver más” */
 .carouselX .hoverMore{margin-top:18px;opacity:0;transform:translateY(6px);transition:opacity .18s ease,transform .18s ease;pointer-events:none}
 .carouselX .sys:hover .hoverMore{opacity:1;transform:translateY(0);pointer-events:auto}
 .chip{display:inline-flex;align-items:center;justify-content:center;padding:6px 14px;border-radius:999px;background:rgba(15,23,42,.9);border:1px solid #1c2533;font-size:14px;font-weight:600;color:#e5f0ff}
@@ -158,6 +134,8 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .yt-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;align-items:start}
 @media(max-width:768px){.yt-grid{grid-template-columns:1fr}}
 .yt{width:100%}
+
+/* Reel title (base; estilo “kicker” se sobreescribe abajo para Nóminas) */
 .reel-title{margin:0 0 8px;text-align:center;color:#fff;font-weight:700;display:none}
 .reel-title.active{display:block}
 
@@ -173,7 +151,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .reel-embed::before{content:"";display:block;padding-top:177.78%}
 @media(max-width:768px){.reel-embed{width:100%!important;max-width:520px!important}}
 
-/* Si soporta aspect-ratio, úsalo */
+/* aspect-ratio */
 @supports (aspect-ratio:16/9){
   .yt-wrap{aspect-ratio:16/9}
   .yt-wrap::before{display:none}
@@ -185,14 +163,12 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .yt-wrap[data-poster],.reel-embed[data-poster]{background-image:var(--yt-poster);background-size:cover;background-position:center}
 
 /* Fill */
-.yt-wrap iframe,.reel-embed iframe,
-.yt-wrap img,.reel-embed img,
-.yt-wrap button,.reel-embed button{position:absolute;inset:0;width:100%;height:100%}
+.yt-wrap iframe,.reel-embed iframe,.yt-wrap img,.reel-embed img,.yt-wrap button,.reel-embed button{position:absolute;inset:0;width:100%;height:100%}
 
 /* Iframe */
 .yt-wrap iframe,.reel-embed iframe{border:0;opacity:1;transition:opacity .18s ease}
 
-/* Evitar overlays dobles */
+/* Sin overlays dobles */
 .yt-wrap::after,.reel-embed::after{content:none!important;display:none!important}
 
 /* Lazy: poster + botón */
@@ -210,21 +186,19 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .yt-grid-single{grid-template-columns:minmax(0,480px);justify-content:center}
 @media(max-width:768px){.yt-grid-single{grid-template-columns:1fr}}
 
-
-
 /* Carrusel videos */
 #carouselVideos{min-height:auto}
 #carouselVideos .carousel-track{height:auto}
 #carouselVideos .carousel-slide{height:auto;align-items:flex-start;justify-content:center;padding:0 50px;box-sizing:border-box}
 @media(max-width:768px){#carouselVideos .carousel-slide{padding:0 10px}}
 
-/* FIX: Bancos reels (no heights forzados) */
+/* FIX: Bancos reels */
 #carouselReelsBancos{min-height:auto}
 #carouselReelsBancos .carousel-track{height:auto}
 #carouselReelsBancos .carousel-slide{height:auto;align-items:flex-start;justify-content:center}
 
 /* =========================================================
-   LISTSLIDER / “POR QUÉ USAR...”
+   LISTSLIDER
    ========================================================= */
 .listSlider{position:relative;border-radius:16px;background:linear-gradient(180deg,#0e1826,#0f1622);border:1px solid #1c2533;padding:8px;overflow:hidden}
 .listTrack{display:flex;overflow:hidden;scroll-behavior:smooth}
@@ -254,7 +228,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .fcard p{margin:0;color:#bcd0ea;font-size:13px;line-height:1.3}
 
 /* =========================================================
-   TABLAS (PRECIOS / COMPARATIVAS)
+   TABLAS
    ========================================================= */
 .pricing-table-nube{width:100%;max-width:960px;margin:20px auto;border-collapse:separate;border-spacing:0;border:1px solid #1e2b3c;border-radius:12px;overflow:hidden}
 .pricing-table-nube th,.pricing-table-nube td{padding:14px 16px;border-bottom:1px solid #1e2b3c;text-align:left;vertical-align:middle}
@@ -283,7 +257,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,.btn:focus-vi
 .faq-item p{padding:12px 14px;margin:0;color:#cfe3ff}
 
 /* =========================================================
-   TOC FLOTANTE
+   TOC
    ========================================================= */
 .toc{position:fixed;right:16px;bottom:16px;max-height:48vh;overflow:auto;background:rgba(15,24,38,.75);border:1px solid #1c2533;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;z-index:900;box-shadow:0 10px 24px rgba(0,0,0,.35);backdrop-filter:blur(6px);transition:all .2s ease}
 .toc.collapsed{width:auto;max-height:none;padding:6px 10px;border-radius:999px;gap:0}
@@ -320,7 +294,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .calc-nube-table tr:last-child td{border-bottom:none}
 
 /* =========================================================
-   CALCULADORA ESCRITORIO (SIN :has() — FRIENDLY PARA CI)
+   CALCULADORA ESCRITORIO (SIN :has())
    ========================================================= */
 .calc-strip{display:grid;gap:14px}
 .calc-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
@@ -332,9 +306,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .placeholder .note{max-width:50ch}
 .icons-wrap,.calc-container .icons-wrap{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center;justify-content:flex-start;gap:18px;overflow-x:auto;overflow-y:hidden;padding:10px 16px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 
-/* IMPORTANTE:
-   Antes usabas :has() para centrar tarjetas solo-iconos.
-   Ahora usa clase .has-icons (agregada por JS) para no romper GitHub Actions. */
+/* Reemplazo de :has() con clase */
 .calc-container.has-icons{display:flex!important;flex-direction:column;justify-content:center;min-height:220px;padding-block:18px}
 .calc-container.has-icons>.icons-wrap{margin:0;padding-inline:16px}
 
@@ -371,6 +343,7 @@ footer{padding:36px 0 12px;border-top:1px solid #11182725;color:#aebbd0}
 .calc-container tr:last-child td{border-bottom:none}
 .calc-container .price,.calc-container .total,.calc-container .monto{font-weight:800;color:var(--brand);text-align:right}
 
+/* Switch nube/escritorio */
 #calc-primary{display:block!important}
 .nube-only{display:none}
 .desk-only{display:none}
@@ -384,7 +357,7 @@ body[data-calc="escritorio"] .pricing-table-nube{display:none!important}
 body[data-calc="escritorio"] #calc-slot-2,body[data-calc="escritorio"] #calc-secondary,body[data-calc="escritorio"] #calc-tertiary,body[data-calc="escritorio"] #add-more-panel,body[data-calc="escritorio"] #combined-wrap,body[data-calc="escritorio"] .icons-wrap{display:initial}
 
 /* =========================================================
-   INTERACCIÓN: SCROLL SUAVE EN CARRUSELES
+   INTERACCIÓN: SCROLL SUAVE
    ========================================================= */
 .carousel-track,.carouselX .track,.icons-wrap{-webkit-overflow-scrolling:touch;scroll-behavior:smooth;overscroll-behavior-x:contain}
 
@@ -409,7 +382,7 @@ body[data-calc="escritorio"] #calc-slot-2,body[data-calc="escritorio"] #calc-sec
 }
 
 /* =========================================================
-   AJUSTES EXTRA RESPONSIVE
+   AJUSTES EXTRA
    ========================================================= */
 @media(min-width:1280px){.container{max-width:1200px;padding-inline:40px}}
 @media(max-width:1024px){body{scroll-padding-top:76px}.container{padding-inline:24px}.hero{padding-top:20px}.lead{max-width:60ch}.card .body{padding:14px}}
@@ -431,3 +404,30 @@ body[data-calc="escritorio"] #calc-slot-2,body[data-calc="escritorio"] #calc-sec
   .pill{font-size:12px;padding:7px 10px}
   .card .body{padding:10px}
 }
+
+/* =========================================================
+   NOMINAS — Integraciones (carouselX) | banners horizontales + sombra
+   ========================================================= */
+#integra .carouselX .track{padding:10px 46px}
+#integra .carouselX .sys{background:linear-gradient(180deg,#0f1622,#0b1220);border:1px solid rgba(43,60,86,.75);box-shadow:0 14px 32px rgba(0,0,0,.35)}
+#integra .carouselX .sys:hover{box-shadow:0 18px 44px rgba(0,0,0,.45)}
+#integra .carouselX .sys img{width:min(220px,88%);height:56px;object-fit:contain;border-radius:12px;background:transparent;border:none;margin:6px auto 10px}
+@media(max-width:980px){#integra .carouselX .sys img{height:62px}}
+
+/* =========================================================
+   NOMINAS — Panel -15% (centrado + flechas + scroll)
+   NOTA: requiere HTML con .note.note-center y .icons-carousel (te lo paso si lo pides)
+   ========================================================= */
+#calc-slot-2.placeholder{min-height:220px}
+#calc-slot-2 .note.note-center{display:flex;flex-direction:column;justify-content:center;gap:10px;height:100%;width:100%}
+.icons-carousel{position:relative;display:block;margin-top:10px}
+.icons-carousel .icons-wrap{padding:10px 52px;gap:14px}
+.icons-carousel .arrowCircle{top:50%;transform:translateY(-50%);z-index:6}
+.icons-carousel .arrowCircle.prev{left:8px}
+.icons-carousel .arrowCircle.next{right:8px}
+
+/* =========================================================
+   NOMINAS — Reels: título “kicker” (1 por reel)
+   ========================================================= */
+.reel-title{margin:0 0 10px;padding:10px 12px;border-radius:12px;border:1px solid #1c2533;background:linear-gradient(180deg,#0e1826,#0f1622);color:#dce8ff;font-weight:900;text-align:left;display:none}
+.reel-title.active{display:block}
