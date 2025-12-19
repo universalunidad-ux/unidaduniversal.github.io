@@ -64,7 +64,6 @@
     wrap&&(ifr.addEventListener("load",()=>markReady(wrap,ifr),{once:!0}),setTimeout(()=>markReady(wrap,ifr),120));
     whenYT(()=>registerIframe(ifr));
   });
-};
 
 W.onYouTubeIframeAPIReady=function(){D.querySelectorAll('iframe[src*="youtube"],iframe[src*="youtube-nocookie"]').forEach(registerIframe)};
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",init,{once:!0}):init();
