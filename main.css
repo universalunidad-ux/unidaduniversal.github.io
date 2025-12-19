@@ -554,5 +554,17 @@ body[data-calc="escritorio"] #calc-slot-2,body[data-calc="escritorio"] #calc-sec
   }
 }
 
+/* =========================================================
+   CALC — Centrar vertical el panel -15% vs calculadora
+   ========================================================= */
+.calc-row{align-items:stretch} /* asegura misma “línea” de grid */
 
+#calc-slot-2{
+  align-self:center;           /* 🔑 lo centra dentro de la altura del grid */
+}
+
+/* Mobile: comportamiento normal (apilado) */
+@media(max-width:980px){
+  #calc-slot-2{align-self:stretch}
+}
 
