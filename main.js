@@ -13,16 +13,26 @@ const D=document,W=window;
 
 /* =========================================================
  0) PARTIALS + NORMALIZACIÓN DE RUTAS (GH Pages + local)
+ - FIX: User Site (unidaduniversal.github.io) => repoBase = ""
+ - Soporta /SISTEMAS/ y /SERVICIOS/ con rel "../"
 ========================================================= */
 (()=>{const exists=async(u)=>{try{const r=await fetch(u,{method:"HEAD",cache:"no-store"});return r.ok}catch{return!1}};
 const pick=async(a)=>{for(const u of a)if(await exists(u))return u;return a[0]};
+
 const isGh=location.hostname.endsWith("github.io");
+/* USER SITE: unidaduniversal.github.io => NO repoBase */
+const isUserSite=isGh&&location.hostname==="unidaduniversal.github.io";
+/* PROJECT SITE: username.github.io/REPO/... => repoBase="/REPO" */
 const firstSeg=location.pathname.split("/")[1]||"";
-const repoBase=(isGh&&firstSeg)?("/"+firstSeg):"";
+const repoBase=(isGh&&!isUserSite&&firstSeg)?("/"+firstSeg):"";
+
 const inSub=/\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
 const rel=inSub?"../":"";
+
+/* arma rutas absolutas para GH y relativas para local/subcarpetas */
 const abs=(p)=>{if(!p)return p;if(/^https?:\/\//i.test(p))return p;if(/^(mailto:|tel:|data:)/i.test(p))return p;
-return (isGh?(repoBase+"/"+p):(rel+p)).replace(/\/+/g,"/")};
+return (isGh?((repoBase||"")+"/"+p):(rel+p)).replace(/\/+/g,"/")};
+
 const normalize=(root=D)=>{root.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{const ds=img.getAttribute("data-src");if(!ds)return;
 const fin=abs(ds);if(!img.getAttribute("src"))img.setAttribute("src",fin);img.style.opacity="1"});
 root.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{const p=a.getAttribute("data-href");if(!p)return;
@@ -31,13 +41,31 @@ root.querySelectorAll(".js-img[data-src]").forEach(img=>{const ds=img.getAttribu
 root.querySelectorAll(".js-link[data-href]").forEach(a=>{const dh=a.getAttribute("data-href");if(!dh)return;if(!a.getAttribute("href"))a.setAttribute("href",dh)});
 const y=(root.getElementById&&root.getElementById("gf-year"))||D.getElementById("gf-year")||(root.getElementById&&root.getElementById("year"))||D.getElementById("year");
 if(y)y.textContent=new Date().getFullYear()};
+
 const loadPartials=async()=>{const hp=D.getElementById("header-placeholder"),fp=D.getElementById("footer-placeholder");
 if(!hp&&!fp){normalize(D);return}
+
+/* intenta varias rutas (GH abs + rel + root) */
 const headerURL=await pick([abs("PARTIALS/global-header.html"),rel+"PARTIALS/global-header.html","./PARTIALS/global-header.html","/PARTIALS/global-header.html"]);
 const footerURL=await pick([abs("PARTIALS/global-footer.html"),rel+"PARTIALS/global-footer.html","./PARTIALS/global-footer.html","/PARTIALS/global-footer.html"]);
-let hh="",fh="";try{const hr=hp?await fetch(headerURL,{cache:"no-store"}):null;const fr=fp?await fetch(footerURL,{cache:"no-store"}):null;
-if(hp&&hr&&hr.ok)hh=await hr.text();if(fp&&fr&&fr.ok)fh=await fr.text()}catch(e){console.warn("No se pudieron cargar parciales",e)}
-if(hp&&hh)hp.outerHTML=hh;if(fp&&fh)fp.outerHTML=fh;normalize(D)};
+
+let hh="",fh="";
+try{
+  const hr=hp?await fetch(headerURL,{cache:"no-store"}):null;
+  const fr=fp?await fetch(footerURL,{cache:"no-store"}):null;
+  if(hp&&hr&&hr.ok)hh=await hr.text();
+  if(fp&&fr&&fr.ok)fh=await fr.text();
+}catch(e){console.warn("No se pudieron cargar parciales",e)}
+
+/* inyecta y normaliza */
+if(hp&&hh)hp.outerHTML=hh;
+if(fp&&fh)fp.outerHTML=fh;
+normalize(D);
+
+/* si tienes initGlobalHeader(), LLÁMALO AQUÍ (si no existe, no pasa nada) */
+try{if(typeof initGlobalHeader==="function")initGlobalHeader()}catch{}
+};
+
 const boot=()=>loadPartials();
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
 W.addEventListener("pageshow",()=>{try{normalize(D)}catch{}})})();
