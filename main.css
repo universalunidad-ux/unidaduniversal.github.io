@@ -461,4 +461,41 @@ aside[aria-label^="Reels"]>h4.title-gradient{display:none!important}
    evita que se oculten títulos de video */
 .reels-card #carouselVideos .yt-title{display:block !important;}
 
+/* =========================================================
+   FIX: Quitar título superior y dejar títulos internos
+   (sin barra verde, solo texto turquesa centrado)
+   ========================================================= */
+
+/* 1) Quitar la línea de arriba (el título superior del bloque) */
+.section-title,
+.section-title h2,
+.section-title h3{
+  display:none !important;
+}
+
+/* 2) Títulos dentro de cada tarjeta: sin fondo, sin borde, turquesa, centrados
+   Ajusta el selector si tus títulos tienen otra clase. */
+.card.body > h3,
+.card.body > h4,
+.card.body > .title-gradient{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 8px 0 12px !important;
+  color: var(--brand) !important;   /* turquesa */
+  text-align: center !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+}
+
+/* Si tu “barra verde” viene de un wrapper tipo .pill/.titlebar, neutralízalo */
+.card.body .pill,
+.card.body .titlebar,
+.card.body .bar-title{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
 
