@@ -376,7 +376,7 @@
   </div>
 </div>
 
-<div class="gh-dim" id="gh-dim" hidden></div>
+<div class="gh-dim" id="gh-dim"></div>
 
 <aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true">
   
@@ -390,7 +390,7 @@
         </div>
       </div>
     </div>
-    <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
+    <button class="gh-close" id="gh-close" type="button" aria-label="Cerrar menú">✕</button>
   </div>
 
   <div class="gh-drawer-body">
@@ -490,7 +490,8 @@
       <a class="gh-ctabtn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener"><img class="gh-ctaico js-abs-src" data-src="IMG/whatsapp.svg" alt=""> WhatsApp</a>
     </div>
 
-  </div></aside>
+  </div><!-- /.gh-drawer-body -->
+</aside>
 </header>
 
 <script>
@@ -565,7 +566,7 @@
   const initPaths = () => {
      const elements = document.querySelectorAll('.js-abs-href, .js-abs-src');
      elements.forEach(el => {
-        if(el.dataset.href && !el.getAttribute('href')) el.href = el.dataset.href;
+        if (el.dataset.href && !el.getAttribute("href")) el.setAttribute("href", el.dataset.href);
         if(el.dataset.src && (!el.src || el.src.includes('data:image'))) {
             if(!el.classList.contains('gh-logo')) el.src = el.dataset.src; 
         }
@@ -581,7 +582,6 @@
       document.documentElement.classList.add("gh-open");
       drawer?.setAttribute("aria-hidden", "false");
       burger?.setAttribute("aria-expanded", "true");
-      if (dim) dim.hidden = false;
       document.body.style.overflow = "hidden";
       initMobileSystems();
       initMobileServices();
@@ -589,7 +589,6 @@
       document.documentElement.classList.remove("gh-open");
       drawer?.setAttribute("aria-hidden", "true");
       burger?.setAttribute("aria-expanded", "false");
-      setTimeout(() => { if (dim) dim.hidden = true; }, 200);
       document.body.style.overflow = "";
     }
   };
