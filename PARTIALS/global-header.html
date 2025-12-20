@@ -16,12 +16,7 @@
     --gh-height: 68px; /* Altura estimada para cálculos */
   }
 
-  /* --- GLOBAL FIX: Evita que se rompa el diseño horizontalmente --- */
-  html, body {
-    overflow-x: hidden !important;
-    width: 100% !important;
-    max-width: 100vw !important;
-  }
+
 
   /* --- Base Header --- */
   .gh {
@@ -327,44 +322,7 @@
   }
   .gh-msys-sub{display:none!important;}
 
-  /* Contenedor del menú desplegado */
-.menu-mobile-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    /* Usamos dvh para que ignore la barra de dirección del navegador móvil */
-    height: 100dvh; 
-    background-color: #0d0d0d; /* Tu color de fondo */
-    z-index: 9999;
-    
-    /* ESTO ES LO CLAVE PARA QUE QUEPA SIN SCROLL */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Distribuye elementos arriba y abajo */
-    padding: 20px; /* Un poco de aire */
-    box-sizing: border-box;
-    overflow: hidden; /* Fuerza a no tener scroll */
-}
 
-/* Si el contenido interno (enlaces) es muy alto, usamos flex-shrink o media queries */
-.menu-items {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1rem; /* Espacio flexible */
-    flex-grow: 1; /* Ocupa el espacio central disponible */
-}
-
-/* Ajuste para pantallas muy pequeñas (tipo iPhone SE) */
-@media (max-height: 600px) {
-    .menu-items {
-        gap: 0.5rem; /* Reduce espacio si la pantalla es chaparra */
-    }
-    .menu-link {
-        font-size: 0.9rem; /* Reduce letra si es necesario */
-    }
-}
 </style>
 
 <div class="gh-container">
