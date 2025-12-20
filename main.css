@@ -430,3 +430,92 @@ body>.arrowCircle{display:none!important}
 aside[aria-label^="Reels"]{overflow:visible}
 
 
+/* =========================================================
+   EXPIRITI — MOBILE POLISH (NO CUTS) + VIDEOS SINGLE CENTER
+   Pegar AL FINAL del main.css
+========================================================= */
+
+/* --------- 1) MÓVIL: evitar “cortes” por overflow/alturas --------- */
+@media (max-width: 768px){
+
+  /* a) Contenedor general: evita que algo se “coma” el contenido */
+  section{padding:18px 0}
+
+  /* b) Cards: en móvil, algunos bloques internos (iframes/grids)
+        pueden quedar recortados si el padre tiene overflow hidden */
+  .card{overflow:visible}
+
+  /* c) Carrusel genérico: NO fuerces altura en track (en móvil causa cortes) */
+  .carousel{min-height:unset}
+  .carousel-track{height:auto;align-items:stretch}
+  .carousel-slide{align-items:stretch}
+
+  /* d) En videos y reels: que el slide tenga padding real para que no se “peguen” */
+  #carouselVideos .carousel-slide,
+  #carouselReelsBancos .carousel-slide{
+    padding:0 12px !important;
+  }
+
+  /* e) Flechas: evita que tapen el contenido en pantallas pequeñas */
+  .carousel>.arrowCircle,
+  .listSlider>.arrowCircle{
+    width:40px;height:40px;
+  }
+  .carousel>.arrowCircle.prev,
+  .listSlider>.arrowCircle.prev{left:6px}
+  .carousel>.arrowCircle.next,
+  .listSlider>.arrowCircle.next{right:6px}
+
+  /* f) Wrapper YouTube: asegura que NO colapse y que el iframe sea visible */
+  .yt{width:100%;max-width:100%}
+  .yt-wrap{border-radius:14px}
+
+  /* g) Reels embed: full ancho en móvil (sin quedarse “angosto” y sin cortes) */
+  .reel-embed{
+    width:100% !important;
+    max-width:520px !important;
+    margin:0 auto !important;
+  }
+
+  /* h) Títulos y spacing dentro de cards: evita texto cortado arriba */
+  .card.body{padding:12px !important}
+  .card.body > h3,
+  .card.body > h4{margin-top:0 !important}
+
+  /* i) Asegura que grids no generen scroll raro lateral */
+  .container{padding-inline:16px}
+  .grid-2,.grid-3,.feature-grid{min-width:0}
+  .grid-2 > *,.grid-3 > *,.feature-grid > *{min-width:0}
+
+  /* j) Si algún bloque de “videos” estaba dentro de contenedor con overflow hidden */
+  #videos, #videos .card, #videos .card.body{overflow:visible !important}
+}
+
+/* --------- 2) VIDEOS: si solo hay 1 video, centrarlo (desktop + mobile) --------- */
+
+/* A) El grid: si solo existe un .yt, hazlo 1 columna centrada */
+#carouselVideos .yt-grid{
+  justify-content:center;
+}
+
+#carouselVideos .yt-grid > .yt:only-child{
+  grid-column:1 / -1;
+  max-width:520px;     /* tamaño “bonito” en escritorio cuando es 1 */
+  margin:0 auto;
+}
+
+/* B) Si tu slide es “ancho”, centra el contenido */
+#carouselVideos .carousel-slide{
+  justify-content:center;
+}
+
+/* C) Asegura que el card del video no se estire raro */
+#carouselVideos .yt{
+  width:100%;
+}
+
+/* --------- 3) EXTRA: cuando hay 1 video, no dejes demasiado padding lateral --------- */
+@media (min-width: 901px){
+  #carouselVideos .carousel-slide{padding:0 24px !important}
+}
+
