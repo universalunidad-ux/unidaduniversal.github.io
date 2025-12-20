@@ -1,7 +1,7 @@
-<header class="gh" role="banner">
+<header class="gh" id="gh-header" role="banner">
 <style>
   /* =========================================================
-     Expiriti - Header Global (Corregido: Rutas + Móvil)
+     Expiriti - Header Global (V3: Scroll Effect + Full Height Fix)
      ========================================================= */
 
   :root {
@@ -13,14 +13,30 @@
     --gh-brand: var(--brand, #2dd4bf);
     --gh-brand2: var(--brand-2, #60a5fa);
     --gh-maxw: var(--maxw, 1200px);
+    --gh-height: 68px; /* Altura estimada para cálculos */
   }
 
-  /* --- Base --- */
+  /* --- GLOBAL FIX: Evita que se rompa el diseño horizontalmente --- */
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  /* --- Base Header --- */
   .gh {
     position: sticky; top: 0; z-index: 9999;
     backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
     background: var(--gh-bg); border-bottom: 1px solid var(--gh-border);
+    transition: transform 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.000); /* Suavidad al esconder/mostrar */
+    will-change: transform;
   }
+  
+  /* Clase que añade JS para esconder el menú */
+  .gh.is-hidden {
+    transform: translateY(-100%);
+  }
+
   .gh * { box-sizing: border-box; }
 
   .gh-container {
@@ -141,40 +157,48 @@
     line-height: 1; cursor: pointer;
   }
 
-  /* --- MOBILE DRAWER (CORREGIDO) --- */
+  /* --- MOBILE DRAWER (CORREGIDO FULL HEIGHT) --- */
   .gh-dim { 
     position: fixed; inset: 0; background: rgba(0, 0, 0, .55); 
     opacity: 0; visibility: hidden; transition: .18s ease; z-index: 9998; 
   }
   
-  /* Se asegura que el drawer no exista visualmente cuando está hidden */
   .gh-drawer {
     position: fixed; top: 0; right: 0; 
-    height: 100vh; /* Fallback */
-    height: 100dvh; /* Altura dinámica para móviles modernos */
+    /* Altura dinámica exacta para móviles (evita barras del navegador) */
+    height: 100vh; height: 100dvh; 
     width: min(92vw, 420px);
     background: rgba(8, 11, 18, .98); border-left: 1px solid rgba(255, 255, 255, .08);
-    transform: translateX(105%); transition: .2s ease; z-index: 9999; 
+    transform: translateX(105%); transition: .25s cubic-bezier(0.4, 0, 0.2, 1); 
+    z-index: 9999; 
     display: flex; flex-direction: column;
   }
   
-  /* Clases de estado abierto */
   html.gh-open .gh-dim { opacity: 1; visibility: visible; }
   html.gh-open .gh-drawer { transform: translateX(0); }
 
-  /* Mantiene oculto estrictamente si tiene atributo hidden */
-  .gh-drawer[hidden] { display: none !important; transform: translateX(105%) !important; }
+  .gh-drawer[hidden] { display: none !important; }
   .gh-dim[hidden] { display: none !important; }
 
-  .gh-drawer-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 14px; border-bottom: 1px solid rgba(255, 255, 255, .06); }
+  /* Header del Drawer fijo */
+  .gh-drawer-head { 
+    flex: 0 0 auto; /* No se encoge */
+    display: flex; align-items: center; justify-content: space-between; 
+    padding: 14px 14px; border-bottom: 1px solid rgba(255, 255, 255, .06); 
+  }
   .gh-close {
     border: 1px solid rgba(255, 255, 255, .18); background: rgba(15, 23, 42, .9);
     color: var(--gh-text); border-radius: 12px; padding: 8px 10px;
     font-size: 16px; line-height: 1; cursor: pointer;
   }
   
-  /* Agregado padding inferior extra para que no se corte el contenido */
-  .gh-drawer-body { padding: 12px 14px 80px 14px; overflow-y: auto; overflow-x: hidden; flex: 1; }
+  /* Cuerpo del Drawer: Este es el ÚNICO que hace scroll */
+  .gh-drawer-body { 
+    flex: 1 1 auto; /* Ocupa el espacio restante */
+    overflow-y: auto; /* Scroll interno */
+    overscroll-behavior: contain; /* Evita que el scroll pase a la página de fondo */
+    padding: 12px 14px 40px 14px; /* Padding extra abajo para ver todo */
+  }
 
   .gh-mnav { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
   .gh-mnav a {
@@ -605,6 +629,36 @@
   window.__EXPIRITI_GH__ = true;
   const Q  = (s, ctx=document) => ctx.querySelector(s);
 
+  // --- Scroll Header Logic (NUEVO) ---
+  const initScrollHeader = () => {
+    let lastScrollY = window.scrollY;
+    const header = Q('#gh-header');
+    
+    const handleScroll = () => {
+      // Si el menú móvil está abierto, NO esconder el header
+      if (document.documentElement.classList.contains("gh-open")) return;
+      
+      const currentScrollY = window.scrollY;
+      
+      // Umbral mínimo de scroll para activar (50px)
+      if (currentScrollY > 50) {
+        if (currentScrollY > lastScrollY) {
+           // Bajando -> Esconder
+           header.classList.add('is-hidden');
+        } else {
+           // Subiendo -> Mostrar
+           header.classList.remove('is-hidden');
+        }
+      } else {
+        // En el tope de la página -> Mostrar siempre
+        header.classList.remove('is-hidden');
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  };
+
   // 1. SISTEMAS (Tabs Logic)
   const initMobileSystems = () => {
     const root = Q("#gh-msys");
@@ -666,31 +720,25 @@
     sync();
   };
 
-  // 3. Path / Attributes Fixer - CORREGIDO PARA SUBPÁGINAS
+  // 3. Path / Attributes Fixer
   const initPaths = () => {
-     // Detectar si estamos en una carpeta profunda (ej: /SISTEMAS/ o /SERVICIOS/)
      const isSubDir = window.location.pathname.includes('/SISTEMAS/') || window.location.pathname.includes('/SERVICIOS/');
      const pathPrefix = isSubDir ? '../' : '';
 
      const elements = document.querySelectorAll('.js-abs-href, .js-abs-src');
      elements.forEach(el => {
-        // Corregir Links (href)
         if(el.dataset.href && !el.getAttribute('href')) {
             let target = el.dataset.href;
-            // Si el link apunta a index.html y estamos en subcarpeta, subimos con ../
             if(isSubDir && (target.startsWith('index.html') || target.startsWith('IMG') || target.startsWith('SISTEMAS') || target.startsWith('SERVICIOS'))) {
                 target = pathPrefix + target;
             }
-            // Si es un link con # (ancla), asegurarse que vaya al index
             if(isSubDir && target.startsWith('#')) {
                 target = '../index.html' + target;
             }
             el.href = target;
         }
 
-        // Corregir Imágenes (src)
         if(el.dataset.src && (!el.src || el.src.includes('data:image'))) {
-            // Solo aplicamos la ruta si no es el logo SVG que ya tiene src
             if(!el.classList.contains('gh-logo') || el.src.includes('data:image')) {
                 el.src = pathPrefix + el.dataset.src; 
             }
@@ -698,7 +746,7 @@
      });
   };
 
-    // 4. Drawer (Main Logic)
+  // 4. Drawer (Main Logic)
   const toggleDrawer = (show) => {
     const drawer = Q("#gh-drawer");
     const dim = Q("#gh-dim");
@@ -709,14 +757,11 @@
     if (show) {
       drawer.hidden = false;
       dim.hidden = false;
-
-      // Forzar reflow para que la transición funcione
       void drawer.offsetWidth;
-
       document.documentElement.classList.add("gh-open");
       drawer.setAttribute("aria-hidden", "false");
       burger.setAttribute("aria-expanded", "true");
-
+      // Bloquear scroll del body
       document.body.style.overflow = "hidden";
       initMobileSystems();
       initMobileServices();
@@ -724,21 +769,16 @@
       document.documentElement.classList.remove("gh-open");
       drawer.setAttribute("aria-hidden", "true");
       burger.setAttribute("aria-expanded", "false");
-
-      document.body.style.overflow = "";
-
+      document.body.style.overflow = ""; // Reactivar scroll body
       window.setTimeout(() => {
-        // Solo ocultar si no se volvió a abrir rápidamente
         if (!document.documentElement.classList.contains("gh-open")) {
             dim.hidden = true;
             drawer.hidden = true;
         }
-      }, 220);
+      }, 250);
     }
   };
 
-
-  // Event Listeners
   document.addEventListener("click", (e) => {
     const burgerBtn = e.target.closest("#gh-burger");
     if (burgerBtn) {
@@ -751,9 +791,7 @@
       toggleDrawer(false);
       return;
     }
-    // Cerrar al dar click en un link dentro del drawer
     if (e.target.closest(".gh-drawer a")) {
-        // Pequeño delay para ver el click visual
         setTimeout(() => toggleDrawer(false), 150);
     }
   }, { passive: false });
@@ -762,13 +800,11 @@
     if (e.key === "Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
   });
   
-  // Ejecutar corrección de rutas
   initPaths();
-
-  // Asegurar estado inicial cerrado
   toggleDrawer(false);
+  // Iniciar la lógica de scroll
+  initScrollHeader();
 
-  // Fix caché bfcache (iOS/Android back button)
   window.addEventListener("pageshow", (ev) => {
     if (ev.persisted) toggleDrawer(false);
   });
