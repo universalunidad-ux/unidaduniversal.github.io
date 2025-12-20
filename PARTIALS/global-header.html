@@ -499,6 +499,120 @@ html,body{overflow-x:hidden}
   background:linear-gradient(90deg, var(--gh-brand), var(--gh-brand2));
 }
 
+      /* =========================================================
+   SERVICIOS (Mobile 2026) — 2x2 + Carrusel + Flechas
+========================================================= */
+.gh-msvc{margin-top:10px}
+
+.gh-svcwrap{
+  position:relative;
+  margin-top:6px;
+  border-radius:18px;
+  padding:0;
+}
+
+.gh-svctrack{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  gap:12px;
+  padding:2px 2px 8px;
+  scrollbar-width:none;
+}
+.gh-svctrack::-webkit-scrollbar{display:none}
+
+.gh-svcpage{
+  flex:0 0 100%;
+  scroll-snap-align:start;
+}
+
+.gh-mgrid-svc{margin-top:6px}
+.gh-mcard-ghost{
+  opacity:0;
+  pointer-events:none;
+  background:transparent;
+  border-color:transparent;
+  box-shadow:none;
+}
+
+/* Flechas estilo “app” */
+.gh-svcarrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:36px;height:36px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(10,14,23,.75);
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  line-height:1;
+  cursor:pointer;
+  z-index:5;
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+}
+.gh-svcarrow:hover{border-color:rgba(45,212,191,.25)}
+.gh-svcarrow:active{transform:translateY(-50%) scale(.98)}
+.gh-svcarrow.prev{left:6px}
+.gh-svcarrow.next{right:6px}
+
+/* Dots */
+.gh-svcdots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:8px;
+}
+.gh-svcdots .dot{
+  width:8px;height:8px;
+  border-radius:999px;
+  border:0;
+  background:rgba(255,255,255,.22);
+}
+.gh-svcdots .dot.is-active{
+  width:18px;
+  background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));
+}
+
+/* =========================================================
+   CTA con iconos (WhatsApp / Tel)
+========================================================= */
+.gh-mcta-ico{margin-top:12px}
+.gh-ctabtn{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:12px 12px;
+  border-radius:16px;
+  text-decoration:none;
+  color:var(--gh-text);
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  box-shadow:0 18px 40px rgba(0,0,0,.30);
+  font-weight:800;
+  letter-spacing:.01em;
+}
+.gh-ctabtn:hover{
+  border-color:rgba(45,212,191,.22);
+  background:linear-gradient(180deg, rgba(45,212,191,.08), rgba(255,255,255,.02));
+}
+.gh-ctabtn:active{transform:scale(.99)}
+.gh-ctaico{
+  width:22px;height:22px;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.30));
+  opacity:.95;
+}
+
+/* Ajuste: iconos de Servicios (cuadrados) */
+.gh-mgrid-svc .gh-mimg{height:52px;object-fit:contain}
+
       
 </style>
    
@@ -673,10 +787,6 @@ html,body{overflow-x:hidden}
           </div>
         </li>
 
-        <li><a class="js-abs-href" data-href="index.html#promociones">Promociones</a></li>
-        <li><a class="js-abs-href" data-href="index.html#eventos">Eventos</a></li>
-        <li><a class="js-abs-href" data-href="nosotros.html">Nosotros</a></li>
-        <li><a class="js-abs-href" data-href="index.html#contacto">Contacto</a></li>
       </ul>
     </nav>
 
@@ -837,39 +947,88 @@ html,body{overflow-x:hidden}
   </a>
 </section>
 
-        <details class="gh-acc">
-          <summary>Servicios <span aria-hidden="true">▾</span></summary>
-          <div class="gh-acc-in">
-            <a class="js-abs-href" data-href="SERVICIOS/polizas.html">Pólizas anuales</a>
+     <!-- ===== Servicios (Mobile 2026 UI) — 2x2 + Carousel ===== -->
+<section class="gh-acc gh-msvc" id="gh-msvc" aria-label="Servicios (móvil)">
+  <div class="gh-msys-head">
+    <div class="gh-msys-title">Servicios</div>
+    <div class="gh-msys-sub">Desliza o usa las flechas</div>
+  </div>
 
-            <a class="js-abs-href" data-href="SERVICIOS/cursos.html">Cursos</a>
-            <a class="js-abs-href" data-href="SERVICIOS/implementaciones.html">Implementaciones</a>
-            <a class="js-abs-href" data-href="SERVICIOS/migraciones.html">Migraciones</a>
-            <a class="js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html">Servidores virtuales</a>
-            <a class="js-abs-href" data-href="SERVICIOS/soporte.html">Soporte técnico</a>
-            <a class="js-abs-href" data-href="SERVICIOS/desarrollos.html">Desarrollos a la medida</a>
-          </div>
-        </details>
+  <div class="gh-svcwrap" aria-roledescription="carousel">
+    <button class="gh-svcarrow prev" type="button" aria-label="Servicios anteriores">‹</button>
 
-        <div class="gh-mcta">
-          <a class="gh-btn" href="tel:+525568437918">Llamar</a>
-          <a class="gh-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
+    <div class="gh-svctrack" id="gh-svctrack" role="region" aria-label="Carrusel de servicios" tabindex="0">
+      <!-- Página 1 (4) -->
+      <div class="gh-svcpage" aria-label="Servicios página 1">
+        <div class="gh-mgrid gh-mgrid-svc">
+          <!-- ⭐ Servicio estrella -->
+          <a class="gh-mcard gh-star js-abs-href" data-href="SERVICIOS/polizas.html">
+            <img class="gh-mimg js-abs-src" data-src="IMG/021-maintenance.webp" alt="">
+            <div class="gh-mmeta">
+              <strong>Pólizas anuales</strong><span>Soporte continuo y preventivo</span>
+            </div>
+          </a>
+
+          <a class="gh-mcard js-abs-href" data-href="SERVICIOS/implementaciones.html">
+            <img class="gh-mimg js-abs-src" data-src="IMG/025-meeting.webp" alt="">
+            <div class="gh-mmeta"><strong>Implementaciones</strong><span>Instalación y puesta en marcha</span></div>
+          </a>
+
+          <a class="gh-mcard js-abs-href" data-href="SERVICIOS/migraciones.html">
+            <img class="gh-mimg js-abs-src" data-src="IMG/018-transfer.webp" alt="">
+            <div class="gh-mmeta"><strong>Migraciones</strong><span>Datos limpios y validados</span></div>
+          </a>
+
+          <a class="gh-mcard js-abs-href" data-href="SERVICIOS/desarrollos.html">
+            <img class="gh-mimg js-abs-src" data-src="IMG/020-code.webp" alt="">
+            <div class="gh-mmeta"><strong>Desarrollos</strong><span>Integraciones y automatización</span></div>
+          </a>
         </div>
-      </nav>
-    </div>
-  </aside>
+      </div>
 
+      <!-- Página 2 (3) -->
+      <div class="gh-svcpage" aria-label="Servicios página 2">
+        <div class="gh-mgrid gh-mgrid-svc">
+          <a class="gh-mcard js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html">
+            <img class="gh-mimg js-abs-src" data-src="IMG/023-stairs.webp" alt="">
+            <div class="gh-mmeta"><strong>Servidores virtuales</strong><span>Acceso remoto seguro</span></div>
+          </a>
+
+          <a class="gh-mcard js-abs-href" data-href="SERVICIOS/cursos.html">
+            <img class="gh-mimg js-abs-src" data-src="IMG/024-education.webp" alt="">
+            <div class="gh-mmeta"><strong>Cursos</strong><span>Capacitación para tu equipo</span></div>
+          </a>
+
+          <a class="gh-mcard js-abs-href" data-href="SERVICIOS/soporte.html">
+            <img class="gh-mimg js-abs-src" data-src="IMG/021-maintenance.webp" alt="">
+            <div class="gh-mmeta"><strong>Soporte técnico</strong><span>Remoto + WhatsApp</span></div>
+          </a>
+
+          <!-- Ghost para mantener 2x2 -->
+          <div class="gh-mcard gh-mcard-ghost" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="gh-svcarrow next" type="button" aria-label="Servicios siguientes">›</button>
+  </div>
+
+  <div class="gh-svcdots" aria-label="Paginación de servicios">
+    <button class="dot is-active" type="button" aria-label="Ir a página 1"></button>
+    <button class="dot" type="button" aria-label="Ir a página 2"></button>
+  </div>
+</section>
 <script>
 (function () {
   "use strict";
-  if (window.__EXPIRITI_GH__) return;      // <- guard anti-duplicado
+  if (window.__EXPIRITI_GH__) return; 
   window.__EXPIRITI_GH__ = true;
 
-  console.log("GH INIT: bind listeners");
-
   const Q  = (s, ctx=document)=>ctx.querySelector(s);
-  const QA = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
 
+  /* =======================
+     Drawer open/close
+  ======================= */
   const toggleDrawer = (show) => {
     const drawer = Q("#gh-drawer");
     const dim = Q("#gh-dim");
@@ -881,6 +1040,11 @@ html,body{overflow-x:hidden}
       burger?.setAttribute("aria-expanded", "true");
       if (dim) dim.hidden = false;
       document.body.style.overflow = "hidden";
+
+      // init módulos mobile al abrir
+      initMobileSystems();
+      initMobileServices();
+
     } else {
       document.documentElement.classList.remove("gh-open");
       drawer?.setAttribute("aria-hidden", "true");
@@ -908,6 +1072,84 @@ html,body{overflow-x:hidden}
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
   });
+
+  /* =======================
+     SISTEMAS tabs (si ya lo tienes, deja tu versión)
+     - Si no tienes initMobileSystems en tu script, esto no hace nada.
+  ======================= */
+  const initMobileSystems = () => {
+    const root = Q("#gh-msys");
+    if (!root || root.__inited) return;
+    root.__inited = true;
+
+    const cats = Array.from(root.querySelectorAll(".gh-cat"));
+    const panels = Array.from(root.querySelectorAll(".gh-panel"));
+
+    const KEY = "expiriti_mobile_sys_cat";
+    const saved = localStorage.getItem(KEY);
+    const defaultCat = saved || "contables";
+
+    const setCat = (cat) => {
+      cats.forEach(b=>{
+        const on = b.dataset.cat === cat;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      panels.forEach(p=>{
+        const on = p.dataset.panel === cat;
+        p.classList.toggle("is-open", on);
+        p.hidden = !on;
+      });
+      localStorage.setItem(KEY, cat);
+    };
+
+    cats.forEach(b=> b.addEventListener("click", ()=> setCat(b.dataset.cat)));
+    setCat(defaultCat);
+  };
+
+  /* =======================
+     SERVICIOS carrusel 2x2
+  ======================= */
+  const initMobileServices = () => {
+    const root = Q("#gh-msvc");
+    const track = Q("#gh-svctrack");
+    if (!root || !track || root.__inited) return;
+    root.__inited = true;
+
+    const pages = Array.from(track.querySelectorAll(".gh-svcpage"));
+    const prev = root.querySelector(".gh-svcarrow.prev");
+    const next = root.querySelector(".gh-svcarrow.next");
+    const dotsWrap = root.querySelector(".gh-svcdots");
+    const dots = dotsWrap ? Array.from(dotsWrap.querySelectorAll(".dot")) : [];
+
+    const pageIndexFromScroll = () => {
+      const w = track.clientWidth || 1;
+      return Math.round(track.scrollLeft / w);
+    };
+
+    const goTo = (idx) => {
+      const w = track.clientWidth || 1;
+      const i = Math.max(0, Math.min(idx, pages.length - 1));
+      track.scrollTo({ left: i * w, behavior: "smooth" });
+    };
+
+    const sync = () => {
+      const idx = pageIndexFromScroll();
+      dots.forEach((d,i)=>d.classList.toggle("is-active", i===idx));
+      if (prev) { prev.disabled = (idx === 0); prev.style.opacity = prev.disabled ? ".35" : "1"; }
+      if (next) { next.disabled = (idx === pages.length - 1); next.style.opacity = next.disabled ? ".35" : "1"; }
+    };
+
+    prev?.addEventListener("click", (e)=>{ e.preventDefault(); goTo(pageIndexFromScroll()-1); });
+    next?.addEventListener("click", (e)=>{ e.preventDefault(); goTo(pageIndexFromScroll()+1); });
+    dots.forEach((d,i)=> d.addEventListener("click",(e)=>{ e.preventDefault(); goTo(i); }));
+
+    track.addEventListener("scroll", () => { requestAnimationFrame(sync); }, { passive:true });
+    window.addEventListener("resize", sync);
+
+    sync();
+  };
+
 })();
 </script>
 
