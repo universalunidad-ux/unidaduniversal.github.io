@@ -330,172 +330,61 @@ section{padding:20px 0}
 #integra .carouselX .sys img{width:min(220px,88%);height:56px;object-fit:contain;border-radius:12px;background:transparent;border:none;margin:6px auto 10px}
 @media(max-width:980px){#integra .carouselX .sys img{height:62px}}
 
+/* ============ TITULOS REELS (estilo limpio/verde) ============ */
+.reel-title{margin:10px 0 12px!important;color:var(--brand)!important;font-weight:900!important;font-size:15px!important;line-height:1.2!important;text-align:left}
+.reel-title.active{color:var(--brand)!important}
+
+/* (Opcional) si tu H4 de reels viene con estilos viejos tipo “badge”, esto lo neutraliza */
+.reel-title{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important}
 
 /* ============ OCULTAR ENCABEZADOS (si aplica en tu UI) ============ */
 #videos-title{display:none!important}
 aside[aria-label^="Reels"]>h4.title-gradient{display:none!important}
 
-
 /* =========================================================
- EXPIRITI FIX FINAL (UNICO) — REELS/VIDEOS TITULOS + FLECHAS + PANEL -15%
- Pegar AL FINAL del main.css (y BORRAR otros “patch/final” duplicados)
+ EXPIRITI FIX FINAL (UNICO) — LIMPIO
+ - Flechas ancladas (no se van al body)
+ - REELS: solo .active, sin barra/badge
+ - VIDEOS: quitar "Videos del sistema" + yt-title turquesa centrado SIN barra
+ - Panel -15%: card y centrado vertical
 ========================================================= */
 
-/* -----------------------------
- A) FLECHAS: encapsular para que NO se vayan al margen del body
------------------------------ */
+/* ============ A) FLECHAS (ancladas) ============ */
 .carousel,.carouselX,.icons-carousel,.listSlider{position:relative}
-.carousel>.arrowCircle{position:absolute;top:50%;transform:translateY(-50%);left:10px;right:auto}
-.carousel>.arrowCircle.next{left:auto;right:10px}
-.carouselX>.arrowCircle{position:absolute;top:50%;transform:translateY(-50%);left:10px;right:auto}
-.carouselX>.arrowCircle.next{left:auto;right:10px}
-.icons-carousel>.arrowCircle{position:absolute;top:50%;transform:translateY(-50%);left:10px;right:auto}
-.icons-carousel>.arrowCircle.next{left:auto;right:10px}
-
-/* Si por algún motivo hay flechas “sueltas” fuera de carrusel (HTML mal ubicado),
-   esto evita que tapen la UI en bordes. (Seguro) */
+.carousel>.arrowCircle,.carouselX>.arrowCircle,.icons-carousel>.arrowCircle,.listSlider>.arrowCircle{position:absolute;top:50%;transform:translateY(-50%);left:10px;right:auto;z-index:10}
+.carousel>.arrowCircle.next,.carouselX>.arrowCircle.next,.icons-carousel>.arrowCircle.next,.listSlider>.arrowCircle.next{left:auto;right:10px}
 body>.arrowCircle{display:none!important}
 
-/* -----------------------------
- B) TITULOS REELS: SOLO 1 visible (el .active), centrado, sin badge/barra
------------------------------ */
-.reel-title{display:none!important;margin:0 0 10px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;color:var(--brand)!important;font-weight:900!important;font-size:15px!important;line-height:1.2;text-align:center!important}
+/* ============ B) REELS TITULOS (solo activo, turquesa, centrado) ============ */
+.reel-title{display:none!important;margin:0 0 10px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;color:var(--brand)!important;font-weight:900!important;font-size:15px!important;line-height:1.2!important;text-align:center!important}
 .reel-title.active{display:block!important}
 
-/* Si tu aside trae un “Reels Destacados: X” y NO lo quieres */
-aside[aria-label^="Reels"]>h4.title-gradient{display:none!important}
+/* ============ C) VIDEOS (según tu HTML) ============ */
+/* 1) Quitar el título superior "Videos del sistema" */
+#videos>#videos-title,#videos>.card.body>#videos-title,#videos .card.body>#videos-title{display:none!important}
+/* 2) Asegura que el carrusel de videos no “fuerce” altura */
+#carouselVideos{min-height:auto}
+#carouselVideos .carousel-track{height:auto}
+#carouselVideos .carousel-slide{height:auto;align-items:flex-start;justify-content:center;box-sizing:border-box}
+/* 3) Grid (2 cols desktop, 1 col mobile) */
+#carouselVideos .yt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;align-items:start}
+@media(max-width:900px){#carouselVideos .yt-grid{grid-template-columns:1fr}}
+/* 4) Card de cada video */
+#carouselVideos .yt{background:rgba(2,6,23,.35);border:1px solid rgba(148,163,184,.25);border-radius:14px;padding:10px;overflow:hidden}
+/* 5) Título de cada video: SOLO texto turquesa centrado (sin barra) */
+#carouselVideos .yt-title{display:block!important;margin:0 0 8px!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;color:var(--brand)!important;font-weight:900!important;font-size:14px!important;line-height:1.25!important;text-align:center!important}
+/* 6) Wrapper 16:9 para iframe (tu JS inserta iframe aquí) */
+#carouselVideos .yt-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.08)}
+#carouselVideos .yt-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 
-/* -----------------------------
- C) TITULOS VIDEOS: mismo look (sin barra), centrado
-   - Usa tu contenedor .yt-titlesbar y items .yt-tab
------------------------------ */
+/* ============ D) (Opcional) Tabs de videos si existieran (sin barra) ============ */
+/* Si tu JS usa .yt-titlesbar/.yt-tab, aquí queda sin fondo/rectángulo */
 .yt-titlesbar{display:flex!important;justify-content:center!important;gap:14px!important;margin:0 0 12px!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important}
-.yt-tab{display:inline-block!important;background:transparent!important;border:0!important;padding:0!important;color:var(--brand)!important;font-weight:900!important;font-size:15px!important;line-height:1.2;text-align:center!important}
+.yt-tab{display:inline-block!important;background:transparent!important;border:0!important;padding:0!important;color:var(--brand)!important;font-weight:900!important;font-size:15px!important;line-height:1.2!important;text-align:center!important}
 @media(max-width:768px){.yt-titlesbar{justify-content:flex-start!important}.yt-tab{text-align:left!important}}
-
-/* NO mates el titulo “real” si tu JS no lo está duplicando.
-   Mantén oculto solo cuando el JS lo marque con clase. */
 .yt-title--hidden{display:none!important}
 
-/* -----------------------------
- D) PANEL -15%: alto “estrecho” (auto) pero CENTRADO VERTICALMENTE
-   - La fila se estira por la calculadora; este slot NO debe estirarse
------------------------------ */
+/* ============ E) PANEL -15% (centrado vertical y look card) ============ */
 #calc-slot-2{height:auto!important;align-self:center!important;display:block!important}
-#calc-slot-2.placeholder{
-  height:auto!important;
-  min-height:0!important;
-  display:block!important;
-  text-align:center!important;
-  /* look “card” como tu estilo base */
-  background:linear-gradient(180deg,#0e1826,#0f1622)!important;
-  border:1px solid #1c2533!important;
-  border-radius:16px!important;
-  box-shadow:0 10px 30px rgba(0,0,0,.25)!important;
-  padding:18px 20px!important;
-}
-
-/* Mobile: se apila, ya no hace falta centrado vertical */
-@media(max-width:980px){
-  #calc-slot-2{align-self:stretch!important}
-}
-
-/* =========================================================
-   FIX: Títulos de VIDEOS visibles (yt-title) + layout grid
-   Pegar AL FINAL del CSS
-========================================================= */
-
-/* Estructura de videos */
-#carouselVideos .yt-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-#carouselVideos .yt{
-  background:rgba(2,6,23,.35);
-  border:1px solid rgba(148,163,184,.25);
-  border-radius:14px;
-  padding:10px;
-  overflow:hidden;
-}
-
-/* Título visible arriba del video */
-#carouselVideos .yt-title{
-  display:block !important;
-  margin:0 0 8px !important;
-  padding:8px 10px !important;
-  border-radius:12px !important;
-  font-size:13px !important;
-  line-height:1.25 !important;
-  font-weight:700 !important;
-  color:#e5e7eb !important;
-  background:linear-gradient(135deg, rgba(34,197,94,.18), rgba(45,212,191,.12));
-  border:1px solid rgba(34,197,94,.35);
-}
-
-/* Contenedor del embed (si tu JS inserta iframe) */
-#carouselVideos .yt-wrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  border-radius:12px;
-  overflow:hidden;
-  background:#000;
-  border:1px solid rgba(255,255,255,.08);
-}
-#carouselVideos .yt-wrap iframe{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
-  display:block;
-}
-
-/* Responsive */
-@media(max-width:900px){
-  #carouselVideos .yt-grid{grid-template-columns:1fr;}
-}
-
-/* Si por accidente los videos están dentro de .reels-card,
-   evita que se oculten títulos de video */
-.reels-card #carouselVideos .yt-title{display:block !important;}
-
-/* =========================================================
-   FIX: Quitar título superior y dejar títulos internos
-   (sin barra verde, solo texto turquesa centrado)
-   ========================================================= */
-
-/* 1) Quitar la línea de arriba (el título superior del bloque) */
-.section-title,
-.section-title h2,
-.section-title h3{
-  display:none !important;
-}
-
-/* 2) Títulos dentro de cada tarjeta: sin fondo, sin borde, turquesa, centrados
-   Ajusta el selector si tus títulos tienen otra clase. */
-.card.body > h3,
-.card.body > h4,
-.card.body > .title-gradient{
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 8px 0 12px !important;
-  color: var(--brand) !important;   /* turquesa */
-  text-align: center !important;
-  -webkit-background-clip: initial !important;
-  background-clip: initial !important;
-}
-
-/* Si tu “barra verde” viene de un wrapper tipo .pill/.titlebar, neutralízalo */
-.card.body .pill,
-.card.body .titlebar,
-.card.body .bar-title{
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
-
+#calc-slot-2.placeholder{height:auto!important;min-height:0!important;display:block!important;text-align:center!important;background:linear-gradient(180deg,#0e1826,#0f1622)!important;border:1px solid #1c2533!important;border-radius:16px!important;box-shadow:0 10px 30px rgba(0,0,0,.25)!important;padding:18px 20px!important}
+@media(max-width:980px){#calc-slot-2{align-self:stretch!important}}
