@@ -159,6 +159,8 @@
     font-size: 16px; line-height: 1; cursor: pointer;
   }
   .gh-drawer-body { padding: 12px 14px; overflow: auto; }
+.gh-drawer[hidden]{display:none!important;}
+.gh-dim[hidden]{display:none!important;}
 
   .gh-mnav { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
   .gh-mnav a {
@@ -391,7 +393,7 @@
 
   <div class="gh-dim" id="gh-dim" hidden></div>
 
-<aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true">
+<aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true" hidden>
   <!-- HEAD (fijo arriba) -->
   <div class="gh-drawer-head">
     <div class="gh-drawer-title gh-dtitle">
@@ -670,27 +672,41 @@
      });
   };
 
-  // 4. Drawer (Main Logic)
+    // 4. Drawer (Main Logic) - FIX: no abrir por default + evita “asomadas”
   const toggleDrawer = (show) => {
     const drawer = Q("#gh-drawer");
     const dim = Q("#gh-dim");
     const burger = Q("#gh-burger");
+
+    if (!drawer || !dim || !burger) return;
+
     if (show) {
+      // IMPORTANT: mostrar drawer antes de animar
+      drawer.hidden = false;
+      dim.hidden = false;
+
       document.documentElement.classList.add("gh-open");
-      drawer?.setAttribute("aria-hidden", "false");
-      burger?.setAttribute("aria-expanded", "true");
-      if (dim) dim.hidden = false;
+      drawer.setAttribute("aria-hidden", "false");
+      burger.setAttribute("aria-expanded", "true");
+
       document.body.style.overflow = "hidden";
       initMobileSystems();
       initMobileServices();
     } else {
       document.documentElement.classList.remove("gh-open");
-      drawer?.setAttribute("aria-hidden", "true");
-      burger?.setAttribute("aria-expanded", "false");
-      setTimeout(() => { if (dim) dim.hidden = true; }, 200);
+      drawer.setAttribute("aria-hidden", "true");
+      burger.setAttribute("aria-expanded", "false");
+
       document.body.style.overflow = "";
+
+      // IMPORTANT: ocultar al terminar transición
+      window.setTimeout(() => {
+        dim.hidden = true;
+        drawer.hidden = true;
+      }, 220);
     }
   };
+
 
   // Event Listeners
   document.addEventListener("click", (e) => {
@@ -711,7 +727,16 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
   });
-
   initPaths();
+
+  // HARD RESET: cerrado al inicio (evita que aparezca abierto/restaurado)
+  toggleDrawer(false);
+
+  // FIX: iOS/Android bfcache (cuando vuelves atrás o el navegador restaura estado)
+  window.addEventListener("pageshow", (ev) => {
+    if (ev.persisted) toggleDrawer(false);
+  });
+
 })();
+
 </script>
