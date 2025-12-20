@@ -198,6 +198,17 @@ html.gh-open .gh-dim{
   visibility: visible;
 }
 
+  /* ===== FIX: Head del drawer integrado (mismo look que el panel) ===== */
+.gh-drawer{
+  background: rgba(8,11,18,.98);
+}
+.gh-drawer-head{
+  background: transparent;                 /* quita el bloque sólido */
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 </style>
 
 <div class="gh-container">
