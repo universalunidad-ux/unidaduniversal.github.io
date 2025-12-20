@@ -395,3 +395,25 @@ body>.arrowCircle{display:none!important}
 ========================================================= */
 #beneficios .grid-2 > div:first-child > h2.title-gradient{display:none!important}
 
+/* =========================================================
+   EXPIRITI FIX — QUITAR TITULOS SUPERIORES (TABS) EN VIDEOS
+   Objetivo: eliminar “Título 1  Título 2” arriba del carrusel
+   Mantener: h4.yt-title (títulos por video dentro del grid)
+========================================================= */
+
+/* 1) Mata los “tabs” sí o sí (si existen, ahí está el texto de arriba) */
+#videos .yt-tab{display:none!important}
+
+/* 2) Mata cualquier barra/contenedor que solo exista para esos tabs */
+#videos .yt-titlesbar,
+#videos .yt-tabs,
+#videos .yt-tabsbar,
+#videos .videos-titles,
+#videos .titlesbar,
+#videos .tabsbar,
+#videos [class*="titlesbar"],
+#videos [class*="tabsbar"]{display:none!important;visibility:hidden!important;height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}
+
+/* 3) Asegura que los títulos internos (los buenos) sigan */
+#carouselVideos .yt-title{display:block!important}
+
