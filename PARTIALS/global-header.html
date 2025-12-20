@@ -1,10 +1,9 @@
 <header class="gh" role="banner">
 <style>
   /* =========================================================
-     Expiriti - Global Header (Fixed + MegaMenu + Mobile Drawer)
+     Expiriti - Header Global (Corregido: Rutas + Móvil)
      ========================================================= */
 
-  /* --- Tokens --- */
   :root {
     --gh-bg: rgba(7, 10, 16, .92);
     --gh-border: rgba(255, 255, 255, .06);
@@ -52,7 +51,6 @@
   }
   .gh-nav > ul > li { display: flex; align-items: center; }
 
-  /* Links top */
   .gh-nav a {
     position: relative; color: var(--gh-text); text-decoration: none;
     font-weight: 520; font-size: 14px; padding: 6px 2px; line-height: 1;
@@ -136,21 +134,37 @@
     transition: .18s ease;
   }
   .gh-btn:hover { background: linear-gradient(90deg, var(--gh-brand), var(--gh-brand2)); color: #020617; border-color: transparent; transform: translateY(-1px); }
+  
   .gh-burger {
     display: none; border: 1px solid rgba(255, 255, 255, .22); background: rgba(15, 23, 42, .9);
     color: var(--gh-text); padding: 8px 10px; border-radius: 12px; font-size: 18px;
     line-height: 1; cursor: pointer;
   }
 
-  /* --- MOBILE DRAWER --- */
-  .gh-dim { position: fixed; inset: 0; background: rgba(0, 0, 0, .55); opacity: 0; visibility: hidden; transition: .18s ease; z-index: 9998; }
-  .gh-drawer {
-    position: fixed; top: 0; right: 0; height: 100vh; width: min(92vw, 420px);
-    background: rgba(8, 11, 18, .98); border-left: 1px solid rgba(255, 255, 255, .08);
-    transform: translateX(105%); transition: .2s ease; z-index: 9999; display: flex; flex-direction: column;
+  /* --- MOBILE DRAWER (CORREGIDO) --- */
+  .gh-dim { 
+    position: fixed; inset: 0; background: rgba(0, 0, 0, .55); 
+    opacity: 0; visibility: hidden; transition: .18s ease; z-index: 9998; 
   }
+  
+  /* Se asegura que el drawer no exista visualmente cuando está hidden */
+  .gh-drawer {
+    position: fixed; top: 0; right: 0; 
+    height: 100vh; /* Fallback */
+    height: 100dvh; /* Altura dinámica para móviles modernos */
+    width: min(92vw, 420px);
+    background: rgba(8, 11, 18, .98); border-left: 1px solid rgba(255, 255, 255, .08);
+    transform: translateX(105%); transition: .2s ease; z-index: 9999; 
+    display: flex; flex-direction: column;
+  }
+  
+  /* Clases de estado abierto */
   html.gh-open .gh-dim { opacity: 1; visibility: visible; }
   html.gh-open .gh-drawer { transform: translateX(0); }
+
+  /* Mantiene oculto estrictamente si tiene atributo hidden */
+  .gh-drawer[hidden] { display: none !important; transform: translateX(105%) !important; }
+  .gh-dim[hidden] { display: none !important; }
 
   .gh-drawer-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 14px; border-bottom: 1px solid rgba(255, 255, 255, .06); }
   .gh-close {
@@ -158,9 +172,9 @@
     color: var(--gh-text); border-radius: 12px; padding: 8px 10px;
     font-size: 16px; line-height: 1; cursor: pointer;
   }
-  .gh-drawer-body { padding: 12px 14px; overflow: auto; }
-.gh-drawer[hidden]{display:none!important;}
-.gh-dim[hidden]{display:none!important;}
+  
+  /* Agregado padding inferior extra para que no se corte el contenido */
+  .gh-drawer-body { padding: 12px 14px 80px 14px; overflow-y: auto; overflow-x: hidden; flex: 1; }
 
   .gh-mnav { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
   .gh-mnav a {
@@ -287,10 +301,7 @@
   @media (prefers-reduced-motion: reduce) {
     .gh-brand, .gh-nav a::after, .gh-dd, .gh-btn, .gh-dim, .gh-drawer { transition: none !important; }
   }
-
-  /* Ocultar subtítulos en menú móvil */
-.gh-msys-sub{display:none!important;}
-
+  .gh-msys-sub{display:none!important;}
 </style>
 
 <div class="gh-container">
@@ -372,12 +383,10 @@
           </div>
         </div>
       </li>
-          <!-- NUEVO: Promociones -->
     <li>
       <a class="js-abs-href" data-href="index.html#promociones">Promociones</a>
     </li>
 
-    <!-- NUEVO: Contacto -->
     <li>
       <a class="js-abs-href" data-href="index.html#contacto">Contacto</a>
     </li>
@@ -394,7 +403,6 @@
   <div class="gh-dim" id="gh-dim" hidden></div>
 
 <aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true" hidden>
-  <!-- HEAD (fijo arriba) -->
   <div class="gh-drawer-head">
     <div class="gh-drawer-title gh-dtitle">
       <div class="gh-dtitle-row">
@@ -410,7 +418,6 @@
     <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
   </div>
 
-  <!-- BODY (scroll del contenido) -->
   <div class="gh-drawer-body">
 
     <div class="gh-mcta gh-mcta-ico" aria-label="Contacto rápido">
@@ -426,7 +433,6 @@
       </a>
     </div>
 
-    <!-- SISTEMAS -->
     <section class="gh-acc gh-msys" id="gh-msys" aria-label="Sistemas (móvil)">
       <div class="gh-msys-head">
         <div class="gh-msys-title">Sistemas</div>
@@ -529,7 +535,6 @@
       </a>
     </section>
 
-    <!-- SERVICIOS -->
     <section class="gh-acc gh-msvc" id="gh-msvc" aria-label="Servicios (móvil)">
       <div class="gh-msys-head">
         <div class="gh-msys-title">Servicios</div>
@@ -661,18 +666,39 @@
     sync();
   };
 
-  // 3. Path / Attributes Fixer
+  // 3. Path / Attributes Fixer - CORREGIDO PARA SUBPÁGINAS
   const initPaths = () => {
+     // Detectar si estamos en una carpeta profunda (ej: /SISTEMAS/ o /SERVICIOS/)
+     const isSubDir = window.location.pathname.includes('/SISTEMAS/') || window.location.pathname.includes('/SERVICIOS/');
+     const pathPrefix = isSubDir ? '../' : '';
+
      const elements = document.querySelectorAll('.js-abs-href, .js-abs-src');
      elements.forEach(el => {
-        if(el.dataset.href && !el.getAttribute('href')) el.href = el.dataset.href;
+        // Corregir Links (href)
+        if(el.dataset.href && !el.getAttribute('href')) {
+            let target = el.dataset.href;
+            // Si el link apunta a index.html y estamos en subcarpeta, subimos con ../
+            if(isSubDir && (target.startsWith('index.html') || target.startsWith('IMG') || target.startsWith('SISTEMAS') || target.startsWith('SERVICIOS'))) {
+                target = pathPrefix + target;
+            }
+            // Si es un link con # (ancla), asegurarse que vaya al index
+            if(isSubDir && target.startsWith('#')) {
+                target = '../index.html' + target;
+            }
+            el.href = target;
+        }
+
+        // Corregir Imágenes (src)
         if(el.dataset.src && (!el.src || el.src.includes('data:image'))) {
-            if(!el.classList.contains('gh-logo')) el.src = el.dataset.src; 
+            // Solo aplicamos la ruta si no es el logo SVG que ya tiene src
+            if(!el.classList.contains('gh-logo') || el.src.includes('data:image')) {
+                el.src = pathPrefix + el.dataset.src; 
+            }
         }
      });
   };
 
-    // 4. Drawer (Main Logic) - FIX: no abrir por default + evita “asomadas”
+    // 4. Drawer (Main Logic)
   const toggleDrawer = (show) => {
     const drawer = Q("#gh-drawer");
     const dim = Q("#gh-dim");
@@ -681,9 +707,11 @@
     if (!drawer || !dim || !burger) return;
 
     if (show) {
-      // IMPORTANT: mostrar drawer antes de animar
       drawer.hidden = false;
       dim.hidden = false;
+
+      // Forzar reflow para que la transición funcione
+      void drawer.offsetWidth;
 
       document.documentElement.classList.add("gh-open");
       drawer.setAttribute("aria-hidden", "false");
@@ -699,10 +727,12 @@
 
       document.body.style.overflow = "";
 
-      // IMPORTANT: ocultar al terminar transición
       window.setTimeout(() => {
-        dim.hidden = true;
-        drawer.hidden = true;
+        // Solo ocultar si no se volvió a abrir rápidamente
+        if (!document.documentElement.classList.contains("gh-open")) {
+            dim.hidden = true;
+            drawer.hidden = true;
+        }
       }, 220);
     }
   };
@@ -721,22 +751,27 @@
       toggleDrawer(false);
       return;
     }
-    if (e.target.closest(".gh-drawer a")) toggleDrawer(false);
+    // Cerrar al dar click en un link dentro del drawer
+    if (e.target.closest(".gh-drawer a")) {
+        // Pequeño delay para ver el click visual
+        setTimeout(() => toggleDrawer(false), 150);
+    }
   }, { passive: false });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
   });
+  
+  // Ejecutar corrección de rutas
   initPaths();
 
-  // HARD RESET: cerrado al inicio (evita que aparezca abierto/restaurado)
+  // Asegurar estado inicial cerrado
   toggleDrawer(false);
 
-  // FIX: iOS/Android bfcache (cuando vuelves atrás o el navegador restaura estado)
+  // Fix caché bfcache (iOS/Android back button)
   window.addEventListener("pageshow", (ev) => {
     if (ev.persisted) toggleDrawer(false);
   });
 
 })();
-
 </script>
