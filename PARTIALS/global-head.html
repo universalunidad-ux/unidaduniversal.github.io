@@ -16,7 +16,16 @@
 <!-- 🔹 Tipografía y performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'">
+
+<noscript>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+</noscript>
+
 
 <!-- 🔹 YouTube (nocookie) -->
 <link rel="preconnect" href="https://www.youtube-nocookie.com">
@@ -32,7 +41,7 @@
 <link rel="icon" type="image/png" sizes="512x512" class="js-abs" data-href="IMG/android-chrome-512x512.png">
 
 <!-- 🔹 CSS global (se auto-ajusta) -->
-<link rel="stylesheet" class="js-abs" data-href="main.css">
+<link rel="stylesheet" class="js-abs" data-href="main.css" fetchpriority="high">
 
 <!-- 🔧 Resolver rutas relativo al repo (root o /SISTEMAS/) y compatible con GitHub Pages project site) -->
 <script>
