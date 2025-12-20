@@ -417,3 +417,16 @@ body>.arrowCircle{display:none!important}
 /* 3) Asegura que los títulos internos (los buenos) sigan */
 #carouselVideos .yt-title{display:block!important}
 
+/* =========================================================
+   FIX: .card.body (mismo elemento) sí debe tener padding
+   - Evita “títulos cortados” en Contabilidad y similares
+========================================================= */
+.card.body{padding:12px;color:#c8d3e5}
+
+/* (opcional pero recomendado) si algún título queda pegado arriba */
+.card.body>h3,.card.body>h4{padding-top:2px}
+
+/* (solo reels) asegura que el título no se recorte por overflow del card */
+aside[aria-label^="Reels"]{overflow:visible}
+
+
