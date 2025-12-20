@@ -48,11 +48,6 @@ W.addEventListener("pageshow",()=>{try{normalize(D)}catch{}})})();
 (()=>{const money=new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
 W.$$fmt=v=>money.format(Math.round(Number(v||0)));if(!W.Q)W.Q=(s,ctx=D)=>ctx.querySelector(s);if(!W.QA)W.QA=(s,ctx=D)=>Array.from(ctx.querySelectorAll(s))})();
 
-/* =========================================================
- 2) AÑO + BURGER
-========================================================= */
-(()=>{const y=D.getElementById("year");if(y)y.textContent=new Date().getFullYear();
-const b=D.getElementById("burger"),m=D.getElementById("mobileMenu");if(b&&m)b.addEventListener("click",()=>m.classList.toggle("open"))})();
 
 /* =========================================================
  3) YOUTUBE MANAGER (pause real + lazy + hook iframes)
