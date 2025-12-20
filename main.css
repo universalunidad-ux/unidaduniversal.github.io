@@ -670,3 +670,11 @@ html, body { max-width: 100%; overflow-x: clip; } /* clip > hidden, no crea scro
 .icons-wrap::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
 .icons-wrap::-webkit-scrollbar-track{background:transparent}
 
+/* FIX definitivo: hijos del grid pueden encoger (evita empujes raros) */
+.calc-row > *{min-width:0!important}
+
+/* El note no debe tener max-width fijo en móvil */
+@media(max-width:768px){
+  .placeholder .note{max-width:100%!important}
+}
+
