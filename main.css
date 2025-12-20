@@ -519,3 +519,53 @@ aside[aria-label^="Reels"]{overflow:visible}
   #carouselVideos .carousel-slide{padding:0 24px !important}
 }
 
+/* =========================================================
+   FIX OVERFLOW HORIZONTAL (SISTEMAS)
+   - Evita que .icons-wrap, .track y tablas rompan el viewport
+========================================================= */
+
+/* 1) Asegura que el contenedor no se haga más ancho que la pantalla */
+html, body { max-width: 100%; overflow-x: clip; } /* clip > hidden, no crea scrollbars */
+@supports not (overflow: clip) {
+  html, body { overflow-x: hidden; }
+}
+
+/* 2) Tu wrapper principal NO debe crecer por hijos */
+.container, main.container { max-width: 100%; overflow-x: clip; }
+@supports not (overflow: clip) {
+  .container, main.container { overflow-x: hidden; }
+}
+
+/* 3) ICONS (carrusel -15%) */
+.icons-carousel { max-width: 100%; }           /* host del carrusel de iconos */
+.icons-wrap { 
+  max-width: 100%;
+  overflow-x: auto;                             /* scroll interno permitido */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* Si tus .sys-icon están forzando ancho raro, esto lo estabiliza */
+.icons-wrap .sys-icon { flex: 0 0 auto; }
+
+/* 4) CAROUSELX SISTEMAS */
+.carouselX { max-width: 100%; overflow: hidden; } /* el componente no empuja el layout */
+.carouselX .track {
+  max-width: 100%;
+  overflow-x: auto;                              /* scroll interno permitido */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* 5) TABLAS (comparativas) */
+.table-like {
+  width: 100%;
+  min-width: 720px;                              /* fuerza scroll en móvil */
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#comparativa .card.body { overflow-x: auto; }     /* scroll interno para la tabla */
+#comparativa .card.body { -webkit-overflow-scrolling: touch; }
+
+
