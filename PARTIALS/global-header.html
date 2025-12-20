@@ -605,74 +605,32 @@ html,body{overflow-x:hidden}
   </aside>
 
 <script>
-(() => {
-  const gh$  = (s, ctx=document)=>ctx.querySelector(s);
-  const gh$$ = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
+(function () {
+  "use strict";
+  if (window.__EXPIRITI_GH__) return;      // <- guard anti-duplicado
+  window.__EXPIRITI_GH__ = true;
 
-  // --- 1) Rutas absolutas (GitHub Pages / subcarpetas) ---
-  const fixPaths = () => {
-    const isGh = location.hostname.endsWith("github.io");
-    const firstSeg = location.pathname.split("/")[1] || "";
-    const repoBase = (isGh && firstSeg) ? ("/" + firstSeg) : "";
+  console.log("GH INIT: bind listeners");
 
-    const abs = (p) => {
-      if(!p) return "#";
-      if (/^https?:\/\//i.test(p) || p.startsWith("mailto:") || p.startsWith("tel:") || p.startsWith("#")) return p;
-      const out = p.startsWith("/") ? (repoBase + p) : (repoBase + "/" + p);
-      return out.replace(/\/+/g, "/");
-    };
+  const Q  = (s, ctx=document)=>ctx.querySelector(s);
+  const QA = (s, ctx=document)=>Array.from(ctx.querySelectorAll(s));
 
-    gh$$(".js-abs-href[data-href]").forEach(a => {
-      if(a.dataset.fixed) return;
-      const raw = a.getAttribute("data-href") || "";
-      const [path, hash] = raw.split("#");
-      a.href = abs(path) + (hash ? ("#" + hash) : "");
-      a.dataset.fixed = "true";
-    });
-
-    gh$$(".js-abs-src[data-src]").forEach(img => {
-      if(img.dataset.fixed) return;
-      img.src = abs(img.getAttribute("data-src"));
-      img.dataset.fixed = "true";
-    });
-  };
-
-  // --- 2) Active links ---
-  const setActiveLinks = () => {
-    const p = location.pathname.toLowerCase();
-    gh$$(".gh-nav > ul > li > a").forEach(a => {
-      a.classList.remove("active-parent");
-      const t = (a.innerText || "").trim().toLowerCase();
-      if(t === "sistemas" && p.includes("/sistemas/")) a.classList.add("active-parent");
-      else if(t === "servicios" && p.includes("/servicios/")) a.classList.add("active-parent");
-      else if(t === "nosotros" && p.includes("nosotros")) a.classList.add("active-parent");
-      else if(t === "inicio" && (p.endsWith("index.html") || p.endsWith("/"))) a.classList.add("active-parent");
-    });
-  };
-
-  const init = () => { fixPaths(); setActiveLinks(); };
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
-  setTimeout(init, 100);
-
-  // --- 3) Drawer ---
   const toggleDrawer = (show) => {
-    const drawer = gh$("#gh-drawer");
-    const dim = gh$("#gh-dim");
-    const burger = gh$("#gh-burger");
+    const drawer = Q("#gh-drawer");
+    const dim = Q("#gh-dim");
+    const burger = Q("#gh-burger");
 
     if (show) {
       document.documentElement.classList.add("gh-open");
-      if(drawer) drawer.setAttribute("aria-hidden", "false");
-      if(burger) burger.setAttribute("aria-expanded", "true");
-      if(dim) dim.hidden = false;
+      drawer?.setAttribute("aria-hidden", "false");
+      burger?.setAttribute("aria-expanded", "true");
+      if (dim) dim.hidden = false;
       document.body.style.overflow = "hidden";
     } else {
       document.documentElement.classList.remove("gh-open");
-      if(drawer) drawer.setAttribute("aria-hidden", "true");
-      if(burger) burger.setAttribute("aria-expanded", "false");
-      setTimeout(() => { if(dim) dim.hidden = true; }, 200);
+      drawer?.setAttribute("aria-hidden", "true");
+      burger?.setAttribute("aria-expanded", "false");
+      setTimeout(() => { if (dim) dim.hidden = true; }, 200);
       document.body.style.overflow = "";
     }
   };
@@ -681,26 +639,23 @@ html,body{overflow-x:hidden}
     const burgerBtn = e.target.closest("#gh-burger");
     if (burgerBtn) {
       e.preventDefault();
-      const isOpen = document.documentElement.classList.contains("gh-open");
-      toggleDrawer(!isOpen);
+      toggleDrawer(!document.documentElement.classList.contains("gh-open"));
       return;
     }
-
     if (e.target.closest("#gh-close") || e.target.matches("#gh-dim")) {
       e.preventDefault();
       toggleDrawer(false);
       return;
     }
-
-    const drawerLink = e.target.closest(".gh-drawer a");
-    if (drawerLink) toggleDrawer(false);
-  });
+    if (e.target.closest(".gh-drawer a")) toggleDrawer(false);
+  }, { passive: false });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
   });
 })();
 </script>
+
 
    
 </header>
