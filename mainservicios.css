@@ -762,3 +762,50 @@ textarea { resize: vertical; }
   display: none;                  /* Chrome / Safari */
 }
 
+
+
+/* =========================================================
+   EXPIRITI — FIX MOBILE "CORTES" (SERVICIOS)
+   Pegar AL FINAL de mainservicios.css
+========================================================= */
+
+/* 1) Evitar cortes por 100vh en móvil */
+main{min-height:auto !important}
+@supports (height: 100dvh){
+  main{min-height:100dvh !important} /* usa dvh (mejor que vh) si existe */
+}
+
+/* 2) Compensar header sticky (evita que el primer bloque se meta "debajo") */
+html{scroll-padding-top:84px}
+@media(max-width:768px){html{scroll-padding-top:72px}}
+
+/* 3) Evitar scroll horizontal que a veces "mueve" y recorta */
+html,body{max-width:100%}
+body{overflow-x:hidden}
+
+/* 4) En móvil, muchos recortes vienen de overflow hidden en cards/wrappers */
+@media(max-width:768px){
+  .card{overflow:visible} /* deja respirar sombras y contenido */
+  #videos, #videos .card, #videos .card.body{overflow:visible !important}
+
+  /* Carruseles: no fuerces alturas fijas en track */
+  .carousel{min-height:auto}
+  .carousel-track{overflow:hidden; height:auto; align-items:stretch}
+  .carousel-slide{align-items:stretch}
+
+  /* Reel: asegura que NO se quede angosto y no corte */
+  .reel-embed{
+    width:100% !important;
+    max-width:520px !important;
+    margin:0 auto !important;
+  }
+
+  /* Sección full: en móvil mejor auto (evita cortes visuales por vh) */
+  .section-full{min-height:auto !important; padding:56px 0 !important}
+}
+
+/* 5) Si el corte te pasa “abajo”, agrega aire inferior real */
+.container{padding-bottom:28px}
+@media(max-width:768px){.container{padding-bottom:36px}}
+
+
