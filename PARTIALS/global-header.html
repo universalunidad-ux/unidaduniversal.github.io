@@ -721,27 +721,30 @@
 
 // 3. Path / Attributes Fixer (CORREGIDO)
   const initPaths = () => {
-     // Obtenemos el path en mayúsculas para asegurar la detección sin importar cómo escriba la URL el navegador
+     // 1. Obtenemos el path y lo convertimos a MAYÚSCULAS para comparar sin errores
      const currentPath = window.location.pathname.toUpperCase();
      
-     // Detectamos si estamos en una subcarpeta (buscando en mayúsculas)
+     // 2. Detectamos si estamos en una subcarpeta (buscando en mayúsculas)
      const isSubDir = currentPath.includes('/SISTEMAS/') || currentPath.includes('/SERVICIOS/');
+     
+     // 3. Definimos el prefijo: si es subdirectorio, subimos un nivel (../), si no, nada ('')
      const pathPrefix = isSubDir ? '../' : '';
 
      const elements = document.querySelectorAll('.js-abs-href, .js-abs-src');
+     
      elements.forEach(el => {
-        // Corrección de Links (HREF)
+        // --- Corrección de Links (HREF) ---
         if(el.dataset.href && !el.getAttribute('href')) {
            let target = el.dataset.href;
            
-           // Verificamos si el target empieza con carpetas conocidas (ignorando si hay diferencias sutiles)
-           // Usamos paths relativos limpios
            if(isSubDir) {
                // Si el link apunta a index, IMG, o a las mismas carpetas SISTEMAS/SERVICIOS
+               // le agregamos el ../ al principio
                if(target.startsWith('index.html') || target.startsWith('IMG') || target.startsWith('SISTEMAS') || target.startsWith('SERVICIOS')) {
                    target = pathPrefix + target;
                }
-               // Si es un ancla (#promociones) estando en subcarpeta, mandamos al home
+               // Casos especiales: Anclas (#promociones) estando en subcarpeta
+               // Deben dirigir al home: ../index.html#promociones
                if(target.startsWith('#')) {
                    target = '../index.html' + target;
                }
@@ -749,21 +752,22 @@
            el.href = target;
         }
 
-        // Corrección de Imágenes (SRC)
+        // --- Corrección de Imágenes (SRC) ---
         if(el.dataset.src) {
-            // Solo aplicamos si no tiene src o si no es base64
+            // Solo aplicamos lógica si el src actual está vacío, es data:image, o el navegador lo resolvió mal
             if (!el.src || el.src.includes('data:image') || el.getAttribute('src') === '') {
-                // Si es subcarpeta y no es base64, agregamos ../
+                
+                // Si es subcarpeta y NO es una imagen base64 (SVG inline), agregamos ../
                 if(isSubDir && !el.dataset.src.includes('data:image')) {
                      el.src = pathPrefix + el.dataset.src;
                 } else {
+                     // Si estamos en inicio, se queda igual
                      el.src = el.dataset.src;
                 }
             }
         }
      });
   };
-
   // 4. Drawer (Main Logic)
   const toggleDrawer = (show) => {
     const drawer = Q("#gh-drawer");
