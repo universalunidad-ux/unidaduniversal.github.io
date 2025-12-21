@@ -1,9 +1,10 @@
 /* =========================================================
-   Expiriti - index.js (FINAL V6 MIN)
+   Expiriti - index.js (FINAL V6 MIN+FIX)
    - SIN conflicto de $/$$
    - Parciales robustos + normaliza rutas (GH Pages + local)
    - HERO Gallery: grupos + tabs + dots + arrows
-   - REELS: título 1-línea + loop + disable flechas si 1
+   - REELS: título 1-línea + loop + flechas off si 1
+   - FIX: títulos se actualizan en dots, flechas, scroll/trackpad y cambio de tabs
    - Servicios default: PÓLIZAS
 ========================================================= */
 (function(){ "use strict";
@@ -11,13 +12,13 @@
   window.__EXPIRITI_INDEX_INIT__=true;
 
   /* =========================
-     Helpers DOM (SIN $/$$)
+     0) Helpers DOM (SIN $/$$)
   ========================= */
   const Q=(s,c=document)=>c.querySelector(s);
   const QA=(s,c=document)=>Array.from(c.querySelectorAll(s));
 
   /* =========================
-     Rutas (GH Pages + local)
+     1) Rutas (GH Pages + local)
      - GH: usa /<repo>/<path>
      - Local: usa ./ o ../ según carpeta
   ========================= */
@@ -36,31 +37,28 @@
   }
 
   function normalizeRoutes(root=document){
-    // imgs con data-src -> src absoluto/relativo correcto
+    /* imgs con data-src -> src correcto */
     QA(".js-abs-src[data-src]",root).forEach(img=>{
       const raw=img.getAttribute("data-src")||"";
       const fin=prefix(raw);
-      if(!img.getAttribute("src")) img.setAttribute("src",fin);
-      else img.src=fin;
+      if(!img.getAttribute("src")) img.setAttribute("src",fin); else img.src=fin;
       img.style.opacity="1";
     });
 
-    // links con data-href -> href correcto
+    /* links con data-href -> href correcto */
     QA(".js-abs-href[data-href]",root).forEach(a=>{
-      const raw=a.getAttribute("data-href")||"";
-      if(!raw) return;
-      const parts=raw.split("#");
-      const p=parts[0]||"", h=parts[1]||"";
+      const raw=a.getAttribute("data-href")||""; if(!raw) return;
+      const parts=raw.split("#"); const p=parts[0]||"", h=parts[1]||"";
       a.href=prefix(p)+(h?("#"+h):"");
     });
 
-    // año footer
+    /* año footer */
     const y=root.getElementById?.("gf-year")||document.getElementById("gf-year");
     if(y) y.textContent=new Date().getFullYear();
   }
 
   /* =========================
-     Parciales (header/footer)
+     2) Parciales (header/footer)
      - Reemplaza placeholder con outerHTML
      - Luego normaliza rutas
   ========================= */
@@ -89,7 +87,7 @@
   }
 
   /* =========================
-     Formularios -> WhatsApp
+     3) Formularios -> WhatsApp
   ========================= */
   function initForms(){
     const quickForm=Q("#quickForm");
@@ -118,7 +116,7 @@
   }
 
   /* =========================
-     Tabs Productos
+     4) Tabs Productos
   ========================= */
   function initTabsProductos(){
     const tabs=QA(".prod-tabs .tab");
@@ -136,7 +134,7 @@
   }
 
   /* =========================
-     Promos filtro
+     5) Promos filtro
   ========================= */
   function initPromosFilter(){
     const promoBtns=QA(".promo-btn");
@@ -155,7 +153,7 @@
   }
 
   /* =========================
-     Cards clicables
+     6) Cards clicables
   ========================= */
   function initClickableCards(){
     QA(".card.product-card[data-href]").forEach(card=>{
@@ -168,7 +166,7 @@
   }
 
   /* =========================================================
-     HERO GALLERY: DATA (TUS DATAS)
+     7) HERO GALLERY: DATA (TUS DATAS)
   ========================================================= */
   const HERO_GALLERY_DATA={
     contable:{label:"Contables",defaultSys:"nominas",systems:{
@@ -243,7 +241,6 @@
 
   /* =========================
      HERO GALLERY: Nodos
-     (IMPORTANTE: solo una vez)
   ========================= */
   const HERO_GALLERY={
     groupNav:Q("#heroGalleryGroups"),
@@ -257,7 +254,6 @@
     const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
     const sys=g.systems[sysKey]; if(!sys||!sys.images?.length) return;
 
-    // título una vez por sistema
     if(HERO_GALLERY.titleEl) HERO_GALLERY.titleEl.textContent=sys.label||"";
 
     const carousel=HERO_GALLERY.carousel; if(!carousel) return;
@@ -279,7 +275,7 @@
 
       const isLCP=(groupKey===HERO_GALLERY.defaultGroup && sysKey===g.defaultSys && idx===0);
       if(isLCP){ img.loading="eager"; img.setAttribute("fetchpriority","high"); }
-      else { img.loading="lazy"; }
+      else img.loading="lazy";
 
       slide.appendChild(img);
       track.appendChild(slide);
@@ -354,7 +350,6 @@
       groupNav.appendChild(btn);
     });
 
-    // flechas (hero)
     const track=carousel.querySelector(".carousel-track");
     const prev=carousel.querySelector(".arrowCircle.prev");
     const next=carousel.querySelector(".arrowCircle.next");
@@ -380,14 +375,13 @@
       goTo(i+1);
     });
 
-    // ✅ INIT real (default group + default sys)
     const cfg=HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
     buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
     buildHeroGallerySlides(HERO_GALLERY.defaultGroup,cfg.defaultSys);
   }
 
   /* =========================================================
-     REELS: DATA (TUS DATAS)
+     8) REELS: DATA (TUS DATAS)
   ========================================================= */
   const REELS_DATA={
     contable:{titleEl:Q("#reelTitle-contable"),carousel:Q("#carouselReels-contable"),defaultSys:"contabilidad",reelsBySys:{
@@ -466,7 +460,7 @@
   };
 
   /* =========================
-     REELS helpers
+     9) REELS helpers
   ========================= */
   function setArrowsEnabled(prev,next,enabled){
     [prev,next].forEach(btn=>{
@@ -479,65 +473,74 @@
     });
   }
 
-  // Título 1 línea: usa heading anterior y oculta subtitle
+  /* Título 1 línea:
+     - Si encuentra un heading “principal” lo usa y oculta el subtitle (#reelTitle-xxx)
+     - Si NO lo encuentra, usa el subtitle y lo vuelve visible (FIX de tu caso) */
   function setSingleLineReelTitle(cfg,title){
     const t=(title||"").trim(); if(!t) return;
-    const subtitle=cfg?.titleEl||null;
+    const el=cfg?.titleEl||null;
 
     if(!cfg._headingEl){
       let heading=null;
-      if(subtitle && subtitle.previousElementSibling) heading=subtitle.previousElementSibling;
-      if(!heading && subtitle && subtitle.parentElement) heading=subtitle.parentElement.querySelector(".reels-kicker, .reels-heading, h2, h3");
-      if(!heading && cfg.carousel){
-        const host=cfg.carousel.parentElement||cfg.carousel;
-        heading=host.querySelector(".reels-kicker, .reels-heading, h2, h3");
+      if(el && el.previousElementSibling) heading=el.previousElementSibling;
+      if(!heading){
+        const host=(cfg.carousel && (cfg.carousel.closest("aside, section, .card, .panel")||cfg.carousel.parentElement))||null;
+        heading=host?.querySelector(".reels-heading, .reels-kicker, h2, h3")||null;
       }
       cfg._headingEl=heading||null;
     }
-    if(cfg._headingEl) cfg._headingEl.textContent=t;
 
-    if(subtitle){
-      subtitle.textContent="";
-      subtitle.style.display="none";
-      subtitle.setAttribute("aria-hidden","true");
+    if(cfg._headingEl){
+      cfg._headingEl.textContent=t;
+      if(el && cfg._headingEl!==el){
+        el.textContent="";
+        el.style.display="none";
+        el.setAttribute("aria-hidden","true");
+      }
+      return;
+    }
+
+    if(el){
+      el.textContent=t;
+      el.style.display="";
+      el.removeAttribute("aria-hidden");
     }
   }
 
   function renderReelThumb(wrap){
     const id=wrap.dataset.ytid; if(!id) return;
     const title=wrap.dataset.title||"";
-    wrap.innerHTML=`
-      <button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
-        <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" loading="lazy" decoding="async" width="480" height="270"
-          alt="${title}" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';">
-        <span class="yt-play"></span>
-      </button>`;
+    wrap.innerHTML=
+      `<button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
+         <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" loading="lazy" decoding="async" width="480" height="270"
+              alt="${title}" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';">
+         <span class="yt-play"></span>
+       </button>`;
     wrap.querySelector(".yt-thumb")?.addEventListener("click",()=>{ stopAllReels(); renderReelIframe(wrap); });
   }
 
   function renderReelIframe(wrap){
     const id=wrap.dataset.ytid;
     const title=wrap.dataset.title||"";
-    wrap.innerHTML=`
-      <iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1"
-        title="${title}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    wrap.innerHTML=
+      `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1"
+               title="${title}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
   }
 
+  /* Pausa “global”: al cambiar slide o abrir un video, regresa todos a thumbnail */
   function stopAllReels(){
-    // Reels verticales
     document.querySelectorAll(".reel-embed").forEach(w=>{ if(w.querySelector("iframe")) renderReelThumb(w); });
 
-    // Videos horizontales yt-lite
     document.querySelectorAll(".yt-lite").forEach(node=>{
       if(node.dataset.ytLoaded==="1"){
         const id=node.dataset.ytid;
         const title=node.dataset.title||"Video";
         const thumb=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-        node.innerHTML=`
-          <button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
-            <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
-            <span class="yt-lite-play"></span>
-          </button>`;
+        node.innerHTML=
+          `<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
+             <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
+             <span class="yt-lite-play"></span>
+           </button>`;
         node.dataset.ytLoaded="";
       }
     });
@@ -590,6 +593,11 @@
     if(reels[0]?.title) setSingleLineReelTitle(cfg,reels[0].title);
   }
 
+  /* =========================
+     10) Reels carousel init (1 sola vez por panel)
+     - flechas: loop
+     - scroll/trackpad: sync índice + título (FIX)
+  ========================= */
   function initReelsCarousel(panelKey){
     const cfg=REELS_DATA[panelKey];
     if(!cfg||!cfg.carousel) return;
@@ -624,16 +632,53 @@
       const i=slides.findIndex(s=>s.classList.contains("is-active"));
       goTo(i-1);
     });
+
     next?.addEventListener("click",()=>{
       const slides=slidesFor(); if(slides.length<=1) return;
       const i=slides.findIndex(s=>s.classList.contains("is-active"));
       goTo(i+1);
     });
 
+    /* Scroll sync (swipe/trackpad) -> índice y título */
+    if(cfg.carousel.dataset.scrollSync!=="1"){
+      cfg.carousel.dataset.scrollSync="1";
+      let raf=0,lastIdx=-1;
+
+      const syncFromScroll=()=>{
+        raf=0;
+        const slides=slidesFor();
+        const len=slides.length;
+        if(!len) return;
+
+        const w=track.clientWidth||1;
+        const idx=Math.max(0,Math.min(len-1,Math.round((track.scrollLeft||0)/w)));
+        if(idx===lastIdx) return;
+        lastIdx=idx;
+
+        slides.forEach((s,k)=>s.classList.toggle("is-active",k===idx));
+        dotsFor().forEach((d,k)=>d.classList.toggle("active",k===idx));
+
+        const sys=cfg._activeSys||cfg.defaultSys;
+        const reels=(cfg.reelsBySys[sys]||[]);
+        setSingleLineReelTitle(cfg,reels[idx]?.title||"");
+        stopAllReels();
+      };
+
+      track.addEventListener("scroll",()=>{
+        if(raf) cancelAnimationFrame(raf);
+        raf=requestAnimationFrame(syncFromScroll);
+      },{passive:true});
+
+      window.addEventListener("resize",()=>{ lastIdx=-1; syncFromScroll(); });
+    }
+
     cfg._activeSys=cfg.defaultSys;
     buildReelsSlides(panelKey,cfg.defaultSys);
   }
 
+  /* =========================
+     11) Videos horizontales (yt-lite)
+  ========================= */
   function initYTLiteVideos(){
     QA(".yt-lite").forEach(node=>{
       if(node.dataset.ytReady==="1") return;
@@ -644,27 +689,29 @@
       node.dataset.ytReady="1";
       const thumb=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-      node.innerHTML=`
-        <button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
-          <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
-          <span class="yt-lite-play"></span>
-        </button>`;
+      node.innerHTML=
+        `<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
+           <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
+           <span class="yt-lite-play"></span>
+         </button>`;
 
       node.addEventListener("click",()=>{
         if(node.dataset.ytLoaded==="1") return;
         stopAllReels();
-        node.innerHTML=`
-          <iframe class="yt-iframe"
-            src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1"
-            title="${title}"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-            referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+        node.innerHTML=
+          `<iframe class="yt-iframe"
+             src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1"
+             title="${title}"
+             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+             allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
         node.dataset.ytLoaded="1";
       });
     });
   }
 
+  /* =========================
+     12) FAQ accordion
+  ========================= */
   function initFAQ(){
     document.querySelectorAll(".faq-item").forEach(item=>{
       item.addEventListener("toggle",()=>{
@@ -675,7 +722,8 @@
   }
 
   /* =========================
-     Reels tabs (panel/sys)
+     13) Reels tabs (panel/sys)
+     - FIX: al cambiar tab, fuerza scroll 0 + título del primer reel
   ========================= */
   function initReelsTabs(){
     QA(".reel-tab").forEach(tab=>{
@@ -689,52 +737,49 @@
 
         stopAllReels();
 
-        // Active tabs SOLO dentro del mismo panel
         QA(".reel-tab").forEach(t=>{
           if(t.dataset.panel===panelKey) t.classList.toggle("active",t===tab);
         });
 
         buildReelsSlides(panelKey,sysKey);
+
+        /* ✅ fuerza estado inicial del nuevo sys */
+        const reels0=(cfg?.reelsBySys?.[sysKey]||[]);
+        cfg?.carousel?.querySelector(".carousel-track")?.scrollTo({left:0,behavior:"auto"});
+        setSingleLineReelTitle(cfg,reels0[0]?.title||"");
       });
     });
   }
 
   /* =========================
-     INIT PRINCIPAL
+     14) INIT PRINCIPAL
   ========================= */
   window.addEventListener("DOMContentLoaded",async ()=>{
-    // 1) Parciales
     await Promise.all([
       loadPartial("header-placeholder","global-header.html"),
       loadPartial("footer-placeholder","global-footer.html")
     ]);
 
-    // 2) Rutas (parciales + página)
     normalizeRoutes(document);
 
-    // 3) Secciones
     initForms();
     initTabsProductos();
     initPromosFilter();
     initClickableCards();
 
-    // 4) Hero gallery
     initHeroGallery();
 
-    // 5) Reels
     ["contable","comercial","nube","productividad","servicios"].forEach(initReelsCarousel);
     initReelsTabs();
 
-    // 6) YT lite + FAQ
     initYTLiteVideos();
     initFAQ();
 
-    // 7) Año
     const yearSpan=document.getElementById("gf-year");
     if(yearSpan) yearSpan.textContent=new Date().getFullYear();
   });
 
-  // BFCache: al volver atrás, re-normaliza rutas
+  /* BFCache: al volver atrás, re-normaliza rutas */
   window.addEventListener("pageshow",()=>{ try{ normalizeRoutes(document); }catch(_){ } });
 
 })(); 
