@@ -158,10 +158,12 @@
   function initClickableCards(){
     QA(".card.product-card[data-href]").forEach(card=>{
       const href=card.getAttribute("data-href");
-      card.addEventListener("click",e=>{
-        if(e.target.closest("a")) return;
-        if(href) location.href=prefix(href);
-      });
+card.addEventListener("click",e=>{
+  if(e.target.closest("a,button,input,select,textarea,label")) return;
+  if(href) location.href=prefix(href);
+});
+
+       
     });
   }
 
@@ -793,31 +795,49 @@
   const dotsWrap = document.getElementById("servicesDots");
   if (!root || !dotsWrap) return;
 
-  const pages = Array.from(root.querySelectorAll(".svc-page"));
-  if (pages.length <= 1) { dotsWrap.innerHTML = ""; return; }
+  const pages = () => Array.from(root.querySelectorAll(".svc-page"));
+  const getPageW = () => Math.max(1, root.getBoundingClientRect().width);
 
-  dotsWrap.innerHTML = "";
-  const dots = pages.map((_, i) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "dot" + (i === 0 ? " active" : "");
-    b.setAttribute("aria-label", `Ir a página ${i + 1} de servicios`);
-    b.addEventListener("click", () => {
-      root.scrollTo({ left: root.clientWidth * i, behavior: "smooth" });
+  const rebuild = () => {
+    const ps = pages();
+    if (ps.length <= 1) { dotsWrap.innerHTML = ""; return; }
+
+    dotsWrap.innerHTML = "";
+    const dots = ps.map((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "dot" + (i === 0 ? " active" : "");
+      b.setAttribute("aria-label", `Ir a página ${i + 1} de servicios`);
+      b.addEventListener("click", () => {
+        root.scrollTo({ left: getPageW() * i, behavior: "smooth" });
+      });
+      dotsWrap.appendChild(b);
+      return b;
     });
-    dotsWrap.appendChild(b);
-    return b;
-  });
 
-  const setActive = (i) => dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
+    const setActive = (i) => dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
 
-  let raf = 0;
-  root.addEventListener("scroll", () => {
-    if (raf) cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      const w = Math.max(1, root.clientWidth);
-      const i = Math.round(root.scrollLeft / w);
-      setActive(Math.max(0, Math.min(pages.length - 1, i)));
-    });
-  }, { passive: true });
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const w = getPageW();
+        const i = Math.round((root.scrollLeft || 0) / w);
+        setActive(Math.max(0, Math.min(dots.length - 1, i)));
+      });
+    };
+
+    root.removeEventListener("scroll", root.__svcScrollHandler || (()=>{}));
+    root.__svcScrollHandler = onScroll;
+    root.addEventListener("scroll", onScroll, { passive: true });
+
+    // Sync inicial
+    onScroll();
+
+    // Resize/orientación
+    window.addEventListener("resize", () => { onScroll(); }, { passive:true });
+  };
+
+  rebuild();
 })();
+
