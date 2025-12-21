@@ -32,7 +32,7 @@ html,body{overflow-x:hidden}@supports (overflow:clip){html,body{overflow-x:clip}
 .card{border:var(--border);background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.07),transparent 60%),radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.06),transparent 60%),linear-gradient(180deg,rgba(17,23,35,.92),rgba(17,23,35,.70));border-radius:var(--radius);box-shadow:var(--shadow)}.card .body{padding:16px}.card.body{padding:16px}
 
 /* ============ HERO ============ */
-.hero{padding:26px 0 10px}.hero-grid{display:grid;grid-template-columns:1fr;gap:16px}.hero h1{font-size:1.65rem;line-height:1.15;margin:0}.hero .badges{margin-top:16px}.hero-gallery-card{overflow:hidden}.hero-gallery-header{padding:14px 16px;border-bottom:var(--border)}.hero-gallery-header h2{margin:0;font-size:1.05rem}.hero-gallery-groups{display:flex;gap:10px;flex-wrap:wrap;padding:12px 16px 8px}.hero-group-tab{min-height:var(--tap);padding:10px 12px;border-radius:999px;border:var(--border);background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);cursor:pointer}.hero-group-tab.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}.hero-gallery-title{padding:0 16px 10px;margin:0;min-height:18px;color:rgba(232,238,246,.92);font-weight:800;letter-spacing:.2px}.hero-gallery-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:12px 16px 16px}.hero-tab{display:flex;align-items:center;gap:10px;border-radius:14px;border:var(--border);background:rgba(255,255,255,.03);min-height:var(--tap);padding:10px;cursor:pointer;text-align:left}.hero-tab img{width:44px;height:44px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.10)}.hero-tab span{font-weight:800;color:rgba(232,238,246,.95)}.hero-tab.active{border-color:rgba(96,165,250,.40);background:rgba(96,165,250,.10)}@media (min-width:980px){.hero{padding:40px 0 18px}.hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}.hero h1{font-size:2.25rem}.hero-gallery-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.hero{padding:26px 0 10px}.hero-grid{display:grid;grid-template-columns:1fr;gap:16px}.hero h1{font-size:1.65rem;line-height:1.15;margin:0}.hero .badges{margin-top:16px}..hero-gallery-card{overflow:visible}.hero-gallery-card .carousel{overflow:hidden}.hero-gallery-header{padding:14px 16px;border-bottom:var(--border)}.hero-gallery-header h2{margin:0;font-size:1.05rem}.hero-gallery-groups{display:flex;gap:10px;flex-wrap:wrap;padding:12px 16px 8px}.hero-group-tab{min-height:var(--tap);padding:10px 12px;border-radius:999px;border:var(--border);background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);cursor:pointer}.hero-group-tab.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}.hero-gallery-title{padding:0 16px 10px;margin:0;min-height:18px;color:rgba(232,238,246,.92);font-weight:800;letter-spacing:.2px}.hero-gallery-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:12px 16px 16px}.hero-tab{display:flex;align-items:center;gap:10px;border-radius:14px;border:var(--border);background:rgba(255,255,255,.03);min-height:var(--tap);padding:10px;cursor:pointer;text-align:left}.hero-tab img{width:44px;height:44px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.10)}.hero-tab span{font-weight:800;color:rgba(232,238,246,.95)}.hero-tab.active{border-color:rgba(96,165,250,.40);background:rgba(96,165,250,.10)}@media (min-width:980px){.hero{padding:40px 0 18px}.hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}.hero h1{font-size:2.25rem}.hero-gallery-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
 /* ============ CARRUSEL UNIVERSAL (HERO + REELS) ============ */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,.10);background:var(--card-2)}.carousel-track{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;min-height:240px}.carousel-track::-webkit-scrollbar{height:6px}.carousel-track::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}.carousel-slide{flex:0 0 100%;scroll-snap-align:start;position:relative}.carousel-nav{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:10px;padding:8px 10px;z-index:3}.carousel-nav .dot{width:18px;height:18px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer}.carousel-nav .dot.active{background:rgba(45,212,191,.85);border-color:rgba(45,212,191,.95)}.arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(7,10,16,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:rgba(232,238,246,.95);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3}.arrowCircle .chev{font-size:22px;line-height:1}.arrowCircle.prev{left:10px}.arrowCircle.next{right:10px}.arrowCircle.is-disabled{opacity:.35}@media (min-width:980px){.carousel-track{min-height:320px}.carousel-nav .dot{width:14px;height:14px}}.hero-slide img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;display:block;background:#0b0f14}
@@ -117,290 +117,73 @@ label{display:block;margin:10px 0 6px;color:rgba(232,238,246,.88);font-weight:90
   .svc-dots{display:none}
 }
 
-/* =========================================================
-   Expiriti - PATCH FINAL (V2025.12.21-2)
-   Objetivo: que el cambio se vea SÍ o SÍ
-   - PROMOS: grandes en mobile/desktop
-   - MSI: oculto (6/12 meses)
-   - HERO tabs: 1 línea con scroll horizontal (notorio)
-   - Carruseles: iframe/video con altura real (no “imagen”)
-   - Grids 2x2: no se sale texto
-   - Quitar texto blanco “Nóminas” arriba del hero
-========================================================= */
-
-/* ---------- 0) PRUEBA DE CARGA (comenta luego si quieres) ---------- */
-/* body{outline:6px solid rgba(45,212,191,.65)!important} */
 
 /* =========================================================
-   1) PROMOS GRANDES (tu problema principal en img1)
-   - Gana contra tus reglas previas y contra inline
-========================================================= */
-.promo-grid{grid-template-columns:1fr!important} /* mobile 1 columna, se ve grande */
-@media (min-width:700px){.promo-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media (min-width:980px){.promo-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
-
-/* Si usas .promo-item */
-.promo-item{border-radius:var(--radius)!important;overflow:hidden!important}
-.promo-item img{width:100%!important;display:block!important;object-fit:cover!important;object-position:center!important;height:clamp(300px,62vw,460px)!important}
-@media (min-width:980px){.promo-item img{height:clamp(300px,22vw,520px)!important}}
-
-/* Si tus promos son <img> directas dentro de .promo-grid */
-.promo-grid>img{width:100%!important;display:block!important;object-fit:cover!important;object-position:center!important;border-radius:var(--radius)!important;border:var(--border)!important;height:clamp(300px,62vw,460px)!important}
-@media (min-width:980px){.promo-grid>img{height:clamp(300px,22vw,520px)!important}}
-
-/* =========================================================
-   2) QUITAR BADGE MSI (6 y 12 MSI)
-   - Selector amplio para cubrir variantes
-========================================================= */
-.promo-badge,.badge-msi,.msi-badge,[data-badge="msi"],[data-msi],[class*="msi"],[id*="msi"],[aria-label*="MSI"],[aria-label*="Meses sin interés"],[aria-label*="Meses sin interes"]{display:none!important}
-
-/* =========================================================
-   3) HERO TABS EN UNA LÍNEA + SCROLL HORIZONTAL NOTORIO (img4)
-   - Tu .prod-tabs hoy hace wrap; lo forzamos a nowrap
-========================================================= */
-.prod-tabs{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;gap:10px!important;padding:4px 2px 10px!important;scroll-snap-type:x mandatory!important}
-.prod-tabs .tab{flex:0 0 auto!important;scroll-snap-align:start!important;white-space:nowrap!important}
-.prod-tabs::-webkit-scrollbar{height:8px}
-.prod-tabs::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
-/* “fade” lateral para indicar scroll */
-.prod-tabs{mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%)}
-
-/* Quitar texto blanco arriba del hero (tu “Nóminas”/title overlay) */
-.hero-gallery-title{display:none!important}
-
-/* =========================================================
-   4) CARRUSELES: VIDEO REAL (img2/img3)
-   - El síntoma “se ve como imagen” suele ser altura 0/colapsada
-========================================================= */
-.carousel-track{min-height:0!important} /* evita alturas raras heredadas */
-.carousel-slide{min-height:clamp(320px,54svh,560px)!important} /* mobile con cuerpo */
-@media (min-width:980px){.carousel-slide{min-height:clamp(340px,26vw,580px)!important}}
-.carousel iframe,.carousel-slide iframe{width:100%!important;height:100%!important;display:block!important;border:0!important}
-
-/* Tus carruseles de reels (si existen con esos IDs) */
-#carouselReels-contable .carousel-track,#carouselReels-comercial .carousel-track,#carouselReels-nube .carousel-track,#carouselReels-productividad .carousel-track,#carouselReels-servicios .carousel-track{height:clamp(340px,56svh,620px)!important}
-#carouselReels-contable .carousel-slide,#carouselReels-comercial .carousel-slide,#carouselReels-nube .carousel-slide,#carouselReels-productividad .carousel-slide,#carouselReels-servicios .carousel-slide{aspect-ratio:9/16!important}
-
-/* Si tienes wrappers de video */
-.carousel-slide .yt-lite,.carousel-slide .yt-wrap,.carousel-slide .video-wrap{position:relative!important;width:100%!important;height:100%!important;min-height:inherit!important}
-
-/* =========================================================
-   5) GRIDS 2x2: NO SE SALE TEXTO (img5)
-   - min-width:0 + wrap + clamp de líneas
-========================================================= */
-.cards-products,.cards-services{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-@media (max-width:420px){.cards-products,.cards-services{grid-template-columns:1fr!important}}
-.cards-products>*,.cards-services>*,.product-card,.product-card *{min-width:0!important}
-.product-card h3,.product-card p,.product-card .body{overflow:hidden!important;overflow-wrap:anywhere!important;word-break:break-word!important;hyphens:auto!important}
-.product-card h3{display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important}
-.product-card p.body{display:-webkit-box!important;-webkit-line-clamp:4!important;-webkit-box-orient:vertical!important}
-
-
-/* =========================================================
-   PATCH UX MOBILE — HERO arrows + chips scroll + grids + reels + promos
-   (Pegar al final del CSS)
+   Expiriti - PATCH FINAL ÚNICO (V2025.12.21-3)
+   - Flechas hero visibles en mobile
+   - Chips/tabs 1 línea con scroll (hero/sistemas/promos)
+   - Cards: botones con aire + apilar en pantallas chicas
+   - Reels: slide con altura real (evita “mini”)
+   - Promos: imágenes consistentes (cover)
 ========================================================= */
 
-/* ---------- 1) CHIPS / TABS en 1 línea con scroll horizontal ---------- */
-/* Usa esto para: Hero categorías, Sistemas categorías, Promos filtros */
-.hscroll-tabs{
-  display:flex;
-  flex-wrap:nowrap;              /* NO brincar a segunda línea */
-  gap:10px;
-  overflow-x:auto;               /* scroll horizontal */
-  overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory;  /* “snap” suave */
-  padding:8px 6px;
-  margin:0;
-  scrollbar-width:none;          /* Firefox hide */
-}
-.hscroll-tabs::-webkit-scrollbar{height:0}
-
-/* Cada chip/botón dentro */
-.hscroll-tabs > *{
-  flex:0 0 auto;                 /* que no se encoja raro */
-  scroll-snap-align:start;
-  white-space:nowrap;            /* texto 1 línea */
+/* 1) HERO: flechas visibles en MOBILE (tu CSS las escondía) */
+@media (max-width:980px){
+  .hero .arrowCircle{display:flex!important}
 }
 
-/* Fade a los lados (indica que se puede deslizar) */
-.hscroll-fade{
-  -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
-  mask-image:linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
-}
-
-/* Tip: sin tocar HTML, intenta “enganchar” tus contenedores existentes */
-.hero .tabs, .hero .chips, .hero .segmented,
-#heroTabs, #heroCategories,
-#sistemasTabs, .sistemas-tabs,
-#promoTabs, .promo-tabs{
-  display:flex;
-  flex-wrap:nowrap;
-  gap:10px;
-  overflow-x:auto;
-  overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory;
-  padding:8px 6px;
+/* 2) Chips/Tabs: 1 línea + scroll horizontal (Hero/Sistemas/Promos) */
+.hero-gallery-groups,.prod-tabs,.promo-filters{
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  gap:10px!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  scroll-snap-type:x mandatory!important;
+  padding:8px 6px!important;
   scrollbar-width:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%);
 }
-.hero .tabs::-webkit-scrollbar,
-.hero .chips::-webkit-scrollbar,
-.hero .segmented::-webkit-scrollbar,
-#heroTabs::-webkit-scrollbar,#heroCategories::-webkit-scrollbar,
-#sistemasTabs::-webkit-scrollbar,.sistemas-tabs::-webkit-scrollbar,
-#promoTabs::-webkit-scrollbar,.promo-tabs::-webkit-scrollbar{height:0}
-
-.hero .tabs > *, .hero .chips > *, .hero .segmented > *,
-#heroTabs > *, #heroCategories > *,
-#sistemasTabs > *, .sistemas-tabs > *,
-#promoTabs > *, .promo-tabs > *{
-  flex:0 0 auto;
-  scroll-snap-align:start;
-  white-space:nowrap;
+.hero-gallery-groups::-webkit-scrollbar,
+.prod-tabs::-webkit-scrollbar,
+.promo-filters::-webkit-scrollbar{height:0}
+.hero-gallery-groups>*,
+.prod-tabs>*,
+.promo-filters>*{
+  flex:0 0 auto!important;
+  scroll-snap-align:start!important;
+  white-space:nowrap!important;
 }
 
-/* ---------- 2) Flechas VISIBLES en HERO carrusel ---------- */
-/* Asumo estructura similar a: .carousel + .arrowCircle.prev/.next */
-.hero .carousel .arrowCircle,
-#heroCarousel .arrowCircle{
-  display:grid !important;       /* forzar visible */
-  place-items:center;
-  opacity:1 !important;
-  pointer-events:auto;
-}
+/* 3) Anti-bloqueo de scroll dentro del hero card (SIN romper todas las cards) */
+.hero-gallery-card{overflow:visible!important}
+.hero-gallery-card .carousel{overflow:hidden!important}
 
-/* Tamaño y posición friendly */
-.hero .carousel .arrowCircle,
-#heroCarousel .arrowCircle{
-  width:42px;height:42px;
-  border-radius:999px;
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(10,15,25,.55);
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  z-index:5;
-}
-.hero .carousel .arrowCircle.prev,
-#heroCarousel .arrowCircle.prev{left:10px}
-.hero .carousel .arrowCircle.next,
-#heroCarousel .arrowCircle.next{right:10px}
-
-/* Zona de “sombra” para que se vean sobre la imagen */
-.hero .carousel:before,
-#heroCarousel:before{
-  content:"";
-  position:absolute;inset:0;
-  pointer-events:none;
-  background:linear-gradient(90deg, rgba(0,0,0,.38), transparent 22%, transparent 78%, rgba(0,0,0,.38));
-  z-index:1;
-}
-.hero .carousel .arrowCircle{z-index:6}
-
-/* ---------- 3) Sistemas: cards 2x2 con aire + botones menos apretados ---------- */
-.systems-grid, .sys-grid, .cards-grid, .grid-2x2{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0, 1fr));
-  gap:12px;
-}
-
-/* Card padding un poco más generoso */
-.system-card, .sys-card, .product-card{
-  padding:14px;
-}
-
-/* Texto: evita cortes raros */
-.system-card p, .sys-card p, .product-card p{
-  line-height:1.35;
-  hyphens:auto;
-  word-break:normal;
-  overflow-wrap:anywhere;
-}
-
-/* Botonera: en pantallas muy chicas, apila WhatsApp / Ver más */
-.card-actions, .sys-actions, .cta-row{
-  display:flex;
-  gap:10px;
-}
+/* 4) Cards Sistemas/Servicios: botones con aire; apilar en pantallas chicas */
+.product-card .foot{gap:12px!important;flex-wrap:wrap!important}
+.product-card .foot .btn{flex:1 1 140px;min-width:140px}
 @media (max-width:420px){
-  .card-actions, .sys-actions, .cta-row{
-    flex-direction:column;
-  }
-  .card-actions > *, .sys-actions > *, .cta-row > *{
-    width:100%;
-  }
+  .product-card .foot{flex-direction:column!important;align-items:stretch!important}
+  .product-card .foot .btn{width:100%!important}
 }
 
-/* Si tus botones tienen ancho fijo o padding enorme, lo recortamos un poco */
-.btn, .button, .pill-btn, .cta, .whats, .vermas{
-  padding:10px 12px;
-  border-radius:999px;
-}
+/* 5) Reels: el slide también debe medir (evita “mini iframe”) */
+#carouselReels-contable .carousel-slide,
+#carouselReels-comercial .carousel-slide,
+#carouselReels-nube .carousel-slide,
+#carouselReels-productividad .carousel-slide,
+#carouselReels-servicios .carousel-slide{height:100%!important}
 
-/* ---------- 4) Reels/Videos: iframe debe LLENAR wrapper + tamaño consistente ---------- */
-.reel, .reel-wrap, .video-wrap, .yt-wrap{
-  position:relative;
-  width:100%;
-  border-radius:14px;
-  overflow:hidden;
-  background:rgba(15,22,34,.85);
-  border:1px solid rgba(255,255,255,.08);
+/* 6) Promos: imagen consistente, grande, sin deformarse */
+.promo-grid>img,.promo-item img{
+  width:100%!important;
+  height:clamp(300px,62vw,460px)!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  display:block!important;
 }
-
-/* Reels verticales: 9:16 */
-.reel, .reel-wrap{
-  aspect-ratio:9 / 16;
-  min-height:340px;              /* evita “mini” */
+@media (min-width:980px){
+  .promo-grid>img,.promo-item img{height:clamp(300px,22vw,520px)!important}
 }
-
-/* Videos horizontales: 16:9 (si aplica) */
-.video-wrap, .yt-wrap{
-  aspect-ratio:16 / 9;
-  min-height:220px;
-}
-
-.reel iframe, .reel-wrap iframe, .video-wrap iframe, .yt-wrap iframe{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  border:0;
-}
-
-/* ---------- 5) Promos: imágenes consistentes (no estiradas) ---------- */
-.promo-card, .promo-item, .promo-slide{
-  border-radius:16px;
-  overflow:hidden;
-  background:rgba(15,22,34,.85);
-  border:1px solid rgba(255,255,255,.08);
-}
-
-/* Contenedor de imagen con ratio consistente (ajústalo si quieres más alto) */
-.promo-media{
-  position:relative;
-  width:100%;
-  aspect-ratio:16 / 9;
-  background:#0b1220;
-}
-.promo-media img{
-  width:100%;
-  height:100%;
-  object-fit:cover;               /* clave para que no se deformen */
-  display:block;
-}
-
-/* Si tus promos vienen como <img class="promo-img"> sin wrapper */
-.promo-img{
-  width:100%;
-  height:auto;
-  display:block;
-  border-radius:16px;
-  object-fit:cover;
-}
-
-/* ---------- 6) Dots del carrusel (si quedan muy abajo o raros) ---------- */
-.carousel-nav{display:flex;gap:8px;justify-content:center;align-items:center;padding:10px 0}
-.carousel-nav .dot{width:10px;height:10px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:transparent}
-.carousel-nav .dot.active{background:rgba(45,212,191,.9);border-color:transparent}
