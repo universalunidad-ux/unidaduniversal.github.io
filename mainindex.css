@@ -853,3 +853,39 @@ body{ padding-top: calc(var(--gh-height) + var(--safe-top)); }
   transform: translateY(1px);
 }
 
+/* ===== FIX: Overflow horizontal (la página se “expande” a la derecha) ===== */
+html, body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden; /* fallback */
+}
+
+/* Mejor que hidden (evita scroll, pero sin recortar efectos internos en muchos casos) */
+@supports (overflow: clip){
+  html, body{ overflow-x:clip; }
+}
+
+/* Previene que grids/flex hijos empujen el ancho */
+.container,
+.section-full,
+.hero,
+.card,
+.carousel,
+.carousel-track,
+.cards,
+.cards-services,
+.cards-products,
+.promo-grid,
+.videos-grid{
+  max-width:100%;
+}
+
+/* Importante en grids: permite que columnas se encojan y no empujen */
+.grid-2 > *{ min-width:0; }
+
+/* Iframes y medios: no deben exceder el contenedor */
+iframe, img, video{
+  max-width:100%;
+}
+
+
