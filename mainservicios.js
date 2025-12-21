@@ -34,84 +34,74 @@ const QA = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
   })();
 
   // =========================================================
-  // 2) Carga de parciales (header/footer) + normalización rutas
-  // =========================================================
-  (async function loadPartials(){
-    const isGh      = location.hostname.endsWith("github.io");
-    const firstSeg  = location.pathname.split("/")[1] || "";
-    const repoBase  = (isGh && firstSeg) ? ("/" + firstSeg) : "";
-    const inSubDir  = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
+// 2) Carga de parciales (header/footer) + normalización rutas
+//    FIX: user-site en ambos hostnames + sin múltiples requests
+// =========================================================
+(async function loadPartials(){
+  const D = document;
 
-    function prefix(p){
-      if (!p || /^https?:\/\//i.test(p)) return p;
-      if (isGh) return (repoBase + "/" + p).replace(/\/+/g, "/");
-      const depth = inSubDir ? "../" : "";
-      return (depth + p).replace(/\/+/g, "/");
+  const inSubDir = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
+  const rel = inSubDir ? "../" : "";
+
+  const isGh = location.hostname.endsWith("github.io");
+  const isUserSite =
+    isGh && (
+      location.hostname === "unidaduniversal.github.io" ||
+      location.hostname === "universalunidad-ux.github.io"
+    );
+
+  // En user-site SIEMPRE es raíz ("/PARTIALS/...")
+  const headerURL = isUserSite ? "/PARTIALS/global-header.html" : (rel + "PARTIALS/global-header.html");
+  const footerURL = isUserSite ? "/PARTIALS/global-footer.html" : (rel + "PARTIALS/global-footer.html");
+
+  const abs = (p) => {
+    if (!p) return p;
+    if (/^https?:\/\//i.test(p)) return p;
+    if (/^(mailto:|tel:|data:)/i.test(p)) return p;
+    if (p.startsWith("/")) return p;
+    return (isUserSite ? ("/" + p) : (rel + p)).replace(/\/+/g, "/");
+  };
+
+  const hp = D.getElementById("header-placeholder");
+  const fp = D.getElementById("footer-placeholder");
+
+  try{
+    if (hp){
+      const r = await fetch(headerURL, { cache: "no-store" });
+      if (r.ok) hp.outerHTML = await r.text();
+      else console.warn("[partials] header 404:", headerURL, r.status);
     }
-
-    const tryFetchText = async (url) => {
-      const r = await fetch(url, { cache: "no-cache" });
-      if (!r.ok) throw new Error(`${r.status} ${r.statusText} -> ${url}`);
-      return r.text();
-    };
-
-    const pickText = async (cands) => {
-      let lastErr = null;
-      for (const u of cands) {
-        try { return await tryFetchText(u); }
-        catch(e){ lastErr = e; }
-      }
-      throw lastErr || new Error("No se pudo cargar partial.");
-    };
-
-    const headerCandidates = [
-      prefix("PARTIALS/global-header.html"),
-      "../PARTIALS/global-header.html",
-      "./PARTIALS/global-header.html",
-      `${repoBase}/PARTIALS/global-header.html`,
-      "/PARTIALS/global-header.html"
-    ];
-    const footerCandidates = [
-      prefix("PARTIALS/global-footer.html"),
-      "../PARTIALS/global-footer.html",
-      "./PARTIALS/global-footer.html",
-      `${repoBase}/PARTIALS/global-footer.html`,
-      "/PARTIALS/global-footer.html"
-    ];
-
-    let headerHTML = "";
-    let footerHTML = "";
-    try{
-      [headerHTML, footerHTML] = await Promise.all([
-        pickText(headerCandidates).catch(()=> ""),
-        pickText(footerCandidates).catch(()=> "")
-      ]);
-    }catch(e){
-      console.warn("No se pudieron cargar parciales:", e);
+    if (fp){
+      const r = await fetch(footerURL, { cache: "no-store" });
+      if (r.ok) fp.outerHTML = await r.text();
+      else console.warn("[partials] footer 404:", footerURL, r.status);
     }
+  } catch(e){
+    console.warn("[partials] error cargando parciales", e);
+  }
 
-const hp = Q("#header-placeholder");
-const fp = Q("#footer-placeholder");
+  // Normalización declarativa dentro del DOM ya insertado
+  D.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+    const v = img.getAttribute("data-src");
+    if (v && !img.getAttribute("src")) img.setAttribute("src", abs(v));
+  });
 
-    if (hp && headerHTML) hp.outerHTML = headerHTML;
-    if (fp && footerHTML) fp.outerHTML = footerHTML;
+  D.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+    const raw = a.getAttribute("data-href");
+    if (!raw) return;
+    const [path, hash] = raw.split("#");
+    a.href = abs(path) + (hash ? ("#" + hash) : "");
+  });
 
-    // Normalización de rutas declarativas dentro de parciales
-    QA(".js-abs-src[data-src]").forEach(img=>{
-      const v = img.getAttribute("data-src");
-      if (!v) return;
-      img.src = prefix(v);
-    });
-    QA(".js-abs-href[data-href]").forEach(a=>{
-      const raw = a.getAttribute("data-href");
-      if (!raw) return;
-      const [path, hash] = raw.split("#");
-      a.href = prefix(path) + (hash ? ("#" + hash) : "");
-    });
+  const y = D.getElementById("gf-year");
+  if (y) y.textContent = new Date().getFullYear();
 
-    const y = Q("#gf-year");
-    if (y) y.textContent = new Date().getFullYear();
-  })();
+  // Si tu header tiene initGlobalHeader(), ejecútalo
+  if (typeof window.initGlobalHeader === "function") {
+    try { window.initGlobalHeader(); } catch(e) {}
+  }
+})();
+
 
   // =========================================================
   // 3) TOC flotante (índice) — mapa del sitio
