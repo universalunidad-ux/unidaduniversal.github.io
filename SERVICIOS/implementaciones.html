@@ -152,52 +152,44 @@
           </div>
         </div>
 
-        <!-- ========== Columna derecha: Reel / Casos ========== -->
-        <aside class="card body reels-card" aria-label="Reels de Implementaciones">
-          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Implementaciones</h4>
+          <!-- ========== Columna derecha: Reel / Casos ========== -->
+<aside class="card body reels-card" aria-label="Reels de Implementaciones">
+  <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Implementaciones</h4>
 
-          <h4 class="reel-title active">De cero a facturar en una sesión</h4>
-          <h4 class="reel-title">Implementación completa de Comercial y Factura</h4>
+  <!-- Un solo título (opcional, tu JS lo puede sobrescribir) -->
+  <h4 class="reel-title active">Implementación Lucía: CONTPAQi</h4>
 
-          <div class="carousel" id="carouselReelsImplementaciones" aria-label="Reels Implementaciones">
-            <button class="arrowCircle prev" aria-label="Anterior" type="button">
-              <span class="chev">‹</span>
-            </button>
+  <div class="carousel" id="carouselReelsImplementaciones" aria-label="Reels Implementaciones">
+    <button class="arrowCircle prev" aria-label="Anterior" type="button" style="display:none;">
+      <span class="chev">‹</span>
+    </button>
 
-            <div class="carousel-track">
-              <!-- Reel 1 -->
-    <!-- Reel 1 -->
-<div class="carousel-slide is-active">
-  <div class="reel-embed">
-  <div class="yt-lite" data-yt="IYn-rGHEfqg" aria-label="Implementación Lucía: CONTPAQi"></div>
-</div>
+    <div class="carousel-track">
+      <!-- ÚNICO REEL (usa el ID que tenías en el reel 1) -->
+      <div class="carousel-slide is-active">
+        <div class="reel-embed">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/IYn-rGHEfqg?rel=0&modestbranding=1&controls=1&fs=1&playsinline=1&enablejsapi=1"
+            title="Implementación Lucía: CONTPAQi"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
 
-</div>
+    <button class="arrowCircle next" aria-label="Siguiente" type="button" style="display:none;">
+      <span class="chev">›</span>
+    </button>
 
-              <!-- Reel 2 -->
-              <div class="carousel-slide">
-                <div class="reel-embed">
-                  <iframe
-                    src="https://www.youtube-nocookie.com/embed/VIDEO_ID_IMPL_2?rel=0&modestbranding=1&controls=1&fs=1"
-                    title="Reel Implementaciones 2"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    loading="lazy"
-                    allowfullscreen>
-                  </iframe>
-                </div>
-              </div>
-            </div>
+    <!-- Dots ocultos porque solo hay 1 -->
+    <div class="carousel-nav" aria-label="Paginación de reels" style="display:none;">
+      <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+    </div>
+  </div>
+</aside>
 
-            <button class="arrowCircle next" aria-label="Siguiente" type="button">
-              <span class="chev">›</span>
-            </button>
-
-            <div class="carousel-nav" aria-label="Paginación de reels">
-              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
-            </div>
-          </div>
-        </aside>
       </div>
     </section>
 
