@@ -146,21 +146,35 @@
   /* =========================
      6) Promos filtro
   ========================= */
-  function initPromosFilter(){
-    const promoBtns=QA(".promo-btn");
-    const promoItems=QA("#promoGrid [data-type]");
-    if(!promoBtns.length||!promoItems.length) return;
+function initPromosFilter(){
+  const promoBtns = QA(".promo-btn");
+  const promoItems = QA("#promoGrid [data-type]");
+  if(!promoBtns.length || !promoItems.length) return;
 
-    function setPromoFilter(filter){
-      promoBtns.forEach(b=>b.classList.toggle("active",b.dataset.filter===filter));
-      promoItems.forEach(el=>{
-        const ok=(filter==="all")||(el.dataset.type===filter);
-        el.style.display=ok?"":"none";
-      });
-    }
-    promoBtns.forEach(b=>b.addEventListener("click",()=>setPromoFilter(b.dataset.filter)));
-    setPromoFilter("nuevos");
+  function setPromoFilter(filter){
+    promoBtns.forEach(b=>{
+      const on = (b.dataset.filter === filter);
+      b.classList.toggle("active", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+
+    promoItems.forEach(el=>{
+      const type = (el.dataset.type || "").trim();
+      const ok = (filter === "all") || (type === filter);
+      el.hidden = !ok;                 // ✅ más consistente que display
+      el.style.display = "";           // limpia overrides previos
+    });
   }
+
+  promoBtns.forEach(b=>{
+    if(b.dataset.bound==="1") return;
+    b.dataset.bound="1";
+    b.addEventListener("click", ()=> setPromoFilter(b.dataset.filter));
+  });
+
+  setPromoFilter("nuevos");
+}
+
 
   /* =========================
      7) Cards clicables
