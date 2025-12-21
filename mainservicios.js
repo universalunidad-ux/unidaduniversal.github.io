@@ -566,5 +566,91 @@ const openBtn  = Q("#tocToggle");
       setActive(0);
     });
   })();
+  /* ===========================
+   YT-LITE Reels Verticales 9:16
+   - Muestra poster desde el inicio (HD)
+   - Mantiene ratio 9:16 (sin saltos CLS)
+   =========================== */
+
+.yt-lite{
+  position:relative;
+  width:100%;
+  aspect-ratio:9/16;
+  border-radius:14px;
+  overflow:hidden;
+  background:#0b1120;
+  border:1px solid rgba(148,163,184,.25);
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+/* Poster (se ve desde el inicio) */
+.yt-lite::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:var(--yt-poster);
+  background-size:cover;
+  background-position:center;
+  filter:saturate(1.05) contrast(1.02);
+  transform:scale(1.02);
+}
+
+/* Sombra suave para legibilidad del botón */
+.yt-lite::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,0) 55%);
+  pointer-events:none;
+}
+
+/* Botón play */
+.yt-lite .yt-play{
+  position:absolute;
+  left:50%; top:50%;
+  transform:translate(-50%,-50%);
+  width:64px; height:64px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(7,10,16,.65);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  z-index:2;
+}
+
+.yt-lite .yt-play svg{
+  width:22px; height:22px;
+  margin-left:2px;
+  fill:#e8eef6;
+}
+
+/* Texto opcional (si lo quieres dentro) */
+.yt-lite .yt-label{
+  position:absolute;
+  left:10px; right:10px; bottom:10px;
+  font-size:.92rem;
+  color:#e8eef6;
+  opacity:.95;
+  z-index:2;
+  text-shadow:0 2px 18px rgba(0,0,0,.8);
+}
+
+/* Iframe real cuando se activa */
+.yt-lite iframe{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  border:0;
+  z-index:3;
+}
+
+/* Si tu carrusel limita altura, esto ayuda */
+.reel-embed, .carousel-slide{
+  display:block;
+}
+.reel-embed .yt-lite{
+  width:100%;
+}
+
 
 })(); // fin IIFE global
