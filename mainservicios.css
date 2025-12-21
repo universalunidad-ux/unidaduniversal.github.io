@@ -799,5 +799,20 @@ body>.arrowCircle{display:none!important}
   .yt-lite{max-width:520px}
 }
 
+.yt-lite::after{z-index:1}
+.yt-lite .yt-play{z-index:2}
+
+/* cuando se active */
+.yt-lite.is-active::after{display:none}
+.yt-lite.is-active .yt-play{display:none}
+
+.yt-lite iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+  z-index:3;
+}
 
 
