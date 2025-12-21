@@ -1,11 +1,11 @@
 /* =========================================================
-   Expiriti - index.js (FINAL V6 MIN+FIX)
+   Expiriti - index.js (FINAL V6 MIN+FIX+WHEEL)
    - SIN conflicto de $/$$
    - Parciales robustos + normaliza rutas (GH Pages + local)
-   - HERO Gallery: grupos + tabs + dots + arrows
-   - REELS: título 1-línea + loop + flechas off si 1
-   - FIX: títulos se actualizan en dots, flechas, scroll/trackpad y cambio de tabs
-   - Servicios default: PÓLIZAS
+   - HERO Gallery: grupos + tabs + dots + arrows + scroll sync
+   - REELS: título 1-línea + loop + flechas off si 1 + scroll/trackpad sync
+   - Servicios: pager 2x2 (mobile) + dots
+   - FIX real: wheel patch se bindea DESPUÉS de cargar parciales
 ========================================================= */
 (function(){ "use strict";
   if(window.__EXPIRITI_INDEX_INIT__) return;
@@ -19,67 +19,52 @@
 
   /* =========================
      1) Rutas (GH Pages + local)
-     - GH: usa /<repo>/<path>
-     - Local: usa ./ o ../ según carpeta
   ========================= */
   const isGh=location.hostname.endsWith("github.io");
   const firstSeg=location.pathname.split("/")[1]||"";
   const repoBase=(isGh&&firstSeg)?("/"+firstSeg):"";
-const inSubDir=/\/(SISTEMAS|SERVICIOS|PDFS)\//i.test(location.pathname);
-const depth=inSubDir?"../":"./";
+  const inSubDir=/\/(SISTEMAS|SERVICIOS|PDFS)\//i.test(location.pathname);
+  const depth=inSubDir?"../":"./";
 
-
-function prefix(path){
-  if(!path) return path;
-  if(/^(https?:)?\/\//i.test(path)) return path;     // http(s) o //cdn...
-  if(/^(mailto:|tel:|data:)/i.test(path)) return path;
-  if(path.startsWith("#")) return path;
-
-  const base = isGh ? (repoBase + "/") : depth;      // repoBase ya trae /<repo>
-  const joined = (base + path).replace(/\\/g,"/");   // por si acaso en Windows
-
-  // Normaliza múltiple "/" SOLO después de "http(s)://"
-  return joined.replace(/([^:]\/)\/+/g, "$1");
-}
-
+  function prefix(path){
+    if(!path) return path;
+    if(/^(https?:)?\/\//i.test(path)) return path;
+    if(/^(mailto:|tel:|data:)/i.test(path)) return path;
+    if(path.startsWith("#")) return path;
+    const base=isGh?(repoBase+"/"):depth;
+    const joined=(base+path).replace(/\\/g,"/");
+    return joined.replace(/([^:]\/)\/+/g,"$1");
+  }
 
   function normalizeRoutes(root=document){
-    /* imgs con data-src -> src correcto */
     QA(".js-abs-src[data-src]",root).forEach(img=>{
       const raw=img.getAttribute("data-src")||"";
       const fin=prefix(raw);
       if(!img.getAttribute("src")) img.setAttribute("src",fin); else img.src=fin;
       img.style.opacity="1";
     });
-
-    /* links con data-href -> href correcto */
     QA(".js-abs-href[data-href]",root).forEach(a=>{
       const raw=a.getAttribute("data-href")||""; if(!raw) return;
       const parts=raw.split("#"); const p=parts[0]||"", h=parts[1]||"";
       a.href=prefix(p)+(h?("#"+h):"");
     });
-
-    /* año footer */
     const y=root.getElementById?.("gf-year")||document.getElementById("gf-year");
     if(y) y.textContent=new Date().getFullYear();
   }
 
   /* =========================
      2) Parciales (header/footer)
-     - Reemplaza placeholder con outerHTML
-     - Luego normaliza rutas
   ========================= */
   async function loadPartial(placeholderId,fileName){
     const ph=document.getElementById(placeholderId);
     if(!ph) return;
 
-const cands = [
-  prefix(`PARTIALS/${fileName}`),                               // GH y local (usa prefix)
-  (isGh && repoBase ? `${repoBase}/PARTIALS/${fileName}` : null), // fallback GH
-  (!isGh ? `${depth}PARTIALS/${fileName}` : null),              // fallback local
-  `/PARTIALS/${fileName}`                                      // fallback root
-].filter(Boolean);
-
+    const cands=[
+      prefix(`PARTIALS/${fileName}`),
+      (isGh&&repoBase?`${repoBase}/PARTIALS/${fileName}`:null),
+      (!isGh?`${depth}PARTIALS/${fileName}`:null),
+      `/PARTIALS/${fileName}`
+    ].filter(Boolean);
 
     let html="", lastErr=null;
     for(const u of cands){
@@ -94,7 +79,25 @@ const cands = [
   }
 
   /* =========================
-     3) Formularios -> WhatsApp
+     3) PATCH UX (WHEEL tabs)
+     - IMPORTANTE: bindear después de parciales
+  ========================= */
+  function bindWheelOnTabs(){
+    const hTabs=document.querySelectorAll(".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs");
+    hTabs.forEach(el=>{
+      if(el.dataset.wheelBound==="1") return;
+      el.dataset.wheelBound="1";
+      el.addEventListener("wheel",(e)=>{
+        if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+          el.scrollLeft+=e.deltaY;
+          e.preventDefault();
+        }
+      },{passive:false});
+    });
+  }
+
+  /* =========================
+     4) Formularios -> WhatsApp
   ========================= */
   function initForms(){
     const quickForm=Q("#quickForm");
@@ -123,7 +126,7 @@ const cands = [
   }
 
   /* =========================
-     4) Tabs Productos
+     5) Tabs Productos
   ========================= */
   function initTabsProductos(){
     const tabs=QA(".prod-tabs .tab");
@@ -141,7 +144,7 @@ const cands = [
   }
 
   /* =========================
-     5) Promos filtro
+     6) Promos filtro
   ========================= */
   function initPromosFilter(){
     const promoBtns=QA(".promo-btn");
@@ -160,22 +163,20 @@ const cands = [
   }
 
   /* =========================
-     6) Cards clicables
+     7) Cards clicables
   ========================= */
   function initClickableCards(){
     QA(".card.product-card[data-href]").forEach(card=>{
       const href=card.getAttribute("data-href");
-card.addEventListener("click",e=>{
-  if(e.target.closest("a,button,input,select,textarea,label")) return;
-  if(href) location.href=prefix(href);
-});
-
-       
+      card.addEventListener("click",e=>{
+        if(e.target.closest("a,button,input,select,textarea,label")) return;
+        if(href) location.href=prefix(href);
+      });
     });
   }
 
   /* =========================================================
-     7) HERO GALLERY: DATA (TUS DATAS)
+     8) HERO GALLERY: DATA (TUS DATAS)
   ========================================================= */
   const HERO_GALLERY_DATA={
     contable:{label:"Contables",defaultSys:"nominas",systems:{
@@ -248,9 +249,6 @@ card.addEventListener("click",e=>{
     servicios:{label:"Servicios",defaultSys:"polizas",systems:{}}
   };
 
-  /* =========================
-     HERO GALLERY: Nodos
-  ========================= */
   const HERO_GALLERY={
     groupNav:Q("#heroGalleryGroups"),
     tabsContainer:Q("#heroGalleryTabs"),
@@ -272,42 +270,38 @@ card.addEventListener("click",e=>{
 
     track.innerHTML=""; nav.innerHTML="";
 
-sys.images.forEach((item, idx) => {
-  const slide = document.createElement("div");
-  slide.className = "carousel-slide hero-slide" + (idx === 0 ? " is-active" : "");
+    sys.images.forEach((item,idx)=>{
+      const slide=document.createElement("div");
+      slide.className="carousel-slide hero-slide"+(idx===0?" is-active":"");
 
-  const img = document.createElement("img");
-  img.src = prefix(item.src);
-  img.alt = item.title || sys.label || "Expiriti";
-  img.width = 550;
-  img.height = 550;
-  img.decoding = "async";
+      const img=document.createElement("img");
+      img.src=prefix(item.src);
+      img.alt=item.title||sys.label||"Expiriti";
+      img.width=550; img.height=550; img.decoding="async";
 
-  const isLCP = (groupKey === HERO_GALLERY.defaultGroup && sysKey === g.defaultSys && idx === 0);
-  if (isLCP) { img.loading = "eager"; img.setAttribute("fetchpriority", "high"); }
-  else img.loading = "lazy";
+      const isLCP=(groupKey===HERO_GALLERY.defaultGroup && sysKey===g.defaultSys && idx===0);
+      if(isLCP){ img.loading="eager"; img.setAttribute("fetchpriority","high"); }
+      else img.loading="lazy";
 
-  slide.appendChild(img);
-  track.appendChild(slide);
+      slide.appendChild(img);
+      track.appendChild(slide);
 
-  const dot = document.createElement("button");
-  dot.type = "button";
-  dot.className = "dot" + (idx === 0 ? " active" : "");
-  dot.setAttribute("aria-label", "Ir a imagen " + (idx + 1));
+      const dot=document.createElement("button");
+      dot.type="button";
+      dot.className="dot"+(idx===0?" active":"");
+      dot.setAttribute("aria-label","Ir a imagen "+(idx+1));
 
-  dot.addEventListener("click", () => {
-    QA(".carousel-slide", track).forEach(s => s.classList.remove("is-active"));
-    QA(".carousel-slide", track)[idx]?.classList.add("is-active");
-    QA(".dot", nav).forEach(d => d.classList.remove("active"));
-    dot.classList.add("active");
-    track.scrollTo({ left: track.clientWidth * idx, behavior: "smooth" });
-  });
+      dot.addEventListener("click",()=>{
+        QA(".carousel-slide",track).forEach(s=>s.classList.remove("is-active"));
+        QA(".carousel-slide",track)[idx]?.classList.add("is-active");
+        QA(".dot",nav).forEach(d=>d.classList.remove("active"));
+        dot.classList.add("active");
+        track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
+      });
 
-  nav.appendChild(dot);
-});
-
-carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir slides
-}
+      nav.appendChild(dot);
+    });
+  }
 
   function buildHeroSystemTabs(groupKey){
     const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
@@ -323,128 +317,124 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
       btn.dataset.group=groupKey;
       btn.dataset.sys=sysKey;
 
-      btn.innerHTML=
-        `<img src="${prefix(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async">
-         <span>${sys.label}</span>`;
+      btn.innerHTML=`<img src="${prefix(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async"><span>${sys.label}</span>`;
 
       btn.addEventListener("click",()=>{
         QA(".hero-tab",c).forEach(b=>b.classList.toggle("active",b===btn));
         buildHeroGallerySlides(groupKey,sysKey);
+        HERO_GALLERY.carousel?.__resetHeroSync?.(); /* reset opcional: evita quedar “a mitad” tras cambiar sys */
       });
 
       c.appendChild(btn);
     });
   }
 
+  function initHeroGallery(){
+    const groupNav=HERO_GALLERY.groupNav;
+    const carousel=HERO_GALLERY.carousel;
+    if(!groupNav||!carousel) return;
 
-            function initHeroGallery(){
-  const groupNav = HERO_GALLERY.groupNav;
-  const carousel = HERO_GALLERY.carousel;
-  if(!groupNav || !carousel) return;
+    groupNav.innerHTML="";
 
-  groupNav.innerHTML = "";
+    Object.entries(HERO_GALLERY_DATA).forEach(([groupKey,group])=>{
+      if(groupKey==="servicios") return;
 
-  Object.entries(HERO_GALLERY_DATA).forEach(([groupKey, group])=>{
-    if(groupKey==="servicios") return;
+      const btn=document.createElement("button");
+      btn.type="button";
+      btn.className="hero-group-tab"+(groupKey===HERO_GALLERY.defaultGroup?" active":"");
+      btn.dataset.group=groupKey;
+      btn.textContent=group.label;
 
-    const btn=document.createElement("button");
-    btn.type="button";
-    btn.className="hero-group-tab"+(groupKey===HERO_GALLERY.defaultGroup?" active":"");
-    btn.dataset.group=groupKey;
-    btn.textContent=group.label;
+      btn.addEventListener("click",()=>{
+        QA(".hero-group-tab",groupNav).forEach(b=>b.classList.toggle("active",b===btn));
+        const cfg=HERO_GALLERY_DATA[groupKey];
+        buildHeroSystemTabs(groupKey);
+        buildHeroGallerySlides(groupKey,cfg.defaultSys);
+        carousel.__resetHeroSync?.(); /* reset opcional: evita scroll residual al cambiar grupo */
+      });
 
-    btn.addEventListener("click",()=>{
-      QA(".hero-group-tab",groupNav).forEach(b=>b.classList.toggle("active",b===btn));
-      const cfg=HERO_GALLERY_DATA[groupKey];
-      buildHeroSystemTabs(groupKey);
-      buildHeroGallerySlides(groupKey,cfg.defaultSys);
-      carousel.__resetHeroSync?.(); // reset consistente
+      groupNav.appendChild(btn);
     });
 
-    groupNav.appendChild(btn);
-  });
+    const track=carousel.querySelector(".carousel-track");
+    const prev=carousel.querySelector(".arrowCircle.prev");
+    const next=carousel.querySelector(".arrowCircle.next");
+    if(!track) return;
 
-  const track = carousel.querySelector(".carousel-track");
-  const prev  = carousel.querySelector(".arrowCircle.prev");
-  const next  = carousel.querySelector(".arrowCircle.next");
-  if(!track) return;
+    const slidesFor=()=>QA(".carousel-slide",track);
 
-  const slidesFor = ()=>QA(".carousel-slide", track);
-
-  const getIdxFromScroll = ()=>{
-    const slides = slidesFor();
-    const len = slides.length;
-    if(!len) return 0;
-    const w = track.clientWidth || 1;
-    return Math.max(0, Math.min(len-1, Math.round((track.scrollLeft||0)/w)));
-  };
-
-  const goTo = (i, behavior="smooth")=>{
-    const slides = slidesFor();
-    if(!slides.length) return;
-    const max = slides.length - 1;
-    const idx = Math.max(0, Math.min(max, i));
-
-    slides.forEach(s=>s.classList.remove("is-active"));
-    slides[idx].classList.add("is-active");
-
-    const navEl = carousel.querySelector(".carousel-nav");
-    QA(".dot", navEl).forEach((d,k)=>d.classList.toggle("active",k===idx));
-
-    track.scrollTo({ left: track.clientWidth*idx, behavior });
-  };
-
-  // Flechas (solo 1 vez)
-  if(carousel.dataset.arrowsBound!=="1"){
-    carousel.dataset.arrowsBound="1";
-    prev?.addEventListener("click",()=>goTo(getIdxFromScroll()-1));
-    next?.addEventListener("click",()=>goTo(getIdxFromScroll()+1));
-  }
-
-  // Scroll sync (solo 1 vez) + expone reset
-  if (carousel.dataset.scrollSync !== "1") {
-    carousel.dataset.scrollSync = "1";
-    let raf = 0, lastIdx = -1;
-
-    const syncFromScroll = () => {
-      raf = 0;
-      const slides = slidesFor();
-      const len = slides.length;
-      if (!len) return;
-
-      const idx = getIdxFromScroll();
-      if (idx === lastIdx) return;
-      lastIdx = idx;
-
-      slides.forEach((s, k) => s.classList.toggle("is-active", k === idx));
-      const navEl = carousel.querySelector(".carousel-nav");
-      QA(".dot", navEl).forEach((d, k) => d.classList.toggle("active", k === idx));
+    const getIdxFromScroll=()=>{
+      const slides=slidesFor();
+      const len=slides.length;
+      if(!len) return 0;
+      const w=track.clientWidth||1;
+      return Math.max(0,Math.min(len-1,Math.round((track.scrollLeft||0)/w)));
     };
 
-    track.addEventListener("scroll", () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(syncFromScroll);
-    }, { passive: true });
+    const goTo=(i,behavior="smooth")=>{
+      const slides=slidesFor();
+      if(!slides.length) return;
+      const max=slides.length-1;
+      const idx=Math.max(0,Math.min(max,i));
 
-    window.addEventListener("resize", () => { lastIdx = -1; syncFromScroll(); });
+      slides.forEach(s=>s.classList.remove("is-active"));
+      slides[idx].classList.add("is-active");
 
-    carousel.__resetHeroSync = () => {
-      lastIdx = -1;
-      track.scrollTo({ left: 0, behavior: "auto" });
-      syncFromScroll();
+      const navEl=carousel.querySelector(".carousel-nav");
+      QA(".dot",navEl).forEach((d,k)=>d.classList.toggle("active",k===idx));
+
+      track.scrollTo({left:track.clientWidth*idx,behavior});
     };
+
+    /* Flechas (solo 1 vez) */
+    if(carousel.dataset.arrowsBound!=="1"){
+      carousel.dataset.arrowsBound="1";
+      prev?.addEventListener("click",()=>goTo(getIdxFromScroll()-1));
+      next?.addEventListener("click",()=>goTo(getIdxFromScroll()+1));
+    }
+
+    /* Scroll sync (solo 1 vez) + expone reset */
+    if(carousel.dataset.scrollSync!=="1"){
+      carousel.dataset.scrollSync="1";
+      let raf=0,lastIdx=-1;
+
+      const syncFromScroll=()=>{
+        raf=0;
+        const slides=slidesFor();
+        const len=slides.length;
+        if(!len) return;
+
+        const idx=getIdxFromScroll();
+        if(idx===lastIdx) return;
+        lastIdx=idx;
+
+        slides.forEach((s,k)=>s.classList.toggle("is-active",k===idx));
+        const navEl=carousel.querySelector(".carousel-nav");
+        QA(".dot",navEl).forEach((d,k)=>d.classList.toggle("active",k===idx));
+      };
+
+      track.addEventListener("scroll",()=>{
+        if(raf) cancelAnimationFrame(raf);
+        raf=requestAnimationFrame(syncFromScroll);
+      },{passive:true});
+
+      window.addEventListener("resize",()=>{ lastIdx=-1; syncFromScroll(); });
+
+      carousel.__resetHeroSync=()=>{
+        lastIdx=-1;
+        track.scrollTo({left:0,behavior:"auto"});
+        syncFromScroll();
+      };
+    }
+
+    /* Init default */
+    const cfg=HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
+    buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
+    buildHeroGallerySlides(HERO_GALLERY.defaultGroup,cfg.defaultSys);
   }
-
-  // Init default
-  const cfg = HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
-  buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
-  buildHeroGallerySlides(HERO_GALLERY.defaultGroup, cfg.defaultSys);
-  carousel.__resetHeroSync?.();
-}
-
 
   /* =========================================================
-     8) REELS: DATA (TUS DATAS)
+     9) REELS: DATA (TUS DATAS)
   ========================================================= */
   const REELS_DATA={
     contable:{titleEl:Q("#reelTitle-contable"),carousel:Q("#carouselReels-contable"),defaultSys:"contabilidad",reelsBySys:{
@@ -506,7 +496,8 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
         {id:"XJQDFDowH0U",title:"Colabora, app sin costo con Nóminas"},
         {id:"nLRgiOPQM80",title:"App Colabora gratis con Nóminas"}
       ],
-      personia:[{id:"gae67GDse30",title:"Nóminas y Personia | Checador por GPS"}]
+      personia:[{id:"gae67GDse30",title:"Nóminas y Personia | Checador por GPS"}
+      ]
     }},
     servicios:{titleEl:Q("#reelTitle-servicios"),carousel:Q("#carouselReels-servicios"),defaultSys:"polizas",reelsBySys:{
       implementaciones:[{id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"}],
@@ -523,7 +514,7 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
   };
 
   /* =========================
-     9) REELS helpers
+     10) REELS helpers
   ========================= */
   function setArrowsEnabled(prev,next,enabled){
     [prev,next].forEach(btn=>{
@@ -536,9 +527,6 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
     });
   }
 
-  /* Título 1 línea:
-     - Si encuentra un heading “principal” lo usa y oculta el subtitle (#reelTitle-xxx)
-     - Si NO lo encuentra, usa el subtitle y lo vuelve visible (FIX de tu caso) */
   function setSingleLineReelTitle(cfg,title){
     const t=(title||"").trim(); if(!t) return;
     const el=cfg?.titleEl||null;
@@ -573,37 +561,24 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
   function renderReelThumb(wrap){
     const id=wrap.dataset.ytid; if(!id) return;
     const title=wrap.dataset.title||"";
-    wrap.innerHTML=
-      `<button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
-         <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" loading="lazy" decoding="async" width="480" height="270"
-              alt="${title}" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';">
-         <span class="yt-play"></span>
-       </button>`;
+    wrap.innerHTML=`<button class="yt-thumb" type="button" aria-label="Reproducir: ${title}"><img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" loading="lazy" decoding="async" width="480" height="270" alt="${title}" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';"><span class="yt-play"></span></button>`;
     wrap.querySelector(".yt-thumb")?.addEventListener("click",()=>{ stopAllReels(); renderReelIframe(wrap); });
   }
 
   function renderReelIframe(wrap){
     const id=wrap.dataset.ytid;
     const title=wrap.dataset.title||"";
-    wrap.innerHTML=
-      `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1"
-               title="${title}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    wrap.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1" title="${title}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
   }
 
-  /* Pausa “global”: al cambiar slide o abrir un video, regresa todos a thumbnail */
   function stopAllReels(){
     document.querySelectorAll(".reel-embed").forEach(w=>{ if(w.querySelector("iframe")) renderReelThumb(w); });
-
     document.querySelectorAll(".yt-lite").forEach(node=>{
       if(node.dataset.ytLoaded==="1"){
         const id=node.dataset.ytid;
         const title=node.dataset.title||"Video";
         const thumb=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-        node.innerHTML=
-          `<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
-             <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
-             <span class="yt-lite-play"></span>
-           </button>`;
+        node.innerHTML=`<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}"><span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span><span class="yt-lite-play"></span></button>`;
         node.dataset.ytLoaded="";
       }
     });
@@ -656,11 +631,6 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
     if(reels[0]?.title) setSingleLineReelTitle(cfg,reels[0].title);
   }
 
-  /* =========================
-     10) Reels carousel init (1 sola vez por panel)
-     - flechas: loop
-     - scroll/trackpad: sync índice + título (FIX)
-  ========================= */
   function initReelsCarousel(panelKey){
     const cfg=REELS_DATA[panelKey];
     if(!cfg||!cfg.carousel) return;
@@ -673,36 +643,36 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
     const slidesFor=()=>QA(".carousel-slide",track);
     const dotsFor=()=>QA(".carousel-nav .dot",cfg.carousel);
 
-    const goTo=(i)=>{
-      const slides=slidesFor();
-      const len=slides.length;
-      if(!len||len<=1) return;
+    /* Flechas: bind 1 sola vez */
+    if(cfg.carousel.dataset.arrowsBound!=="1"){
+      cfg.carousel.dataset.arrowsBound="1";
+      const goTo=(i)=>{
+        const slides=slidesFor();
+        const len=slides.length;
+        if(!len||len<=1) return;
+        const idx=((i%len)+len)%len;
+        slides.forEach(s=>s.classList.remove("is-active"));
+        slides[idx].classList.add("is-active");
+        dotsFor().forEach((d,k)=>d.classList.toggle("active",k===idx));
+        track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
+        const sys=cfg._activeSys||cfg.defaultSys;
+        const reels=(cfg.reelsBySys[sys]||[]);
+        setSingleLineReelTitle(cfg,reels[idx]?.title||"");
+        stopAllReels();
+      };
+      prev?.addEventListener("click",()=>{
+        const slides=slidesFor(); if(slides.length<=1) return;
+        const i=slides.findIndex(s=>s.classList.contains("is-active"));
+        goTo(i-1);
+      });
+      next?.addEventListener("click",()=>{
+        const slides=slidesFor(); if(slides.length<=1) return;
+        const i=slides.findIndex(s=>s.classList.contains("is-active"));
+        goTo(i+1);
+      });
+    }
 
-      const idx=((i%len)+len)%len;
-      slides.forEach(s=>s.classList.remove("is-active"));
-      slides[idx].classList.add("is-active");
-      dotsFor().forEach((d,k)=>d.classList.toggle("active",k===idx));
-      track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
-
-      const sys=cfg._activeSys||cfg.defaultSys;
-      const reels=(cfg.reelsBySys[sys]||[]);
-      setSingleLineReelTitle(cfg,reels[idx]?.title||"");
-      stopAllReels();
-    };
-
-    prev?.addEventListener("click",()=>{
-      const slides=slidesFor(); if(slides.length<=1) return;
-      const i=slides.findIndex(s=>s.classList.contains("is-active"));
-      goTo(i-1);
-    });
-
-    next?.addEventListener("click",()=>{
-      const slides=slidesFor(); if(slides.length<=1) return;
-      const i=slides.findIndex(s=>s.classList.contains("is-active"));
-      goTo(i+1);
-    });
-
-    /* Scroll sync (swipe/trackpad) -> índice y título */
+    /* Scroll sync (swipe/trackpad) */
     if(cfg.carousel.dataset.scrollSync!=="1"){
       cfg.carousel.dataset.scrollSync="1";
       let raf=0,lastIdx=-1;
@@ -739,9 +709,6 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
     buildReelsSlides(panelKey,cfg.defaultSys);
   }
 
-  /* =========================
-     11) Videos horizontales (yt-lite)
-  ========================= */
   function initYTLiteVideos(){
     QA(".yt-lite").forEach(node=>{
       if(node.dataset.ytReady==="1") return;
@@ -752,29 +719,17 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
       node.dataset.ytReady="1";
       const thumb=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-      node.innerHTML=
-        `<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
-           <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
-           <span class="yt-lite-play"></span>
-         </button>`;
+      node.innerHTML=`<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}"><span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span><span class="yt-lite-play"></span></button>`;
 
       node.addEventListener("click",()=>{
         if(node.dataset.ytLoaded==="1") return;
         stopAllReels();
-        node.innerHTML=
-          `<iframe class="yt-iframe"
-             src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1"
-             title="${title}"
-             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-             allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+        node.innerHTML=`<iframe class="yt-iframe" src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1" title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
         node.dataset.ytLoaded="1";
       });
     });
   }
 
-  /* =========================
-     12) FAQ accordion
-  ========================= */
   function initFAQ(){
     document.querySelectorAll(".faq-item").forEach(item=>{
       item.addEventListener("toggle",()=>{
@@ -784,10 +739,6 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
     });
   }
 
-  /* =========================
-     13) Reels tabs (panel/sys)
-     - FIX: al cambiar tab, fuerza scroll 0 + título del primer reel
-  ========================= */
   function initReelsTabs(){
     QA(".reel-tab").forEach(tab=>{
       tab.addEventListener("click",()=>{
@@ -806,7 +757,6 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
 
         buildReelsSlides(panelKey,sysKey);
 
-        /* ✅ fuerza estado inicial del nuevo sys */
         const reels0=(cfg?.reelsBySys?.[sysKey]||[]);
         cfg?.carousel?.querySelector(".carousel-track")?.scrollTo({left:0,behavior:"auto"});
         setSingleLineReelTitle(cfg,reels0[0]?.title||"");
@@ -815,7 +765,58 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
   }
 
   /* =========================
-     14) INIT PRINCIPAL
+     11) Servicios: pager 2x2 (mobile)
+  ========================= */
+  function initServicesPager(){
+    const root=document.getElementById("servicesCarousel");
+    const dotsWrap=document.getElementById("servicesDots");
+    if(!root||!dotsWrap) return;
+
+    const isDesktop=window.matchMedia("(min-width: 980px)").matches;
+    if(isDesktop || !root.classList.contains("is-carousel")){
+      dotsWrap.innerHTML="";
+      return;
+    }
+
+    const pages=Array.from(root.querySelectorAll(".svc-page"));
+    if(pages.length<=1){ dotsWrap.innerHTML=""; return; }
+
+    dotsWrap.innerHTML="";
+    const dots=pages.map((_,i)=>{
+      const b=document.createElement("button");
+      b.type="button";
+      b.className="dot"+(i===0?" active":"");
+      b.setAttribute("aria-label",`Ir a página ${i+1} de servicios`);
+      b.addEventListener("click",()=>{
+        const w=Math.max(1,root.clientWidth);
+        root.scrollTo({left:w*i,behavior:"smooth"});
+      });
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    const setActive=(i)=>dots.forEach((d,idx)=>d.classList.toggle("active",idx===i));
+
+    let raf=0;
+    const sync=()=>{
+      const w=Math.max(1,root.clientWidth);
+      const i=Math.round(root.scrollLeft/w);
+      setActive(Math.max(0,Math.min(pages.length-1,i)));
+    };
+
+    if(root.dataset.pagerBound!=="1"){
+      root.dataset.pagerBound="1";
+      root.addEventListener("scroll",()=>{
+        if(raf) cancelAnimationFrame(raf);
+        raf=requestAnimationFrame(sync);
+      },{passive:true});
+    }
+
+    sync();
+  }
+
+  /* =========================
+     12) INIT PRINCIPAL
   ========================= */
   window.addEventListener("DOMContentLoaded",async ()=>{
     await Promise.all([
@@ -824,6 +825,9 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
     ]);
 
     normalizeRoutes(document);
+
+    /* ✅ FIX: ahora el wheel se bindea cuando YA existen tabs del header */
+    bindWheelOnTabs();
 
     initForms();
     initTabsProductos();
@@ -837,111 +841,23 @@ carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir sl
 
     initYTLiteVideos();
     initFAQ();
+
     initServicesPager();
 
     const yearSpan=document.getElementById("gf-year");
     if(yearSpan) yearSpan.textContent=new Date().getFullYear();
   });
 
-  /* BFCache: al volver atrás, re-normaliza rutas */
-  window.addEventListener("pageshow",()=>{ try{ normalizeRoutes(document); }catch(_){ } });
+  /* =========================
+     13) Eventos globales
+  ========================= */
+  window.addEventListener("resize",()=>{ try{ initServicesPager(); }catch(_){ } });
 
-})(); 
-
-/* =========================
-   Servicios: pager 2x2 (mobile)
-   - Requiere: #servicesCarousel.cards-services.is-carousel
-   - Páginas: .svc-page
-   - Dots: #servicesDots.svc-dots
-========================= */
-function initServicesPager(){
-  const root = document.getElementById("servicesCarousel");
-  const dotsWrap = document.getElementById("servicesDots");
-  if (!root || !dotsWrap) return;
-
-  const isDesktop = window.matchMedia("(min-width: 980px)").matches;
-  if (isDesktop || !root.classList.contains("is-carousel")) {
-    dotsWrap.innerHTML = "";
-    return;
-  }
-
-  const pages = Array.from(root.querySelectorAll(".svc-page"));
-  if (pages.length <= 1) { dotsWrap.innerHTML = ""; return; }
-
-  dotsWrap.innerHTML = "";
-  const dots = pages.map((_, i) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "dot" + (i === 0 ? " active" : "");
-    b.setAttribute("aria-label", `Ir a página ${i + 1} de servicios`);
-    b.addEventListener("click", () => {
-      const w = Math.max(1, root.clientWidth);
-      root.scrollTo({ left: w * i, behavior: "smooth" });
-    });
-    dotsWrap.appendChild(b);
-    return b;
+  /* BFCache: al volver atrás, re-normaliza + re-bindea wheel + pager */
+  window.addEventListener("pageshow",()=>{
+    try{ normalizeRoutes(document); }catch(_){}
+    try{ bindWheelOnTabs(); }catch(_){}
+    try{ initServicesPager(); }catch(_){}
   });
 
-  const setActive = (i) => dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
-
-  let raf = 0;
-  const sync = () => {
-    const w = Math.max(1, root.clientWidth);
-    const i = Math.round(root.scrollLeft / w);
-    setActive(Math.max(0, Math.min(pages.length - 1, i)));
-  };
-
-  if(root.dataset.pagerBound!=="1"){
-    root.dataset.pagerBound="1";
-    root.addEventListener("scroll", () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(sync);
-    }, { passive: true });
-  }
-
-  sync();
-}
-
-window.addEventListener("resize", initServicesPager);
-window.addEventListener("pageshow", initServicesPager);
-
-
-/* =========================================================
-   PATCH UX — HScroll tabs wheel + optional hero arrows scroll
-   (Pegar al final de tu JS)
-========================================================= */
-(()=>{"use strict";
-
-/* 1) Tabs horizontales: wheel => scroll horizontal */
-const hTabs=document.querySelectorAll(".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs");
-hTabs.forEach(el=>{
-  el.addEventListener("wheel",(e)=>{
-    if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
-      el.scrollLeft+=e.deltaY;
-      e.preventDefault();
-    }
-  },{passive:false});
-});
-
-/* 2) (Opcional) Si tu carrusel es “scroll-snap” y quieres que flechas empujen 1 slide */
-function bindScrollArrows(carouselSel){
-  const root=document.querySelector(carouselSel);
-  if(!root) return;
-  const track=root.querySelector(".carousel-track")||root.querySelector(".track")||root;
-  const prev=root.querySelector(".arrowCircle.prev");
-  const next=root.querySelector(".arrowCircle.next");
-  if(!track||!prev||!next) return;
-
-  const step=()=>Math.max(280, Math.round(root.getBoundingClientRect().width*0.92));
-  prev.addEventListener("click",()=>track.scrollBy({left:-step(),behavior:"smooth"}));
-  next.addEventListener("click",()=>track.scrollBy({left: step(),behavior:"smooth"}));
-}
-
-/* Ajusta el selector a tu hero real si aplica */
-// bindScrollArrows("#heroCarousel");
-// bindScrollArrows(".hero .carousel");
-
-
 })();
-
-
