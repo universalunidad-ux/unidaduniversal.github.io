@@ -1,73 +1,114 @@
 <!-- =========================================================
-  Expiriti - Header Global (V4 FIX)
-  - FIX 404 en subcarpetas (GH Pages project base) usando repoBase (NO ../)
-  - FIX Drawer invisible con scroll: el transform SOLO se aplica a .gh-bar, NO al contenedor
-  - Mantiene: fixed + hide/show on scroll + mega menu + drawer full height
-  Copia/pega tal cual (HTML+CSS+JS en bloque)
-========================================================= -->
+     Expiriti - Header Global (V4 FIXED)
+     FIX 1: Links/IMG sin 404 en GH Pages (/REPO/)
+     FIX 2: Drawer visible aunque estés scrolleado (hide solo barra)
+     ========================================================= -->
 <header class="gh" id="gh-header" role="banner">
 <style>
-/* =========================
+/* =========================================================
    TOKENS
-========================= */
-:root{--gh-bg:rgba(7,10,16,.92);--gh-border:rgba(255,255,255,.06);--gh-panel:rgba(10,14,23,.98);--gh-text:var(--text,#e8eef6);--gh-muted:var(--muted,#95a2b3);--gh-brand:var(--brand,#2dd4bf);--gh-brand2:var(--brand-2,#60a5fa);--gh-maxw:var(--maxw,1200px);--gh-height:68px}
+========================================================= */
+:root{
+  --gh-bg:rgba(7,10,16,.92);
+  --gh-border:rgba(255,255,255,.06);
+  --gh-panel:rgba(10,14,23,.98);
+  --gh-text:var(--text,#e8eef6);
+  --gh-muted:var(--muted,#95a2b3);
+  --gh-brand:var(--brand,#2dd4bf);
+  --gh-brand2:var(--brand-2,#60a5fa);
+  --gh-maxw:var(--maxw,1200px);
+  --gh-height:68px;
+}
 
-/* =========================
-   ESTRUCTURA + FIX TRANSFORM
-   - .gh NO se transforma
-   - .gh-bar es fixed + se oculta con transform
-========================= */
-.gh{position:relative;z-index:9999}
+/* =========================================================
+   ROOT WRAPPER (NO TRANSFORM AQUÍ)
+   - Importante: el hide-on-scroll se aplica a .gh-bar, NO a .gh
+========================================================= */
+.gh{position:fixed;top:0;left:0;right:0;z-index:9999}
 .gh *{box-sizing:border-box}
-.gh-bar{position:fixed;top:0;left:0;right:0;height:var(--gh-height);z-index:10000;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:var(--gh-bg);border-bottom:1px solid var(--gh-border);transition:transform .4s cubic-bezier(.215,.61,.355,1);will-change:transform}
+
+/* Barra visible/oculta */
+.gh-bar{
+  height:var(--gh-height);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:var(--gh-bg);border-bottom:1px solid var(--gh-border);
+  transition:transform .4s cubic-bezier(.215,.61,.355,1);
+  will-change:transform;
+}
 .gh-bar.is-hidden{transform:translateY(-100%)}
 
-/* =========================
-   CONTENEDOR
-========================= */
-.gh-container{max-width:var(--gh-maxw);margin:0 auto;padding:12px clamp(12px,2vw,18px);display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;min-width:0}
+.gh-container{
+  max-width:var(--gh-maxw);margin:0 auto;
+  padding:12px clamp(12px,2vw,18px);
+  display:grid;grid-template-columns:auto 1fr auto;
+  gap:14px;align-items:center;min-width:0
+}
 
-/* =========================
-   BRAND
-========================= */
-.gh-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--gh-text);padding:4px 6px;border-radius:999px;transition:.2s ease;min-width:0}
+/* Brand */
+.gh-brand{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;color:var(--gh-text);
+  padding:4px 6px;border-radius:999px;
+  transition:.2s ease;min-width:0
+}
 .gh-brand:hover{background:rgba(255,255,255,.04);transform:translateY(-1px)}
 .gh-brand img{width:44px;height:44px;border-radius:12px;flex:0 0 44px}
 .gh-brand-title{display:flex;flex-direction:column;line-height:1.1;min-width:0}
 .gh-brand-title .name{font-size:16px;font-weight:650;letter-spacing:.02em;color:#fff;white-space:nowrap}
 .gh-brand-title .sub{font-size:13px;color:var(--gh-muted);white-space:nowrap}
 
-/* =========================
-   NAV DESKTOP
-========================= */
+/* Desktop nav */
 .gh-nav{justify-self:center;min-width:0}
 .gh-nav>ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;align-items:center;min-width:0}
 .gh-nav>ul>li{display:flex;align-items:center}
-.gh-nav a{position:relative;color:var(--gh-text);text-decoration:none;font-weight:520;font-size:14px;padding:6px 2px;line-height:1;transition:color .2s ease;white-space:nowrap}
-.gh-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));transform:scaleX(0);transform-origin:center;opacity:0;transition:.2s ease}
+.gh-nav a{
+  position:relative;color:var(--gh-text);text-decoration:none;
+  font-weight:520;font-size:14px;padding:6px 2px;line-height:1;
+  transition:color .2s ease;white-space:nowrap
+}
+.gh-nav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;border-radius:999px;
+  background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));
+  transform:scaleX(0);transform-origin:center;opacity:0;transition:.2s ease
+}
 .gh-nav a:hover::after,.gh-nav a.active-parent::after{transform:scaleX(1);opacity:1}
 .gh-nav a.active-parent{color:var(--gh-brand)}
 
-/* =========================
-   DROPDOWNS
-========================= */
+/* Dropdowns */
 .gh-has-dd{position:relative}
-.gh-dd{position:absolute;top:calc(100% + 10px);left:0;background:var(--gh-panel);border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 45px rgba(0,0,0,.6);border-radius:18px;padding:14px;z-index:1000;visibility:hidden;opacity:0;transform:translateY(10px);transition:opacity .18s ease,transform .18s ease,visibility 0s linear .22s}
+.gh-dd{
+  position:absolute;top:calc(100% + 10px);left:0;
+  background:var(--gh-panel);border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 18px 45px rgba(0,0,0,.6);
+  border-radius:18px;padding:14px;z-index:1000;
+  visibility:hidden;opacity:0;transform:translateY(10px);
+  transition:opacity .18s ease,transform .18s ease,visibility 0s linear .22s
+}
 .gh-dd::before{content:"";position:absolute;top:-18px;left:0;width:100%;height:18px;background:transparent}
-.gh-has-dd:focus-within .gh-dd,.gh-has-dd:hover .gh-dd{visibility:visible;opacity:1;transform:translateY(0);transition:opacity .18s ease,transform .18s ease,visibility 0s linear 0s}
+.gh-has-dd:focus-within .gh-dd,.gh-has-dd:hover .gh-dd{
+  visibility:visible;opacity:1;transform:translateY(0);
+  transition:opacity .18s ease,transform .18s ease,visibility 0s linear 0s
+}
 
-/* =========================
-   MEGA MENU
-========================= */
+/* Mega */
 .gh-dd.mega{left:50%;transform:translate(-50%,10px);width:min(980px,calc(100vw - 24px));padding:20px}
 .gh-has-dd:hover .gh-dd.mega,.gh-has-dd:focus-within .gh-dd.mega{transform:translate(-50%,0)}
 .gh-mega{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.gh-col{border-radius:16px;padding:12px;background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);border:1px solid rgba(255,255,255,.06);min-width:0}
+.gh-col{
+  border-radius:16px;padding:12px;
+  background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);
+  border:1px solid rgba(255,255,255,.06);min-width:0
+}
 .gh-col h4{margin:0 0 8px;font-size:12px;letter-spacing:.14em;color:var(--gh-muted);text-transform:uppercase;opacity:.75}
 .gh-subhead{display:flex;align-items:center;gap:6px;margin:12px 0 8px;font-weight:650;font-size:11px;color:#fff;text-transform:uppercase;letter-spacing:.05em}
 .gh-subhead svg{width:14px;height:14px;opacity:.9;color:var(--gh-brand)}
 .gh-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.gh-col a.gh-link{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:12px;border-radius:12px;text-decoration:none;color:var(--gh-text);border:1px solid transparent;transition:.18s ease;min-width:0}
+
+.gh-col a.gh-link{
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+  padding:12px;border-radius:12px;text-decoration:none;color:var(--gh-text);
+  border:1px solid transparent;transition:.18s ease;min-width:0
+}
 .gh-col a.gh-link:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
 .gh-ico32{width:min(220px,100%);aspect-ratio:20/7;height:auto;object-fit:contain;display:block;flex:0 0 auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));opacity:.95}
 .gh-link-content{display:flex;flex-direction:column;gap:4px;min-width:0}
@@ -75,38 +116,60 @@
 .gh-desc{margin:0;font-size:11px;line-height:1.35;color:var(--gh-muted);white-space:normal}
 @media(min-width:1200px){.gh-ico32{width:clamp(110px,9vw,150px)}}
 
-/* =========================
-   LIST (SERVICIOS DD)
-========================= */
+/* Servicios dropdown simple */
 .gh-list{display:flex;flex-direction:column;gap:8px;min-width:260px}
-.gh-list a{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;color:var(--gh-text);text-decoration:none;background:rgba(17,23,35,.5);border:1px solid rgba(255,255,255,.06);font-size:13px;transition:.18s ease}
+.gh-list a{
+  display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;
+  color:var(--gh-text);text-decoration:none;background:rgba(17,23,35,.5);
+  border:1px solid rgba(255,255,255,.06);font-size:13px;transition:.18s ease
+}
 .gh-list a:hover{border-color:rgba(255,255,255,.18);background:rgba(27,33,48,1);transform:translateY(-1px)}
 .gh-ico{width:18px;height:18px;opacity:.9}
 
-/* =========================
-   CTA + BURGER
-========================= */
+/* CTA */
 .gh-cta{display:flex;gap:8px;align-items:center}
-.gh-btn{border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--gh-text);padding:8px 14px;border-radius:999px;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:6px;transition:.18s ease}
+.gh-btn{
+  border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);
+  color:var(--gh-text);padding:8px 14px;border-radius:999px;
+  text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:6px;
+  transition:.18s ease
+}
 .gh-btn:hover{background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));color:#020617;border-color:transparent;transform:translateY(-1px)}
-.gh-burger{display:none;border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--gh-text);padding:8px 10px;border-radius:12px;font-size:18px;line-height:1;cursor:pointer}
+.gh-burger{
+  display:none;border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);
+  color:var(--gh-text);padding:8px 10px;border-radius:12px;font-size:18px;line-height:1;cursor:pointer
+}
 
-/* =========================
-   MOBILE DRAWER (FULL HEIGHT)
-   - z-index > bar
-========================= */
-.gh-dim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.18s ease;z-index:10001}
-.gh-drawer{position:fixed;top:0;right:0;height:100vh;height:100dvh;width:min(92vw,420px);background:rgba(8,11,18,.98);border-left:1px solid rgba(255,255,255,.08);transform:translateX(105%);transition:.25s cubic-bezier(.4,0,.2,1);z-index:10002;display:flex;flex-direction:column}
+/* =========================================================
+   MOBILE DRAWER (ALTO OK + SCROLL INTERNO)
+========================================================= */
+.gh-dim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.18s ease;z-index:10010}
+.gh-drawer{
+  position:fixed;top:0;right:0;height:100vh;height:100dvh;width:min(92vw,420px);
+  background:rgba(8,11,18,.98);border-left:1px solid rgba(255,255,255,.08);
+  transform:translateX(105%);transition:.25s cubic-bezier(.4,0,.2,1);
+  z-index:10011;display:flex;flex-direction:column
+}
 html.gh-open .gh-dim{opacity:1;visibility:visible}
 html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-drawer[hidden],.gh-dim[hidden]{display:none!important}
+
 .gh-drawer-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px;border-bottom:1px solid rgba(255,255,255,.06)}
 .gh-close{border:1px solid rgba(255,255,255,.18);background:rgba(15,23,42,.9);color:var(--gh-text);border-radius:12px;padding:8px 10px;font-size:16px;line-height:1;cursor:pointer}
 .gh-drawer-body{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:12px 14px 40px}
 
-/* =========================
-   MOBILE UI (SISTEMAS)
-========================= */
+.gh-mcta-ico{margin-top:12px;display:flex;gap:10px}
+.gh-ctabtn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  box-shadow:0 18px 40px rgba(0,0,0,.30);font-weight:800;letter-spacing:.01em
+}
+.gh-ctabtn:hover{border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
+.gh-ctaico{width:22px;height:22px;object-fit:contain;filter:drop-shadow(0 8px 16px rgba(0,0,0,.30));opacity:.95}
+
+/* Sistemas tabs (móvil) */
 .gh-acc{border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden}
 .gh-msys{padding:10px 10px 14px;margin-top:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);border-radius:18px}
 .gh-msys-head{padding:6px 4px 10px}
@@ -114,83 +177,78 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-msys-sub{color:var(--gh-muted);font-size:12px;margin-top:2px}
 .gh-catbar{display:flex;gap:8px;overflow:auto;padding:2px 2px 10px;scrollbar-width:none}
 .gh-catbar::-webkit-scrollbar{display:none}
-.gh-cat{border:1px solid rgba(255,255,255,.10);background:rgba(17,23,35,.55);color:var(--gh-text);padding:9px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.01em;white-space:nowrap;transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.gh-cat{
+  border:1px solid rgba(255,255,255,.10);background:rgba(17,23,35,.55);
+  color:var(--gh-text);padding:9px 12px;border-radius:999px;font-size:12px;font-weight:700;
+  letter-spacing:.01em;white-space:nowrap;transition:transform .15s ease,background .15s ease,border-color .15s ease
+}
 .gh-cat:active{transform:scale(.98)}
-.gh-cat.is-active{background:linear-gradient(90deg,rgba(45,212,191,.20),rgba(96,165,250,.18));border-color:rgba(45,212,191,.38);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.gh-cat.is-active{
+  background:linear-gradient(90deg,rgba(45,212,191,.20),rgba(96,165,250,.18));
+  border-color:rgba(45,212,191,.38);box-shadow:0 10px 24px rgba(0,0,0,.25)
+}
 .gh-panel{margin-top:6px}
 .gh-panel.is-open{animation:ghFadeUp .18s ease both}
 @keyframes ghFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
 .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.gh-mcard{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:16px;text-decoration:none;color:var(--gh-text);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.07);box-shadow:0 18px 40px rgba(0,0,0,.30);transition:transform .16s ease,border-color .16s ease,background .16s ease;min-height:118px}
+.gh-mcard{
+  display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:16px;
+  text-decoration:none;color:var(--gh-text);
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.07);box-shadow:0 18px 40px rgba(0,0,0,.30);
+  transition:transform .16s ease,border-color .16s ease,background .16s ease;min-height:118px
+}
 .gh-mcard:hover{transform:translateY(-1px);border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
-.gh-mcard:active{transform:scale(.99)}
 .gh-mimg{width:100%;height:44px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35));opacity:.98}
 .gh-mmeta{display:flex;flex-direction:column;gap:2px;min-width:0}
 .gh-mmeta strong{color:#fff;font-weight:800;font-size:13px;line-height:1.15}
 .gh-mmeta span{color:var(--gh-muted);font-size:11px;line-height:1.25}
-.gh-mpromo{display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);border:1px solid rgba(255,255,255,.10);background:linear-gradient(90deg,rgba(245,158,11,.12),rgba(45,212,191,.08));box-shadow:0 18px 40px rgba(0,0,0,.30)}
-.gh-mpromo:hover{border-color:rgba(245,158,11,.30)}
+
+.gh-mpromo{
+  display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px;border-radius:16px;
+  text-decoration:none;color:var(--gh-text);border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(90deg,rgba(245,158,11,.12),rgba(45,212,191,.08));box-shadow:0 18px 40px rgba(0,0,0,.30)
+}
 .gh-mpromo-ico{width:22px;height:22px;object-fit:contain;opacity:.95}
 .gh-mpromo-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
 .gh-mpromo-txt strong{color:#fff;font-weight:900;font-size:13px}
 .gh-mpromo-txt span{color:var(--gh-muted);font-size:11px}
 .gh-mpromo-chip{margin-left:auto;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;color:#020617;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
-.gh-star{position:relative;border-color:rgba(45,212,191,.28)!important;background:linear-gradient(180deg,rgba(45,212,191,.10),rgba(255,255,255,.02))!important;box-shadow:0 18px 44px rgba(0,0,0,.35);overflow:hidden}
-.gh-star::before{content:"";position:absolute;inset:-2px;background:conic-gradient(from 180deg,rgba(45,212,191,0),rgba(45,212,191,.35),rgba(96,165,250,.30),rgba(45,212,191,0));filter:blur(10px);opacity:.55;pointer-events:none}
-.gh-star::after{content:"Servicio estrella";position:absolute;top:10px;right:10px;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#021018;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
 
-/* =========================
-   MOBILE UI (SERVICIOS CAROUSEL 2x2)
-========================= */
-.gh-msvc{margin-top:10px}
-.gh-svcwrap{position:relative;margin-top:6px;border-radius:18px;padding:0}
-.gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:12px;padding:2px 2px 8px;scrollbar-width:none}
-.gh-svctrack::-webkit-scrollbar{display:none}
-.gh-svcpage{flex:0 0 100%;scroll-snap-align:start}
-.gh-mgrid-svc{margin-top:6px}
-.gh-mcard-ghost{opacity:0;pointer-events:none;background:transparent;border-color:transparent;box-shadow:none}
-.gh-svcarrow{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(10,14,23,.75);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;z-index:5;box-shadow:0 12px 28px rgba(0,0,0,.35)}
-.gh-svcarrow:hover{border-color:rgba(45,212,191,.25)}
-.gh-svcarrow:active{transform:translateY(-50%) scale(.98)}
-.gh-svcarrow.prev{left:6px}
-.gh-svcarrow.next{right:6px}
-.gh-svcdots{display:flex;justify-content:center;gap:8px;margin-top:8px}
-.gh-svcdots .dot{width:8px;height:8px;border-radius:999px;border:0;background:rgba(255,255,255,.22)}
-.gh-svcdots .dot.is-active{width:18px;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
-.gh-mcta-ico{margin-top:12px;display:flex;gap:10px}
-.gh-ctabtn{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));box-shadow:0 18px 40px rgba(0,0,0,.30);font-weight:800;letter-spacing:.01em}
-.gh-ctabtn:hover{border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
-.gh-ctabtn:active{transform:scale(.99)}
-.gh-ctaico{width:22px;height:22px;object-fit:contain;filter:drop-shadow(0 8px 16px rgba(0,0,0,.30));opacity:.95}
-.gh-mgrid-svc .gh-mimg{height:52px;object-fit:contain}
-
-/* =========================
-   DRAWER TITLE
-========================= */
-.gh-dtitle{display:flex;flex-direction:column}
+/* Drawer title */
 .gh-dtitle-row{display:flex;align-items:center;gap:10px}
 .gh-dtitle-logo{width:26px;height:26px;border-radius:8px;object-fit:cover}
 .gh-dtitle-name{color:#fff;font-weight:900;letter-spacing:.02em;line-height:1}
 .gh-dtitle-sub{color:var(--gh-muted);font-size:12px;font-weight:650;margin-top:2px;line-height:1.1}
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media(max-width:980px){.gh-container{grid-template-columns:1fr auto;gap:8px}.gh-nav{display:none}.gh-burger{display:inline-flex}.gh-cta .gh-btn:first-child{display:none}.gh-brand-title .sub{display:none}}
-@media(max-width:420px){.gh-brand-title .name{font-size:15px}.gh-brand img{width:40px;height:40px;flex-basis:40px}}
-@media(prefers-reduced-motion:reduce){.gh-brand,.gh-nav a::after,.gh-dd,.gh-btn,.gh-dim,.gh-drawer,.gh-bar{transition:none!important}}
+/* Responsive */
+@media(max-width:980px){
+  .gh-container{grid-template-columns:1fr auto;gap:8px}
+  .gh-nav{display:none}
+  .gh-burger{display:inline-flex}
+  .gh-cta .gh-btn:first-child{display:none}
+  .gh-brand-title .sub{display:none}
+}
+@media(max-width:420px){
+  .gh-brand-title .name{font-size:15px}
+  .gh-brand img{width:40px;height:40px;flex-basis:40px}
+}
+@media(prefers-reduced-motion:reduce){
+  .gh-brand,.gh-nav a::after,.gh-dd,.gh-btn,.gh-dim,.gh-drawer,.gh-bar{transition:none!important}
+}
 </style>
 
-<!-- =========================
-     TOP BAR (solo esto se oculta con scroll)
-========================= -->
+<!-- =========================================================
+     TOP BAR (ES LO ÚNICO QUE SE ESCONDE EN SCROLL)
+========================================================= -->
 <div class="gh-bar" id="gh-bar">
   <div class="gh-container">
     <a class="gh-brand js-abs-href" data-href="index.html" aria-label="Inicio Expiriti">
       <img class="js-abs-src gh-logo"
-        data-src="IMG/expiritilogo.webp"
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%232dd4bf'/%3E%3Cstop offset='1' stop-color='%2360a5fa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='44' height='44' rx='12' fill='%230b1120'/%3E%3Crect x='2' y='2' width='40' height='40' rx='10' fill='url(%23g)' opacity='.18'/%3E%3Cpath d='M16 30V14h12v3H20v3h7v3h-7v4h8v3H16z' fill='%23e8eef6' opacity='.85'/%3E%3C/svg%3E"
-        width="44" height="44" alt="Expiriti" decoding="async" fetchpriority="high" />
+           data-src="IMG/expiritilogo.webp"
+           src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%232dd4bf'/%3E%3Cstop offset='1' stop-color='%2360a5fa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='44' height='44' rx='12' fill='%230b1120'/%3E%3Crect x='2' y='2' width='40' height='40' rx='10' fill='url(%23g)' opacity='.18'/%3E%3Cpath d='M16 30V14h12v3H20v3h7v3h-7v4h8v3H16z' fill='%23e8eef6' opacity='.85'/%3E%3C/svg%3E"
+           width="44" height="44" alt="Expiriti" decoding="async" fetchpriority="high">
       <div class="gh-brand-title">
         <span class="name">ExpIRI TI</span>
         <span class="sub">Expertos en CONTPAQi</span>
@@ -205,9 +263,13 @@ html.gh-open .gh-drawer{transform:translateX(0)}
           <a class="js-abs-href" data-href="index.html#productos-con" aria-haspopup="true" aria-expanded="false">Sistemas</a>
           <div class="gh-dd mega" role="menu" aria-label="Sistemas">
             <div class="gh-mega">
+
               <div class="gh-col">
                 <h4>Contables</h4>
-                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg> Desktop</div>
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>
+                  Desktop
+                </div>
                 <ul>
                   <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabilidad.webp" alt=""><div class="gh-link-content"><strong>Contabilidad</strong><span class="gh-desc">Pólizas y contabilidad electrónica.</span></div></a></li>
                   <li><a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html"><img class="gh-ico32 js-abs-src" data-src="IMG/nominas.webp" alt=""><div class="gh-link-content"><strong>Nóminas</strong><span class="gh-desc">Cálculo y timbrado.</span></div></a></li>
@@ -218,7 +280,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
               <div class="gh-col">
                 <h4>Comerciales</h4>
-                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg> Desktop</div>
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>
+                  Desktop
+                </div>
                 <ul>
                   <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialstart.webp" alt=""><div class="gh-link-content"><strong>Comercial Start</strong><span class="gh-desc">Ventas e inventario básico.</span></div></a></li>
                   <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialpro.webp" alt=""><div class="gh-link-content"><strong>Comercial Pro</strong><span class="gh-desc">Alto volumen y sucursales.</span></div></a></li>
@@ -229,7 +294,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
               <div class="gh-col">
                 <h4>Nube</h4>
-                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg> Soluciones nube</div>
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>
+                  Soluciones nube
+                </div>
                 <ul>
                   <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabiliza.webp" alt=""><div class="gh-link-content"><strong>Contabiliza</strong><span class="gh-desc">Contabilidad en la nube.</span></div></a></li>
                   <li><a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html"><img class="gh-ico32 js-abs-src" data-src="IMG/analiza.webp" alt=""><div class="gh-link-content"><strong>Analiza</strong><span class="gh-desc">Dashboards y BI.</span></div></a></li>
@@ -240,17 +308,24 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
               <div class="gh-col">
                 <h4>Productividad</h4>
-                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg> RRHH y Colaboración</div>
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>
+                  RRHH y Colaboración
+                </div>
                 <ul>
                   <li><a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html"><img class="gh-ico32 js-abs-src" data-src="IMG/evalua.webp" alt=""><div class="gh-link-content"><strong>Evalúa</strong><span class="gh-desc">Clima laboral y NOM-035.</span></div></a></li>
                   <li><a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html"><img class="gh-ico32 js-abs-src" data-src="IMG/colabora.webp" alt=""><div class="gh-link-content"><strong>Colabora</strong><span class="gh-desc">Seguimiento móvil.</span></div></a></li>
                   <li><a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html"><img class="gh-ico32 js-abs-src" data-src="IMG/personia.webp" alt=""><div class="gh-link-content"><strong>Personia</strong><span class="gh-desc">Nómina en la nube.</span></div></a></li>
                 </ul>
-                <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg> Promociones</div>
+                <div class="gh-subhead">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>
+                  Promociones
+                </div>
                 <ul>
                   <li><a class="gh-link js-abs-href" data-href="index.html#promociones"><img class="gh-ico32 js-abs-src" data-src="IMG/etiqueta-de-precio.webp" alt=""><div class="gh-link-content"><strong>Promociones</strong><span class="gh-desc">Ver descuentos activos.</span></div></a></li>
                 </ul>
               </div>
+
             </div>
           </div>
         </li>
@@ -283,17 +358,15 @@ html.gh-open .gh-drawer{transform:translateX(0)}
   </div>
 </div>
 
-<!-- =========================
-     OVERLAY + DRAWER (NO están dentro del transform)
-========================= -->
+<!-- Overlay + Drawer (fuera de la barra, SIEMPRE visible) -->
 <div class="gh-dim" id="gh-dim" hidden></div>
 
 <aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true" hidden>
   <div class="gh-drawer-head">
-    <div class="gh-drawer-title gh-dtitle">
+    <div class="gh-dtitle">
       <div class="gh-dtitle-row">
         <img class="gh-dtitle-logo js-abs-src" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="26" height="26">
-        <div class="gh-dtitle-txt">
+        <div>
           <div class="gh-dtitle-name">Expiriti</div>
           <div class="gh-dtitle-sub">Expertos en CONTPAQi®</div>
         </div>
@@ -308,6 +381,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
       <a class="gh-ctabtn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener"><img class="gh-ctaico js-abs-src" data-src="IMG/whatsapp.svg" alt="">WhatsApp</a>
     </div>
 
+    <!-- Sistemas (móvil) -->
     <section class="gh-acc gh-msys" id="gh-msys" aria-label="Sistemas (móvil)">
       <div class="gh-msys-head">
         <div class="gh-msys-title">Sistemas</div>
@@ -365,93 +439,119 @@ html.gh-open .gh-drawer{transform:translateX(0)}
       </a>
     </section>
 
-    <section class="gh-acc gh-msvc" id="gh-msvc" aria-label="Servicios (móvil)">
-      <div class="gh-msys-head">
-        <div class="gh-msys-title">Servicios</div>
-        <div class="gh-msys-sub">Desliza o usa las flechas</div>
-      </div>
-
-      <div class="gh-svcwrap" aria-roledescription="carousel">
-        <button class="gh-svcarrow prev" type="button" aria-label="Servicios anteriores">‹</button>
-
-        <div class="gh-svctrack" id="gh-svctrack" role="region" aria-label="Carrusel de servicios" tabindex="0">
-          <div class="gh-svcpage" aria-label="Servicios página 1">
-            <div class="gh-mgrid gh-mgrid-svc">
-              <a class="gh-mcard gh-star js-abs-href" data-href="SERVICIOS/polizas.html"><img class="gh-mimg js-abs-src" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Pólizas anuales</strong><span>Soporte continuo y preventivo</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/implementaciones.html"><img class="gh-mimg js-abs-src" data-src="IMG/025-meeting.webp" alt=""><div class="gh-mmeta"><strong>Implementaciones</strong><span>Instalación y puesta en marcha</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/migraciones.html"><img class="gh-mimg js-abs-src" data-src="IMG/018-transfer.webp" alt=""><div class="gh-mmeta"><strong>Migraciones</strong><span>Datos limpios y validados</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/desarrollos.html"><img class="gh-mimg js-abs-src" data-src="IMG/020-code.webp" alt=""><div class="gh-mmeta"><strong>Desarrollos</strong><span>Integraciones y automatización</span></div></a>
-            </div>
-          </div>
-
-          <div class="gh-svcpage" aria-label="Servicios página 2">
-            <div class="gh-mgrid gh-mgrid-svc">
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html"><img class="gh-mimg js-abs-src" data-src="IMG/023-stairs.webp" alt=""><div class="gh-mmeta"><strong>Servidores virtuales</strong><span>Acceso remoto seguro</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/cursos.html"><img class="gh-mimg js-abs-src" data-src="IMG/024-education.webp" alt=""><div class="gh-mmeta"><strong>Cursos</strong><span>Capacitación para tu equipo</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/soporte.html"><img class="gh-mimg js-abs-src" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Soporte técnico</strong><span>Remoto + WhatsApp</span></div></a>
-              <div class="gh-mcard gh-mcard-ghost" aria-hidden="true"></div>
-            </div>
-          </div>
-        </div>
-
-        <button class="gh-svcarrow next" type="button" aria-label="Servicios siguientes">›</button>
-      </div>
-
-      <div class="gh-svcdots" aria-label="Paginación de servicios">
-        <button class="dot is-active" type="button" aria-label="Ir a página 1"></button>
-        <button class="dot" type="button" aria-label="Ir a página 2"></button>
-      </div>
-    </section>
   </div>
 </aside>
+</header>
 
 <script>
 /* =========================================================
-  Expiriti - Header JS (V4 FIX)
-  - FIX Links/IMG con repoBase (GH Pages) sin ../
-  - FIX Drawer visible aunque header esté oculto (transform en .gh-bar)
-  - Mantiene: hide/show on scroll + tabs sistemas + carousel servicios
+   Expiriti Header (V4)
+   - repoBase absoluto (GH pages + local)
+   - Fix drawer visible con scroll (hide solo .gh-bar)
 ========================================================= */
-(function(){"use strict";if(window.__EXPIRITI_GH__)return;window.__EXPIRITI_GH__=true;const Q=(s,c=document)=>c.querySelector(s);
+(function(){ "use strict";
+if(window.__EXPIRITI_GH_V4__)return;window.__EXPIRITI_GH_V4__=true;
+const Q=(s,c=document)=>c.querySelector(s);
 
-/* =========================
-   0) PATHS ROBUSTOS (repoBase)
-   - Evita 404 en /SISTEMAS/ y /SERVICIOS/ en GH Pages
-========================= */
-const initPaths=()=>{const isGh=location.hostname.endsWith("github.io");const parts=location.pathname.split("/").filter(Boolean);const repoBase=isGh&&parts.length?`/${parts[0]}/`:"/";const isAbs=u=>/^(https?:)?\/\//i.test(u)||u.startsWith("mailto:")||u.startsWith("tel:")||u.startsWith("data:");const norm=u=>u.replace(/^\.?\//,"");document.querySelectorAll(".js-abs-href,.js-abs-src").forEach(el=>{if(el.dataset.href&&!el.getAttribute("href")){let t=el.dataset.href.trim();if(isAbs(t)){el.href=t;return}if(t.startsWith("#")){el.href=`${repoBase}index.html${t}`;return}if(t.startsWith("/")){el.href=`${repoBase}${norm(t)}`;return}el.href=`${repoBase}${norm(t)}`}if(el.dataset.src){const s0=el.dataset.src.trim();if(isAbs(s0)){if(!el.getAttribute("src")||el.src.includes("data:image"))el.src=s0;return}const s=`${repoBase}${norm(s0.startsWith("/")?s0:s0)}`;if(!el.getAttribute("src")||el.src.includes("data:image")||el.getAttribute("src")==="")el.src=s}})};
+/* ===== repoBase (GH Pages project page) ===== */
+function getRepoBase(){
+  const isGh=location.hostname.endsWith("github.io");
+  if(!isGh) return "/";             // local / dominio normal
+  const parts=location.pathname.split("/").filter(Boolean);
+  return parts.length?"/"+parts[0]+"/":"/";
+}
+const REPO_BASE=getRepoBase();
+const joinRepo=(p)=>REPO_BASE + String(p||"").replace(/^\/+/,"");
 
-/* =========================
-   1) SCROLL: ocultar/mostrar barra
-   - Se aplica a #gh-bar, NO al header
-========================= */
-const initScrollHeader=()=>{let lastY=window.scrollY;const bar=Q("#gh-bar");if(!bar)return;const onScroll=()=>{if(document.documentElement.classList.contains("gh-open"))return;const y=window.scrollY;if(y>50){if(y>lastY)bar.classList.add("is-hidden");else bar.classList.remove("is-hidden")}else bar.classList.remove("is-hidden");lastY=y};window.addEventListener("scroll",onScroll,{passive:true})};
+/* ===== aplica rutas absolutas ===== */
+function applyAbsPaths(){
+  document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+    const raw=a.getAttribute("data-href")||"";
+    if(!raw) return;
+    a.setAttribute("href", raw.startsWith("#") ? joinRepo("index.html")+raw : joinRepo(raw));
+  });
+  document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+    const raw=img.getAttribute("data-src")||"";
+    if(!raw) return;
+    const val=raw.startsWith("data:image") ? raw : joinRepo(raw);
+    if(!img.getAttribute("src") || (img.getAttribute("src")+"").startsWith("data:image")) img.setAttribute("src", val);
+    else img.setAttribute("src", val);
+  });
+}
 
-/* =========================
-   2) SISTEMAS (tabs móvil)
-========================= */
-const initMobileSystems=()=>{const root=Q("#gh-msys");if(!root||root.__inited)return;root.__inited=true;const cats=Array.from(root.querySelectorAll(".gh-cat"));const panels=Array.from(root.querySelectorAll(".gh-panel"));const KEY="expiriti_mobile_sys_cat";const saved=localStorage.getItem(KEY);const def=saved||"contables";const setCat=cat=>{cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle("is-active",on);b.setAttribute("aria-selected",on?"true":"false")});panels.forEach(p=>{const on=p.dataset.panel===cat;p.classList.toggle("is-open",on);p.hidden=!on});localStorage.setItem(KEY,cat)};cats.forEach(b=>b.addEventListener("click",()=>setCat(b.dataset.cat)));setCat(def)};
+/* ===== Scroll hide header (solo barra) ===== */
+function initScrollHide(){
+  const bar=Q("#gh-bar");
+  if(!bar) return;
+  let last=window.scrollY||0;
+  const onScroll=()=>{
+    if(document.documentElement.classList.contains("gh-open")) return;
+    const y=window.scrollY||0;
+    if(y>50){ (y>last)?bar.classList.add("is-hidden"):bar.classList.remove("is-hidden"); }
+    else bar.classList.remove("is-hidden");
+    last=y;
+  };
+  window.addEventListener("scroll", onScroll, {passive:true});
+}
 
-/* =========================
-   3) SERVICIOS (carousel móvil 2x2)
-========================= */
-const initMobileServices=()=>{const root=Q("#gh-msvc");const track=Q("#gh-svctrack");if(!root||!track||root.__inited)return;root.__inited=true;const pages=Array.from(track.querySelectorAll(".gh-svcpage"));const prev=root.querySelector(".gh-svcarrow.prev");const next=root.querySelector(".gh-svcarrow.next");const dotsWrap=root.querySelector(".gh-svcdots");const dots=dotsWrap?Array.from(dotsWrap.querySelectorAll(".dot")):[];const idxFromScroll=()=>{const w=track.clientWidth||1;return Math.round(track.scrollLeft/w)};const goTo=i=>{const w=track.clientWidth||1;const x=Math.max(0,Math.min(i,pages.length-1));track.scrollTo({left:x*w,behavior:"smooth"})};const sync=()=>{const i=idxFromScroll();dots.forEach((d,k)=>d.classList.toggle("is-active",k===i));if(prev){prev.disabled=i===0;prev.style.opacity=prev.disabled?".35":"1"}if(next){next.disabled=i===pages.length-1;next.style.opacity=next.disabled?".35":"1"}};prev&&prev.addEventListener("click",e=>{e.preventDefault();goTo(idxFromScroll()-1)});next&&next.addEventListener("click",e=>{e.preventDefault();goTo(idxFromScroll()+1)});dots.forEach((d,i)=>d.addEventListener("click",e=>{e.preventDefault();goTo(i)}));track.addEventListener("scroll",()=>{requestAnimationFrame(sync)},{passive:true});window.addEventListener("resize",sync);sync()};
+/* ===== Tabs sistemas (móvil) ===== */
+function initMobileSystems(){
+  const root=Q("#gh-msys"); if(!root||root.__inited) return; root.__inited=true;
+  const cats=[...root.querySelectorAll(".gh-cat")];
+  const panels=[...root.querySelectorAll(".gh-panel")];
+  const KEY="expiriti_mobile_sys_cat";
+  const saved=localStorage.getItem(KEY);
+  const setCat=(cat)=>{
+    cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle("is-active",on);b.setAttribute("aria-selected",on?"true":"false");});
+    panels.forEach(p=>{const on=p.dataset.panel===cat;p.classList.toggle("is-open",on);p.hidden=!on;});
+    localStorage.setItem(KEY,cat);
+  };
+  cats.forEach(b=>b.addEventListener("click",()=>setCat(b.dataset.cat)));
+  setCat(saved||"contables");
+}
 
-/* =========================
-   4) DRAWER toggle
-   - Fuerza mostrar barra al abrir
-========================= */
-const toggleDrawer=show=>{const drawer=Q("#gh-drawer");const dim=Q("#gh-dim");const burger=Q("#gh-burger");const bar=Q("#gh-bar");if(!drawer||!dim||!burger)return;if(show){bar&&bar.classList.remove("is-hidden");drawer.hidden=false;dim.hidden=false;void drawer.offsetWidth;document.documentElement.classList.add("gh-open");drawer.setAttribute("aria-hidden","false");burger.setAttribute("aria-expanded","true");document.body.style.overflow="hidden";initMobileSystems();initMobileServices()}else{document.documentElement.classList.remove("gh-open");drawer.setAttribute("aria-hidden","true");burger.setAttribute("aria-expanded","false");document.body.style.overflow="";window.setTimeout(()=>{if(!document.documentElement.classList.contains("gh-open")){dim.hidden=true;drawer.hidden=true}},250)}};
+/* ===== Drawer ===== */
+function toggleDrawer(show){
+  const drawer=Q("#gh-drawer"),dim=Q("#gh-dim"),burger=Q("#gh-burger"),bar=Q("#gh-bar");
+  if(!drawer||!dim||!burger) return;
 
-/* =========================
-   5) EVENTS
-========================= */
-document.addEventListener("click",e=>{const b=e.target.closest("#gh-burger");if(b){e.preventDefault();toggleDrawer(!document.documentElement.classList.contains("gh-open"));return}if(e.target.closest("#gh-close")||e.target.matches("#gh-dim")){e.preventDefault();toggleDrawer(false);return}if(e.target.closest(".gh-drawer a"))setTimeout(()=>toggleDrawer(false),150)},{passive:false});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.documentElement.classList.contains("gh-open"))toggleDrawer(false)});
+  if(show){
+    // Asegura que se vea aunque el header esté escondido por scroll
+    bar && bar.classList.remove("is-hidden");
 
-/* =========================
-   INIT
-========================= */
-initPaths();toggleDrawer(false);initScrollHeader();window.addEventListener("pageshow",ev=>{if(ev.persisted)toggleDrawer(false)});
+    drawer.hidden=false; dim.hidden=false;
+    void drawer.offsetWidth;
+    document.documentElement.classList.add("gh-open");
+    drawer.setAttribute("aria-hidden","false");
+    burger.setAttribute("aria-expanded","true");
+    document.body.style.overflow="hidden";
+    initMobileSystems();
+  }else{
+    document.documentElement.classList.remove("gh-open");
+    drawer.setAttribute("aria-hidden","true");
+    burger.setAttribute("aria-expanded","false");
+    document.body.style.overflow="";
+    setTimeout(()=>{ if(!document.documentElement.classList.contains("gh-open")){ dim.hidden=true; drawer.hidden=true; } },250);
+  }
+}
+
+document.addEventListener("click",(e)=>{
+  const isBurger=e.target.closest("#gh-burger");
+  if(isBurger){e.preventDefault();toggleDrawer(!document.documentElement.classList.contains("gh-open"));return;}
+  if(e.target.closest("#gh-close") || e.target.matches("#gh-dim")){e.preventDefault();toggleDrawer(false);return;}
+  if(e.target.closest(".gh-drawer a")) setTimeout(()=>toggleDrawer(false),150);
+},{passive:false});
+
+document.addEventListener("keydown",(e)=>{
+  if(e.key==="Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
+});
+
+window.addEventListener("pageshow",(ev)=>{ if(ev.persisted) toggleDrawer(false); });
+
+/* init */
+applyAbsPaths();
+toggleDrawer(false);
+initScrollHide();
+
 })();
 </script>
-</header>
