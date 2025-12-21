@@ -15,6 +15,7 @@ const D=document,W=window;
 /* =========================================================
  0) PARTIALS + NORMALIZACIÓN (GH Pages user-site + local)
  - User site: https://unidaduniversal.github.io  => usa "/PARTIALS/..."
+ - User site alterno: https://universalunidad-ux.github.io => idem
  - Local / subcarpetas: usa "../PARTIALS/..." cuando estés en /SISTEMAS/ o /SERVICIOS/
 ========================================================= */
 (() => {
@@ -25,10 +26,12 @@ const D=document,W=window;
   const inSub = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
   const rel = inSub ? "../" : "";
 
-  // Detecta user-site real (tu caso)
-  const isGhUserSite = location.hostname === "unidaduniversal.github.io";
+  // Detecta user-site real (tus dos hostnames)
+  const isGhUserSite =
+    location.hostname === "unidaduniversal.github.io" ||
+    location.hostname === "universalunidad-ux.github.io";
 
-  // Ruta final ÚNICA (sin "pick" que dispara 5 requests)
+  // Rutas finales (1 request por parcial)
   const headerURL = isGhUserSite ? "/PARTIALS/global-header.html" : (rel + "PARTIALS/global-header.html");
   const footerURL = isGhUserSite ? "/PARTIALS/global-footer.html" : (rel + "PARTIALS/global-footer.html");
 
@@ -38,7 +41,10 @@ const D=document,W=window;
     if (/^https?:\/\//i.test(p)) return p;
     if (/^(mailto:|tel:|data:)/i.test(p)) return p;
 
-    // En user-site GH: usa raíz ("/IMG/..", "/SISTEMAS/..")
+    // Si ya viene absoluto ("/IMG/.."), respétalo
+    if (p.startsWith("/")) return p;
+
+    // En user-site GH: usa raíz
     if (isGhUserSite) return ("/" + p).replace(/\/+/g, "/");
 
     // En subcarpetas locales: prefijo "../"
@@ -46,7 +52,6 @@ const D=document,W=window;
   };
 
   const normalize = (root = D) => {
-    // data-src => src
     root.querySelectorAll(".js-abs-src[data-src]").forEach((img) => {
       const ds = img.getAttribute("data-src");
       if (!ds) return;
@@ -55,7 +60,6 @@ const D=document,W=window;
       img.style.opacity = "1";
     });
 
-    // data-href => href (soporta #hash)
     root.querySelectorAll(".js-abs-href[data-href]").forEach((a) => {
       const p = a.getAttribute("data-href");
       if (!p) return;
@@ -65,7 +69,6 @@ const D=document,W=window;
       a.href = abs(pth) + (hash ? ("#" + hash) : "");
     });
 
-    // fallback simples
     root.querySelectorAll(".js-img[data-src]").forEach((img) => {
       const ds = img.getAttribute("data-src");
       if (!ds) return;
@@ -78,7 +81,6 @@ const D=document,W=window;
       if (!a.getAttribute("href")) a.setAttribute("href", dh);
     });
 
-    // Año footer
     const y =
       (root.getElementById && root.getElementById("gf-year")) ||
       D.getElementById("gf-year") ||
@@ -114,7 +116,6 @@ const D=document,W=window;
 
     normalize(D);
 
-    // Si ya tienes initGlobalHeader() en este JS, llámalo aquí:
     if (typeof W.initGlobalHeader === "function") {
       try { W.initGlobalHeader(); } catch (e) { console.warn("initGlobalHeader error", e); }
     }
@@ -128,6 +129,7 @@ const D=document,W=window;
     try { normalize(D); } catch {}
   });
 })();
+
 
 /* =========================================================
  1) UTILIDADES (SIN $/$$)
