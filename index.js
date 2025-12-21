@@ -830,8 +830,17 @@ if (carousel.dataset.scrollSync !== "1") {
   const dotsWrap = document.getElementById("servicesDots");
   if (!root || !dotsWrap) return;
 
+  // ❌ No pager en desktop
+  if (window.matchMedia("(min-width: 980px)").matches) {
+    dotsWrap.innerHTML = "";
+    return;
+  }
+
   // Solo aplica si está en modo carrusel
-  if (!root.classList.contains("is-carousel")) { dotsWrap.innerHTML = ""; return; }
+  if (!root.classList.contains("is-carousel")) {
+    dotsWrap.innerHTML = "";
+    return;
+  }
 
   const pages = Array.from(root.querySelectorAll(".svc-page"));
   if (pages.length <= 1) { dotsWrap.innerHTML = ""; return; }
@@ -871,3 +880,4 @@ if (carousel.dataset.scrollSync !== "1") {
   // Estado inicial
   sync();
 })();
+
