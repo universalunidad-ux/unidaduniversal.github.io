@@ -399,148 +399,158 @@
 
     servicios: { label: "Servicios", defaultSys: "polizas", systems: {} }
   };
+const g0 = HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
+buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
+buildHeroGallerySlides(HERO_GALLERY.defaultGroup, g0?.defaultSys || "nominas");
 
-  const HERO_GALLERY = {
-    groupNav: Q("#heroGalleryGroups"),
-    tabsContainer: Q("#heroGalleryTabs"),
-    titleEl: Q("#heroGalleryTitle"),
-    carousel: Q("#heroGalleryCarousel"),
-    defaultGroup: "contable"
+
+   const HERO_GALLERY = {
+  groupNav: Q("#heroGalleryGroups"),
+  tabsContainer: Q("#heroGalleryTabs"),
+  titleEl: Q("#heroGalleryTitle"),
+  carousel: Q("#heroGalleryCarousel"),
+  defaultGroup: "contable"
+};
+
+function buildHeroGallerySlides(groupKey, sysKey) {
+  const g = HERO_GALLERY_DATA[groupKey]; if (!g) return;
+  const sys = g.systems[sysKey]; if (!sys || !sys.images?.length) return;
+
+  // ✅ Set título UNA sola vez por sistema
+  if (HERO_GALLERY.titleEl) HERO_GALLERY.titleEl.textContent = sys.label || "";
+
+  const carousel = HERO_GALLERY.carousel; if (!carousel) return;
+  const track = carousel.querySelector(".carousel-track");
+  const nav = carousel.querySelector(".carousel-nav");
+  if (!track || !nav) return;
+
+  track.innerHTML = "";
+  nav.innerHTML = "";
+
+  sys.images.forEach((item, idx) => {
+    const slide = document.createElement("div");
+    slide.className = "carousel-slide hero-slide" + (idx === 0 ? " is-active" : "");
+
+    const img = document.createElement("img");
+    img.src = prefix(item.src);
+    img.alt = item.title || sys.label || "Expiriti";
+    img.width = 550; img.height = 550;
+    img.decoding = "async";
+
+    const isLCP = (groupKey === HERO_GALLERY.defaultGroup && sysKey === g.defaultSys && idx === 0);
+    if (isLCP) {
+      img.loading = "eager";
+      img.setAttribute("fetchpriority", "high");
+    } else {
+      img.loading = "lazy";
+    }
+
+    slide.appendChild(img);
+    track.appendChild(slide);
+
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "dot" + (idx === 0 ? " active" : "");
+    dot.setAttribute("aria-label", "Ir a imagen " + (idx + 1));
+
+    dot.addEventListener("click", () => {
+      QA(".carousel-slide", track).forEach((s) => s.classList.remove("is-active"));
+      QA(".carousel-slide", track)[idx]?.classList.add("is-active");
+      QA(".dot", nav).forEach((d) => d.classList.remove("active"));
+      dot.classList.add("active");
+      track.scrollTo({ left: track.clientWidth * idx, behavior: "smooth" });
+    });
+
+    nav.appendChild(dot);
+  });
+}
+
+function buildHeroSystemTabs(groupKey) {
+  const g = HERO_GALLERY_DATA[groupKey]; if (!g) return;
+  const c = HERO_GALLERY.tabsContainer; if (!c) return;
+
+  c.innerHTML = "";
+  const def = g.defaultSys;
+
+  Object.entries(g.systems || {}).forEach(([sysKey, sys]) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "hero-tab" + (sysKey === def ? " active" : "");
+    btn.dataset.group = groupKey;
+    btn.dataset.sys = sysKey;
+
+    btn.innerHTML =
+      `<img src="${prefix(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async">
+       <span>${sys.label}</span>`;
+
+    btn.addEventListener("click", () => {
+      QA(".hero-tab", c).forEach((b) => b.classList.toggle("active", b === btn));
+      buildHeroGallerySlides(groupKey, sysKey);
+    });
+
+    c.appendChild(btn);
+  });
+}
+
+function initHeroGallery() {
+  const groupNav = HERO_GALLERY.groupNav;
+  const carousel = HERO_GALLERY.carousel;
+  if (!groupNav || !carousel) return;
+
+  groupNav.innerHTML = "";
+
+  Object.entries(HERO_GALLERY_DATA).forEach(([groupKey, group]) => {
+    if (groupKey === "servicios") return;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "hero-group-tab" + (groupKey === HERO_GALLERY.defaultGroup ? " active" : "");
+    btn.dataset.group = groupKey;
+    btn.textContent = group.label;
+
+    btn.addEventListener("click", () => {
+      QA(".hero-group-tab", groupNav).forEach((b) => b.classList.toggle("active", b === btn));
+      const cfg = HERO_GALLERY_DATA[groupKey];
+      buildHeroSystemTabs(groupKey);
+      buildHeroGallerySlides(groupKey, cfg.defaultSys);
+    });
+
+    groupNav.appendChild(btn);
+  });
+
+  // Flechas
+  const track = carousel.querySelector(".carousel-track");
+  const prev = carousel.querySelector(".arrowCircle.prev");
+  const next = carousel.querySelector(".arrowCircle.next");
+  if (!track) return;
+
+  const slidesFor = () => QA(".carousel-slide", track);
+
+  const goTo = (i) => {
+    const slides = slidesFor(); if (!slides.length) return;
+    const max = slides.length - 1;
+    const idx = Math.max(0, Math.min(max, i));
+    slides.forEach((s) => s.classList.remove("is-active"));
+    slides[idx].classList.add("is-active");
+    QA(".dot", carousel.querySelector(".carousel-nav")).forEach((d, k) => d.classList.toggle("active", k === idx));
+    track.scrollTo({ left: track.clientWidth * idx, behavior: "smooth" });
   };
 
-  function buildHeroGallerySlides(groupKey, sysKey) {
-    const g = HERO_GALLERY_DATA[groupKey]; if (!g) return;
-    const sys = g.systems[sysKey]; if (!sys || !sys.images?.length) return;
+  prev?.addEventListener("click", () => {
+    const i = slidesFor().findIndex((s) => s.classList.contains("is-active"));
+    goTo(i - 1);
+  });
+  next?.addEventListener("click", () => {
+    const i = slidesFor().findIndex((s) => s.classList.contains("is-active"));
+    goTo(i + 1);
+  });
 
-    const carousel = HERO_GALLERY.carousel; if (!carousel) return;
-    const track = carousel.querySelector(".carousel-track");
-    const nav = carousel.querySelector(".carousel-nav");
-    if (!track || !nav) return;
+  // ✅ INIT real (default group + default sys)
+  const cfg = HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
+  buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
+  buildHeroGallerySlides(HERO_GALLERY.defaultGroup, cfg.defaultSys);
+}
 
-    track.innerHTML = "";
-    nav.innerHTML = "";
-
-    sys.images.forEach((item, idx) => {
-      const slide = document.createElement("div");
-      slide.className = "carousel-slide hero-slide" + (idx === 0 ? " is-active" : "");
-
-      const img = document.createElement("img");
-      img.src = prefix(item.src);
-      img.alt = item.title || sys.label || "Expiriti";
-      img.width = 550; img.height = 550;
-      img.decoding = "async";
-
-      const isLCP = (groupKey === HERO_GALLERY.defaultGroup && sysKey === g.defaultSys && idx === 0);
-      if (isLCP) {
-        img.loading = "eager";
-        img.setAttribute("fetchpriority", "high");
-      } else {
-        img.loading = "lazy";
-      }
-
-      slide.appendChild(img);
-      track.appendChild(slide);
-
-      const dot = document.createElement("button");
-      dot.type = "button";
-      dot.className = "dot" + (idx === 0 ? " active" : "");
-      dot.setAttribute("aria-label", "Ir a imagen " + (idx + 1));
-
-      dot.addEventListener("click", () => {
-        QA(".carousel-slide", track).forEach((s) => s.classList.remove("is-active"));
-        QA(".carousel-slide", track)[idx]?.classList.add("is-active");
-        QA(".dot", nav).forEach((d) => d.classList.remove("active"));
-        dot.classList.add("active");
-        track.scrollTo({ left: track.clientWidth * idx, behavior: "smooth" });
-      });
-
-      nav.appendChild(dot);
-    });
-  }
-
-  function buildHeroSystemTabs(groupKey) {
-    const g = HERO_GALLERY_DATA[groupKey]; if (!g) return;
-    const c = HERO_GALLERY.tabsContainer; if (!c) return;
-
-    c.innerHTML = "";
-    const def = g.defaultSys;
-
-    Object.entries(g.systems || {}).forEach(([sysKey, sys]) => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "hero-tab" + (sysKey === def ? " active" : "");
-      btn.dataset.group = groupKey;
-      btn.dataset.sys = sysKey;
-
-      btn.innerHTML =
-        `<img src="${prefix(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async">
-         <span>${sys.label}</span>`;
-
-      btn.addEventListener("click", () => {
-        QA(".hero-tab", c).forEach((b) => b.classList.toggle("active", b === btn));
-        buildHeroGallerySlides(groupKey, sysKey);
-      });
-
-      c.appendChild(btn);
-    });
-  }
-
-  function initHeroGallery() {
-    const groupNav = HERO_GALLERY.groupNav;
-    const carousel = HERO_GALLERY.carousel;
-    if (!groupNav || !carousel) return;
-
-    groupNav.innerHTML = "";
-
-    Object.entries(HERO_GALLERY_DATA).forEach(([groupKey, group]) => {
-      if (groupKey === "servicios") return;
-
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "hero-group-tab" + (groupKey === HERO_GALLERY.defaultGroup ? " active" : "");
-      btn.dataset.group = groupKey;
-      btn.textContent = group.label;
-
-      btn.addEventListener("click", () => {
-        QA(".hero-group-tab", groupNav).forEach((b) => b.classList.toggle("active", b === btn));
-        const cfg = HERO_GALLERY_DATA[groupKey];
-        buildHeroSystemTabs(groupKey);
-        buildHeroGallerySlides(groupKey, cfg.defaultSys);
-      });
-
-      groupNav.appendChild(btn);
-    });
-
-    const track = carousel.querySelector(".carousel-track");
-    const prev = carousel.querySelector(".arrowCircle.prev");
-    const next = carousel.querySelector(".arrowCircle.next");
-    if (!track) return;
-
-    const slidesFor = () => QA(".carousel-slide", track);
-
-    const goTo = (i) => {
-      const slides = slidesFor(); if (!slides.length) return;
-      const max = slides.length - 1;
-      const idx = Math.max(0, Math.min(max, i));
-      slides.forEach((s) => s.classList.remove("is-active"));
-      slides[idx].classList.add("is-active");
-      QA(".dot", carousel.querySelector(".carousel-nav")).forEach((d, k) => d.classList.toggle("active", k === idx));
-      track.scrollTo({ left: track.clientWidth * idx, behavior: "smooth" });
-    };
-
-    prev?.addEventListener("click", () => {
-      const i = slidesFor().findIndex((s) => s.classList.contains("is-active"));
-      goTo(i - 1);
-    });
-    next?.addEventListener("click", () => {
-      const i = slidesFor().findIndex((s) => s.classList.contains("is-active"));
-      goTo(i + 1);
-    });
-
-    const cfg = HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
-    buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
-    buildHeroGallerySlides(HERO_GALLERY.defaultGroup, cfg.defaultSys);
-  }
 
   /* =========================================================
      REELS: DATA (TUS DATAS)
