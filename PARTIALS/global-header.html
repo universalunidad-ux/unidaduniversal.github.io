@@ -719,27 +719,46 @@
     sync();
   };
 
-  // 3. Path / Attributes Fixer
+// 3. Path / Attributes Fixer (CORREGIDO)
   const initPaths = () => {
-     const isSubDir = window.location.pathname.includes('/SISTEMAS/') || window.location.pathname.includes('/SERVICIOS/');
+     // Obtenemos el path en mayúsculas para asegurar la detección sin importar cómo escriba la URL el navegador
+     const currentPath = window.location.pathname.toUpperCase();
+     
+     // Detectamos si estamos en una subcarpeta (buscando en mayúsculas)
+     const isSubDir = currentPath.includes('/SISTEMAS/') || currentPath.includes('/SERVICIOS/');
      const pathPrefix = isSubDir ? '../' : '';
 
      const elements = document.querySelectorAll('.js-abs-href, .js-abs-src');
      elements.forEach(el => {
+        // Corrección de Links (HREF)
         if(el.dataset.href && !el.getAttribute('href')) {
-            let target = el.dataset.href;
-            if(isSubDir && (target.startsWith('index.html') || target.startsWith('IMG') || target.startsWith('SISTEMAS') || target.startsWith('SERVICIOS'))) {
-                target = pathPrefix + target;
-            }
-            if(isSubDir && target.startsWith('#')) {
-                target = '../index.html' + target;
-            }
-            el.href = target;
+           let target = el.dataset.href;
+           
+           // Verificamos si el target empieza con carpetas conocidas (ignorando si hay diferencias sutiles)
+           // Usamos paths relativos limpios
+           if(isSubDir) {
+               // Si el link apunta a index, IMG, o a las mismas carpetas SISTEMAS/SERVICIOS
+               if(target.startsWith('index.html') || target.startsWith('IMG') || target.startsWith('SISTEMAS') || target.startsWith('SERVICIOS')) {
+                   target = pathPrefix + target;
+               }
+               // Si es un ancla (#promociones) estando en subcarpeta, mandamos al home
+               if(target.startsWith('#')) {
+                   target = '../index.html' + target;
+               }
+           }
+           el.href = target;
         }
 
-        if(el.dataset.src && (!el.src || el.src.includes('data:image'))) {
-            if(!el.classList.contains('gh-logo') || el.src.includes('data:image')) {
-                el.src = pathPrefix + el.dataset.src; 
+        // Corrección de Imágenes (SRC)
+        if(el.dataset.src) {
+            // Solo aplicamos si no tiene src o si no es base64
+            if (!el.src || el.src.includes('data:image') || el.getAttribute('src') === '') {
+                // Si es subcarpeta y no es base64, agregamos ../
+                if(isSubDir && !el.dataset.src.includes('data:image')) {
+                     el.src = pathPrefix + el.dataset.src;
+                } else {
+                     el.src = el.dataset.src;
+                }
             }
         }
      });
