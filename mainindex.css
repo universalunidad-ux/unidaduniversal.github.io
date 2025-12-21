@@ -630,3 +630,226 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 :root{ --gh-height:68px; } /* usa tu valor real */
 body{ padding-top: var(--gh-height); }
 .gh{ position: fixed; top:0; left:0; right:0; height: var(--gh-height); }
+/* =========================================================
+   Expiriti - PATCH UI/UX 2026 (Mobile + Desktop refinado)
+   PÉGALO AL FINAL de mainindex.css
+========================================================= */
+
+/* ---------- Fondo más premium (dark + glow + textura) ---------- */
+:root{
+  /* Ajusta estos si quieres más/menos contraste */
+  --bg:#070b12;          /* más profundo */
+  --bg-2:#0a111b;
+  --surface:#0d1522;     /* superficies */
+  --surface-2:#0b1220;
+  --glow-1: rgba(45,212,191,.11);
+  --glow-2: rgba(96,165,250,.10);
+  --grain: rgba(255,255,255,.035);
+}
+
+/* Fondo: gradientes + “grain” sutil (sin imagen) */
+body{
+  background:
+    radial-gradient(1100px 720px at 14% -10%, var(--glow-1), transparent 55%),
+    radial-gradient(900px 640px at 86% 6%, var(--glow-2), transparent 58%),
+    linear-gradient(180deg, rgba(255,255,255,.02), transparent 34%),
+    var(--bg);
+  position:relative;
+}
+
+/* Textura sutil tipo “noise” (CSS-only). Si no te gusta, bórralo. */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.018),
+      rgba(255,255,255,.018) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  mix-blend-mode:overlay;
+  opacity:.22;
+}
+
+/* Cards un poco más “agencia” */
+.card{
+  background:
+    radial-gradient(900px 420px at 0% 0%, rgba(45,212,191,.07), transparent 60%),
+    radial-gradient(700px 420px at 100% 0%, rgba(96,165,250,.06), transparent 60%),
+    linear-gradient(180deg, rgba(17,23,35,.92), rgba(17,23,35,.70));
+  border:1px solid rgba(255,255,255,.085);
+}
+
+/* ---------- Altura real en móviles modernos (evita cortes con barra navegador) ---------- */
+/* svh/dvh: mejor que vh para evitar “brincos” en iOS/Android */
+:root{
+  --vh: 1svh;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Si tu header es fixed, esta reserva debe ser real */
+:root{ --gh-height:68px; } /* ajusta si tu header real es distinto */
+body{ padding-top: calc(var(--gh-height) + var(--safe-top)); }
+
+/* ---------- Reels Mobile: más compactos y “que quepan” ---------- */
+/* Objetivo: que entre título + reel + tabs/dots en una pantalla vertical */
+.reels-home-card .reel-title{
+  margin:0 0 8px;
+  font-size:1rem;
+  line-height:1.2;
+}
+
+/* Reel con altura adaptativa: NO enorme en móviles altos, NO minúsculo en móviles chicos */
+.reel-embed{
+  /* Altura objetivo:
+     - mínimo 320px para que se vea,
+     - máximo ~ (pantalla - header - títulos - tabs - paddings)
+  */
+  aspect-ratio:auto; /* dejamos de forzar 9/16 exacto en contenedor */
+  height: clamp(320px, 44svh, 520px);
+  max-height: calc(100svh - var(--gh-height) - 220px - var(--safe-bottom));
+  border-radius: var(--radius);
+  overflow:hidden;
+  background: var(--surface-2);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+/* El iframe mantiene 9/16 dentro del contenedor sin deformarse */
+.reel-embed iframe,
+.reel-embed .yt-thumb{
+  width:100%;
+  height:100%;
+}
+
+/* En pantallas muy pequeñas, baja un poco más */
+@media (max-height:740px){
+  .reel-embed{
+    height: clamp(280px, 42svh, 460px);
+    max-height: calc(100svh - var(--gh-height) - 200px - var(--safe-bottom));
+  }
+}
+
+/* Tabs de sistemas/servicios: más compactos en mobile */
+.reel-sys-tabs{
+  gap:8px;
+  margin-top:10px;
+}
+.reel-tab{
+  padding:9px 8px;
+  border-radius:13px;
+}
+.reel-tab img{
+  width:40px;height:40px;
+  padding:6px;
+}
+.reel-tab span{ font-size:.82rem; }
+
+/* ---------- Servicios 2x2 + “carrusel” en mobile ---------- */
+/* UX: en mobile se desplaza horizontalmente por páginas, cada página muestra 2x2.
+   Esto se siente moderno, rápido y cabe en una pantalla.
+*/
+.cards-services{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:12px;
+}
+
+/* Convertimos la LISTA en carrusel por “páginas” en mobile */
+@media (max-width:980px){
+  /* Contenedor carrusel */
+  .cards-services.is-carousel{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:8px; /* aire para scrollbar */
+  }
+
+  /* Cada “page” = 2x2 */
+  .cards-services.is-carousel .svc-page{
+    flex:0 0 100%;
+    scroll-snap-align:start;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:12px;
+  }
+}
+
+/* En desktop: vuelve a grid normal */
+@media (min-width:981px){
+  .cards-services.is-carousel{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    overflow:visible;
+  }
+  .cards-services.is-carousel .svc-page{
+    display:contents; /* “aplana” las páginas */
+  }
+}
+
+/* Nota: Para que esto funcione, tu HTML debe agrupar servicios en .svc-page (te doy ejemplo abajo). */
+
+/* ---------- Dots / navegación más “tap friendly” ---------- */
+.carousel-nav .dot{
+  width:18px;height:18px;
+}
+@media (min-width:980px){
+  .carousel-nav .dot{ width:14px;height:14px; }
+}
+.carousel-nav{
+  bottom:10px;
+}
+
+/* ---------- Promos: tamaño consistente + MSI controlado ---------- */
+/* Si unas promos se ven “chicas” es porque el contenedor no fuerza altura; lo resolvemos con height clamp */
+.promo-item{
+  background: rgba(255,255,255,.03);
+}
+
+/* Tamaño visual consistente en grid */
+.promo-item img{
+  width:100%;
+  height: clamp(220px, 34vw, 360px); /* mobile: evita “mini”; desktop: no se desborda */
+  object-fit: cover;
+  aspect-ratio:auto; /* quitamos el 634/900 fijo que te puede romper otras promos */
+  display:block;
+}
+
+/* MSI: si esa imagen viene con ratio “raro” y se ve gigante, la tratamos como “contain” */
+.promo-item.is-msi img{
+  object-fit: contain;
+  background: rgba(0,0,0,.18);
+  padding:10px;
+  height: clamp(200px, 30vw, 320px);
+}
+
+/* Desktop: promos un poco más “hero” */
+@media (min-width:980px){
+  .promo-item img{
+    height: clamp(240px, 18vw, 420px);
+  }
+}
+
+/* ---------- Carruseles: altura mínima + estabilidad CLS ---------- */
+.carousel-track{
+  /* En mobile, no uses min-height muy alto si quieres “1 pantalla”.
+     Esto reduce el “scroll vertical” innecesario.
+  */
+  min-height: 220px;
+}
+@media (min-width:980px){
+  .carousel-track{ min-height: 320px; }
+}
+
+/* ---------- Micro UX: tarjetas más táctiles ---------- */
+.product-card:active,
+.svc-featured:active{
+  transform: translateY(1px);
+}
+
