@@ -625,3 +625,8 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   .arrowCircle{display:none} /* en móvil prioriza swipe (tendencia UI) */
   .product-card:hover{transform:none} /* hover no aplica real en touch */
 }
+
+/* Reserva el alto del header para evitar salto */
+:root{ --gh-height:68px; } /* usa tu valor real */
+body{ padding-top: var(--gh-height); }
+.gh{ position: fixed; top:0; left:0; right:0; height: var(--gh-height); }
