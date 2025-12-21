@@ -272,41 +272,42 @@ card.addEventListener("click",e=>{
 
     track.innerHTML=""; nav.innerHTML="";
 
-    sys.images.forEach((item,idx)=>{
-      const slide=document.createElement("div");
-      slide.className="carousel-slide hero-slide"+(idx===0?" is-active":"");
+sys.images.forEach((item, idx) => {
+  const slide = document.createElement("div");
+  slide.className = "carousel-slide hero-slide" + (idx === 0 ? " is-active" : "");
 
-      const img=document.createElement("img");
-      img.src=prefix(item.src);
-      img.alt=item.title||sys.label||"Expiriti";
-      img.width=550; img.height=550;
-      img.decoding="async";
+  const img = document.createElement("img");
+  img.src = prefix(item.src);
+  img.alt = item.title || sys.label || "Expiriti";
+  img.width = 550;
+  img.height = 550;
+  img.decoding = "async";
 
-      const isLCP=(groupKey===HERO_GALLERY.defaultGroup && sysKey===g.defaultSys && idx===0);
-      if(isLCP){ img.loading="eager"; img.setAttribute("fetchpriority","high"); }
-      else img.loading="lazy";
+  const isLCP = (groupKey === HERO_GALLERY.defaultGroup && sysKey === g.defaultSys && idx === 0);
+  if (isLCP) { img.loading = "eager"; img.setAttribute("fetchpriority", "high"); }
+  else img.loading = "lazy";
 
-      slide.appendChild(img);
-      track.appendChild(slide);
+  slide.appendChild(img);
+  track.appendChild(slide);
 
-      const dot=document.createElement("button");
-      dot.type="button";
-      dot.className="dot"+(idx===0?" active":"");
-      dot.setAttribute("aria-label","Ir a imagen "+(idx+1));
+  const dot = document.createElement("button");
+  dot.type = "button";
+  dot.className = "dot" + (idx === 0 ? " active" : "");
+  dot.setAttribute("aria-label", "Ir a imagen " + (idx + 1));
 
-      dot.addEventListener("click",()=>{
-        QA(".carousel-slide",track).forEach(s=>s.classList.remove("is-active"));
-        QA(".carousel-slide",track)[idx]?.classList.add("is-active");
-        QA(".dot",nav).forEach(d=>d.classList.remove("active"));
-        dot.classList.add("active");
-        track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
-      });
+  dot.addEventListener("click", () => {
+    QA(".carousel-slide", track).forEach(s => s.classList.remove("is-active"));
+    QA(".carousel-slide", track)[idx]?.classList.add("is-active");
+    QA(".dot", nav).forEach(d => d.classList.remove("active"));
+    dot.classList.add("active");
+    track.scrollTo({ left: track.clientWidth * idx, behavior: "smooth" });
+  });
 
-nav.appendChild(dot);
+  nav.appendChild(dot);
 });
+
 carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir slides
 }
-
 
   function buildHeroSystemTabs(groupKey){
     const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
