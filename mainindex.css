@@ -1,50 +1,45 @@
 /* =========================================================
-   Expiriti - mainindex.css (DEF V2026.1)
+   Expiriti - mainindex.css (FINAL V2026.2 COMPLETO)
    - Mobile-first refinado (2x2 sistemas y servicios)
    - FIX CLS: reserva header/footer + carruseles
    - FIX videos estirados (aspect-ratio)
    - Carruseles hero/reels robustos (scroll-snap)
    - Targets táctiles (dots + tabs)
+   - PATCH 2026 integrado SIN DUPLICADOS
 ========================================================= */
 
 /* ============ TOKENS ============ */
 :root{
-  --bg:#0b0f14;
-  --bg-2:#0d1219;
-  --card:#111723;
-  --card-2:#0f1622;
-  --muted:#95a2b3;
-  --text:#e8eef6;
-  --brand:#2dd4bf;
-  --brand-2:#60a5fa;
-  --ok:#22c55e;
-  --warn:#f59e0b;
-  --err:#ef4444;
-  --maxw:1200px;
-  --radius:14px;
-  --radius-lg:18px;
-  --shadow:0 10px 30px rgba(0,0,0,.25);
-  --border:1px solid rgba(255,255,255,.08);
-  --gap:14px;
-  --tap:44px; /* target tactil */
+  --bg:#0b0f14;--bg-2:#0d1219;--card:#111723;--card-2:#0f1622;
+  --muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;
+  --ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--maxw:1200px;
+  --radius:14px;--radius-lg:18px;--shadow:0 10px 30px rgba(0,0,0,.25);
+  --border:1px solid rgba(255,255,255,.08);--gap:14px;--tap:44px;
+  /* Header fixed: ajusta si tu header real difiere */
+  --gh-height:68px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
 }
 
-/* ============ RESET LIGERO ============ */
+/* ============ RESET LIGERO + ANTI OVERFLOW ============ */
 *{box-sizing:border-box}
-html,body{height:100%}
+html,body{height:100%;width:100%;max-width:100%;overflow-x:hidden}
+@supports(overflow:clip){html,body{overflow-x:clip}}
 body{
   margin:0;
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:radial-gradient(1200px 700px at 18% 0%, rgba(45,212,191,.10), transparent 50%),
-             radial-gradient(900px 650px at 80% 10%, rgba(96,165,250,.10), transparent 55%),
-             var(--bg);
+  background:
+    radial-gradient(1200px 700px at 18% 0%, rgba(45,212,191,.10), transparent 50%),
+    radial-gradient(900px 650px at 80% 10%, rgba(96,165,250,.10), transparent 55%),
+    var(--bg);
   color:var(--text);
   line-height:1.45;
+  /* reserva real header fixed */
+  padding-top:calc(var(--gh-height) + var(--safe-top));
 }
 img,video{max-width:100%;height:auto;display:block}
+iframe{max-width:100%}
 a{color:inherit}
 button,input,select,textarea{font:inherit}
-:focus-visible{outline:2px solid rgba(96,165,250,.75); outline-offset:2px}
+:focus-visible{outline:2px solid rgba(96,165,250,.75);outline-offset:2px}
 
 /* ============ LAYOUT ============ */
 .container{max-width:var(--maxw);margin:0 auto;padding:0 16px}
@@ -52,76 +47,60 @@ button,input,select,textarea{font:inherit}
 .grid-2{display:grid;grid-template-columns:1fr;gap:var(--gap)}
 .v-center{align-items:center}
 .align-center{align-items:center}
-
-/* Desktop grid helper */
-@media (min-width:980px){
+.grid-2>*{min-width:0} /* clave anti overflow */
+@media(min-width:980px){
   .container{padding:0 18px}
   .grid-2{grid-template-columns:1fr 1fr}
 }
 
 /* ============ TIPOGRAFÍA / UI ============ */
 .kicker{
-  display:inline-flex; gap:8px; align-items:center;
-  color:rgba(232,238,246,.9);
-  font-weight:600;
-  letter-spacing:.2px;
-  background:rgba(255,255,255,.04);
-  border:var(--border);
-  border-radius:999px;
-  padding:8px 12px;
-  margin-bottom:10px;
+  display:inline-flex;gap:8px;align-items:center;
+  color:rgba(232,238,246,.9);font-weight:600;letter-spacing:.2px;
+  background:rgba(255,255,255,.04);border:var(--border);
+  border-radius:999px;padding:8px 12px;margin-bottom:10px;
 }
-.lead{color:rgba(232,238,246,.86); margin:10px 0 0}
-.hint{color:rgba(149,162,179,.95); font-size:.94rem}
-.title-gradient{
-  background:linear-gradient(90deg,var(--brand),var(--brand-2));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.gradient-word{
+.lead{color:rgba(232,238,246,.86);margin:10px 0 0}
+.hint{color:rgba(149,162,179,.95);font-size:.94rem}
+.title-gradient,.gradient-word{
   background:linear-gradient(90deg,var(--brand),var(--brand-2));
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .badge{
   display:inline-flex;align-items:center;gap:8px;
-  border-radius:999px;padding:8px 12px;
-  border:var(--border);
-  background:rgba(255,255,255,.04);
-  color:rgba(232,238,246,.92);
-  font-size:.92rem;
+  border-radius:999px;padding:8px 12px;border:var(--border);
+  background:rgba(255,255,255,.04);color:rgba(232,238,246,.92);
+  font-size:.92rem;max-width:100%;
 }
 .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 
 /* ============ BOTONES ============ */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;
-  border-radius:12px;
-  padding:12px 14px;
-  border:var(--border);
-  background:rgba(255,255,255,.04);
-  color:rgba(232,238,246,.96);
-  text-decoration:none;
-  cursor:pointer;
+  border-radius:12px;padding:12px 14px;border:var(--border);
+  background:rgba(255,255,255,.04);color:rgba(232,238,246,.96);
+  text-decoration:none;cursor:pointer;
   transition:transform .12s ease, background .12s ease, border-color .12s ease;
   min-height:var(--tap);
 }
 .btn:active{transform:translateY(1px)}
 .btn-sm{padding:10px 12px;border-radius:11px;min-height:40px}
-.btn-grad-green{border-color:rgba(45,212,191,.35); background:linear-gradient(180deg, rgba(45,212,191,.20), rgba(255,255,255,.03))}
-.btn-grad-blue{border-color:rgba(96,165,250,.35); background:linear-gradient(180deg, rgba(96,165,250,.20), rgba(255,255,255,.03))}
+.btn-grad-green{border-color:rgba(45,212,191,.35);background:linear-gradient(180deg,rgba(45,212,191,.20),rgba(255,255,255,.03))}
+.btn-grad-blue{border-color:rgba(96,165,250,.35);background:linear-gradient(180deg,rgba(96,165,250,.20),rgba(255,255,255,.03))}
 .hero-btn{font-weight:700}
 
 /* ============ CARDS ============ */
 .card{
   border:var(--border);
-  background:linear-gradient(180deg, rgba(17,23,35,.92), rgba(17,23,35,.72));
+  background:linear-gradient(180deg,rgba(17,23,35,.92),rgba(17,23,35,.72));
   border-radius:var(--radius);
   box-shadow:var(--shadow);
+  max-width:100%;
 }
 .card .body{padding:16px}
 .card.body{padding:16px}
 
 /* ============ CLS FIX (PLACEHOLDERS) ============ */
-/* Reserva altura para evitar “saltos” cuando se inyecta el header/footer */
 #header-placeholder{display:block;min-height:68px}
 #footer-placeholder{display:block;min-height:220px}
 
@@ -133,61 +112,33 @@ button,input,select,textarea{font:inherit}
 .hero-gallery-card{overflow:hidden}
 .hero-gallery-header{padding:14px 16px;border-bottom:var(--border)}
 .hero-gallery-header h2{margin:0;font-size:1.05rem}
-.hero-gallery-groups{
-  display:flex;gap:10px;flex-wrap:wrap;
-  padding:12px 16px 8px;
-}
+.hero-gallery-groups{display:flex;gap:10px;flex-wrap:wrap;padding:12px 16px 8px}
 .hero-group-tab{
-  min-height:var(--tap);
-  padding:10px 12px;
-  border-radius:999px;
-  border:var(--border);
-  background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.92);
-  cursor:pointer;
+  min-height:var(--tap);padding:10px 12px;border-radius:999px;border:var(--border);
+  background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);cursor:pointer;
 }
-.hero-group-tab.active{
-  border-color:rgba(45,212,191,.45);
-  background:rgba(45,212,191,.12);
-}
+.hero-group-tab.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}
 .hero-gallery-title{
-  padding:0 16px 10px;
-  margin:0;
-  min-height:18px; /* evita warning + micro CLS */
-  color:rgba(232,238,246,.92);
-  font-weight:700;
-  letter-spacing:.2px;
+  padding:0 16px 10px;margin:0;min-height:18px;
+  color:rgba(232,238,246,.92);font-weight:700;letter-spacing:.2px;
 }
 .hero-gallery-tabs{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0,1fr));
-  gap:10px;
-  padding:12px 16px 16px;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;padding:12px 16px 16px;
 }
 .hero-tab{
   display:flex;align-items:center;gap:10px;
-  border-radius:14px;
-  border:var(--border);
-  background:rgba(255,255,255,.03);
-  min-height:var(--tap);
-  padding:10px 10px;
-  cursor:pointer;
-  text-align:left;
+  border-radius:14px;border:var(--border);
+  background:rgba(255,255,255,.03);min-height:var(--tap);
+  padding:10px 10px;cursor:pointer;text-align:left;
 }
 .hero-tab img{
-  width:44px;height:44px;
-  border-radius:12px;
-  object-fit:cover;
+  width:44px;height:44px;border-radius:12px;object-fit:cover;
   border:1px solid rgba(255,255,255,.10);
 }
 .hero-tab span{font-weight:700;color:rgba(232,238,246,.95)}
-.hero-tab.active{
-  border-color:rgba(96,165,250,.40);
-  background:rgba(96,165,250,.10);
-}
-
-/* Desktop hero */
-@media (min-width:980px){
+.hero-tab.active{border-color:rgba(96,165,250,.40);background:rgba(96,165,250,.10)}
+@media(min-width:980px){
   .hero{padding:40px 0 18px}
   .hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}
   .hero h1{font-size:2.25rem}
@@ -196,458 +147,228 @@ button,input,select,textarea{font:inherit}
 
 /* ============ CARRUSEL UNIVERSAL ============ */
 .carousel{
-  position:relative;
-  border-radius:var(--radius);
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.10);
-  background:var(--card-2);
+  position:relative;border-radius:var(--radius);overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);background:var(--card-2);max-width:100%;
 }
-/* Altura mínima para que NO “desaparezca” antes de que JS pinte slides */
 .carousel-track{
-  display:flex;
-  gap:0;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  scroll-behavior:smooth;
-  -webkit-overflow-scrolling:touch;
-  min-height:240px; /* clave para móvil */
+  display:flex;gap:0;overflow-x:auto;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+  min-height:240px;
 }
 .carousel-track::-webkit-scrollbar{height:6px}
 .carousel-track::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
-.carousel-slide{
-  flex:0 0 100%;
-  scroll-snap-align:start;
-  position:relative;
-}
+.carousel-slide{flex:0 0 100%;scroll-snap-align:start;position:relative}
 .hero-slide img{
-  width:100%;
-  height:auto;
-  aspect-ratio:1/1;           /* tus imágenes son cuadradas */
-  object-fit:cover;
-  display:block;
-  background:#0b0f14;
+  width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;display:block;background:#0b0f14;
 }
-
 /* Flechas */
 .arrowCircle{
-  position:absolute;top:50%;
-  transform:translateY(-50%);
-  width:42px;height:42px;
-  border-radius:999px;
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:42px;height:42px;border-radius:999px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(7,10,16,.55);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   color:rgba(232,238,246,.95);
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  z-index:3;
+  cursor:pointer;z-index:3;
 }
 .arrowCircle .chev{font-size:22px;line-height:1}
 .arrowCircle.prev{left:10px}
 .arrowCircle.next{right:10px}
 .arrowCircle.is-disabled{opacity:.35}
-
-/* Dots (tap-friendly) */
+/* Dots */
 .carousel-nav{
   position:absolute;left:0;right:0;bottom:8px;
-  display:flex;justify-content:center;gap:10px;
-  padding:8px 10px;
-  z-index:3;
-  pointer-events:auto;
+  display:flex;justify-content:center;gap:10px;padding:8px 10px;
+  z-index:3;pointer-events:auto;
 }
 .carousel-nav .dot{
-  width:18px;height:18px; /* móvil */
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.22);
-  background:rgba(255,255,255,.10);
-  cursor:pointer;
+  width:18px;height:18px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer;
 }
-.carousel-nav .dot.active{
-  background:rgba(45,212,191,.85);
-  border-color:rgba(45,212,191,.95);
-}
-@media (min-width:980px){
+.carousel-nav .dot.active{background:rgba(45,212,191,.85);border-color:rgba(45,212,191,.95)}
+@media(min-width:980px){
   .carousel-track{min-height:320px}
   .carousel-nav .dot{width:14px;height:14px}
 }
 
 /* ============ REELS (vertical) ============ */
 .reels-home-card .reel-title{
-  margin:0 0 10px;
-  font-weight:800;
-  letter-spacing:.1px;
-  color:rgba(232,238,246,.96);
-  min-height:22px;
+  margin:0 0 10px;font-weight:800;letter-spacing:.1px;
+  color:rgba(232,238,246,.96);min-height:22px;
 }
-.reel-embed{
-  width:100%;
-  aspect-ratio:9/16;   /* vertical real */
-  background:#0b0f14;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.reel-embed iframe{
-  width:100%;
-  height:100%;
-  border:0;
-}
-.yt-thumb{
-  width:100%;
-  height:100%;
-  border:0;
-  padding:0;
-  background:transparent;
-  cursor:pointer;
-  position:relative;
-}
-.yt-thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+.reel-embed{width:100%;aspect-ratio:9/16;background:#0b0f14;display:flex;align-items:center;justify-content:center}
+.reel-embed iframe{width:100%;height:100%;border:0}
+.yt-thumb{width:100%;height:100%;border:0;padding:0;background:transparent;cursor:pointer;position:relative}
+.yt-thumb img{width:100%;height:100%;object-fit:cover}
 .yt-play{
-  position:absolute;inset:auto auto 16px 16px;
-  width:52px;height:52px;border-radius:999px;
-  background:rgba(0,0,0,.45);
-  border:1px solid rgba(255,255,255,.20);
-  backdrop-filter:blur(10px);
+  position:absolute;inset:auto auto 16px 16px;width:52px;height:52px;border-radius:999px;
+  background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.20);backdrop-filter:blur(10px);
 }
 .yt-play:before{
-  content:"";
-  position:absolute;left:20px;top:16px;
-  width:0;height:0;
+  content:"";position:absolute;left:20px;top:16px;width:0;height:0;
   border-left:14px solid rgba(232,238,246,.92);
-  border-top:10px solid transparent;
-  border-bottom:10px solid transparent;
+  border-top:10px solid transparent;border-bottom:10px solid transparent;
 }
-
-/* Tabs de reels: mejor tap, sin deformar imágenes */
-.reel-sys-tabs{
-  display:grid;
-  grid-template-columns:repeat(4, minmax(0,1fr));
-  gap:10px;
-  margin-top:12px;
-}
+/* Tabs reels */
+.reel-sys-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px;max-width:100%}
 .reel-tab{
-  min-height:var(--tap);
-  border-radius:14px;
-  border:var(--border);
-  background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.92);
-  padding:10px 8px;
-  cursor:pointer;
-  display:flex;flex-direction:column;gap:8px;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+  min-height:var(--tap);border-radius:14px;border:var(--border);
+  background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);
+  padding:10px 8px;cursor:pointer;
+  display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;
 }
 .reel-tab img{
-  width:44px;height:44px;
-  object-fit:contain;           /* evita estirar */
-  border-radius:12px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.10);
-  padding:6px;
+  width:44px;height:44px;object-fit:contain;border-radius:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);padding:6px;
 }
-.reel-tab span{
-  font-size:.84rem;
-  font-weight:700;
-  color:rgba(232,238,246,.94);
-  line-height:1.1;
-}
-.reel-tab.active{
-  border-color:rgba(96,165,250,.45);
-  background:rgba(96,165,250,.10);
-}
-@media (max-width:520px){
-  .reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
+.reel-tab span{font-size:.84rem;font-weight:700;color:rgba(232,238,246,.94);line-height:1.1}
+.reel-tab.active{border-color:rgba(96,165,250,.45);background:rgba(96,165,250,.10)}
+@media(max-width:520px){.reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
 /* ============ PRODUCTOS / SISTEMAS ============ */
-.productos-inline-bar{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  gap:12px;
-  margin:6px 0 14px;
-}
+.productos-inline-bar{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:6px 0 14px}
 .prod-title{margin:0;font-size:1.1rem}
 .prod-title span{margin-left:6px;color:rgba(232,238,246,.75)}
 .prod-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .prod-tabs .tab{
-  min-height:var(--tap);
-  border-radius:999px;
-  border:var(--border);
-  background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.9);
-  padding:10px 12px;
-  cursor:pointer;
+  min-height:var(--tap);border-radius:999px;border:var(--border);
+  background:rgba(255,255,255,.03);color:rgba(232,238,246,.9);
+  padding:10px 12px;cursor:pointer;
 }
-.prod-tabs .tab.active{
-  border-color:rgba(45,212,191,.45);
-  background:rgba(45,212,191,.12);
-}
+.prod-tabs .tab.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}
 .prod-cta{
-  min-height:var(--tap);
-  border-radius:12px;
-  border:1px solid rgba(96,165,250,.35);
-  background:linear-gradient(180deg, rgba(96,165,250,.20), rgba(255,255,255,.03));
-  color:rgba(232,238,246,.96);
-  padding:12px 14px;
-  cursor:pointer;
-  font-weight:800;
+  min-height:var(--tap);border-radius:12px;border:1px solid rgba(96,165,250,.35);
+  background:linear-gradient(180deg,rgba(96,165,250,.20),rgba(255,255,255,.03));
+  color:rgba(232,238,246,.96);padding:12px 14px;cursor:pointer;font-weight:800;
 }
-
-/* Cards grid: en móvil 2x2 */
-.cards{display:grid;gap:12px}
-.cards-products{
-  grid-template-columns:repeat(2, minmax(0,1fr)); /* CLAVE: 2 columnas móvil */
-}
-@media (min-width:980px){
-  .cards-products{grid-template-columns:repeat(2, minmax(0,1fr))}
-}
-@media (min-width:1200px){
-  .cards-products{grid-template-columns:repeat(2, minmax(0,1fr))}
-}
-
+.cards{display:grid;gap:12px;max-width:100%}
+.cards-products{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:980px){.cards-products{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1200px){.cards-products{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .product-card{
-  cursor:pointer;
-  transition:transform .12s ease, border-color .12s ease, background .12s ease;
+  cursor:pointer;transition:transform .12s ease,border-color .12s ease,background .12s ease;
 }
 .product-card:hover{transform:translateY(-2px)}
-.product-card .foot{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:10px;margin-top:12px;
-}
+.product-card .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
 .logo-sistema{
-  width:100%;
-  height:auto;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.08);
-  background:#0b0f14;
-  object-fit:contain; /* evita deformación si el logo no es mismo ratio */
+  width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,.08);
+  background:#0b0f14;object-fit:contain;
 }
 .hoverMore .chip{
-  display:inline-flex;align-items:center;
-  border-radius:999px;
-  padding:8px 10px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.90);
-  font-weight:700;
-  white-space:nowrap;
+  display:inline-flex;align-items:center;border-radius:999px;padding:8px 10px;
+  border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);
+  color:rgba(232,238,246,.90);font-weight:700;white-space:nowrap;max-width:100%;
 }
 
 /* ============ SERVICIOS (2x2 en móvil + featured) ============ */
-.cards-services{
-  grid-template-columns:repeat(2, minmax(0,1fr)); /* CLAVE: 2 columnas móvil */
-  gap:12px;
-}
-@media (min-width:980px){
-  .cards-services{grid-template-columns:repeat(2, minmax(0,1fr))}
-}
-@media (max-width:420px){
-  .cards-services{grid-template-columns:1fr}
-}
-
+.cards-services{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(min-width:980px){.cards-services{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.cards-services{grid-template-columns:1fr}}
 .svc-icon{width:44px;height:44px;object-fit:contain}
-.product-card h3{
-  display:flex;align-items:center;gap:10px;
-  margin:0 0 8px;
-  font-size:1.02rem;
-}
+.product-card h3{display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:1.02rem}
 .product-card p.body{margin:0;color:rgba(232,238,246,.82)}
-
-/* “Pólizas anuales” destacada: efecto premium + “tap highlight” */
 .svc-featured{
   border:1px solid rgba(45,212,191,.35);
   background:
     radial-gradient(900px 420px at 0% 0%, rgba(45,212,191,.16), transparent 60%),
     radial-gradient(700px 420px at 100% 0%, rgba(96,165,250,.12), transparent 60%),
     linear-gradient(180deg, rgba(17,23,35,.92), rgba(17,23,35,.70));
-  position:relative;
-  overflow:hidden;
+  position:relative;overflow:hidden;
 }
 .svc-featured:before{
-  content:"";
-  position:absolute;inset:-2px;
-  background:linear-gradient(90deg, rgba(45,212,191,.35), rgba(96,165,250,.35));
-  opacity:.12;
-  filter:blur(16px);
-  pointer-events:none;
+  content:"";position:absolute;inset:-2px;
+  background:linear-gradient(90deg,rgba(45,212,191,.35),rgba(96,165,250,.35));
+  opacity:.12;filter:blur(16px);pointer-events:none;
 }
 .svc-featured:hover{transform:translateY(-2px)}
 .svc-featured:active{transform:translateY(1px)}
-/* En móvil “hover equivalente”: focus-visible y active */
-.svc-featured:focus-visible{
-  outline:2px solid rgba(45,212,191,.65);
-  outline-offset:2px;
-}
+.svc-featured:focus-visible{outline:2px solid rgba(45,212,191,.65);outline-offset:2px}
 
 /* ============ PROMOS ============ */
-.promo-filters{
-  display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px
-}
+.promo-filters{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px}
 .promo-btn{
-  min-height:var(--tap);
-  border-radius:999px;
-  border:var(--border);
-  background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.90);
-  padding:10px 12px;
-  cursor:pointer;
+  min-height:var(--tap);border-radius:999px;border:var(--border);
+  background:rgba(255,255,255,.03);color:rgba(232,238,246,.90);
+  padding:10px 12px;cursor:pointer;
 }
-.promo-btn.active{
-  border-color:rgba(45,212,191,.45);
-  background:rgba(45,212,191,.12);
-}
-.promo-grid{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0,1fr));
-  gap:12px;
-}
-@media (min-width:980px){
-  .promo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
+.promo-btn.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}
+.promo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:100%}
+@media(min-width:980px){.promo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .promo-item{
-  position:relative;
-  margin:0;
-  border-radius:var(--radius);
-  overflow:hidden;
-  border:var(--border);
+  position:relative;margin:0;border-radius:var(--radius);overflow:hidden;border:var(--border);
   background:rgba(255,255,255,.03);
 }
-.promo-item img{
-  width:100%;
-  height:auto;
-  aspect-ratio:634/900;  /* FIX MSI: evita estirar */
-  object-fit:cover;
-}
+.promo-item img{width:100%;height:auto;aspect-ratio:634/900;object-fit:cover}
 .promo-badge{
-  position:absolute;left:10px;top:10px;
-  border-radius:999px;
-  padding:8px 10px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(7,10,16,.55);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  font-weight:800;
+  position:absolute;left:10px;top:10px;border-radius:999px;padding:8px 10px;
+  border:1px solid rgba(255,255,255,.14);background:rgba(7,10,16,.55);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-weight:800;
 }
 
 /* ============ VIDEOS (no estirados) ============ */
-.videos-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:12px;
-}
-@media (min-width:980px){
-  .videos-grid{grid-template-columns:1fr 1fr}
-}
+.videos-grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:100%}
+@media(min-width:980px){.videos-grid{grid-template-columns:1fr 1fr}}
 .yt-lite{
-  border-radius:var(--radius);
-  border:var(--border);
-  background:#0b0f14;
-  overflow:hidden;
-  aspect-ratio:16/9; /* CLAVE */
-  position:relative;
+  border-radius:var(--radius);border:var(--border);background:#0b0f14;
+  overflow:hidden;aspect-ratio:16/9;position:relative;
 }
-.yt-lite .yt-lite-inner{
-  position:absolute;inset:0;
-  border:0;padding:0;margin:0;
-  width:100%;height:100%;
-  background:transparent;
-  cursor:pointer;
-}
-.yt-lite-thumb{
-  position:absolute;inset:0;
-  background-size:cover;
-  background-position:center;
-  filter:saturate(1.02);
-}
+.yt-lite .yt-lite-inner{position:absolute;inset:0;border:0;padding:0;margin:0;width:100%;height:100%;background:transparent;cursor:pointer}
+.yt-lite-thumb{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(1.02)}
 .yt-lite-play{
-  position:absolute;left:16px;bottom:16px;
-  width:54px;height:54px;border-radius:999px;
-  background:rgba(0,0,0,.45);
-  border:1px solid rgba(255,255,255,.20);
-  backdrop-filter:blur(10px);
+  position:absolute;left:16px;bottom:16px;width:54px;height:54px;border-radius:999px;
+  background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.20);backdrop-filter:blur(10px);
 }
 .yt-lite-play:before{
-  content:"";
-  position:absolute;left:21px;top:17px;
-  width:0;height:0;
+  content:"";position:absolute;left:21px;top:17px;width:0;height:0;
   border-left:14px solid rgba(232,238,246,.92);
-  border-top:10px solid transparent;
-  border-bottom:10px solid transparent;
+  border-top:10px solid transparent;border-bottom:10px solid transparent;
 }
 .yt-iframe{width:100%;height:100%;border:0}
 
 /* ============ FAQ ============ */
-.faq-wrap{display:grid;gap:10px}
-.faq-item{
-  border-radius:var(--radius);
-  border:var(--border);
-  background:rgba(255,255,255,.03);
-  padding:10px 12px;
-}
-.faq-item summary{
-  cursor:pointer;
-  font-weight:800;
-  list-style:none;
-}
+.faq-wrap{display:grid;gap:10px;max-width:100%}
+.faq-item{border-radius:var(--radius);border:var(--border);background:rgba(255,255,255,.03);padding:10px 12px}
+.faq-item summary{cursor:pointer;font-weight:800;list-style:none}
 .faq-item summary::-webkit-details-marker{display:none}
 .faq-item p{color:rgba(232,238,246,.82);margin:10px 0 6px}
 
 /* ============ FORM / CONTACTO ============ */
 label{display:block;margin:10px 0 6px;color:rgba(232,238,246,.88);font-weight:700}
 input,select,textarea{
-  width:100%;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.95);
-  padding:12px 12px;
-  outline:none;
+  width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);color:rgba(232,238,246,.95);
+  padding:12px 12px;outline:none;
 }
-textarea{resize:vertical; min-height:120px}
+textarea{resize:vertical;min-height:120px}
 input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 
 /* ============ UTIL ============ */
-.hidden{display:none !important}
+.hidden{display:none!important}
 .section-title{margin:0 0 12px}
 .section-title h2{margin:0}
 
 /* ============ MOBILE PULIDO EXTRA ============ */
-@media (max-width:980px){
+@media(max-width:980px){
   .section-full{padding:26px 0}
   .hero .container{padding:0 14px}
   .hero-gallery-header h2{font-size:1rem}
   .hero-group-tab{padding:10px 12px}
-  .arrowCircle{display:none} /* en móvil prioriza swipe (tendencia UI) */
-  .product-card:hover{transform:none} /* hover no aplica real en touch */
+  .arrowCircle{display:none} /* móvil: swipe */
+  .product-card:hover{transform:none}
 }
 
-/* Reserva el alto del header para evitar salto */
-:root{ --gh-height:68px; } /* usa tu valor real */
-body{ padding-top: var(--gh-height); }
-.gh{ position: fixed; top:0; left:0; right:0; height: var(--gh-height); }
 /* =========================================================
-   Expiriti - PATCH UI/UX 2026 (Mobile + Desktop refinado)
-   PÉGALO AL FINAL de mainindex.css
+   OVERRIDES FINALES (PATCH UI/UX 2026) - SIN DUPLICAR
+   Pega aquí NO más parches: aquí vive todo lo “final”
 ========================================================= */
 
-/* ---------- Fondo más premium (dark + glow + textura) ---------- */
+/* 1) Fondo premium + textura (override limpio) */
 :root{
-  /* Ajusta estos si quieres más/menos contraste */
-  --bg:#070b12;          /* más profundo */
-  --bg-2:#0a111b;
-  --surface:#0d1522;     /* superficies */
-  --surface-2:#0b1220;
-  --glow-1: rgba(45,212,191,.11);
-  --glow-2: rgba(96,165,250,.10);
-  --grain: rgba(255,255,255,.035);
+  --bg:#070b12;--bg-2:#0a111b;
+  --surface:#0d1522;--surface-2:#0b1220;
+  --glow-1:rgba(45,212,191,.11);--glow-2:rgba(96,165,250,.10);
 }
-
-/* Fondo: gradientes + “grain” sutil (sin imagen) */
 body{
   background:
     radial-gradient(1100px 720px at 14% -10%, var(--glow-1), transparent 55%),
@@ -656,236 +377,69 @@ body{
     var(--bg);
   position:relative;
 }
-
-/* Textura sutil tipo “noise” (CSS-only). Si no te gusta, bórralo. */
 body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,.018),
-      rgba(255,255,255,.018) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-  mix-blend-mode:overlay;
-  opacity:.22;
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.018),rgba(255,255,255,.018) 1px,transparent 1px,transparent 3px);
+  mix-blend-mode:overlay;opacity:.22;
 }
 
-/* Cards un poco más “agencia” */
-.card{
-  background:
-    radial-gradient(900px 420px at 0% 0%, rgba(45,212,191,.07), transparent 60%),
-    radial-gradient(700px 420px at 100% 0%, rgba(96,165,250,.06), transparent 60%),
-    linear-gradient(180deg, rgba(17,23,35,.92), rgba(17,23,35,.70));
-  border:1px solid rgba(255,255,255,.085);
-}
+/* 2) Header fixed: asegura ancho/alto */
+.gh{position:fixed;top:0;left:0;right:0;height:var(--gh-height);width:100%}
 
-/* ---------- Altura real en móviles modernos (evita cortes con barra navegador) ---------- */
-/* svh/dvh: mejor que vh para evitar “brincos” en iOS/Android */
-:root{
-  --vh: 1svh;
-  --safe-top: env(safe-area-inset-top, 0px);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-}
+/* 3) FIX overflow horizontal definitivo (sin repetir bloques) */
+.container,.section-full,.hero,.card,.cards,.promo-grid,.videos-grid,.carousel,.carousel-track,.reel-sys-tabs{max-width:100%}
+.badge,.chip{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+img,video,iframe{max-width:100%}
 
-/* Si tu header es fixed, esta reserva debe ser real */
-:root{ --gh-height:68px; } /* ajusta si tu header real es distinto */
-body{ padding-top: calc(var(--gh-height) + var(--safe-top)); }
+/* 4) Reels mobile: quepan en una pantalla (si usas IDs exactos) */
+#carouselReels-servicios .carousel-track,
+#carouselReels-sistemas .carousel-track{
+  min-height:0;
+  height:clamp(300px,44svh,520px);
+  max-height:calc(100svh - var(--gh-height) - 240px - var(--safe-bottom));
+}
+#carouselReels-servicios .carousel-slide iframe,
+#carouselReels-sistemas .carousel-slide iframe{width:100%;height:100%;border:0}
 
-/* ---------- Reels Mobile: más compactos y “que quepan” ---------- */
-/* Objetivo: que entre título + reel + tabs/dots en una pantalla vertical */
-.reels-home-card .reel-title{
-  margin:0 0 8px;
-  font-size:1rem;
-  line-height:1.2;
-}
-
-/* Reel con altura adaptativa: NO enorme en móviles altos, NO minúsculo en móviles chicos */
-.reel-embed{
-  /* Altura objetivo:
-     - mínimo 320px para que se vea,
-     - máximo ~ (pantalla - header - títulos - tabs - paddings)
-  */
-  aspect-ratio:auto; /* dejamos de forzar 9/16 exacto en contenedor */
-  height: clamp(320px, 44svh, 520px);
-  max-height: calc(100svh - var(--gh-height) - 220px - var(--safe-bottom));
-  border-radius: var(--radius);
-  overflow:hidden;
-  background: var(--surface-2);
-  border:1px solid rgba(255,255,255,.10);
-}
-
-/* El iframe mantiene 9/16 dentro del contenedor sin deformarse */
-.reel-embed iframe,
-.reel-embed .yt-thumb{
-  width:100%;
-  height:100%;
-}
-
-/* En pantallas muy pequeñas, baja un poco más */
-@media (max-height:740px){
-  .reel-embed{
-    height: clamp(280px, 42svh, 460px);
-    max-height: calc(100svh - var(--gh-height) - 200px - var(--safe-bottom));
-  }
-}
-
-/* Tabs de sistemas/servicios: más compactos en mobile */
-.reel-sys-tabs{
-  gap:8px;
-  margin-top:10px;
-}
-.reel-tab{
-  padding:9px 8px;
-  border-radius:13px;
-}
-.reel-tab img{
-  width:40px;height:40px;
-  padding:6px;
-}
-.reel-tab span{ font-size:.82rem; }
-
-/* ---------- Servicios 2x2 + “carrusel” en mobile ---------- */
-/* UX: en mobile se desplaza horizontalmente por páginas, cada página muestra 2x2.
-   Esto se siente moderno, rápido y cabe en una pantalla.
-*/
-.cards-services{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0,1fr));
-  gap:12px;
-}
-
-/* Convertimos la LISTA en carrusel por “páginas” en mobile */
-@media (max-width:980px){
-  /* Contenedor carrusel */
+/* 5) Servicios: carrusel 2x2 por páginas (ACTIVA con .is-carousel y .svc-page en HTML) */
+@media(max-width:980px){
   .cards-services.is-carousel{
-    display:flex;
-    gap:12px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    padding-bottom:8px; /* aire para scrollbar */
+    display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding:2px 2px 10px;margin:0;
   }
-
-  /* Cada “page” = 2x2 */
+  .cards-services.is-carousel::-webkit-scrollbar{height:6px}
+  .cards-services.is-carousel::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
   .cards-services.is-carousel .svc-page{
-    flex:0 0 100%;
+    flex:0 0 100%;max-width:100%;
     scroll-snap-align:start;
-    display:grid;
-    grid-template-columns:repeat(2, minmax(0,1fr));
-    gap:12px;
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
   }
+  .cards-services.is-carousel .svc-page>*{min-width:0}
+}
+@media(min-width:981px){
+  .cards-services.is-carousel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}
+  .cards-services.is-carousel .svc-page{display:contents}
 }
 
-/* En desktop: vuelve a grid normal */
-@media (min-width:981px){
-  .cards-services.is-carousel{
-    display:grid;
-    grid-template-columns:repeat(2, minmax(0,1fr));
-    overflow:visible;
-  }
-  .cards-services.is-carousel .svc-page{
-    display:contents; /* “aplana” las páginas */
-  }
-}
-
-/* Nota: Para que esto funcione, tu HTML debe agrupar servicios en .svc-page (te doy ejemplo abajo). */
-
-/* ---------- Dots / navegación más “tap friendly” ---------- */
-.carousel-nav .dot{
-  width:18px;height:18px;
-}
-@media (min-width:980px){
-  .carousel-nav .dot{ width:14px;height:14px; }
-}
-.carousel-nav{
-  bottom:10px;
-}
-
-/* ---------- Promos: tamaño consistente + MSI controlado ---------- */
-/* Si unas promos se ven “chicas” es porque el contenedor no fuerza altura; lo resolvemos con height clamp */
-.promo-item{
-  background: rgba(255,255,255,.03);
-}
-
-/* Tamaño visual consistente en grid */
+/* 6) Promos: tamaño consistente + MSI controlado (override final) */
 .promo-item img{
   width:100%;
-  height: clamp(220px, 34vw, 360px); /* mobile: evita “mini”; desktop: no se desborda */
-  object-fit: cover;
-  aspect-ratio:auto; /* quitamos el 634/900 fijo que te puede romper otras promos */
+  height:clamp(220px,34vw,360px);
+  object-fit:cover;
+  aspect-ratio:auto;
   display:block;
 }
-
-/* MSI: si esa imagen viene con ratio “raro” y se ve gigante, la tratamos como “contain” */
 .promo-item.is-msi img{
-  object-fit: contain;
-  background: rgba(0,0,0,.18);
+  object-fit:contain;
+  background:rgba(0,0,0,.18);
   padding:10px;
-  height: clamp(200px, 30vw, 320px);
+  height:clamp(200px,30vw,320px);
+}
+@media(min-width:980px){
+  .promo-item img{height:clamp(240px,18vw,420px)}
 }
 
-/* Desktop: promos un poco más “hero” */
-@media (min-width:980px){
-  .promo-item img{
-    height: clamp(240px, 18vw, 420px);
-  }
-}
-
-/* ---------- Carruseles: altura mínima + estabilidad CLS ---------- */
-.carousel-track{
-  /* En mobile, no uses min-height muy alto si quieres “1 pantalla”.
-     Esto reduce el “scroll vertical” innecesario.
-  */
-  min-height: 220px;
-}
-@media (min-width:980px){
-  .carousel-track{ min-height: 320px; }
-}
-
-/* ---------- Micro UX: tarjetas más táctiles ---------- */
-.product-card:active,
-.svc-featured:active{
-  transform: translateY(1px);
-}
-
-/* ===== FIX: Overflow horizontal (la página se “expande” a la derecha) ===== */
-html, body{
-  width:100%;
-  max-width:100%;
-  overflow-x:hidden; /* fallback */
-}
-
-/* Mejor que hidden (evita scroll, pero sin recortar efectos internos en muchos casos) */
-@supports (overflow: clip){
-  html, body{ overflow-x:clip; }
-}
-
-/* Previene que grids/flex hijos empujen el ancho */
-.container,
-.section-full,
-.hero,
-.card,
-.carousel,
-.carousel-track,
-.cards,
-.cards-services,
-.cards-products,
-.promo-grid,
-.videos-grid{
-  max-width:100%;
-}
-
-/* Importante en grids: permite que columnas se encojan y no empujen */
-.grid-2 > *{ min-width:0; }
-
-/* Iframes y medios: no deben exceder el contenedor */
-iframe, img, video{
-  max-width:100%;
-}
-
-
+/* 7) Carrusel: altura mínima estable (reduce scroll vertical excesivo) */
+.carousel-track{min-height:220px}
+@media(min-width:980px){.carousel-track{min-height:320px}}
+.carousel-nav{bottom:10px}
