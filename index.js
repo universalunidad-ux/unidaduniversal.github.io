@@ -25,8 +25,9 @@
   const isGh=location.hostname.endsWith("github.io");
   const firstSeg=location.pathname.split("/")[1]||"";
   const repoBase=(isGh&&firstSeg)?("/"+firstSeg):"";
-  const inSubDir=/\/(SISTEMAS|SERVICIOS|PDFS|CSS)\//i.test(location.pathname);
-  const depth=inSubDir?"../":"./";
+const inSubDir=/\/(SISTEMAS|SERVICIOS|PDFS)\//i.test(location.pathname);
+const depth=inSubDir?"../":"./";
+
 
   function prefix(path){
     if(!path) return path;
@@ -66,13 +67,13 @@
     const ph=document.getElementById(placeholderId);
     if(!ph) return;
 
-    const cands=[
-      prefix("PARTIALS/"+fileName),
-      depth.replace("./","")+"PARTIALS/"+fileName,
-      "./PARTIALS/"+fileName,
-      (repoBase?(repoBase+"/PARTIALS/"+fileName):""),
-      "/PARTIALS/"+fileName
-    ].filter(Boolean);
+const cands = [
+  prefix(`PARTIALS/${fileName}`),                               // GH y local (usa prefix)
+  (isGh && repoBase ? `${repoBase}/PARTIALS/${fileName}` : null), // fallback GH
+  (!isGh ? `${depth}PARTIALS/${fileName}` : null),              // fallback local
+  `/PARTIALS/${fileName}`                                      // fallback root
+].filter(Boolean);
+
 
     let html="", lastErr=null;
     for(const u of cands){
@@ -376,6 +377,38 @@ card.addEventListener("click",e=>{
       const i=slidesFor().findIndex(s=>s.classList.contains("is-active"));
       goTo(i+1);
     });
+
+     
+/* Scroll sync (swipe/trackpad) -> actualiza dot/slide activo */
+if (carousel.dataset.scrollSync !== "1") {
+  carousel.dataset.scrollSync = "1";
+  let raf = 0, lastIdx = -1;
+
+  const syncFromScroll = () => {
+    raf = 0;
+    const slides = slidesFor();
+    const len = slides.length;
+    if (!len) return;
+
+    const w = track.clientWidth || 1;
+    const idx = Math.max(0, Math.min(len - 1, Math.round((track.scrollLeft || 0) / w)));
+    if (idx === lastIdx) return;
+    lastIdx = idx;
+
+    slides.forEach((s, k) => s.classList.toggle("is-active", k === idx));
+    const nav = carousel.querySelector(".carousel-nav");
+    QA(".dot", nav).forEach((d, k) => d.classList.toggle("active", k === idx));
+  };
+
+  track.addEventListener("scroll", () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(syncFromScroll);
+  }, { passive: true });
+
+  window.addEventListener("resize", () => { lastIdx = -1; syncFromScroll(); });
+}
+
+     
 
     const cfg=HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
     buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
