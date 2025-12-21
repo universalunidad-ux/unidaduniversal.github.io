@@ -750,5 +750,54 @@ body>.arrowCircle{display:none!important}
 /* ========================= 18) DEBUG (opcional) ========================= */
 /* *{outline:1px solid rgba(255,0,0,.07)} */
 
+/* ===== YT-LITE (solo CSS) ===== */
+.yt-lite{
+  position:relative;
+  width:100%;
+  max-width:380px;
+  margin:0 auto;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(148,163,184,.18);
+  background:#0b1220;
+}
+
+/* 9:16 */
+.yt-lite::before{
+  content:"";
+  display:block;
+  padding-top:177.78%;
+}
+
+/* poster */
+.yt-lite::after{
+  content:"";
+  position:absolute;inset:0;
+  background-image:var(--yt-poster);
+  background-size:cover;
+  background-position:center;
+  filter:saturate(1.05);
+}
+
+/* play button */
+.yt-lite .yt-play{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  z-index:2;
+}
+
+.yt-lite .yt-play svg{
+  width:74px;height:74px;
+  fill:rgba(255,255,255,.92);
+  filter:drop-shadow(0 10px 25px rgba(0,0,0,.45));
+}
+
+@media(max-width:768px){
+  .yt-lite{max-width:520px}
+}
+
 
 
