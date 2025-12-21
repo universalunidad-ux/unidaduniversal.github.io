@@ -360,64 +360,87 @@ const openBtn  = Q("#tocToggle");
     });
   })();
 
-  // =========================================================
-  // 8) GESTOR YOUTUBE — pausa reels al cambiar
-  // =========================================================
-  (function(){
-    if (!window.exPlayers) window.exPlayers = [];
+// =========================================================
+// 8) GESTOR YOUTUBE — pausa reels al cambiar (LAZY YT API)
+// =========================================================
+(function(){
+  if (!window.exPlayers) window.exPlayers = [];
 
-    if (!window.pauseAllYTIframes) {
-      window.pauseAllYTIframes = function(exceptPlayer){
-        window.exPlayers.forEach(p=>{
-          if (!p || p === exceptPlayer) return;
-          try{
-            if (typeof p.getPlayerState === "function" &&
-                typeof p.pauseVideo     === "function"){
-              const s = p.getPlayerState();
-              if (s === 1 || s === 3) p.pauseVideo();
-            }
-          }catch(e){}
-        });
-      };
-    }
-
-    function onPlayerStateChange(event){
-      if (event.data === 1){
-        window.pauseAllYTIframes(event.target);
-      }
-    }
-
-    const prevOnReady = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = function(){
-      if (typeof prevOnReady === "function") prevOnReady();
-
-      QA('iframe[src*="youtube"]').forEach(iframe=>{
-        if (iframe.dataset.ytInit) return;
-        iframe.dataset.ytInit = "1";
-
-        let src = iframe.src || "";
-        if (src && !src.includes("enablejsapi=1")){
-          src += (src.includes("?") ? "&" : "?") + "enablejsapi=1";
-          iframe.src = src;
-        }
-
-        if (window.YT && window.YT.Player){
-          const player = new YT.Player(iframe, {
-            events:{ onStateChange:onPlayerStateChange }
-          });
-          window.exPlayers.push(player);
-        }
+  // Pausar todos excepto el actual
+  if (!window.pauseAllYTIframes) {
+    window.pauseAllYTIframes = function(exceptPlayer){
+      (window.exPlayers || []).forEach(p=>{
+        if (!p || p === exceptPlayer) return;
+        try{
+          if (typeof p.getPlayerState === "function" &&
+              typeof p.pauseVideo     === "function"){
+            const s = p.getPlayerState();
+            if (s === 1 || s === 3) p.pauseVideo();
+          }
+        }catch(e){}
       });
     };
+  }
 
-    if (!window.YT || !window.YT.Player){
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.head.appendChild(tag);
-    } else {
-      window.onYouTubeIframeAPIReady();
-    }
-  })();
+  function onPlayerStateChange(event){
+    if (event.data === 1) window.pauseAllYTIframes(event.target);
+  }
+
+  // Inicializa players en iframes ya presentes
+  function initYTPlayers(){
+    if (!(window.YT && window.YT.Player)) return;
+
+    document.querySelectorAll('iframe[src*="youtube"]').forEach(iframe=>{
+      if (iframe.dataset.ytInit) return;
+      iframe.dataset.ytInit = "1";
+
+      // Asegurar enablejsapi=1
+      let src = iframe.src || "";
+      if (src && !src.includes("enablejsapi=1")){
+        src += (src.includes("?") ? "&" : "?") + "enablejsapi=1";
+        iframe.src = src;
+      }
+
+      try{
+        const player = new YT.Player(iframe, {
+          events:{ onStateChange:onPlayerStateChange }
+        });
+        window.exPlayers.push(player);
+      }catch(e){}
+    });
+  }
+
+  // Hook oficial: cuando carga la API, inicializa
+  const prevOnReady = window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady = function(){
+    if (typeof prevOnReady === "function") prevOnReady();
+    initYTPlayers();
+  };
+
+  // Cargar API UNA vez, SOLO tras interacción
+  function loadYTApiOnce(){
+    if (window.__YT_API_LOADING__ || (window.YT && window.YT.Player)) return;
+    window.__YT_API_LOADING__ = true;
+
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  }
+
+  // Disparadores: primer gesto del usuario
+  document.addEventListener("pointerdown", loadYTApiOnce, { once:true, passive:true });
+  document.addEventListener("keydown", loadYTApiOnce, { once:true });
+
+  // (Opcional) si quieres que se cargue cuando el carrusel entre en viewport:
+  // const firstReels = document.querySelector('.carousel[id^="carouselReels"]');
+  // if (firstReels && "IntersectionObserver" in window) {
+  //   const io = new IntersectionObserver((entries)=>{
+  //     if (entries.some(e=>e.isIntersecting)) { loadYTApiOnce(); io.disconnect(); }
+  //   }, { rootMargin: "200px" });
+  //   io.observe(firstReels);
+  // }
+})();
+
 
   // =========================================================
   // 9) Carrusel de REELS (título 1-línea + ocultar flechas si no aplica)
