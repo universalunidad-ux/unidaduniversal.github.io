@@ -788,56 +788,53 @@ card.addEventListener("click",e=>{
 
 /* =========================
    Servicios: pager 2x2 (mobile)
-   - Requiere: #servicesCarousel, .svc-page, #servicesDots
+   - Requiere: #servicesCarousel.cards-services.is-carousel
+   - Páginas: .svc-page
+   - Dots: #servicesDots.svc-dots
 ========================= */
 (function servicesPager(){
   const root = document.getElementById("servicesCarousel");
   const dotsWrap = document.getElementById("servicesDots");
   if (!root || !dotsWrap) return;
 
-  const pages = () => Array.from(root.querySelectorAll(".svc-page"));
-  const getPageW = () => Math.max(1, root.getBoundingClientRect().width);
+  // Solo aplica si está en modo carrusel
+  if (!root.classList.contains("is-carousel")) { dotsWrap.innerHTML = ""; return; }
 
-  const rebuild = () => {
-    const ps = pages();
-    if (ps.length <= 1) { dotsWrap.innerHTML = ""; return; }
+  const pages = Array.from(root.querySelectorAll(".svc-page"));
+  if (pages.length <= 1) { dotsWrap.innerHTML = ""; return; }
 
-    dotsWrap.innerHTML = "";
-    const dots = ps.map((_, i) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "dot" + (i === 0 ? " active" : "");
-      b.setAttribute("aria-label", `Ir a página ${i + 1} de servicios`);
-      b.addEventListener("click", () => {
-        root.scrollTo({ left: getPageW() * i, behavior: "smooth" });
-      });
-      dotsWrap.appendChild(b);
-      return b;
+  dotsWrap.innerHTML = "";
+  const dots = pages.map((_, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "dot" + (i === 0 ? " active" : "");
+    b.setAttribute("aria-label", `Ir a página ${i + 1} de servicios`);
+    b.addEventListener("click", () => {
+      const w = Math.max(1, root.clientWidth);
+      root.scrollTo({ left: w * i, behavior: "smooth" });
     });
+    dotsWrap.appendChild(b);
+    return b;
+  });
 
-    const setActive = (i) => dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
-
-    let raf = 0;
-    const onScroll = () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const w = getPageW();
-        const i = Math.round((root.scrollLeft || 0) / w);
-        setActive(Math.max(0, Math.min(dots.length - 1, i)));
-      });
-    };
-
-    root.removeEventListener("scroll", root.__svcScrollHandler || (()=>{}));
-    root.__svcScrollHandler = onScroll;
-    root.addEventListener("scroll", onScroll, { passive: true });
-
-    // Sync inicial
-    onScroll();
-
-    // Resize/orientación
-    window.addEventListener("resize", () => { onScroll(); }, { passive:true });
+  const setActive = (i) => {
+    dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
   };
 
-  rebuild();
-})();
+  let raf = 0;
+  const sync = () => {
+    const w = Math.max(1, root.clientWidth);
+    const i = Math.round(root.scrollLeft / w);
+    setActive(Math.max(0, Math.min(pages.length - 1, i)));
+  };
 
+  root.addEventListener("scroll", () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(sync);
+  }, { passive: true });
+
+  window.addEventListener("resize", () => { raf = 0; sync(); });
+
+  // Estado inicial
+  sync();
+})();
