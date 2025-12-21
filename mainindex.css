@@ -1,0 +1,534 @@
+/* =========================================================
+  Expiriti - mainindex.css (HOME ONLY) — v2025.12.20-1
+  - Diseñado para usarse ENCIMA de mainservicios.css
+  - NO incluye estilos de header (.gh) ni nav antiguo
+  - Home: hero, hero-gallery, productos tabs, reels-home, videos-grid,
+          sectores, servicios home, promociones, FAQ, contacto
+========================================================= */
+
+/* =========================
+   0) Ajustes globales HOME
+========================= */
+:root{
+  --home-gap: var(--gap,14px);
+}
+
+/* Evita “cortes” por overflow en cards del home */
+#main-content .card{overflow:visible}
+
+/* Secciones: respiración consistente en home */
+#main-content section{padding:26px 0;border-top:1px solid rgba(17,24,39,.15)}
+@media(max-width:768px){
+  #main-content section{padding:20px 0}
+}
+
+/* =========================
+   1) HERO (Home)
+========================= */
+.hero.section-full{padding:22px 0 0;border-top:0}
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: var(--home-gap);
+  align-items:start;
+}
+.hero-grid.v-center{align-items:center}
+
+.kicker{
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  font-weight:800;
+  font-size:12px;
+  color:#cfe3ff;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.25);
+  background:rgba(15,24,38,.55);
+  margin-bottom:10px;
+}
+
+.gradient-word{
+  background:linear-gradient(90deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero .badges{margin-top:8px}
+.hero .btn.hero-btn{padding:10px 14px}
+
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr}
+}
+
+/* =========================
+   2) HERO GALLERY (card derecha)
+========================= */
+.hero-gallery-card .hero-gallery-header{
+  padding:14px 14px 0;
+}
+.hero-gallery-card .hero-gallery-header h2{
+  margin:0 0 10px;
+  font-size:16px;
+  color:#dbeafe;
+}
+
+.hero-gallery-groups{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  padding:0 14px 8px;
+}
+
+.hero-gallery-groups .pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.28);
+  background:rgba(15,24,38,.65);
+  color:#cfe3ff;
+  font-weight:800;
+  font-size:12px;
+  cursor:pointer;
+  transition:transform .12s ease,filter .15s ease,box-shadow .15s ease;
+}
+.hero-gallery-groups .pill:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.hero-gallery-groups .pill.active{
+  background:linear-gradient(145deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));
+  color:#08121b;
+  border-color:transparent;
+}
+
+.hero-gallery-title{
+  padding:0 14px 10px;
+  margin:0;
+  font-size:14px;
+  font-weight:900;
+  color:#bfe8ff;
+  min-height:20px;
+}
+
+.hero-carousel{min-height:300px}
+.hero-carousel .carousel-track{height:auto}
+.hero-carousel .carousel-slide{padding:0 52px;box-sizing:border-box}
+@media(max-width:768px){
+  .hero-carousel .carousel-slide{padding:0 12px}
+}
+
+.hero-gallery-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  padding:12px 14px 14px;
+}
+@media(max-width:520px){
+  .hero-gallery-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+.hero-gallery-tabs .tab{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 10px;
+  border-radius:14px;
+  border:1px solid rgba(148,163,184,.25);
+  background:rgba(15,24,38,.55);
+  color:#e8eef6;
+  font-weight:800;
+  font-size:12px;
+  cursor:pointer;
+  transition:transform .12s ease,border-color .15s ease,box-shadow .15s ease,filter .15s ease;
+}
+.hero-gallery-tabs .tab:hover{
+  transform:translateY(-1px);
+  border-color:rgba(96,165,250,.45);
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+  filter:brightness(1.03);
+}
+.hero-gallery-tabs .tab.active{
+  border-color:rgba(45,212,191,.55);
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+  background:radial-gradient(circle at top left,rgba(96,165,250,.16),rgba(15,24,38,.65));
+}
+
+/* =========================
+   3) PRODUCTOS (tabs + panels)
+========================= */
+#productos-con .productos-inline-bar{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:14px;
+}
+#productos-con .prod-tabs-shell{display:grid;gap:8px}
+#productos-con .prod-title{
+  margin:0;
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:.2px;
+}
+#productos-con .prod-title span{
+  margin-left:6px;
+  background:linear-gradient(90deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+#productos-con .prod-tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+#productos-con .tab{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.28);
+  background:rgba(15,24,38,.55);
+  color:#cfe3ff;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+  transition:transform .12s ease,filter .15s ease,box-shadow .15s ease,border-color .15s ease;
+}
+#productos-con .tab:hover{transform:translateY(-1px);filter:brightness(1.05)}
+#productos-con .tab.active{
+  background:linear-gradient(145deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));
+  color:#08121b;
+  border-color:transparent;
+}
+
+#productos-con .prod-cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.28);
+  background:rgba(15,24,38,.55);
+  color:#e8eef6;
+  font-weight:900;
+  cursor:pointer;
+  transition:transform .12s ease,filter .15s ease,box-shadow .15s ease,border-color .15s ease;
+}
+#productos-con .prod-cta:hover{
+  transform:translateY(-1px);
+  border-color:rgba(96,165,250,.45);
+  box-shadow:0 14px 30px rgba(0,0,0,.38);
+  filter:brightness(1.05);
+}
+
+.panel-productos.hidden{display:none!important}
+
+/* Cards de productos (home) */
+.cards-products{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+@media(max-width:980px){
+  .cards-products{grid-template-columns:1fr}
+}
+.product-card{cursor:pointer}
+.product-card .logo-sistema{
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  margin:4px 0 10px;
+  border-radius:12px;
+  background:rgba(2,6,23,.25);
+  border:1px solid rgba(148,163,184,.18);
+  padding:8px;
+}
+.product-card .foot{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:10px;
+}
+.product-card .hoverMore .chip{
+  opacity:.9;
+  transition:opacity .15s ease,transform .12s ease;
+}
+.product-card:hover .hoverMore .chip{opacity:1;transform:translateY(-1px)}
+
+/* =========================
+   4) REELS HOME (por sistema)
+========================= */
+.reels-home-card .body{padding:14px}
+.reels-home-card .hint{margin:0 0 10px}
+
+.reel-sys-tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.reel-sys-tabs .reel-tab{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(148,163,184,.22);
+  background:rgba(15,24,38,.55);
+  color:#e8eef6;
+  cursor:pointer;
+  font-weight:900;
+  font-size:12px;
+  transition:transform .12s ease,box-shadow .15s ease,border-color .15s ease,filter .15s ease;
+}
+.reel-sys-tabs .reel-tab img{
+  width:34px;height:34px;
+  border-radius:10px;
+  object-fit:cover;
+  background:rgba(2,6,23,.25);
+  border:1px solid rgba(148,163,184,.18);
+}
+.reel-sys-tabs .reel-tab:hover{
+  transform:translateY(-1px);
+  border-color:rgba(96,165,250,.45);
+  box-shadow:0 12px 26px rgba(0,0,0,.35);
+  filter:brightness(1.04);
+}
+.reel-sys-tabs .reel-tab.active{
+  border-color:rgba(45,212,191,.55);
+  background:radial-gradient(circle at top left,rgba(45,212,191,.12),rgba(15,24,38,.65));
+}
+
+/* Reels: deja solo visible el título activo (si tu core no lo hace ya) */
+.reels-home-card .reel-title{display:none!important}
+.reels-home-card .reel-title.active{display:block!important}
+
+/* Carrusel reels: no fuerces altura, centra */
+.reels-home-card .carousel{min-height:auto}
+.reels-home-card .carousel-track{height:auto}
+.reels-home-card .carousel-slide{height:auto;align-items:flex-start;justify-content:center;padding:0 44px;box-sizing:border-box}
+@media(max-width:768px){
+  .reels-home-card .carousel-slide{padding:0 12px}
+}
+
+/* Asegura que el embed 9:16 no quede “cortado” */
+.reels-home-card .reel-embed{
+  width:100%!important;
+  max-width:520px!important;
+  margin:0 auto!important;
+}
+
+/* =========================
+   5) VIDEOS (Home)
+   Tu HTML actual usa: #videos .videos-grid + .yt-lite
+========================= */
+#videos .section-title{margin-bottom:10px}
+#videos .videos-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+@media(max-width:900px){
+  #videos .videos-grid{grid-template-columns:1fr}
+}
+
+/* Si tu “yt-lite” ya trae su propio aspect-ratio, no lo pisamos agresivo.
+   Solo lo envolvemos visualmente como card. */
+#videos .yt-lite{
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(148,163,184,.22);
+  background:rgba(2,6,23,.35);
+  min-height:220px;
+}
+@media(max-width:520px){
+  #videos .yt-lite{min-height:200px}
+}
+
+/* =========================
+   6) SECTORES / SERVICIOS (home)
+========================= */
+#sectores .card{border-radius:16px}
+#sectores .features{
+  margin:10px 0 0;
+  padding-left:18px;
+  color:#cfe3ff;
+}
+#sectores .features li{margin:6px 0;color:#bcd0ea}
+
+#servicios .cards-services{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+@media(max-width:980px){
+  #servicios .cards-services{grid-template-columns:1fr}
+}
+
+/* Featured “Pólizas” */
+.svc-featured{
+  border-color:rgba(45,212,191,.45)!important;
+  background:radial-gradient(circle at top left,rgba(45,212,191,.10),rgba(15,24,38,.68))!important;
+}
+.svc-icon{vertical-align:middle;margin-right:8px}
+
+/* =========================
+   7) PROMOCIONES (home)
+========================= */
+#promociones .promo-filters{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:10px 0 14px;
+}
+#promociones .promo-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:9px 12px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.28);
+  background:rgba(15,24,38,.55);
+  color:#cfe3ff;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+  transition:transform .12s ease,filter .15s ease,box-shadow .15s ease,border-color .15s ease;
+}
+#promociones .promo-btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+#promociones .promo-btn.active{
+  background:linear-gradient(145deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));
+  color:#08121b;
+  border-color:transparent;
+}
+
+#promociones .promo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+@media(max-width:980px){
+  #promociones .promo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  #promociones .promo-grid{grid-template-columns:1fr}
+}
+
+#promociones .promo-grid > img,
+#promociones .promo-item img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:16px;
+  border:1px solid rgba(148,163,184,.22);
+  background:rgba(2,6,23,.25);
+}
+
+/* Promo con overlay badge (si decides dejarlo) */
+#promociones .promo-item{
+  position:relative;
+  margin:0;
+}
+#promociones .promo-badge{
+  position:absolute;
+  top:10px;left:10px;
+  z-index:2;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:900;
+  font-size:12px;
+  color:#08121b;
+  background:linear-gradient(145deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));
+  border:1px solid rgba(255,255,255,.12);
+}
+
+/* =========================
+   8) FAQ (home)
+========================= */
+#faq .faq-wrap{display:grid;gap:10px}
+#faq .faq-item{
+  border:1px solid rgba(148,163,184,.22);
+  border-radius:14px;
+  background:rgba(15,24,38,.55);
+  overflow:hidden;
+}
+#faq .faq-item>summary{
+  list-style:none;
+  cursor:pointer;
+  padding:12px 14px;
+  font-weight:900;
+  color:#e8eef6;
+}
+#faq .faq-item[open]>summary{
+  border-bottom:1px solid rgba(148,163,184,.22);
+  background:rgba(2,6,23,.25);
+}
+#faq .faq-item p{
+  padding:12px 14px;
+  margin:0;
+  color:#cfe3ff;
+}
+
+/* =========================
+   9) CONTACTO (home)
+========================= */
+#contacto .badges{margin-top:10px}
+#contacto .badge a{font-weight:800}
+
+/* Inputs del form (solo home) */
+#contactForm label{
+  display:block;
+  margin:10px 0 6px;
+  font-weight:800;
+  color:#dbeafe;
+  font-size:13px;
+}
+#contactForm input,
+#contactForm select,
+#contactForm textarea{
+  width:100%;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,.22);
+  background:rgba(2,6,23,.25);
+  color:#e8eef6;
+  outline:none;
+}
+#contactForm input:focus,
+#contactForm select:focus,
+#contactForm textarea:focus{
+  border-color:rgba(45,212,191,.55);
+  box-shadow:0 0 0 2px rgba(45,212,191,.12);
+}
+
+/* =========================
+   10) Ajustes móviles finos
+========================= */
+@media(max-width:768px){
+  /* Evita que flechas tapen embeds */
+  .hero-carousel .arrowCircle,
+  .reels-home-card .arrowCircle{
+    width:40px;height:40px;
+  }
+  .hero-carousel .arrowCircle.prev,
+  .reels-home-card .arrowCircle.prev{left:6px}
+  .hero-carousel .arrowCircle.next,
+  .reels-home-card .arrowCircle.next{right:6px}
+
+  /* Tabs compactos */
+  #productos-con .prod-tabs{gap:8px}
+  #productos-con .tab{padding:8px 10px}
+  .reel-sys-tabs .reel-tab{padding:9px 10px}
+}
+
+/* =========================
+   11) Anti-overflow (solo home)
+========================= */
+#main-content .container{min-width:0}
+#main-content .grid-2 > *,
+#main-content .grid-3 > *{min-width:0}
