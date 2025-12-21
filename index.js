@@ -399,9 +399,6 @@
 
     servicios: { label: "Servicios", defaultSys: "polizas", systems: {} }
   };
-const g0 = HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
-buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
-buildHeroGallerySlides(HERO_GALLERY.defaultGroup, g0?.defaultSys || "nominas");
 
 
    const HERO_GALLERY = {
