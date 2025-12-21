@@ -194,3 +194,213 @@ label{display:block;margin:10px 0 6px;color:rgba(232,238,246,.88);font-weight:90
 .product-card h3,.product-card p,.product-card .body{overflow:hidden!important;overflow-wrap:anywhere!important;word-break:break-word!important;hyphens:auto!important}
 .product-card h3{display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important}
 .product-card p.body{display:-webkit-box!important;-webkit-line-clamp:4!important;-webkit-box-orient:vertical!important}
+
+
+/* =========================================================
+   PATCH UX MOBILE — HERO arrows + chips scroll + grids + reels + promos
+   (Pegar al final del CSS)
+========================================================= */
+
+/* ---------- 1) CHIPS / TABS en 1 línea con scroll horizontal ---------- */
+/* Usa esto para: Hero categorías, Sistemas categorías, Promos filtros */
+.hscroll-tabs{
+  display:flex;
+  flex-wrap:nowrap;              /* NO brincar a segunda línea */
+  gap:10px;
+  overflow-x:auto;               /* scroll horizontal */
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;  /* “snap” suave */
+  padding:8px 6px;
+  margin:0;
+  scrollbar-width:none;          /* Firefox hide */
+}
+.hscroll-tabs::-webkit-scrollbar{height:0}
+
+/* Cada chip/botón dentro */
+.hscroll-tabs > *{
+  flex:0 0 auto;                 /* que no se encoja raro */
+  scroll-snap-align:start;
+  white-space:nowrap;            /* texto 1 línea */
+}
+
+/* Fade a los lados (indica que se puede deslizar) */
+.hscroll-fade{
+  -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
+  mask-image:linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
+}
+
+/* Tip: sin tocar HTML, intenta “enganchar” tus contenedores existentes */
+.hero .tabs, .hero .chips, .hero .segmented,
+#heroTabs, #heroCategories,
+#sistemasTabs, .sistemas-tabs,
+#promoTabs, .promo-tabs{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:10px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+  padding:8px 6px;
+  scrollbar-width:none;
+}
+.hero .tabs::-webkit-scrollbar,
+.hero .chips::-webkit-scrollbar,
+.hero .segmented::-webkit-scrollbar,
+#heroTabs::-webkit-scrollbar,#heroCategories::-webkit-scrollbar,
+#sistemasTabs::-webkit-scrollbar,.sistemas-tabs::-webkit-scrollbar,
+#promoTabs::-webkit-scrollbar,.promo-tabs::-webkit-scrollbar{height:0}
+
+.hero .tabs > *, .hero .chips > *, .hero .segmented > *,
+#heroTabs > *, #heroCategories > *,
+#sistemasTabs > *, .sistemas-tabs > *,
+#promoTabs > *, .promo-tabs > *{
+  flex:0 0 auto;
+  scroll-snap-align:start;
+  white-space:nowrap;
+}
+
+/* ---------- 2) Flechas VISIBLES en HERO carrusel ---------- */
+/* Asumo estructura similar a: .carousel + .arrowCircle.prev/.next */
+.hero .carousel .arrowCircle,
+#heroCarousel .arrowCircle{
+  display:grid !important;       /* forzar visible */
+  place-items:center;
+  opacity:1 !important;
+  pointer-events:auto;
+}
+
+/* Tamaño y posición friendly */
+.hero .carousel .arrowCircle,
+#heroCarousel .arrowCircle{
+  width:42px;height:42px;
+  border-radius:999px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(10,15,25,.55);
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:5;
+}
+.hero .carousel .arrowCircle.prev,
+#heroCarousel .arrowCircle.prev{left:10px}
+.hero .carousel .arrowCircle.next,
+#heroCarousel .arrowCircle.next{right:10px}
+
+/* Zona de “sombra” para que se vean sobre la imagen */
+.hero .carousel:before,
+#heroCarousel:before{
+  content:"";
+  position:absolute;inset:0;
+  pointer-events:none;
+  background:linear-gradient(90deg, rgba(0,0,0,.38), transparent 22%, transparent 78%, rgba(0,0,0,.38));
+  z-index:1;
+}
+.hero .carousel .arrowCircle{z-index:6}
+
+/* ---------- 3) Sistemas: cards 2x2 con aire + botones menos apretados ---------- */
+.systems-grid, .sys-grid, .cards-grid, .grid-2x2{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:12px;
+}
+
+/* Card padding un poco más generoso */
+.system-card, .sys-card, .product-card{
+  padding:14px;
+}
+
+/* Texto: evita cortes raros */
+.system-card p, .sys-card p, .product-card p{
+  line-height:1.35;
+  hyphens:auto;
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+/* Botonera: en pantallas muy chicas, apila WhatsApp / Ver más */
+.card-actions, .sys-actions, .cta-row{
+  display:flex;
+  gap:10px;
+}
+@media (max-width:420px){
+  .card-actions, .sys-actions, .cta-row{
+    flex-direction:column;
+  }
+  .card-actions > *, .sys-actions > *, .cta-row > *{
+    width:100%;
+  }
+}
+
+/* Si tus botones tienen ancho fijo o padding enorme, lo recortamos un poco */
+.btn, .button, .pill-btn, .cta, .whats, .vermas{
+  padding:10px 12px;
+  border-radius:999px;
+}
+
+/* ---------- 4) Reels/Videos: iframe debe LLENAR wrapper + tamaño consistente ---------- */
+.reel, .reel-wrap, .video-wrap, .yt-wrap{
+  position:relative;
+  width:100%;
+  border-radius:14px;
+  overflow:hidden;
+  background:rgba(15,22,34,.85);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+/* Reels verticales: 9:16 */
+.reel, .reel-wrap{
+  aspect-ratio:9 / 16;
+  min-height:340px;              /* evita “mini” */
+}
+
+/* Videos horizontales: 16:9 (si aplica) */
+.video-wrap, .yt-wrap{
+  aspect-ratio:16 / 9;
+  min-height:220px;
+}
+
+.reel iframe, .reel-wrap iframe, .video-wrap iframe, .yt-wrap iframe{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  border:0;
+}
+
+/* ---------- 5) Promos: imágenes consistentes (no estiradas) ---------- */
+.promo-card, .promo-item, .promo-slide{
+  border-radius:16px;
+  overflow:hidden;
+  background:rgba(15,22,34,.85);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+/* Contenedor de imagen con ratio consistente (ajústalo si quieres más alto) */
+.promo-media{
+  position:relative;
+  width:100%;
+  aspect-ratio:16 / 9;
+  background:#0b1220;
+}
+.promo-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;               /* clave para que no se deformen */
+  display:block;
+}
+
+/* Si tus promos vienen como <img class="promo-img"> sin wrapper */
+.promo-img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:16px;
+  object-fit:cover;
+}
+
+/* ---------- 6) Dots del carrusel (si quedan muy abajo o raros) ---------- */
+.carousel-nav{display:flex;gap:8px;justify-content:center;align-items:center;padding:10px 0}
+.carousel-nav .dot{width:10px;height:10px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:transparent}
+.carousel-nav .dot.active{background:rgba(45,212,191,.9);border-color:transparent}
