@@ -619,7 +619,6 @@
   </div>
 </aside>
 </header>
-
 <script>
 (function () {
   "use strict";
@@ -627,33 +626,26 @@
   window.__EXPIRITI_GH__ = true;
   const Q  = (s, ctx=document) => ctx.querySelector(s);
 
-  // --- Scroll Header Logic (NUEVO) ---
+  // --- Scroll Header Logic ---
   const initScrollHeader = () => {
     let lastScrollY = window.scrollY;
     const header = Q('#gh-header');
     
     const handleScroll = () => {
-      // Si el menú móvil está abierto, NO esconder el header
       if (document.documentElement.classList.contains("gh-open")) return;
-      
       const currentScrollY = window.scrollY;
       
-      // Umbral mínimo de scroll para activar (50px)
       if (currentScrollY > 50) {
         if (currentScrollY > lastScrollY) {
-           // Bajando -> Esconder
            header.classList.add('is-hidden');
         } else {
-           // Subiendo -> Mostrar
            header.classList.remove('is-hidden');
         }
       } else {
-        // En el tope de la página -> Mostrar siempre
         header.classList.remove('is-hidden');
       }
       lastScrollY = currentScrollY;
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
   };
 
@@ -710,7 +702,6 @@
       if (prev) { prev.disabled = (idx === 0); prev.style.opacity = prev.disabled ? ".35" : "1"; }
       if (next) { next.disabled = (idx === pages.length - 1); next.style.opacity = next.disabled ? ".35" : "1"; }
     };
-  
     prev?.addEventListener("click", (e) => { e.preventDefault(); goTo(pageIndexFromScroll() - 1); });
     next?.addEventListener("click", (e) => { e.preventDefault(); goTo(pageIndexFromScroll() + 1); });
     dots.forEach((d, i) => d.addEventListener("click", (e) => { e.preventDefault(); goTo(i); }));
@@ -719,32 +710,26 @@
     sync();
   };
 
-// 3. Path / Attributes Fixer (CORREGIDO)
+  // 3. Path / Attributes Fixer (CORREGIDO PARA MAYÚSCULAS/MINÚSCULAS)
   const initPaths = () => {
-     // 1. Obtenemos el path y lo convertimos a MAYÚSCULAS para comparar sin errores
+     // Convertimos el path actual a MAYÚSCULAS para comparar de forma segura
      const currentPath = window.location.pathname.toUpperCase();
      
-     // 2. Detectamos si estamos en una subcarpeta (buscando en mayúsculas)
+     // Buscamos si estamos en subcarpetas ignorando si el navegador usa minúsculas
      const isSubDir = currentPath.includes('/SISTEMAS/') || currentPath.includes('/SERVICIOS/');
-     
-     // 3. Definimos el prefijo: si es subdirectorio, subimos un nivel (../), si no, nada ('')
      const pathPrefix = isSubDir ? '../' : '';
 
      const elements = document.querySelectorAll('.js-abs-href, .js-abs-src');
-     
      elements.forEach(el => {
-        // --- Corrección de Links (HREF) ---
+        // --- Corrección de Links ---
         if(el.dataset.href && !el.getAttribute('href')) {
            let target = el.dataset.href;
-           
            if(isSubDir) {
-               // Si el link apunta a index, IMG, o a las mismas carpetas SISTEMAS/SERVICIOS
-               // le agregamos el ../ al principio
+               // Ajustar rutas relativas si estamos en subcarpeta
                if(target.startsWith('index.html') || target.startsWith('IMG') || target.startsWith('SISTEMAS') || target.startsWith('SERVICIOS')) {
                    target = pathPrefix + target;
                }
-               // Casos especiales: Anclas (#promociones) estando en subcarpeta
-               // Deben dirigir al home: ../index.html#promociones
+               // Enlaces ancla (#) van al home
                if(target.startsWith('#')) {
                    target = '../index.html' + target;
                }
@@ -752,22 +737,21 @@
            el.href = target;
         }
 
-        // --- Corrección de Imágenes (SRC) ---
+        // --- Corrección de Imágenes ---
         if(el.dataset.src) {
-            // Solo aplicamos lógica si el src actual está vacío, es data:image, o el navegador lo resolvió mal
+            // Solo actuar si no tiene src o está vacío o es data:image
             if (!el.src || el.src.includes('data:image') || el.getAttribute('src') === '') {
-                
-                // Si es subcarpeta y NO es una imagen base64 (SVG inline), agregamos ../
+                // Si es subcarpeta y NO es base64, agregamos ../
                 if(isSubDir && !el.dataset.src.includes('data:image')) {
                      el.src = pathPrefix + el.dataset.src;
                 } else {
-                     // Si estamos en inicio, se queda igual
                      el.src = el.dataset.src;
                 }
             }
         }
      });
   };
+
   // 4. Drawer (Main Logic)
   const toggleDrawer = (show) => {
     const drawer = Q("#gh-drawer");
@@ -783,7 +767,6 @@
       document.documentElement.classList.add("gh-open");
       drawer.setAttribute("aria-hidden", "false");
       burger.setAttribute("aria-expanded", "true");
-      // Bloquear scroll del body
       document.body.style.overflow = "hidden";
       initMobileSystems();
       initMobileServices();
@@ -791,7 +774,7 @@
       document.documentElement.classList.remove("gh-open");
       drawer.setAttribute("aria-hidden", "true");
       burger.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = ""; // Reactivar scroll body
+      document.body.style.overflow = ""; 
       window.setTimeout(() => {
         if (!document.documentElement.classList.contains("gh-open")) {
             dim.hidden = true;
@@ -824,7 +807,6 @@
   
   initPaths();
   toggleDrawer(false);
-  // Iniciar la lógica de scroll
   initScrollHeader();
 
   window.addEventListener("pageshow", (ev) => {
