@@ -19,8 +19,9 @@
 
 
   /* --- Base Header --- */
-  .gh {
-    position: sticky; top: 0; z-index: 9999;
+  .gh {  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--gh-height);
+  z-index: 9999;    
     backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
     background: var(--gh-bg); border-bottom: 1px solid var(--gh-border);
     transition: transform 0.4s cubic-bezier(0.215, 0.610, 0.355, 1.000); /* Suavidad al esconder/mostrar */
@@ -709,6 +710,7 @@
       if (prev) { prev.disabled = (idx === 0); prev.style.opacity = prev.disabled ? ".35" : "1"; }
       if (next) { next.disabled = (idx === pages.length - 1); next.style.opacity = next.disabled ? ".35" : "1"; }
     };
+  
     prev?.addEventListener("click", (e) => { e.preventDefault(); goTo(pageIndexFromScroll() - 1); });
     next?.addEventListener("click", (e) => { e.preventDefault(); goTo(pageIndexFromScroll() + 1); });
     dots.forEach((d, i) => d.addEventListener("click", (e) => { e.preventDefault(); goTo(i); }));
