@@ -302,3 +302,112 @@ label{display:block;margin:10px 0 6px;color:rgba(232,238,246,.88);font-weight:90
 @media (min-width:980px){
   .promo-grid>img,.promo-item img{height:clamp(300px,22vw,520px)!important}
 }
+
+/* =========================================================
+   PATCH: Safe Area REAL (iOS) + márgenes consistentes
+========================================================= */
+:root{
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* Evita que algo “pegue” al borde físico */
+body{
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
+
+/* Container: padding lateral = max(16px, safe-area) */
+.container{
+  padding-left: max(16px, var(--safe-left));
+  padding-right: max(16px, var(--safe-right));
+}
+
+/* Tu regla móvil que pisa el container en hero: AJUSTE */
+@media (max-width:980px){
+  .hero .container{
+    padding-left: max(14px, var(--safe-left));
+    padding-right: max(14px, var(--safe-right));
+  }
+}
+
+/* =========================================================
+   PATCH: Tabs móviles “nativos” (scroll + gestos)
+========================================================= */
+.hero-gallery-groups,
+.prod-tabs,
+.promo-filters{
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+  scroll-padding-left: 12px;
+  scroll-padding-right: 12px;
+}
+
+/* Botones: evita que se “apachurren” y queden sin overflow real */
+.hero-gallery-groups > *,
+.prod-tabs > *,
+.promo-filters > *{
+  flex: 0 0 auto !important;
+}
+
+/* Importante: si algún padre tiene overflow hidden, no bloquees los tabs */
+.hero-gallery-card,
+.productos-inline-bar,
+.prod-tabs-shell{
+  overflow: visible;
+}
+
+/* =========================================================
+   PATCH: Reels 9:16 reales (thumb + iframe full)
+========================================================= */
+.reel-embed{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 9 / 16;   /* CLAVE para reels */
+  border-radius: 14px;
+  overflow: hidden;
+  background: #050812;
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+/* El botón thumb y el iframe ocupan TODO */
+.reel-embed iframe,
+.reel-embed .yt-thumb{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Imagen del thumb “cover” para evitar barras */
+.reel-embed .yt-thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* CLAVE */
+  object-position: center;
+  display: block;
+}
+
+/* Asegura que el slide también crezca */
+#carouselReels-contable .carousel-slide,
+#carouselReels-comercial .carousel-slide,
+#carouselReels-nube .carousel-slide,
+#carouselReels-productividad .carousel-slide,
+#carouselReels-servicios .carousel-slide{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* Ajuste de altura del carrusel: que responda mejor en móvil */
+#carouselReels-contable .carousel-track,
+#carouselReels-comercial .carousel-track,
+#carouselReels-nube .carousel-track,
+#carouselReels-productividad .carousel-track,
+#carouselReels-servicios .carousel-track{
+  height: min(74svh, 560px);
+  max-height: calc(100svh - var(--gh-height) - 220px - var(--safe-bottom));
+}
+
