@@ -29,13 +29,19 @@ const inSubDir=/\/(SISTEMAS|SERVICIOS|PDFS)\//i.test(location.pathname);
 const depth=inSubDir?"../":"./";
 
 
-  function prefix(path){
-    if(!path) return path;
-    if(/^(https?:)?\/\//i.test(path)) return path;
-    if(/^(mailto:|tel:|data:)/i.test(path)) return path;
-    if(path.startsWith("#")) return path;
-    return (isGh ? (repoBase+"/"+path) : (depth+path)).replace(/\/+/g,"/");
-  }
+function prefix(path){
+  if(!path) return path;
+  if(/^(https?:)?\/\//i.test(path)) return path;     // http(s) o //cdn...
+  if(/^(mailto:|tel:|data:)/i.test(path)) return path;
+  if(path.startsWith("#")) return path;
+
+  const base = isGh ? (repoBase + "/") : depth;      // repoBase ya trae /<repo>
+  const joined = (base + path).replace(/\\/g,"/");   // por si acaso en Windows
+
+  // Normaliza múltiple "/" SOLO después de "http(s)://"
+  return joined.replace(/([^:]\/)\/+/g, "$1");
+}
+
 
   function normalizeRoutes(root=document){
     /* imgs con data-src -> src correcto */
@@ -296,9 +302,11 @@ card.addEventListener("click",e=>{
         track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
       });
 
-      nav.appendChild(dot);
-    });
-  }
+nav.appendChild(dot);
+});
+carousel && carousel.__resetHeroSync?.(); // reset consistente al reconstruir slides
+}
+
 
   function buildHeroSystemTabs(groupKey){
     const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
@@ -327,93 +335,112 @@ card.addEventListener("click",e=>{
     });
   }
 
-  function initHeroGallery(){
-    const groupNav=HERO_GALLERY.groupNav;
-    const carousel=HERO_GALLERY.carousel;
-    if(!groupNav||!carousel) return;
 
-    groupNav.innerHTML="";
+            function initHeroGallery(){
+  const groupNav = HERO_GALLERY.groupNav;
+  const carousel = HERO_GALLERY.carousel;
+  if(!groupNav || !carousel) return;
 
-    Object.entries(HERO_GALLERY_DATA).forEach(([groupKey,group])=>{
-      if(groupKey==="servicios") return;
+  groupNav.innerHTML = "";
 
-      const btn=document.createElement("button");
-      btn.type="button";
-      btn.className="hero-group-tab"+(groupKey===HERO_GALLERY.defaultGroup?" active":"");
-      btn.dataset.group=groupKey;
-      btn.textContent=group.label;
+  Object.entries(HERO_GALLERY_DATA).forEach(([groupKey, group])=>{
+    if(groupKey==="servicios") return;
 
-      btn.addEventListener("click",()=>{
-        QA(".hero-group-tab",groupNav).forEach(b=>b.classList.toggle("active",b===btn));
-        const cfg=HERO_GALLERY_DATA[groupKey];
-        buildHeroSystemTabs(groupKey);
-        buildHeroGallerySlides(groupKey,cfg.defaultSys);
-      });
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="hero-group-tab"+(groupKey===HERO_GALLERY.defaultGroup?" active":"");
+    btn.dataset.group=groupKey;
+    btn.textContent=group.label;
 
-      groupNav.appendChild(btn);
+    btn.addEventListener("click",()=>{
+      QA(".hero-group-tab",groupNav).forEach(b=>b.classList.toggle("active",b===btn));
+      const cfg=HERO_GALLERY_DATA[groupKey];
+      buildHeroSystemTabs(groupKey);
+      buildHeroGallerySlides(groupKey,cfg.defaultSys);
+      carousel.__resetHeroSync?.(); // reset consistente
     });
 
-    const track=carousel.querySelector(".carousel-track");
-    const prev=carousel.querySelector(".arrowCircle.prev");
-    const next=carousel.querySelector(".arrowCircle.next");
-    if(!track) return;
+    groupNav.appendChild(btn);
+  });
 
-    const slidesFor=()=>QA(".carousel-slide",track);
-    const goTo=(i)=>{
-      const slides=slidesFor(); if(!slides.length) return;
-      const max=slides.length-1;
-      const idx=Math.max(0,Math.min(max,i));
-      slides.forEach(s=>s.classList.remove("is-active"));
-      slides[idx].classList.add("is-active");
-      QA(".dot",carousel.querySelector(".carousel-nav")).forEach((d,k)=>d.classList.toggle("active",k===idx));
-      track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
-    };
+  const track = carousel.querySelector(".carousel-track");
+  const prev  = carousel.querySelector(".arrowCircle.prev");
+  const next  = carousel.querySelector(".arrowCircle.next");
+  if(!track) return;
 
-    prev?.addEventListener("click",()=>{
-      const i=slidesFor().findIndex(s=>s.classList.contains("is-active"));
-      goTo(i-1);
-    });
-    next?.addEventListener("click",()=>{
-      const i=slidesFor().findIndex(s=>s.classList.contains("is-active"));
-      goTo(i+1);
-    });
+  const slidesFor = ()=>QA(".carousel-slide", track);
 
-     
-/* Scroll sync (swipe/trackpad) -> actualiza dot/slide activo */
-if (carousel.dataset.scrollSync !== "1") {
-  carousel.dataset.scrollSync = "1";
-  let raf = 0, lastIdx = -1;
-
-  const syncFromScroll = () => {
-    raf = 0;
+  const getIdxFromScroll = ()=>{
     const slides = slidesFor();
     const len = slides.length;
-    if (!len) return;
-
+    if(!len) return 0;
     const w = track.clientWidth || 1;
-    const idx = Math.max(0, Math.min(len - 1, Math.round((track.scrollLeft || 0) / w)));
-    if (idx === lastIdx) return;
-    lastIdx = idx;
-
-    slides.forEach((s, k) => s.classList.toggle("is-active", k === idx));
-    const nav = carousel.querySelector(".carousel-nav");
-    QA(".dot", nav).forEach((d, k) => d.classList.toggle("active", k === idx));
+    return Math.max(0, Math.min(len-1, Math.round((track.scrollLeft||0)/w)));
   };
 
-  track.addEventListener("scroll", () => {
-    if (raf) cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(syncFromScroll);
-  }, { passive: true });
+  const goTo = (i, behavior="smooth")=>{
+    const slides = slidesFor();
+    if(!slides.length) return;
+    const max = slides.length - 1;
+    const idx = Math.max(0, Math.min(max, i));
 
-  window.addEventListener("resize", () => { lastIdx = -1; syncFromScroll(); });
+    slides.forEach(s=>s.classList.remove("is-active"));
+    slides[idx].classList.add("is-active");
+
+    const navEl = carousel.querySelector(".carousel-nav");
+    QA(".dot", navEl).forEach((d,k)=>d.classList.toggle("active",k===idx));
+
+    track.scrollTo({ left: track.clientWidth*idx, behavior });
+  };
+
+  // Flechas (solo 1 vez)
+  if(carousel.dataset.arrowsBound!=="1"){
+    carousel.dataset.arrowsBound="1";
+    prev?.addEventListener("click",()=>goTo(getIdxFromScroll()-1));
+    next?.addEventListener("click",()=>goTo(getIdxFromScroll()+1));
+  }
+
+  // Scroll sync (solo 1 vez) + expone reset
+  if (carousel.dataset.scrollSync !== "1") {
+    carousel.dataset.scrollSync = "1";
+    let raf = 0, lastIdx = -1;
+
+    const syncFromScroll = () => {
+      raf = 0;
+      const slides = slidesFor();
+      const len = slides.length;
+      if (!len) return;
+
+      const idx = getIdxFromScroll();
+      if (idx === lastIdx) return;
+      lastIdx = idx;
+
+      slides.forEach((s, k) => s.classList.toggle("is-active", k === idx));
+      const navEl = carousel.querySelector(".carousel-nav");
+      QA(".dot", navEl).forEach((d, k) => d.classList.toggle("active", k === idx));
+    };
+
+    track.addEventListener("scroll", () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(syncFromScroll);
+    }, { passive: true });
+
+    window.addEventListener("resize", () => { lastIdx = -1; syncFromScroll(); });
+
+    carousel.__resetHeroSync = () => {
+      lastIdx = -1;
+      track.scrollTo({ left: 0, behavior: "auto" });
+      syncFromScroll();
+    };
+  }
+
+  // Init default
+  const cfg = HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
+  buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
+  buildHeroGallerySlides(HERO_GALLERY.defaultGroup, cfg.defaultSys);
+  carousel.__resetHeroSync?.();
 }
 
-     
-
-    const cfg=HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
-    buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
-    buildHeroGallerySlides(HERO_GALLERY.defaultGroup,cfg.defaultSys);
-  }
 
   /* =========================================================
      8) REELS: DATA (TUS DATAS)
@@ -809,6 +836,7 @@ if (carousel.dataset.scrollSync !== "1") {
 
     initYTLiteVideos();
     initFAQ();
+    initServicesPager();
 
     const yearSpan=document.getElementById("gf-year");
     if(yearSpan) yearSpan.textContent=new Date().getFullYear();
@@ -825,19 +853,13 @@ if (carousel.dataset.scrollSync !== "1") {
    - Páginas: .svc-page
    - Dots: #servicesDots.svc-dots
 ========================= */
-(function servicesPager(){
+function initServicesPager(){
   const root = document.getElementById("servicesCarousel");
   const dotsWrap = document.getElementById("servicesDots");
   if (!root || !dotsWrap) return;
 
-  // ❌ No pager en desktop
-  if (window.matchMedia("(min-width: 980px)").matches) {
-    dotsWrap.innerHTML = "";
-    return;
-  }
-
-  // Solo aplica si está en modo carrusel
-  if (!root.classList.contains("is-carousel")) {
+  const isDesktop = window.matchMedia("(min-width: 980px)").matches;
+  if (isDesktop || !root.classList.contains("is-carousel")) {
     dotsWrap.innerHTML = "";
     return;
   }
@@ -859,9 +881,7 @@ if (carousel.dataset.scrollSync !== "1") {
     return b;
   });
 
-  const setActive = (i) => {
-    dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
-  };
+  const setActive = (i) => dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
 
   let raf = 0;
   const sync = () => {
@@ -870,16 +890,20 @@ if (carousel.dataset.scrollSync !== "1") {
     setActive(Math.max(0, Math.min(pages.length - 1, i)));
   };
 
-  root.addEventListener("scroll", () => {
-    if (raf) cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(sync);
-  }, { passive: true });
+  if(root.dataset.pagerBound!=="1"){
+    root.dataset.pagerBound="1";
+    root.addEventListener("scroll", () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(sync);
+    }, { passive: true });
+  }
 
-  window.addEventListener("resize", () => { raf = 0; sync(); });
-
-  // Estado inicial
   sync();
-})();
+}
+
+window.addEventListener("resize", initServicesPager);
+window.addEventListener("pageshow", initServicesPager);
+
 
 /* =========================================================
    PATCH UX — HScroll tabs wheel + optional hero arrows scroll
@@ -913,8 +937,9 @@ function bindScrollArrows(carouselSel){
 }
 
 /* Ajusta el selector a tu hero real si aplica */
-bindScrollArrows("#heroCarousel");
-bindScrollArrows(".hero .carousel");
+// bindScrollArrows("#heroCarousel");
+// bindScrollArrows(".hero .carousel");
+
 
 })();
 
