@@ -881,3 +881,41 @@ if (carousel.dataset.scrollSync !== "1") {
   sync();
 })();
 
+/* =========================================================
+   PATCH UX — HScroll tabs wheel + optional hero arrows scroll
+   (Pegar al final de tu JS)
+========================================================= */
+(()=>{"use strict";
+
+/* 1) Tabs horizontales: wheel => scroll horizontal */
+const hTabs=document.querySelectorAll(".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs");
+hTabs.forEach(el=>{
+  el.addEventListener("wheel",(e)=>{
+    if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+      el.scrollLeft+=e.deltaY;
+      e.preventDefault();
+    }
+  },{passive:false});
+});
+
+/* 2) (Opcional) Si tu carrusel es “scroll-snap” y quieres que flechas empujen 1 slide */
+function bindScrollArrows(carouselSel){
+  const root=document.querySelector(carouselSel);
+  if(!root) return;
+  const track=root.querySelector(".carousel-track")||root.querySelector(".track")||root;
+  const prev=root.querySelector(".arrowCircle.prev");
+  const next=root.querySelector(".arrowCircle.next");
+  if(!track||!prev||!next) return;
+
+  const step=()=>Math.max(280, Math.round(root.getBoundingClientRect().width*0.92));
+  prev.addEventListener("click",()=>track.scrollBy({left:-step(),behavior:"smooth"}));
+  next.addEventListener("click",()=>track.scrollBy({left: step(),behavior:"smooth"}));
+}
+
+/* Ajusta el selector a tu hero real si aplica */
+bindScrollArrows("#heroCarousel");
+bindScrollArrows(".hero .carousel");
+
+})();
+
+
