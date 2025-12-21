@@ -750,3 +750,104 @@ body>.arrowCircle{display:none!important}
 /* ========================= 18) DEBUG (opcional) ========================= */
 /* *{outline:1px solid rgba(255,0,0,.07)} */
 
+
+
+/* =========================================================
+   YT-LITE (Reels verticales) — Poster HD + iframe al click
+   - Reduce drásticamente FCP/LCP/TBT
+   - Mantiene calidad (poster maxresdefault cuando existe)
+========================================================= */
+(function(){
+  "use strict";
+
+  function pickBestPoster(videoId){
+    // maxresdefault no siempre existe; caemos a hqdefault si falla
+    const maxres = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+    const hq = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    return { maxres, hq };
+  }
+
+  function makePlayButton(){
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "yt-play";
+    b.setAttribute("aria-label","Reproducir video");
+    b.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 5v14l11-7z"></path>
+      </svg>
+    `;
+    return b;
+  }
+
+  function activateLite(el){
+    if (el.__yt_active) return;
+    el.__yt_active = true;
+
+    const id = el.getAttribute("data-yt");
+    if(!id) return;
+
+    const title = el.getAttribute("aria-label") || "Video";
+    const params = "rel=0&modestbranding=1&controls=1&fs=1&playsinline=1&enablejsapi=1";
+    const src = `https://www.youtube-nocookie.com/embed/${id}?${params}`;
+
+    // Limpia poster/botón
+    el.innerHTML = "";
+
+    const iframe = document.createElement("iframe");
+    iframe.src = src;
+    iframe.title = title;
+    iframe.loading = "lazy";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+
+    el.appendChild(iframe);
+  }
+
+  async function preloadPoster(url){
+    // Intento de precarga suave
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = url;
+    });
+  }
+
+  async function initYTLite(){
+    const nodes = Array.from(document.querySelectorAll(".yt-lite[data-yt]"));
+    if (!nodes.length) return;
+
+    for (const el of nodes){
+      const id = el.getAttribute("data-yt");
+      if(!id) continue;
+
+      const { maxres, hq } = pickBestPoster(id);
+
+      // Intentamos maxres primero; si falla, usamos hq
+      const ok = await preloadPoster(maxres);
+      const poster = ok ? maxres : hq;
+
+      el.style.setProperty("--yt-poster", `url("${poster}")`);
+
+      // Botón play
+      const play = makePlayButton();
+      play.addEventListener("click", () => activateLite(el), { passive:true });
+      el.appendChild(play);
+
+      // Activación al click en cualquier parte (opcional)
+      el.addEventListener("click", (e) => {
+        // Evita doble click si apretó el botón
+        if (e.target && e.target.closest && e.target.closest(".yt-play")) return;
+        activateLite(el);
+      }, { passive:true });
+    }
+  }
+
+  // Ejecuta cuando DOM esté listo
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initYTLite);
+  } else {
+    initYTLite();
+  }
+})();
