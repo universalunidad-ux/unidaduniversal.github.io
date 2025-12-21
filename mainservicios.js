@@ -33,73 +33,98 @@ const QA = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
     });
   })();
 
-  // =========================================================
-// 2) Carga de parciales (header/footer) + normalización rutas
-//    FIX: user-site en ambos hostnames + sin múltiples requests
 // =========================================================
-(async function loadPartials(){
-  const D = document;
+// PARTIALS + NORMALIZACIÓN (GH Project Pages + local)
+// - GH Project: https://universalunidad-ux.github.io/unidaduniversal.github.io/
+// - Local: rutas relativas por carpeta
+// =========================================================
+(function(){
+  "use strict";
 
-  const inSubDir = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
-  const rel = inSubDir ? "../" : "";
+  const D = document;
+  const Q  = (sel, ctx=D) => ctx.querySelector(sel);
+  const QA = (sel, ctx=D) => Array.from(ctx.querySelectorAll(sel));
 
   const isGh = location.hostname.endsWith("github.io");
-  const isUserSite =
-    isGh && (
-      location.hostname === "unidaduniversal.github.io" ||
-      location.hostname === "universalunidad-ux.github.io"
-    );
+  const firstSeg = location.pathname.split("/")[1] || "";
+  // En GH Project Pages: base="/unidaduniversal.github.io"
+  // En local: base=""
+  const base = (isGh && firstSeg) ? ("/" + firstSeg) : "";
 
-  // En user-site SIEMPRE es raíz ("/PARTIALS/...")
-  const headerURL = isUserSite ? "/PARTIALS/global-header.html" : (rel + "PARTIALS/global-header.html");
-  const footerURL = isUserSite ? "/PARTIALS/global-footer.html" : (rel + "PARTIALS/global-footer.html");
+  // Si estás dentro de subcarpeta (SISTEMAS/SERVICIOS) para local relativo
+  const inSub = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
+  const relLocal = inSub ? "../" : "";
 
+  // Convierte "IMG/x.webp" => "/unidaduniversal.github.io/IMG/x.webp" (GH)
+  // o "../IMG/x.webp" (local en subcarpetas)
   const abs = (p) => {
     if (!p) return p;
     if (/^https?:\/\//i.test(p)) return p;
     if (/^(mailto:|tel:|data:)/i.test(p)) return p;
-    if (p.startsWith("/")) return p;
-    return (isUserSite ? ("/" + p) : (rel + p)).replace(/\/+/g, "/");
+
+    if (isGh) return (base + "/" + p).replace(/\/+/g, "/");
+    return (relLocal + p).replace(/\/+/g, "/");
   };
 
-  const hp = D.getElementById("header-placeholder");
-  const fp = D.getElementById("footer-placeholder");
+  const headerURL = isGh ? abs("PARTIALS/global-header.html") : (relLocal + "PARTIALS/global-header.html");
+  const footerURL = isGh ? abs("PARTIALS/global-footer.html") : (relLocal + "PARTIALS/global-footer.html");
 
-  try{
-    if (hp){
-      const r = await fetch(headerURL, { cache: "no-store" });
-      if (r.ok) hp.outerHTML = await r.text();
-      else console.warn("[partials] header 404:", headerURL, r.status);
-    }
-    if (fp){
-      const r = await fetch(footerURL, { cache: "no-store" });
-      if (r.ok) fp.outerHTML = await r.text();
-      else console.warn("[partials] footer 404:", footerURL, r.status);
-    }
-  } catch(e){
-    console.warn("[partials] error cargando parciales", e);
+  async function fetchText(url){
+    const r = await fetch(url, { cache: "no-store" });
+    if (!r.ok) throw new Error(`${r.status} ${url}`);
+    return r.text();
   }
 
-  // Normalización declarativa dentro del DOM ya insertado
-  D.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
-    const v = img.getAttribute("data-src");
-    if (v && !img.getAttribute("src")) img.setAttribute("src", abs(v));
-  });
+  function normalize(root=D){
+    // data-src => src
+    QA(".js-abs-src[data-src]", root).forEach(img=>{
+      const ds = img.getAttribute("data-src");
+      if (!ds) return;
+      if (!img.getAttribute("src")) img.setAttribute("src", abs(ds));
+    });
 
-  D.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
-    const raw = a.getAttribute("data-href");
-    if (!raw) return;
-    const [path, hash] = raw.split("#");
-    a.href = abs(path) + (hash ? ("#" + hash) : "");
-  });
+    // data-href => href
+    QA(".js-abs-href[data-href]", root).forEach(a=>{
+      const raw = a.getAttribute("data-href");
+      if (!raw) return;
+      const [path, hash] = raw.split("#");
+      a.href = abs(path) + (hash ? ("#" + hash) : "");
+    });
 
-  const y = D.getElementById("gf-year");
-  if (y) y.textContent = new Date().getFullYear();
-
-  // Si tu header tiene initGlobalHeader(), ejecútalo
-  if (typeof window.initGlobalHeader === "function") {
-    try { window.initGlobalHeader(); } catch(e) {}
+    // Año
+    const y = root.getElementById?.("gf-year") || D.getElementById("gf-year") ||
+              root.getElementById?.("year")    || D.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
   }
+
+  async function load(){
+    const hp = Q("#header-placeholder");
+    const fp = Q("#footer-placeholder");
+
+    try{
+      if (hp) hp.outerHTML = await fetchText(headerURL);
+    } catch(e){
+      console.warn("[partials] header no cargó:", headerURL, e);
+    }
+
+    try{
+      if (fp) fp.outerHTML = await fetchText(footerURL);
+    } catch(e){
+      console.warn("[partials] footer no cargó:", footerURL, e);
+    }
+
+    normalize(D);
+
+    // Si tienes initGlobalHeader() en el parcial o en otro JS:
+    if (typeof window.initGlobalHeader === "function") {
+      try { window.initGlobalHeader(); } catch(e){ console.warn("initGlobalHeader error", e); }
+    }
+  }
+
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", load, { once:true });
+  else load();
+
+  window.addEventListener("pageshow", ()=> { try{ normalize(D); } catch{} });
 })();
 
 
