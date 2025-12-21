@@ -134,3 +134,82 @@ body>.arrowCircle{display:none!important}
 
 /* ========================= 13) DEBUG (opcional) ========================= */
 /* *{outline:1px solid rgba(255,0,0,.08)} */
+/* =========================================================
+   EXPIRITI — PATCH V7 (AGREGAR AL FINAL DEL V6)
+   Objetivos:
+   - Anti overflow lateral (sin romper carruseles)
+   - Reels 9:16 controlado (no gigantes)
+   - Tablas: scroll horizontal interno
+   - Servicios complementarios (TU HTML): desktop 2 cols, móvil carrusel 2x2 por slide
+========================================================= */
+
+/* 1) Anti “desliz derecha” (mejor que hidden) */
+html,body{max-width:100%;overflow-x:clip}
+@supports not (overflow:clip){html,body{overflow-x:hidden}}
+
+/* Importante: permitir que hijos de grid encojan (evita overflow) */
+.grid-2>*,.grid-3>*,.hero-grid>*,.cards>*,.videos-grid>*,.feature-grid>*{min-width:0}
+
+/* 2) Reels: limitar tamaño (tu V6 usa .reel-embed con aspect-ratio, aquí controlamos “gigante”) */
+.reel-embed{max-width:380px;margin:0 auto}
+@media(max-width:768px){.reel-embed{max-width:520px}}
+
+/* Si en algunas páginas tu iframe tenía height fijo, lo neutralizamos */
+.reels-card iframe{height:auto}
+.reel-embed iframe{width:100%!important;height:100%!important}
+
+/* 3) Tablas: wrapper con scroll interno (sin empujar viewport) */
+.table-scroll,[data-table-scroll],#comparativa .card.body,.comparativa .card.body{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+}
+
+/* Fuerza ancho mínimo en móvil para que aparezca scroll */
+@media(max-width:900px){
+  .table-like{min-width:720px}
+  .pricing-table-nube{min-width:760px}
+}
+
+/* 4) Servicios complementarios (TU HTML real):
+   <section id="servicios-complementarios">
+     <div class="svc-grid">
+       <ul class="svc-list"> <li class="svc-link">...</li> ... </ul>
+       <ul class="svc-list"> ... </ul>
+     </div>
+   </section>
+*/
+#servicios-complementarios .svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#servicios-complementarios .svc-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+#servicios-complementarios .svc-link{min-width:0}
+
+/* Móvil: carrusel horizontal; cada UL es un “slide” con grid 2x2 */
+@media(max-width:768px){
+  #servicios-complementarios .svc-grid{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding:4px 4px 10px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+  }
+  #servicios-complementarios .svc-list{
+    flex:0 0 100%;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    scroll-snap-align:start;
+  }
+  #servicios-complementarios .svc-link{flex-direction:column;align-items:flex-start}
+  #servicios-complementarios .svc-grid::-webkit-scrollbar{height:6px}
+  #servicios-complementarios .svc-grid::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
+}
+
+/* 5) NO romper carruseles:
+   Tu V6 usa overflow:hidden en .carousel-track (no scroll). Aquí NO lo cambiamos.
+   Solo prevenimos que algo externo cree flechas sueltas.
+*/
+body>.arrowCircle{display:none!important}
+
