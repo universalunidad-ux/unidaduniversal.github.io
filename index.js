@@ -90,7 +90,7 @@
      - Sólo intercepta wheel si hay overflow horizontal
   ========================= */
   function bindWheelOnTabs(){
-    const sels = ".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs";
+    const sels = ".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs,.prod-tabs,.hero-gallery-groups,#heroGalleryGroups,.hero-gallery-tabs,#heroGalleryTabs,.promo-filters";
     document.querySelectorAll(sels).forEach(el=>{
       if(el.dataset.wheelBound === "1") return;
       el.dataset.wheelBound = "1";
