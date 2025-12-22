@@ -1,105 +1,100 @@
 /* =========================================================
-   Expiriti - index.js (FINAL V6 MIN+FIX+WHEEL+HARDENED)
+   Expiriti - index.js (FINAL V6 MIN+FIX+WHEEL+HARDENED) — PATCHED
    - SIN conflicto de $/$$
    - Parciales robustos + normaliza rutas (GH Pages + local)
-   - Wheel patch (tabs/chips): SOLO si hay overflow horizontal
-   - Listeners “bound” (evita duplicados aunque el script se inyecte 2 veces)
-   - HERO Gallery: grupos + tabs + dots + arrows + scroll sync
-   - REELS: título 1-línea + flechas off si 1 + scroll/trackpad sync
-   - Servicios: pager 2x2 (mobile) + dots
-   - BFCache safe: re-normaliza + re-bindea wheel + pager
-========================================================= */
+   - Wheel patch SOLO si hay overflow horizontal
+   - Listeners “bound” (evita duplicados)
+   - HERO Gallery: grupos + tabs + dots + arrows + scroll sync (FIX offsetLeft)
+   - REELS: título 1-línea (FIX determinístico) + flechas off si 1 + scroll/trackpad sync
+   - Servicios: pager 2x2 (mobile) + dots (FIX width)
+   - Promos: filtro (FIX hidden + display)
+   - BFCache safe
+   ========================================================= */
 (function(){ "use strict";
-  if(window.__EXPIRITI_INDEX_INIT__) return;
-  window.__EXPIRITI_INDEX_INIT__ = true;
+  if(window.__EXPIRITI_INDEX_INIT__) return; window.__EXPIRITI_INDEX_INIT__=true;
 
   /* =========================
      0) Helpers DOM (SIN $/$$)
   ========================= */
-  const Q  = (s,c=document)=>c.querySelector(s);
-  const QA = (s,c=document)=>Array.from(c.querySelectorAll(s));
-  const on = (el,ev,fn,opt)=>{ if(el) el.addEventListener(ev,fn,opt); };
-  const safe = (fn)=>{ try{ fn(); }catch(_){ } };
+  const Q=(s,c=document)=>c.querySelector(s), QA=(s,c=document)=>Array.from(c.querySelectorAll(s));
+  const on=(el,ev,fn,opt)=>{ if(el) el.addEventListener(ev,fn,opt); };
+  const safe=(fn)=>{ try{ fn(); }catch(_){ } };
 
   /* =========================
-     1) Rutas (GH Pages + local)
+     1) Rutas (GH Pages + local) — FIX profundidad real
+     - Antes: depth basado en /SISTEMAS|SERVICIOS|PDFS/ (limitado)
+     - Ahora: depth real por # de segmentos (más robusto)
   ========================= */
-  const isGh    = location.hostname.endsWith("github.io");
-  const firstSeg= (location.pathname.split("/")[1]||"").trim();
-  const repoBase= (isGh && firstSeg) ? ("/"+firstSeg) : "";
-  const inSubDir= /\/(SISTEMAS|SERVICIOS|PDFS)\//i.test(location.pathname);
-  const depth   = inSubDir ? "../" : "./";
+  const isGh=location.hostname.endsWith("github.io");
+  const firstSeg=(location.pathname.split("/")[1]||"").trim();
+  const repoBase=(isGh && firstSeg)?("/"+firstSeg):"";
+
+  const pathParts=location.pathname.replace(/\/+$/,"").split("/").filter(Boolean);
+  const contentParts=isGh?pathParts.slice(1):pathParts;          // quita repo en GH
+  const depth=(contentParts.length>1)?"../".repeat(contentParts.length-1):"./";
 
   function prefix(path){
     if(!path) return path;
     if(/^(https?:)?\/\//i.test(path)) return path;
     if(/^(mailto:|tel:|data:)/i.test(path)) return path;
     if(path.startsWith("#")) return path;
-    const base = isGh ? (repoBase + "/") : depth;
-    const joined = (base + path).replace(/\\/g,"/");
+    const base=isGh?(repoBase+"/"):depth;
+    const joined=(base+path).replace(/\\/g,"/");
     return joined.replace(/([^:]\/)\/+/g,"$1");
   }
 
   function normalizeRoutes(root=document){
     QA(".js-abs-src[data-src]",root).forEach(img=>{
-      const raw = img.getAttribute("data-src") || "";
-      const fin = prefix(raw);
-      if(!img.getAttribute("src")) img.setAttribute("src",fin); else img.src = fin;
-      img.style.opacity = "1";
+      const raw=img.getAttribute("data-src")||"", fin=prefix(raw);
+      if(!img.getAttribute("src")) img.setAttribute("src",fin); else img.src=fin;
+      img.style.opacity="1";
     });
     QA(".js-abs-href[data-href]",root).forEach(a=>{
-      const raw = a.getAttribute("data-href") || ""; if(!raw) return;
-      const parts = raw.split("#"); const p = parts[0]||"", h = parts[1]||"";
-      a.href = prefix(p) + (h ? ("#"+h) : "");
+      const raw=a.getAttribute("data-href")||""; if(!raw) return;
+      const parts=raw.split("#"), p=parts[0]||"", h=parts[1]||"";
+      a.href=prefix(p)+(h?("#"+h):"");
     });
-    const y = root.getElementById?.("gf-year") || document.getElementById("gf-year");
-    if(y) y.textContent = new Date().getFullYear();
+    const y=root.getElementById?.("gf-year")||document.getElementById("gf-year");
+    if(y) y.textContent=new Date().getFullYear();
   }
 
   /* =========================
      2) Parciales (header/footer)
   ========================= */
   async function loadPartial(placeholderId,fileName){
-    const ph = document.getElementById(placeholderId);
-    if(!ph) return;
-
-    const cands = [
+    const ph=document.getElementById(placeholderId); if(!ph) return;
+    const cands=[
       prefix(`PARTIALS/${fileName}`),
-      (isGh && repoBase ? `${repoBase}/PARTIALS/${fileName}` : null),
-      (!isGh ? `${depth}PARTIALS/${fileName}` : null),
+      (isGh && repoBase?`${repoBase}/PARTIALS/${fileName}`:null),
+      (!isGh?`${depth}PARTIALS/${fileName}`:null),
       `/PARTIALS/${fileName}`
     ].filter(Boolean);
 
-    let html = "", lastErr = null;
+    let html="", lastErr=null;
     for(const u of cands){
       try{
-        const url = u + (u.includes("?") ? "&" : "?") + "v=" + Date.now();
-        const resp = await fetch(url,{cache:"no-store"});
+        const url=u+(u.includes("?")?"&":"?")+"v="+Date.now();
+        const resp=await fetch(url,{cache:"no-store"});
         if(!resp.ok) throw new Error("HTTP "+resp.status+" "+resp.statusText);
-        html = await resp.text();
-        break;
-      }catch(e){ lastErr = e; }
+        html=await resp.text(); break;
+      }catch(e){ lastErr=e; }
     }
     if(!html){ console.warn("[Expiriti] No se pudo cargar partial:",fileName,lastErr); return; }
-    ph.outerHTML = html;
+    ph.outerHTML=html;
   }
 
   /* =========================
-     3) PATCH UX (WHEEL tabs)
-     - IMPORTANTE: bindear después de parciales
-     - Sólo intercepta wheel si hay overflow horizontal
+     3) PATCH UX (WHEEL tabs) — SOLO si overflow
   ========================= */
   function bindWheelOnTabs(){
-    const sels = ".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs,.prod-tabs,.hero-gallery-groups,#heroGalleryGroups,.hero-gallery-tabs,#heroGalleryTabs,.promo-filters";
+    const sels=".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs,.prod-tabs,.hero-gallery-groups,#heroGalleryGroups,.hero-gallery-tabs,#heroGalleryTabs,.promo-filters";
     document.querySelectorAll(sels).forEach(el=>{
-      if(el.dataset.wheelBound === "1") return;
-      el.dataset.wheelBound = "1";
+      if(el.dataset.wheelBound==="1") return; el.dataset.wheelBound="1";
       on(el,"wheel",(e)=>{
-        const hasOverflow = (el.scrollWidth > el.clientWidth + 2);
+        const hasOverflow=(el.scrollWidth>el.clientWidth+2);
         if(!hasOverflow) return;
-        if(Math.abs(e.deltaY) > Math.abs(e.deltaX)){
-          el.scrollLeft += e.deltaY;
-          e.preventDefault();
+        if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+          el.scrollLeft+=e.deltaY; e.preventDefault();
         }
       },{passive:false});
     });
@@ -109,29 +104,29 @@
      4) Formularios -> WhatsApp (sin duplicar listeners)
   ========================= */
   function initForms(){
-    const quickForm = Q("#quickForm");
+    const quickForm=Q("#quickForm");
     if(quickForm && quickForm.dataset.bound!=="1"){
       quickForm.dataset.bound="1";
       on(quickForm,"submit",(e)=>{
         e.preventDefault();
-        const modulo  = encodeURIComponent((Q("#modulo")?.value||""));
-        const mensaje = encodeURIComponent(((Q("#mensaje")?.value||"")).trim());
-        const texto   = `Hola Expiriti, me interesa ${modulo}. ${mensaje}`;
+        const modulo=encodeURIComponent((Q("#modulo")?.value||""));
+        const mensaje=encodeURIComponent(((Q("#mensaje")?.value||"")).trim());
+        const texto=`Hola Expiriti, me interesa ${modulo}. ${mensaje}`;
         window.open(`https://wa.me/525568437918?text=${texto}`,"_blank","noopener");
       });
     }
 
-    const contactForm = Q("#contactForm");
+    const contactForm=Q("#contactForm");
     if(contactForm && contactForm.dataset.bound!=="1"){
       contactForm.dataset.bound="1";
       on(contactForm,"submit",(e)=>{
         e.preventDefault();
-        const nombre   = encodeURIComponent(((Q("#nombre")?.value||"")).trim());
-        const correo   = encodeURIComponent(((Q("#correo")?.value||"")).trim());
-        const telefono = encodeURIComponent(((Q("#telefono")?.value||"")).trim());
-        const interes  = encodeURIComponent((Q("#interes")?.value||""));
-        const detalle  = encodeURIComponent(((Q("#detalle")?.value||"")).trim());
-        const texto    = `Hola Expiriti, soy ${nombre}. Email: ${correo}. Tel: ${telefono||"N/A"}. Interés: ${interes}. Detalle: ${detalle}`;
+        const nombre=encodeURIComponent(((Q("#nombre")?.value||"")).trim());
+        const correo=encodeURIComponent(((Q("#correo")?.value||"")).trim());
+        const telefono=encodeURIComponent(((Q("#telefono")?.value||"")).trim());
+        const interes=encodeURIComponent((Q("#interes")?.value||""));
+        const detalle=encodeURIComponent(((Q("#detalle")?.value||"")).trim());
+        const texto=`Hola Expiriti, soy ${nombre}. Email: ${correo}. Tel: ${telefono||"N/A"}. Interés: ${interes}. Detalle: ${detalle}`;
         window.open(`https://wa.me/525568437918?text=${texto}`,"_blank","noopener");
       });
     }
@@ -141,52 +136,46 @@
      5) Tabs Productos (sin duplicar)
   ========================= */
   function initTabsProductos(){
-    const tabs   = QA(".prod-tabs .tab");
-    const panels = QA(".panel-productos");
-    if(!tabs.length || !panels.length) return;
-
+    const tabs=QA(".prod-tabs .tab"), panels=QA(".panel-productos");
+    if(!tabs.length||!panels.length) return;
     function activar(btn){
-      const targetId = btn.dataset.target;
+      const targetId=btn.dataset.target;
       tabs.forEach(t=>t.classList.toggle("active",t===btn));
       panels.forEach(p=>p.classList.toggle("hidden",p.id!==targetId));
     }
-
     tabs.forEach(btn=>{
-      if(btn.dataset.bound==="1") return;
-      btn.dataset.bound="1";
+      if(btn.dataset.bound==="1") return; btn.dataset.bound="1";
       on(btn,"click",()=>activar(btn));
     });
-
-    const tabInicial = document.getElementById("tab-contable");
-    activar(tabInicial || tabs[0]);
+    const tabInicial=document.getElementById("tab-contable");
+    activar(tabInicial||tabs[0]);
   }
 
   /* =========================
-     6) Promos filtro (sin duplicar)
+     6) Promos filtro — FIX hidden + display:none
   ========================= */
   function initPromosFilter(){
-    const promoBtns  = QA(".promo-btn");
-    const promoItems = QA("#promoGrid [data-type]");
-    if(!promoBtns.length || !promoItems.length) return;
+    const promoBtns=QA(".promo-btn");
+    const promoItems=QA("#promoGrid [data-type]");
+    if(!promoBtns.length||!promoItems.length) return;
 
     function setPromoFilter(filter){
       promoBtns.forEach(b=>{
-        const on = (b.dataset.filter === filter);
-        b.classList.toggle("active", on);
-        b.setAttribute("aria-pressed", on ? "true" : "false");
+        const act=(b.dataset.filter===filter);
+        b.classList.toggle("active",act);
+        b.setAttribute("aria-pressed",act?"true":"false");
       });
       promoItems.forEach(el=>{
-        const type = (el.dataset.type || "").trim();
-        const ok   = (filter === "all") || (type === filter);
-        el.hidden = !ok;
-        el.style.display = "";
+        const type=(el.dataset.type||"").trim();
+        const ok=(filter==="all")||(type===filter);
+        el.toggleAttribute("hidden",!ok);
+        el.style.display=ok?"":"none";
       });
     }
 
     promoBtns.forEach(b=>{
-      if(b.dataset.bound==="1") return;
-      b.dataset.bound="1";
-      on(b,"click",()=> setPromoFilter(b.dataset.filter || "all"));
+      if(b.dataset.bound==="1") return; b.dataset.bound="1";
+      on(b,"click",()=>setPromoFilter(b.dataset.filter||"all"));
     });
 
     setPromoFilter("nuevos");
@@ -197,12 +186,11 @@
   ========================= */
   function initClickableCards(){
     QA(".card.product-card[data-href]").forEach(card=>{
-      if(card.dataset.bound==="1") return;
-      card.dataset.bound="1";
-      const href = card.getAttribute("data-href");
+      if(card.dataset.bound==="1") return; card.dataset.bound="1";
+      const href=card.getAttribute("data-href");
       on(card,"click",(e)=>{
         if(e.target.closest("a,button,input,select,textarea,label")) return;
-        if(href) location.href = prefix(href);
+        if(href) location.href=prefix(href);
       });
     });
   }
@@ -282,54 +270,53 @@
   };
 
   const HERO_GALLERY={
-    groupNav:     Q("#heroGalleryGroups"),
+    groupNav:Q("#heroGalleryGroups"),
     tabsContainer:Q("#heroGalleryTabs"),
-    titleEl:      Q("#heroGalleryTitle"),
-    carousel:     Q("#heroGalleryCarousel"),
-    defaultGroup: "contable"
+    titleEl:Q("#heroGalleryTitle"),
+    carousel:Q("#heroGalleryCarousel"),
+    defaultGroup:"contable"
   };
 
   function buildHeroGallerySlides(groupKey,sysKey){
-    const g = HERO_GALLERY_DATA[groupKey]; if(!g) return;
-    const sys = g.systems[sysKey]; if(!sys || !sys.images?.length) return;
+    const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
+    const sys=g.systems[sysKey]; if(!sys || !sys.images?.length) return;
 
-    if(HERO_GALLERY.titleEl) HERO_GALLERY.titleEl.textContent = sys.label || "";
+    if(HERO_GALLERY.titleEl) HERO_GALLERY.titleEl.textContent=sys.label||"";
+    const carousel=HERO_GALLERY.carousel; if(!carousel) return;
 
-    const carousel = HERO_GALLERY.carousel; if(!carousel) return;
-    const track = carousel.querySelector(".carousel-track");
-    const nav   = carousel.querySelector(".carousel-nav");
+    const track=carousel.querySelector(".carousel-track");
+    const nav=carousel.querySelector(".carousel-nav");
     if(!track || !nav) return;
 
-    track.innerHTML = ""; nav.innerHTML = "";
+    track.innerHTML=""; nav.innerHTML="";
 
     sys.images.forEach((item,idx)=>{
-      const slide = document.createElement("div");
-      slide.className = "carousel-slide hero-slide" + (idx===0 ? " is-active" : "");
+      const slide=document.createElement("div");
+      slide.className="carousel-slide hero-slide"+(idx===0?" is-active":"");
 
-      const img = document.createElement("img");
-      img.src = prefix(item.src);
-      img.alt = item.title || sys.label || "Expiriti";
-      img.width = 550; img.height = 550; img.decoding = "async";
+      const img=document.createElement("img");
+      img.src=prefix(item.src);
+      img.alt=item.title||sys.label||"Expiriti";
+      img.width=550; img.height=550; img.decoding="async";
 
-      const isLCP = (groupKey===HERO_GALLERY.defaultGroup && sysKey===g.defaultSys && idx===0);
-      if(isLCP){ img.loading="eager"; img.setAttribute("fetchpriority","high"); }
-      else img.loading="lazy";
+      const isLCP=(groupKey===HERO_GALLERY.defaultGroup && sysKey===g.defaultSys && idx===0);
+      if(isLCP){ img.loading="eager"; img.setAttribute("fetchpriority","high"); } else img.loading="lazy";
 
-      slide.appendChild(img);
-      track.appendChild(slide);
+      slide.appendChild(img); track.appendChild(slide);
 
-      const dot = document.createElement("button");
+      const dot=document.createElement("button");
       dot.type="button";
       dot.className="dot"+(idx===0?" active":"");
       dot.setAttribute("aria-label","Ir a imagen "+(idx+1));
 
       on(dot,"click",()=>{
-        const slides = QA(".carousel-slide",track);
+        const slides=QA(".carousel-slide",track);
         slides.forEach(s=>s.classList.remove("is-active"));
         slides[idx]?.classList.add("is-active");
         QA(".dot",nav).forEach(d=>d.classList.remove("active"));
         dot.classList.add("active");
-        track.scrollTo({left:track.clientWidth*idx,behavior:"smooth"});
+        /* FIX: offsetLeft en vez de clientWidth*idx */
+        track.scrollTo({ left: slides[idx].offsetLeft, behavior:"smooth" });
       });
 
       nav.appendChild(dot);
@@ -337,49 +324,42 @@
   }
 
   function buildHeroSystemTabs(groupKey){
-    const g = HERO_GALLERY_DATA[groupKey]; if(!g) return;
-    const c = HERO_GALLERY.tabsContainer; if(!c) return;
-
-    c.innerHTML = "";
-    const def = g.defaultSys;
+    const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
+    const c=HERO_GALLERY.tabsContainer; if(!c) return;
+    c.innerHTML="";
+    const def=g.defaultSys;
 
     Object.entries(g.systems||{}).forEach(([sysKey,sys])=>{
-      const btn = document.createElement("button");
+      const btn=document.createElement("button");
       btn.type="button";
       btn.className="hero-tab"+(sysKey===def?" active":"");
-      btn.dataset.group=groupKey;
-      btn.dataset.sys=sysKey;
-      btn.innerHTML = `<img src="${prefix(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async"><span>${sys.label}</span>`;
-
+      btn.dataset.group=groupKey; btn.dataset.sys=sysKey;
+      btn.innerHTML=`<img src="${prefix(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async"><span>${sys.label}</span>`;
       on(btn,"click",()=>{
         QA(".hero-tab",c).forEach(b=>b.classList.toggle("active",b===btn));
         buildHeroGallerySlides(groupKey,sysKey);
         HERO_GALLERY.carousel?.__resetHeroSync?.();
       });
-
       c.appendChild(btn);
     });
   }
 
   function initHeroGallery(){
-    const groupNav = HERO_GALLERY.groupNav;
-    const carousel = HERO_GALLERY.carousel;
+    const groupNav=HERO_GALLERY.groupNav;
+    const carousel=HERO_GALLERY.carousel;
     if(!groupNav || !carousel) return;
 
-    groupNav.innerHTML = "";
-
+    groupNav.innerHTML="";
     Object.entries(HERO_GALLERY_DATA).forEach(([groupKey,group])=>{
       if(groupKey==="servicios") return;
-
-      const btn = document.createElement("button");
+      const btn=document.createElement("button");
       btn.type="button";
       btn.className="hero-group-tab"+(groupKey===HERO_GALLERY.defaultGroup?" active":"");
-      btn.dataset.group=groupKey;
-      btn.textContent=group.label;
+      btn.dataset.group=groupKey; btn.textContent=group.label;
 
       on(btn,"click",()=>{
         QA(".hero-group-tab",groupNav).forEach(b=>b.classList.toggle("active",b===btn));
-        const cfg = HERO_GALLERY_DATA[groupKey];
+        const cfg=HERO_GALLERY_DATA[groupKey];
         buildHeroSystemTabs(groupKey);
         buildHeroGallerySlides(groupKey,cfg.defaultSys);
         carousel.__resetHeroSync?.();
@@ -388,30 +368,28 @@
       groupNav.appendChild(btn);
     });
 
-    const track = carousel.querySelector(".carousel-track");
-    const prev  = carousel.querySelector(".arrowCircle.prev");
-    const next  = carousel.querySelector(".arrowCircle.next");
+    const track=carousel.querySelector(".carousel-track");
+    const prev=carousel.querySelector(".arrowCircle.prev");
+    const next=carousel.querySelector(".arrowCircle.next");
     if(!track) return;
 
-    const slidesFor = ()=>QA(".carousel-slide",track);
+    const slidesFor=()=>QA(".carousel-slide",track);
 
-    const getIdxFromScroll = ()=>{
-      const slides = slidesFor();
-      const len = slides.length; if(!len) return 0;
-      const w = track.clientWidth || 1;
+    const getIdxFromScroll=()=>{
+      const slides=slidesFor(), len=slides.length; if(!len) return 0;
+      const w=track.clientWidth||1;
       return Math.max(0,Math.min(len-1,Math.round((track.scrollLeft||0)/w)));
     };
 
-    const goTo = (i,behavior="smooth")=>{
-      const slides = slidesFor();
-      if(!slides.length) return;
-      const max = slides.length-1;
-      const idx = Math.max(0,Math.min(max,i));
+    const goTo=(i,behavior="smooth")=>{
+      const slides=slidesFor(); if(!slides.length) return;
+      const max=slides.length-1, idx=Math.max(0,Math.min(max,i));
       slides.forEach(s=>s.classList.remove("is-active"));
       slides[idx].classList.add("is-active");
-      const navEl = carousel.querySelector(".carousel-nav");
+      const navEl=carousel.querySelector(".carousel-nav");
       QA(".dot",navEl).forEach((d,k)=>d.classList.toggle("active",k===idx));
-      track.scrollTo({left:track.clientWidth*idx,behavior});
+      /* FIX: offsetLeft */
+      track.scrollTo({ left: slides[idx].offsetLeft, behavior });
     };
 
     if(carousel.dataset.arrowsBound!=="1"){
@@ -426,7 +404,7 @@
 
       const syncFromScroll=()=>{
         raf=0;
-        const slides=slidesFor(); const len=slides.length; if(!len) return;
+        const slides=slidesFor(), len=slides.length; if(!len) return;
         const idx=getIdxFromScroll(); if(idx===lastIdx) return;
         lastIdx=idx;
         slides.forEach((s,k)=>s.classList.toggle("is-active",k===idx));
@@ -448,7 +426,7 @@
       };
     }
 
-    const cfg = HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
+    const cfg=HERO_GALLERY_DATA[HERO_GALLERY.defaultGroup];
     buildHeroSystemTabs(HERO_GALLERY.defaultGroup);
     buildHeroGallerySlides(HERO_GALLERY.defaultGroup,cfg.defaultSys);
   }
@@ -538,55 +516,33 @@
   function setArrowsEnabled(prev,next,enabled){
     [prev,next].forEach(btn=>{
       if(!btn) return;
-      btn.style.pointerEvents = enabled ? "" : "none";
-      btn.style.opacity       = enabled ? "" : "0.35";
-      btn.setAttribute("aria-disabled", enabled ? "false" : "true");
-      btn.classList.toggle("is-disabled", !enabled);
-      if("disabled" in btn) btn.disabled = !enabled;
+      btn.style.pointerEvents=enabled?"":"none";
+      btn.style.opacity=enabled?"":"0.35";
+      btn.setAttribute("aria-disabled",enabled?"false":"true");
+      btn.classList.toggle("is-disabled",!enabled);
+      if("disabled" in btn) btn.disabled=!enabled;
     });
   }
 
+  /* FIX: Título reels determinístico (no “adivina” headings, no oculta H4 por error) */
   function setSingleLineReelTitle(cfg,title){
-    const t=(title||"").trim(); if(!t) return;
-    const el=cfg?.titleEl||null;
-
-    if(!cfg._headingEl){
-      let heading=null;
-      if(el && el.previousElementSibling) heading=el.previousElementSibling;
-      if(!heading){
-        const host=(cfg.carousel && (cfg.carousel.closest("aside, section, .card, .panel") || cfg.carousel.parentElement)) || null;
-        heading = host?.querySelector(".reels-heading, .reels-kicker, h2, h3") || null;
-      }
-      cfg._headingEl = heading || null;
-    }
-
-    if(cfg._headingEl){
-      cfg._headingEl.textContent = t;
-      if(el && cfg._headingEl !== el){
-        el.textContent = "";
-        el.style.display = "none";
-        el.setAttribute("aria-hidden","true");
-      }
-      return;
-    }
-
-    if(el){
-      el.textContent = t;
-      el.style.display = "";
-      el.removeAttribute("aria-hidden");
-    }
+    const t=(title||"").trim(), el=cfg?.titleEl||null;
+    if(!el) return;
+    el.textContent=t;
+    el.style.display="";
+    el.removeAttribute("aria-hidden");
   }
 
   function renderReelThumb(wrap){
     const id=wrap.dataset.ytid; if(!id) return;
     const title=wrap.dataset.title||"";
-    wrap.innerHTML =
+    wrap.innerHTML=
       `<button class="yt-thumb" type="button" aria-label="Reproducir: ${title}">
         <img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" loading="lazy" decoding="async" width="480" height="270" alt="${title}"
              onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg';">
         <span class="yt-play"></span>
       </button>`;
-    const btn = wrap.querySelector(".yt-thumb");
+    const btn=wrap.querySelector(".yt-thumb");
     if(btn && btn.dataset.bound!=="1"){
       btn.dataset.bound="1";
       on(btn,"click",()=>{ stopAllReels(); renderReelIframe(wrap); });
@@ -596,7 +552,7 @@
   function renderReelIframe(wrap){
     const id=wrap.dataset.ytid;
     const title=wrap.dataset.title||"";
-    wrap.innerHTML =
+    wrap.innerHTML=
       `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1"
                title="${title}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
   }
@@ -607,15 +563,14 @@
     });
     document.querySelectorAll(".yt-lite").forEach(node=>{
       if(node.dataset.ytLoaded==="1"){
-        const id=node.dataset.ytid;
-        const title=node.dataset.title||"Video";
+        const id=node.dataset.ytid, title=node.dataset.title||"Video";
         const thumb=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-        node.innerHTML =
+        node.innerHTML=
           `<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
             <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
             <span class="yt-lite-play"></span>
           </button>`;
-        node.dataset.ytLoaded = "";
+        node.dataset.ytLoaded="";
       }
     });
   }
@@ -623,7 +578,7 @@
   function buildReelsSlides(panelKey,sysKey){
     const cfg=REELS_DATA[panelKey]; if(!cfg) return;
     const track=cfg.carousel?.querySelector(".carousel-track");
-    const nav  =cfg.carousel?.querySelector(".carousel-nav");
+    const nav=cfg.carousel?.querySelector(".carousel-nav");
     if(!track || !nav) return;
 
     const prev=cfg.carousel.querySelector(".arrowCircle.prev");
@@ -673,18 +628,18 @@
     if(!cfg || !cfg.carousel) return;
 
     const track=cfg.carousel.querySelector(".carousel-track");
-    const prev =cfg.carousel.querySelector(".arrowCircle.prev");
-    const next =cfg.carousel.querySelector(".arrowCircle.next");
+    const prev=cfg.carousel.querySelector(".arrowCircle.prev");
+    const next=cfg.carousel.querySelector(".arrowCircle.next");
     if(!track) return;
 
     const slidesFor=()=>QA(".carousel-slide",track);
-    const dotsFor  =()=>QA(".carousel-nav .dot",cfg.carousel);
+    const dotsFor=()=>QA(".carousel-nav .dot",cfg.carousel);
 
     if(cfg.carousel.dataset.arrowsBound!=="1"){
       cfg.carousel.dataset.arrowsBound="1";
 
       const goTo=(i)=>{
-        const slides=slidesFor(); const len=slides.length;
+        const slides=slidesFor(), len=slides.length;
         if(!len || len<=1) return;
         const idx=((i%len)+len)%len;
 
@@ -719,7 +674,7 @@
 
       const syncFromScroll=()=>{
         raf=0;
-        const slides=slidesFor(); const len=slides.length; if(!len) return;
+        const slides=slidesFor(), len=slides.length; if(!len) return;
         const w=track.clientWidth||1;
         const idx=Math.max(0,Math.min(len-1,Math.round((track.scrollLeft||0)/w)));
         if(idx===lastIdx) return;
@@ -742,7 +697,7 @@
       on(window,"resize",()=>{ lastIdx=-1; syncFromScroll(); });
     }
 
-    cfg._activeSys = cfg.defaultSys;
+    cfg._activeSys=cfg.defaultSys;
     buildReelsSlides(panelKey,cfg.defaultSys);
   }
 
@@ -756,7 +711,7 @@
       node.dataset.ytReady="1";
       const thumb=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-      node.innerHTML =
+      node.innerHTML=
         `<button class="yt-lite-inner" type="button" aria-label="Reproducir: ${title}">
           <span class="yt-lite-thumb" style="background-image:url('${thumb}')"></span>
           <span class="yt-lite-play"></span>
@@ -765,7 +720,7 @@
       on(node,"click",()=>{
         if(node.dataset.ytLoaded==="1") return;
         stopAllReels();
-        node.innerHTML =
+        node.innerHTML=
           `<iframe class="yt-iframe" src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1"
                    title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                    allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
@@ -776,8 +731,7 @@
 
   function initFAQ(){
     document.querySelectorAll(".faq-item").forEach(item=>{
-      if(item.dataset.bound==="1") return;
-      item.dataset.bound="1";
+      if(item.dataset.bound==="1") return; item.dataset.bound="1";
       on(item,"toggle",()=>{
         if(!item.open) return;
         document.querySelectorAll(".faq-item").forEach(other=>{
@@ -789,19 +743,15 @@
 
   function initReelsTabs(){
     QA(".reel-tab").forEach(tab=>{
-      if(tab.dataset.bound==="1") return;
-      tab.dataset.bound="1";
-
+      if(tab.dataset.bound==="1") return; tab.dataset.bound="1";
       on(tab,"click",()=>{
-        const panelKey=tab.dataset.panel;
-        const sysKey  =tab.dataset.sys;
+        const panelKey=tab.dataset.panel, sysKey=tab.dataset.sys;
         if(!panelKey || !sysKey) return;
 
         const cfg=REELS_DATA[panelKey];
         if(cfg) cfg._activeSys=sysKey;
 
         stopAllReels();
-
         QA(".reel-tab").forEach(t=>{
           if(t.dataset.panel===panelKey) t.classList.toggle("active",t===tab);
         });
@@ -816,30 +766,29 @@
   }
 
   /* =========================
-     11) Servicios: pager 2x2 (mobile)
+     11) Servicios: pager 2x2 (mobile) — FIX width
   ========================= */
   function initServicesPager(){
-    const root    = document.getElementById("servicesCarousel");
-    const dotsWrap= document.getElementById("servicesDots");
+    const root=document.getElementById("servicesCarousel");
+    const dotsWrap=document.getElementById("servicesDots");
     if(!root || !dotsWrap) return;
 
-    const isDesktop = window.matchMedia("(min-width: 980px)").matches;
+    const isDesktop=window.matchMedia("(min-width: 980px)").matches;
     if(isDesktop || !root.classList.contains("is-carousel")){
-      dotsWrap.innerHTML="";
-      return;
+      dotsWrap.innerHTML=""; return;
     }
 
-    const pages = Array.from(root.querySelectorAll(".svc-page"));
+    const pages=Array.from(root.querySelectorAll(".svc-page"));
     if(pages.length<=1){ dotsWrap.innerHTML=""; return; }
 
     dotsWrap.innerHTML="";
-    const dots = pages.map((_,i)=>{
+    const dots=pages.map((_,i)=>{
       const b=document.createElement("button");
       b.type="button";
       b.className="dot"+(i===0?" active":"");
       b.setAttribute("aria-label",`Ir a página ${i+1} de servicios`);
       on(b,"click",()=>{
-        const w=Math.max(1,root.clientWidth);
+        const w=Math.max(1, pages[0]?.getBoundingClientRect().width || root.clientWidth);
         root.scrollTo({left:w*i,behavior:"smooth"});
       });
       dotsWrap.appendChild(b);
@@ -850,7 +799,7 @@
 
     let raf=0;
     const sync=()=>{
-      const w=Math.max(1,root.clientWidth);
+      const w=Math.max(1, pages[0]?.getBoundingClientRect().width || root.clientWidth);
       const i=Math.round(root.scrollLeft/w);
       setActive(Math.max(0,Math.min(pages.length-1,i)));
     };
@@ -876,8 +825,6 @@
     ]);
 
     normalizeRoutes(document);
-
-    /* ✅ FIX: wheel se bindea cuando YA existen tabs del header */
     bindWheelOnTabs();
 
     initForms();
