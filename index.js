@@ -858,6 +858,7 @@ function buildHeroSystemTabs(groupKey){
   "use strict";
 
   function addPreconnect(href){
+    if(document.querySelector(`link[rel="preconnect"][href="${href}"]`)) return;
     const l=document.createElement("link");
     l.rel="preconnect";
     l.href=href;
@@ -876,12 +877,16 @@ function buildHeroSystemTabs(groupKey){
     addPreconnect("https://maps.gstatic.com");
 
     const src = root.getAttribute("data-embed");
+    if(!src) return;
+
     const iframe = document.createElement("iframe");
     iframe.src = src;
-    iframe.loading = "lazy"; // ok aunque ya sea lazy-on-demand
+    iframe.loading = "lazy";
     iframe.referrerPolicy = "no-referrer-when-downgrade";
     iframe.allowFullscreen = true;
     iframe.title = "Mapa: ExpIRI TI";
+    iframe.setAttribute("aria-hidden","false");
+
     root.innerHTML = "";
     root.appendChild(iframe);
   }
@@ -890,13 +895,11 @@ function buildHeroSystemTabs(groupKey){
     const root = document.getElementById("mapExpiriti");
     if(!root) return;
 
-    // Click en placeholder
+    // Click: si dan clic en el CTA de “Cargar mapa”, embebe.
+    // Si dan clic en “Ver en Google Maps”, deja que navegue normal.
     root.addEventListener("click", function(e){
-      const a = e.target.closest("a");
-      if(!a) return;
-      // si clic fue en “Ver en Google Maps” abre en nueva pestaña normal
-      // pero si quieren cargar mapa, evitamos navegación:
-      if(e.target && e.target.classList && e.target.classList.contains("map-cover-cta")){
+      const cta = e.target.closest(".map-cover-cta");
+      if(cta){
         e.preventDefault();
         loadMap(root);
       }
@@ -911,13 +914,11 @@ function buildHeroSystemTabs(groupKey){
             io.disconnect();
           }
         });
-      }, { rootMargin: "200px 0px" }); // carga un poco antes
+      }, { rootMargin: "200px 0px" });
       io.observe(root);
     }
   }
 
-  // Si tu index.js ya tiene init principal, llama initLazyMap() dentro.
-  // Si no, esto lo arranca seguro:
   if(document.readyState==="loading"){
     document.addEventListener("DOMContentLoaded", initLazyMap, { once:true });
   }else{
@@ -925,6 +926,9 @@ function buildHeroSystemTabs(groupKey){
   }
 })();
 
+
+
+            
             
   /* =========================
      13) Eventos globales
