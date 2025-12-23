@@ -300,4 +300,57 @@ html,body{overscroll-behavior-x:none}
 /* 6) Si algún botón viene como <a> en hero, quita subrayado */
 .hero-gallery-groups > a{text-decoration:none;display:inline-flex;align-items:center}
 
+/* =========================================================
+   FIX OVERFLOW HERO (mobile): nada se sale de 100vw
+========================================================= */
+
+/* el grid del hero NO estaba cubierto por tu guard .grid-2>*{min-width:0} */
+.hero-grid > *{min-width:0}
+
+/* contención dura del bloque del hero */
+.hero, .hero .container, .hero-grid, .hero-gallery-card{max-width:100%}
+.hero-gallery-card{overflow:hidden} /* antes lo tenías overflow:visible (eso ayuda a “salirse”) */
+
+/* los scrollers horizontales del hero: que no empujen layout */
+.hero-gallery-groups,
+.hero-gallery-tabs{
+  max-width:100%;
+  min-width:0;
+}
+
+/* si el mask/scroll-padding en algunos Android provoca “layout overflow”, lo neutralizamos en móvil */
+@media (max-width:520px){
+  .hero-gallery-groups,
+  .prod-tabs,
+  .promo-filters{
+    -webkit-mask-image:none;
+    mask-image:none;
+    padding-left:0;
+    padding-right:0;
+  }
+}
+
+/* =========================================================
+   FIX PROMOS: que NO se recorten (mostrar imagen completa)
+========================================================= */
+
+/* el contenedor mantiene forma cuadrada, la imagen se ajusta sin recorte */
+.promo-grid > img,
+.promo-item img{
+  height:auto !important;              /* mata tu clamp anterior */
+  aspect-ratio:1/1;                    /* flyers cuadrados */
+  object-fit:contain !important;       /* clave: no recorta */
+  background:rgba(255,255,255,.03);    /* “marco” si sobra espacio */
+  border-radius:var(--radius);
+}
+
+/* si quieres que en desktop no se vean enormes, limita el tamaño visual */
+@media (min-width:980px){
+  .promo-grid > img,
+  .promo-item img{
+    max-height:520px;
+  }
+}
+
+
 
