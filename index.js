@@ -857,14 +857,15 @@ function buildHeroSystemTabs(groupKey){
 (function(){
   "use strict";
 
-  function addPreconnect(href){
-    if(document.querySelector(`link[rel="preconnect"][href="${href}"]`)) return;
-    const l=document.createElement("link");
-    l.rel="preconnect";
-    l.href=href;
-    l.crossOrigin="anonymous";
-    document.head.appendChild(l);
-  }
+function addPreconnect(href){
+  if(document.querySelector(`link[rel="preconnect"][href="${href}"]`)) return;
+  const l=document.createElement("link");
+  l.rel="preconnect";
+  l.href=href;
+  l.crossOrigin="anonymous";
+  document.head.appendChild(l);
+}
+
 
   function loadMap(root){
     if(!root || root.dataset.loaded==="1") return;
@@ -890,32 +891,35 @@ function buildHeroSystemTabs(groupKey){
     root.appendChild(iframe);
   }
 
-  function initLazyMap(){
-    const root=document.getElementById("mapExpiriti");
-    if(!root) return;
+function initLazyMap(){
+  const root=document.getElementById("mapExpiriti");
+  if(!root) return;
 
-    // Click robusto: cualquier click dentro del CTA con clase .map-cover-cta carga el mapa
-    root.addEventListener("click", (e)=>{
-      const cta=e.target.closest(".map-cover-cta");
-      if(!cta) return;
-      e.preventDefault();
-      loadMap(root);
-    });
+  if(root.dataset.mapBound==="1") return;
+  root.dataset.mapBound="1";
 
-    // Autoload en viewport
-    if("IntersectionObserver" in window){
-      const io=new IntersectionObserver((entries)=>{
-        entries.forEach(ent=>{
-          if(ent.isIntersecting){
-            loadMap(root);
-            io.disconnect();
-          }
-        });
-      }, { rootMargin:"200px 0px" });
-      io.observe(root);
-    }
+  root.addEventListener("click",(e)=>{
+    const cta=e.target.closest(".map-cover-cta");
+    if(!cta) return;
+    e.preventDefault();
+    loadMap(root);
+  });
+
+  if("IntersectionObserver" in window){
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting){
+          loadMap(root);
+          io.disconnect();
+        }
+      });
+    }, { rootMargin:"200px 0px" });
+    io.observe(root);
   }
+}
 
+
+   
   if(document.readyState==="loading"){
     document.addEventListener("DOMContentLoaded", initLazyMap, { once:true });
   }else{
