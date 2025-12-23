@@ -790,3 +790,93 @@ html,body{overscroll-behavior-x:none}
 }
 
 
+/* =========================================================
+   PATCH V2025.12.21-4 (FIX): Texto SOLO en Reels Servicios + Promos mobile 1-col grande
+   Pegar AL FINAL de mainindex.css
+========================================================= */
+
+/* ================================
+   A) REELS SERVICIOS: que SI haya texto en botones
+   (NO toca contable/comercial/nube/productividad)
+================================ */
+
+/* 1) Re-habilita texto SOLO dentro del carrusel/section de SERVICIOS */
+#carouselReels-servicios ~ .reel-sys-tabs .reel-tab span,
+#carouselReels-servicios .reel-sys-tabs .reel-tab span,
+#carouselReels-servicios .reel-tab span{
+  display:block !important;
+}
+
+/* 2) Layout SOLO para SERVICIOS: icono arriba, texto abajo */
+#carouselReels-servicios ~ .reel-sys-tabs .reel-tab,
+#carouselReels-servicios .reel-sys-tabs .reel-tab,
+#carouselReels-servicios .reel-tab{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  gap:8px !important;
+  padding:12px 10px !important;
+  min-height:92px !important;
+}
+
+/* 3) Logo SOLO SERVICIOS: visible y más grande (sin “caja” que lo aplaste) */
+#carouselReels-servicios ~ .reel-sys-tabs .reel-tab img,
+#carouselReels-servicios .reel-sys-tabs .reel-tab img,
+#carouselReels-servicios .reel-tab img{
+  width:auto !important;
+  height:44px !important;
+  max-width:150px !important;
+  object-fit:contain !important;
+
+  /* quita el tile/box de parches anteriores */
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  padding:0 !important;
+}
+
+/* 4) Texto SOLO SERVICIOS: 1-2 líneas, sin romper */
+#carouselReels-servicios ~ .reel-sys-tabs .reel-tab span,
+#carouselReels-servicios .reel-sys-tabs .reel-tab span,
+#carouselReels-servicios .reel-tab span{
+  font-size:.86rem !important;
+  font-weight:900 !important;
+  line-height:1.1 !important;
+
+  /* permite 2 líneas y corta elegante */
+  display:-webkit-box !important;
+  -webkit-line-clamp:2 !important;
+  -webkit-box-orient:vertical !important;
+  overflow:hidden !important;
+}
+
+/* ================================
+   B) PROMOS: mobile 1 columna + más grandes
+================================ */
+@media (max-width:980px){
+  .promo-grid{
+    grid-template-columns:1fr !important; /* 1 por fila => hacia abajo */
+    gap:14px !important;
+  }
+
+  /* Imagen más grande en móvil (sin recorte) */
+  .promo-grid > img,
+  .promo-item img{
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:4/5 !important;       /* “poster” grande en móvil */
+    object-fit:contain !important;
+    max-height:none !important;
+  }
+}
+
+/* Extra: móviles muy chicos */
+@media (max-width:420px){
+  .promo-grid > img,
+  .promo-item img{
+    aspect-ratio:1/1 !important;       /* más compacto si la pantalla es mini */
+  }
+}
+
