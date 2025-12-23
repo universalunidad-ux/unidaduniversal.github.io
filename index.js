@@ -853,6 +853,79 @@ function buildHeroSystemTabs(groupKey){
     if(yearSpan) yearSpan.textContent=new Date().getFullYear();
   });
 
+/* ===== MAPA: lazy-load on demand (PageSpeed friendly) ===== */
+(function(){
+  "use strict";
+
+  function addPreconnect(href){
+    const l=document.createElement("link");
+    l.rel="preconnect";
+    l.href=href;
+    l.crossOrigin="anonymous";
+    document.head.appendChild(l);
+  }
+
+  function loadMap(root){
+    if(!root || root.dataset.loaded==="1") return;
+    root.dataset.loaded="1";
+
+    // Preconnect SOLO cuando se va a cargar el mapa
+    addPreconnect("https://www.google.com");
+    addPreconnect("https://www.google.com.mx");
+    addPreconnect("https://maps.google.com");
+    addPreconnect("https://maps.gstatic.com");
+
+    const src = root.getAttribute("data-embed");
+    const iframe = document.createElement("iframe");
+    iframe.src = src;
+    iframe.loading = "lazy"; // ok aunque ya sea lazy-on-demand
+    iframe.referrerPolicy = "no-referrer-when-downgrade";
+    iframe.allowFullscreen = true;
+    iframe.title = "Mapa: ExpIRI TI";
+    root.innerHTML = "";
+    root.appendChild(iframe);
+  }
+
+  function initLazyMap(){
+    const root = document.getElementById("mapExpiriti");
+    if(!root) return;
+
+    // Click en placeholder
+    root.addEventListener("click", function(e){
+      const a = e.target.closest("a");
+      if(!a) return;
+      // si clic fue en “Ver en Google Maps” abre en nueva pestaña normal
+      // pero si quieren cargar mapa, evitamos navegación:
+      if(e.target && e.target.classList && e.target.classList.contains("map-cover-cta")){
+        e.preventDefault();
+        loadMap(root);
+      }
+    });
+
+    // Carga automática al entrar en viewport (suave)
+    if("IntersectionObserver" in window){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(ent=>{
+          if(ent.isIntersecting){
+            loadMap(root);
+            io.disconnect();
+          }
+        });
+      }, { rootMargin: "200px 0px" }); // carga un poco antes
+      io.observe(root);
+    }
+  }
+
+  // Si tu index.js ya tiene init principal, llama initLazyMap() dentro.
+  // Si no, esto lo arranca seguro:
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded", initLazyMap, { once:true });
+  }else{
+    initLazyMap();
+  }
+})();
+
+            
   /* =========================
      13) Eventos globales
   ========================= */
