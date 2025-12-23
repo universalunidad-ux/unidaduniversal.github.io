@@ -323,26 +323,33 @@
     });
   }
 
-  function buildHeroSystemTabs(groupKey){
-    const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
-    const c=HERO_GALLERY.tabsContainer; if(!c) return;
-    c.innerHTML="";
-    const def=g.defaultSys;
+function buildHeroSystemTabs(groupKey){
+  const g=HERO_GALLERY_DATA[groupKey]; if(!g) return;
+  const c=HERO_GALLERY.tabsContainer; if(!c) return;
+  c.innerHTML="";
+  const def=g.defaultSys;
 
-    Object.entries(g.systems||{}).forEach(([sysKey,sys])=>{
-      const btn=document.createElement("button");
-      btn.type="button";
-      btn.className="hero-tab"+(sysKey===def?" active":"");
-      btn.dataset.group=groupKey; btn.dataset.sys=sysKey;
-      btn.innerHTML=`<img src="${prefix(sys.icon)}" alt="${sys.label}" width="56" height="56" loading="lazy" decoding="async"><span>${sys.label}</span>`;
-      on(btn,"click",()=>{
-        QA(".hero-tab",c).forEach(b=>b.classList.toggle("active",b===btn));
-        buildHeroGallerySlides(groupKey,sysKey);
-        HERO_GALLERY.carousel?.__resetHeroSync?.();
-      });
-      c.appendChild(btn);
+  Object.entries(g.systems||{}).forEach(([sysKey,sys])=>{
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="hero-tab"+(sysKey===def?" active":"");
+    btn.dataset.group=groupKey; btn.dataset.sys=sysKey;
+
+    // ✅ SOLO ICONO (sin texto redundante), accesible por aria-label
+    btn.setAttribute("aria-label", sys.label || sysKey);
+    btn.setAttribute("title", sys.label || sysKey); // opcional
+    btn.innerHTML =
+      `<img src="${prefix(sys.icon)}" alt="" width="56" height="56" loading="lazy" decoding="async">`;
+
+    on(btn,"click",()=>{
+      QA(".hero-tab",c).forEach(b=>b.classList.toggle("active",b===btn));
+      buildHeroGallerySlides(groupKey,sysKey);
+      HERO_GALLERY.carousel?.__resetHeroSync?.();
     });
-  }
+    c.appendChild(btn);
+  });
+}
+
 
   function initHeroGallery(){
     const groupNav=HERO_GALLERY.groupNav;
