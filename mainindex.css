@@ -307,9 +307,6 @@ html,body{overscroll-behavior-x:none}
 /* el grid del hero NO estaba cubierto por tu guard .grid-2>*{min-width:0} */
 .hero-grid > *{min-width:0}
 
-/* contención dura del bloque del hero */
-.hero, .hero .container, .hero-grid, .hero-gallery-card{max-width:100%}
-.hero-gallery-card{overflow:hidden} /* antes lo tenías overflow:visible (eso ayuda a “salirse”) */
 
 /* los scrollers horizontales del hero: que no empujen layout */
 .hero-gallery-groups,
@@ -349,6 +346,125 @@ html,body{overscroll-behavior-x:none}
   .promo-grid > img,
   .promo-item img{
     max-height:520px;
+  }
+}
+
+/* =========================================================
+   HERO: misma caja que el resto (no full-bleed)
+========================================================= */
+
+/* Asegura que el hero NO tenga ancho “visual” mayor al container */
+.hero .container{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding-left:max(16px,var(--safe-left));
+  padding-right:max(16px,var(--safe-right));
+}
+
+/* El card del hero debe recortar contenido interno, pero SIN empujar el layout */
+.hero-gallery-card{
+  overflow:hidden;              /* evita overflow fantasma */
+  width:100%;
+  max-width:100%;
+}
+
+/* Importante: el carrusel no debe crecer fuera del card */
+.hero-gallery-card .carousel,
+.hero-gallery-card .carousel-track{
+  max-width:100%;
+}
+
+/* Mantén el guard correcto para grid (evita que algo empuje el ancho) */
+.hero-grid > *{min-width:0}
+
+/* =========================================================
+   ICON TABS HORIZONTALES (HERO + REELS) — responsive
+   - Siempre: icono izquierda + texto derecha
+   - Móvil: más aire, scroller suave
+   - Desktop: más compacto
+========================================================= */
+
+/* 1) Forzar layout horizontal en ambos componentes */
+.hero-tab,
+.reel-tab{
+  display:flex;
+  flex-direction:row;           /* <-- horizontal SIEMPRE */
+  align-items:center;
+  justify-content:flex-start;
+  text-align:left;
+  gap:10px;
+  padding:10px 12px;
+}
+
+/* 2) El “marco” del icono: ya no cuadrado forzado que aplaste logos */
+.hero-tab img,
+.reel-tab img{
+  width:auto;
+  height:26px;                  /* altura consistente para logos horizontales */
+  max-width:110px;              /* evita que un logo enorme rompa el botón */
+  object-fit:contain;
+  border-radius:0;              /* logos horizontales se ven mejor sin “caja” */
+  background:transparent;
+  border:0;
+  padding:0;
+  flex:0 0 auto;
+}
+
+/* 3) Texto: una línea, elipsis */
+.hero-tab span,
+.reel-tab span{
+  font-size:.92rem;
+  font-weight:900;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  flex:1 1 auto;
+  min-width:0;
+}
+
+/* 4) Contenedores: que permitan scroll horizontal en móvil sin romper */
+.hero-gallery-tabs,
+.reel-sys-tabs{
+  display:flex;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  overflow-y:hidden;
+  gap:10px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:10px 10px 12px;
+}
+.hero-gallery-tabs::-webkit-scrollbar,
+.reel-sys-tabs::-webkit-scrollbar{height:0}
+
+/* 5) Cada botón como “pill” estable (ancho mínimo) */
+.hero-tab,
+.reel-tab{
+  flex:0 0 auto;
+  min-width:170px;              /* móvil: se ven como tarjetas/chips */
+  border-radius:14px;
+  border:var(--border);
+  background:rgba(255,255,255,.03);
+}
+
+/* 6) Desktop: más compacto (caben más por fila) */
+@media (min-width:980px){
+  .hero-gallery-tabs,
+  .reel-sys-tabs{
+    overflow:visible;
+    flex-wrap:wrap;             /* desktop: ya no scroller, acomoda */
+    padding:10px 0 0;
+  }
+  .hero-tab,
+  .reel-tab{
+    min-width:0;
+    flex:1 1 220px;             /* botones horizontales que se reparten */
+    padding:10px 12px;
+  }
+  .hero-tab img,
+  .reel-tab img{
+    height:24px;
+    max-width:120px;
   }
 }
 
