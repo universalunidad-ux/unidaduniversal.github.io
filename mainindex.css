@@ -269,6 +269,55 @@ html,body{overscroll-behavior-x:none}
   background:rgba(0,0,0,.25);
 }
 
+.map-embed{
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:18px;
+  overflow:hidden;
+  background:#0b1220;
+  border:1px solid rgba(255,255,255,.08);
+  position:relative;
+}
+
+.map-embed iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
+.map-cover{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  text-decoration:none;
+  color:#fff;
+  background:linear-gradient(
+    180deg,
+    rgba(0,0,0,.35),
+    rgba(0,0,0,.55)
+  );
+  font-weight:700;
+}
+
+.map-cover-title{
+  font-size:16px;
+  text-align:center;
+}
+
+.map-cover-cta{
+  padding:8px 14px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  color:#020617;
+  font-size:13px;
+}
+
+
 /* =========================================================
    PATCH: Unificar estilo de selectores (Promo -> Sistemas -> Hero)
    - Aplica look de .promo-btn a .prod-tabs .tab
