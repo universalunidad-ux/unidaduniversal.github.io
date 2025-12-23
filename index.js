@@ -870,51 +870,48 @@ function buildHeroSystemTabs(groupKey){
     if(!root || root.dataset.loaded==="1") return;
     root.dataset.loaded="1";
 
-    // Preconnect SOLO cuando se va a cargar el mapa
     addPreconnect("https://www.google.com");
     addPreconnect("https://www.google.com.mx");
     addPreconnect("https://maps.google.com");
     addPreconnect("https://maps.gstatic.com");
 
-    const src = root.getAttribute("data-embed");
+    const src=root.getAttribute("data-embed");
     if(!src) return;
 
-    const iframe = document.createElement("iframe");
-    iframe.src = src;
-    iframe.loading = "lazy";
-    iframe.referrerPolicy = "no-referrer-when-downgrade";
-    iframe.allowFullscreen = true;
-    iframe.title = "Mapa: ExpIRI TI";
+    const iframe=document.createElement("iframe");
+    iframe.src=src;
+    iframe.loading="lazy";
+    iframe.referrerPolicy="no-referrer-when-downgrade";
+    iframe.allowFullscreen=true;
+    iframe.title="Mapa: ExpIRI TI";
     iframe.setAttribute("aria-hidden","false");
 
-    root.innerHTML = "";
+    root.innerHTML="";
     root.appendChild(iframe);
   }
 
   function initLazyMap(){
-    const root = document.getElementById("mapExpiriti");
+    const root=document.getElementById("mapExpiriti");
     if(!root) return;
 
-    // Click: si dan clic en el CTA de “Cargar mapa”, embebe.
-    // Si dan clic en “Ver en Google Maps”, deja que navegue normal.
-    root.addEventListener("click", function(e){
-      const cta = e.target.closest(".map-cover-cta");
-      if(cta){
-        e.preventDefault();
-        loadMap(root);
-      }
+    // Click robusto: cualquier click dentro del CTA con clase .map-cover-cta carga el mapa
+    root.addEventListener("click", (e)=>{
+      const cta=e.target.closest(".map-cover-cta");
+      if(!cta) return;
+      e.preventDefault();
+      loadMap(root);
     });
 
-    // Carga automática al entrar en viewport (suave)
+    // Autoload en viewport
     if("IntersectionObserver" in window){
-      const io = new IntersectionObserver((entries)=>{
+      const io=new IntersectionObserver((entries)=>{
         entries.forEach(ent=>{
           if(ent.isIntersecting){
             loadMap(root);
             io.disconnect();
           }
         });
-      }, { rootMargin: "200px 0px" });
+      }, { rootMargin:"200px 0px" });
       io.observe(root);
     }
   }
