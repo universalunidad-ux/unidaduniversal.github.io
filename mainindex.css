@@ -721,3 +721,72 @@ html,body{overscroll-behavior-x:none}
   .hero-tab img,.reel-tab img{ width:78px !important; height:78px !important; padding:12px !important; }
 }
 
+/* =========================================================
+   PATCH 2x2 (HERO + REELS): icon-only + logos VISIBLES
+   Pegar AL FINAL de mainindex.css
+========================================================= */
+
+/* 1) Fuerza grid 2x2 (mata cualquier display:flex/scroll previo) */
+.hero-gallery-tabs,
+.reel-sys-tabs{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:12px !important;
+  overflow:visible !important;
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  padding:12px 12px 14px !important;
+}
+
+/* 2) Botón tipo “tile” centrado */
+.hero-tab,
+.reel-tab{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+
+  min-height:86px !important;
+  padding:14px !important;
+
+  border-radius:14px !important;
+  border:var(--border) !important;
+  background:rgba(255,255,255,.03) !important;
+}
+
+/* 3) Sin texto SIEMPRE */
+.hero-tab span,
+.reel-tab span{ display:none !important; }
+
+/* 4) LOGO visible: grande, sin “cuadro” que lo aplaste */
+.hero-tab img,
+.reel-tab img{
+  width:auto !important;
+  height:52px !important;          /* tamaño real del logo */
+  max-width:170px !important;      /* permite logos horizontales */
+  object-fit:contain !important;
+
+  /* clave: quitar la “caja” */
+  padding:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+
+  display:block !important;
+  margin:0 auto !important;
+}
+
+/* 5) Ajustes por pantalla */
+@media (max-width:420px){
+  .hero-tab,.reel-tab{ min-height:82px !important; padding:12px !important; }
+  .hero-tab img,.reel-tab img{ height:46px !important; max-width:160px !important; }
+}
+
+@media (min-width:980px){
+  /* en desktop puedes mantener 2x2 si eso quieres, o subir a 4 */
+  .hero-tab,.reel-tab{ min-height:84px !important; }
+  .hero-tab img,.reel-tab img{ height:50px !important; max-width:180px !important; }
+}
+
+
