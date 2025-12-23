@@ -652,4 +652,72 @@ html,body{overscroll-behavior-x:none}
 .reel-tab span{ display:none !important; }
 */
 
+/* =========================================================
+   PATCH ÚNICO (HERO + REELS): SOLO ICONO + ICONOS GRANDES + GRID
+   PÉGALO AL FINAL del mainindex.css
+========================================================= */
+
+/* 0) Apaga el modo scroller/horizontal que te está dejando “tira” */
+.hero-gallery-tabs,
+.reel-sys-tabs{
+  display:grid !important;
+  overflow:visible !important;
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  padding:12px 12px 14px !important;
+  gap:12px !important;
+}
+
+/* HERO: 4 iconos (en móvil chico baja a 3) */
+.hero-gallery-tabs{ grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+@media (max-width:520px){
+  .hero-gallery-tabs{ grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+}
+
+/* REELS: 4 iconos (en móvil chico baja a 3) */
+.reel-sys-tabs{ grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+@media (max-width:520px){
+  .reel-sys-tabs{ grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+}
+
+/* 1) Botones: “tile” centrado (no fila horizontal) */
+.hero-tab,
+.reel-tab{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  gap:0 !important;
+  padding:12px !important;
+  min-width:0 !important;
+}
+
+/* 2) Quita texto SIEMPRE (aunque el JS lo inserte) */
+.hero-tab span,
+.reel-tab span{
+  display:none !important;
+}
+
+/* 3) ICONOS GRANDES (HERO + REELS) */
+.hero-tab img,
+.reel-tab img{
+  width:68px !important;
+  height:68px !important;
+  max-width:none !important;
+
+  object-fit:contain !important;
+  border-radius:16px !important;            /* look “tile” */
+  background:rgba(255,255,255,.04) !important;
+  border:1px solid rgba(255,255,255,.12) !important;
+  padding:10px !important;
+}
+
+/* 4) Ajustes finos por pantalla */
+@media (max-width:420px){
+  .hero-tab img,.reel-tab img{ width:62px !important; height:62px !important; padding:9px !important; }
+}
+@media (min-width:980px){
+  .hero-tab img,.reel-tab img{ width:78px !important; height:78px !important; padding:12px !important; }
+}
 
