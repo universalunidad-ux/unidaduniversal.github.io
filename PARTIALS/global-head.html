@@ -1,37 +1,24 @@
-<!-- /PARTIALS/global-head.html -->
-<!-- 🔹 Meta básicos -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#0b0f14" />
 
-<!-- 🔹 Open Graph / Social -->
+<meta name="expiriti-base" content="/unidaduniversal.github.io/">
+
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="ExpIRI TI | Distribuidor CONTPAQi" />
 <meta property="og:locale" content="es_MX" />
 <meta name="twitter:card" content="summary_large_image" />
-<!-- Se resuelve a absoluto dentro del repo -->
 <meta property="og:image" class="js-abs-meta" data-path="IMG/expiriti_og.webp" />
 
-<!-- 🔹 Tipografía y performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
 
-<link rel="preload" as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'">
-
-<noscript>
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-</noscript>
-
-
-<!-- 🔹 YouTube (nocookie) -->
 <link rel="preconnect" href="https://www.youtube-nocookie.com">
 <link rel="preconnect" href="https://i.ytimg.com">
 
-<!-- 🔹 Íconos / Manifest (se auto-ajustan) -->
 <link rel="apple-touch-icon" sizes="180x180" class="js-abs" data-href="IMG/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" class="js-abs" data-href="IMG/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" class="js-abs" data-href="IMG/favicon-16x16.png">
@@ -40,26 +27,35 @@
 <link rel="icon" type="image/png" sizes="192x192" class="js-abs" data-href="IMG/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" class="js-abs" data-href="IMG/android-chrome-512x512.png">
 
-<!-- 🔹 CSS global (se auto-ajusta) -->
 <link rel="stylesheet" class="js-abs" data-href="main.css" fetchpriority="high">
 
-<!-- 🔧 Resolver rutas relativo al repo (root o /SISTEMAS/) y compatible con GitHub Pages project site) -->
 <script>
   (function(){
-    // Si es *.github.io/project, repoBase = "/project"; si no, repoBase = ""
-    var isGh = location.hostname.endsWith("github.io");
-    var firstSeg = location.pathname.split("/")[1] || "";
-    var repoBase = isGh && firstSeg ? ("/" + firstSeg) : "";
-    var abs = function(p){ return (repoBase + "/" + p).replace(/\/+/g, "/"); };
+    // 1. Leer la configuración maestra del meta tag (Igual que el Header)
+    var meta = document.querySelector('meta[name="expiriti-base"]');
+    var root = meta && meta.content ? meta.content : "/";
+    
+    // Asegurar formato correcto "/algo/"
+    if(!root.startsWith("/")) root = "/" + root;
+    if(!root.endsWith("/")) root = root + "/";
 
-    // Reescribe <link ... class="js-abs" data-href="...">
-    document.querySelectorAll('link.js-abs[data-href]').forEach(function(el){
-      el.href = abs(el.getAttribute('data-href'));
-    });
+    // 2. Función constructora de URL absoluta
+    var abs = function(p) { 
+        // Elimina barra inicial del path para evitar dobles (//)
+        var cleanP = p.replace(/^\//, ""); 
+        return location.origin + root + cleanP; 
+    };
 
-    // Reescribe <meta property="og:image" class="js-abs-meta" data-path="...">
-    document.querySelectorAll('meta.js-abs-meta[data-path]').forEach(function(el){
-      el.setAttribute('content', location.origin + abs(el.getAttribute('data-path')));
-    });
+    // 3. Aplicar a CSS y Favicons (<link class="js-abs">)
+    var links = document.querySelectorAll('link.js-abs[data-href]');
+    for(var i=0; i<links.length; i++){
+      links[i].href = abs(links[i].getAttribute('data-href'));
+    }
+
+    // 4. Aplicar a Open Graph (<meta class="js-abs-meta">)
+    var metas = document.querySelectorAll('meta.js-abs-meta[data-path]');
+    for(var j=0; j<metas.length; j++){
+      metas[j].setAttribute('content', abs(metas[j].getAttribute('data-path')));
+    }
   })();
 </script>
