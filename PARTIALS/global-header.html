@@ -1,28 +1,37 @@
 <!-- =========================================================
-     Expiriti - GLOBAL HEADER (V5 FINAL)
-     - GH Pages SAFE (evita 404 en /REPO/)
-     - Hide on scroll: solo barra (.gh-bar), drawer siempre funciona
-     - Móvil: Sistemas con tabs + Servicios con carrusel 2 páginas
-     - Rutas: usa data-href / data-src + JS aplica href/src absolutos
-     ========================================================= -->
+  Expiriti - GLOBAL HEADER (V6.2 HARDENED + PAGESPEED)
+  OBJETIVO:
+  - 0x 404 “intermitente” (GH Pages / subcarpetas / header inyectado tarde)
+  - 0 CLS: reserva espacio real del header (mide altura y aplica offset)
+  - Anchors (#) NO quedan debajo del header (scroll-padding-top + fixHashLanding)
+  - Drawer/Tabs/Carousel robustos + BFCache safe
+  NOTAS:
+  - Recomendado en <head> de TODAS las páginas:
+    <meta name="expiriti-base" content="/unidaduniversal.github.io/">
+    (o "/" si estás en dominio raíz)
+========================================================= -->
+
 <header class="gh" id="gh-header" role="banner">
 <style>
-/* ===================== TOKENS ===================== */
-:root{--gh-bg:rgba(7,10,16,.92);--gh-border:rgba(255,255,255,.06);--gh-panel:rgba(10,14,23,.98);--gh-text:var(--text,#e8eef6);--gh-muted:var(--muted,#95a2b3);--gh-brand:var(--brand,#2dd4bf);--gh-brand2:var(--brand-2,#60a5fa);--gh-maxw:var(--maxw,1200px);--gh-height:68px}
-/* ===================== WRAPPER ===================== */
+/* ===== TOKENS ===== */
+:root{--gh-bg:rgba(7,10,16,.92);--gh-border:rgba(255,255,255,.06);--gh-panel:rgba(10,14,23,.98);--gh-text:var(--text,#e8eef6);--gh-muted:var(--muted,#95a2b3);--gh-brand:var(--brand,#2dd4bf);--gh-brand2:var(--brand-2,#60a5fa);--gh-maxw:var(--maxw,1200px);--gh-height:68px;--gh-offset:68px}
+/* ===== GLOBAL OFFSET (NO TAPA CONTENIDO + ANCHORS) ===== */
+html{scroll-padding-top:calc(var(--gh-offset) + 12px)}
+body{padding-top:var(--gh-offset)}
+/* ===== WRAPPER ===== */
 .gh{position:fixed;top:0;left:0;right:0;z-index:9999}.gh *{box-sizing:border-box}
-/* ===================== TOP BAR (HIDE ONLY THIS) ===================== */
+/* ===== TOP BAR (HIDE ONLY THIS) ===== */
 .gh-bar{height:var(--gh-height);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:var(--gh-bg);border-bottom:1px solid var(--gh-border);transition:transform .4s cubic-bezier(.215,.61,.355,1);will-change:transform}
 .gh-bar.is-hidden{transform:translateY(-100%)}
 .gh-container{max-width:var(--gh-maxw);margin:0 auto;padding:12px clamp(12px,2vw,18px);display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;min-width:0}
-/* ===================== BRAND ===================== */
+/* ===== BRAND ===== */
 .gh-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--gh-text);padding:4px 6px;border-radius:999px;transition:.2s ease;min-width:0}
 .gh-brand:hover{background:rgba(255,255,255,.04);transform:translateY(-1px)}
 .gh-brand img{width:44px;height:44px;border-radius:12px;flex:0 0 44px}
 .gh-brand-title{display:flex;flex-direction:column;line-height:1.1;min-width:0}
 .gh-brand-title .name{font-size:16px;font-weight:650;letter-spacing:.02em;color:#fff;white-space:nowrap}
 .gh-brand-title .sub{font-size:13px;color:var(--gh-muted);white-space:nowrap}
-/* ===================== DESKTOP NAV ===================== */
+/* ===== DESKTOP NAV ===== */
 .gh-nav{justify-self:center;min-width:0}
 .gh-nav>ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;align-items:center;min-width:0}
 .gh-nav>ul>li{display:flex;align-items:center}
@@ -30,12 +39,12 @@
 .gh-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));transform:scaleX(0);transform-origin:center;opacity:0;transition:.2s ease}
 .gh-nav a:hover::after,.gh-nav a.active-parent::after{transform:scaleX(1);opacity:1}
 .gh-nav a.active-parent{color:var(--gh-brand)}
-/* ===================== DROPDOWNS ===================== */
+/* ===== DROPDOWNS ===== */
 .gh-has-dd{position:relative}
 .gh-dd{position:absolute;top:calc(100% + 10px);left:0;background:var(--gh-panel);border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 45px rgba(0,0,0,.6);border-radius:18px;padding:14px;z-index:1000;visibility:hidden;opacity:0;transform:translateY(10px);transition:opacity .18s ease,transform .18s ease,visibility 0s linear .22s}
 .gh-dd::before{content:"";position:absolute;top:-18px;left:0;width:100%;height:18px;background:transparent}
 .gh-has-dd:focus-within .gh-dd,.gh-has-dd:hover .gh-dd{visibility:visible;opacity:1;transform:translateY(0);transition:opacity .18s ease,transform .18s ease,visibility 0s linear 0s}
-/* ===================== MEGA MENU ===================== */
+/* ===== MEGA MENU ===== */
 .gh-dd.mega{left:50%;transform:translate(-50%,10px);width:min(980px,calc(100vw - 24px));padding:20px}
 .gh-has-dd:hover .gh-dd.mega,.gh-has-dd:focus-within .gh-dd.mega{transform:translate(-50%,0)}
 .gh-mega{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
@@ -51,17 +60,17 @@
 .gh-link strong{font-size:13px;font-weight:650;color:#fff;line-height:1.15}
 .gh-desc{margin:0;font-size:11px;line-height:1.35;color:var(--gh-muted);white-space:normal}
 @media(min-width:1200px){.gh-ico32{width:clamp(110px,9vw,150px)}}
-/* ===================== SERVICIOS (DESKTOP DD) ===================== */
+/* ===== SERVICIOS (DESKTOP DD) ===== */
 .gh-list{display:flex;flex-direction:column;gap:8px;min-width:260px}
 .gh-list a{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;color:var(--gh-text);text-decoration:none;background:rgba(17,23,35,.5);border:1px solid rgba(255,255,255,.06);font-size:13px;transition:.18s ease}
 .gh-list a:hover{border-color:rgba(255,255,255,.18);background:rgba(27,33,48,1);transform:translateY(-1px)}
 .gh-ico{width:18px;height:18px;opacity:.9}
-/* ===================== CTA / BURGER ===================== */
+/* ===== CTA / BURGER ===== */
 .gh-cta{display:flex;gap:8px;align-items:center}
 .gh-btn{border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--gh-text);padding:8px 14px;border-radius:999px;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:6px;transition:.18s ease}
 .gh-btn:hover{background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));color:#020617;border-color:transparent;transform:translateY(-1px)}
 .gh-burger{display:none;border:1px solid rgba(255,255,255,.22);background:rgba(15,23,42,.9);color:var(--gh-text);padding:8px 10px;border-radius:12px;font-size:18px;line-height:1;cursor:pointer}
-/* ===================== MOBILE DRAWER ===================== */
+/* ===== MOBILE DRAWER ===== */
 .gh-dim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.18s ease;z-index:10010}
 .gh-drawer{position:fixed;top:0;right:0;height:100vh;height:100dvh;width:min(92vw,420px);background:rgba(8,11,18,.98);border-left:1px solid rgba(255,255,255,.08);transform:translateX(105%);transition:.25s cubic-bezier(.4,0,.2,1);z-index:10011;display:flex;flex-direction:column}
 html.gh-open .gh-dim{opacity:1;visibility:visible}
@@ -78,7 +87,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-ctabtn{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));box-shadow:0 18px 40px rgba(0,0,0,.30);font-weight:800;letter-spacing:.01em}
 .gh-ctabtn:hover{border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
 .gh-ctaico{width:22px;height:22px;object-fit:contain;filter:drop-shadow(0 8px 16px rgba(0,0,0,.30));opacity:.95}
-/* ===================== MOBILE: SISTEMAS (TABS) ===================== */
+/* ===== MOBILE: SISTEMAS (TABS) ===== */
 .gh-acc{border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden}
 .gh-msys,.gh-msvc{padding:10px 10px 14px;margin-top:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);border-radius:18px}
 .gh-msys-head{padding:6px 4px 10px}
@@ -105,7 +114,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-mpromo-txt strong{color:#fff;font-weight:900;font-size:13px}
 .gh-mpromo-txt span{color:var(--gh-muted);font-size:11px}
 .gh-mpromo-chip{margin-left:auto;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;color:#020617;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
-/* ===================== MOBILE: SERVICIOS (CAROUSEL) ===================== */
+/* ===== MOBILE: SERVICIOS (CAROUSEL) ===== */
 .gh-msvc{margin-top:12px}
 .gh-svcwrap{position:relative;margin-top:6px;border-radius:18px}
 .gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:12px;padding:2px 2px 8px;scrollbar-width:none}
@@ -121,31 +130,28 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-svcdots{display:flex;justify-content:center;gap:8px;margin-top:8px}
 .gh-svcdots .dot{width:8px;height:8px;border-radius:999px;border:0;background:rgba(255,255,255,.22);cursor:pointer}
 .gh-svcdots .dot.is-active{width:18px;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
-/* ===================== RESPONSIVE ===================== */
+/* ===== RESPONSIVE ===== */
 @media(max-width:980px){.gh-container{grid-template-columns:1fr auto;gap:8px}.gh-nav{display:none}.gh-burger{display:inline-flex}.gh-cta .gh-btn:first-child{display:none}.gh-brand-title .sub{display:none}}
 @media(max-width:420px){.gh-brand-title .name{font-size:15px}.gh-brand img{width:40px;height:40px;flex-basis:40px}}
 @media(prefers-reduced-motion:reduce){.gh-brand,.gh-nav a::after,.gh-dd,.gh-btn,.gh-dim,.gh-drawer,.gh-bar{transition:none!important}}
 </style>
 
-<!-- ===================== TOP BAR ===================== -->
 <div class="gh-bar" id="gh-bar">
   <div class="gh-container">
-    <!-- Brand -->
-    <a class="gh-brand js-abs-href" data-href="index.html" aria-label="Inicio Expiriti">
-      <img class="js-abs-src gh-logo" data-src="IMG/expiritilogo.webp"
-           src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%232dd4bf'/%3E%3Cstop offset='1' stop-color='%2360a5fa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='44' height='44' rx='12' fill='%230b1120'/%3E%3Crect x='2' y='2' width='40' height='40' rx='10' fill='url(%23g)' opacity='.18'/%3E%3Cpath d='M16 30V14h12v3H20v3h7v3h-7v4h8v3H16z' fill='%23e8eef6' opacity='.85'/%3E%3C/svg%3E"
-           width="44" height="44" alt="Expiriti" decoding="async" fetchpriority="high">
+    <!-- BRAND (fallback real + data-* para normalizar base absoluta) -->
+    <a class="gh-brand js-abs-href" href="index.html" data-href="index.html" aria-label="Inicio Expiriti">
+      <img class="js-abs-src gh-logo" src="IMG/expiritilogo.webp" data-src="IMG/expiritilogo.webp"
+        onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2744%27 height=%2744%27 viewBox=%270 0 44 44%27%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop stop-color=%27%232dd4bf%27/%3E%3Cstop offset=%271%27 stop-color=%27%2360a5fa%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2744%27 height=%2744%27 rx=%2712%27 fill=%27%230b1120%27/%3E%3Crect x=%272%27 y=%272%27 width=%2740%27 height=%2740%27 rx=%2710%27 fill=%27url(%23g)%27 opacity=%27.18%27/%3E%3Cpath d=%27M16 30V14h12v3H20v3h7v3h-7v4h8v3H16z%27 fill=%27%23e8eef6%27 opacity=%27.85%27/%3E%3C/svg%3E';"
+        width="44" height="44" alt="Expiriti" decoding="async" fetchpriority="high">
       <div class="gh-brand-title"><span class="name">ExpIRI TI</span><span class="sub">Expertos en CONTPAQi</span></div>
     </a>
 
-    <!-- Desktop nav -->
     <nav class="gh-nav" aria-label="Principal">
       <ul>
-        <li><a class="js-abs-href" data-href="index.html">Inicio</a></li>
+        <li><a class="js-abs-href" href="index.html" data-href="index.html">Inicio</a></li>
 
-        <!-- Sistemas mega -->
         <li class="gh-has-dd">
-          <a class="js-abs-href" data-href="index.html#productos-con" aria-haspopup="true" aria-expanded="false">Sistemas</a>
+          <a class="js-abs-href" href="index.html#productos-con" data-href="index.html#productos-con" aria-haspopup="true" aria-expanded="false">Sistemas</a>
           <div class="gh-dd mega" role="menu" aria-label="Sistemas">
             <div class="gh-mega">
 
@@ -153,10 +159,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
                 <h4>Contables</h4>
                 <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Desktop</div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabilidad.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabilidad.webp" alt=""><div class="gh-link-content"><strong>Contabilidad</strong><span class="gh-desc">Pólizas y contabilidad electrónica.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/nominas.html"><img class="gh-ico32 js-abs-src" data-src="IMG/nominas.webp" alt=""><div class="gh-link-content"><strong>Nóminas</strong><span class="gh-desc">Cálculo y timbrado.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/bancos.html"><img class="gh-ico32 js-abs-src" data-src="IMG/bancos.webp" alt=""><div class="gh-link-content"><strong>Bancos</strong><span class="gh-desc">Conciliación y tesorería.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-ico32 js-abs-src" data-src="IMG/xml.webp" alt=""><div class="gh-link-content"><strong>XML en Línea+</strong><span class="gh-desc">CFDI del SAT para contabilidad.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/contabilidad.html" data-href="SISTEMAS/contabilidad.html"><img class="gh-ico32 js-abs-src" src="IMG/contabilidad.webp" data-src="IMG/contabilidad.webp" alt=""><div class="gh-link-content"><strong>Contabilidad</strong><span class="gh-desc">Pólizas y contabilidad electrónica.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/nominas.html" data-href="SISTEMAS/nominas.html"><img class="gh-ico32 js-abs-src" src="IMG/nominas.webp" data-src="IMG/nominas.webp" alt=""><div class="gh-link-content"><strong>Nóminas</strong><span class="gh-desc">Cálculo y timbrado.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/bancos.html" data-href="SISTEMAS/bancos.html"><img class="gh-ico32 js-abs-src" src="IMG/bancos.webp" data-src="IMG/bancos.webp" alt=""><div class="gh-link-content"><strong>Bancos</strong><span class="gh-desc">Conciliación y tesorería.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/xmlenlinea.html" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-ico32 js-abs-src" src="IMG/xml.webp" data-src="IMG/xml.webp" alt=""><div class="gh-link-content"><strong>XML en Línea+</strong><span class="gh-desc">CFDI del SAT para contabilidad.</span></div></a></li>
                 </ul>
               </div>
 
@@ -164,10 +170,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
                 <h4>Comerciales</h4>
                 <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Desktop</div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialstart.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialstart.webp" alt=""><div class="gh-link-content"><strong>Comercial Start</strong><span class="gh-desc">Ventas e inventario básico.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpro.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialpro.webp" alt=""><div class="gh-link-content"><strong>Comercial Pro</strong><span class="gh-desc">Alto volumen y sucursales.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/comercialpremium.html"><img class="gh-ico32 js-abs-src" data-src="IMG/comercialpremium.webp" alt=""><div class="gh-link-content"><strong>Comercial Premium</strong><span class="gh-desc">Control y reportes.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" data-src="IMG/factura.webp" alt=""><div class="gh-link-content"><strong>Factura Electrónica</strong><span class="gh-desc">Timbrado y CFDI 4.0.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/comercialstart.html" data-href="SISTEMAS/comercialstart.html"><img class="gh-ico32 js-abs-src" src="IMG/comercialstart.webp" data-src="IMG/comercialstart.webp" alt=""><div class="gh-link-content"><strong>Comercial Start</strong><span class="gh-desc">Ventas e inventario básico.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/comercialpro.html" data-href="SISTEMAS/comercialpro.html"><img class="gh-ico32 js-abs-src" src="IMG/comercialpro.webp" data-src="IMG/comercialpro.webp" alt=""><div class="gh-link-content"><strong>Comercial Pro</strong><span class="gh-desc">Alto volumen y sucursales.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/comercialpremium.html" data-href="SISTEMAS/comercialpremium.html"><img class="gh-ico32 js-abs-src" src="IMG/comercialpremium.webp" data-src="IMG/comercialpremium.webp" alt=""><div class="gh-link-content"><strong>Comercial Premium</strong><span class="gh-desc">Control y reportes.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/facturaelectronica.html" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-ico32 js-abs-src" src="IMG/factura.webp" data-src="IMG/factura.webp" alt=""><div class="gh-link-content"><strong>Factura Electrónica</strong><span class="gh-desc">Timbrado y CFDI 4.0.</span></div></a></li>
                 </ul>
               </div>
 
@@ -175,10 +181,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
                 <h4>Nube</h4>
                 <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>Soluciones nube</div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/contabiliza.html"><img class="gh-ico32 js-abs-src" data-src="IMG/contabiliza.webp" alt=""><div class="gh-link-content"><strong>Contabiliza</strong><span class="gh-desc">Contabilidad en la nube.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/analiza.html"><img class="gh-ico32 js-abs-src" data-src="IMG/analiza.webp" alt=""><div class="gh-link-content"><strong>Analiza</strong><span class="gh-desc">Dashboards y BI.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/despachos.html"><img class="gh-ico32 js-abs-src" data-src="IMG/despachos.webp" alt=""><div class="gh-link-content"><strong>Despachos</strong><span class="gh-desc">Gestión integral.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/vende.html"><img class="gh-ico32 js-abs-src" data-src="IMG/vende.webp" alt=""><div class="gh-link-content"><strong>Vende</strong><span class="gh-desc">Punto de venta nube.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/contabiliza.html" data-href="SISTEMAS/contabiliza.html"><img class="gh-ico32 js-abs-src" src="IMG/contabiliza.webp" data-src="IMG/contabiliza.webp" alt=""><div class="gh-link-content"><strong>Contabiliza</strong><span class="gh-desc">Contabilidad en la nube.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/analiza.html" data-href="SISTEMAS/analiza.html"><img class="gh-ico32 js-abs-src" src="IMG/analiza.webp" data-src="IMG/analiza.webp" alt=""><div class="gh-link-content"><strong>Analiza</strong><span class="gh-desc">Dashboards y BI.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/despachos.html" data-href="SISTEMAS/despachos.html"><img class="gh-ico32 js-abs-src" src="IMG/despachos.webp" data-src="IMG/despachos.webp" alt=""><div class="gh-link-content"><strong>Despachos</strong><span class="gh-desc">Gestión integral.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/vende.html" data-href="SISTEMAS/vende.html"><img class="gh-ico32 js-abs-src" src="IMG/vende.webp" data-src="IMG/vende.webp" alt=""><div class="gh-link-content"><strong>Vende</strong><span class="gh-desc">Punto de venta nube.</span></div></a></li>
                 </ul>
               </div>
 
@@ -186,13 +192,13 @@ html.gh-open .gh-drawer{transform:translateX(0)}
                 <h4>Productividad</h4>
                 <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>RRHH y Colaboración</div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/evalua.html"><img class="gh-ico32 js-abs-src" data-src="IMG/evalua.webp" alt=""><div class="gh-link-content"><strong>Evalúa</strong><span class="gh-desc">Clima laboral y NOM-035.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/colabora.html"><img class="gh-ico32 js-abs-src" data-src="IMG/colabora.webp" alt=""><div class="gh-link-content"><strong>Colabora</strong><span class="gh-desc">Seguimiento móvil.</span></div></a></li>
-                  <li><a class="gh-link js-abs-href" data-href="SISTEMAS/personia.html"><img class="gh-ico32 js-abs-src" data-src="IMG/personia.webp" alt=""><div class="gh-link-content"><strong>Personia</strong><span class="gh-desc">Gestión de personal.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/evalua.html" data-href="SISTEMAS/evalua.html"><img class="gh-ico32 js-abs-src" src="IMG/evalua.webp" data-src="IMG/evalua.webp" alt=""><div class="gh-link-content"><strong>Evalúa</strong><span class="gh-desc">Clima laboral y NOM-035.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/colabora.html" data-href="SISTEMAS/colabora.html"><img class="gh-ico32 js-abs-src" src="IMG/colabora.webp" data-src="IMG/colabora.webp" alt=""><div class="gh-link-content"><strong>Colabora</strong><span class="gh-desc">Seguimiento móvil.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="SISTEMAS/personia.html" data-href="SISTEMAS/personia.html"><img class="gh-ico32 js-abs-src" src="IMG/personia.webp" data-src="IMG/personia.webp" alt=""><div class="gh-link-content"><strong>Personia</strong><span class="gh-desc">Gestión de personal.</span></div></a></li>
                 </ul>
                 <div class="gh-subhead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Promociones</div>
                 <ul>
-                  <li><a class="gh-link js-abs-href" data-href="index.html#promociones"><img class="gh-ico32 js-abs-src" data-src="IMG/etiqueta-de-precio.webp" alt=""><div class="gh-link-content"><strong>Promociones</strong><span class="gh-desc">Ver descuentos activos.</span></div></a></li>
+                  <li><a class="gh-link js-abs-href" href="index.html#promociones" data-href="index.html#promociones"><img class="gh-ico32 js-abs-src" src="IMG/etiqueta-de-precio.webp" data-src="IMG/etiqueta-de-precio.webp" alt=""><div class="gh-link-content"><strong>Promociones</strong><span class="gh-desc">Ver descuentos activos.</span></div></a></li>
                 </ul>
               </div>
 
@@ -200,28 +206,26 @@ html.gh-open .gh-drawer{transform:translateX(0)}
           </div>
         </li>
 
-        <!-- Servicios dropdown -->
         <li class="gh-has-dd">
-          <a class="js-abs-href" data-href="index.html#servicios" aria-haspopup="true" aria-expanded="false">Servicios</a>
+          <a class="js-abs-href" href="index.html#servicios" data-href="index.html#servicios" aria-haspopup="true" aria-expanded="false">Servicios</a>
           <div class="gh-dd" role="menu" aria-label="Servicios">
             <div class="gh-list" role="group">
-              <a class="js-abs-href" data-href="SERVICIOS/polizas.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 15l2 2 4-4"></path></svg>Pólizas anuales</a>
-              <a class="js-abs-href" data-href="SERVICIOS/cursos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M8 5h8v10H8z"/></svg>Cursos</a>
-              <a class="js-abs-href" data-href="SERVICIOS/implementaciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>Implementaciones</a>
-              <a class="js-abs-href" data-href="SERVICIOS/migraciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 4l8 8-8 8"/></svg>Migraciones</a>
-              <a class="js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10H7z"/></svg>Servidores virtuales</a>
-              <a class="js-abs-href" data-href="SERVICIOS/soporte.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6a6 6 0 0 0-6 6v4h12v-4a6 6 0 0 0-6-6z"/></svg>Soporte técnico</a>
-              <a class="js-abs-href" data-href="SERVICIOS/desarrollos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>Desarrollos a la medida</a>
+              <a class="js-abs-href" href="SERVICIOS/polizas.html" data-href="SERVICIOS/polizas.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 15l2 2 4-4"></path></svg>Pólizas anuales</a>
+              <a class="js-abs-href" href="SERVICIOS/cursos.html" data-href="SERVICIOS/cursos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M8 5h8v10H8z"/></svg>Cursos</a>
+              <a class="js-abs-href" href="SERVICIOS/implementaciones.html" data-href="SERVICIOS/implementaciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>Implementaciones</a>
+              <a class="js-abs-href" href="SERVICIOS/migraciones.html" data-href="SERVICIOS/migraciones.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 4l8 8-8 8"/></svg>Migraciones</a>
+              <a class="js-abs-href" href="SERVICIOS/servidoresvirtuales.html" data-href="SERVICIOS/servidoresvirtuales.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 7h10v10H7z"/></svg>Servidores virtuales</a>
+              <a class="js-abs-href" href="SERVICIOS/soporte.html" data-href="SERVICIOS/soporte.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6a6 6 0 0 0-6 6v4h12v-4a6 6 0 0 0-6-6z"/></svg>Soporte técnico</a>
+              <a class="js-abs-href" href="SERVICIOS/desarrollos.html" data-href="SERVICIOS/desarrollos.html"><svg class="gh-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>Desarrollos a la medida</a>
             </div>
           </div>
         </li>
 
-        <li><a class="js-abs-href" data-href="index.html#promociones">Promociones</a></li>
-        <li><a class="js-abs-href" data-href="index.html#contacto">Contacto</a></li>
+        <li><a class="js-abs-href" href="index.html#promociones" data-href="index.html#promociones">Promociones</a></li>
+        <li><a class="js-abs-href" href="index.html#contacto" data-href="index.html#contacto">Contacto</a></li>
       </ul>
     </nav>
 
-    <!-- CTA + Burger -->
     <div class="gh-cta">
       <a class="gh-btn" href="tel:+525568437918">55 6843 7918</a>
       <a class="gh-btn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
@@ -230,31 +234,26 @@ html.gh-open .gh-drawer{transform:translateX(0)}
   </div>
 </div>
 
-<!-- ===================== OVERLAY + DRAWER ===================== -->
 <div class="gh-dim" id="gh-dim" hidden></div>
 
 <aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true" hidden>
   <div class="gh-drawer-head">
     <div class="gh-dtitle">
       <div class="gh-dtitle-row">
-        <img class="gh-dtitle-logo js-abs-src" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="26" height="26">
-        <div>
-          <div class="gh-dtitle-name">Expiriti</div>
-          <div class="gh-dtitle-sub">Expertos en CONTPAQi®</div>
-        </div>
+        <img class="gh-dtitle-logo js-abs-src" src="IMG/expiritilogo.webp" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="26" height="26">
+        <div><div class="gh-dtitle-name">Expiriti</div><div class="gh-dtitle-sub">Expertos en CONTPAQi®</div></div>
       </div>
     </div>
     <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
   </div>
 
   <div class="gh-drawer-body">
-    <!-- Quick CTA -->
+
     <div class="gh-mcta gh-mcta-ico" aria-label="Contacto rápido">
-      <a class="gh-ctabtn" href="tel:+525568437918"><img class="gh-ctaico js-abs-src" data-src="IMG/034-telefono.webp" alt="">Llamar</a>
-      <a class="gh-ctabtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener"><img class="gh-ctaico js-abs-src" data-src="IMG/whatsapp.svg" alt="">WhatsApp</a>
+      <a class="gh-ctabtn" href="tel:+525568437918"><img class="gh-ctaico js-abs-src" src="IMG/034-telefono.webp" data-src="IMG/034-telefono.webp" alt="">Llamar</a>
+      <a class="gh-ctabtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener"><img class="gh-ctaico js-abs-src" src="IMG/whatsapp.svg" data-src="IMG/whatsapp.svg" alt="">WhatsApp</a>
     </div>
 
-    <!-- ===================== SISTEMAS (MÓVIL) ===================== -->
     <section class="gh-acc gh-msys" id="gh-msys" aria-label="Sistemas (móvil)">
       <div class="gh-msys-head"><div class="gh-msys-title">Sistemas</div><div class="gh-msys-sub">Elige una categoría</div></div>
 
@@ -268,49 +267,48 @@ html.gh-open .gh-drawer{transform:translateX(0)}
       <div class="gh-msys-panels">
         <div class="gh-panel is-open" data-panel="contables" role="tabpanel">
           <div class="gh-mgrid">
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/contabilidad.html"><img class="gh-mimg js-abs-src" data-src="IMG/contabilidad.webp" alt=""><div class="gh-mmeta"><strong>Contabilidad</strong><span>Pólizas y contabilidad electrónica</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/nominas.html"><img class="gh-mimg js-abs-src" data-src="IMG/nominas.webp" alt=""><div class="gh-mmeta"><strong>Nóminas</strong><span>Cálculo y timbrado</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/bancos.html"><img class="gh-mimg js-abs-src" data-src="IMG/bancos.webp" alt=""><div class="gh-mmeta"><strong>Bancos</strong><span>Conciliación y tesorería</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-mimg js-abs-src" data-src="IMG/xml.webp" alt=""><div class="gh-mmeta"><strong>XML en Línea+</strong><span>CFDI del SAT a contabilidad</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/contabilidad.html" data-href="SISTEMAS/contabilidad.html"><img class="gh-mimg js-abs-src" src="IMG/contabilidad.webp" data-src="IMG/contabilidad.webp" alt=""><div class="gh-mmeta"><strong>Contabilidad</strong><span>Pólizas y contabilidad electrónica</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/nominas.html" data-href="SISTEMAS/nominas.html"><img class="gh-mimg js-abs-src" src="IMG/nominas.webp" data-src="IMG/nominas.webp" alt=""><div class="gh-mmeta"><strong>Nóminas</strong><span>Cálculo y timbrado</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/bancos.html" data-href="SISTEMAS/bancos.html"><img class="gh-mimg js-abs-src" src="IMG/bancos.webp" data-src="IMG/bancos.webp" alt=""><div class="gh-mmeta"><strong>Bancos</strong><span>Conciliación y tesorería</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/xmlenlinea.html" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-mimg js-abs-src" src="IMG/xml.webp" data-src="IMG/xml.webp" alt=""><div class="gh-mmeta"><strong>XML en Línea+</strong><span>CFDI del SAT a contabilidad</span></div></a>
           </div>
         </div>
 
         <div class="gh-panel" data-panel="comerciales" role="tabpanel" hidden>
           <div class="gh-mgrid">
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/comercialstart.html"><img class="gh-mimg js-abs-src" data-src="IMG/comercialstart.webp" alt=""><div class="gh-mmeta"><strong>Comercial Start</strong><span>Ventas e inventario básico</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/comercialpro.html"><img class="gh-mimg js-abs-src" data-src="IMG/comercialpro.webp" alt=""><div class="gh-mmeta"><strong>Comercial Pro</strong><span>Alto volumen y sucursales</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/comercialpremium.html"><img class="gh-mimg js-abs-src" data-src="IMG/comercialpremium.webp" alt=""><div class="gh-mmeta"><strong>Comercial Premium</strong><span>Control y reportes</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-mimg js-abs-src" data-src="IMG/factura.webp" alt=""><div class="gh-mmeta"><strong>Factura Electrónica</strong><span>Timbrado y CFDI 4.0</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/comercialstart.html" data-href="SISTEMAS/comercialstart.html"><img class="gh-mimg js-abs-src" src="IMG/comercialstart.webp" data-src="IMG/comercialstart.webp" alt=""><div class="gh-mmeta"><strong>Comercial Start</strong><span>Ventas e inventario básico</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/comercialpro.html" data-href="SISTEMAS/comercialpro.html"><img class="gh-mimg js-abs-src" src="IMG/comercialpro.webp" data-src="IMG/comercialpro.webp" alt=""><div class="gh-mmeta"><strong>Comercial Pro</strong><span>Alto volumen y sucursales</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/comercialpremium.html" data-href="SISTEMAS/comercialpremium.html"><img class="gh-mimg js-abs-src" src="IMG/comercialpremium.webp" data-src="IMG/comercialpremium.webp" alt=""><div class="gh-mmeta"><strong>Comercial Premium</strong><span>Control y reportes</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/facturaelectronica.html" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-mimg js-abs-src" src="IMG/factura.webp" data-src="IMG/factura.webp" alt=""><div class="gh-mmeta"><strong>Factura Electrónica</strong><span>Timbrado y CFDI 4.0</span></div></a>
           </div>
         </div>
 
         <div class="gh-panel" data-panel="nube" role="tabpanel" hidden>
           <div class="gh-mgrid">
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/contabiliza.html"><img class="gh-mimg js-abs-src" data-src="IMG/contabiliza.webp" alt=""><div class="gh-mmeta"><strong>Contabiliza</strong><span>Contabilidad en la nube</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/analiza.html"><img class="gh-mimg js-abs-src" data-src="IMG/analiza.webp" alt=""><div class="gh-mmeta"><strong>Analiza</strong><span>Dashboards y BI</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/despachos.html"><img class="gh-mimg js-abs-src" data-src="IMG/despachos.webp" alt=""><div class="gh-mmeta"><strong>Despachos</strong><span>Gestión integral</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/vende.html"><img class="gh-mimg js-abs-src" data-src="IMG/vende.webp" alt=""><div class="gh-mmeta"><strong>Vende</strong><span>Punto de venta nube</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/contabiliza.html" data-href="SISTEMAS/contabiliza.html"><img class="gh-mimg js-abs-src" src="IMG/contabiliza.webp" data-src="IMG/contabiliza.webp" alt=""><div class="gh-mmeta"><strong>Contabiliza</strong><span>Contabilidad en la nube</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/analiza.html" data-href="SISTEMAS/analiza.html"><img class="gh-mimg js-abs-src" src="IMG/analiza.webp" data-src="IMG/analiza.webp" alt=""><div class="gh-mmeta"><strong>Analiza</strong><span>Dashboards y BI</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/despachos.html" data-href="SISTEMAS/despachos.html"><img class="gh-mimg js-abs-src" src="IMG/despachos.webp" data-src="IMG/despachos.webp" alt=""><div class="gh-mmeta"><strong>Despachos</strong><span>Gestión integral</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/vende.html" data-href="SISTEMAS/vende.html"><img class="gh-mimg js-abs-src" src="IMG/vende.webp" data-src="IMG/vende.webp" alt=""><div class="gh-mmeta"><strong>Vende</strong><span>Punto de venta nube</span></div></a>
           </div>
         </div>
 
         <div class="gh-panel" data-panel="prod" role="tabpanel" hidden>
           <div class="gh-mgrid">
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/evalua.html"><img class="gh-mimg js-abs-src" data-src="IMG/evalua.webp" alt=""><div class="gh-mmeta"><strong>Evalúa</strong><span>Clima laboral y NOM-035</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/colabora.html"><img class="gh-mimg js-abs-src" data-src="IMG/colabora.webp" alt=""><div class="gh-mmeta"><strong>Colabora</strong><span>Seguimiento móvil</span></div></a>
-            <a class="gh-mcard js-abs-href" data-href="SISTEMAS/personia.html"><img class="gh-mimg js-abs-src" data-src="IMG/personia.webp" alt=""><div class="gh-mmeta"><strong>Personia</strong><span>Gestión de personal</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/evalua.html" data-href="SISTEMAS/evalua.html"><img class="gh-mimg js-abs-src" src="IMG/evalua.webp" data-src="IMG/evalua.webp" alt=""><div class="gh-mmeta"><strong>Evalúa</strong><span>Clima laboral y NOM-035</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/colabora.html" data-href="SISTEMAS/colabora.html"><img class="gh-mimg js-abs-src" src="IMG/colabora.webp" data-src="IMG/colabora.webp" alt=""><div class="gh-mmeta"><strong>Colabora</strong><span>Seguimiento móvil</span></div></a>
+            <a class="gh-mcard js-abs-href" href="SISTEMAS/personia.html" data-href="SISTEMAS/personia.html"><img class="gh-mimg js-abs-src" src="IMG/personia.webp" data-src="IMG/personia.webp" alt=""><div class="gh-mmeta"><strong>Personia</strong><span>Gestión de personal</span></div></a>
             <div class="gh-mcard gh-mcard-ghost" aria-hidden="true"></div>
           </div>
         </div>
       </div>
 
-      <a class="gh-mpromo js-abs-href" data-href="index.html#promociones" aria-label="Promociones">
-        <img class="gh-mpromo-ico js-abs-src" data-src="IMG/etiqueta-de-precio.webp" alt="">
+      <a class="gh-mpromo js-abs-href" href="index.html#promociones" data-href="index.html#promociones" aria-label="Promociones">
+        <img class="gh-mpromo-ico js-abs-src" src="IMG/etiqueta-de-precio.webp" data-src="IMG/etiqueta-de-precio.webp" alt="">
         <div class="gh-mpromo-txt"><strong>Promociones</strong><span>Ver descuentos activos</span></div>
         <span class="gh-mpromo-chip">Ver</span>
       </a>
     </section>
 
-    <!-- ===================== SERVICIOS (MÓVIL) ===================== -->
     <section class="gh-acc gh-msvc" id="gh-msvc" aria-label="Servicios (móvil)">
       <div class="gh-msys-head"><div class="gh-msys-title">Servicios</div><div class="gh-msys-sub">Desliza o usa las flechas</div></div>
 
@@ -318,22 +316,20 @@ html.gh-open .gh-drawer{transform:translateX(0)}
         <button class="gh-svcarrow prev" type="button" aria-label="Servicios anteriores">‹</button>
 
         <div class="gh-svctrack" id="gh-svctrack" role="region" aria-label="Carrusel de servicios" tabindex="0">
-          <!-- Página 1 -->
           <div class="gh-svcpage" aria-label="Servicios página 1">
             <div class="gh-mgrid gh-mgrid-svc">
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/polizas.html"><img class="gh-mimg js-abs-src" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Pólizas anuales</strong><span>Soporte continuo y preventivo</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/implementaciones.html"><img class="gh-mimg js-abs-src" data-src="IMG/025-meeting.webp" alt=""><div class="gh-mmeta"><strong>Implementaciones</strong><span>Instalación y puesta en marcha</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/migraciones.html"><img class="gh-mimg js-abs-src" data-src="IMG/018-transfer.webp" alt=""><div class="gh-mmeta"><strong>Migraciones</strong><span>Datos limpios y validados</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/desarrollos.html"><img class="gh-mimg js-abs-src" data-src="IMG/020-code.webp" alt=""><div class="gh-mmeta"><strong>Desarrollos</strong><span>Integraciones y automatización</span></div></a>
+              <a class="gh-mcard js-abs-href" href="SERVICIOS/polizas.html" data-href="SERVICIOS/polizas.html"><img class="gh-mimg js-abs-src" src="IMG/021-maintenance.webp" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Pólizas anuales</strong><span>Soporte continuo y preventivo</span></div></a>
+              <a class="gh-mcard js-abs-href" href="SERVICIOS/implementaciones.html" data-href="SERVICIOS/implementaciones.html"><img class="gh-mimg js-abs-src" src="IMG/025-meeting.webp" data-src="IMG/025-meeting.webp" alt=""><div class="gh-mmeta"><strong>Implementaciones</strong><span>Instalación y puesta en marcha</span></div></a>
+              <a class="gh-mcard js-abs-href" href="SERVICIOS/migraciones.html" data-href="SERVICIOS/migraciones.html"><img class="gh-mimg js-abs-src" src="IMG/018-transfer.webp" data-src="IMG/018-transfer.webp" alt=""><div class="gh-mmeta"><strong>Migraciones</strong><span>Datos limpios y validados</span></div></a>
+              <a class="gh-mcard js-abs-href" href="SERVICIOS/desarrollos.html" data-href="SERVICIOS/desarrollos.html"><img class="gh-mimg js-abs-src" src="IMG/020-code.webp" data-src="IMG/020-code.webp" alt=""><div class="gh-mmeta"><strong>Desarrollos</strong><span>Integraciones y automatización</span></div></a>
             </div>
           </div>
 
-          <!-- Página 2 -->
           <div class="gh-svcpage" aria-label="Servicios página 2">
             <div class="gh-mgrid gh-mgrid-svc">
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/servidoresvirtuales.html"><img class="gh-mimg js-abs-src" data-src="IMG/023-stairs.webp" alt=""><div class="gh-mmeta"><strong>Servidores virtuales</strong><span>Acceso remoto seguro</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/cursos.html"><img class="gh-mimg js-abs-src" data-src="IMG/024-education.webp" alt=""><div class="gh-mmeta"><strong>Cursos</strong><span>Capacitación para tu equipo</span></div></a>
-              <a class="gh-mcard js-abs-href" data-href="SERVICIOS/soporte.html"><img class="gh-mimg js-abs-src" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Soporte técnico</strong><span>Remoto + WhatsApp</span></div></a>
+              <a class="gh-mcard js-abs-href" href="SERVICIOS/servidoresvirtuales.html" data-href="SERVICIOS/servidoresvirtuales.html"><img class="gh-mimg js-abs-src" src="IMG/023-stairs.webp" data-src="IMG/023-stairs.webp" alt=""><div class="gh-mmeta"><strong>Servidores virtuales</strong><span>Acceso remoto seguro</span></div></a>
+              <a class="gh-mcard js-abs-href" href="SERVICIOS/cursos.html" data-href="SERVICIOS/cursos.html"><img class="gh-mimg js-abs-src" src="IMG/024-education.webp" data-src="IMG/024-education.webp" alt=""><div class="gh-mmeta"><strong>Cursos</strong><span>Capacitación para tu equipo</span></div></a>
+              <a class="gh-mcard js-abs-href" href="SERVICIOS/soporte.html" data-href="SERVICIOS/soporte.html"><img class="gh-mimg js-abs-src" src="IMG/021-maintenance.webp" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Soporte técnico</strong><span>Remoto + WhatsApp</span></div></a>
               <div class="gh-mcard gh-mcard-ghost" aria-hidden="true"></div>
             </div>
           </div>
@@ -354,42 +350,79 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
 <script>
 /* =========================================================
-   Expiriti Header (V5)
-   - repoBase absoluto (GH pages + local) => evita 404 al navegar desde /SISTEMAS/ o /SERVICIOS/
-   - Rutas seguras: NO toca http(s), mailto, tel
-   - Drawer + tabs + carrusel servicios
+  JS - Expiriti Header (V6.2)
+  - base robusta: meta expirit-base / <base> / GH Pages / subcarpeta
+  - aplica rutas incluso si el header se inyecta tarde (MutationObserver)
+  - mide altura real y setea --gh-offset (evita que “se coma” contenido)
+  - anchors: scroll-padding-top + fixHashLanding
 ========================================================= */
-(function(){ "use strict"; if(window.__EXPIRITI_GH_V5__)return; window.__EXPIRITI_GH_V5__=true;
-const Q=(s,c=document)=>c.querySelector(s);
+(()=>{"use strict";if(window.__EXPIRITI_GH_V62__)return;window.__EXPIRITI_GH_V62__=true;
+const Q=(s,c=document)=>c.querySelector(s),QA=(s,c=document)=>Array.from(c.querySelectorAll(s));
+const isExternal=u=>/^(https?:)?\/\//i.test(u)||/^(mailto:|tel:|sms:)/i.test(u);
 
-/* ===== repoBase (GH Pages project site) ===== */
-function getRepoBase(){const isGh=location.hostname.endsWith("github.io"); if(!isGh) return "/"; const parts=location.pathname.split("/").filter(Boolean); return parts.length?"/"+parts[0]+"/":"/";}
-const REPO_BASE=getRepoBase();
-const joinRepo=(p)=>REPO_BASE+String(p||"").replace(/^\/+/,"");
-const isExternal=(u)=>/^(https?:)?\/\//i.test(u)||/^(mailto:|tel:|sms:)/i.test(u);
+/* ===== Base robusta ===== */
+function getBase(){
+  const m=document.querySelector('meta[name="expiriti-base"]');
+  if(m&&m.content){let v=m.content.trim();if(!v.endsWith("/"))v+="/";return v;}
+  const b=document.querySelector("base[href]");
+  if(b){try{const u=new URL(b.getAttribute("href"),location.origin);return u.pathname.endsWith("/")?u.pathname:u.pathname+"/";}catch(e){}}
+  if(location.hostname.endsWith("github.io")){
+    const parts=location.pathname.split("/").filter(Boolean);
+    return parts.length?"/"+parts[0]+"/":"/";
+  }
+  const p=location.pathname;
+  if(/\/(SISTEMAS|SERVICIOS)\//i.test(p)) return p.replace(/\/(SISTEMAS|SERVICIOS)\/.*/i,"/");
+  return "/";
+}
+const BASE=getBase();
+const join=p=>BASE+String(p||"").replace(/^\/+/,"");
 
-/* ===== aplica href/src absolutos desde data-href/data-src ===== */
-function applyAbsPaths(){
-  document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
-    const raw=(a.getAttribute("data-href")||"").trim(); if(!raw) return;
-    if(isExternal(raw)){a.setAttribute("href",raw);return;}
-    if(raw.startsWith("#")){a.setAttribute("href",joinRepo("index.html")+raw);return;}
-    a.setAttribute("href",joinRepo(raw));
+/* ===== Aplica href/src absolutos desde data-* ===== */
+function applyAbs(root=document){
+  QA(".js-abs-href[data-href]",root).forEach(a=>{
+    const raw=(a.getAttribute("data-href")||"").trim();if(!raw)return;
+    if(isExternal(raw)){a.href=raw;return;}
+    if(raw.startsWith("#")){a.href=join("index.html")+raw;return;}
+    a.href=join(raw);
   });
-  document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
-    const raw=(img.getAttribute("data-src")||"").trim(); if(!raw) return;
-    const val=(raw.startsWith("data:")||isExternal(raw))?raw:joinRepo(raw);
-    img.setAttribute("src",val);
+  QA(".js-abs-src[data-src]",root).forEach(el=>{
+    const raw=(el.getAttribute("data-src")||"").trim();if(!raw)return;
+    el.src=(raw.startsWith("data:")||isExternal(raw))?raw:join(raw);
   });
+}
+
+/* ===== Fallback imágenes si faltan assets ===== */
+function bindImgFallback(root=document){
+  QA("img.js-abs-src",root).forEach(img=>{
+    if(img.__fb)return; img.__fb=1;
+    img.addEventListener("error",()=>{ if(img.dataset.fallbackApplied) return;
+      img.dataset.fallbackApplied="1";
+      img.src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='70' viewBox='0 0 220 70'%3E%3Crect width='220' height='70' rx='14' fill='%230b1120'/%3E%3Cpath d='M22 50V20h24v6H30v6h14v6H30v12H22z' fill='%23e8eef6' opacity='.6'/%3E%3Cpath d='M60 50V20h10c10 0 16 6 16 15s-6 15-16 15H60zm8-6h3c6 0 9-3 9-9s-3-9-9-9h-3v18z' fill='%23e8eef6' opacity='.55'/%3E%3C/svg%3E";
+    },{once:false});
+  });
+}
+
+/* ===== Offset real del header: evita que tape contenido ===== */
+function setHeaderOffset(){
+  const bar=Q("#gh-bar");
+  const h=bar?Math.ceil(bar.getBoundingClientRect().height):68;
+  document.documentElement.style.setProperty("--gh-offset",h+"px");
+}
+
+/* ===== Fix para aterrizaje con #hash ===== */
+function fixHashLanding(){
+  const id=location.hash&&location.hash.slice(1); if(!id) return;
+  const el=document.getElementById(id); if(!el) return;
+  requestAnimationFrame(()=>{ el.scrollIntoView({block:"start"}); });
 }
 
 /* ===== Hide on scroll (solo barra) ===== */
 function initScrollHide(){
-  const bar=Q("#gh-bar"); if(!bar) return;
+  const bar=Q("#gh-bar"); if(!bar||bar.__hideInit) return; bar.__hideInit=1;
   let last=window.scrollY||0;
-  const onScroll=()=>{if(document.documentElement.classList.contains("gh-open")) return;
+  const onScroll=()=>{ if(document.documentElement.classList.contains("gh-open")) return;
     const y=window.scrollY||0;
-    if(y>50){(y>last)?bar.classList.add("is-hidden"):bar.classList.remove("is-hidden");}
+    if(y>50){ (y>last)?bar.classList.add("is-hidden"):bar.classList.remove("is-hidden"); }
     else bar.classList.remove("is-hidden");
     last=y;
   };
@@ -399,12 +432,12 @@ function initScrollHide(){
 /* ===== Sistemas tabs (móvil) ===== */
 function initMobileSystems(){
   const root=Q("#gh-msys"); if(!root||root.__inited) return; root.__inited=true;
-  const cats=[...root.querySelectorAll(".gh-cat")],panels=[...root.querySelectorAll(".gh-panel")];
-  const KEY="expiriti_mobile_sys_cat",saved=localStorage.getItem(KEY);
-  const setCat=(cat)=>{
+  const cats=QA(".gh-cat",root),panels=QA(".gh-panel",root);
+  const KEY="expiriti_mobile_sys_cat"; let saved=null; try{saved=localStorage.getItem(KEY);}catch(e){}
+  const setCat=cat=>{
     cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle("is-active",on);b.setAttribute("aria-selected",on?"true":"false");});
     panels.forEach(p=>{const on=p.dataset.panel===cat;p.classList.toggle("is-open",on);p.hidden=!on;});
-    localStorage.setItem(KEY,cat);
+    try{localStorage.setItem(KEY,cat);}catch(e){}
   };
   cats.forEach(b=>b.addEventListener("click",()=>setCat(b.dataset.cat)));
   setCat(saved||"contables");
@@ -413,22 +446,23 @@ function initMobileSystems(){
 /* ===== Servicios carrusel (móvil) ===== */
 function initMobileServices(){
   const root=Q("#gh-msvc"),track=Q("#gh-svctrack"); if(!root||!track||root.__inited) return; root.__inited=true;
-  const pages=[...track.querySelectorAll(".gh-svcpage")];
-  const prev=root.querySelector(".gh-svcarrow.prev"),next=root.querySelector(".gh-svcarrow.next");
-  const dotsWrap=root.querySelector(".gh-svcdots"),dots=dotsWrap?[...dotsWrap.querySelectorAll(".dot")]:[];
-  const idxFromScroll=()=>{const w=track.clientWidth||1;return Math.round(track.scrollLeft/w);};
-  const goTo=(i)=>{const w=track.clientWidth||1;const n=Math.max(0,Math.min(i,pages.length-1));track.scrollTo({left:n*w,behavior:"smooth"});};
+  const pages=QA(".gh-svcpage",track);
+  const prev=Q(".gh-svcarrow.prev",root),next=Q(".gh-svcarrow.next",root);
+  const dots=Q(".gh-svcdots",root)?QA(".dot",Q(".gh-svcdots",root)):[];
+  const idx=()=>{const w=track.clientWidth||1;return Math.round(track.scrollLeft/w);};
+  const go=i=>{const w=track.clientWidth||1;const n=Math.max(0,Math.min(i,pages.length-1));track.scrollTo({left:n*w,behavior:"smooth"});};
   const sync=()=>{
-    const i=idxFromScroll();
+    const i=idx();
     dots.forEach((d,k)=>d.classList.toggle("is-active",k===i));
-    if(prev){prev.disabled=(i===0);prev.style.opacity=prev.disabled?".35":"1";}
-    if(next){next.disabled=(i===pages.length-1);next.style.opacity=next.disabled?".35":"1";}
+    if(prev){prev.disabled=i===0;prev.style.opacity=prev.disabled?".35":"1";}
+    if(next){next.disabled=i===pages.length-1;next.style.opacity=next.disabled?".35":"1";}
   };
-  prev&&prev.addEventListener("click",(e)=>{e.preventDefault();goTo(idxFromScroll()-1);});
-  next&&next.addEventListener("click",(e)=>{e.preventDefault();goTo(idxFromScroll()+1);});
-  dots.forEach((d,i)=>d.addEventListener("click",(e)=>{e.preventDefault();goTo(i);}));
+  prev&&prev.addEventListener("click",e=>{e.preventDefault();go(idx()-1);});
+  next&&next.addEventListener("click",e=>{e.preventDefault();go(idx()+1);});
+  dots.forEach((d,i)=>d.addEventListener("click",e=>{e.preventDefault();go(i);}));
   track.addEventListener("scroll",()=>{requestAnimationFrame(sync);},{passive:true});
-  window.addEventListener("resize",sync); sync();
+  window.addEventListener("resize",()=>{setHeaderOffset();sync();},{passive:true});
+  sync();
 }
 
 /* ===== Drawer open/close ===== */
@@ -441,7 +475,7 @@ function toggleDrawer(show){
     document.documentElement.classList.add("gh-open");
     drawer.setAttribute("aria-hidden","false"); burger.setAttribute("aria-expanded","true");
     document.body.style.overflow="hidden";
-    applyAbsPaths(); initMobileSystems(); initMobileServices();
+    applyAbs(document); bindImgFallback(document); initMobileSystems(); initMobileServices();
   }else{
     document.documentElement.classList.remove("gh-open");
     drawer.setAttribute("aria-hidden","true"); burger.setAttribute("aria-expanded","false");
@@ -451,16 +485,35 @@ function toggleDrawer(show){
 }
 
 /* ===== Click wiring ===== */
-document.addEventListener("click",(e)=>{
-  const isBurger=e.target.closest("#gh-burger");
-  if(isBurger){e.preventDefault();toggleDrawer(!document.documentElement.classList.contains("gh-open"));return;}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("#gh-burger");
+  if(b){e.preventDefault();toggleDrawer(!document.documentElement.classList.contains("gh-open"));return;}
   if(e.target.closest("#gh-close")||e.target.matches("#gh-dim")){e.preventDefault();toggleDrawer(false);return;}
   if(e.target.closest(".gh-drawer a")) setTimeout(()=>toggleDrawer(false),150);
 },{passive:false});
-document.addEventListener("keydown",(e)=>{if(e.key==="Escape"&&document.documentElement.classList.contains("gh-open")) toggleDrawer(false);});
-window.addEventListener("pageshow",(ev)=>{if(ev.persisted) toggleDrawer(false);});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.documentElement.classList.contains("gh-open")) toggleDrawer(false);});
 
-/* ===== INIT ===== */
-applyAbsPaths(); toggleDrawer(false); initScrollHide();
+/* ===== Si header se inyecta tarde: reaplica rutas + offset ===== */
+function initWhenReady(){
+  const h=Q("#gh-header"); if(!h) return false;
+  setHeaderOffset(); applyAbs(h); bindImgFallback(h); initScrollHide(); toggleDrawer(false);
+  setTimeout(fixHashLanding,0);
+  return true;
+}
+if(!initWhenReady()){
+  const mo=new MutationObserver(()=>{ if(initWhenReady()) mo.disconnect(); });
+  mo.observe(document.documentElement,{childList:true,subtree:true});
+}
+
+/* ===== BFCache: al volver, reaplica todo ===== */
+window.addEventListener("pageshow",ev=>{
+  if(ev.persisted){
+    setHeaderOffset(); applyAbs(document); toggleDrawer(false);
+    setTimeout(fixHashLanding,0);
+  }
+});
+
+/* ===== INIT (si ya estaba) ===== */
+setHeaderOffset(); applyAbs(document); bindImgFallback(document);
 })();
 </script>
