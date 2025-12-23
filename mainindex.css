@@ -561,3 +561,95 @@ html,body{overscroll-behavior-x:none}
 }
 
 
+/* =========================================================
+   PATCH FINAL: HERO sin texto + iconos más grandes (HERO + REELS)
+   Pegar AL FINAL de mainindex.css para que gane prioridad
+========================================================= */
+
+/* ---------- 1) HERO tabs: NO texto (aunque el JS lo inserte) ---------- */
+.hero-tab span{
+  display:none !important;     /* <- quita la etiqueta redundante */
+}
+
+/* ---------- 2) HERO tabs: botón tipo “tile” + logo GRANDE ---------- */
+/* (Tu screenshot muestra tiles 2x2: esto respeta ese estilo) */
+.hero-gallery-tabs{
+  /* si ya lo tienes como grid en otra parte, esto no estorba;
+     solo evita que un patch anterior lo convierta en scroller */
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  overflow:visible;
+  padding:12px 12px 14px;
+}
+
+.hero-tab{
+  min-height:92px;                 /* más alto para lucir logo */
+  padding:14px;
+  justify-content:center;
+  text-align:center;
+  gap:0;
+}
+
+.hero-tab img{
+  /* CLAVE: deshacer el height:26px que te los dejó mini */
+  height:56px !important;          /* <-- SUBE el tamaño real */
+  width:auto !important;
+  max-width:170px !important;      /* logos horizontales se ven bien así */
+  object-fit:contain !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  padding:0 !important;
+  display:block;
+  margin:0 auto;
+}
+
+/* Ajuste fino por tamaños de pantalla */
+@media (max-width:420px){
+  .hero-tab{ min-height:88px; padding:12px; }
+  .hero-tab img{ height:50px !important; max-width:160px !important; }
+}
+@media (min-width:980px){
+  /* En desktop puedes volver a 3-4 columnas si quieres más compacto */
+  .hero-gallery-tabs{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    padding:10px 0 0;
+  }
+  .hero-tab{ min-height:86px; }
+  .hero-tab img{ height:52px !important; max-width:160px !important; }
+}
+
+/* ---------- 3) REELS tabs: iconos más grandes ---------- */
+/* Mantengo el texto en reels (como en tu screenshot). */
+.reel-tab{
+  align-items:center;
+  justify-content:center;
+}
+
+.reel-tab img{
+  height:44px !important;          /* <-- más grande */
+  width:auto !important;
+  max-width:150px !important;
+  object-fit:contain !important;
+  border-radius:12px;              /* si quieres sin “caja”, pon 0 */
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.10);
+  padding:6px;
+}
+
+/* Texto reels: una línea, sin romper */
+.reel-tab span{
+  font-size:.90rem;
+  font-weight:900;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  min-width:0;
+}
+
+/* Si también quisieras REELS sin texto (opcional), descomenta:
+.reel-tab span{ display:none !important; }
+*/
+
+
