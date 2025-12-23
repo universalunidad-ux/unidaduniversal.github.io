@@ -740,3 +740,16 @@ html,body{overscroll-behavior-x:none}
 }
 
 
+/* === FIX REAL: tabs no se encogen => cuando no caben, generan overflow y scrollean === */
+.prod-tabs{
+  min-width:0;
+  max-width:100%;
+  justify-content:flex-start; /* evita “repartir” ancho raro */
+}
+
+.prod-tabs .tab{
+  flex:0 0 auto !important;     /* no grow / no shrink */
+  flex-shrink:0 !important;     /* clave */
+  white-space:nowrap !important;
+}
+
