@@ -491,5 +491,73 @@ html,body{overscroll-behavior-x:none}
 }
 
 
+/* =========================================================
+   PATCH (HERO + REELS): icon-only + icon más grande
+   - Quita texto en botones (span)
+   - Iconos más grandes en Hero y Reels por sistema
+   - Mantiene estilos active/border existentes
+========================================================= */
+
+/* 1) Botón SOLO icono (mata tu regla anterior de flex-row) */
+.hero-tab,
+.reel-tab{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:0;
+  padding:12px;
+  min-width:0;              /* evita “tarjetas” enormes */
+}
+
+/* 2) Oculta el texto (aunque el span exista) */
+.hero-tab span,
+.reel-tab span{
+  display:none !important;
+}
+
+/* 3) Iconos MÁS GRANDES (base mobile) */
+.hero-tab img,
+.reel-tab img{
+  width:64px !important;
+  height:64px !important;
+  max-width:none !important;
+  object-fit:contain;
+  border-radius:14px;       /* si quieres “tile” tipo app */
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12);
+  padding:10px;
+}
+
+/* 4) Contenedores de tabs: que se vean como icon-grid (no 1xN con texto) */
+.hero-gallery-tabs,
+.reel-sys-tabs{
+  display:grid;
+  gap:10px;
+}
+
+/* Hero: 4 iconos en fila (baja a 3 si el móvil es chico) */
+.hero-gallery-tabs{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+@media (max-width:520px){
+  .hero-gallery-tabs{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+
+/* Reels: normalmente 4 por fila (ya lo tenías, lo reforzamos) */
+.reel-sys-tabs{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+@media (max-width:520px){
+  .reel-sys-tabs{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+
+/* 5) Desktop: iconos todavía más grandes */
+@media (min-width:980px){
+  .hero-tab img,
+  .reel-tab img{
+    width:74px !important;
+    height:74px !important;
+    border-radius:16px;
+    padding:12px;
+  }
+}
 
 
