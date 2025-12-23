@@ -135,22 +135,51 @@
   /* =========================
      5) Tabs Productos (sin duplicar)
   ========================= */
-  function initTabsProductos(){
-    const tabs=QA(".prod-tabs .tab"), panels=QA(".panel-productos");
-    if(!tabs.length||!panels.length) return;
-    function activar(btn){
-      const targetId=btn.dataset.target;
-      tabs.forEach(t=>t.classList.toggle("active",t===btn));
-      panels.forEach(p=>p.classList.toggle("hidden",p.id!==targetId));
-    }
-    tabs.forEach(btn=>{
-      if(btn.dataset.bound==="1") return; btn.dataset.bound="1";
-      on(btn,"click",()=>activar(btn));
-    });
-    const tabInicial=document.getElementById("tab-contable");
-    activar(tabInicial||tabs[0]);
+
+  function scrollTabIntoView(btn){
+    const wrap = btn?.closest(".prod-tabs");
+    if(!wrap) return;
+
+    // Solo si hay overflow horizontal real
+    if(wrap.scrollWidth <= wrap.clientWidth + 2) return;
+
+    const wRect = wrap.getBoundingClientRect();
+    const bRect = btn.getBoundingClientRect();
+
+    // Centrar el botón dentro del contenedor
+    const targetLeft =
+      wrap.scrollLeft + (bRect.left - wRect.left) - (wRect.width/2 - bRect.width/2);
+
+    wrap.scrollTo({ left: Math.max(0, targetLeft), behavior: "smooth" });
   }
 
+  function initTabsProductos(){
+    const tabs = QA(".prod-tabs .tab");
+    const panels = QA(".panel-productos");
+    if(!tabs.length || !panels.length) return;
+
+    function activar(btn){
+      const targetId = btn?.dataset?.target;
+      if(!targetId) return;
+
+      tabs.forEach(t => t.classList.toggle("active", t === btn));
+      panels.forEach(p => p.classList.toggle("hidden", p.id !== targetId));
+
+      scrollTabIntoView(btn); // ✅ auto-scroll del tab activo (cuando hay overflow)
+    }
+
+    tabs.forEach(btn=>{
+      if(btn.dataset.bound==="1") return;
+      btn.dataset.bound="1";
+      on(btn,"click",()=>activar(btn));
+    });
+
+    const tabInicial = document.getElementById("tab-contable");
+    activar(tabInicial || tabs[0]);
+  }
+
+
+            
   /* =========================
      6) Promos filtro — FIX hidden + display:none
   ========================= */
