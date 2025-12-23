@@ -200,39 +200,39 @@
   ========================================================= */
   const HERO_GALLERY_DATA={
     contable:{label:"Contables",defaultSys:"nominas",systems:{
-      contabilidad:{label:"Contabilidad",icon:"IMG/contabilidadsq.webp",images:[
+      contabilidad:{label:"Contabilidad",icon:"IMG/contabilidad.webp",images:[
         {src:"IMG/contamate.webp"},{src:"IMG/contadesglo.webp"},{src:"IMG/conta%20y%20bancos.webp"},
         {src:"IMG/conta%20y%20bancos%20.webp"},{src:"IMG/impuestos%20sin%20estres%20conta%20y%20bancos.webp"},
         {src:"IMG/1conta.webp"},{src:"IMG/conta%20y%20bancos%202.webp"},{src:"IMG/contacfdi.webp"}
       ]},
-      nominas:{label:"Nóminas",icon:"IMG/nominassq.webp",images:[
+      nominas:{label:"Nóminas",icon:"IMG/nominas.webp",images:[
         {src:"IMG/primera.webp"},{src:"IMG/nomisr.webp"},{src:"IMG/490962328_1082897360538668_175183934644162321_n.webp"},
         {src:"IMG/NOMINAS.webp"},{src:"IMG/ptu.webp"},{src:"IMG/posible.webp"},{src:"IMG/COMENTARIOS%20USUARIOS.webp"},
         {src:"IMG/COMMENTS%20ESTRELLAS%201.webp"},{src:"IMG/nomtraza.webp"},{src:"IMG/nommovs.webp"},
         {src:"IMG/nomiequi.webp"},{src:"IMG/nomentrega.webp"}
       ]},
-      bancos:{label:"Bancos",icon:"IMG/bancossq.webp",images:[
+      bancos:{label:"Bancos",icon:"IMG/bancos.webp",images:[
         {src:"IMG/efectivamente.webp"},{src:"IMG/olvida.webp"},{src:"IMG/CONTROL%20MOVIMIENTOS%20BANCARIOS.webp"},
         {src:"IMG/CARRUSEL%20CONECTA%201jpg.webp"},{src:"IMG/CARRUSEL%20CONECTA%202.webp"},{src:"IMG/PAGARAN.webp"},
         {src:"IMG/proyecta.webp"},{src:"IMG/revisas.webp"},{src:"IMG/bancosperso.webp"}
       ]},
-      xml:{label:"XML en Línea+",icon:"IMG/xmlsq.webp",images:[
+      xml:{label:"XML en Línea+",icon:"IMG/xml.webp",images:[
         {src:"IMG/dos.webp"},{src:"IMG/SOFTWARE%20FAVORITO%201.webp"},{src:"IMG/SOFTWARE%20FAVORITO%202.webp"}
       ]}
     }},
     comercial:{label:"Comerciales",defaultSys:"pro",systems:{
-      pro:{label:"Comercial Pro",icon:"IMG/comercialprosq.webp",images:[
+      pro:{label:"Comercial Pro",icon:"IMG/comercialpro.webp",images:[
         {src:"IMG/captura%20manual.webp"},{src:"IMG/procumple.webp"},{src:"IMG/prorenta.webp"},
         {src:"IMG/COMPRAVENTA.webp"},{src:"IMG/FUNCIONES%20PRO.webp"},{src:"IMG/FUNCIONES%20PRO2.webp"},
         {src:"IMG/MODULO.webp"}
       ]},
-      premium:{label:"Comercial Premium",icon:"IMG/comercialpremiumsq.webp",images:[
+      premium:{label:"Comercial Premium",icon:"IMG/comercialpremium.webp",images:[
         {src:"IMG/desde%20compras%20ventas%20traslados.webp"},{src:"IMG/INVENTARIO%20Y%20VENTAS.webp"},
         {src:"IMG/LIGAS%20DE%20PAGO.webp"},{src:"IMG/NOTAS%20DE%20VENTA.webp"},{src:"IMG/COSTOS%20Y%20UTILIDADES.webp"},
         {src:"IMG/INVENTARIOS,%20FINANZAS%20jpg.webp"},{src:"IMG/STOCK.webp"},{src:"IMG/comportamiento.webp"},
         {src:"IMG/premtrans.webp"},{src:"IMG/premrutas.webp"},{src:"IMG/prempro.webp"},{src:"IMG/premdash.webp"}
       ]},
-      factura:{label:"Factura electrónica",icon:"IMG/facturasq.webp",images:[
+      factura:{label:"Factura electrónica",icon:"IMG/factura.webp",images:[
         {src:"IMG/INCLUYE%201.webp"},{src:"IMG/INCLUYE%202.webp"},{src:"IMG/INCLUYE%203.webp"},
         {src:"IMG/CARACTERISTICAS%202.webp"},{src:"IMG/CARACTERISTICAS%203.webp"},{src:"IMG/carta%20porte.webp"},
         {src:"IMG/CONTROLA.webp"},{src:"IMG/solucion%20facil.webp"},{src:"IMG/facinfo.webp"},{src:"IMG/facpreo.webp"},
