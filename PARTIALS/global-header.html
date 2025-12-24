@@ -1,9 +1,11 @@
 <!-- =========================================================
-  Expiriti - GLOBAL HEADER (V7 + MOBILE UI/UX V5)
-  - Desktop: el header que ya tienes (mega + dropdown)
-  - Mobile: drawer V5 (Sistemas con tabs + Servicios carrusel 2 páginas)
-  - Rutas: V7 “master root” + buildPath (data-href / data-src -> href/src ABSOLUTOS)
+  Expiriti - GLOBAL HEADER (V7 + MOBILE UI/UX V5) + MEGA V5 PATCH (RESPONSIVE)
+  - Desktop: mega “Sistemas” estilo V5 (cards vertical + imagen ancha) + responsive cols
+  - Desktop: dropdown “Servicios” normal (no mega)
+  - Mobile: drawer V5 (Sistemas tabs + Servicios carrusel 2 páginas)
+  - Rutas: V7 master root + buildPath (data-href / data-src -> href/src ABSOLUTOS)
   - Hide on scroll: solo barra (#gh-bar)
+  - FIX: Promociones en móvil (index.html#promociones) garantizado + scroll
 ========================================================= -->
 <header class="gh" id="gh-header" role="banner">
 <style>
@@ -81,7 +83,7 @@ body{padding-top:var(--gh-offset)}
 }
 .gh-nav a:hover::after{transform:scaleX(1);transform-origin:left}
 
-/* ===== DESKTOP DROPDOWN / MEGA ===== */
+/* ===== DESKTOP DROPDOWN / MEGA BASE ===== */
 .gh-dd-wrap{position:relative}
 .gh-dd-menu{
   position:absolute;top:100%;left:50%;
@@ -99,27 +101,17 @@ body{padding-top:var(--gh-offset)}
 .gh-dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;white-space:nowrap}
 .gh-dd-menu a:hover{background:rgba(255,255,255,.05);color:var(--gh-brand)}
 
-/* Mega */
-.gh-dd-menu.mega.gh-mega{
-  width:90vw;max-width:1000px;
-  left:50%;
-  transform:translate(-50%,15px)!important;
-  display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:20px;
-}
-.gh-dd-wrap:hover .gh-dd-menu.mega.gh-mega,
-.gh-dd-wrap:focus-within .gh-dd-menu.mega.gh-mega{
-  transform:translate(-50%,0)!important;
-}
-.gh-col h4{
+/* ===== “ESTILO VIEJO” SOLO PARA DROPDOWN NORMAL (NO MEGA) ===== */
+.gh-dd-menu:not(.mega) .gh-col h4{
   color:var(--gh-muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;
-  margin:0 0 10px;padding-bottom:5px;border-bottom:1px solid var(--gh-border)
+  margin:0 0 10px;padding-bottom:5px;border-bottom:1px solid var(--gh-border);
 }
-.gh-item{display:flex;align-items:flex-start;gap:10px;padding:8px;border-radius:8px;transition:.2s}
-.gh-item:hover{background:rgba(255,255,255,.04)}
-.gh-item img{width:32px;height:32px;object-fit:contain}
-.gh-item div{display:flex;flex-direction:column;min-width:0}
-.gh-item b{font-size:13px;color:#fff}
-.gh-item span{font-size:11px;color:var(--gh-muted)}
+.gh-dd-menu:not(.mega) .gh-item{display:flex;align-items:flex-start;gap:10px;padding:8px;border-radius:8px;transition:.2s}
+.gh-dd-menu:not(.mega) .gh-item:hover{background:rgba(255,255,255,.04)}
+.gh-dd-menu:not(.mega) .gh-item img{width:32px;height:32px;object-fit:contain}
+.gh-dd-menu:not(.mega) .gh-item div{display:flex;flex-direction:column;min-width:0}
+.gh-dd-menu:not(.mega) .gh-item b{font-size:13px;color:#fff}
+.gh-dd-menu:not(.mega) .gh-item span{font-size:11px;color:var(--gh-muted)}
 
 /* ===== ACTIONS ===== */
 .gh-actions{display:flex;align-items:center;gap:10px}
@@ -194,9 +186,18 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 /* Sistemas (tabs) */
 .gh-acc{border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden}
 .gh-msys,.gh-msvc{padding:10px 10px 14px;margin-top:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);border-radius:18px}
-.gh-msys-head{padding:6px 4px 10px}
+
+/* Mobile: Sistemas + “por categoría” en la misma línea */
+.gh-msys-head{
+  padding:6px 4px 10px;
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:10px;
+}
 .gh-msys-title{color:#fff;font-weight:800;letter-spacing:.01em;font-size:14px}
-.gh-msys-sub{color:var(--gh-muted);font-size:12px;margin-top:2px}
+.gh-msys-sub{color:var(--gh-muted);font-size:12px;margin-top:0;line-height:1.1;white-space:nowrap}
+
 .gh-catbar{display:flex;gap:8px;overflow:auto;padding:2px 2px 10px;scrollbar-width:none}
 .gh-catbar::-webkit-scrollbar{display:none}
 .gh-cat{
@@ -216,6 +217,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-panel{margin-top:6px}
 .gh-panel.is-open{animation:ghFadeUp .18s ease both}
 @keyframes ghFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
 .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .gh-mcard{
   display:flex;flex-direction:column;gap:8px;
@@ -277,10 +279,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 @media(prefers-reduced-motion:reduce){
   .gh-brand,.gh-nav a::after,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar{transition:none!important}
 }
-  /* =========================================================
-   PATCH: Mega menú Desktop estilo V5 (cards + icono ancho)
-   - Solo afecta el mega de "Sistemas" en escritorio
-   - No toca burger/drawer móvil
+
+/* =========================================================
+   PATCH: Mega menú Desktop responsive (cards + icono ancho)
+   - Solo afecta .gh-dd-menu.mega.gh-mega (Sistemas)
 ========================================================= */
 @media (min-width:1024px){
 
@@ -293,10 +295,19 @@ html.gh-open .gh-drawer{transform:translateX(0)}
     background:var(--gh-panel);
     box-shadow:0 18px 45px rgba(0,0,0,.60);
 
-    /* layout 4 columnas (como V5) */
+    /* blinda posicionamiento independiente del dropdown normal */
+    left:50%;
+    transform:translate(-50%,15px);
+
     display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
     gap:16px;
+
+    /* default: 4 columnas */
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+  .gh-dd-wrap:hover .gh-dd-menu.mega.gh-mega,
+  .gh-dd-wrap:focus-within .gh-dd-menu.mega.gh-mega{
+    transform:translate(-50%,0);
   }
 
   /* Columna */
@@ -320,7 +331,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
     padding-bottom:0;
   }
 
-  /* Cada item: ahora “card” vertical (imagen arriba, texto abajo) */
+  /* Cada item: card vertical */
   .gh-dd-menu.mega.gh-mega a.gh-item{
     display:flex;
     flex-direction:column;
@@ -334,17 +345,15 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
     border:1px solid transparent;
     background:transparent;
-
     transition:.18s ease;
     min-width:0;
   }
-
   .gh-dd-menu.mega.gh-mega a.gh-item:hover{
     background:rgba(255,255,255,.05);
     border-color:rgba(255,255,255,.10);
   }
 
-  /* Imagen “ancha” tipo V5 */
+  /* Imagen ancha */
   .gh-dd-menu.mega.gh-mega a.gh-item img{
     width:min(220px,100%);
     height:auto;
@@ -356,12 +365,9 @@ html.gh-open .gh-drawer{transform:translateX(0)}
     opacity:.95;
   }
 
-  /* Texto debajo */
+  /* Texto */
   .gh-dd-menu.mega.gh-mega a.gh-item div{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    min-width:0;
+    display:flex;flex-direction:column;gap:4px;min-width:0;
   }
   .gh-dd-menu.mega.gh-mega a.gh-item b{
     font-size:13px;
@@ -376,22 +382,40 @@ html.gh-open .gh-drawer{transform:translateX(0)}
     color:var(--gh-muted);
     white-space:normal;
   }
+}
 
-  /* En pantallas grandes, limita el tamaño del “banner” */
-  @media (min-width:1200px){
-    .gh-dd-menu.mega.gh-mega a.gh-item img{
-      width:clamp(110px,9vw,150px);
-    }
+/* Breakpoints del mega (solo desktop) */
+@media (min-width:1024px) and (max-width:1199px){
+  .gh-dd-menu.mega.gh-mega{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    width:min(860px,calc(100vw - 24px));
+  }
+}
+@media (min-width:1200px) and (max-width:1399px){
+  .gh-dd-menu.mega.gh-mega{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    width:min(940px,calc(100vw - 24px));
+  }
+}
+@media (min-width:1400px){
+  .gh-dd-menu.mega.gh-mega{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    width:min(1000px,calc(100vw - 24px));
   }
 }
 
-  /* ====== FIX: Drawer siempre encima de todo ====== */
+/* Imagen más contenida en pantallas grandes */
+@media (min-width:1200px){
+  .gh-dd-menu.mega.gh-mega a.gh-item img{
+    width:clamp(110px,9vw,150px);
+  }
+}
+
+/* ====== FIX: Drawer siempre encima de todo ====== */
 .gh{ z-index:2147483000; }          /* header wrapper top */
 .gh-bar{ z-index:2147483001; }       /* barra arriba */
 .gh-dim{ z-index:2147483646; }       /* overlay */
 .gh-drawer{ z-index:2147483647; }    /* drawer */
-
-
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
@@ -498,7 +522,8 @@ html.gh-open .gh-drawer{transform:translateX(0)}
     <!-- ===================== SISTEMAS (MÓVIL: TABS) ===================== -->
     <section class="gh-acc gh-msys" id="gh-msys" aria-label="Sistemas (móvil)">
       <div class="gh-msys-head">
-        <div class="gh-msys-title">Sistemas</div>  <div class="gh-msys-sub">por categoría</div>
+        <div class="gh-msys-title">Sistemas</div>
+        <div class="gh-msys-sub">por categoría</div>
       </div>
 
       <div class="gh-catbar" role="tablist" aria-label="Categorías de sistemas">
@@ -556,7 +581,8 @@ html.gh-open .gh-drawer{transform:translateX(0)}
     <!-- ===================== SERVICIOS (MÓVIL: CAROUSEL) ===================== -->
     <section class="gh-acc gh-msvc" id="gh-msvc" aria-label="Servicios (móvil)">
       <div class="gh-msys-head">
-        <div class="gh-msys-title">Servicios</div> 
+        <div class="gh-msys-title">Servicios</div>
+        <div class="gh-msys-sub" aria-hidden="true"></div>
       </div>
 
       <div class="gh-svcwrap" aria-roledescription="carousel">
@@ -603,11 +629,12 @@ html.gh-open .gh-drawer{transform:translateX(0)}
    - master root + buildPath (absoluto)
    - drawer + tabs + carrusel servicios
    - hide on scroll (solo barra)
+   - FIX: Promociones en móvil (index.html#promociones) garantizado + scroll
 ========================================================= */
 (function(){
   "use strict";
- // Permite reintentar si el header aún no existe
-if (window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__ghInited) return;
+  // Permite reintentar si el header aún no existe
+  if (window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__ghInited) return;
 
   const Q  = (s, c=document)=>c.querySelector(s);
   const QA = (s, c=document)=>Array.from(c.querySelectorAll(s));
@@ -791,16 +818,51 @@ if (window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__g
   function bind(){
     document.addEventListener("click", (e)=>{
       const b = e.target.closest("#gh-burger");
-      if (b){ e.preventDefault(); toggleDrawer(!document.documentElement.classList.contains("gh-open")); return; }
+      if (b){
+        e.preventDefault();
+        toggleDrawer(!document.documentElement.classList.contains("gh-open"));
+        return;
+      }
 
       if (e.target.closest("#gh-close") || e.target.matches("#gh-dim")){
-        e.preventDefault(); toggleDrawer(false); return;
+        e.preventDefault();
+        toggleDrawer(false);
+        return;
       }
 
-      // cerrar cuando dan click en un link del drawer
-      if (e.target.closest(".gh-drawer a")){
-        setTimeout(()=>toggleDrawer(false), 150);
+      // ===== FIX: Promociones en móvil (index.html#promociones) garantizado + scroll =====
+      const a = e.target.closest(".gh-drawer a");
+      if (a){
+        const href = a.getAttribute("href") || "";
+
+        // Solo intercepta el caso index.html#promociones
+        const isIndexPromo = /index\.html#promociones$/i.test(href);
+
+        if (isIndexPromo){
+          e.preventDefault();
+
+          // 1) cierra drawer primero (libera overflow)
+          toggleDrawer(false);
+
+          // 2) navega a index#promociones
+          setTimeout(()=>{
+            window.location.href = href;
+
+            // 3) si ya estás en index, fuerza scroll al ancla
+            setTimeout(()=>{
+              const el = document.getElementById("promociones");
+              if (el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+            }, 60);
+
+          }, 280);
+
+          return;
+        }
+
+        // Default: cierra drawer sin interferir navegación normal
+        setTimeout(()=>toggleDrawer(false), 120);
       }
+
     }, {passive:false});
 
     document.addEventListener("keydown", (e)=>{
@@ -829,13 +891,13 @@ if (window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__g
   // 1) Intenta ya mismo (sirve si el script va después del header)
   boot();
 
-  // 2) Si el DOM aún no está listo o el header se inyecta tarde, reintenta en DOMContentLoaded
+  // 2) Reintenta en DOMContentLoaded
   document.addEventListener("DOMContentLoaded", boot, { once:true });
 
   // 3) Recalcula offset en resize
   window.addEventListener("resize", syncOffset, { passive:true });
 
-  // 4) OBSERVER robusto: si el header aparece tarde, inicializa sin depender de hrefs
+  // 4) OBSERVER robusto: si el header aparece tarde
   function startObserver(){
     const observer = new MutationObserver(()=>{
       const header = Q("#gh-header");
@@ -848,9 +910,5 @@ if (window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__g
   if (document.body) startObserver();
   else document.addEventListener("DOMContentLoaded", startObserver, { once:true });
 
-
-
-
-  
 })();
 </script>
