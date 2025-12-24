@@ -703,14 +703,14 @@ if (window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__g
     window.addEventListener("pageshow", (ev)=>{ if (ev.persisted) toggleDrawer(false); });
   }
 
-  /* ===== 9) BOOT ===== */
+  // ===== 9) BOOT =====
   function boot(){
     const header = Q("#gh-header");
     if (!header) return;
-  if (header.__ghInited) return;          // evita doble init
-  header.__ghInited = true;               // marca init OK
-  window.__EXPIRITI_GH_V7MOBILE__ = true; // ahora sí
-    
+
+    if (header.__ghInited) return;          // evita doble init por reintentos
+    header.__ghInited = true;               // marca init OK
+    window.__EXPIRITI_GH_V7MOBILE__ = true; // ahora sí
 
     applySafePaths(header);
     syncOffset();
@@ -719,17 +719,31 @@ if (window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__g
     toggleDrawer(false);
   }
 
+  // 1) Intenta ya mismo (sirve si el script va después del header)
   boot();
-  window.addEventListener("resize", syncOffset, {passive:true});
-  document.addEventListener("DOMContentLoaded", boot);
 
-  // MutationObserver por si inyectas header tarde
-  const observer = new MutationObserver(()=>{
-    const header = Q("#gh-header");
-    if (!header) return;
-    // si detecta links sin href aún, reaplica
-    if (Q(".js-link[data-href]:not([href])", header)) boot();
-  });
-  observer.observe(document.body, {childList:true, subtree:true});
+  // 2) Si el DOM aún no está listo o el header se inyecta tarde, reintenta en DOMContentLoaded
+  document.addEventListener("DOMContentLoaded", boot, { once:true });
+
+  // 3) Recalcula offset en resize
+  window.addEventListener("resize", syncOffset, { passive:true });
+
+  // 4) OBSERVER robusto: si el header aparece tarde, inicializa sin depender de hrefs
+  function startObserver(){
+    const observer = new MutationObserver(()=>{
+      const header = Q("#gh-header");
+      if (!header) return;
+      if (!header.__ghInited) boot();
+    });
+    observer.observe(document.body, { childList:true, subtree:true });
+  }
+
+  if (document.body) startObserver();
+  else document.addEventListener("DOMContentLoaded", startObserver, { once:true });
+
+
+
+
+  
 })();
 </script>
