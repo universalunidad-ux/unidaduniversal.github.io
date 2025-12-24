@@ -499,8 +499,8 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 ========================================================= */
 (function(){
   "use strict";
-  if (window.__EXPIRITI_GH_V7MOBILE__) return;
-  window.__EXPIRITI_GH_V7MOBILE__ = true;
+ // Permite reintentar si el header aún no existe
+if (window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__ghInited) return;
 
   const Q  = (s, c=document)=>c.querySelector(s);
   const QA = (s, c=document)=>Array.from(c.querySelectorAll(s));
@@ -707,6 +707,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
   function boot(){
     const header = Q("#gh-header");
     if (!header) return;
+  if (header.__ghInited) return;          // evita doble init
+  header.__ghInited = true;               // marca init OK
+  window.__EXPIRITI_GH_V7MOBILE__ = true; // ahora sí
+    
 
     applySafePaths(header);
     syncOffset();
