@@ -35,7 +35,16 @@ section{padding:26px 0;border-top:1px solid #11182725}
 @media(max-width:980px){.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}}
 
 /* ============ HEADER / NAV ============ */
-header{position:sticky;top:0;z-index:1000;width:100%;background:rgba(11,15,20,.75);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid #19202b}
+/* ===== HEADER LEGACY (solo si alguna página todavía lo usa) ===== */
+header:not(.gh){
+  position:sticky;
+  top:0;
+  z-index:1000;
+  width:100%;
+  background:rgba(11,15,20,.75);
+  backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid #19202b;
+}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700}
 .brand img{width:38px;height:38px;border-radius:10px;display:block}
@@ -525,10 +534,12 @@ aside[aria-label^="Reels"]{overflow:visible}
 ========================================================= */
 
 /* 1) Asegura que el contenedor no se haga más ancho que la pantalla */
-html, body { max-width: 100%; overflow-x: clip; } /* clip > hidden, no crea scrollbars */
 @supports not (overflow: clip) {
-  html, body { overflow-x: hidden; }
+html, body{
+  max-width:100%;
+  overflow-x:hidden;
 }
+
 
 /* 2) Tu wrapper principal NO debe crecer por hijos */
 .container, main.container { max-width: 100%; overflow-x: clip; }
@@ -678,38 +689,43 @@ html, body { max-width: 100%; overflow-x: clip; } /* clip > hidden, no crea scro
   .placeholder .note{max-width:100%!important}
 }
 
+
 /* =========================================================
-   EXPIRITI — COMPAT: HEADER GLOBAL (GH V7)
-   Objetivo:
-   1) Evitar que el main.css afecte al header global .gh
-   2) Evitar doble sticky / fondos / z-index
-   3) Quitar estilos legacy (.nav/.burger) si existen
+   EXPIRITI — COMPAT PATCH para HEADER V7 (.gh)
+   - Evita colisiones con header legacy
+   - Evita drawer “cortado” en móvil (10%)
 ========================================================= */
 
-/* 1) No estilices el <header> genérico: solo el header global usa .gh */
-header:not(.gh){
-  position: static;
-  top:auto;
-  z-index:auto;
-  background: transparent;
-  backdrop-filter: none;
-  border-bottom: 0;
-}
-
-/* 2) Asegura que el header global mande */
-.gh{
-  position: fixed; /* o sticky si tu V7 así lo define, pero consistente en todas */
+/* A) El header global manda */
+#gh-header.gh{
+  position:fixed;
   top:0;left:0;right:0;
   width:100%;
-  z-index: 9999;
+  z-index:2147483000;
 }
 
-/* 3) El offset del body lo controla el header V7 (si ya lo hace) */
-body{ padding-top: var(--gh-offset, 68px); }
+/* B) Lock scroll robusto cuando el drawer está abierto */
+html.gh-open, body.gh-open{
+  overflow:hidden !important;
+  height:100% !important;
+}
 
-/* 4) Neutraliza clases legacy si tu HTML viejo las trae */
-.nav, .burger, .mobile{ all: unset; }
-.nav *, .burger *, .mobile *{ all: unset; }
-/* Si todavía usas .nav dentro de contenido, borra este bloque y dime. */
+/* C) Drawer: alto correcto en móvil + safe area */
+#gh-drawer.gh-drawer{
+  height:100dvh;
+  max-height:100dvh;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  -webkit-overflow-scrolling:touch;
+  transform:translate3d(105%,0,0);
+  will-change:transform;
+}
+html.gh-open #gh-drawer.gh-drawer{
+  transform:translate3d(0,0,0);
+}
 
+/* D) No uses overflow-x:clip si tienes drawer fixed (puede recortar) */
+html, body{
+  overflow-x:hidden;
+}
 
