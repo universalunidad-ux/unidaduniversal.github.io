@@ -385,6 +385,13 @@ html.gh-open .gh-drawer{transform:translateX(0)}
   }
 }
 
+  /* ====== FIX: Drawer siempre encima de todo ====== */
+.gh{ z-index:2147483000; }          /* header wrapper top */
+.gh-bar{ z-index:2147483001; }       /* barra arriba */
+.gh-dim{ z-index:2147483646; }       /* overlay */
+.gh-drawer{ z-index:2147483647; }    /* drawer */
+
+
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
@@ -488,17 +495,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
       <a class="gh-ctabtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener"><img class="gh-ctaico js-img" data-src="IMG/whatsapp.svg" alt="">WhatsApp</a>
     </div>
 
-    <!-- ===== Inicio / Contacto rápido ===== -->
-    <div style="margin-top:12px;display:grid;gap:10px">
-      <a class="gh-ctabtn js-link" data-href="index.html" style="justify-content:flex-start">Inicio</a>
-      <a class="gh-ctabtn js-link" data-href="index.html#contacto" style="justify-content:flex-start">Contacto</a>
-    </div>
-
     <!-- ===================== SISTEMAS (MÓVIL: TABS) ===================== -->
     <section class="gh-acc gh-msys" id="gh-msys" aria-label="Sistemas (móvil)">
       <div class="gh-msys-head">
-        <div class="gh-msys-title">Sistemas</div>
-        <div class="gh-msys-sub">Elige una categoría</div>
+        <div class="gh-msys-title">Sistemas</div>  <div class="gh-msys-sub">por categoría</div>
       </div>
 
       <div class="gh-catbar" role="tablist" aria-label="Categorías de sistemas">
@@ -556,8 +556,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
     <!-- ===================== SERVICIOS (MÓVIL: CAROUSEL) ===================== -->
     <section class="gh-acc gh-msvc" id="gh-msvc" aria-label="Servicios (móvil)">
       <div class="gh-msys-head">
-        <div class="gh-msys-title">Servicios</div>
-        <div class="gh-msys-sub">Desliza o usa las flechas</div>
+        <div class="gh-msys-title">Servicios</div> 
       </div>
 
       <div class="gh-svcwrap" aria-roledescription="carousel">
