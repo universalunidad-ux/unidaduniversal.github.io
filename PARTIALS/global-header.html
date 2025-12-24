@@ -277,6 +277,114 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 @media(prefers-reduced-motion:reduce){
   .gh-brand,.gh-nav a::after,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar{transition:none!important}
 }
+  /* =========================================================
+   PATCH: Mega menú Desktop estilo V5 (cards + icono ancho)
+   - Solo afecta el mega de "Sistemas" en escritorio
+   - No toca burger/drawer móvil
+========================================================= */
+@media (min-width:1024px){
+
+  /* Caja del mega */
+  .gh-dd-menu.mega.gh-mega{
+    width:min(980px,calc(100vw - 24px));
+    padding:20px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.08);
+    background:var(--gh-panel);
+    box-shadow:0 18px 45px rgba(0,0,0,.60);
+
+    /* layout 4 columnas (como V5) */
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:16px;
+  }
+
+  /* Columna */
+  .gh-dd-menu.mega.gh-mega .gh-col{
+    border-radius:16px;
+    padding:12px;
+    background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);
+    border:1px solid rgba(255,255,255,.06);
+    min-width:0;
+  }
+
+  /* Encabezado de columna */
+  .gh-dd-menu.mega.gh-mega .gh-col h4{
+    margin:0 0 8px;
+    font-size:12px;
+    letter-spacing:.14em;
+    color:var(--gh-muted);
+    text-transform:uppercase;
+    opacity:.75;
+    border-bottom:none;
+    padding-bottom:0;
+  }
+
+  /* Cada item: ahora “card” vertical (imagen arriba, texto abajo) */
+  .gh-dd-menu.mega.gh-mega a.gh-item{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+
+    padding:12px;
+    border-radius:12px;
+    text-decoration:none;
+    color:var(--gh-text);
+
+    border:1px solid transparent;
+    background:transparent;
+
+    transition:.18s ease;
+    min-width:0;
+  }
+
+  .gh-dd-menu.mega.gh-mega a.gh-item:hover{
+    background:rgba(255,255,255,.05);
+    border-color:rgba(255,255,255,.10);
+  }
+
+  /* Imagen “ancha” tipo V5 */
+  .gh-dd-menu.mega.gh-mega a.gh-item img{
+    width:min(220px,100%);
+    height:auto;
+    aspect-ratio:20/7;
+    object-fit:contain;
+    display:block;
+    flex:0 0 auto;
+    filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));
+    opacity:.95;
+  }
+
+  /* Texto debajo */
+  .gh-dd-menu.mega.gh-mega a.gh-item div{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    min-width:0;
+  }
+  .gh-dd-menu.mega.gh-mega a.gh-item b{
+    font-size:13px;
+    font-weight:650;
+    color:#fff;
+    line-height:1.15;
+  }
+  .gh-dd-menu.mega.gh-mega a.gh-item span{
+    margin:0;
+    font-size:11px;
+    line-height:1.35;
+    color:var(--gh-muted);
+    white-space:normal;
+  }
+
+  /* En pantallas grandes, limita el tamaño del “banner” */
+  @media (min-width:1200px){
+    .gh-dd-menu.mega.gh-mega a.gh-item img{
+      width:clamp(110px,9vw,150px);
+    }
+  }
+}
+
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
