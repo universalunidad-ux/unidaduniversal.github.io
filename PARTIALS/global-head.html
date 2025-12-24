@@ -35,26 +35,24 @@
 
   <script>
     (function(){
-      // 1. Leer la configuración maestra
       var meta = document.querySelector('meta[name="expiriti-base"]');
       var root = meta && meta.content ? meta.content : "/";
       
       if(!root.startsWith("/")) root = "/" + root;
       if(!root.endsWith("/")) root = root + "/";
 
-      // 2. Constructor de URL absoluta
       var abs = function(p) { 
           var cleanP = p.replace(/^\//, ""); 
           return location.origin + root + cleanP; 
       };
 
-      // 3. Aplicar a Favicons (Nota: ya no al CSS principal, ese va directo arriba)
+      // Arregla los Favicons (usa la clase .js-abs)
       var links = document.querySelectorAll('link.js-abs[data-href]');
       for(var i=0; i<links.length; i++){
         links[i].href = abs(links[i].getAttribute('data-href'));
       }
 
-      // 4. Aplicar a Open Graph
+      // Arregla Open Graph (usa la clase .js-abs-meta)
       var metas = document.querySelectorAll('meta.js-abs-meta[data-path]');
       for(var j=0; j<metas.length; j++){
         metas[j].setAttribute('content', abs(metas[j].getAttribute('data-path')));
