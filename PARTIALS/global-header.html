@@ -1,302 +1,731 @@
+<!-- =========================================================
+  Expiriti - GLOBAL HEADER (V7 + MOBILE UI/UX V5)
+  - Desktop: el header que ya tienes (mega + dropdown)
+  - Mobile: drawer V5 (Sistemas con tabs + Servicios carrusel 2 páginas)
+  - Rutas: V7 “master root” + buildPath (data-href / data-src -> href/src ABSOLUTOS)
+  - Hide on scroll: solo barra (#gh-bar)
+========================================================= -->
 <header class="gh" id="gh-header" role="banner">
 <style>
-/* ===== ESTILOS (IGUAL QUE ANTES, OPTIMIZADOS) ===== */
-:root{--gh-bg:rgba(7,10,16,.95);--gh-border:rgba(255,255,255,.08);--gh-panel:rgba(10,14,23,.98);--gh-text:#e8eef6;--gh-muted:#94a3b8;--gh-brand:#2dd4bf;--gh-brand2:#60a5fa;--gh-maxw:1200px;--gh-height:68px;--gh-offset:68px}
+/* ===== TOKENS ===== */
+:root{
+  --gh-bg:rgba(7,10,16,.95);
+  --gh-border:rgba(255,255,255,.08);
+  --gh-panel:rgba(10,14,23,.98);
+  --gh-text:#e8eef6;
+  --gh-muted:#94a3b8;
+  --gh-brand:#2dd4bf;
+  --gh-brand2:#60a5fa;
+  --gh-maxw:1200px;
+  --gh-height:68px;
+  --gh-offset:68px;
+}
+
+/* ===== OFFSET GLOBAL (evita que el header tape el contenido) ===== */
 html{scroll-padding-top:calc(var(--gh-offset) + 20px)}
 body{padding-top:var(--gh-offset)}
+
+/* ===== WRAPPER ===== */
 .gh{position:fixed;top:0;left:0;right:0;z-index:9999;font-family:system-ui,-apple-system,sans-serif}
 .gh *{box-sizing:border-box}
-.gh-bar{height:var(--gh-height);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:var(--gh-bg);border-bottom:1px solid var(--gh-border);transition:transform .3s ease;will-change:transform}
+
+/* ===== TOP BAR (hide only this) ===== */
+.gh-bar{
+  height:var(--gh-height);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  background:var(--gh-bg);
+  border-bottom:1px solid var(--gh-border);
+  transition:transform .3s ease;
+  will-change:transform;
+}
 .gh-bar.is-hidden{transform:translateY(-100%)}
-.gh-container{max-width:var(--gh-maxw);margin:0 auto;padding:0 clamp(15px,4vw,24px);height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
-/* LOGO */
-.gh-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--gh-text);padding:4px;border-radius:12px;transition:background .2s}
+
+.gh-container{
+  max-width:var(--gh-maxw);
+  margin:0 auto;
+  padding:0 clamp(15px,4vw,24px);
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+/* ===== BRAND (DESKTOP/MOBILE) ===== */
+.gh-brand{
+  display:flex;align-items:center;gap:12px;
+  text-decoration:none;color:var(--gh-text);
+  padding:4px;border-radius:12px;transition:background .2s;
+}
 .gh-brand:hover{background:rgba(255,255,255,.05)}
 .gh-brand img{width:42px;height:42px;border-radius:10px;object-fit:cover;background:#1e293b}
-.gh-brand-txt{line-height:1.2;display:flex;flex-direction:column}
-.gh-brand-txt .n{font-weight:700;font-size:16px;color:#fff;letter-spacing:-0.01em}
-.gh-brand-txt .s{font-size:12px;color:var(--gh-muted)}
-/* NAV */
+.gh-brand-txt{line-height:1.2;display:flex;flex-direction:column;min-width:0}
+.gh-brand-txt .n{font-weight:700;font-size:16px;color:#fff;letter-spacing:-0.01em;white-space:nowrap}
+.gh-brand-txt .s{font-size:12px;color:var(--gh-muted);white-space:nowrap}
+
+/* ===== DESKTOP NAV ===== */
 .gh-nav{display:none}
 @media(min-width:1024px){.gh-nav{display:block}}
 .gh-nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;align-items:center}
-.gh-nav a{color:var(--gh-text);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s;padding:8px 0;position:relative}
+.gh-nav a{
+  color:var(--gh-text);text-decoration:none;
+  font-size:14px;font-weight:500;transition:color .2s;
+  padding:8px 0;position:relative;white-space:nowrap;
+}
 .gh-nav a:hover{color:#fff}
-.gh-nav a::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--gh-brand);transform:scaleX(0);transform-origin:right;transition:transform .3s ease}
+.gh-nav a::after{
+  content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;
+  background:var(--gh-brand);
+  transform:scaleX(0);transform-origin:right;transition:transform .3s ease
+}
 .gh-nav a:hover::after{transform:scaleX(1);transform-origin:left}
-/* DROPDOWN SIMPLE (Desktop) */
+
+/* ===== DESKTOP DROPDOWN / MEGA ===== */
 .gh-dd-wrap{position:relative}
-.gh-dd-menu{position:absolute;top:100%;left:50%;transform:translate(-50%,15px);background:var(--gh-panel);border:1px solid var(--gh-border);padding:10px;border-radius:12px;min-width:220px;opacity:0;visibility:hidden;transition:.2s ease;box-shadow:0 10px 30px -10px rgba(0,0,0,0.5)}
-.gh-dd-wrap:hover .gh-dd-menu,.gh-dd-wrap:focus-within .gh-dd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.gh-dd-menu{
+  position:absolute;top:100%;left:50%;
+  transform:translate(-50%,15px);
+  background:var(--gh-panel);
+  border:1px solid var(--gh-border);
+  padding:10px;border-radius:12px;min-width:220px;
+  opacity:0;visibility:hidden;transition:.2s ease;
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.5);
+}
+.gh-dd-wrap:hover .gh-dd-menu,
+.gh-dd-wrap:focus-within .gh-dd-menu{
+  opacity:1;visibility:visible;transform:translate(-50%,0)
+}
 .gh-dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;white-space:nowrap}
 .gh-dd-menu a:hover{background:rgba(255,255,255,.05);color:var(--gh-brand)}
-/* MEGA MENU (Desktop) */
-.gh-mega{width:90vw;max-width:1000px;left:50%;transform:translate(-50%,15px)!important;display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:20px}
-.gh-col h4{color:var(--gh-muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin:0 0 10px;padding-bottom:5px;border-bottom:1px solid var(--gh-border)}
+
+/* Mega */
+.gh-dd-menu.mega.gh-mega{
+  width:90vw;max-width:1000px;
+  left:50%;
+  transform:translate(-50%,15px)!important;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:20px;
+}
+.gh-dd-wrap:hover .gh-dd-menu.mega.gh-mega,
+.gh-dd-wrap:focus-within .gh-dd-menu.mega.gh-mega{
+  transform:translate(-50%,0)!important;
+}
+.gh-col h4{
+  color:var(--gh-muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;
+  margin:0 0 10px;padding-bottom:5px;border-bottom:1px solid var(--gh-border)
+}
 .gh-item{display:flex;align-items:flex-start;gap:10px;padding:8px;border-radius:8px;transition:.2s}
 .gh-item:hover{background:rgba(255,255,255,.04)}
 .gh-item img{width:32px;height:32px;object-fit:contain}
-.gh-item div{display:flex;flex-direction:column}
+.gh-item div{display:flex;flex-direction:column;min-width:0}
 .gh-item b{font-size:13px;color:#fff}
 .gh-item span{font-size:11px;color:var(--gh-muted)}
-/* MOBILE TRIGGER */
+
+/* ===== ACTIONS ===== */
 .gh-actions{display:flex;align-items:center;gap:10px}
 .gh-btn-tel{display:none;background:var(--gh-brand);color:#0f172a;padding:6px 14px;border-radius:99px;font-weight:700;font-size:13px;text-decoration:none}
 @media(min-width:600px){.gh-btn-tel{display:inline-block}}
-.gh-burger{background:transparent;border:1px solid var(--gh-border);color:#fff;font-size:20px;padding:6px 12px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.gh-burger{
+  background:rgba(15,23,42,.9);
+  border:1px solid rgba(255,255,255,.22);
+  color:#fff;font-size:18px;
+  padding:8px 10px;border-radius:12px;
+  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+}
 @media(min-width:1024px){.gh-burger{display:none}}
-/* MOBILE DRAWER */
-.gh-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:.3s}
-.gh-drawer{position:fixed;top:0;right:0;bottom:0;width:min(320px,85vw);background:#0f172a;border-left:1px solid var(--gh-border);transform:translateX(100%);transition:.3s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;z-index:10000}
-html.gh-open .gh-overlay{opacity:1;visibility:visible}
+
+/* =========================================================
+   MOBILE DRAWER (UI/UX V5: tabs + carrusel)
+========================================================= */
+.gh-dim{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
+  opacity:0;visibility:hidden;
+  transition:.18s ease;
+  z-index:10010;
+}
+.gh-drawer{
+  position:fixed;top:0;right:0;bottom:0;
+  width:min(92vw,420px);
+  background:rgba(8,11,18,.98);
+  border-left:1px solid rgba(255,255,255,.08);
+  transform:translateX(105%);
+  transition:.25s cubic-bezier(.4,0,.2,1);
+  z-index:10011;
+  display:flex;flex-direction:column;
+}
+html.gh-open .gh-dim{opacity:1;visibility:visible}
 html.gh-open .gh-drawer{transform:translateX(0)}
-.gh-d-head{padding:15px;border-bottom:1px solid var(--gh-border);display:flex;justify-content:space-between;align-items:center}
-.gh-close{background:transparent;border:0;color:#fff;font-size:24px;cursor:pointer}
-.gh-d-body{flex:1;overflow-y:auto;padding:15px}
-/* Mobile Accordion */
-.gh-acc-btn{width:100%;text-align:left;background:rgba(255,255,255,.03);border:1px solid var(--gh-border);color:#fff;padding:12px;border-radius:8px;margin-bottom:8px;font-weight:600;display:flex;justify-content:space-between}
-.gh-acc-content{display:none;padding-left:10px;margin-bottom:15px}
-.gh-acc-content.is-open{display:block}
-.gh-m-link{display:flex;align-items:center;gap:10px;padding:8px;color:var(--gh-muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.05)}
-.gh-m-link strong{color:#e8eef6;font-size:14px}
+.gh-dim[hidden],.gh-drawer[hidden]{display:none!important}
+
+.gh-drawer-head{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+  padding:14px;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.gh-dtitle-row{display:flex;align-items:center;gap:10px}
+.gh-dtitle-logo{width:26px;height:26px;border-radius:8px;object-fit:cover;background:#111723}
+.gh-dtitle-name{color:#fff;font-weight:900;letter-spacing:.02em;line-height:1}
+.gh-dtitle-sub{color:var(--gh-muted);font-size:12px;font-weight:650;margin-top:2px;line-height:1.1}
+.gh-close{
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(15,23,42,.9);
+  color:var(--gh-text);
+  border-radius:12px;padding:8px 10px;
+  font-size:16px;line-height:1;cursor:pointer;
+}
+.gh-drawer-body{
+  flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;
+  padding:12px 14px 40px;
+}
+
+/* Quick CTA */
+.gh-mcta-ico{margin-top:12px;display:flex;gap:10px}
+.gh-ctabtn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  box-shadow:0 18px 40px rgba(0,0,0,.30);
+  font-weight:800;letter-spacing:.01em;
+}
+.gh-ctabtn:hover{border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
+.gh-ctaico{width:22px;height:22px;object-fit:contain;filter:drop-shadow(0 8px 16px rgba(0,0,0,.30));opacity:.95}
+
+/* Sistemas (tabs) */
+.gh-acc{border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden}
+.gh-msys,.gh-msvc{padding:10px 10px 14px;margin-top:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);border-radius:18px}
+.gh-msys-head{padding:6px 4px 10px}
+.gh-msys-title{color:#fff;font-weight:800;letter-spacing:.01em;font-size:14px}
+.gh-msys-sub{color:var(--gh-muted);font-size:12px;margin-top:2px}
+.gh-catbar{display:flex;gap:8px;overflow:auto;padding:2px 2px 10px;scrollbar-width:none}
+.gh-catbar::-webkit-scrollbar{display:none}
+.gh-cat{
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(17,23,35,.55);
+  color:var(--gh-text);
+  padding:9px 12px;border-radius:999px;
+  font-size:12px;font-weight:700;white-space:nowrap;
+  transition:transform .15s ease,background .15s ease,border-color .15s ease;
+}
+.gh-cat:active{transform:scale(.98)}
+.gh-cat.is-active{
+  background:linear-gradient(90deg,rgba(45,212,191,.20),rgba(96,165,250,.18));
+  border-color:rgba(45,212,191,.38);
+  box-shadow:0 10px 24px rgba(0,0,0,.25)
+}
+.gh-panel{margin-top:6px}
+.gh-panel.is-open{animation:ghFadeUp .18s ease both}
+@keyframes ghFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.gh-mcard{
+  display:flex;flex-direction:column;gap:8px;
+  padding:10px;border-radius:16px;text-decoration:none;color:var(--gh-text);
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.07);
+  box-shadow:0 18px 40px rgba(0,0,0,.30);
+  transition:transform .16s ease,border-color .16s ease,background .16s ease;
+  min-height:118px;
+}
+.gh-mcard:hover{transform:translateY(-1px);border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
+.gh-mimg{width:100%;height:44px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35));opacity:.98}
+.gh-mmeta{display:flex;flex-direction:column;gap:2px;min-width:0}
+.gh-mmeta strong{color:#fff;font-weight:800;font-size:13px;line-height:1.15}
+.gh-mmeta span{color:var(--gh-muted);font-size:11px;line-height:1.25}
+.gh-mcard-ghost{opacity:0;pointer-events:none;background:transparent;border-color:transparent;box-shadow:none}
+
+/* Promo */
+.gh-mpromo{
+  display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px;border-radius:16px;
+  text-decoration:none;color:var(--gh-text);
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(90deg,rgba(245,158,11,.12),rgba(45,212,191,.08));
+  box-shadow:0 18px 40px rgba(0,0,0,.30)
+}
+.gh-mpromo-ico{width:22px;height:22px;object-fit:contain;opacity:.95}
+.gh-mpromo-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.gh-mpromo-txt strong{color:#fff;font-weight:900;font-size:13px}
+.gh-mpromo-txt span{color:var(--gh-muted);font-size:11px}
+.gh-mpromo-chip{margin-left:auto;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;color:#020617;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
+
+/* Servicios (carrusel) */
+.gh-msvc{margin-top:12px}
+.gh-svcwrap{position:relative;margin-top:6px;border-radius:18px}
+.gh-svctrack{
+  display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  gap:12px;padding:2px 2px 8px;scrollbar-width:none
+}
+.gh-svctrack::-webkit-scrollbar{display:none}
+.gh-svcpage{flex:0 0 100%;scroll-snap-align:start}
+.gh-mgrid-svc{margin-top:6px}
+.gh-svcarrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:36px;height:36px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(10,14,23,.75);
+  color:#fff;display:inline-flex;align-items:center;justify-content:center;
+  font-size:20px;line-height:1;cursor:pointer;z-index:5;
+  box-shadow:0 12px 28px rgba(0,0,0,.35)
+}
+.gh-svcarrow:hover{border-color:rgba(45,212,191,.25)}
+.gh-svcarrow:active{transform:translateY(-50%) scale(.98)}
+.gh-svcarrow.prev{left:6px}
+.gh-svcarrow.next{right:6px}
+.gh-svcdots{display:flex;justify-content:center;gap:8px;margin-top:8px}
+.gh-svcdots .dot{width:8px;height:8px;border-radius:999px;border:0;background:rgba(255,255,255,.22);cursor:pointer}
+.gh-svcdots .dot.is-active{width:18px;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
+
+@media(prefers-reduced-motion:reduce){
+  .gh-brand,.gh-nav a::after,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar{transition:none!important}
+}
 </style>
 
+<!-- ===================== TOP BAR ===================== -->
 <div class="gh-bar" id="gh-bar">
   <div class="gh-container">
-    <a class="gh-brand js-link" data-href="index.html">
+
+    <!-- Brand -->
+    <a class="gh-brand js-link" data-href="index.html" aria-label="Inicio Expiriti">
       <img class="js-img" data-src="IMG/expiritilogo.webp" alt="Logo" width="42" height="42">
-      <div class="gh-brand-txt"><span class="n">ExpIRI TI</span><span class="s">Expertos CONTPAQi</span></div>
+      <div class="gh-brand-txt">
+        <span class="n">ExpIRI TI</span>
+        <span class="s">Expertos CONTPAQi</span>
+      </div>
     </a>
 
-    <nav class="gh-nav">
+    <!-- Desktop nav -->
+    <nav class="gh-nav" aria-label="Principal">
       <ul>
         <li><a class="js-link" data-href="index.html">Inicio</a></li>
-        
+
         <li class="gh-dd-wrap">
-          <a class="js-link" data-href="index.html#productos-con">Sistemas ▾</a>
-          <div class="gh-dd-menu mega gh-mega">
+          <a class="js-link" data-href="index.html#productos-con" aria-haspopup="true">Sistemas ▾</a>
+          <div class="gh-dd-menu mega gh-mega" role="menu" aria-label="Sistemas">
             <div class="gh-col">
               <h4>Contables</h4>
               <a class="gh-item js-link" data-href="SISTEMAS/contabilidad.html"><img class="js-img" data-src="IMG/contabilidad.webp" alt=""><div><b>Contabilidad</b><span>Pólizas y XML</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/nominas.html"><img class="js-img" data-src="IMG/nominas.webp" alt=""><div><b>Nóminas</b><span>Cálculo exacto</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/bancos.html"><img class="js-img" data-src="IMG/bancos.webp" alt=""><div><b>Bancos</b><span>Tesorería</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/xmlenlinea.html"><img class="js-img" data-src="IMG/xml.webp" alt=""><div><b>XML en Línea+</b><span>CFDI del SAT</span></div></a>
             </div>
             <div class="gh-col">
               <h4>Comerciales</h4>
               <a class="gh-item js-link" data-href="SISTEMAS/comercialpremium.html"><img class="js-img" data-src="IMG/comercialpremium.webp" alt=""><div><b>Premium</b><span>Gestión total</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/comercialpro.html"><img class="js-img" data-src="IMG/comercialpro.webp" alt=""><div><b>Pro</b><span>Multisucursal</span></div></a>
-              <a class="gh-item js-link" data-href="SISTEMAS/facturaelectronica.html"><img class="js-img" data-src="IMG/factura.webp" alt=""><div><b>Factura</b><span>Timbrado ilimitado</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/comercialstart.html"><img class="js-img" data-src="IMG/comercialstart.webp" alt=""><div><b>Start</b><span>Inventario básico</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/facturaelectronica.html"><img class="js-img" data-src="IMG/factura.webp" alt=""><div><b>Factura</b><span>CFDI 4.0</span></div></a>
             </div>
             <div class="gh-col">
               <h4>Nube</h4>
               <a class="gh-item js-link" data-href="SISTEMAS/contabiliza.html"><img class="js-img" data-src="IMG/contabiliza.webp" alt=""><div><b>Contabiliza</b><span>Contador móvil</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/vende.html"><img class="js-img" data-src="IMG/vende.webp" alt=""><div><b>Vende</b><span>Factura web</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/personia.html"><img class="js-img" data-src="IMG/personia.webp" alt=""><div><b>Personia</b><span>Nómina nube</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/analiza.html"><img class="js-img" data-src="IMG/analiza.webp" alt=""><div><b>Analiza</b><span>Dashboards</span></div></a>
             </div>
             <div class="gh-col">
               <h4>Servicios</h4>
               <a class="gh-item js-link" data-href="index.html#promociones"><img class="js-img" data-src="IMG/etiqueta-de-precio.webp" alt=""><div><b>Promociones</b><span>Descuentos</span></div></a>
+              <a class="gh-item js-link" data-href="index.html#servicios"><img class="js-img" data-src="IMG/020-code.webp" alt=""><div><b>Ver servicios</b><span>Implementación y soporte</span></div></a>
             </div>
           </div>
         </li>
 
         <li class="gh-dd-wrap">
-          <a class="js-link" data-href="index.html#servicios">Servicios ▾</a>
-          <div class="gh-dd-menu">
+          <a class="js-link" data-href="index.html#servicios" aria-haspopup="true">Servicios ▾</a>
+          <div class="gh-dd-menu" role="menu" aria-label="Servicios">
             <a class="js-link" data-href="SERVICIOS/polizas.html">🛡️ Pólizas de Soporte</a>
             <a class="js-link" data-href="SERVICIOS/implementaciones.html">⚙️ Implementaciones</a>
             <a class="js-link" data-href="SERVICIOS/migraciones.html">🔄 Migraciones</a>
             <a class="js-link" data-href="SERVICIOS/cursos.html">🎓 Cursos</a>
             <a class="js-link" data-href="SERVICIOS/servidoresvirtuales.html">☁️ Servidores Virtuales</a>
+            <a class="js-link" data-href="SERVICIOS/desarrollos.html">💻 Desarrollos</a>
           </div>
         </li>
 
+        <li><a class="js-link" data-href="index.html#promociones">Promociones</a></li>
         <li><a class="js-link" data-href="index.html#contacto">Contacto</a></li>
       </ul>
     </nav>
 
+    <!-- Actions -->
     <div class="gh-actions">
       <a class="gh-btn-tel" href="tel:+525568437918">55 6843 7918</a>
-      <button class="gh-burger" id="gh-burger-btn" aria-label="Menu">☰</button>
+      <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
     </div>
+
   </div>
 </div>
 
-<div class="gh-overlay" id="gh-overlay"></div>
-<aside class="gh-drawer" id="gh-drawer">
-  <div class="gh-d-head">
-    <span style="color:#fff;font-weight:bold">Menú</span>
-    <button class="gh-close" id="gh-close-btn">✕</button>
+<!-- ===================== OVERLAY + DRAWER (MOBILE V5) ===================== -->
+<div class="gh-dim" id="gh-dim" hidden></div>
+
+<aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true" hidden>
+  <div class="gh-drawer-head">
+    <div class="gh-dtitle">
+      <div class="gh-dtitle-row">
+        <img class="gh-dtitle-logo js-img" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="26" height="26">
+        <div>
+          <div class="gh-dtitle-name">ExpIRI TI</div>
+          <div class="gh-dtitle-sub">Expertos en CONTPAQi</div>
+        </div>
+      </div>
+    </div>
+    <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
   </div>
-  <div class="gh-d-body">
-    <a class="gh-acc-btn js-link" data-href="index.html">Inicio</a>
-    
-    <button class="gh-acc-btn" onclick="this.nextElementSibling.classList.toggle('is-open')">Sistemas ▾</button>
-    <div class="gh-acc-content">
-      <a class="gh-m-link js-link" data-href="SISTEMAS/contabilidad.html"><strong>Contabilidad</strong></a>
-      <a class="gh-m-link js-link" data-href="SISTEMAS/nominas.html"><strong>Nóminas</strong></a>
-      <a class="gh-m-link js-link" data-href="SISTEMAS/bancos.html"><strong>Bancos</strong></a>
-      <a class="gh-m-link js-link" data-href="SISTEMAS/comercialpremium.html"><strong>Comercial Premium</strong></a>
-      <a class="gh-m-link js-link" data-href="SISTEMAS/contabiliza.html"><strong>Contabiliza (Nube)</strong></a>
+
+  <div class="gh-drawer-body">
+
+    <!-- Quick CTA -->
+    <div class="gh-mcta-ico" aria-label="Contacto rápido">
+      <a class="gh-ctabtn" href="tel:+525568437918"><img class="gh-ctaico js-img" data-src="IMG/034-telefono.webp" alt="">Llamar</a>
+      <a class="gh-ctabtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener"><img class="gh-ctaico js-img" data-src="IMG/whatsapp.svg" alt="">WhatsApp</a>
     </div>
 
-    <button class="gh-acc-btn" onclick="this.nextElementSibling.classList.toggle('is-open')">Servicios ▾</button>
-    <div class="gh-acc-content">
-      <a class="gh-m-link js-link" data-href="SERVICIOS/polizas.html">Pólizas</a>
-      <a class="gh-m-link js-link" data-href="SERVICIOS/soporte.html">Soporte</a>
+    <!-- ===== Inicio / Contacto rápido ===== -->
+    <div style="margin-top:12px;display:grid;gap:10px">
+      <a class="gh-ctabtn js-link" data-href="index.html" style="justify-content:flex-start">Inicio</a>
+      <a class="gh-ctabtn js-link" data-href="index.html#contacto" style="justify-content:flex-start">Contacto</a>
     </div>
 
-    <a class="gh-acc-btn js-link" data-href="index.html#contacto">Contacto</a>
-    <br>
-    <a class="gh-acc-btn" href="tel:+525568437918" style="background:var(--gh-brand);color:#000;justify-content:center">Llamar Ahora</a>
+    <!-- ===================== SISTEMAS (MÓVIL: TABS) ===================== -->
+    <section class="gh-acc gh-msys" id="gh-msys" aria-label="Sistemas (móvil)">
+      <div class="gh-msys-head">
+        <div class="gh-msys-title">Sistemas</div>
+        <div class="gh-msys-sub">Elige una categoría</div>
+      </div>
+
+      <div class="gh-catbar" role="tablist" aria-label="Categorías de sistemas">
+        <button class="gh-cat is-active" type="button" data-cat="contables" role="tab" aria-selected="true">Contables</button>
+        <button class="gh-cat" type="button" data-cat="comerciales" role="tab" aria-selected="false">Comerciales</button>
+        <button class="gh-cat" type="button" data-cat="nube" role="tab" aria-selected="false">Nube</button>
+        <button class="gh-cat" type="button" data-cat="prod" role="tab" aria-selected="false">Productividad</button>
+      </div>
+
+      <div class="gh-msys-panels">
+        <div class="gh-panel is-open" data-panel="contables" role="tabpanel">
+          <div class="gh-mgrid">
+            <a class="gh-mcard js-link" data-href="SISTEMAS/contabilidad.html"><img class="gh-mimg js-img" data-src="IMG/contabilidad.webp" alt=""><div class="gh-mmeta"><strong>Contabilidad</strong><span>Pólizas y contabilidad electrónica</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/nominas.html"><img class="gh-mimg js-img" data-src="IMG/nominas.webp" alt=""><div class="gh-mmeta"><strong>Nóminas</strong><span>Cálculo y timbrado</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/bancos.html"><img class="gh-mimg js-img" data-src="IMG/bancos.webp" alt=""><div class="gh-mmeta"><strong>Bancos</strong><span>Conciliación y tesorería</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-mimg js-img" data-src="IMG/xml.webp" alt=""><div class="gh-mmeta"><strong>XML en Línea+</strong><span>CFDI del SAT a contabilidad</span></div></a>
+          </div>
+        </div>
+
+        <div class="gh-panel" data-panel="comerciales" role="tabpanel" hidden>
+          <div class="gh-mgrid">
+            <a class="gh-mcard js-link" data-href="SISTEMAS/comercialstart.html"><img class="gh-mimg js-img" data-src="IMG/comercialstart.webp" alt=""><div class="gh-mmeta"><strong>Comercial Start</strong><span>Ventas e inventario básico</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/comercialpro.html"><img class="gh-mimg js-img" data-src="IMG/comercialpro.webp" alt=""><div class="gh-mmeta"><strong>Comercial Pro</strong><span>Alto volumen y sucursales</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/comercialpremium.html"><img class="gh-mimg js-img" data-src="IMG/comercialpremium.webp" alt=""><div class="gh-mmeta"><strong>Comercial Premium</strong><span>Control y reportes</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-mimg js-img" data-src="IMG/factura.webp" alt=""><div class="gh-mmeta"><strong>Factura Electrónica</strong><span>Timbrado y CFDI 4.0</span></div></a>
+          </div>
+        </div>
+
+        <div class="gh-panel" data-panel="nube" role="tabpanel" hidden>
+          <div class="gh-mgrid">
+            <a class="gh-mcard js-link" data-href="SISTEMAS/contabiliza.html"><img class="gh-mimg js-img" data-src="IMG/contabiliza.webp" alt=""><div class="gh-mmeta"><strong>Contabiliza</strong><span>Contabilidad en la nube</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/analiza.html"><img class="gh-mimg js-img" data-src="IMG/analiza.webp" alt=""><div class="gh-mmeta"><strong>Analiza</strong><span>Dashboards y BI</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/despachos.html"><img class="gh-mimg js-img" data-src="IMG/despachos.webp" alt=""><div class="gh-mmeta"><strong>Despachos</strong><span>Gestión integral</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/vende.html"><img class="gh-mimg js-img" data-src="IMG/vende.webp" alt=""><div class="gh-mmeta"><strong>Vende</strong><span>Punto de venta nube</span></div></a>
+          </div>
+        </div>
+
+        <div class="gh-panel" data-panel="prod" role="tabpanel" hidden>
+          <div class="gh-mgrid">
+            <a class="gh-mcard js-link" data-href="SISTEMAS/evalua.html"><img class="gh-mimg js-img" data-src="IMG/evalua.webp" alt=""><div class="gh-mmeta"><strong>Evalúa</strong><span>Clima laboral y NOM-035</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/colabora.html"><img class="gh-mimg js-img" data-src="IMG/colabora.webp" alt=""><div class="gh-mmeta"><strong>Colabora</strong><span>Seguimiento móvil</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/personia.html"><img class="gh-mimg js-img" data-src="IMG/personia.webp" alt=""><div class="gh-mmeta"><strong>Personia</strong><span>Gestión de personal</span></div></a>
+            <div class="gh-mcard gh-mcard-ghost" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+
+      <a class="gh-mpromo js-link" data-href="index.html#promociones" aria-label="Promociones">
+        <img class="gh-mpromo-ico js-img" data-src="IMG/etiqueta-de-precio.webp" alt="">
+        <div class="gh-mpromo-txt"><strong>Promociones</strong><span>Ver descuentos activos</span></div>
+        <span class="gh-mpromo-chip">Ver</span>
+      </a>
+    </section>
+
+    <!-- ===================== SERVICIOS (MÓVIL: CAROUSEL) ===================== -->
+    <section class="gh-acc gh-msvc" id="gh-msvc" aria-label="Servicios (móvil)">
+      <div class="gh-msys-head">
+        <div class="gh-msys-title">Servicios</div>
+        <div class="gh-msys-sub">Desliza o usa las flechas</div>
+      </div>
+
+      <div class="gh-svcwrap" aria-roledescription="carousel">
+        <button class="gh-svcarrow prev" type="button" aria-label="Servicios anteriores">‹</button>
+
+        <div class="gh-svctrack" id="gh-svctrack" role="region" aria-label="Carrusel de servicios" tabindex="0">
+          <!-- Página 1 -->
+          <div class="gh-svcpage" aria-label="Servicios página 1">
+            <div class="gh-mgrid gh-mgrid-svc">
+              <a class="gh-mcard js-link" data-href="SERVICIOS/polizas.html"><img class="gh-mimg js-img" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Pólizas anuales</strong><span>Soporte continuo y preventivo</span></div></a>
+              <a class="gh-mcard js-link" data-href="SERVICIOS/implementaciones.html"><img class="gh-mimg js-img" data-src="IMG/025-meeting.webp" alt=""><div class="gh-mmeta"><strong>Implementaciones</strong><span>Instalación y puesta en marcha</span></div></a>
+              <a class="gh-mcard js-link" data-href="SERVICIOS/migraciones.html"><img class="gh-mimg js-img" data-src="IMG/018-transfer.webp" alt=""><div class="gh-mmeta"><strong>Migraciones</strong><span>Datos limpios y validados</span></div></a>
+              <a class="gh-mcard js-link" data-href="SERVICIOS/desarrollos.html"><img class="gh-mimg js-img" data-src="IMG/020-code.webp" alt=""><div class="gh-mmeta"><strong>Desarrollos</strong><span>Integraciones y automatización</span></div></a>
+            </div>
+          </div>
+
+          <!-- Página 2 -->
+          <div class="gh-svcpage" aria-label="Servicios página 2">
+            <div class="gh-mgrid gh-mgrid-svc">
+              <a class="gh-mcard js-link" data-href="SERVICIOS/servidoresvirtuales.html"><img class="gh-mimg js-img" data-src="IMG/023-stairs.webp" alt=""><div class="gh-mmeta"><strong>Servidores virtuales</strong><span>Acceso remoto seguro</span></div></a>
+              <a class="gh-mcard js-link" data-href="SERVICIOS/cursos.html"><img class="gh-mimg js-img" data-src="IMG/024-education.webp" alt=""><div class="gh-mmeta"><strong>Cursos</strong><span>Capacitación para tu equipo</span></div></a>
+              <a class="gh-mcard js-link" data-href="SERVICIOS/soporte.html"><img class="gh-mimg js-img" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Soporte técnico</strong><span>Remoto + WhatsApp</span></div></a>
+              <div class="gh-mcard gh-mcard-ghost" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="gh-svcarrow next" type="button" aria-label="Servicios siguientes">›</button>
+      </div>
+
+      <div class="gh-svcdots" aria-label="Paginación de servicios">
+        <button class="dot is-active" type="button" aria-label="Ir a página 1"></button>
+        <button class="dot" type="button" aria-label="Ir a página 2"></button>
+      </div>
+    </section>
+
   </div>
 </aside>
 </header>
 
 <script>
 /* =========================================================
-   JS INFALIBLE V7.0
-   Lógica: Detecta la RAÍZ REAL del dominio y construye URLs absolutas.
-   0% Adivinanzas. 100% Matemáticas.
+   Expiriti Header (V7 ROOT) + Mobile UI/UX V5
+   - master root + buildPath (absoluto)
+   - drawer + tabs + carrusel servicios
+   - hide on scroll (solo barra)
 ========================================================= */
-(function() {
+(function(){
   "use strict";
-  if (window.__GH_V7_LOADED__) return;
-  window.__GH_V7_LOADED__ = true;
+  if (window.__EXPIRITI_GH_V7MOBILE__) return;
+  window.__EXPIRITI_GH_V7MOBILE__ = true;
 
-  // 1. OBTENER LA RAÍZ MAESTRA (La fuente de la verdad)
-  function getMasterRoot() {
-    // A. ¿Hay meta tag definido por el usuario? (Lo más seguro)
+  const Q  = (s, c=document)=>c.querySelector(s);
+  const QA = (s, c=document)=>Array.from(c.querySelectorAll(s));
+
+  /* ===== 1) MASTER ROOT (V7) ===== */
+  function getMasterRoot(){
     const meta = document.querySelector('meta[name="expiriti-base"]');
-    if (meta && meta.content) {
+    if (meta && meta.content){
       let r = meta.content.trim();
-      // Asegurar formato "/algo/"
       if (!r.startsWith("/")) r = "/" + r;
       if (!r.endsWith("/")) r = r + "/";
       return r;
     }
-
-    // B. Detección automática robusta
     const path = window.location.pathname;
-    // Si estamos en GitHub Pages, la raíz suele ser /nombre-repo/
-    // Detectamos si el primer segmento no es un archivo
-    const parts = path.split('/').filter(Boolean);
-    if (window.location.hostname.includes('github.io') && parts.length > 0) {
+    const parts = path.split("/").filter(Boolean);
+    if (window.location.hostname.includes("github.io") && parts.length > 0){
       return "/" + parts[0] + "/";
     }
-    
-    // C. Por defecto (dominio propio o localhost raíz)
     return "/";
   }
-
   const ROOT = getMasterRoot();
-  console.log("Expiriti Header: Root detectada como ->", ROOT);
 
-  // 2. FUNCIÓN CONSTRUCTORA DE URLS (Indestructible)
-  function buildPath(raw) {
+  function buildPath(raw){
     if (!raw) return "#";
-    // Si ya es externa, no tocar
-    if (/^(http|https|mailto|tel|whatsapp):/.test(raw)) return raw;
-    // Si es ancla simple (#contacto), agregar ruta completa al index
-    if (raw.startsWith("#")) {
-      return window.location.origin + ROOT + "index.html" + raw;
-    }
-    // Construir ruta absoluta: Origen + Raíz + Recurso
-    // Elimina barras iniciales para evitar // dobles
-    const cleanRaw = raw.replace(/^\//, "");
-    return window.location.origin + ROOT + cleanRaw;
+    if (/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw)) return raw;
+    if (raw.startsWith("#")) return window.location.origin + ROOT + "index.html" + raw;
+    const clean = raw.replace(/^\//,"");
+    return window.location.origin + ROOT + clean;
   }
 
-  // 3. APLICAR A TODO EL HEADER
-  function applySafePaths(container = document) {
-    // Links
-    const links = container.querySelectorAll('.js-link');
-    links.forEach(a => {
-      const raw = a.getAttribute('data-href');
-      if(raw) a.href = buildPath(raw);
+  /* ===== 2) APPLY PATHS (data-href / data-src) ===== */
+  function applySafePaths(container=document){
+    QA(".js-link[data-href]", container).forEach(a=>{
+      const raw = a.getAttribute("data-href");
+      if (raw) a.href = buildPath(raw);
     });
 
-    // Imágenes
-    const imgs = container.querySelectorAll('.js-img');
-    imgs.forEach(img => {
-      const raw = img.getAttribute('data-src');
-      if (raw) {
-        img.src = buildPath(raw);
-        // Fallback silencioso si falla la imagen
-        img.onerror = function() {
-          this.style.opacity = "0.5";
-          // Placeholder transparente de 1px
-          this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
-        };
+    QA(".js-img[data-src]", container).forEach(img=>{
+      const raw = img.getAttribute("data-src");
+      if (!raw) return;
+      img.src = buildPath(raw);
+      img.onerror = function(){
+        this.style.opacity = "0.5";
+        this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
+      };
+    });
+  }
+
+  /* ===== 3) OFFSET TOP (evita solape) ===== */
+  function syncOffset(){
+    const bar = Q("#gh-bar");
+    const h = bar ? bar.offsetHeight : 68;
+    document.documentElement.style.setProperty("--gh-offset", h + "px");
+  }
+
+  /* ===== 4) HIDE ON SCROLL (solo barra) ===== */
+  function initScrollHide(){
+    const bar = Q("#gh-bar");
+    if (!bar) return;
+    let last = window.scrollY || 0;
+
+    window.addEventListener("scroll", ()=>{
+      if (document.documentElement.classList.contains("gh-open")) return;
+      const y = window.scrollY || 0;
+      if (y > 60 && y > last) bar.classList.add("is-hidden");
+      else bar.classList.remove("is-hidden");
+      last = y;
+    }, {passive:true});
+  }
+
+  /* ===== 5) MOBILE: SISTEMAS TABS ===== */
+  function initMobileSystems(){
+    const root = Q("#gh-msys");
+    if (!root || root.__inited) return;
+    root.__inited = true;
+
+    const cats   = QA(".gh-cat", root);
+    const panels = QA(".gh-panel", root);
+    const KEY = "expiriti_mobile_sys_cat";
+    const saved = localStorage.getItem(KEY);
+
+    function setCat(cat){
+      cats.forEach(b=>{
+        const on = b.dataset.cat === cat;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      panels.forEach(p=>{
+        const on = p.dataset.panel === cat;
+        p.classList.toggle("is-open", on);
+        p.hidden = !on;
+      });
+      localStorage.setItem(KEY, cat);
+    }
+
+    cats.forEach(b=>b.addEventListener("click", ()=>setCat(b.dataset.cat)));
+    setCat(saved || "contables");
+  }
+
+  /* ===== 6) MOBILE: SERVICIOS CAROUSEL ===== */
+  function initMobileServices(){
+    const root  = Q("#gh-msvc");
+    const track = Q("#gh-svctrack");
+    if (!root || !track || root.__inited) return;
+    root.__inited = true;
+
+    const pages = QA(".gh-svcpage", track);
+    const prev  = Q(".gh-svcarrow.prev", root);
+    const next  = Q(".gh-svcarrow.next", root);
+    const dots  = QA(".gh-svcdots .dot", root);
+
+    const idxFromScroll = ()=>{
+      const w = track.clientWidth || 1;
+      return Math.round(track.scrollLeft / w);
+    };
+
+    const goTo = (i)=>{
+      const w = track.clientWidth || 1;
+      const n = Math.max(0, Math.min(i, pages.length - 1));
+      track.scrollTo({left: n * w, behavior: "smooth"});
+    };
+
+    const sync = ()=>{
+      const i = idxFromScroll();
+      dots.forEach((d,k)=>d.classList.toggle("is-active", k === i));
+      if (prev){
+        prev.disabled = (i === 0);
+        prev.style.opacity = prev.disabled ? ".35" : "1";
       }
-    });
+      if (next){
+        next.disabled = (i === pages.length - 1);
+        next.style.opacity = next.disabled ? ".35" : "1";
+      }
+    };
+
+    prev && prev.addEventListener("click", (e)=>{e.preventDefault(); goTo(idxFromScroll() - 1);});
+    next && next.addEventListener("click", (e)=>{e.preventDefault(); goTo(idxFromScroll() + 1);});
+    dots.forEach((d,i)=>d.addEventListener("click", (e)=>{e.preventDefault(); goTo(i);}));
+
+    track.addEventListener("scroll", ()=>requestAnimationFrame(sync), {passive:true});
+    window.addEventListener("resize", sync, {passive:true});
+    sync();
   }
 
-  // 4. LÓGICA DE MENÚ MÓVIL (Simple y sólida)
-  function initDrawer() {
-    const btn = document.getElementById('gh-burger-btn');
-    const close = document.getElementById('gh-close-btn');
-    const overlay = document.getElementById('gh-overlay');
-    const html = document.documentElement;
+  /* ===== 7) DRAWER OPEN/CLOSE ===== */
+  function toggleDrawer(open){
+    const drawer = Q("#gh-drawer");
+    const dim    = Q("#gh-dim");
+    const burger = Q("#gh-burger");
+    const bar    = Q("#gh-bar");
+    if (!drawer || !dim || !burger) return;
 
-    function toggle(open) {
-      if(open) html.classList.add('gh-open');
-      else html.classList.remove('gh-open');
-    }
+    if (open){
+      bar && bar.classList.remove("is-hidden");
+      drawer.hidden = false; dim.hidden = false; void drawer.offsetWidth;
+      document.documentElement.classList.add("gh-open");
+      drawer.setAttribute("aria-hidden", "false");
+      burger.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
 
-    if(btn) btn.onclick = () => toggle(true);
-    if(close) close.onclick = () => toggle(false);
-    if(overlay) overlay.onclick = () => toggle(false);
-    
-    // Cerrar al hacer click en links internos
-    document.querySelectorAll('.gh-drawer a').forEach(a => {
-      a.addEventListener('click', () => toggle(false));
-    });
-  }
+      // Asegura rutas e inicializa UI móvil
+      applySafePaths(Q("#gh-header"));
+      initMobileSystems();
+      initMobileServices();
+    } else {
+      document.documentElement.classList.remove("gh-open");
+      drawer.setAttribute("aria-hidden", "true");
+      burger.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
 
-  // 5. AUTOCORRECCIÓN DE SCROLL (Barra se esconde suave)
-  function initScroll() {
-    let lastY = window.scrollY;
-    const bar = document.getElementById('gh-bar');
-    if(!bar) return;
-    
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (y > 60 && y > lastY) bar.classList.add('is-hidden');
-      else bar.classList.remove('is-hidden');
-      lastY = y;
-    }, {passive: true});
-  }
-
-  // 6. INICIALIZADOR MAESTRO (Ejecuta ahora y vigila cambios)
-  function boot() {
-    const h = document.getElementById('gh-header');
-    if (h) {
-      applySafePaths(h);
-      initDrawer();
-      initScroll();
-      // Ajuste de espacio superior para no tapar contenido
-      const hHeight = document.getElementById('gh-bar')?.offsetHeight || 68;
-      document.documentElement.style.setProperty('--gh-offset', hHeight + 'px');
+      setTimeout(()=>{
+        if (!document.documentElement.classList.contains("gh-open")){
+          dim.hidden = true;
+          drawer.hidden = true;
+        }
+      }, 250);
     }
   }
 
-  // Ejecución Inmediata
+  /* ===== 8) WIRING (sin onclick inline) ===== */
+  function bind(){
+    document.addEventListener("click", (e)=>{
+      const b = e.target.closest("#gh-burger");
+      if (b){ e.preventDefault(); toggleDrawer(!document.documentElement.classList.contains("gh-open")); return; }
+
+      if (e.target.closest("#gh-close") || e.target.matches("#gh-dim")){
+        e.preventDefault(); toggleDrawer(false); return;
+      }
+
+      // cerrar cuando dan click en un link del drawer
+      if (e.target.closest(".gh-drawer a")){
+        setTimeout(()=>toggleDrawer(false), 150);
+      }
+    }, {passive:false});
+
+    document.addEventListener("keydown", (e)=>{
+      if (e.key === "Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
+    });
+
+    window.addEventListener("pageshow", (ev)=>{ if (ev.persisted) toggleDrawer(false); });
+  }
+
+  /* ===== 9) BOOT ===== */
+  function boot(){
+    const header = Q("#gh-header");
+    if (!header) return;
+
+    applySafePaths(header);
+    syncOffset();
+    initScrollHide();
+    bind();
+    toggleDrawer(false);
+  }
+
   boot();
-  
-  // Ejecución Diferida (por si el script carga antes que el HTML)
-  document.addEventListener('DOMContentLoaded', boot);
-  
-  // Ejecución Blindada (MutationObserver): Si algo inyecta el header tarde, esto lo atrapa
-  const observer = new MutationObserver(() => {
-    if(document.getElementById('gh-header') && !document.querySelector('.gh-open')) {
-      // Solo reaplicar rutas si detectamos elementos sin procesar
-      if(document.querySelector('.js-link[data-href]:not([href])')) {
-        boot();
-      }
-    }
-  });
-  observer.observe(document.body, {childList: true, subtree: true});
+  window.addEventListener("resize", syncOffset, {passive:true});
+  document.addEventListener("DOMContentLoaded", boot);
 
+  // MutationObserver por si inyectas header tarde
+  const observer = new MutationObserver(()=>{
+    const header = Q("#gh-header");
+    if (!header) return;
+    // si detecta links sin href aún, reaplica
+    if (Q(".js-link[data-href]:not([href])", header)) boot();
+  });
+  observer.observe(document.body, {childList:true, subtree:true});
 })();
 </script>
