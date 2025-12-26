@@ -802,32 +802,34 @@ function buildHeroSystemTabs(groupKey){
   }
 
 /* =========================
-   11) Servicios: pager 2x2 (mobile) — FIX DEFINITIVO
-   - Sync por umbral real entre páginas
-   - Click por offsetLeft corregido
+   11) Servicios: pager 2x2 (mobile) — FIX (re-init safe)
+   - El scroll listener se bindea 1 sola vez
+   - En cada init, actualiza root.__svcPagerSync para que el listener use los dots actuales
    ========================= */
 
 function initServicesPager(){
-  const root = document.getElementById("servicesCarousel");  // .cards-services
-  const dotsWrap = document.getElementById("servicesDots");  // .svc-dots
+  const root = document.getElementById("servicesCarousel");
+  const dotsWrap = document.getElementById("servicesDots");
   if(!root || !dotsWrap) return;
 
   const isDesktop = window.matchMedia("(min-width: 981px)").matches;
   const isCarousel = root.classList.contains("is-carousel");
 
-  // Solo carrusel + dots en móvil
+  // Solo en móvil + modo carrusel
   if(isDesktop || !isCarousel){
     dotsWrap.innerHTML = "";
+    root.__svcPagerSync = null;
     return;
   }
 
   const pages = Array.from(root.querySelectorAll(".svc-page"));
   if(pages.length <= 1){
     dotsWrap.innerHTML = "";
+    root.__svcPagerSync = null;
     return;
   }
 
-  /* ===== construir dots ===== */
+  // ===== construir dots (NUEVOS)
   dotsWrap.innerHTML = "";
   const dots = pages.map((_, i) => {
     const b = document.createElement("button");
@@ -835,41 +837,43 @@ function initServicesPager(){
     b.className = "dot" + (i === 0 ? " active" : "");
     b.setAttribute("aria-label", `Ir a página ${i+1} de servicios`);
     b.addEventListener("click", () => {
-      // Scroll exacto a la página (alineado al inicio real)
       const base = pages[0].offsetLeft;
-      root.scrollTo({
-        left: pages[i].offsetLeft - base,
-        behavior: "smooth"
-      });
+      root.scrollTo({ left: pages[i].offsetLeft - base, behavior: "smooth" });
     });
     dotsWrap.appendChild(b);
     return b;
   });
 
-  const setActive = (i) =>
+  const setActive = (i) => {
     dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
-
-  /* ===== sync por UMBRAL REAL ===== */
-  const base = pages[0].offsetLeft;
-  const delta = pages[1].offsetLeft - base;   // ~706 en tu caso
-  const threshold = delta / 2;                // ~353
-
-  let raf = 0;
-  const sync = () => {
-    const x = root.scrollLeft;
-    const idx = (x >= threshold) ? 1 : 0;
-    setActive(idx);
   };
 
+  // ===== sync por umbral entre páginas (2 páginas)
+  const base = pages[0].offsetLeft;
+  const delta = pages[1].offsetLeft - base;     // ~706
+  const threshold = delta * 0.5;                // ~353
+
+  const sync = () => {
+    const x = root.scrollLeft;
+    setActive(x >= threshold ? 1 : 0);
+  };
+
+  // ✅ CLAVE: dejar el sync actual “colgado” del root
+  root.__svcPagerSync = sync;
+
+  // ===== bind scroll UNA sola vez (y siempre ejecuta el sync actual)
   if(root.dataset.pagerBound !== "1"){
     root.dataset.pagerBound = "1";
+    let raf = 0;
     root.addEventListener("scroll", () => {
       if(raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(sync);
+      raf = requestAnimationFrame(() => {
+        if(typeof root.__svcPagerSync === "function") root.__svcPagerSync();
+      });
     }, { passive:true });
   }
 
-  // Arranque estable (espera layout final)
+  // Arranque estable
   requestAnimationFrame(() => requestAnimationFrame(sync));
 }
 
