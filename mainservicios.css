@@ -602,56 +602,53 @@ body>.arrowCircle{display:none!important}
 }
 
 /* =========================
-   FCARD (Qué incluye) — ICONOS HOMOLOGADOS
-   - Compatible con tu HTML: .fcard > .fhead > img.ficon + h4
+   FCARD (Qué incluye) — ICONOS MÁS GRANDES (estilo listSlider)
+   - Tu HTML: .fcard > .fhead > img.ficon + h4
 ========================= */
 
-/* fhead: deja de centrar como “logo-only” y vuelve layout row */
 .fcard .fhead{
   display:flex;
   align-items:center;
-  justify-content:flex-start;   /* antes estaba center */
-  gap:12px;
-  min-height:72px;              /* altura uniforme en cards */
-  margin-bottom:8px;
+  justify-content:flex-start;
+  gap:14px;
+  min-height:96px;          /* similar a sensación listSlider */
+  margin-bottom:10px;
 }
 
-/* Icono: caja fija + object-fit para evitar gigantes */
+/* Caja grande + icono grande (similar a .listIcon 90/55) */
 .fcard .ficon{
-  width:44px;
-  height:44px;
-  flex:0 0 44px;
+  width:84px;
+  height:84px;
+  flex:0 0 84px;
   object-fit:contain;
   display:block;
 
-  /* “badge” visual para que se vea pro y consistente */
-  padding:8px;
-  border-radius:14px;
-  background:rgba(2,6,23,.55);
+  padding:14px;
+  border-radius:18px;
+  background:rgba(15,23,42,1);
+  box-shadow:inset 0 0 0 1px rgba(56,189,248,.25);
   border:1px solid rgba(148,163,184,.25);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
 }
 
-/* Título dentro del head: que no reviente el layout */
+/* Título alineado y legible con icono grande */
 .fcard .fhead h4{
   margin:0;
   font-weight:900;
-  font-size:14px;
+  font-size:15px;
   line-height:1.25;
   color:#e5e7eb;
   min-width:0;
 }
 
-/* En desktop: un poco más de presencia sin “gigante” */
+/* Desktop: un poco más grande aún, sin “gigante” */
 @media(min-width:981px){
-  .fcard .fhead{min-height:78px}
-  .fcard .ficon{width:52px;height:52px;flex-basis:52px;padding:10px}
-  .fcard .fhead h4{font-size:15px}
+  .fcard .fhead{min-height:104px}
+  .fcard .ficon{width:92px;height:92px;flex-basis:92px;padding:16px}
+  .fcard .fhead h4{font-size:16px}
 }
 
-/* En pantallas muy chicas: baja un toque para no saturar */
+/* Móvil pequeño: baja un poco para que no se coma el texto */
 @media(max-width:420px){
-  .fcard .ficon{width:40px;height:40px;flex-basis:40px;padding:7px}
+  .fcard .fhead{min-height:88px}
+  .fcard .ficon{width:76px;height:76px;flex-basis:76px;padding:13px}
 }
-
-
