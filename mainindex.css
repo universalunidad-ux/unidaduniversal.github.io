@@ -52,3 +52,60 @@
   aspect-ratio: 170 / 52 !important;
   width: auto !important;
 }
+
+/* ==============================
+   Productos CONTPAQi – Tabs + CTA
+   ============================== */
+.productos-inline-bar{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:stretch;
+}
+
+.prod-cta-wrap{
+  width:100%;
+}
+
+.prod-cta.prod-cta-strong{
+  width:100%;
+  border-radius:14px;
+  font-weight:800;
+  letter-spacing:.2px;
+  padding:14px 16px;
+  border:1px solid rgba(45,212,191,.45);
+  background:linear-gradient(
+    90deg,
+    rgba(45,212,191,.22),
+    rgba(96,165,250,.18)
+  );
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+
+/* ==============================
+   Cards Sistemas – footer limpio
+   ============================== */
+.product-card .foot{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+.product-card .btn-vermas{
+  min-width:140px;
+}
+
+
+/* Mobile: CTA claro y fácil de tocar */
+@media (max-width:520px){
+  .product-card .btn-vermas{
+    width:100%;
+  }
+}
+
