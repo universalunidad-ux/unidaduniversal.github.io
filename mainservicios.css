@@ -653,81 +653,7 @@ body>.arrowCircle{display:none!important}
   .fcard .ficon{width:76px;height:76px;flex-basis:76px;padding:13px}
 }
 
-/* =========================
-   PLATAFORMAS — GRID + TARJETAS
-========================= */
 
-#plataformas .platforms-grid{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:14px;
-  margin-top:12px;
-}
-
-@media(max-width:980px){
-  #plataformas .platforms-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
-}
-@media(max-width:640px){
-  #plataformas .platforms-grid{grid-template-columns:1fr}
-}
-
-#plataformas .platform{
-  display:grid;
-  grid-template-columns:110px 1fr;
-  gap:14px;
-  align-items:center;
-
-  padding:14px;
-  border-radius:16px;
-  border:1px solid rgba(148,163,184,.18);
-  background:linear-gradient(180deg,#0b1120,#020617);
-  box-shadow:0 10px 28px rgba(0,0,0,.22);
-  min-width:0;
-}
-
-@media(max-width:640px){
-  #plataformas .platform{grid-template-columns:1fr}
-}
-
-/* Caja del logo (homologada) */
-#plataformas .p-logo{
-  width:100%;
-  height:78px;
-  border-radius:14px;
-  background:rgba(2,6,23,.55);
-  border:1px solid rgba(148,163,184,.25);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:10px;
-  overflow:hidden;
-}
-
-/* Logo: nunca gigante */
-#plataformas .p-logo img{
-  max-width:100%;
-  max-height:56px;
-  width:auto;
-  height:auto;
-  object-fit:contain;
-  display:block;
-  filter:saturate(1.05);
-}
-
-#plataformas .p-text{min-width:0}
-#plataformas .p-name{
-  margin:0 0 4px;
-  font-weight:900;
-  font-size:15px;
-  line-height:1.2;
-  color:#e5e7eb;
-}
-#plataformas .p-desc{
-  margin:0;
-  font-size:13px;
-  line-height:1.55;
-  color:#9ca3af;
-}
 
 /* =========================
    SISTEMAS SOPORTADOS — GRID (NO CARRUSEL)
@@ -920,3 +846,74 @@ body>.arrowCircle{display:none!important}
     justify-content:center;
   }
 }
+
+/* =========================
+   PLATAFORMAS — GRID (SIN CARRUSEL) usando tu HTML .carouselX/.track/.sys
+========================= */
+
+/* Quita flechas y dots SOLO en plataformas */
+#plataformas .arrowCircle,
+#plataformas .group-dots{display:none !important;}
+
+/* Deja de comportarse como carrusel */
+#plataformas .carouselX{overflow:visible;}
+
+/* Track = GRID responsive */
+#plataformas .track{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));  /* Desktop: 3 */
+  gap:14px;
+}
+
+/* Tablet: 2 columnas */
+@media(max-width:980px){
+  #plataformas .track{grid-template-columns:repeat(2, minmax(0,1fr));}
+}
+
+/* Mobile: 1 columna (queda más elegante con logos grandes) */
+@media(max-width:640px){
+  #plataformas .track{grid-template-columns:1fr;}
+}
+
+/* Tarjeta plataforma (reusa tu .sys) */
+#plataformas .sys{
+  background:linear-gradient(180deg,#0b1120,#020617);
+  border:1px solid rgba(148,163,184,.18);
+  border-radius:16px;
+  padding:14px 12px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-width:0;
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+}
+
+/* Logo: CAPA para que no se coma la pantalla */
+#plataformas .sys img{
+  width:100%;
+  max-height:84px;           /* clave: evita “gigantes” */
+  height:auto;
+  object-fit:contain;
+  display:block;
+
+  padding:10px;
+  border-radius:14px;
+  background:rgba(2,6,23,.55);
+  border:1px solid rgba(148,163,184,.20);
+}
+
+/* Título/descripcion */
+#plataformas .sys h4{
+  margin:0;
+  font-size:15px;
+  font-weight:900;
+  line-height:1.25;
+  color:#e5e7eb;
+}
+#plataformas .sys p{
+  margin:0;
+  font-size:13px;
+  line-height:1.55;
+  color:#9ca3af;
+}
+
