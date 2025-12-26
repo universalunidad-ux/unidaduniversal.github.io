@@ -804,52 +804,67 @@ function buildHeroSystemTabs(groupKey){
   /* =========================
      11) Servicios: pager 2x2 (mobile) — FIX width
   ========================= */
-  function initServicesPager(){
-    const root=document.getElementById("servicesCarousel");
-    const dotsWrap=document.getElementById("servicesDots");
-    if(!root || !dotsWrap) return;
 
-    const isDesktop=window.matchMedia("(min-width: 980px)").matches;
-    if(isDesktop || !root.classList.contains("is-carousel")){
-      dotsWrap.innerHTML=""; return;
-    }
+            function initServicesPager(){
+  const root = document.getElementById("servicesCarousel");  // .cards-services
+  const dotsWrap = document.getElementById("servicesDots");  // .svc-dots
+  if(!root || !dotsWrap) return;
 
-    const pages=Array.from(root.querySelectorAll(".svc-page"));
-    if(pages.length<=1){ dotsWrap.innerHTML=""; return; }
-
-    dotsWrap.innerHTML="";
-    const dots=pages.map((_,i)=>{
-      const b=document.createElement("button");
-      b.type="button";
-      b.className="dot"+(i===0?" active":"");
-      b.setAttribute("aria-label",`Ir a página ${i+1} de servicios`);
-      on(b,"click",()=>{
-        const w=Math.max(1, pages[0]?.getBoundingClientRect().width || root.clientWidth);
-        root.scrollTo({left:w*i,behavior:"smooth"});
-      });
-      dotsWrap.appendChild(b);
-      return b;
-    });
-
-    const setActive=(i)=>dots.forEach((d,idx)=>d.classList.toggle("active",idx===i));
-
-    let raf=0;
-    const sync=()=>{
-      const w=Math.max(1, pages[0]?.getBoundingClientRect().width || root.clientWidth);
-      const i=Math.round(root.scrollLeft/w);
-      setActive(Math.max(0,Math.min(pages.length-1,i)));
-    };
-
-    if(root.dataset.pagerBound!=="1"){
-      root.dataset.pagerBound="1";
-      on(root,"scroll",()=>{
-        if(raf) cancelAnimationFrame(raf);
-        raf=requestAnimationFrame(sync);
-      },{passive:true});
-    }
-
-    sync();
+  const isDesktop = window.matchMedia("(min-width: 981px)").matches;
+  const isCarousel = root.classList.contains("is-carousel");
+  if(isDesktop || !isCarousel){
+    dotsWrap.innerHTML = "";
+    return;
   }
+
+  const pages = Array.from(root.querySelectorAll(".svc-page"));
+  if(pages.length <= 1){
+    dotsWrap.innerHTML = "";
+    return;
+  }
+
+  // ===== construir dots
+  dotsWrap.innerHTML = "";
+  const dots = pages.map((_, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "dot" + (i === 0 ? " active" : "");
+    b.setAttribute("aria-label", `Ir a página ${i+1} de servicios`);
+    b.addEventListener("click", () => {
+      // GAP-SAFE: ir por offsetLeft real de la página
+      root.scrollTo({ left: pages[i].offsetLeft, behavior: "smooth" });
+    });
+    dotsWrap.appendChild(b);
+    return b;
+  });
+
+  const setActive = (i) => dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
+
+  // ===== sync por "página más cercana" (no por división de widths)
+  let raf = 0;
+  const sync = () => {
+    const x = root.scrollLeft;
+    let best = 0;
+    let bestDist = Infinity;
+
+    for(let i=0;i<pages.length;i++){
+      const dist = Math.abs(pages[i].offsetLeft - x);
+      if(dist < bestDist){ bestDist = dist; best = i; }
+    }
+    setActive(best);
+  };
+
+  if(root.dataset.pagerBound !== "1"){
+    root.dataset.pagerBound = "1";
+    root.addEventListener("scroll", () => {
+      if(raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(sync);
+    }, { passive:true });
+  }
+
+  // Arranque estable (2 rafs para fuentes/imagenes)
+  requestAnimationFrame(() => requestAnimationFrame(sync));
+}
 
   /* =========================
      12) INIT PRINCIPAL
