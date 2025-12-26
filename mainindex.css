@@ -286,3 +286,25 @@
 /* 5) Por seguridad: si existe el viejo CTA en medio, lo anulamos */
 .prod-cta-mid{ display:none !important; }
 
+/* ================================
+   Desktop: centrar verticalmente columna izquierda vs Reels
+================================ */
+@media (min-width: 981px){
+  /* el grid (cards | reels) mismo alto */
+  #productos-con .section-cq{
+    align-items: stretch;
+  }
+
+  /* columna izquierda (cards + cta) centrada verticalmente */
+  #productos-con .section-cq > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* CENTRO vertical */
+  }
+
+  /* evita que se estire raro si hay espacio */
+  #productos-con .section-cq > div > .cards{
+    align-content: start;
+  }
+}
+
