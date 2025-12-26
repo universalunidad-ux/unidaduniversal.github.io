@@ -146,3 +146,53 @@
     align-self:stretch;
   }
 }
+
+
+/* =========================
+   FIX: NO agrandar tabs de REELS
+   (revierte overrides con !important)
+========================= */
+.reels-home-card .reel-sys-tabs{
+  display:grid !important;
+  grid-template-columns:repeat(4, minmax(0,1fr)) !important;
+  gap:10px !important;
+  padding:0 !important;
+  margin-top:12px !important;
+  overflow:visible !important;
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+}
+
+@media (max-width:520px){
+  .reels-home-card .reel-sys-tabs{
+    grid-template-columns:repeat(3, minmax(0,1fr)) !important;
+  }
+}
+
+.reels-home-card .reel-tab{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:8px !important;
+  min-height:var(--tap) !important;
+  padding:10px 8px !important;
+  border-radius:14px !important;
+  text-align:center !important;
+}
+
+.reels-home-card .reel-tab span{
+  display:block !important; /* si sí quieres el texto */
+  font-size:.84rem !important;
+  font-weight:900 !important;
+  line-height:1.1 !important;
+}
+
+.reels-home-card .reel-tab img{
+  width:44px !important;
+  height:44px !important;
+  max-width:none !important;
+  object-fit:contain !important;
+  padding:6px !important;
+  border-radius:12px !important;
+  background:rgba(255,255,255,.04) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+}
