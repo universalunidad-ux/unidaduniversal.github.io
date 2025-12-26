@@ -801,17 +801,21 @@ function buildHeroSystemTabs(groupKey){
     });
   }
 
-  /* =========================
-     11) Servicios: pager 2x2 (mobile) — FIX width
-  ========================= */
+/* =========================
+   11) Servicios: pager 2x2 (mobile) — FIX DEFINITIVO
+   - Sync por umbral real entre páginas
+   - Click por offsetLeft corregido
+   ========================= */
 
-            function initServicesPager(){
+function initServicesPager(){
   const root = document.getElementById("servicesCarousel");  // .cards-services
   const dotsWrap = document.getElementById("servicesDots");  // .svc-dots
   if(!root || !dotsWrap) return;
 
   const isDesktop = window.matchMedia("(min-width: 981px)").matches;
   const isCarousel = root.classList.contains("is-carousel");
+
+  // Solo carrusel + dots en móvil
   if(isDesktop || !isCarousel){
     dotsWrap.innerHTML = "";
     return;
@@ -823,7 +827,7 @@ function buildHeroSystemTabs(groupKey){
     return;
   }
 
-  // ===== construir dots
+  /* ===== construir dots ===== */
   dotsWrap.innerHTML = "";
   const dots = pages.map((_, i) => {
     const b = document.createElement("button");
@@ -831,27 +835,30 @@ function buildHeroSystemTabs(groupKey){
     b.className = "dot" + (i === 0 ? " active" : "");
     b.setAttribute("aria-label", `Ir a página ${i+1} de servicios`);
     b.addEventListener("click", () => {
-      // GAP-SAFE: ir por offsetLeft real de la página
-      root.scrollTo({ left: pages[i].offsetLeft, behavior: "smooth" });
+      // Scroll exacto a la página (alineado al inicio real)
+      const base = pages[0].offsetLeft;
+      root.scrollTo({
+        left: pages[i].offsetLeft - base,
+        behavior: "smooth"
+      });
     });
     dotsWrap.appendChild(b);
     return b;
   });
 
-  const setActive = (i) => dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
+  const setActive = (i) =>
+    dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
 
-  // ===== sync por "página más cercana" (no por división de widths)
+  /* ===== sync por UMBRAL REAL ===== */
+  const base = pages[0].offsetLeft;
+  const delta = pages[1].offsetLeft - base;   // ~706 en tu caso
+  const threshold = delta / 2;                // ~353
+
   let raf = 0;
   const sync = () => {
     const x = root.scrollLeft;
-    let best = 0;
-    let bestDist = Infinity;
-
-    for(let i=0;i<pages.length;i++){
-      const dist = Math.abs(pages[i].offsetLeft - x);
-      if(dist < bestDist){ bestDist = dist; best = i; }
-    }
-    setActive(best);
+    const idx = (x >= threshold) ? 1 : 0;
+    setActive(idx);
   };
 
   if(root.dataset.pagerBound !== "1"){
@@ -862,10 +869,12 @@ function buildHeroSystemTabs(groupKey){
     }, { passive:true });
   }
 
-  // Arranque estable (2 rafs para fuentes/imagenes)
+  // Arranque estable (espera layout final)
   requestAnimationFrame(() => requestAnimationFrame(sync));
 }
 
+
+            
   /* =========================
      12) INIT PRINCIPAL
   ========================= */
