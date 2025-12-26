@@ -917,35 +917,4 @@ body>.arrowCircle{display:none!important}
   color:#9ca3af;
 }
 
-/* =========================
-   PLATAFORMAS — Normalizar logos con mucho padding (Rappi/Shopify)
-========================= */
-
-/* Base: la caja ya existe en #plataformas .sys img (padding + bg + border)
-   Aquí solo hacemos que el “contenido” se vea más grande, sin deformar */
-#plataformas .sys img{
-  max-height:84px;                 /* tu tope actual */
-  transform-origin:center;
-}
-
-/* Rappi: suele venir con mucho “aire” arriba/abajo -> zoom */
-#plataformas .sys img[alt*="Rappi"],
-#plataformas .sys img[alt*="Delivery"]{
-  transform:scale(1.55);
-}
-
-/* Shopify: logo chico con mucho margen interno -> zoom */
-#plataformas .sys img[alt*="eCommerce"],
-#plataformas .sys img[alt*="Shopify"]{
-  transform:scale(1.75);
-}
-
-/* En pantallas muy pequeñas, baja un poco el zoom para que no se recorte */
-@media(max-width:420px){
-  #plataformas .sys img[alt*="Rappi"],
-  #plataformas .sys img[alt*="Delivery"]{ transform:scale(1.45); }
-
-  #plataformas .sys img[alt*="eCommerce"],
-  #plataformas .sys img[alt*="Shopify"]{ transform:scale(1.60); }
-}
 
