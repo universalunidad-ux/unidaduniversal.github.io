@@ -729,7 +729,6 @@ body>.arrowCircle{display:none!important}
   color:#9ca3af;
 }
 
-
 /* =========================
    SISTEMAS SOPORTADOS — GRID (NO CARRUSEL)
 ========================= */
@@ -745,4 +744,78 @@ body>.arrowCircle{display:none!important}
 }
 
 /* Track se convierte en GRID */
-#sistemas-soportados .track
+#sistemas-soportados .track{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr)); /* Desktop */
+  gap:14px;
+}
+
+/* Tablet */
+@media(max-width:980px){
+  #sistemas-soportados .track{
+    grid-template-columns:repeat(2, minmax(0,1fr));
+  }
+}
+
+/* Mobile */
+@media(max-width:520px){
+  #sistemas-soportados .track{
+    grid-template-columns:repeat(2, minmax(0,1fr)); /* 2 por fila */
+  }
+}
+
+/* =========================
+   TARJETA DE SISTEMA
+========================= */
+
+#sistemas-soportados .sys{
+  background:linear-gradient(180deg,#0b1120,#020617);
+  border:1px solid rgba(148,163,184,.18);
+  border-radius:16px;
+  padding:14px 12px 12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:8px;
+  min-width:0;
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+}
+
+/* Logo */
+#sistemas-soportados .sys img{
+  max-width:120px;
+  max-height:48px;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  margin-bottom:4px;
+}
+
+/* Título */
+#sistemas-soportados .sys h4{
+  margin:2px 0 0;
+  font-size:14px;
+  font-weight:900;
+  line-height:1.25;
+  color:#e5e7eb;
+}
+
+/* Descripción */
+#sistemas-soportados .sys p{
+  margin:0;
+  font-size:12px;
+  line-height:1.5;
+  color:#9ca3af;
+}
+
+/* Mobile ajuste fino */
+@media(max-width:520px){
+  #sistemas-soportados .sys img{
+    max-height:42px;
+  }
+  #sistemas-soportados .sys h4{
+    font-size:13px;
+  }
+}
+
