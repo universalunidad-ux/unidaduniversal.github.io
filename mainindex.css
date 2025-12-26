@@ -124,3 +124,27 @@
 }
 
 
+
+/* Base: el contenedor ya existe */
+.section-cq{
+  display:grid;
+  gap:14px;
+}
+
+/* Móvil: apilar y dejar el CTA en medio */
+@media (max-width: 980px){
+  .section-cq{ grid-template-columns:1fr; }
+  .prod-cta-bottom{ order:2; }         /* entre cards y reels */
+}
+
+/* Desktop: 3 columnas (cards / CTA / reels) */
+@media (min-width: 981px){
+  .section-cq{
+    grid-template-columns: 1fr minmax(210px, 260px) 1fr;
+    align-items:stretch;
+  }
+  /* Si el CTA es el 2do hijo, no necesitas nada más.
+     Si no, puedes forzarlo así: */
+  .prod-cta-bottom{ grid-column:2; align-self:stretch; }
+  .prod-cta-bottom .cta-big{ width:100%; height:100%; }
+}
