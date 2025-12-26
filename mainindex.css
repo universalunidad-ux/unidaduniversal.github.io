@@ -52,3 +52,44 @@
   aspect-ratio: 170 / 52 !important;
   width: auto !important;
 }
+
+/* ================================
+   HERO GALLERY: espaciar pills vs carrusel
+   y acercar la línea (border) al título
+================================ */
+
+/* 1) Línea más pegada al texto del header */
+.hero-gallery-header{
+  /* antes: padding:14px 16px; */
+  padding: 10px 16px 8px;         /* menos “aire” abajo => línea más cerca */
+  border-bottom: var(--border);
+}
+.hero-gallery-header h2{
+  margin: 0;
+  line-height: 1.15;              /* ayuda a que se perciba más compacto */
+}
+
+/* 2) Más espacio entre “badges/pills” y la imagen (carrusel) */
+.hero-gallery-groups{
+  /* si ya lo usas como hscroll, esto no rompe */
+  padding: 8px 12px 0;
+  margin: 8px 0 14px;             /* AQUI crece el espacio hacia el carrusel */
+  gap: 12px;                      /* separa más los pills entre sí */
+}
+
+/* 3) Un “respiro” extra arriba del carrusel (opcional, sutil) */
+.hero-carousel{
+  margin-top: 2px;                /* déjalo en 0 si no lo quieres */
+}
+
+/* Ajuste fino en móvil (para que no se vea exagerado) */
+@media (max-width: 520px){
+  .hero-gallery-groups{
+    margin: 6px 0 12px;
+    gap: 10px;
+  }
+  .hero-gallery-header{
+    padding: 10px 14px 7px;
+  }
+}
+
