@@ -231,7 +231,7 @@
     contable:{label:"Contables",defaultSys:"nominas",systems:{
       contabilidad:{label:"Contabilidad",icon:"IMG/contabilidad.webp",images:[
         {src:"IMG/contamate.webp"},{src:"IMG/contadesglo.webp"},{src:"IMG/conta%20y%20bancos.webp"},
-        {src:"IMG/conta%20y%20bancos%20.webp"},{src:"IMG/impuestos%20sin%20estres%20conta%20y%20bancos.webp"},
+        {src:"IMG/conta%20y%20bancos%202.webp"},{src:"IMG/impuestos%20sin%20estres%20conta%20y%20bancos.webp"},
         {src:"IMG/1conta.webp"},{src:"IMG/conta%20y%20bancos%202.webp"},{src:"IMG/contacfdi.webp"}
       ]},
       nominas:{label:"Nóminas",icon:"IMG/nominas.webp",images:[
