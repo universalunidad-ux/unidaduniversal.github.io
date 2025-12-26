@@ -33,3 +33,22 @@
   flex:0 0 auto;
   white-space:nowrap;
 }
+
+#productos-con{
+  min-height: 520px;               /* escritorio */
+  content-visibility: auto;
+  contain-intrinsic-size: 520px;
+}
+
+@media (max-width: 980px){
+  #productos-con{
+    min-height: 460px;
+    contain-intrinsic-size: 460px;
+  }
+}
+
+.hero-tab img{
+  height: 52px !important;
+  aspect-ratio: 170 / 52 !important;
+  width: auto !important;
+}
