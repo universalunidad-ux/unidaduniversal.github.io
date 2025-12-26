@@ -652,3 +652,80 @@ body>.arrowCircle{display:none!important}
   .fcard .fhead{min-height:88px}
   .fcard .ficon{width:76px;height:76px;flex-basis:76px;padding:13px}
 }
+
+/* =========================
+   PLATAFORMAS — GRID + TARJETAS
+========================= */
+
+#plataformas .platforms-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:14px;
+  margin-top:12px;
+}
+
+@media(max-width:980px){
+  #plataformas .platforms-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+}
+@media(max-width:640px){
+  #plataformas .platforms-grid{grid-template-columns:1fr}
+}
+
+#plataformas .platform{
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:14px;
+  align-items:center;
+
+  padding:14px;
+  border-radius:16px;
+  border:1px solid rgba(148,163,184,.18);
+  background:linear-gradient(180deg,#0b1120,#020617);
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+  min-width:0;
+}
+
+@media(max-width:640px){
+  #plataformas .platform{grid-template-columns:1fr}
+}
+
+/* Caja del logo (homologada) */
+#plataformas .p-logo{
+  width:100%;
+  height:78px;
+  border-radius:14px;
+  background:rgba(2,6,23,.55);
+  border:1px solid rgba(148,163,184,.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+  overflow:hidden;
+}
+
+/* Logo: nunca gigante */
+#plataformas .p-logo img{
+  max-width:100%;
+  max-height:56px;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  display:block;
+  filter:saturate(1.05);
+}
+
+#plataformas .p-text{min-width:0}
+#plataformas .p-name{
+  margin:0 0 4px;
+  font-weight:900;
+  font-size:15px;
+  line-height:1.2;
+  color:#e5e7eb;
+}
+#plataformas .p-desc{
+  margin:0;
+  font-size:13px;
+  line-height:1.55;
+  color:#9ca3af;
+}
+
