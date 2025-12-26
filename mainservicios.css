@@ -917,4 +917,144 @@ body>.arrowCircle{display:none!important}
   color:#9ca3af;
 }
 
+/* =========================
+   SERVICIOS COMPLEMENTARIOS — CANON (unificado)
+   HTML esperado:
+   #servicios-complementarios .svc-grid
+   .svc-list (x2) con .svc-link
+========================= */
+
+#servicios-complementarios .card.body{
+  padding:14px;
+}
+
+/* Desktop: 2 columnas (dos UL) */
+#servicios-complementarios .svc-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px 18px;
+  align-items:start;
+}
+#servicios-complementarios .svc-grid>*{min-width:0}
+
+#servicios-complementarios .svc-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* Card clickable */
+#servicios-complementarios .svc-link{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(148,163,184,.18);
+  background:linear-gradient(180deg,#0b1120,#020617);
+  box-shadow:0 10px 28px rgba(0,0,0,.20);
+
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+
+  transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .16s ease;
+}
+#servicios-complementarios .svc-link:hover{
+  transform:translateY(-1px);
+  border-color:rgba(96,165,250,.45);
+  box-shadow:0 14px 35px rgba(0,0,0,.28);
+}
+
+/* Texto */
+#servicios-complementarios .svc-text{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width:0;
+}
+#servicios-complementarios .svc-title{
+  font-size:14px;
+  font-weight:900;
+  line-height:1.2;
+  color:#e5e7eb;
+}
+#servicios-complementarios .svc-sub{
+  font-size:12px;
+  line-height:1.45;
+  color:#9ca3af;
+}
+
+/* “Ver más” pill */
+#servicios-complementarios .svc-pill{
+  font-size:12px;
+  font-weight:900;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.35);
+  background:rgba(15,23,42,.65);
+  color:#e5e7eb;
+  white-space:nowrap;
+  align-self:flex-start;
+}
+
+/* =========================
+   Mobile: carrusel 2x2 (como tu screenshot)
+   - Cada UL es un “slide”
+   - Dentro: grid 2 columnas (2x2 visibles)
+========================= */
+@media(max-width:768px){
+
+  #servicios-complementarios .card.body{padding:12px}
+
+  #servicios-complementarios .svc-grid{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    padding:4px 4px 10px;
+
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+    scrollbar-width:thin;
+    scrollbar-color:#1e2b3c transparent;
+  }
+
+  #servicios-complementarios .svc-grid::-webkit-scrollbar{height:6px}
+  #servicios-complementarios .svc-grid::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
+
+  /* Cada UL ocupa todo el ancho y se vuelve 2 columnas = 2x2 */
+  #servicios-complementarios .svc-list{
+    flex:0 0 100%;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+    scroll-snap-align:start;
+  }
+
+  /* En mobile, hacemos cards más compactas */
+  #servicios-complementarios .svc-link{
+    flex-direction:column;
+    gap:10px;
+    padding:12px;
+    min-height:132px; /* ayuda a que se “sientan” parejas */
+  }
+
+  #servicios-complementarios .svc-pill{
+    align-self:flex-start;
+  }
+}
+
+/* Extra: mobile muy chico, una columna (opcional) */
+@media(max-width:390px){
+  #servicios-complementarios .svc-list{
+    grid-template-columns:1fr;
+  }
+}
 
