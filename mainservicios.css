@@ -1058,3 +1058,20 @@ body>.arrowCircle{display:none!important}
   }
 }
 
+/* =========================
+   PRECIOS — Scroll horizontal tipo COMPARATIVA
+========================= */
+
+/* El card actúa como contenedor de scroll */
+#calculadora-section .card.body{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+}
+
+/* En mobile, fuerza ancho mínimo para activar scroll */
+@media(max-width:900px){
+  #calculadora-section .pricing-table-nube{
+    min-width:720px; /* mismo criterio que comparativa */
+  }
+}
