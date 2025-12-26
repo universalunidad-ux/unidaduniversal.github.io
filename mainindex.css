@@ -308,3 +308,30 @@
   }
 }
 
+/* ================================
+   ESPACIADO: separar "Sistemas" de "Sectores"
+================================ */
+
+/* Más aire debajo de toda la sección de sistemas */
+#productos-con{
+  padding-bottom: 32px;   /* separación interna */
+  margin-bottom: 22px;    /* separación externa */
+}
+
+/* Si tu .section-full ya mete padding, esto asegura un gap consistente */
+#sectores{
+  margin-top: 14px;
+}
+
+/* Ajuste fino en desktop */
+@media (min-width: 981px){
+  #productos-con{
+    padding-bottom: 44px;
+    margin-bottom: 26px;
+  }
+  #sectores{
+    margin-top: 18px;
+  }
+}
+
+
