@@ -336,4 +336,44 @@
 
 [hidden]{display:none !important;}
 
-/* ===== CLS FIX (productos-con) ===== */ /* Reserva espacio estable para el bloque que Lighthouse marca */ #productos-con{content-visibility:auto;contain-intrinsic-size:520px;min-height:520px} @media(max-width:980px){#productos-con{contain-intrinsic-size:460px;min-height:460px}} /* Misma huella al alternar tabs */ #productos-con .panel-productos{min-height:420px} @media(max-width:980px){#productos-con .panel-productos{min-height:380px}} /* Reserva track reels (thumbs/iframes) */ #productos-con .reels-home-card .carousel-track{min-height:320px} @media(min-width:980px){#productos-con .reels-home-card .carousel-track{min-height:360px}} /* Placeholder partials (elige 1 sola altura) */ #header-placeholder{display:block;min-height:var(--gh-height)} #footer-placeholder{display:block;min-height:260px} /* ===== /CLS FIX ===== */
+/* ===== CLS FIX (productos-con) ===== */ /* Reserva espacio estable para el bloque que Lighthouse marca */ #productos-con{content-visibility:auto;contain-intrinsic-size:520px;min-height:520px} @media(max-width:980px){#productos-con{contain-intrinsic-size:460px;min-height:460px}} /* Misma huella al alternar tabs */ #productos-con .panel-productos{min-height:420px} @media(max-width:980px){#productos-con .panel-productos{min-height:380px}} / /* Placeholder partials (elige 1 sola altura) */ #header-placeholder{display:block;min-height:var(--gh-height)} #footer-placeholder{display:block;min-height:260px} /* ===== /CLS FIX ===== */
+
+/* ===== CLS FIX (productos-con) - V2 coherente con tu carrusel ===== */
+
+/* 1) Header/Footer placeholders (elige 1 altura y ya) */
+#header-placeholder{display:block;min-height:var(--gh-height)}
+#footer-placeholder{display:block;min-height:260px}
+
+/* 2) Reserva huella del bloque culpable */
+#productos-con{
+  content-visibility:auto;
+  contain-intrinsic-size:560px; /* un poco más realista por tu panel+reels */
+  min-height:560px;
+}
+@media(max-width:980px){
+  #productos-con{
+    contain-intrinsic-size:500px;
+    min-height:500px;
+  }
+}
+
+/* 3) Tabs/paneles: huella estable */
+#productos-con .panel-productos{min-height:440px}
+@media(max-width:980px){#productos-con .panel-productos{min-height:400px}}
+
+/* 4) CLAVE: carrusel reels = reserva EXACTA del alto final (no min-height suelto) */
+#carouselReels-contable .carousel-track,
+#carouselReels-comercial .carousel-track,
+#carouselReels-nube .carousel-track,
+#carouselReels-productividad .carousel-track{
+  height:min(74svh,560px);
+  max-height:calc(100svh - var(--gh-height) - 220px - var(--safe-bottom));
+  min-height:320px; /* fallback si svh falla */
+}
+
+/* 5) Reserva altura para dots (para que no empujen al “aparecer”) */
+#productos-con .reels-home-card .carousel-nav{
+  min-height:34px; /* ajusta si tus dots son más grandes */
+}
+
+/* ===== /CLS FIX ===== */
