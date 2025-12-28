@@ -357,3 +357,20 @@
 #header-placeholder{min-height:var(--gh-height);display:block}
 #footer-placeholder{min-height:220px;display:block}
 /* ===== /PERF/CLS PATCH ===== */
+
+
+#header-placeholder{min-height:68px}
+#footer-placeholder{min-height:260px}
+
+/* Mantén estable el bloque de tabs/paneles */
+#productos-con .panel-productos{
+  contain: layout paint;
+}
+
+/* Evita saltos por imágenes dentro de los paneles */
+#productos-con img{
+  display:block;
+  height:auto;
+}
+
+html{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
