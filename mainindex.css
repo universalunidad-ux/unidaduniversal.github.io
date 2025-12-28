@@ -336,41 +336,4 @@
 
 [hidden]{display:none !important;}
 
-/* ===== PERF/CLS PATCH (productos-con) ===== */
-/* 1) Reserva espacio estable para el bloque que PageSpeed marca como culpable */
-#productos-con{content-visibility:auto;contain-intrinsic-size:520px;min-height:520px}
-@media(max-width:980px){#productos-con{contain-intrinsic-size:460px;min-height:460px}}
-
-/* 2) Evita “brinco” al mostrar/ocultar paneles: misma huella en layout */
-#productos-con .panel-productos{min-height:420px}
-@media(max-width:980px){#productos-con .panel-productos{min-height:380px}}
-
-/* 3) Evita salto por carrusel de reels (track cambia de alto mientras monta thumbs/iframes) */
-#productos-con .reels-home-card .carousel-track{min-height:320px}
-@media(min-width:980px){#productos-con .reels-home-card .carousel-track{min-height:360px}}
-
-/* 4) Imágenes de cards: asegura caja estable incluso antes de cargar (por si alguna no trae width/height) */
-#productos-con img.logo-sistema{background:#0b0f14;display:block}
-#productos-con img.logo-sistema[width][height]{height:auto} /* respeta ratio real */
-
-/* 5) Placeholder header/footer: cero CLS por inyección de partials */
-#header-placeholder{min-height:var(--gh-height);display:block}
-#footer-placeholder{min-height:220px;display:block}
-/* ===== /PERF/CLS PATCH ===== */
-
-
-#header-placeholder{min-height:68px}
-#footer-placeholder{min-height:260px}
-
-/* Mantén estable el bloque de tabs/paneles */
-#productos-con .panel-productos{
-  contain: layout paint;
-}
-
-/* Evita saltos por imágenes dentro de los paneles */
-#productos-con img{
-  display:block;
-  height:auto;
-}
-
-html{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+/* ===== CLS FIX (productos-con) ===== */ /* Reserva espacio estable para el bloque que Lighthouse marca */ #productos-con{content-visibility:auto;contain-intrinsic-size:520px;min-height:520px} @media(max-width:980px){#productos-con{contain-intrinsic-size:460px;min-height:460px}} /* Misma huella al alternar tabs */ #productos-con .panel-productos{min-height:420px} @media(max-width:980px){#productos-con .panel-productos{min-height:380px}} /* Reserva track reels (thumbs/iframes) */ #productos-con .reels-home-card .carousel-track{min-height:320px} @media(min-width:980px){#productos-con .reels-home-card .carousel-track{min-height:360px}} /* Placeholder partials (elige 1 sola altura) */ #header-placeholder{display:block;min-height:var(--gh-height)} #footer-placeholder{display:block;min-height:260px} /* ===== /CLS FIX ===== */
