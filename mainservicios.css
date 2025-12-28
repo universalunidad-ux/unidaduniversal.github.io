@@ -573,3 +573,18 @@ body>.arrowCircle{display:none!important}
   #beneficios .reel-embed{min-height:auto}
 }
 
+/* Reserva 1 línea para el título dinámico del reel */
+#beneficios .reel-title[data-reel-title]{
+  display:block;                 /* importante: siempre ocupa espacio */
+  min-height:1.35em;             /* 1 línea */
+  margin:4px 0 6px;
+  font-size:13px;
+  line-height:1.35;
+  color:#e5e7eb;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+@media (min-width:981px){
+  #beneficios .reel-embed{max-width:380px;aspect-ratio:9/16}
+}
