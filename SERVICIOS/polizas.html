@@ -601,7 +601,7 @@
   <!-- Footer dinámico -->
   <div id="footer-placeholder"></div>
 
-  <script>
+<script>
 (() => {
   const isGh = location.hostname.endsWith("github.io");
   const firstSeg = location.pathname.split("/")[1] || "";
@@ -627,6 +627,14 @@
     throw lastErr || new Error("No se pudo cargar el partial.");
   };
 
+  const injectHTML = (placeholderId, html) => {
+    const ph = document.getElementById(placeholderId);
+    if (!ph || !html) return;
+    // Más robusto que outerHTML cuando hay <script> dentro del partial
+    ph.insertAdjacentHTML("beforebegin", html);
+    ph.remove();
+  };
+
   const injectPartials = async () => {
     const headerCandidates = [
       abs("PARTIALS/global-header.html"),
@@ -644,28 +652,10 @@
       pickText(footerCandidates)
     ]);
 
-    const hp = document.getElementById("header-placeholder");
-    const fp = document.getElementById("footer-placeholder");
-    if (hp && h) hp.outerHTML = h;
-    if (fp && f) fp.outerHTML = f;
+    injectHTML("header-placeholder", h);
+    injectHTML("footer-placeholder", f);
 
-    document.querySelectorAll(".js-abs-src[data-src]").forEach(el => {
-      const v = el.getAttribute("data-src");
-      if (!v) return;
-      el.src = abs(v);
-      const show = () => { el.style.opacity = "1"; };
-      if (el.complete && el.naturalWidth > 0) show();
-      else el.addEventListener("load", show, { once: true });
-      el.addEventListener("error", () => { el.style.opacity = "1"; }, { once: true });
-    });
-
-    document.querySelectorAll(".js-abs-href[data-href]").forEach(a => {
-      const raw = a.getAttribute("data-href");
-      if (!raw) return;
-      const [pth, hash] = raw.split("#");
-      a.href = abs(pth) + (hash ? ("#" + hash) : "");
-    });
-
+    // Año (por si el footer no lo setea por alguna razón)
     const y = document.getElementById("gf-year");
     if (y) y.textContent = new Date().getFullYear();
   };
@@ -677,6 +667,7 @@
   }
 })();
 </script>
+
 
   <!-- JS global servicios -->
   <script src="../mainservicios.js" defer></script>
