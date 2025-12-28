@@ -1,157 +1,231 @@
-<!-- ===========================================================
-  Expiriti | Póliza de Soporte Técnico (SERVICIOS/polizas.html)
-  OBJETIVOS PSI (móvil):
-  - Reducir TBT/JS: YouTube "click-to-load" (no iframes en inicial)
-  - Reducir CLS: reservar offset header antes de inyectar partials
-  - Reducir render-blocking: preload CSS + swap rel=stylesheet
-  - Evitar warnings ARIA: sin role=listitem suelto
-=========================================================== -->
-<!doctype html><html lang="es"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Póliza de Soporte Técnico | Expiriti</title>
-<meta name="description" content="Póliza anual de soporte técnico para CONTPAQi por Expiriti. Contrato anual con pagos mensuales. Precio según usuarios, sistemas y número de empresas. Incluye acompañamiento, capacitación, ajustes y desarrollos menores.">
+<!-- ====== Póliza de Soporte Técnico | Expiriti (formato servicios) ====== -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Póliza de Soporte Técnico | Expiriti</title>
+  <meta name="description" content="Póliza anual de soporte técnico para CONTPAQi por Expiriti. Contrato anual con pagos mensuales. Precio según usuarios, sistemas y número de empresas. Incluye acompañamiento, capacitación, ajustes y desarrollos menores.">
 
-<!-- [CLS FIX] Reserva espacio del header desde el primer paint (evita reflow al inyectar partials) -->
-<style>:root{--gh-offset:68px}body{padding-top:var(--gh-offset)}.yt-lite{position:relative;cursor:pointer;aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:#0b1220}.yt-lite img{width:100%;height:100%;object-fit:cover;display:block}.yt-lite .yt-play{position:absolute;left:12px;bottom:12px;padding:10px 14px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);color:#fff;font-weight:800;line-height:1}.yt-lite.is-loading{pointer-events:none;opacity:.92}</style>
+  <!-- Preconnects -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.youtube-nocookie.com">
+  <link rel="preconnect" href="https://i.ytimg.com">
 
-<!-- Preconnects (con crossorigin para que efectivamente ayuden) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
-<link rel="preconnect" href="https://i.ytimg.com" crossorigin>
+  <!-- Fuente + CSS global servicios -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../mainservicios.css" />
 
-<!-- Fuente -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
+  <link rel="manifest" href="../IMG/site.webmanifest">
+  <link rel="icon" href="../IMG/favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
+</head>
 
-<!-- CSS servicios (no bloqueante) -->
-<link rel="preload" href="../mainservicios.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="../mainservicios.css"></noscript>
+<body id="top">
+  <!-- Header dinámico -->
+  <div id="header-placeholder"></div>
 
-<!-- Favicons -->
-<link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
-<link rel="manifest" href="../IMG/site.webmanifest">
-<link rel="icon" href="../IMG/favicon.ico">
-<link rel="icon" type="image/png" sizes="192x192" href="../IMG/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="../IMG/android-chrome-512x512.png">
-</head><body id="top">
+  <main class="container hero">
+    <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#servicios">
+      ← Volver a servicios
+    </a>
 
-<!-- Partial Header -->
-<div id="header-placeholder"></div>
+    
 
-<main class="container hero">
-  <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#servicios">← Volver a servicios</a>
+    <h1>Póliza de Soporte Técnico
+      <span class="badge" style="background:rgba(34,197,94,.16);border-color:#22c55e;color:#bbf7d0;">
+        Servicio
+      </span>
+    </h1>
 
-  <h1>Póliza de Soporte Técnico
-    <span class="badge" style="background:rgba(34,197,94,.16);border-color:#22c55e;color:#bbf7d0">Servicio</span>
-  </h1>
+    <div class="badges">
+      <span class="badge">Soporte CONTPAQi</span>
+      <span class="badge">Acompañamiento y capacitación</span>
+      <span class="badge">Desarrollos menores incluidos</span>
+      <span class="badge">Atención a incidencias y dudas</span>
+      <span class="badge" role="listitem" style="background:rgba(245,158,11,.15);border-color:#f59e0b;color:#fbbf24;">
+        Póliza anual · pagos mensuales · firma de contrato
+      </span>
+    </div>
 
-  <div class="badges">
-    <span class="badge">Soporte CONTPAQi</span>
-    <span class="badge">Acompañamiento y capacitación</span>
-    <span class="badge">Desarrollos menores incluidos</span>
-    <span class="badge">Atención a incidencias y dudas</span>
-    <span class="badge" style="background:rgba(245,158,11,.15);border-color:#f59e0b;color:#fbbf24">Póliza anual · pagos mensuales · firma de contrato</span>
-  </div>
+    
 
-  <!-- ===== Hero: Beneficios + Reels ===== -->
-  <section id="beneficios" aria-label="Por qué elegir póliza Expiriti">
-    <div class="grid-2 align-center">
+    <!-- ===== Hero: Beneficios + Reels ===== -->
+    <section id="beneficios" aria-label="Por qué elegir póliza Expiriti">
+      <div class="grid-2 align-center">
+        <!-- Columna izquierda -->
+        <div class="stack">
+          <div>
+            <h2 class="title-gradient">Soporte serio, por contrato y con continuidad</h2>
+            <p class="lead">
+              La póliza Expiriti está diseñada para que tu operación con <strong>CONTPAQi</strong> no se detenga:
+              atención a dudas e incidencias, acompañamiento en procesos, capacitación continua y <strong>ajustes/desarrollos menores</strong>
+              incluidos. Todo bajo un esquema profesional: <strong>póliza anual</strong> con <strong>pagos mensuales</strong>.
+            </p>
+          </div>
 
-      <!-- Columna izquierda -->
-      <div class="stack">
-        <div>
-          <h2 class="title-gradient">Soporte serio, por contrato y con continuidad</h2>
-          <p class="lead">La póliza Expiriti está diseñada para que tu operación con <strong>CONTPAQi</strong> no se detenga: atención a dudas e incidencias, acompañamiento en procesos, capacitación continua y <strong>ajustes/desarrollos menores</strong> incluidos. Todo bajo un esquema profesional: <strong>póliza anual</strong> con <strong>pagos mensuales</strong>.</p>
-        </div>
+          <div class="card">
+            <div class="body">
+              <div class="listSlider">
+                <button class="arrowCircle prev" aria-label="Anterior">
+                  <span class="chev">‹</span>
+                </button>
 
-        <div class="card"><div class="body">
-          <div class="listSlider">
-            <button class="arrowCircle prev" aria-label="Anterior"><span class="chev">‹</span></button>
+                <div class="listTrack">
+                  <!-- Página 1 -->
+                  <div class="listPage">
+                    <div class="listItem">
+                      <div class="listIcon"><img src="../IMG/079-solucion.webp" alt=""></div>
+                      <div>
+                        <strong>RESPUESTA PRIORITARIA</strong>
+                        <div>Tienes atención rápida y eficaz, con tiempo máximo de respuesta de 2 horas.</div>
+                      </div>
+                    </div>
+                    <div class="listItem">
+                      <div class="listIcon"><img src="../IMG/126-solicitud.webp" alt=""></div>
+                      <div>
+                        <strong>ACOMPAÑAMIENTO REAL</strong>
+                        <div>No solo “te contestamos”: te guiamos en el proceso y buenas prácticas.</div>
+                      </div>
+                    </div>
+                    <div class="listItem">
+                      <div class="listIcon"><img src="../IMG/informe%20(1).webp" alt=""></div>
+                      <div>
+                        <strong>ORDEN Y CONTINUIDAD</strong>
+                        <div>Bitácora de avances, seguimiento y claridad de qué se hizo y por qué.</div>
+                      </div>
+                    </div>
+                  </div>
 
-            <div class="listTrack">
-              <div class="listPage">
-                <div class="listItem"><div class="listIcon"><img src="../IMG/079-solucion.webp" alt="" loading="lazy" width="44" height="44"></div><div><strong>RESPUESTA PRIORITARIA</strong><div>Tienes atención rápida y eficaz, con tiempo máximo de respuesta de 2 horas.</div></div></div>
-                <div class="listItem"><div class="listIcon"><img src="../IMG/126-solicitud.webp" alt="" loading="lazy" width="44" height="44"></div><div><strong>ACOMPAÑAMIENTO REAL</strong><div>No solo “te contestamos”: te guiamos en el proceso y buenas prácticas.</div></div></div>
-                <div class="listItem"><div class="listIcon"><img src="../IMG/informe%20(1).webp" alt="" loading="lazy" width="44" height="44"></div><div><strong>ORDEN Y CONTINUIDAD</strong><div>Bitácora de avances, seguimiento y claridad de qué se hizo y por qué.</div></div></div>
-              </div>
+                  <!-- Página 2 -->
+                  <div class="listPage">
+                    <div class="listItem">
+                      <div class="listIcon"><img src="../IMG/plan-estrategico(1).webp" alt=""></div>
+                      <div>
+                        <strong>PREVENCIÓN</strong>
+                        <div>Reducimos errores recurrentes con capacitación por rol y checklist de operación.</div>
+                      </div>
+                    </div>
+                    <div class="listItem">
+                      <div class="listIcon"><img src="../IMG/053-rotacion.webp" alt=""></div>
+                      <div>
+                        <strong>MEJOR ADOPCIÓN</strong>
+                        <div>Tu equipo usa mejor el sistema, menos retrabajo y menos “paros”.</div>
+                      </div>
+                    </div>
+                    <div class="listItem">
+                      <div class="listIcon"><img src="../IMG/163-trabajo-colaborativo.webp" alt=""></div>
+                      <div>
+                        <strong>ESCALA CON TU OPERACIÓN</strong>
+                        <div>El precio se ajusta por usuarios, sistemas y número de empresas operadas.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="listPage">
-                <div class="listItem"><div class="listIcon"><img src="../IMG/plan-estrategico(1).webp" alt="" loading="lazy" width="44" height="44"></div><div><strong>PREVENCIÓN</strong><div>Reducimos errores recurrentes con capacitación por rol y checklist de operación.</div></div></div>
-                <div class="listItem"><div class="listIcon"><img src="../IMG/053-rotacion.webp" alt="" loading="lazy" width="44" height="44"></div><div><strong>MEJOR ADOPCIÓN</strong><div>Tu equipo usa mejor el sistema, menos retrabajo y menos “paros”.</div></div></div>
-                <div class="listItem"><div class="listIcon"><img src="../IMG/163-trabajo-colaborativo.webp" alt="" loading="lazy" width="44" height="44"></div><div><strong>ESCALA CON TU OPERACIÓN</strong><div>El precio se ajusta por usuarios, sistemas y número de empresas operadas.</div></div></div>
+                <button class="arrowCircle next" aria-label="Siguiente">
+                  <span class="chev">›</span>
+                </button>
               </div>
             </div>
-
-            <button class="arrowCircle next" aria-label="Siguiente"><span class="chev">›</span></button>
           </div>
-        </div></div>
 
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-          <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20cotizar%20una%20p%C3%B3liza%20de%20soporte%20t%C3%A9cnico%20CONTPAQi.%20Usuarios%3A%20__%20Sistemas%3A%20__%20Empresas%3A%20__" target="_blank" rel="noopener">Cotizar póliza</a>
-          <a class="btn btn-grad-blue hero-btn" href="tel:+525568437918">Llamar (55 6843 7918)</a>
-          <a class="btn btn-ghost hero-btn" href="#caracteristicas">Ver qué incluye</a>
+          <!-- Botones principales -->
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
+            <a class="btn btn-grad-green hero-btn"
+               href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20cotizar%20una%20p%C3%B3liza%20de%20soporte%20t%C3%A9cnico%20CONTPAQi.%20Usuarios%3A%20__%20Sistemas%3A%20__%20Empresas%3A%20__"
+               target="_blank" rel="noopener">Cotizar póliza</a>
+            <a class="btn btn-grad-blue hero-btn" href="tel:+525568437918">Llamar (55 6843 7918)</a>
+            <a class="btn btn-ghost hero-btn" href="#caracteristicas">Ver qué incluye</a>
+          </div>
         </div>
-      </div>
 
-      <!-- Columna derecha: Reels -->
-      <aside class="card body reels-card" aria-label="Reels de soporte técnico">
-        <h4 class="title-gradient" style="margin-bottom:8px">Reels Destacados: Soporte</h4>
-        <h4 class="reel-title active">¿Qué incluye una póliza de soporte Expiriti?</h4>
-        <h4 class="reel-title">Buenas prácticas para operar CONTPAQi sin errores</h4>
+        <!-- Columna derecha: Reels -->
+        <aside class="card body reels-card" aria-label="Reels de soporte técnico">
+          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Soporte</h4>
 
-        <div class="carousel" id="carouselReelsSoporte" aria-label="Reels Soporte">
-          <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+          <h4 class="reel-title active">¿Qué incluye una póliza de soporte Expiriti?</h4>
+          <h4 class="reel-title">Buenas prácticas para operar CONTPAQi sin errores</h4>
 
-          <div class="carousel-track">
-            <!-- Reel 1 (YouTube click-to-load) -->
-            <div class="carousel-slide is-active">
-              <div class="reel-embed">
-                <div class="yt-lite" data-yt="sTvwf2ISsJU" role="button" tabindex="0" aria-label="Reproducir: Póliza de Soporte Expiriti">
-                  <img src="https://i.ytimg.com/vi/sTvwf2ISsJU/hqdefault.jpg" alt="Póliza de Soporte Expiriti" loading="lazy" width="480" height="270">
-                  <span class="yt-play" aria-hidden="true">▶</span>
+          <div class="carousel" id="carouselReelsSoporte" aria-label="Reels Soporte">
+            <button class="arrowCircle prev" aria-label="Anterior" type="button">
+              <span class="chev">‹</span>
+            </button>
+
+            <div class="carousel-track">
+              <!-- Reel 1 -->
+              <div class="carousel-slide is-active">
+                <div class="reel-embed">
+
+                <iframe
+  src="https://www.youtube-nocookie.com/embed/sTvwf2ISsJU?rel=0&modestbranding=1&controls=1&fs=1"
+  title="Póliza de Soporte Expiriti"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  loading="lazy"
+  allowfullscreen>
+</iframe>
+
+                </div>
+              </div>
+
+              <!-- Reel 2 -->
+              <div class="carousel-slide">
+                <div class="reel-embed">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/VIDEO_ID_SOP_2?rel=0&modestbranding=1&controls=1&fs=1"
+                    title="Reel Soporte 2"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    loading="lazy"
+                    allowfullscreen>
+                  </iframe>
                 </div>
               </div>
             </div>
 
-            <!-- Reel 2 (placeholder ligero: NO carga YouTube hasta que tengas el ID real) -->
-            <div class="carousel-slide">
-              <div class="reel-embed">
-                <div class="yt-lite" data-yt="" role="button" tabindex="0" aria-label="Video próximamente">
-                  <img src="https://i.ytimg.com/vi/sTvwf2ISsJU/hqdefault.jpg" alt="Próximamente" loading="lazy" width="480" height="270">
-                  <span class="yt-play" aria-hidden="true">Próximamente</span>
-                </div>
-              </div>
+            <button class="arrowCircle next" aria-label="Siguiente" type="button">
+              <span class="chev">›</span>
+            </button>
+
+            <div class="carousel-nav" aria-label="Paginación de reels">
+              <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
+              <button class="dot" aria-label="Ir al reel 2" type="button"></button>
             </div>
           </div>
+        </aside>
+      </div>
+    </section>
 
-          <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+    <!-- ===== Notas generales (Contrato / Precio) ===== -->
+    <section aria-labelledby="notas">
+      <div class="card body">
+        <div class="info info-contrato">
+          <strong>Contratación:</strong> Se contrata mediante <strong>firma de contrato</strong>. Es una <strong>póliza anual</strong> con <strong>pagos mensuales</strong>.
+        </div>
 
-          <div class="carousel-nav" aria-label="Paginación de reels">
-            <button class="dot active" aria-label="Ir al reel 1" type="button"></button>
-            <button class="dot" aria-label="Ir al reel 2" type="button"></button>
+        <div class="warn" style="margin-top:10px;">
+          <strong>Precio variable:</strong> El precio se calcula en función de:
+          <ul class="imp-list" style="margin-top:8px;">
+            <li><strong>Número de usuarios</strong> que requieren atención y/o acceso.</li>
+            <li><strong>Número de sistemas CONTPAQi</strong> incluidos en la póliza.</li>
+            <li><strong>Número de empresas</strong> manejadas dentro de los sistemas (multiempresa).</li>
+          </ul>
+          <div class="hint" style="margin-top:8px;">
+            Para un levantamiento rápido, envíanos: usuarios, sistemas y número de empresas. Con eso te damos rango y propuesta.
           </div>
         </div>
-      </aside>
-    </div>
-  </section>
 
-  <section aria-labelledby="notas">
-    <div class="card body">
-      <div class="info info-contrato"><strong>Contratación:</strong> Se contrata mediante <strong>firma de contrato</strong>. Es una <strong>póliza anual</strong> con <strong>pagos mensuales</strong>.</div>
-      <div class="warn" style="margin-top:10px"><strong>Precio variable:</strong> El precio se calcula en función de:
-        <ul class="imp-list" style="margin-top:8px">
-          <li><strong>Número de usuarios</strong> que requieren atención y/o acceso.</li>
-          <li><strong>Número de sistemas CONTPAQi</strong> incluidos en la póliza.</li>
-          <li><strong>Número de empresas</strong> manejadas dentro de los sistemas (multiempresa).</li>
-        </ul>
-        <div class="hint" style="margin-top:8px">Para un levantamiento rápido, envíanos: usuarios, sistemas y número de empresas. Con eso te damos rango y propuesta.</div>
+        <div class="hint" style="margin-top:10px;">
+          Si se requiere un <strong>proyecto integral</strong> (automatizaciones complejas, integraciones, migraciones masivas, etc.),
+          se cotiza por separado en caso de ser necesario.
+        </div>
       </div>
-      <div class="hint" style="margin-top:10px">Si se requiere un <strong>proyecto integral</strong> (automatizaciones complejas, integraciones, migraciones masivas, etc.), se cotiza por separado en caso de ser necesario.</div>
-    </div>
-  </section>
-
+    </section>
 
     <!-- ===== Qué incluye (pills + cards) ===== -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
@@ -522,33 +596,81 @@
       <a href="#faq">Preguntas frecuentes</a>
       <a href="#sesion-guiada">Contacto</a>
     </aside>
+  </main>
 
-    <!-- El resto de tu contenido lo dejo igual (caracteristicas, comparativa, etc.) -->
-  <!-- IMPORTANTE: no modifiqué tus secciones largas; puedes dejar todo tu bloque tal cual aquí abajo -->
-  <!-- ================== TU CONTENIDO (SIN CAMBIOS) ================== -->
-  <!-- Pega aquí desde: <section id="caracteristicas" ...> hasta antes del cierre de </main> -->
-  <!-- =============================================================== -->
+  <!-- Footer dinámico -->
+  <div id="footer-placeholder"></div>
 
-</main>
-
-<!-- Partial Footer -->
-<div id="footer-placeholder"></div>
-
-<!-- ===========================================================
-  JS: Partials + YouTube click-to-load (SIN librerías)
-=========================================================== -->
 <script>
-(()=>{const isGh=location.hostname.endsWith("github.io"),seg=(location.pathname.split("/")[1]||""),repoBase=(isGh&&seg)?("/"+seg):"",root=isGh?(location.origin+repoBase+"/"):(location.origin+"/"),abs=p=>new URL(String(p||"").replace(/^\/+/,""),root).href,fetchText=async u=>{const r=await fetch(u,{cache:"force-cache"});if(!r.ok)throw new Error(r.status+" "+r.statusText+" -> "+u);return r.text()},pick=async arr=>{let e=null;for(const u of arr){try{return await fetchText(u)}catch(err){e=err}}throw e||new Error("No se pudo cargar partial.")},inject=(id,html)=>{const ph=document.getElementById(id);if(!ph||!html)return;ph.insertAdjacentHTML("beforebegin",html);ph.remove()},partials=async()=>{const hc=[abs("PARTIALS/global-header.html"),"../PARTIALS/global-header.html","PARTIALS/global-header.html"],fc=[abs("PARTIALS/global-footer.html"),"../PARTIALS/global-footer.html","PARTIALS/global-footer.html"];const [h,f]=await Promise.all([pick(hc).catch(()=>""),pick(fc).catch(()=>"" )]);inject("header-placeholder",h);inject("footer-placeholder",f);const y=document.getElementById("gf-year");if(y)y.textContent=new Date().getFullYear()};if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",()=>partials().catch(console.error),{once:true})}else{partials().catch(console.error)}
-/* YouTube: crea el iframe SOLO al click (reduce ~1MB JS en inicial) */
-const mkIframe=id=>{const i=document.createElement("iframe");i.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&controls=1&fs=1`;i.title="YouTube video";i.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";i.allowFullscreen=true;i.loading="lazy";i.referrerPolicy="strict-origin-when-cross-origin";i.style.width="100%";i.style.height="100%";i.style.border="0";return i};
-const activate=box=>{const id=(box.getAttribute("data-yt")||"").trim();if(!id)return;box.classList.add("is-loading");box.innerHTML="";box.appendChild(mkIframe(id))};
-document.addEventListener("click",e=>{const box=e.target.closest(".yt-lite[data-yt]");if(box)activate(box)},{passive:true});
-document.addEventListener("keydown",e=>{if(e.key!=="Enter"&&e.key!==" ")return;const box=e.target.closest?.(".yt-lite[data-yt]");if(box){e.preventDefault();activate(box)}});
+(() => {
+  const isGh = location.hostname.endsWith("github.io");
+  const firstSeg = location.pathname.split("/")[1] || "";
+  const repoBase = (isGh && firstSeg) ? ("/" + firstSeg) : "";
+
+  const abs = (p) => {
+    const clean = String(p || "").replace(/^\/+/, "");
+    const root = isGh ? (location.origin + repoBase + "/") : (location.origin + "/");
+    return new URL(clean, root).href;
+  };
+
+  const fetchText = async (url) => {
+    const r = await fetch(url, { cache: "force-cache" });
+    if (!r.ok) throw new Error(`${r.status} ${r.statusText} -> ${url}`);
+    return r.text();
+  };
+
+  const pickText = async (cands) => {
+    let lastErr = null;
+    for (const u of cands) {
+      try { return await fetchText(u); } catch (e) { lastErr = e; }
+    }
+    throw lastErr || new Error("No se pudo cargar el partial.");
+  };
+
+  const injectHTML = (placeholderId, html) => {
+    const ph = document.getElementById(placeholderId);
+    if (!ph || !html) return;
+    // Más robusto que outerHTML cuando hay <script> dentro del partial
+    ph.insertAdjacentHTML("beforebegin", html);
+    ph.remove();
+  };
+
+  const injectPartials = async () => {
+    const headerCandidates = [
+      abs("PARTIALS/global-header.html"),
+      "../PARTIALS/global-header.html",
+      "PARTIALS/global-header.html"
+    ];
+    const footerCandidates = [
+      abs("PARTIALS/global-footer.html"),
+      "../PARTIALS/global-footer.html",
+      "PARTIALS/global-footer.html"
+    ];
+
+    const [h, f] = await Promise.all([
+      pickText(headerCandidates).catch(() => ""),
+      pickText(footerCandidates)
+    ]);
+
+    injectHTML("header-placeholder", h);
+    injectHTML("footer-placeholder", f);
+
+    // Año (por si el footer no lo setea por alguna razón)
+    const y = document.getElementById("gf-year");
+    if (y) y.textContent = new Date().getFullYear();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => { injectPartials().catch(console.error); }, { once: true });
+  } else {
+    injectPartials().catch(console.error);
+  }
 })();
 </script>
 
-<!-- JS global servicios -->
-<script src="../mainservicios.js" defer></script>
-</body></html>
 
-
+  <!-- JS global servicios -->
+  <script src="../mainservicios.js" defer></script>
+</body>
+</html>
+ 
