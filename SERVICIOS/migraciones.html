@@ -1,34 +1,32 @@
-<!-- =========================================================
-  Expiriti | Migraciones a CONTPAQi (SERVICIOS/migraciones.html)
-  - HTML corregido + “minificado humano” (compacto) + comentarios útiles
-  - Compatible con tu mainservicios.js GLOBAL (parciales, pills, TOC, sliders, etc.)
-  - FIXES aplicados:
-    1) Error HTML: role="listitem"style -> role="listitem" style
-    2) Reel: elimina wrapper .reel-embed (doble 9:16) y deja solo .ytLite
-    3) target=_blank: rel="noopener noreferrer"
-    4) Pills: se quita role="tablist" (no son tabs ARIA reales, son filtros)
-    5) CTA tel: se deja SIN target (no aplica); y se corrige rel donde sí aplica
-    6) Accesibilidad: agrega alt="" decorativos donde corresponde
-========================================================= -->
 <!doctype html>
 <html lang="es">
 <head>
+  <!-- =========================================================
+    Migraciones a CONTPAQi | Expiriti
+    - Compatible 100% con tu mainservicios.js + mainservicios.css
+    - Parciales: #header-placeholder / #footer-placeholder
+    - ListSlider: .listSlider/.listTrack/.listPage + flechas .arrowCircle
+    - Pills: .pill + .feature-grid .fcard tag-*
+    - FAQ: #faqWrap .faq-item
+    - TOC: #toc + #tocToggle
+    - Reel: usa .ytLite (tu CSS) + script inline mínimo para “play”
+  ========================================================= -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Migraciones a CONTPAQi | Expiriti</title>
   <meta name="description" content="Migraciones de datos y sistemas hacia CONTPAQi. Incluye migración de ASPEL COI/NOI, Contafiscal 2000, ContaSIX, migración de sistemas CONTPAQi a otro equipo, restauración y conversiones.">
 
-  <!-- Preconnects (esta página sí usa Reel en hero) -->
+  <!-- Preconnects (rendimiento) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://www.youtube-nocookie.com">
   <link rel="preconnect" href="https://i.ytimg.com">
 
-  <!-- Fuente + CSS global servicios -->
+  <!-- Fuente + CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../mainservicios.css">
 
-  <!-- Favicons -->
+  <!-- Favicons (rutas relativas a /SERVICIOS/) -->
   <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -43,6 +41,7 @@
   <div id="header-placeholder"></div>
 
   <main class="container hero">
+    <!-- Back: deja tu URL (si luego cambias dominio, solo ajustas aquí) -->
     <a class="hint" href="https://universalunidad-ux.github.io/unidaduniversal.github.io/#servicios">← Volver a servicios</a>
 
     <h1>
@@ -50,36 +49,31 @@
       <span class="badge" style="background:rgba(37,99,235,.18);border-color:#3b82f6;color:#bfdbfe;">Servicio</span>
     </h1>
 
-    <div class="badges" role="list" aria-label="Resumen del servicio">
+    <div class="badges" role="list" aria-label="Características clave">
       <span class="badge" role="listitem">Migración CONTPAQi a otro equipo</span>
       <span class="badge" role="listitem">Conversión de ASPEL, Contafiscal, ContaSIX y más</span>
       <span class="badge" role="listitem">Restauración de bases de datos</span>
       <span class="badge" role="listitem" style="background:rgba(245,158,11,.15);border-color:#f59e0b;color:#fbbf24;">Precio por número de empresas</span>
     </div>
 
-    <!-- =====================================================
-      Beneficios + Reel en hero
-      - grid-2: izquierda (beneficios + CTAs) / derecha (reel)
-      - listSlider controlado por mainservicios.js (sección 4)
-    ====================================================== -->
+    <!-- ===================== BENEFICIOS (listSlider) + REEL (ytLite) ===================== -->
     <section id="beneficios" aria-label="Por qué elegir nuestras migraciones">
       <div class="grid-2 align-center">
-
-        <!-- ========== Columna izquierda ========== -->
+        <!-- Columna izquierda -->
         <div class="stack">
           <div>
             <h2 class="title-gradient">¿Por qué migrar con Expiriti?</h2>
             <p class="lead">
-              No solo movemos archivos: diseñamos un <strong>plan de migración y conversión</strong>,
-              cuidamos respaldos, revisamos saldos y dejamos tu información <strong>lista para operar en CONTPAQi</strong>,
-              sin perder historial ni poner en riesgo tu contabilidad o nóminas.
+              No solo movemos archivos: diseñamos un <strong>plan de migración y conversión</strong>, cuidamos respaldos,
+              revisamos saldos y dejamos tu información <strong>lista para operar en CONTPAQi</strong>, sin perder historial
+              ni poner en riesgo tu contabilidad o nóminas.
             </p>
           </div>
 
-          <!-- Lista de beneficios (slider 2 páginas) -->
           <div class="card">
             <div class="body">
-              <div class="listSlider" aria-label="Beneficios de migrar con Expiriti">
+              <!-- listSlider (tu JS lo controla) -->
+              <div class="listSlider" aria-label="Beneficios">
                 <button class="arrowCircle prev" type="button" aria-label="Anterior"><span class="chev">‹</span></button>
 
                 <div class="listTrack">
@@ -87,15 +81,26 @@
                   <div class="listPage">
                     <div class="listItem">
                       <div class="listIcon"><img src="../IMG/008-agenda.webp" alt=""></div>
-                      <div><strong>PLAN Y CHECKLIST CLARO</strong><div>Te indicamos exactamente qué respaldos y datos necesitamos por sistema.</div></div>
+                      <div>
+                        <strong>PLAN Y CHECKLIST CLARO</strong>
+                        <div>Te indicamos exactamente qué respaldos y datos necesitamos por sistema.</div>
+                      </div>
                     </div>
+
                     <div class="listItem">
                       <div class="listIcon"><img src="../IMG/004-business.webp" alt=""></div>
-                      <div><strong>RESPALDOS Y PRUEBAS</strong><div>Respaldamos, migramos, probamos acceso y verificamos integridad básica.</div></div>
+                      <div>
+                        <strong>RESPALDOS Y PRUEBAS</strong>
+                        <div>Respaldamos, migramos, probamos acceso y verificamos integridad básica.</div>
+                      </div>
                     </div>
+
                     <div class="listItem">
                       <div class="listIcon"><img src="../IMG/013-fecha-limite-del-proyecto.webp" alt=""></div>
-                      <div><strong>HISTORIAL CONSERVADO</strong><div>Buscamos conservar tus ejercicios históricos según el alcance de cada conversión.</div></div>
+                      <div>
+                        <strong>HISTORIAL CONSERVADO</strong>
+                        <div>Buscamos conservar tus ejercicios históricos según el alcance de cada conversión.</div>
+                      </div>
                     </div>
                   </div>
 
@@ -103,15 +108,26 @@
                   <div class="listPage">
                     <div class="listItem">
                       <div class="listIcon"><img src="../IMG/023-atencion-al-cliente.webp" alt=""></div>
-                      <div><strong>VISIÓN TÉCNICA Y CONTABLE</strong><div>No solo “abre el sistema”: revisamos catálogos y saldos clave.</div></div>
+                      <div>
+                        <strong>VISIÓN TÉCNICA Y CONTABLE</strong>
+                        <div>No solo “abre el sistema”: revisamos catálogos y saldos clave.</div>
+                      </div>
                     </div>
+
                     <div class="listItem">
                       <div class="listIcon"><img src="../IMG/013-fecha-limite-del-proyecto.webp" alt=""></div>
-                      <div><strong>MENOS TIEMPO FUERA DE OPERACIÓN</strong><div>Agendamos ventanas de trabajo para minimizar el impacto en tu operación.</div></div>
+                      <div>
+                        <strong>MENOS TIEMPO FUERA DE OPERACIÓN</strong>
+                        <div>Agendamos ventanas de trabajo para minimizar el impacto en tu operación.</div>
+                      </div>
                     </div>
+
                     <div class="listItem">
                       <div class="listIcon"><img src="../IMG/032-persona-1.webp" alt=""></div>
-                      <div><strong>ACOMPAÑAMIENTO POST-MIGRACIÓN</strong><div>Te ayudamos con dudas y ajustes tras entrar en producción.</div></div>
+                      <div>
+                        <strong>ACOMPAÑAMIENTO POST-MIGRACIÓN</strong>
+                        <div>Te ayudamos con dudas y ajustes tras entrar en producción.</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -121,68 +137,55 @@
             </div>
           </div>
 
-          <!-- CTAs -->
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
-            <a class="btn btn-grad-green hero-btn"
-               href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20necesito%20una%20migraci%C3%B3n%20o%20conversi%C3%B3n%20a%20CONTPAQi."
-               target="_blank" rel="noopener noreferrer">Cotizar mi migración</a>
-
+            <a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20necesito%20una%20migraci%C3%B3n%20o%20conversi%C3%B3n%20a%20CONTPAQi." target="_blank" rel="noopener">Cotizar mi migración</a>
             <a class="btn btn-grad-blue hero-btn" href="tel:+525568437918">Llamar (55 6843 7918)</a>
-
             <a class="btn btn-ghost hero-btn" href="#caracteristicas">Ver servicios detallados</a>
           </div>
         </div>
 
-        <!-- ========== Columna derecha: Reel (1 solo, sin carrusel) ==========
-          FIX: se elimina wrapper .reel-embed (para evitar doble aspect-ratio).
-          Nota: tu JS no inserta iframe en .ytLite hoy; esto depende de tu CSS/JS
-          “yt-lite” previo. Si en tu mainservicios.css ya tienes .ytLite listo,
-          queda bien. Si no, al pegar tu JS te agrego el “click-to-embed” para .ytLite.
-        =================================================================== -->
+        <!-- Columna derecha (Reel) -->
         <aside class="card body reels-card" aria-label="Reel de Migraciones">
           <h4 class="title-gradient" style="margin-bottom:8px;">Reel Destacado: Migraciones</h4>
-          <h4 class="reel-title active">De ASPEL a CONTPAQi sin perder historia</h4>
 
-          <div class="ytLite"
-               data-ytid="4QqrKkTPZ6U"
-               data-title="Testimonio Uriel: Conversión a CONTPAQi"
-               style="--yt-poster:url('https://i.ytimg.com/vi/4QqrKkTPZ6U/hqdefault.jpg');">
-            <button class="ytPlay" type="button" aria-label="Reproducir video"></button>
-            <div class="ytGrad"></div>
-            <div class="ytMeta">
-              <div class="ytTitle">Testimonio Uriel</div>
-              <div class="ytSub">Conversión a CONTPAQi</div>
+          <!-- Tu CSS maneja 1-línea; tu JS de “reels” solo actúa en .carousel[id^="carouselReels"] -->
+          <h4 class="reel-title active" data-reel-title>De ASPEL a CONTPAQi sin perder historia</h4>
+
+          <div class="reel-embed">
+            <!-- IMPORTANTE: tu CSS usa .ytLite (camelCase) -->
+            <div class="ytLite" data-ytid="4QqrKkTPZ6U" data-title="Testimonio Uriel: Conversión a CONTPAQi">
+              <button class="ytPlay" type="button" aria-label="Reproducir video"></button>
+              <div class="ytGrad" aria-hidden="true"></div>
+              <div class="ytMeta">
+                <div class="ytTitle">Testimonio Uriel</div>
+                <div class="ytSub">Conversión a CONTPAQi</div>
+              </div>
             </div>
           </div>
         </aside>
-
       </div>
     </section>
 
-    <!-- Notas generales -->
+    <!-- ===================== NOTAS ===================== -->
     <section aria-labelledby="notas">
       <div class="card body">
         <div class="warn">
           <strong>Migración o conversión de una empresa</strong> se calcula con base en la cantidad de empresas a migrar.
           El servicio <strong>suele incluir una empresa</strong>; si tienes más, se cotizan adicionalmente.
         </div>
-        <p class="hint" style="margin-top:8px">
+        <p class="hint" style="margin-top:8px;">
           La <strong>restauración de base de datos</strong> también se calcula por empresa a restaurar y por tipo de respaldo.
         </p>
       </div>
     </section>
 
-    <!-- =====================================================
-      Servicios: Migración / Conversiones / Restauración
-      - pills controladas por mainservicios.js (sección 5)
-      - FIX: pills sin role=tablist (son filtros, no tabs ARIA)
-    ====================================================== -->
+    <!-- ===================== SERVICIOS (pills + feature-grid) ===================== -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
       <div class="card body">
         <h3 id="caracteristicas-title" class="title-gradient">Servicios de Migración, Conversiones y Restauraciones</h3>
         <p class="hint" style="margin:4px 0 10px;">Filtra por tipo de servicio. El detalle fino se revisa en la sesión de levantamiento.</p>
 
-        <div class="pillbar" aria-label="Filtrar servicios">
+        <div class="pillbar" role="tablist" aria-label="Filtrar servicios">
           <button class="pill active" type="button" data-filter="migracion">Migración</button>
           <button class="pill" type="button" data-filter="conversiones">Conversiones</button>
           <button class="pill" type="button" data-filter="restauracion">Restauración</button>
@@ -212,7 +215,7 @@
             <ul class="imp-list">
               <li>Respaldo según versión (exportaciones, carpetas, FDB/FBK o BAK).</li>
               <li>Revisión de catálogo de cuentas y segmentos/centros de costo.</li>
-              <li>No se migran proyectos; se aclara alcance antes de comenzar.</li>
+              <li>Alcance se aclara antes de comenzar.</li>
             </ul>
           </article>
 
@@ -237,7 +240,7 @@
             <p>Conversión de empresas desde <strong>Contafiscal 2000</strong> hacia CONTPAQi.</p>
             <ul class="imp-list">
               <li>Uso de carpeta original de empresa (.DAT, .IDX).</li>
-              <li>Se definen alcances y sistema destino en sesión de levantamiento.</li>
+              <li>Alcances y sistema destino se definen en sesión de levantamiento.</li>
               <li>Cotización específica según volumen y detalle requerido.</li>
             </ul>
           </article>
@@ -265,7 +268,7 @@
             <ul class="imp-list">
               <li>Respaldo de empresas en el equipo actual.</li>
               <li>Instalación y activación en el equipo nuevo.</li>
-              <li>Restauración, validación de información y revocación en el equipo anterior.</li>
+              <li>Restauración, validación y revocación en el equipo anterior.</li>
             </ul>
           </article>
 
@@ -298,11 +301,14 @@
       </div>
     </section>
 
-    <!-- Comparativa -->
+    <!-- ===================== COMPARATIVA (tabla con scroll interno por CSS) ===================== -->
     <section id="comparativa" aria-labelledby="comparativa-title">
       <h3 id="comparativa-title" class="title-gradient">¿Partner especializado o hacerlo “a mano”?</h3>
+
       <div class="card body">
-        <p class="hint" style="margin-bottom:10px;">Comparativa entre migrar con un <strong>partner especializado</strong>, hacerlo internamente y usar soporte TI genérico.</p>
+        <p class="hint" style="margin-bottom:10px;">
+          Comparativa entre migrar con un <strong>partner especializado</strong>, hacerlo internamente y usar soporte TI genérico.
+        </p>
 
         <table class="table-like" aria-label="Comparativa de migraciones">
           <thead>
@@ -349,7 +355,7 @@
       </div>
     </section>
 
-    <!-- Servicios complementarios -->
+    <!-- ===================== SERVICIOS COMPLEMENTARIOS (li clickable por tu JS) ===================== -->
     <section id="servicios-complementarios" aria-labelledby="relacionados">
       <h3 id="relacionados" class="title-gradient">Servicios complementarios</h3>
       <p class="hint" style="margin-top:4px;margin-bottom:10px;">Haz clic en el servicio que necesites para ver el detalle completo.</p>
@@ -357,7 +363,7 @@
       <div class="card body">
         <div class="svc-grid">
           <ul class="svc-list">
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
               <div class="svc-text">
                 <span class="svc-title">Pólizas de Soporte Técnico Mensual</span>
                 <span class="svc-sub">Soporte y cursos ilimitados, desarrollos y más. Todo firmado por contrato.</span>
@@ -365,7 +371,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
               <div class="svc-text">
                 <span class="svc-title">Hora de soporte y soporte sin costo</span>
                 <span class="svc-sub">Atención por evento vía AnyDesk.</span>
@@ -373,7 +379,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
               <div class="svc-text">
                 <span class="svc-title">Cursos por sistema CONTPAQi</span>
                 <span class="svc-sub">Contabilidad, Bancos, Nóminas, Comercial, nube, etc.</span>
@@ -381,7 +387,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/soporte.html">
               <div class="svc-text">
                 <span class="svc-title">Instalaciones</span>
                 <span class="svc-sub">En otro equipo o nuevas versiones.</span>
@@ -389,7 +395,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
               <div class="svc-text">
                 <span class="svc-title">Migración de equipo</span>
                 <span class="svc-sub">Mueve tu sistema CONTPAQi a otro equipo.</span>
@@ -397,7 +403,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/migraciones.html">
               <div class="svc-text">
                 <span class="svc-title">Migración y conversión de datos a CONTPAQi</span>
                 <span class="svc-sub">De otros sistemas a CONTPAQi.</span>
@@ -407,7 +413,7 @@
           </ul>
 
           <ul class="svc-list">
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
               <div class="svc-text">
                 <span class="svc-title">Contabilización por empresa</span>
                 <span class="svc-sub">Procesos contables recurrentes por compañía.</span>
@@ -415,7 +421,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
               <div class="svc-text">
                 <span class="svc-title">Adecuación de formatos PDF</span>
                 <span class="svc-sub">Formatos amigables de facturas, cotizaciones, tickets, etc.</span>
@@ -423,7 +429,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/reportesyformatos.html">
               <div class="svc-text">
                 <span class="svc-title">Reportes personalizados</span>
                 <span class="svc-sub">Indicadores y listados hechos a tu medida.</span>
@@ -431,7 +437,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html">
               <div class="svc-text">
                 <span class="svc-title">Capacitaciones por rol</span>
                 <span class="svc-sub">Sesiones por persona o equipo según funciones.</span>
@@ -439,7 +445,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://universalunidad-ux.github.io/unidaduniversal.github.io/SERVICIOS/desarrollos.html">
               <div class="svc-text">
                 <span class="svc-title">Desarrollos a tu medida</span>
                 <span class="svc-sub">Soluciones específicas sobre el ecosistema CONTPAQi.</span>
@@ -447,7 +453,7 @@
               <span class="svc-pill">Ver más →</span>
             </li>
 
-            <li class="svc-link" data-url="https://wa.me/5568437918?text=Hola%21%20Estoy%20buscando%20un%20servicio%20que%20no%20encontr%C3%A9%20en%20su%20p%C3%A1gina.%20Necesito%3A">
+            <li class="svc-link" tabindex="0" role="link" data-url="https://wa.me/5568437918?text=Hola%21%20Estoy%20buscando%20un%20servicio%20que%20no%20encontr%C3%A9%20en%20su%20p%C3%A1gina.%20Necesito%3A">
               <div class="svc-text">
                 <span class="svc-title">¿No ves lo que buscas?</span>
                 <span class="svc-sub">Cuéntanos tu caso específico en CONTPAQi.</span>
@@ -459,7 +465,7 @@
       </div>
     </section>
 
-    <!-- FAQ (controlado por mainservicios.js sección 6) -->
+    <!-- ===================== FAQ ===================== -->
     <section id="faq" aria-labelledby="faq-title">
       <h3 id="faq-title" class="title-gradient">Preguntas frecuentes sobre migraciones</h3>
 
@@ -471,7 +477,7 @@
 
         <details class="faq-item">
           <summary>¿Se conserva el historial de años anteriores?</summary>
-          <p>En la mayoría de los casos sí. Las conversiones se cotizan <strong>por empresa</strong> sin limitar el número de ejercicios. Si hay restricciones por versión o formato te lo indicamos antes de avanzar, para que sepas exactamente qué quedará disponible en CONTPAQi.</p>
+          <p>En la mayoría de los casos sí. Las conversiones se cotizan <strong>por empresa</strong>. Si hay restricciones por versión o formato te lo indicamos antes de avanzar para que sepas exactamente qué quedará disponible en CONTPAQi.</p>
         </details>
 
         <details class="faq-item">
@@ -486,28 +492,25 @@
 
         <details class="faq-item">
           <summary>¿Cómo se cobra: por hora, por empresa o por sistema?</summary>
-          <p>Las <strong>conversiones y migraciones</strong> se cobran principalmente <strong>por empresa</strong> y por tipo de sistema/versión. La <strong>restauración de bases</strong> también se calcula por empresa a restaurar. Si el proyecto incluye pasos adicionales (por ejemplo, reconfiguración de formatos o conexiones remotas) se cotizan como servicios extra, siempre por escrito y antes de comenzar.</p>
+          <p>Las <strong>conversiones y migraciones</strong> se cobran principalmente <strong>por empresa</strong> y por tipo de sistema/versión. La <strong>restauración de bases</strong> también se calcula por empresa a restaurar. Si el proyecto incluye pasos adicionales, se cotizan como servicios extra, siempre por escrito y antes de comenzar.</p>
         </details>
       </div>
     </section>
 
-    <!-- CTA -->
+    <!-- ===================== CTA ===================== -->
     <section id="sesion-guiada" class="card body">
       <h3 class="title-gradient">¿Necesitas migrar hoy?</h3>
       <p>Cuéntanos desde qué sistema vienes, cuánto historial necesitas convertir y cuántas empresas son. Te indicamos el procedimiento exacto de respaldo y te enviamos una cotización clara.</p>
 
       <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-        <a class="btn btn-grad-blue"
-           href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20necesito%20una%20migraci%C3%B3n%20o%20conversi%C3%B3n%20a%20CONTPAQi%20y%20tengo%20dudas%20sobre%20los%20respaldos."
-           target="_blank" rel="noopener noreferrer">WhatsApp</a>
-
+        <a class="btn btn-grad-blue" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20necesito%20una%20migraci%C3%B3n%20o%20conversi%C3%B3n%20a%20CONTPAQi%20y%20tengo%20dudas%20sobre%20los%20respaldos." target="_blank" rel="noopener">WhatsApp</a>
         <a class="btn btn-ghost" href="tel:+525568437918">Llamar (55 6843 7918)</a>
       </div>
     </section>
 
-    <!-- TOC (controlado por mainservicios.js sección 3) -->
+    <!-- ===================== TOC (Mapa flotante) ===================== -->
     <aside class="toc collapsed" id="toc" aria-live="polite">
-      <button class="toc-toggle" id="tocToggle" type="button" aria-label="Abrir mapa del sitio">Mapa</button>
+      <button class="toc-toggle" id="tocToggle" type="button" aria-label="Abrir mapa">🗺️ Mapa</button>
       <button class="toc-close" type="button" aria-label="Cerrar">×</button>
       <strong class="toc-title">Mapa del sitio</strong>
       <a href="#beneficios">Beneficios</a>
@@ -524,5 +527,51 @@
 
   <!-- JS global servicios -->
   <script src="../mainservicios.js" defer></script>
+
+  <!-- =========================================================
+    YT-Lite (1 reel)
+    - Tu mainservicios.js carga la YT Iframe API al primer gesto (pointerdown/keydown)
+    - Aquí solo “incrustamos” el iframe al click del componente .ytLite
+    - Mantiene youtube-nocookie + autoplay, mute para evitar bloqueos
+  ========================================================= -->
+  <script>
+  (function(){
+    "use strict";
+    function posterUrl(id){return "https://i.ytimg.com/vi/"+id+"/hqdefault.jpg";}
+    function buildSrc(id){
+      var base="https://www.youtube-nocookie.com/embed/"+id;
+      var qs="autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1";
+      return base+"?"+qs;
+    }
+    function activate(box){
+      if(!box || box.classList.contains("is-playing")) return;
+      var id=(box.getAttribute("data-ytid")||"").trim();
+      if(!id) return;
+
+      box.style.setProperty("--yt-poster","url('"+posterUrl(id)+"')");
+      var iframe=document.createElement("iframe");
+      iframe.src=buildSrc(id);
+      iframe.title=box.getAttribute("data-title")||"Video";
+      iframe.loading="lazy";
+      iframe.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.referrerPolicy="strict-origin-when-cross-origin";
+      iframe.allowFullscreen=true;
+
+      box.classList.add("is-playing");
+      box.appendChild(iframe);
+    }
+
+    document.querySelectorAll(".ytLite[data-ytid]").forEach(function(box){
+      // pinta poster desde el inicio
+      var id=(box.getAttribute("data-ytid")||"").trim();
+      if(id) box.style.setProperty("--yt-poster","url('"+posterUrl(id)+"')");
+
+      // click en contenedor o botón
+      box.addEventListener("click",function(){activate(box);});
+      var btn=box.querySelector(".ytPlay");
+      if(btn) btn.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();activate(box);});
+    });
+  })();
+  </script>
 </body>
 </html>
