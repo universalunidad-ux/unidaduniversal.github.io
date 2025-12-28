@@ -1152,3 +1152,12 @@ body>.arrowCircle{display:none!important}
   border:0;
 }
 
+
+/* ===== FIX YT-LITE: limitar tamaño en desktop (evita reel gigante) ===== */
+.ytLite{
+  max-width:380px;      /* igual que tu intención en reel-embed */
+  margin:0 auto;        /* centrado en la columna */
+}
+@media(max-width:768px){
+  .ytLite{max-width:520px;}
+}
