@@ -528,50 +528,6 @@
   <!-- JS global servicios -->
   <script src="../mainservicios.js" defer></script>
 
-  <!-- =========================================================
-    YT-Lite (1 reel)
-    - Tu mainservicios.js carga la YT Iframe API al primer gesto (pointerdown/keydown)
-    - Aquí solo “incrustamos” el iframe al click del componente .ytLite
-    - Mantiene youtube-nocookie + autoplay, mute para evitar bloqueos
-  ========================================================= -->
-  <script>
-  (function(){
-    "use strict";
-    function posterUrl(id){return "https://i.ytimg.com/vi/"+id+"/hqdefault.jpg";}
-    function buildSrc(id){
-      var base="https://www.youtube-nocookie.com/embed/"+id;
-      var qs="autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1";
-      return base+"?"+qs;
-    }
-    function activate(box){
-      if(!box || box.classList.contains("is-playing")) return;
-      var id=(box.getAttribute("data-ytid")||"").trim();
-      if(!id) return;
-
-      box.style.setProperty("--yt-poster","url('"+posterUrl(id)+"')");
-      var iframe=document.createElement("iframe");
-      iframe.src=buildSrc(id);
-      iframe.title=box.getAttribute("data-title")||"Video";
-      iframe.loading="lazy";
-      iframe.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-      iframe.referrerPolicy="strict-origin-when-cross-origin";
-      iframe.allowFullscreen=true;
-
-      box.classList.add("is-playing");
-      box.appendChild(iframe);
-    }
-
-    document.querySelectorAll(".ytLite[data-ytid]").forEach(function(box){
-      // pinta poster desde el inicio
-      var id=(box.getAttribute("data-ytid")||"").trim();
-      if(id) box.style.setProperty("--yt-poster","url('"+posterUrl(id)+"')");
-
-      // click en contenedor o botón
-      box.addEventListener("click",function(){activate(box);});
-      var btn=box.querySelector(".ytPlay");
-      if(btn) btn.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();activate(box);});
-    });
-  })();
-  </script>
+ 
 </body>
 </html>
