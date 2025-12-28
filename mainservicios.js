@@ -1,18 +1,15 @@
 // =========================================================
-// Expiriti - mainservicios.js (REEMPLAZO COMPLETO)
-// Servicios (Soporte, Pólizas, Cursos, Migraciones, etc.)
-// Parciales + TOC + Carruseles + Filtros + FAQ + YouTube pause
-// + FIX: Reels títulos 1-línea + ocultar flechas si no aplica
-// + FIX: carouselX solo link si existe data-href
+// Expiriti - mainservicios.js (FINAL CONSOLIDADO)
+// Parciales + TOC + Carruseles + Filtros + FAQ
+// YouTube: pausa entre videos + YT-Lite (poster + click => iframe)
+// FIX: Reels title visible (force .active)
+// FIX: carouselX solo link si existe data-href
 // =========================================================
-
 (function(){
   "use strict";
 
-  // -------- Helpers básicos --------
-const Q  = (sel, ctx=document) => ctx.querySelector(sel);
-const QA = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
-
+  const Q  = (sel, ctx=document) => ctx.querySelector(sel);
+  const QA = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
 
   // =========================================================
   // 1) Servicios complementarios: <li> completo como link
@@ -25,94 +22,80 @@ const QA = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
       };
       li.addEventListener('click', go);
       li.addEventListener('keydown', e=>{
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          go();
-        }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
       });
     });
   })();
 
-// =========================================================
-// 2) Carga de parciales (header/footer) + normalización rutas
-//    FIX: GH Project Pages + local (SIN /PARTIALS pelón)
-// =========================================================
-(async function loadPartials(){
-  const D = document;
+  // =========================================================
+  // 2) Carga de parciales (header/footer) + normalización rutas
+  // =========================================================
+  (async function loadPartials(){
+    const D = document;
 
-  const inSubDir = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
-  const relLocal = inSubDir ? "../" : "";
+    const inSubDir = /\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
+    const relLocal = inSubDir ? "../" : "";
 
-  // GH Project Pages: base="/unidaduniversal.github.io"
-  const isGh = location.hostname.endsWith("github.io");
-  const firstSeg = location.pathname.split("/")[1] || "";
-  const base = (isGh && firstSeg) ? ("/" + firstSeg) : "";
+    const isGh = location.hostname.endsWith("github.io");
+    const firstSeg = location.pathname.split("/")[1] || "";
+    const base = (isGh && firstSeg) ? ("/" + firstSeg) : "";
 
-  // --- URLs correctas ---
-  const headerURL = isGh ? (base + "/PARTIALS/global-header.html") : (relLocal + "PARTIALS/global-header.html");
-  const footerURL = isGh ? (base + "/PARTIALS/global-footer.html") : (relLocal + "PARTIALS/global-footer.html");
+    const headerURL = isGh ? (base + "/PARTIALS/global-header.html") : (relLocal + "PARTIALS/global-header.html");
+    const footerURL = isGh ? (base + "/PARTIALS/global-footer.html") : (relLocal + "PARTIALS/global-footer.html");
 
-  const abs = (p) => {
-    if (!p) return p;
-    if (/^https?:\/\//i.test(p)) return p;
-    if (/^(mailto:|tel:|data:)/i.test(p)) return p;
-    if (p.startsWith("/")) return p; // ya absoluto
+    const abs = (p) => {
+      if (!p) return p;
+      if (/^https?:\/\//i.test(p)) return p;
+      if (/^(mailto:|tel:|data:)/i.test(p)) return p;
+      if (p.startsWith("/")) return p;
+      if (isGh) return (base + "/" + p).replace(/\/+/g, "/");
+      return (relLocal + p).replace(/\/+/g, "/");
+    };
 
-    // En GH Project Pages: prefija base
-    if (isGh) return (base + "/" + p).replace(/\/+/g, "/");
+    const hp = D.getElementById("header-placeholder");
+    const fp = D.getElementById("footer-placeholder");
 
-    // Local: respeta subcarpetas
-    return (relLocal + p).replace(/\/+/g, "/");
-  };
-
-  const hp = D.getElementById("header-placeholder");
-  const fp = D.getElementById("footer-placeholder");
-
-  try{
-    if (hp){
-      const r = await fetch(headerURL, { cache: "no-store" });
-      if (r.ok) hp.outerHTML = await r.text();
-      else console.warn("[partials] header 404:", headerURL, r.status);
+    try{
+      if (hp){
+        const r = await fetch(headerURL, { cache: "no-store" });
+        if (r.ok) hp.outerHTML = await r.text();
+        else console.warn("[partials] header 404:", headerURL, r.status);
+      }
+      if (fp){
+        const r = await fetch(footerURL, { cache: "no-store" });
+        if (r.ok) fp.outerHTML = await r.text();
+        else console.warn("[partials] footer 404:", footerURL, r.status);
+      }
+    }catch(e){
+      console.warn("[partials] error cargando parciales", e);
     }
-    if (fp){
-      const r = await fetch(footerURL, { cache: "no-store" });
-      if (r.ok) fp.outerHTML = await r.text();
-      else console.warn("[partials] footer 404:", footerURL, r.status);
+
+    D.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
+      const v = img.getAttribute("data-src");
+      if (v && !img.getAttribute("src")) img.setAttribute("src", abs(v));
+    });
+
+    D.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
+      const raw = a.getAttribute("data-href");
+      if (!raw) return;
+      const [path, hash] = raw.split("#");
+      a.href = abs(path) + (hash ? ("#" + hash) : "");
+    });
+
+    const y = D.getElementById("gf-year");
+    if (y) y.textContent = new Date().getFullYear();
+
+    if (typeof window.initGlobalHeader === "function") {
+      try { window.initGlobalHeader(); } catch(e) {}
     }
-  } catch(e){
-    console.warn("[partials] error cargando parciales", e);
-  }
-
-  // Normalización declarativa dentro del DOM ya insertado
-  D.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
-    const v = img.getAttribute("data-src");
-    if (v && !img.getAttribute("src")) img.setAttribute("src", abs(v));
-  });
-
-  D.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
-    const raw = a.getAttribute("data-href");
-    if (!raw) return;
-    const [path, hash] = raw.split("#");
-    a.href = abs(path) + (hash ? ("#" + hash) : "");
-  });
-
-  const y = D.getElementById("gf-year");
-  if (y) y.textContent = new Date().getFullYear();
-
-  if (typeof window.initGlobalHeader === "function") {
-    try { window.initGlobalHeader(); } catch(e) {}
-  }
-})();
-
-
+  })();
 
   // =========================================================
-  // 3) TOC flotante (índice) — mapa del sitio
+  // 3) TOC flotante
   // =========================================================
   (function(){
-const toc      = Q("#toc");
-const openBtn  = Q("#tocToggle");
-
+    const toc      = Q("#toc");
+    const openBtn  = Q("#tocToggle");
     const closeBtn = toc?.querySelector(".toc-close");
     if (!toc || !openBtn || !closeBtn) return;
 
@@ -135,7 +118,7 @@ const openBtn  = Q("#tocToggle");
   })();
 
   // =========================================================
-  // 4) List slider (“beneficios”) - estable
+  // 4) listSlider (“beneficios”)
   // =========================================================
   (function(){
     QA(".listSlider").forEach(w=>{
@@ -165,7 +148,7 @@ const openBtn  = Q("#tocToggle");
   })();
 
   // =========================================================
-  // 5) Píldoras (filtros de servicios)
+  // 5) Píldoras (filtros)
   // =========================================================
   (function(){
     const pills = QA(".pill");
@@ -195,7 +178,7 @@ const openBtn  = Q("#tocToggle");
   })();
 
   // =========================================================
-  // 6) FAQ: solo uno abierto a la vez
+  // 6) FAQ: solo uno abierto
   // =========================================================
   (function(){
     const wrap = Q("#faqWrap");
@@ -212,7 +195,7 @@ const openBtn  = Q("#tocToggle");
   })();
 
   // =========================================================
-  // 7) Carrusel de sistemas (.carouselX) — UI + dots + FIX links
+  // 7) Carrusel de sistemas (.carouselX) — UI + dots + links opcionales
   // =========================================================
   (function(){
     function ensureUI(root){
@@ -248,20 +231,17 @@ const openBtn  = Q("#tocToggle");
       const items = QA(".sys", root);
       if (!items.length) return;
 
-      // FIX: SOLO hacer click-link si existe data-href
+      // SOLO click-link si existe data-href
       items.forEach(it=>{
         const href = it.getAttribute("data-href");
-        if (!href) return; // plataformas puede no tener links
+        if (!href) return;
 
         it.setAttribute("role","link");
         it.setAttribute("tabindex","0");
         const go = () => window.open(href, "_blank", "noopener");
         it.addEventListener("click", go);
         it.addEventListener("keydown", e=>{
-          if(e.key === "Enter" || e.key === " "){
-            e.preventDefault();
-            go();
-          }
+          if(e.key === "Enter" || e.key === " "){ e.preventDefault(); go(); }
         });
       });
 
@@ -291,9 +271,7 @@ const openBtn  = Q("#tocToggle");
       let dots = buildDots();
       let idx  = 0;
 
-      function paint(j){
-        dots.forEach((d,i)=>d.classList.toggle("active", i===j));
-      }
+      function paint(j){ dots.forEach((d,i)=>d.classList.toggle("active", i===j)); }
 
       function toggleUI(){
         const multi = pageCount() > 1;
@@ -308,6 +286,7 @@ const openBtn  = Q("#tocToggle");
 
         const startIdx = Math.min(idx * perView(), items.length - 1);
         const first    = items[startIdx];
+
         let baseLeft = (idx === 0)
           ? 0
           : (first ? first.offsetLeft - (track.firstElementChild?.offsetLeft || 0)
@@ -332,10 +311,7 @@ const openBtn  = Q("#tocToggle");
 
       track.addEventListener("scroll",()=>{
         const i = Math.round(track.scrollLeft / viewportW());
-        if(i !== idx){
-          idx = i;
-          paint(idx);
-        }
+        if(i !== idx){ idx = i; paint(idx); }
       });
 
       window.addEventListener("resize",()=>{
@@ -363,90 +339,77 @@ const openBtn  = Q("#tocToggle");
     });
   })();
 
-// =========================================================
-// 8) GESTOR YOUTUBE — pausa reels al cambiar (LAZY YT API)
-// =========================================================
-(function(){
-  if (!window.exPlayers) window.exPlayers = [];
+  // =========================================================
+  // 8) Gestor YouTube (pausa entre videos) + carga lazy API
+  // =========================================================
+  (function(){
+    if (!window.exPlayers) window.exPlayers = [];
 
-  // Pausar todos excepto el actual
-  if (!window.pauseAllYTIframes) {
-    window.pauseAllYTIframes = function(exceptPlayer){
-      (window.exPlayers || []).forEach(p=>{
-        if (!p || p === exceptPlayer) return;
+    if (!window.pauseAllYTIframes) {
+      window.pauseAllYTIframes = function(exceptPlayer){
+        (window.exPlayers || []).forEach(p=>{
+          if (!p || p === exceptPlayer) return;
+          try{
+            if (typeof p.getPlayerState === "function" &&
+                typeof p.pauseVideo     === "function"){
+              const s = p.getPlayerState();
+              if (s === 1 || s === 3) p.pauseVideo();
+            }
+          }catch(e){}
+        });
+      };
+    }
+
+    function onPlayerStateChange(event){
+      if (event.data === 1) window.pauseAllYTIframes(event.target);
+    }
+
+    function initYTPlayers(){
+      if (!(window.YT && window.YT.Player)) return;
+
+      document.querySelectorAll('iframe[src*="youtube"]').forEach(iframe=>{
+        if (iframe.dataset.ytInit) return;
+        iframe.dataset.ytInit = "1";
+
+        let src = iframe.src || "";
+        if (src && !src.includes("enablejsapi=1")){
+          src += (src.includes("?") ? "&" : "?") + "enablejsapi=1";
+          iframe.src = src;
+        }
+
         try{
-          if (typeof p.getPlayerState === "function" &&
-              typeof p.pauseVideo     === "function"){
-            const s = p.getPlayerState();
-            if (s === 1 || s === 3) p.pauseVideo();
-          }
+          const player = new YT.Player(iframe, {
+            events:{ onStateChange:onPlayerStateChange }
+          });
+          window.exPlayers.push(player);
         }catch(e){}
       });
+    }
+
+    const prevOnReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function(){
+      if (typeof prevOnReady === "function") prevOnReady();
+      initYTPlayers();
     };
-  }
 
-  function onPlayerStateChange(event){
-    if (event.data === 1) window.pauseAllYTIframes(event.target);
-  }
+    function loadYTApiOnce(){
+      if (window.__YT_API_LOADING__ || (window.YT && window.YT.Player)) return;
+      window.__YT_API_LOADING__ = true;
 
-  // Inicializa players en iframes ya presentes
-  function initYTPlayers(){
-    if (!(window.YT && window.YT.Player)) return;
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    }
 
-    document.querySelectorAll('iframe[src*="youtube"]').forEach(iframe=>{
-      if (iframe.dataset.ytInit) return;
-      iframe.dataset.ytInit = "1";
+    document.addEventListener("pointerdown", loadYTApiOnce, { once:true, passive:true });
+    document.addEventListener("keydown", loadYTApiOnce, { once:true });
 
-      // Asegurar enablejsapi=1
-      let src = iframe.src || "";
-      if (src && !src.includes("enablejsapi=1")){
-        src += (src.includes("?") ? "&" : "?") + "enablejsapi=1";
-        iframe.src = src;
-      }
-
-      try{
-        const player = new YT.Player(iframe, {
-          events:{ onStateChange:onPlayerStateChange }
-        });
-        window.exPlayers.push(player);
-      }catch(e){}
-    });
-  }
-
-  // Hook oficial: cuando carga la API, inicializa
-  const prevOnReady = window.onYouTubeIframeAPIReady;
-  window.onYouTubeIframeAPIReady = function(){
-    if (typeof prevOnReady === "function") prevOnReady();
-    initYTPlayers();
-  };
-
-  // Cargar API UNA vez, SOLO tras interacción
-  function loadYTApiOnce(){
-    if (window.__YT_API_LOADING__ || (window.YT && window.YT.Player)) return;
-    window.__YT_API_LOADING__ = true;
-
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
-  }
-
-  // Disparadores: primer gesto del usuario
-  document.addEventListener("pointerdown", loadYTApiOnce, { once:true, passive:true });
-  document.addEventListener("keydown", loadYTApiOnce, { once:true });
-
-  // (Opcional) si quieres que se cargue cuando el carrusel entre en viewport:
-  // const firstReels = document.querySelector('.carousel[id^="carouselReels"]');
-  // if (firstReels && "IntersectionObserver" in window) {
-  //   const io = new IntersectionObserver((entries)=>{
-  //     if (entries.some(e=>e.isIntersecting)) { loadYTApiOnce(); io.disconnect(); }
-  //   }, { rootMargin: "200px" });
-  //   io.observe(firstReels);
-  // }
-})();
-
+    // expone init para YT-Lite (si ya hay API cargada)
+    window.__initYTPlayersExpiriti__ = initYTPlayers;
+  })();
 
   // =========================================================
-  // 9) Carrusel de REELS (título 1-línea + ocultar flechas si no aplica)
+  // 9) Carrusel REELS (título 1-línea + oculta flechas si 1)
   // =========================================================
   (function(){
     function ensureDots(root, count){
@@ -469,15 +432,11 @@ const openBtn  = Q("#tocToggle");
     }
 
     function findTitleEl(scope){
-      // Preferido: el que tenga data-reel-title
       let t = scope.querySelector("[data-reel-title]");
       if (t) return t;
 
-      // Fallback: primer .reel-title
       const all = [...scope.querySelectorAll(".reel-title")];
       if (!all.length) return null;
-
-      // Oculta extras por seguridad
       all.slice(1).forEach(x => x.style.display = "none");
       return all[0];
     }
@@ -489,18 +448,18 @@ const openBtn  = Q("#tocToggle");
       const prev   = root.querySelector(".arrowCircle.prev");
       const next   = root.querySelector(".arrowCircle.next");
 
+      const titleEl = findTitleEl(scope);
+      if (titleEl) titleEl.classList.add("active"); // FIX: siempre visible
+
       if (!track || !slides.length) {
-        // Sin slides: oculta UI
         if (prev) prev.style.display = "none";
         if (next) next.style.display = "none";
         const nav = root.querySelector(".carousel-nav");
         if (nav) nav.style.display = "none";
-        const t = findTitleEl(scope);
-        if (t) t.textContent = "";
+        if (titleEl) titleEl.textContent = "";
         return;
       }
 
-      // Títulos por slide
       const titles = slides.map(sl => {
         const dt = sl.getAttribute("data-title");
         if (dt) return dt.trim();
@@ -512,30 +471,23 @@ const openBtn  = Q("#tocToggle");
         return (it || "").trim();
       });
 
-      // Dots: si no existen o no coinciden, crear
       let dots = [...root.querySelectorAll(".carousel-nav .dot")];
       if (dots.length !== slides.length){
         dots = ensureDots(root, slides.length);
       }
 
-      // UI: si solo hay 1 reel, no muestres flechas ni dots
       const multi = slides.length > 1;
       if (prev) prev.style.display = multi ? "" : "none";
       if (next) next.style.display = multi ? "" : "none";
       const nav = root.querySelector(".carousel-nav");
       if (nav) nav.style.display = multi ? "" : "none";
 
-      // Título 1-línea (estilo index)
-      const titleEl = findTitleEl(scope);
-
       let idx = 0;
 
       function paint(){
         dots.forEach((d, di)=> d.classList.toggle("active", di===idx));
         slides.forEach((sl, si)=> sl.classList.toggle("is-active", si===idx));
-        if (titleEl){
-          titleEl.textContent = titles[idx] || "";
-        }
+        if (titleEl) titleEl.textContent = titles[idx] || "";
       }
 
       function setActive(i){
@@ -561,115 +513,111 @@ const openBtn  = Q("#tocToggle");
       });
 
       window.addEventListener("resize", ()=> setActive(idx));
-
-      // Init
       setActive(0);
     });
   })();
 
+  // =========================================================
+  // 10) YT-LITE (ytLite) — poster + click => iframe
+  // =========================================================
+  (function(){
+    function buildPoster(id){
+      return [
+        `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+        `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
+        `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+      ];
+    }
 
-})(); // fin IIFE global
+    function setPoster(el, id){
+      const hasInline = (el.getAttribute("style") || "").includes("--yt-poster");
+      if (hasInline) return;
 
+      const urls = buildPoster(id);
+      el.style.setProperty("--yt-poster", `url('${urls[1]}')`);
 
-// =========================================================
-// 8.5) YT-LITE (ytLite) — click => iframe (autoplay) + poster
-//      - Corrige: "no abre al click"
-//      - Corrige: poster pixelado + tamaños descontrolados (junto con CSS)
-// =========================================================
-(function(){
-  function buildPoster(id){
-    // Mejor que hqdefault para evitar pixelado (si existe)
-    // maxresdefault a veces no existe; si falla, YouTube regresa 404.
-    return [
-      `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
-      `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
-      `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
-    ];
-  }
+      const img = new Image();
+      img.onload  = () => el.style.setProperty("--yt-poster", `url('${urls[0]}')`);
+      img.onerror = () => {};
+      img.src = urls[0];
+    }
 
-  function setPoster(el, id){
-    // Si ya tiene --yt-poster inline, respétalo
-    const hasInline = (el.getAttribute("style") || "").includes("--yt-poster");
-    if (hasInline) return;
+    function ensureYTApiLoaded(){
+      if (window.__YT_API_LOADING__ || (window.YT && window.YT.Player)) return;
+      window.__YT_API_LOADING__ = true;
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    }
 
-    const urls = buildPoster(id);
-    // Intento rápido: usa sddefault por default (menos pixelado)
-    el.style.setProperty("--yt-poster", `url('${urls[1]}')`);
-
-    // Opcional: intenta maxres en background sin bloquear
-    const img = new Image();
-    img.onload = () => el.style.setProperty("--yt-poster", `url('${urls[0]}')`);
-    img.onerror = () => {}; // deja sd/hq
-    img.src = urls[0];
-  }
-
-  function mountIframe(el, id){
-    if (!id) return;
-    if (el.classList.contains("is-playing")) return;
-
-    // Pausa otros iframes si ya existen
-    if (window.pauseAllYTIframes) window.pauseAllYTIframes();
-
-    const origin = encodeURIComponent(location.origin);
-    const src =
-      `https://www.youtube-nocookie.com/embed/${id}` +
-      `?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1` +
-      `&enablejsapi=1&origin=${origin}`;
-
-    const iframe = document.createElement("iframe");
-    iframe.setAttribute("src", src);
-    iframe.setAttribute("title", el.getAttribute("data-title") || "Video");
-    iframe.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
-    iframe.setAttribute("allowfullscreen", "");
-    iframe.loading = "eager";
-
-    // Limpia overlays/botón y monta iframe
-    el.classList.add("is-playing");
-    el.appendChild(iframe);
-
-    // Carga API (para poder pausar entre videos) — solo si el usuario ya interactuó
-    // Aquí el usuario YA dio clic, entonces es seguro dispararla:
-    try{
-      if (!window.__YT_API_LOADING__ && !(window.YT && window.YT.Player)) {
-        window.__YT_API_LOADING__ = true;
-        const tag = document.createElement("script");
-        tag.src = "https://www.youtube.com/iframe_api";
-        document.head.appendChild(tag);
-      }
-    }catch(e){}
-  }
-
-  function init(){
-    document.querySelectorAll(".ytLite[data-ytid]").forEach(el=>{
-      const id = el.getAttribute("data-ytid");
+    function mountIframe(el, id){
       if (!id) return;
+      if (el.classList.contains("is-playing")) return;
 
-      setPoster(el, id);
+      if (window.pauseAllYTIframes) window.pauseAllYTIframes();
 
-      // click en cualquier parte
-      const go = () => mountIframe(el, id);
-      el.addEventListener("click", (e)=>{
-        // Evita doble disparo si el click viene del botón
-        if (e.target && e.target.closest && e.target.closest("a")) return;
-        go();
+      const origin = encodeURIComponent(location.origin);
+      const src =
+        `https://www.youtube-nocookie.com/embed/${id}` +
+        `?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1` +
+        `&enablejsapi=1&origin=${origin}`;
+
+      const iframe = document.createElement("iframe");
+      iframe.src = src;
+      iframe.title = el.getAttribute("data-title") || "Video";
+      iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.loading = "eager";
+
+      el.classList.add("is-playing");
+      el.appendChild(iframe);
+
+      // Carga API (ya hubo click)
+      ensureYTApiLoaded();
+
+      // Si YA existe la API, registra el player nuevo
+      if (window.YT && window.YT.Player && typeof window.__initYTPlayersExpiriti__ === "function"){
+        try { window.__initYTPlayersExpiriti__(); } catch(e) {}
+      } else {
+        // si está cargando, vuelve a intentar cuando ya esté
+        setTimeout(()=> {
+          if (window.YT && window.YT.Player && typeof window.__initYTPlayersExpiriti__ === "function"){
+            try { window.__initYTPlayersExpiriti__(); } catch(e) {}
+          }
+        }, 800);
+      }
+    }
+
+    function init(){
+      document.querySelectorAll(".ytLite[data-ytid]").forEach(el=>{
+        const id = el.getAttribute("data-ytid");
+        if (!id) return;
+
+        setPoster(el, id);
+
+        const go = () => mountIframe(el, id);
+
+        el.addEventListener("click", (e)=>{
+          if (e.target && e.target.closest && e.target.closest("a")) return;
+          go();
+        });
+
+        el.setAttribute("role", "button");
+        el.setAttribute("tabindex", "0");
+        el.addEventListener("keydown", (e)=>{
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+        });
+
+        const btn = el.querySelector(".ytPlay");
+        if (btn) btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); go(); });
       });
+    }
 
-      // accesibilidad
-      el.setAttribute("role", "button");
-      el.setAttribute("tabindex", "0");
-      el.addEventListener("keydown", (e)=>{
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
-      });
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init, { once:true });
+    } else {
+      init();
+    }
+  })();
 
-      // Si hay botón interno, también engancha
-      const btn = el.querySelector(".ytPlay");
-      if (btn) btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); go(); });
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once:true });
-  } else {
-    init();
-  }
-})();
+})(); // FIN
