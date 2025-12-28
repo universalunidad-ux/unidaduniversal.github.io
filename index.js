@@ -48,10 +48,48 @@ function initForms(){const quickForm=Q("#quickForm");quickForm&&quickForm.datase
 function scrollTabIntoView(btn,behavior="smooth"){const wrap=btn?.closest(".prod-tabs");if(!wrap)return;if(wrap.scrollWidth<=wrap.clientWidth+2)return;const wRect=wrap.getBoundingClientRect(),bRect=btn.getBoundingClientRect(),targetLeft=wrap.scrollLeft+(bRect.left-wRect.left)-(wRect.width/2-bRect.width/2);wrap.scrollTo({left:Math.max(0,targetLeft),behavior})}
 function initTabsProductos(){const tabs=QA(".prod-tabs .tab"),panels=QA(".panel-productos");if(!tabs.length||!panels.length)return;function activar(btn,behavior="smooth"){const targetId=btn?.dataset?.target;if(!targetId)return;tabs.forEach(t=>t.classList.toggle("active",t===btn));panels.forEach(p=>p.classList.toggle("hidden",p.id!==targetId));scrollTabIntoView(btn,behavior)}tabs.forEach(btn=>{if(btn.dataset.bound==="1")return;btn.dataset.bound="1";on(btn,"click",()=>activar(btn,"smooth"))});const tabInicial=document.getElementById("tab-contable");activar(tabInicial||tabs[0],"auto")}
 
+
 /* =========================
-   6) Promos filtro — hidden-only (CSS maneja display)
+   6) Promos filtro — FIX (solo hijos directos)
 ========================= */
-function initPromosFilter(){const promoBtns=QA(".promo-btn"),promoItems=QA("#promoGrid [data-type]");if(!promoBtns.length||!promoItems.length)return;function setPromoFilter(filter){promoBtns.forEach(b=>{const act=b.dataset.filter===filter;b.classList.toggle("active",act);b.setAttribute("aria-pressed",act?"true":"false")});promoItems.forEach(el=>{const type=(el.dataset.type||"").trim(),ok=filter==="all"||type===filter;el.toggleAttribute("hidden",!ok)})}promoBtns.forEach(b=>{if(b.dataset.bound==="1")return;b.dataset.bound="1";on(b,"click",()=>setPromoFilter(b.dataset.filter||"all"))});setPromoFilter("nuevos")}
+function initPromosFilter(){
+  const grid = document.getElementById("promoGrid");
+  if(!grid) return;
+
+  const promoBtns = QA("#promociones .promo-btn[data-filter]");
+  if(!promoBtns.length) return;
+
+  // CLAVE: SOLO items directos (img y figure)
+  const promoItems = Array.from(grid.querySelectorAll(":scope > [data-type]"));
+  if(!promoItems.length) return;
+
+  function setPromoFilter(filter){
+    promoBtns.forEach(b=>{
+      const act = (b.dataset.filter === filter);
+      b.classList.toggle("active", act);
+      b.setAttribute("aria-pressed", act ? "true" : "false");
+    });
+
+    promoItems.forEach(el=>{
+      const type = (el.dataset.type || "").trim();
+      const ok = (filter === "all") || (type === filter);
+      el.toggleAttribute("hidden", !ok);
+      el.style.display = ok ? "" : "none"; // doble seguro
+    });
+  }
+
+  // binds 1 vez
+  promoBtns.forEach(b=>{
+    if(b.dataset.bound === "1") return;
+    b.dataset.bound = "1";
+    on(b, "click", (e)=>{
+      e.preventDefault();
+      setPromoFilter(b.dataset.filter || "all");
+    });
+  });
+
+  setPromoFilter("nuevos");
+}
 
 /* =========================
    7) Cards clicables (sin duplicar)
