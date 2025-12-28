@@ -57,7 +57,10 @@
 
     try{
       if (hp){
-        const r = await fetch(headerURL, { cache: "no-store" });
+const V = "2025.12.28-1"; // súbelo cuando publiques cambios
+const withV = (u)=> u + (u.includes("?") ? "&" : "?") + "v=" + encodeURIComponent(V);
+
+const r = await fetch(withV(headerURL), { cache: "force-cache" });
         if (r.ok) hp.outerHTML = await r.text();
         else console.warn("[partials] header 404:", headerURL, r.status);
       }
