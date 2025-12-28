@@ -1075,3 +1075,80 @@ body>.arrowCircle{display:none!important}
     min-width:720px; /* mismo criterio que comparativa */
   }
 }
+
+/* ===================== YT-LITE (Reels) ===================== */
+.ytLite{
+  position:relative;
+  width:100%;
+  aspect-ratio:9/16;
+  border-radius:18px;
+  overflow:hidden;
+  background:
+    radial-gradient(900px 520px at 25% 15%, rgba(96,165,250,.14), transparent 55%),
+    radial-gradient(900px 520px at 75% 10%, rgba(45,212,191,.16), transparent 60%),
+    rgba(10,14,23,.92);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 18px 50px rgba(0,0,0,.35);
+  cursor:pointer;
+}
+
+/* poster */
+.ytLite::before{
+  content:"";
+  position:absolute; inset:0;
+  background:var(--yt-poster) center/cover no-repeat;
+  transform:scale(1.01);
+  filter:saturate(1.02) contrast(1.02);
+}
+
+/* overlay */
+.ytGrad{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.10) 45%, rgba(0,0,0,.45));
+  pointer-events:none;
+}
+
+.ytPlay{
+  position:absolute; left:50%; top:50%;
+  transform:translate(-50%,-50%);
+  width:74px; height:74px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.20);
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 16px 40px rgba(0,0,0,.45);
+  cursor:pointer;
+  z-index:3;
+}
+.ytPlay::before{
+  content:"";
+  position:absolute; left:50%; top:50%;
+  transform:translate(-40%,-50%);
+  width:0; height:0;
+  border-top:14px solid transparent;
+  border-bottom:14px solid transparent;
+  border-left:22px solid rgba(255,255,255,.92);
+}
+
+.ytMeta{
+  position:absolute; left:14px; right:14px; bottom:12px;
+  z-index:3;
+  color:#e8eef6;
+  text-shadow:0 10px 25px rgba(0,0,0,.55);
+}
+.ytTitle{font-weight:700;font-size:14px;letter-spacing:.2px}
+.ytSub{margin-top:4px;font-size:12px;color:rgba(232,238,246,.78)}
+
+/* playing => ocultar overlay */
+.ytLite.is-playing::before,
+.ytLite.is-playing .ytGrad,
+.ytLite.is-playing .ytPlay,
+.ytLite.is-playing .ytMeta{display:none}
+
+.ytLite iframe{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  border:0;
+}
+
