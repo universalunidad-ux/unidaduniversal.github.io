@@ -569,3 +569,107 @@ const openBtn  = Q("#tocToggle");
 
 
 })(); // fin IIFE global
+
+
+// =========================================================
+// 8.5) YT-LITE (ytLite) — click => iframe (autoplay) + poster
+//      - Corrige: "no abre al click"
+//      - Corrige: poster pixelado + tamaños descontrolados (junto con CSS)
+// =========================================================
+(function(){
+  function buildPoster(id){
+    // Mejor que hqdefault para evitar pixelado (si existe)
+    // maxresdefault a veces no existe; si falla, YouTube regresa 404.
+    return [
+      `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+      `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
+      `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+    ];
+  }
+
+  function setPoster(el, id){
+    // Si ya tiene --yt-poster inline, respétalo
+    const hasInline = (el.getAttribute("style") || "").includes("--yt-poster");
+    if (hasInline) return;
+
+    const urls = buildPoster(id);
+    // Intento rápido: usa sddefault por default (menos pixelado)
+    el.style.setProperty("--yt-poster", `url('${urls[1]}')`);
+
+    // Opcional: intenta maxres en background sin bloquear
+    const img = new Image();
+    img.onload = () => el.style.setProperty("--yt-poster", `url('${urls[0]}')`);
+    img.onerror = () => {}; // deja sd/hq
+    img.src = urls[0];
+  }
+
+  function mountIframe(el, id){
+    if (!id) return;
+    if (el.classList.contains("is-playing")) return;
+
+    // Pausa otros iframes si ya existen
+    if (window.pauseAllYTIframes) window.pauseAllYTIframes();
+
+    const origin = encodeURIComponent(location.origin);
+    const src =
+      `https://www.youtube-nocookie.com/embed/${id}` +
+      `?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1` +
+      `&enablejsapi=1&origin=${origin}`;
+
+    const iframe = document.createElement("iframe");
+    iframe.setAttribute("src", src);
+    iframe.setAttribute("title", el.getAttribute("data-title") || "Video");
+    iframe.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+    iframe.setAttribute("allowfullscreen", "");
+    iframe.loading = "eager";
+
+    // Limpia overlays/botón y monta iframe
+    el.classList.add("is-playing");
+    el.appendChild(iframe);
+
+    // Carga API (para poder pausar entre videos) — solo si el usuario ya interactuó
+    // Aquí el usuario YA dio clic, entonces es seguro dispararla:
+    try{
+      if (!window.__YT_API_LOADING__ && !(window.YT && window.YT.Player)) {
+        window.__YT_API_LOADING__ = true;
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+      }
+    }catch(e){}
+  }
+
+  function init(){
+    document.querySelectorAll(".ytLite[data-ytid]").forEach(el=>{
+      const id = el.getAttribute("data-ytid");
+      if (!id) return;
+
+      setPoster(el, id);
+
+      // click en cualquier parte
+      const go = () => mountIframe(el, id);
+      el.addEventListener("click", (e)=>{
+        // Evita doble disparo si el click viene del botón
+        if (e.target && e.target.closest && e.target.closest("a")) return;
+        go();
+      });
+
+      // accesibilidad
+      el.setAttribute("role", "button");
+      el.setAttribute("tabindex", "0");
+      el.addEventListener("keydown", (e)=>{
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+      });
+
+      // Si hay botón interno, también engancha
+      const btn = el.querySelector(".ytPlay");
+      if (btn) btn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); go(); });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once:true });
+  } else {
+    init();
+  }
+})();
