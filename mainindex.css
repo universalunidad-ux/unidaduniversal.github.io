@@ -345,3 +345,48 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
     display:block !important;
   }
 }
+
+/* =========================================================
+   FIX HUECO entre tabs y cards (Productos CONTPAQi)
+   Pegar al FINAL del CSS para que gane prioridad
+========================================================= */
+
+#productos-con .container{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:14px !important;
+  align-items:stretch !important;
+}
+
+#productos-con .productos-inline-bar{
+  margin:0 !important;
+  padding:0 !important;
+  min-height:0 !important;
+}
+
+#productos-con .panel-productos{
+  margin:0 !important;
+  padding:0 !important;
+  min-height:0 !important;
+}
+
+#productos-con .panel-productos .grid-2,
+#productos-con .panel-productos .grid-3{
+  margin-top:0 !important;
+}
+
+/* Si algún layout viejo está forzando filas altas */
+#productos-con .container,
+#productos-con .panel-productos{
+  align-content:flex-start !important;
+  justify-content:flex-start !important;
+}
+
+/* Por si quedó una regla previa tipo "grid-row: 1 / span 2" */
+#productos-con .reels-card,
+#productos-con .reels-home-card,
+#productos-con aside.reels-card{
+  grid-row:auto !important;
+  grid-column:auto !important;
+}
+
