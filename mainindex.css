@@ -356,3 +356,22 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   aspect-ratio:9/16;
 }
 
+
+/* =========================================================
+   PATCH: Reels (Sistemas + Servicios) que “llenen” como Shorts
+   - Elimina visualmente barras laterales del player con zoom suave
+   - Tradeoff: recorta ligeramente arriba/abajo
+========================================================= */
+.reel-embed{overflow:hidden} /* ya lo tienes, lo reforzamos */
+.reel-embed iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  transform:scale(1.10);
+  transform-origin:center;
+}
+
+/* Ajuste fino móvil (menos recorte) */
+@media (max-width:520px){
+  .reel-embed iframe{transform:scale(1.06)}
+}
