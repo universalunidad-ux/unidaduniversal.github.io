@@ -406,7 +406,8 @@ function buildReelsSlides(panelKey,sysKey){
   const track=cfg.carousel?.querySelector(".carousel-track"),nav=cfg.carousel?.querySelector(".carousel-nav");
   if(!track||!nav)return;
   const prev=cfg.carousel.querySelector(".arrowCircle.prev"),next=cfg.carousel.querySelector(".arrowCircle.next"),
-        reels=cfg.reelsBySys[sysKey]||[],unlock=lockTrackHeight(track);
+        reels=cfg.reelsBySys[sysKey]||[],      unlock=lockElHeight(cfg.carousel); // ✅ FIX: lock del contenedor
+
 
   track.innerHTML="";nav.innerHTML="";
   setArrowsEnabled(prev,next,reels.length>1);
