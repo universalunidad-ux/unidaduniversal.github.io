@@ -294,84 +294,94 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   margin-bottom:10px;
 }
 
+
+
 /* =========================================================
-   PATCH: Reels de Sistemas = look & sizing igual a Servicios
-   - Normaliza el área del video (iframe) dentro del carrusel
-   - Evita “marcos raros” o alturas inconsistentes
+   FIX DEFINITIVO: Shorts/Reels en carruseles aunque el iframe
+   venga DIRECTO (sin .reel-embed)
+   - Aplica a Reels de Sistemas y Servicios
 ========================================================= */
 
-/* Marco interno consistente */
-#productos-con .reels-home-card .carousel{
-  background:var(--card-2);
+/* 1) El track no debe “centrar” dejando huecos raros */
+#carouselReels-contable .carousel-track,
+#carouselReels-comercial .carousel-track,
+#carouselReels-nube .carousel-track,
+#carouselReels-productividad .carousel-track,
+#carouselReels-servicios .carousel-track{
+  align-items:stretch;           /* clave */
 }
 
-/* Área estable del carrusel (igual sensación que servicios) */
-#productos-con #carouselReels-contable .carousel-track,
-#productos-con #carouselReels-comercial .carousel-track,
-#productos-con #carouselReels-nube .carousel-track,
-#productos-con #carouselReels-productividad .carousel-track{
-  /* mantén estable y similar */
-  height:min(74svh,560px);
-  max-height:calc(100svh - var(--gh-height) - 220px - var(--safe-bottom));
-  min-height:320px;
-
-  /* importante: que el contenido no “salte” */
-  align-items:stretch;
-}
-
-/* Slide: centrado y con padding como “servicios” se siente */
-#productos-con #carouselReels-contable .carousel-slide,
-#productos-con #carouselReels-comercial .carousel-slide,
-#productos-con #carouselReels-nube .carousel-slide,
-#productos-con #carouselReels-productividad .carousel-slide{
+/* 2) Slide: que siempre tenga un “marco” interno consistente */
+#carouselReels-contable .carousel-slide,
+#carouselReels-comercial .carousel-slide,
+#carouselReels-nube .carousel-slide,
+#carouselReels-productividad .carousel-slide,
+#carouselReels-servicios .carousel-slide{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:14px;
+  height:100%;
+  padding:14px;                  /* look uniforme */
 }
 
-/* Si tu JS NO mete .reel-embed en sistemas, esto los fuerza a verse igual */
-#productos-con #carouselReels-contable .carousel-slide > iframe,
-#productos-con #carouselReels-comercial .carousel-slide > iframe,
-#productos-con #carouselReels-nube .carousel-slide > iframe,
-#productos-con #carouselReels-productividad .carousel-slide > iframe{
-  width:100%;
-  height:100%;
+/* 3) Si NO hay .reel-embed y el iframe viene directo: lo convertimos a Shorts */
+#carouselReels-contable .carousel-slide > iframe,
+#carouselReels-comercial .carousel-slide > iframe,
+#carouselReels-nube .carousel-slide > iframe,
+#carouselReels-productividad .carousel-slide > iframe,
+#carouselReels-servicios .carousel-slide > iframe{
+  /* “tarjeta” 9:16 */
+  aspect-ratio:9/16;
+  height:auto;
+  width:clamp(240px, 52vw, 360px);  /* desktop se ve PRO, no enorme */
+  max-height:100%;
   border:0;
 
-  /* look igual */
   border-radius:14px;
   overflow:hidden;
   background:#050812;
   border:1px solid rgba(255,255,255,.10);
 }
 
-/* Si SÍ tienes .reel-embed (ideal), lo dejamos perfecto */
-#productos-con #carouselReels-contable .reel-embed,
-#productos-con #carouselReels-comercial .reel-embed,
-#productos-con #carouselReels-nube .reel-embed,
-#productos-con #carouselReels-productividad .reel-embed{
-  height:100%;
-  min-height:0;           /* clave para que respete el alto del track */
-  aspect-ratio:9/16;
+/* 4) En móvil sí puede usar más ancho */
+@media (max-width:980px){
+  #carouselReels-contable .carousel-slide > iframe,
+  #carouselReels-comercial .carousel-slide > iframe,
+  #carouselReels-nube .carousel-slide > iframe,
+  #carouselReels-productividad .carousel-slide > iframe,
+  #carouselReels-servicios .carousel-slide > iframe{
+    width:100%;
+    max-width:420px;  /* evita que se deforme en pantallas muy anchas */
+  }
 }
 
-
-/* =========================================================
-   PATCH: Reels (Sistemas + Servicios) que “llenen” como Shorts
-   - Elimina visualmente barras laterales del player con zoom suave
-   - Tradeoff: recorta ligeramente arriba/abajo
-========================================================= */
-.reel-embed{overflow:hidden} /* ya lo tienes, lo reforzamos */
-.reel-embed iframe{
-  width:100%;
+/* 5) Si SÍ existe .reel-embed, mantenlo “full” dentro del alto del track */
+#carouselReels-contable .reel-embed,
+#carouselReels-comercial .reel-embed,
+#carouselReels-nube .reel-embed,
+#carouselReels-productividad .reel-embed,
+#carouselReels-servicios .reel-embed{
   height:100%;
-  border:0;
-  transform:scale(1.10);
+  min-height:0;
+}
+
+/* (Opcional) “zoom” suave para reducir barras internas del player */
+#carouselReels-contable .carousel-slide > iframe,
+#carouselReels-comercial .carousel-slide > iframe,
+#carouselReels-nube .carousel-slide > iframe,
+#carouselReels-productividad .carousel-slide > iframe,
+#carouselReels-servicios .carousel-slide > iframe,
+.reel-embed iframe{
+  transform:scale(1.06);
   transform-origin:center;
 }
-
-/* Ajuste fino móvil (menos recorte) */
 @media (max-width:520px){
-  .reel-embed iframe{transform:scale(1.06)}
+  #carouselReels-contable .carousel-slide > iframe,
+  #carouselReels-comercial .carousel-slide > iframe,
+  #carouselReels-nube .carousel-slide > iframe,
+  #carouselReels-productividad .carousel-slide > iframe,
+  #carouselReels-servicios .carousel-slide > iframe,
+  .reel-embed iframe{
+    transform:scale(1.03);
+  }
 }
