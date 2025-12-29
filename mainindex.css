@@ -277,50 +277,60 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 /* ===== [19] UTIL ===== */
 [hidden]{display:none!important}
 
+/* ===== PATCH FINAL ÚNICO (FIX HUECO + ALIGN) ===== */
 
-/* ===== PATCH FINAL ÚNICO: HERO vs SISTEMAS + grid 2 cols ===== */
-
-
-.hero{padding-bottom:26px}
-@media (min-width:980px){.hero{padding-bottom:34px}}
-
-/* Desktop: 2 columnas (izq: header+cards, der: reels) */
+/* Desktop: 2 filas
+   - Fila 1: "Sistemas + tabs" a lo ancho
+   - Fila 2: Izq (cards+CTA) / Der (Reels) alineados verticalmente
+*/
 @media (min-width:980px){
+  /* 1) Container: 2 cols + 2 filas */
   #productos-con > .container{
     display:grid !important;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
     gap: var(--gap, 14px);
     align-items: stretch;
   }
 
-  /* Header (Sistemas + tabs) arriba izquierda */
+  /* 2) Header (Sistemas + tabs) ocupa las 2 columnas arriba */
   #productos-con .productos-inline-bar{
-    grid-column: 1 / 2;
+    grid-column: 1 / -1;
     grid-row: 1;
     align-self: start;
     margin: 0 0 12px !important;
   }
 
-  /* Aplanar wrappers SOLO del panel activo */
-  #productos-con .panel-productos:not(.hidden){ display: contents; }
-  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{ display: contents; }
-
-  /* Izquierda: cards + CTA */
-  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > div:first-child{
-    grid-column: 1 / 2;
+  /* 3) Panel activo vive en la fila 2 y ocupa las 2 cols,
+        adentro creamos el layout 2 columnas */
+  #productos-con .panel-productos:not(.hidden){
+    grid-column: 1 / -1;
     grid-row: 2;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
-    gap:12px;
-    min-height:0;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap, 14px);
+    align-items: center; /* ✅ aquí se logra el centrado vertical */
   }
 
-  /* Derecha: Reels ocupa fila 1-2 */
+  /* 4) Evita que el grid interno (grid-2) estorbe */
+  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{
+    display: contents;
+  }
+
+  /* 5) Izquierda: cards + CTA */
+  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > div:first-child{
+    grid-column: 1 / 2;
+    min-width: 0;
+    display:flex;
+    flex-direction:column;
+    gap: 12px;
+  }
+
+  /* 6) Derecha: Reels */
   #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > .reels-home-card{
     grid-column: 2 / 3;
-    grid-row: 1 / span 2;
-    height:100%;
+    min-width: 0;
+    height: 100%;
   }
 
   /* Limpieza */
