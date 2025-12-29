@@ -385,3 +385,82 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
     transform:scale(1.03);
   }
 }
+
+/* =========================================================
+   PATCH: Alineación vertical Sistemas vs Reels + espacio con Sectores
+   - Desktop: centra verticalmente ambas columnas del panel
+   - Columna izquierda: cards + CTA pegada abajo sin romper alineación
+   - Mejora separación visual con la sección #sectores
+========================================================= */
+
+/* 1) El grid del panel: que ambas columnas se estiren igual y podamos centrar */
+#productos-con .section-cq{
+  align-items: stretch; /* clave: columnas con misma altura */
+}
+
+/* 2) Columna izquierda del panel: vuelve “layout columna” con CTA abajo */
+#productos-con .panel-productos .section-cq > div:first-child{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  min-height:0; /* evita overflow raro en grids */
+}
+
+/* 3) El bloque de cards toma el espacio disponible */
+#productos-con .cards-products{
+  flex:1 1 auto;
+  min-height:0;
+}
+
+/* 4) CTA abajo: NO empuja el layout, queda “pegada” abajo */
+#productos-con .prod-cta-bottom{
+  margin-top:auto;      /* empuja hacia el fondo de la columna */
+  padding-top:12px;     /* separación visual */
+}
+
+/* 5) Columna de reels: que su tarjeta también use toda la altura
+      y su contenido pueda centrarse verticalmente si sobra espacio */
+#productos-con .reels-home-card{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+
+#productos-con .reels-home-card > .body{
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:center; /* centra verticalmente el contenido del card en desktop */
+  min-height:0;
+}
+
+/* 6) Si no quieres centrar TODO el contenido del card de reels (solo alinear),
+      cambia justify-content:center por: justify-content:flex-start;
+*/
+
+/* 7) Ajuste fino: evita que el carrusel se “estire” feo */
+#productos-con .reels-home-card .carousel{
+  margin-top:10px;
+}
+
+/* 8) Más aire antes de “Sectores” para que no se vea pegado a Reels */
+#sectores{
+  margin-top:22px; /* sube/baja este número a tu gusto */
+}
+
+/* 9) Mobile: en 1 columna ya no tiene sentido centrar verticalmente,
+      volvemos a flujo natural y damos aire entre bloques */
+@media (max-width: 900px){
+  #productos-con .reels-home-card > .body{
+    justify-content:flex-start;
+  }
+
+  #productos-con .prod-cta-bottom{
+    margin-top:12px; /* en mobile no la “pegamos” al fondo */
+  }
+
+  #sectores{
+    margin-top:16px;
+  }
+}
+
