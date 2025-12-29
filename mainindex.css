@@ -301,14 +301,16 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   }
 
   /* Columna izquierda: cards + CTA en fila 2 */
-  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > div:first-child{
-    grid-column: 1 / 2;
-    grid-row: 2;
-    display:flex;
-    flex-direction:column;
-    justify-content:center; /* centra verticalmente vs reels */
-    min-height:0;
-  }
+#productos-con .panel-productos:not(.hidden) .grid-2.section-cq > div:first-child{
+  grid-column: 1 / 2;
+  grid-row: 2;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start; /* FIX: ya no empuja cards hacia abajo */
+  gap:12px;
+  min-height:0;
+}
+
 
   /* Columna derecha: Reels abarca fila 1 y 2 */
   #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > .reels-home-card{
@@ -331,4 +333,11 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
     display:block;
   }
 }
+
+/* Separación clara entre HERO y SISTEMAS */
+#productos-con{margin-top:24px}
+@media (min-width:981px){#productos-con{margin-top:34px}}
+
+.hero{padding-bottom:26px}
+@media (min-width:981px){.hero{padding-bottom:34px}}
 
