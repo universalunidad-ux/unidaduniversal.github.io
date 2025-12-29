@@ -680,6 +680,18 @@
       </div>
       <div class="card" style="padding:16px">
         <form id="contactForm" aria-label="Formulario de contacto">
+         <!-- Anti-spam (honeypot): no lo ve un humano, un bot suele llenarlo -->
+<input type="text" id="empresa" name="empresa" tabindex="-1" autocomplete="off"
+       style="position:absolute;left:-9999px;opacity:0;height:0;width:0"
+       aria-hidden="true">
+
+<!-- Anti-spam: tiempo mínimo -->
+<input type="hidden" id="ts" name="ts">
+
+<!-- Meta útil (para ti): página y user-agent -->
+<input type="hidden" id="page" name="page">
+<input type="hidden" id="ua" name="ua">
+
           <label for="nombre">Nombre</label><input id="nombre" name="nombre" placeholder="Tu nombre" required />
           <label for="correo">Correo</label><input id="correo" name="correo" type="email" placeholder="tucorreo@empresa.com" required />
           <label for="telefono">Teléfono / WhatsApp (opcional)</label><input id="telefono" name="telefono" placeholder="55 0000 0000" />
@@ -688,8 +700,8 @@
             <option value="" selected disabled>Selecciona</option><option>Nóminas</option><option>Comercial Pro/Premium</option><option>Comercial Start</option><option>XML en Línea</option><option>Contabilidad</option><option>Bancos</option><option>Factura electrónica</option><option>Analiza (Nube)</option><option>Implementación / Póliza de soporte</option><option>Desarrollo</option><option>Cursos / Soporte</option>
           </select>
           <label for="detalle">Cuéntanos más</label><textarea id="detalle" name="detalle" rows="4" placeholder="Ej. Migración desde Excel, capacitación, timbrado, licencias, etc." required></textarea>
-          <button class="btn hero-btn btn-grad-blue" type="submit">Enviar (abre WhatsApp)</button>
-          <p class="hint">*Por ahora enviamos la consulta por WhatsApp para respuesta más rápida.</p>
+          <button class="btn hero-btn btn-grad-blue" type="submit">Enviar</button>
+          <p class="hint">Te respondemos por correo o WhatsApp lo antes posible.</p>
         </form>
       </div>
     </div>
