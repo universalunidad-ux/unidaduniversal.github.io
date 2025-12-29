@@ -65,24 +65,73 @@ function bindWheelOnTabs(){
 /* =========================
    4) Formularios -> WhatsApp (sin duplicar listeners)
 ========================= */
+/* =========================
+   4) Formularios (Quick WhatsApp + Contacto a Apps Script)
+========================= */
 function initForms(){
-  const quickForm=Q("#quickForm");
-  quickForm&&quickForm.dataset.bound!=="1"&&(quickForm.dataset.bound="1",on(quickForm,"submit",e=>{
-    e.preventDefault();
-    const modulo=encodeURIComponent(Q("#modulo")?.value||""),mensaje=encodeURIComponent((Q("#mensaje")?.value||"").trim()),texto=`Hola Expiriti, me interesa ${modulo}. ${mensaje}`;
-    window.open(`https://wa.me/525568437918?text=${texto}`,"_blank","noopener")
-  }));
-  const contactForm=Q("#contactForm");
-  contactForm&&contactForm.dataset.bound!=="1"&&(contactForm.dataset.bound="1",on(contactForm,"submit",e=>{
-    e.preventDefault();
-    const nombre=encodeURIComponent((Q("#nombre")?.value||"").trim()),
-          correo=encodeURIComponent((Q("#correo")?.value||"").trim()),
-          telefono=encodeURIComponent((Q("#telefono")?.value||"").trim()),
-          interes=encodeURIComponent(Q("#interes")?.value||""),
-          detalle=encodeURIComponent((Q("#detalle")?.value||"").trim()),
-          texto=`Hola Expiriti, soy ${nombre}. Email: ${correo}. Tel: ${telefono||"N/A"}. Interés: ${interes}. Detalle: ${detalle}`;
-    window.open(`https://wa.me/525568437918?text=${texto}`,"_blank","noopener")
-  }))
+  // ===== QuickForm -> WhatsApp (lo de siempre) =====
+  const quickForm = Q("#quickForm");
+  if(quickForm && quickForm.dataset.bound!=="1"){
+    quickForm.dataset.bound="1";
+    on(quickForm,"submit",e=>{
+      e.preventDefault();
+      const modulo = encodeURIComponent(Q("#modulo")?.value||"");
+      const mensaje = encodeURIComponent((Q("#mensaje")?.value||"").trim());
+      const texto = `Hola Expiriti, me interesa ${modulo}. ${mensaje}`;
+      window.open(`https://wa.me/525568437918?text=${texto}`,"_blank","noopener");
+    });
+  }
+
+  // ===== ContactForm -> Apps Script =====
+  const contactForm = Q("#contactForm");
+  if(contactForm && contactForm.dataset.bound!=="1"){
+    contactForm.dataset.bound="1";
+
+    // 1) anti-spam timestamp (si existe)
+    const tsEl = Q("#ts", contactForm);
+    if(tsEl) tsEl.value = String(Date.now());
+
+    // 2) meta extra (si existen)
+    const pageEl = Q("#page", contactForm); if(pageEl) pageEl.value = location.href;
+    const uaEl   = Q("#ua", contactForm);   if(uaEl) uaEl.value = navigator.userAgent;
+
+    // 3) URL del Apps Script Web App (TERMINA EN /exec)
+    const GAS_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT_EXEC";
+
+    on(contactForm,"submit", async (e)=>{
+      e.preventDefault();
+
+      // Honeypot: si está lleno, es bot
+      const empresa = (Q("#empresa", contactForm)?.value || "").trim();
+      if(empresa) return;
+
+      // Payload
+      const fd = new FormData(contactForm);
+
+      // Refuerzos (por si faltan)
+      if(!fd.get("ts"))   fd.set("ts", String(Date.now()));
+      if(!fd.get("page")) fd.set("page", location.href);
+      if(!fd.get("ua"))   fd.set("ua", navigator.userAgent);
+
+      try{
+        // no-cors: sitio estático + Apps Script
+        await fetch(GAS_URL, { method:"POST", body: fd, mode:"no-cors" });
+
+        alert("Listo. Recibimos tu mensaje. En breve te contactamos.");
+
+        // OPCIONAL: abre WhatsApp también (si lo quieres, deja esto; si no, bórralo)
+        // window.open("https://wa.me/525568437918?text=Hola%20Expiriti%20acabo%20de%20enviar%20el%20formulario","_blank","noopener");
+
+        contactForm.reset();
+        if(tsEl) tsEl.value = String(Date.now());
+        if(pageEl) pageEl.value = location.href;
+        if(uaEl) uaEl.value = navigator.userAgent;
+
+      }catch(_){
+        alert("No se pudo enviar en este momento. Intenta de nuevo o contáctanos por WhatsApp.");
+      }
+    });
+  }
 }
 
 /* =========================
@@ -598,54 +647,6 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
 
 })();
 
-function initForms(){
-  const contactForm = Q("#contactForm");
-  if(contactForm && contactForm.dataset.bound!=="1"){
-    contactForm.dataset.bound="1";
 
-    // 1) set anti-spam timestamp en carga
-    const tsEl = Q("#ts");
-    if(tsEl) tsEl.value = String(Date.now());
 
-    // 2) meta extra
-    const pageEl = Q("#page"); if(pageEl) pageEl.value = location.href;
-    const uaEl   = Q("#ua");   if(uaEl) uaEl.value = navigator.userAgent;
-
-    // 3) URL del Apps Script Web App
-    const GAS_URL = "Pega_aqui_tu_URL_de_AppsScript";
-
-    on(contactForm, "submit", async (e) => {
-      e.preventDefault();
-
-      // Honeypot: si está lleno, no hagas nada (bots)
-      const empresa = (Q("#empresa")?.value || "").trim();
-      if(empresa) return;
-
-      // Payload
-      const fd = new FormData(contactForm);
-
-      // refuerzos
-      if(!fd.get("ts")) fd.set("ts", String(Date.now()));
-      if(!fd.get("page")) fd.set("page", location.href);
-      if(!fd.get("ua")) fd.set("ua", navigator.userAgent);
-
-      // ENVÍO: no-cors para evitar broncas CORS en sitio estático
-      try{
-        await fetch(GAS_URL, { method:"POST", body: fd, mode:"no-cors" });
-
-        // UX: confirma sin depender de respuesta
-        alert("Listo. Recibimos tu mensaje. En breve te contactamos.");
-
-        // (Opcional) Si quieres seguir abriendo WhatsApp:
-        window.open("https://wa.me/525568437918?text=Hola%20Expiriti%20acabo%20de%20enviar%20el%20formulario","_blank","noopener");
-
-        contactForm.reset();
-        if(tsEl) tsEl.value = String(Date.now()); // reset ts
-
-      }catch(_){
-        alert("No se pudo enviar en este momento. Intenta de nuevo o contáctanos por WhatsApp.");
-      }
-    });
-  }
-}
-
+ 
