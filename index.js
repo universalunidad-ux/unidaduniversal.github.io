@@ -649,5 +649,36 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
 })();
 
 
+(function(){
+  "use strict";
+
+  function setBgSplit(){
+    const hero =
+      document.querySelector('#hero-gallery') ||
+      document.querySelector('#hero') ||
+      document.querySelector('.hero-gallery') ||
+      document.querySelector('.hero');
+
+    if(!hero) return;
+
+    // Altura real del hero dentro del documento
+    const split = hero.offsetTop + hero.offsetHeight;
+
+    // Set CSS var en :root
+    document.documentElement.style.setProperty('--bg-split', split + 'px');
+  }
+
+  // Corre cuando ya renderizó layout
+  window.addEventListener('load', setBgSplit, { once:true });
+
+  // Recalcula en resize/orientación
+  window.addEventListener('resize', () => {
+    window.requestAnimationFrame(setBgSplit);
+  });
+
+  // Si tus imágenes/iframes cambian la altura después, recalcula 1 vez extra
+  setTimeout(setBgSplit, 250);
+  setTimeout(setBgSplit, 1000);
+})();
 
  
