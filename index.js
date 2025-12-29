@@ -597,3 +597,55 @@ on(window,"resize",()=>safe(initServicesPager));
 on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTabs);safe(initServicesPager)});
 
 })();
+
+function initForms(){
+  const contactForm = Q("#contactForm");
+  if(contactForm && contactForm.dataset.bound!=="1"){
+    contactForm.dataset.bound="1";
+
+    // 1) set anti-spam timestamp en carga
+    const tsEl = Q("#ts");
+    if(tsEl) tsEl.value = String(Date.now());
+
+    // 2) meta extra
+    const pageEl = Q("#page"); if(pageEl) pageEl.value = location.href;
+    const uaEl   = Q("#ua");   if(uaEl) uaEl.value = navigator.userAgent;
+
+    // 3) URL del Apps Script Web App
+    const GAS_URL = "Pega_aqui_tu_URL_de_AppsScript";
+
+    on(contactForm, "submit", async (e) => {
+      e.preventDefault();
+
+      // Honeypot: si está lleno, no hagas nada (bots)
+      const empresa = (Q("#empresa")?.value || "").trim();
+      if(empresa) return;
+
+      // Payload
+      const fd = new FormData(contactForm);
+
+      // refuerzos
+      if(!fd.get("ts")) fd.set("ts", String(Date.now()));
+      if(!fd.get("page")) fd.set("page", location.href);
+      if(!fd.get("ua")) fd.set("ua", navigator.userAgent);
+
+      // ENVÍO: no-cors para evitar broncas CORS en sitio estático
+      try{
+        await fetch(GAS_URL, { method:"POST", body: fd, mode:"no-cors" });
+
+        // UX: confirma sin depender de respuesta
+        alert("Listo. Recibimos tu mensaje. En breve te contactamos.");
+
+        // (Opcional) Si quieres seguir abriendo WhatsApp:
+        window.open("https://wa.me/525568437918?text=Hola%20Expiriti%20acabo%20de%20enviar%20el%20formulario","_blank","noopener");
+
+        contactForm.reset();
+        if(tsEl) tsEl.value = String(Date.now()); // reset ts
+
+      }catch(_){
+        alert("No se pudo enviar en este momento. Intenta de nuevo o contáctanos por WhatsApp.");
+      }
+    });
+  }
+}
+
