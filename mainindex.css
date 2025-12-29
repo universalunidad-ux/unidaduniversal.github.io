@@ -417,3 +417,93 @@ body{
   background: transparent !important;
 }
 
+
+/* =========================================================
+   FIX DEFINITIVO: NO romper el GRID desktop de #productos-con
+   - Móvil: flex column (quita huecos)
+   - Desktop: grid 2 filas + 2 columnas (alineación Cards/Reels)
+========================================================= */
+
+/* ---- MÓVIL/TABLET: sí usamos flex column ---- */
+@media (max-width: 979px){
+  #productos-con .container{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:14px !important;
+    align-items:stretch !important;
+  }
+}
+
+/* ---- DESKTOP: forzamos el GRID (anula el flex con !important) ---- */
+@media (min-width: 980px){
+  #productos-con > .container{
+    display:grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: auto 1fr !important;
+    gap: var(--gap, 14px) !important;
+    align-items: stretch !important;
+  }
+
+  #productos-con .productos-inline-bar{
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    margin: 0 0 12px !important;
+  }
+
+  #productos-con .panel-productos:not(.hidden){
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    display:grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: var(--gap, 14px) !important;
+    align-items: center !important; /* centrado vertical */
+  }
+
+  /* neutraliza grid interno */
+  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{
+    display: contents !important;
+  }
+
+  /* izquierda */
+  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > div:first-child{
+    grid-column: 1 / 2 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap: 12px !important;
+    min-width:0 !important;
+  }
+
+  /* derecha */
+  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > .reels-home-card{
+    grid-column: 2 / 3 !important;
+    min-width:0 !important;
+    height:100% !important;
+  }
+}
+
+/* =========================================================
+   Fondo global: conserva el fondo original + split hero->resto
+========================================================= */
+:root{ --bg-split: 560px; } /* fallback */
+
+/* Mantén el fondo original + agrega el split como primera capa */
+body{
+  background:
+    /* capa 1: split (arriba bg, abajo bg-2) */
+    linear-gradient(
+      180deg,
+      var(--bg) 0,
+      var(--bg) var(--bg-split),
+      var(--bg-2) var(--bg-split),
+      var(--bg-2) 100%
+    ),
+    /* capas originales (las que ya tenías en body) */
+    radial-gradient(1100px 720px at 14% -10%,rgba(45,212,191,.11),transparent 55%),
+    radial-gradient(900px 640px at 86% 6%,rgba(96,165,250,.10),transparent 58%),
+    linear-gradient(180deg,rgba(255,255,255,.02),transparent 34%);
+  background-color: var(--bg-2);
+  background-repeat: no-repeat;
+}
+
+/* Evita que secciones pinten un fondo encima */
+.hero, .hero-gallery, #productos-con, .section-cq{ background: transparent !important; }
