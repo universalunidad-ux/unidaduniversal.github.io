@@ -266,3 +266,93 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 
 /* ===== [19] UTIL ===== */
 [hidden]{display:none!important}
+/* =========================================================
+   PATCH: Logos de Sistemas (quita marco negro alto)
+   - El problema era aspect-ratio:4/3 forzado.
+   - Usamos el ratio real que ya reservan width/height del HTML.
+========================================================= */
+#productos-con .logo-sistema{
+  /* anula el 4/3 que te infla el contenedor */
+  aspect-ratio:auto !important;
+
+  /* conserva el logo, pero sin “bloque negro” enorme */
+  object-fit:contain;
+  height:auto;
+  width:100%;
+
+  /* el “fondo” ahora es sutil (no negro sólido) */
+  background:rgba(255,255,255,.02) !important;
+
+  /* opcional: que se vea más “tight” */
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+}
+
+/* Si quieres aún más compacto visualmente sin tocar el logo:
+   reduce un poco el espacio debajo del logo */
+#productos-con .product-card .body > .logo-sistema{
+  margin-bottom:10px;
+}
+
+/* =========================================================
+   PATCH: Reels de Sistemas = look & sizing igual a Servicios
+   - Normaliza el área del video (iframe) dentro del carrusel
+   - Evita “marcos raros” o alturas inconsistentes
+========================================================= */
+
+/* Marco interno consistente */
+#productos-con .reels-home-card .carousel{
+  background:var(--card-2);
+}
+
+/* Área estable del carrusel (igual sensación que servicios) */
+#productos-con #carouselReels-contable .carousel-track,
+#productos-con #carouselReels-comercial .carousel-track,
+#productos-con #carouselReels-nube .carousel-track,
+#productos-con #carouselReels-productividad .carousel-track{
+  /* mantén estable y similar */
+  height:min(74svh,560px);
+  max-height:calc(100svh - var(--gh-height) - 220px - var(--safe-bottom));
+  min-height:320px;
+
+  /* importante: que el contenido no “salte” */
+  align-items:stretch;
+}
+
+/* Slide: centrado y con padding como “servicios” se siente */
+#productos-con #carouselReels-contable .carousel-slide,
+#productos-con #carouselReels-comercial .carousel-slide,
+#productos-con #carouselReels-nube .carousel-slide,
+#productos-con #carouselReels-productividad .carousel-slide{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+}
+
+/* Si tu JS NO mete .reel-embed en sistemas, esto los fuerza a verse igual */
+#productos-con #carouselReels-contable .carousel-slide > iframe,
+#productos-con #carouselReels-comercial .carousel-slide > iframe,
+#productos-con #carouselReels-nube .carousel-slide > iframe,
+#productos-con #carouselReels-productividad .carousel-slide > iframe{
+  width:100%;
+  height:100%;
+  border:0;
+
+  /* look igual */
+  border-radius:14px;
+  overflow:hidden;
+  background:#050812;
+  border:1px solid rgba(255,255,255,.10);
+}
+
+/* Si SÍ tienes .reel-embed (ideal), lo dejamos perfecto */
+#productos-con #carouselReels-contable .reel-embed,
+#productos-con #carouselReels-comercial .reel-embed,
+#productos-con #carouselReels-nube .reel-embed,
+#productos-con #carouselReels-productividad .reel-embed{
+  height:100%;
+  min-height:0;           /* clave para que respete el alto del track */
+  aspect-ratio:9/16;
+}
+
