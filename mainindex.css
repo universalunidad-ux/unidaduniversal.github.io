@@ -386,81 +386,107 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   }
 }
 
+
 /* =========================================================
-   PATCH: Alineación vertical Sistemas vs Reels + espacio con Sectores
-   - Desktop: centra verticalmente ambas columnas del panel
-   - Columna izquierda: cards + CTA pegada abajo sin romper alineación
-   - Mejora separación visual con la sección #sectores
+   FIX: Centrado vertical real de columna izquierda vs Reels
+   (SOLO DESKTOP) — aplica a TODOS los paneles
+========================================================= */
+@media (min-width:981px){
+  /* 1) Mata el centering del helper align-center dentro de este módulo */
+  #productos-con .grid-2.align-center.section-cq{align-items:stretch !important;}
+
+  /* 2) Columna izquierda centrada como bloque */
+  #productos-con .panel-productos .section-cq > div:first-child{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;   /* <-- centro vertical */
+    height:100%;
+    min-height:0;
+  }
+
+  /* 3) Cards no deben forzar altura rara */
+  #productos-con .cards.cards-products{flex:0 0 auto;}
+
+  /* 4) CTA: debe formar parte del bloque centrado (no margin-top:auto) */
+  #productos-con .prod-cta-bottom{
+    margin-top:12px !important;
+  }
+
+  /* 5) Columna reels: que también estire completo */
+  #productos-con .reels-home-card{height:100%;}
+  #productos-con .reels-home-card > .body{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+}
+
+/* Mobile: flujo normal */
+@media (max-width:980px){
+  #productos-con .panel-productos .section-cq > div:first-child{display:block;height:auto;}
+}
+/* =========================================================
+   FIX: Quitar “barras negras” arriba/abajo en REELS de SISTEMAS
+   Causa: track con altura fija + iframe full height
+   Solución: track auto + iframe 9:16 con alto natural
 ========================================================= */
 
-/* 1) El grid del panel: que ambas columnas se estiren igual y podamos centrar */
-#productos-con .section-cq{
-  align-items: stretch; /* clave: columnas con misma altura */
+/* 1) SISTEMAS: el track NO debe tener height fijo */
+#carouselReels-contable .carousel-track,
+#carouselReels-comercial .carousel-track,
+#carouselReels-nube .carousel-track,
+#carouselReels-productividad .carousel-track{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  align-items:stretch;
 }
 
-/* 2) Columna izquierda del panel: vuelve “layout columna” con CTA abajo */
-#productos-con .panel-productos .section-cq > div:first-child{
+/* 2) Slide: que se adapte a lo que mide el iframe */
+#carouselReels-contable .carousel-slide,
+#carouselReels-comercial .carousel-slide,
+#carouselReels-nube .carousel-slide,
+#carouselReels-productividad .carousel-slide{
+  height:auto !important;
+  padding:14px;
   display:flex;
-  flex-direction:column;
-  height:100%;
-  min-height:0; /* evita overflow raro en grids */
+  justify-content:center;
+  align-items:center;
 }
 
-/* 3) El bloque de cards toma el espacio disponible */
-#productos-con .cards-products{
-  flex:1 1 auto;
-  min-height:0;
+/* 3) Iframe (Short): tamaño 9:16 => ya no sobra espacio arriba/abajo */
+#carouselReels-contable .carousel-slide > iframe,
+#carouselReels-comercial .carousel-slide > iframe,
+#carouselReels-nube .carousel-slide > iframe,
+#carouselReels-productividad .carousel-slide > iframe{
+  width:clamp(240px, 52vw, 360px);
+  aspect-ratio:9/16;
+  height:auto !important;
+  max-height:none !important;
+
+  border-radius:14px;
+  background:#050812;
+  border:1px solid rgba(255,255,255,.10);
+  display:block;
 }
 
-/* 4) CTA abajo: NO empuja el layout, queda “pegada” abajo */
-#productos-con .prod-cta-bottom{
-  margin-top:auto;      /* empuja hacia el fondo de la columna */
-  padding-top:12px;     /* separación visual */
-}
-
-/* 5) Columna de reels: que su tarjeta también use toda la altura
-      y su contenido pueda centrarse verticalmente si sobra espacio */
-#productos-con .reels-home-card{
-  height:100%;
-  display:flex;
-  flex-direction:column;
-}
-
-#productos-con .reels-home-card > .body{
-  flex:1 1 auto;
-  display:flex;
-  flex-direction:column;
-  justify-content:center; /* centra verticalmente el contenido del card en desktop */
-  min-height:0;
-}
-
-/* 6) Si no quieres centrar TODO el contenido del card de reels (solo alinear),
-      cambia justify-content:center por: justify-content:flex-start;
-*/
-
-/* 7) Ajuste fino: evita que el carrusel se “estire” feo */
-#productos-con .reels-home-card .carousel{
-  margin-top:10px;
-}
-
-/* 8) Más aire antes de “Sectores” para que no se vea pegado a Reels */
-#sectores{
-  margin-top:22px; /* sube/baja este número a tu gusto */
-}
-
-/* 9) Mobile: en 1 columna ya no tiene sentido centrar verticalmente,
-      volvemos a flujo natural y damos aire entre bloques */
-@media (max-width: 900px){
-  #productos-con .reels-home-card > .body{
-    justify-content:flex-start;
-  }
-
-  #productos-con .prod-cta-bottom{
-    margin-top:12px; /* en mobile no la “pegamos” al fondo */
-  }
-
-  #sectores{
-    margin-top:16px;
+/* 4) Mobile: que use más ancho pero mantiene 9:16 */
+@media (max-width:980px){
+  #carouselReels-contable .carousel-slide > iframe,
+  #carouselReels-comercial .carousel-slide > iframe,
+  #carouselReels-nube .carousel-slide > iframe,
+  #carouselReels-productividad .carousel-slide > iframe{
+    width:100%;
+    max-width:420px;
   }
 }
 
+/* 5) Anula tu regla global que los estiraba a 100% alto/ancho */
+#carouselReels-contable iframe,
+#carouselReels-comercial iframe,
+#carouselReels-nube iframe,
+#carouselReels-productividad iframe{
+  width:auto !important;
+  height:auto !important;
+}
