@@ -1,8 +1,9 @@
 /* =========================================================
    Expiriti - mainindex.css (FINAL CONSOLIDADO + PageSpeed/CLS)
-   - SIN duplicados: HERO, section-cq, prod-tabs, CLS FIX
-   - Minificado “humano” + comentarios útiles
-   - LISTO para copiar/pegar como archivo completo
+   - SIN duplicados (HERO, section-cq, prod-tabs, REELS)
+   - FIX: Controles YouTube clicables (dots no tapan iframe)
+   - FIX: Reels/Sistemas/Servicios con frame 9:16 serio (sin barras raras)
+   - Minificado “humano” + comentarios útiles (copy/paste)
 ========================================================= */
 
 /* ===== [0] TOKENS + BASE ===== */
@@ -34,7 +35,7 @@ button,input,select,textarea{font:inherit}
 #footer-placeholder{display:block;min-height:260px}
 
 /* ===== [3] TYPO/CHIPS/BUTTONS ===== */
-.kicker{display:inline-flex;gap:8px;align-items:center;color:rgba(232,238,246,.92);font-weight:700;letter-spacing:.2px;background:rgba(255,255,255,.04);border:var(--border);border-radius:999px;padding:8px 12px;margin-bottom:10px}
+.kicker{display:inline-flex;gap:8px;align-items:center;color:rgba(232,238,246,.92);font-weight:800;letter-spacing:.2px;background:rgba(255,255,255,.04);border:var(--border);border-radius:999px;padding:8px 12px;margin-bottom:10px}
 .lead{color:rgba(232,238,246,.86);margin:10px 0 0}
 .hint{color:rgba(149,162,179,.95);font-size:.94rem}
 .title-gradient,.gradient-word{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -47,7 +48,7 @@ button,input,select,textarea{font:inherit}
 .btn-sm{padding:10px 12px;border-radius:11px;min-height:40px}
 .btn-grad-green{border-color:rgba(45,212,191,.35);background:linear-gradient(180deg,rgba(45,212,191,.20),rgba(255,255,255,.03))}
 .btn-grad-blue{border-color:rgba(96,165,250,.35);background:linear-gradient(180deg,rgba(96,165,250,.20),rgba(255,255,255,.03))}
-.hero-btn{font-weight:800}
+.hero-btn{font-weight:900}
 
 /* ===== [4] CARD ===== */
 .card{border:var(--border);background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.07),transparent 60%),radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.06),transparent 60%),linear-gradient(180deg,rgba(17,23,35,.92),rgba(17,23,35,.70));border-radius:var(--radius);box-shadow:var(--shadow)}
@@ -62,7 +63,7 @@ button,input,select,textarea{font:inherit}
 .hero .badges{margin-top:16px}
 .hero-gallery-header{padding:10px 16px 8px;border-bottom:var(--border)}
 .hero-gallery-header h2{margin:0;font-size:1.05rem;line-height:1.15}
-.hero-gallery-title{padding:0 16px 10px;margin:0;min-height:18px;color:rgba(232,238,246,.92);font-weight:800;letter-spacing:.2px}
+.hero-gallery-title{padding:0 16px 10px;margin:0;min-height:18px;color:rgba(232,238,246,.92);font-weight:900;letter-spacing:.2px}
 .hero-gallery-groups{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;gap:12px;max-width:100%;scrollbar-width:none;padding:8px 12px 0;margin:8px 0 14px}
 .hero-gallery-groups::-webkit-scrollbar{height:0}
 .hero-gallery-groups>*{flex:0 0 auto;white-space:nowrap}
@@ -71,19 +72,17 @@ button,input,select,textarea{font:inherit}
 .hero-gallery-card .carousel{overflow:hidden}
 .hero-tab{display:flex;align-items:center;gap:10px;border-radius:14px;border:var(--border);background:rgba(255,255,255,.03);min-height:var(--tap);padding:10px;cursor:pointer;text-align:left}
 .hero-tab img{width:44px;height:44px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.10)}
-.hero-tab span{font-weight:800;color:rgba(232,238,246,.95)}
+.hero-tab span{font-weight:900;color:rgba(232,238,246,.95)}
 .hero-tab.active{border-color:rgba(96,165,250,.40);background:rgba(96,165,250,.10)}
 @media (min-width:980px){.hero{padding:40px 0 18px}.hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}.hero h1{font-size:2.25rem}.hero-gallery-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:520px){.hero-gallery-groups{margin:6px 0 12px;gap:10px}.hero-gallery-header{padding:10px 14px 7px}}
 
-/* ===== [6] CAROUSEL ===== */
+/* ===== [6] CAROUSEL (base) ===== */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,.10);background:var(--card-2)}
 .carousel-track{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;min-height:240px}
-.carousel-track::-webkit-scrollbar{height:6px}
-.carousel-track::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}
 .carousel-slide{flex:0 0 100%;scroll-snap-align:start;position:relative}
-.carousel-nav{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:10px;padding:8px 10px;z-index:3}
-.carousel-nav .dot{width:18px;height:18px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer}
+.carousel-nav{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:10px;padding:8px 10px;z-index:3;pointer-events:none}
+.carousel-nav .dot{pointer-events:auto;width:18px;height:18px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer}
 .carousel-nav .dot.active{background:rgba(45,212,191,.85);border-color:rgba(45,212,191,.95)}
 .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(7,10,16,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:rgba(232,238,246,.95);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3}
 .arrowCircle .chev{font-size:22px;line-height:1}
@@ -92,6 +91,14 @@ button,input,select,textarea{font:inherit}
 .arrowCircle.is-disabled{opacity:.35}
 @media (min-width:980px){.carousel-track{min-height:320px}.carousel-nav .dot{width:14px;height:14px}}
 .hero-slide img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;display:block;background:#0b0f14}
+
+/* ===== [6B] CAROUSEL Reels (CRÍTICO: no tapar controles del iframe) =====
+   - Para carruseles de Reels: dots NO van encima del video (layout normal).
+   - Resultado: controles YouTube clicables (desktop/mobile).
+*/
+.carousel[id^="carouselReels"] .carousel-nav{position:static;bottom:auto;left:auto;right:auto;margin:10px 0 0;padding:6px 10px;pointer-events:auto;background:transparent}
+.carousel[id^="carouselReels"] .carousel-track{min-height:0!important;height:auto!important;max-height:none!important}
+.carousel[id^="carouselReels"] .carousel-slide{display:flex;align-items:center;justify-content:center;padding:14px}
 
 /* ===== [7] SISTEMAS (barra título+tabs+cta) ===== */
 .productos-inline-bar{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:6px 0 14px}
@@ -112,14 +119,14 @@ button,input,select,textarea{font:inherit}
 .product-card h3{display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:1.02rem}
 .product-card p.body{margin:0;color:rgba(232,238,246,.82)}
 .product-card .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
-.hoverMore .chip{display:inline-flex;align-items:center;border-radius:999px;padding:8px 10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);color:rgba(232,238,246,.90);font-weight:800;white-space:nowrap}
-.logo-sistema{width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0b0f14;object-fit:contain}
+.hoverMore .chip{display:inline-flex;align-items:center;border-radius:999px;padding:8px 10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);color:rgba(232,238,246,.90);font-weight:900;white-space:nowrap}
+.logo-sistema{width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);object-fit:contain}
 .svc-icon{width:44px;height:44px;object-fit:contain}
 .svc-featured{border:1px solid rgba(45,212,191,.35);background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.16),transparent 60%),radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.12),transparent 60%),linear-gradient(180deg,rgba(17,23,35,.92),rgba(17,23,35,.70));position:relative;overflow:hidden}
 .svc-featured:before{content:"";position:absolute;inset:-2px;background:linear-gradient(90deg,rgba(45,212,191,.35),rgba(96,165,250,.35));opacity:.12;filter:blur(16px);pointer-events:none}
 .svc-featured:focus-visible{outline:2px solid rgba(45,212,191,.65);outline-offset:2px}
 
-/* ===== [9] REELS ===== */
+/* ===== [9] REELS (tabs + frame 9:16 serio) ===== */
 .reels-home-card .reel-title{margin:0 0 10px;font-weight:900;letter-spacing:.1px;color:rgba(232,238,246,.96);min-height:22px}
 .reel-sys-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
 .reel-tab{min-height:var(--tap);border-radius:14px;border:var(--border);background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);padding:10px 8px;cursor:pointer;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center}
@@ -127,13 +134,20 @@ button,input,select,textarea{font:inherit}
 .reel-tab span{font-size:.84rem;font-weight:900;color:rgba(232,238,246,.94);line-height:1.1}
 .reel-tab.active{border-color:rgba(96,165,250,.45);background:rgba(96,165,250,.10)}
 @media (max-width:520px){.reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.reel-embed{position:relative;width:100%;height:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);min-height:320px}
+
+/* Reels embed: SIEMPRE 9:16, centrado, sin “barras negras” de layout */
+.reel-embed{position:relative;aspect-ratio:9/16;width:min(380px,100%);border-radius:14px;overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);min-height:clamp(300px,56vh,560px);margin:0 auto}
 .reel-embed iframe,.reel-embed .yt-thumb{position:absolute;inset:0;width:100%;height:100%}
-.reel-embed .yt-thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-@media (max-width:520px){.reel-embed{min-height:280px}}
+.reel-embed iframe{border:0;pointer-events:auto}
 .reel-embed .yt-thumb{border:0;background:transparent;padding:0;margin:0;cursor:pointer}
+.reel-embed .yt-thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .reel-embed .yt-play{position:absolute;left:16px;bottom:16px;width:54px;height:54px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.20);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .reel-embed .yt-play:before{content:"";position:absolute;left:21px;top:17px;width:0;height:0;border-left:14px solid rgba(232,238,246,.92);border-top:10px solid transparent;border-bottom:10px solid transparent}
+@media (max-width:520px){.reel-embed{width:min(420px,100%);min-height:clamp(280px,54vh,520px)}}
+
+/* Si el iframe viene DIRECTO (sin .reel-embed): lo “envolvemos” visualmente vía CSS */
+.carousel[id^="carouselReels"] .carousel-slide>iframe{aspect-ratio:9/16;width:min(380px,100%);height:auto;border-radius:14px;overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);display:block;pointer-events:auto}
+@media (max-width:980px){.carousel[id^="carouselReels"] .carousel-slide>iframe{width:min(420px,100%)}}
 
 /* ===== [10] VIDEOS (lite embed) ===== */
 .videos-grid{display:grid;grid-template-columns:1fr;gap:12px}
@@ -184,8 +198,8 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .svc-dots{display:none;gap:10px;justify-content:center;margin-top:12px}
 .svc-dots .dot{width:14px;height:14px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer}
 .svc-dots .dot.active{background:rgba(45,212,191,.85);border-color:rgba(45,212,191,.95)}
-@media (max-width:980px){.cards-services.is-carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:2px 2px 10px;margin:0}.cards-services.is-carousel::-webkit-scrollbar{height:6px}.cards-services.is-carousel::-webkit-scrollbar-thumb{background:#1e2b3c;border-radius:999px}.cards-services.is-carousel .svc-page{flex:0 0 100%;max-width:100%;scroll-snap-align:start;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cards-services.is-carousel .svc-page>*{min-width:0}.svc-spacer{display:block;visibility:hidden}.svc-dots{display:flex}}
-@media (min-width:981px){.cards-services.is-carousel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}.cards-services.is-carousel .svc-page{display:contents}.svc-spacer,.svc-dots{display:none}}
+@media (max-width:980px){.cards-services.is-carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:2px 2px 10px;margin:0}.cards-services.is-carousel .svc-page{flex:0 0 100%;max-width:100%;scroll-snap-align:start;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.svc-dots{display:flex}}
+@media (min-width:981px){.cards-services.is-carousel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}.cards-services.is-carousel .svc-page{display:contents}.svc-dots{display:none}}
 
 /* ===== [14] MAP ===== */
 .map-embed{position:relative;width:100%;aspect-ratio:16/9;min-height:260px;border-radius:var(--radius-lg);overflow:hidden;border:var(--border);background:linear-gradient(180deg, rgba(96,165,250,.10), rgba(45,212,191,.08))}
@@ -194,7 +208,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .map-cover-title{font-weight:900;text-align:center}
 .map-cover-cta{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap);padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#020617;font-size:13px;font-weight:900}
 
-/* ===== [15] OVERRIDES “MOBILE 2x2” (tus grids con !important) ===== */
+/* ===== [15] OVERRIDES “MOBILE 2x2” (si tus grids usan !important) ===== */
 .hero-gallery-card,.hero-gallery-card .carousel,.hero-gallery-card .carousel-track{max-width:100%}
 .hero-gallery-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;padding:12px 12px 14px!important}
 .hero-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;gap:0!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;border:var(--border)!important;background:rgba(255,255,255,.03)!important}
@@ -225,40 +239,25 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .prod-tabs .tab:focus-visible,.prod-tabs>button:focus-visible,.prod-tabs>a:focus-visible{outline:2px solid rgba(96,165,250,.75);outline-offset:2px}
 @media (max-width:520px){.productos-inline-bar{flex-wrap:wrap}.prod-cta{width:100%}}
 
-/* ===== [17] section-cq FINAL (ÚNICO) + CTA abajo + centrado vertical ===== */
+/* ===== [17] section-cq FINAL (ÚNICO) + CTA abajo + centrado vertical (desktop) ===== */
 .section-cq{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
 @media (min-width:981px){.section-cq{grid-template-columns:1fr 1fr;align-items:stretch}}
 .prod-cta-mid{display:none!important}
 .prod-cta-bottom{margin-top:12px}
-.prod-cta-bottom .cta-big{width:100%;min-height:96px;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:16px;border-radius:14px;border:1px solid rgba(96,165,250,.30);background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.10),transparent 60%),radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.10),transparent 60%),linear-gradient(180deg,rgba(17,23,35,.92),rgba(10,17,27,.86));color:rgba(232,238,246,.96);text-align:left;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);transform:translateZ(0);transition:transform .12s ease,border-color .12s ease,background .12s ease}
+.prod-cta-bottom .cta-big{width:100%;min-height:96px;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:16px;border-radius:14px;border:1px solid rgba(96,165,250,.30);background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.10),transparent 60%),radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.10),transparent 60%),linear-gradient(180deg,rgba(17,23,35,.92),rgba(10,17,27,.86));color:rgba(232,238,246,.96);text-align:left;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .12s ease,border-color .12s ease,background .12s ease}
 .prod-cta-bottom .cta-big:active{transform:translateY(1px)}
 @media (hover:hover){.prod-cta-bottom .cta-big:hover{border-color:rgba(45,212,191,.40);background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.14),transparent 60%),radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.14),transparent 60%),linear-gradient(180deg,rgba(17,23,35,.94),rgba(10,17,27,.88))}}
 .prod-cta-bottom .cta-big:focus-visible{outline:2px solid rgba(96,165,250,.75);outline-offset:2px}
 .prod-cta-bottom .cta-big .cta-sub{display:block;font-size:.95rem;color:rgba(232,238,246,.78);line-height:1.25}
-@media (min-width:981px){#productos-con .section-cq>div:first-child{display:flex;flex-direction:column;justify-content:center}#productos-con .section-cq>div:first-child>.cards{align-content:start}}
+@media (min-width:981px){#productos-con .section-cq>div:first-child{display:flex;flex-direction:column;justify-content:center}}
 
-/* ===== [18] PageSpeed / CLS FINAL (ÚNICO) =====
-   Nota: usamos UNA estrategia coherente:
-   - content-visibility + contain-intrinsic-size (reserva huella)
-   - contain: layout paint (aísla layout interno)
-   - min-heights realistas para panel y reels + reserva de dots
-*/
+/* ===== [18] PageSpeed / CLS FINAL ===== */
 #productos-con{content-visibility:auto;contain-intrinsic-size:560px;min-height:560px;contain:layout paint;padding-bottom:44px;margin-bottom:26px}
 @media (max-width:980px){#productos-con{contain-intrinsic-size:500px;min-height:500px;padding-bottom:32px;margin-bottom:22px}}
 #productos-con .panel-productos{min-height:440px}
 @media (max-width:980px){#productos-con .panel-productos{min-height:400px}}
 #productos-con .reels-home-card{min-height:560px}
 @media (max-width:980px){#productos-con .reels-home-card{min-height:520px}}
-#productos-con .reels-home-card .carousel-nav{min-height:34px}
-
-/* Reels: altura estable (evita CLS al montar iframes) */
-#carouselReels-contable .carousel-track,#carouselReels-comercial .carousel-track,#carouselReels-nube .carousel-track,#carouselReels-productividad .carousel-track,#carouselReels-servicios .carousel-track{height:min(74svh,560px);max-height:calc(100svh - var(--gh-height) - 220px - var(--safe-bottom));min-height:320px}
-#carouselReels-contable iframe,#carouselReels-comercial iframe,#carouselReels-nube iframe,#carouselReels-productividad iframe,#carouselReels-servicios iframe{width:100%;height:100%;border:0}
-#carouselReels-contable .carousel-slide,#carouselReels-comercial .carousel-slide,#carouselReels-nube .carousel-slide,#carouselReels-productividad .carousel-slide,#carouselReels-servicios .carousel-slide{display:flex;align-items:center;justify-content:center;height:100%}
-
-/* Evita saltos por imágenes (si tienen width/height en HTML) */
-#productos-con img[width][height]{height:auto;}
-#productos-con .logo-sistema{aspect-ratio:4/3;object-fit:contain}
 
 /* Separación con la siguiente sección */
 #sectores{margin-top:18px}
@@ -266,227 +265,3 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 
 /* ===== [19] UTIL ===== */
 [hidden]{display:none!important}
-/* =========================================================
-   PATCH: Logos de Sistemas (quita marco negro alto)
-   - El problema era aspect-ratio:4/3 forzado.
-   - Usamos el ratio real que ya reservan width/height del HTML.
-========================================================= */
-#productos-con .logo-sistema{
-  /* anula el 4/3 que te infla el contenedor */
-  aspect-ratio:auto !important;
-
-  /* conserva el logo, pero sin “bloque negro” enorme */
-  object-fit:contain;
-  height:auto;
-  width:100%;
-
-  /* el “fondo” ahora es sutil (no negro sólido) */
-  background:rgba(255,255,255,.02) !important;
-
-  /* opcional: que se vea más “tight” */
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:12px;
-}
-
-/* Si quieres aún más compacto visualmente sin tocar el logo:
-   reduce un poco el espacio debajo del logo */
-#productos-con .product-card .body > .logo-sistema{
-  margin-bottom:10px;
-}
-
-
-
-/* =========================================================
-   FIX DEFINITIVO: Shorts/Reels en carruseles aunque el iframe
-   venga DIRECTO (sin .reel-embed)
-   - Aplica a Reels de Sistemas y Servicios
-========================================================= */
-
-/* 1) El track no debe “centrar” dejando huecos raros */
-#carouselReels-contable .carousel-track,
-#carouselReels-comercial .carousel-track,
-#carouselReels-nube .carousel-track,
-#carouselReels-productividad .carousel-track,
-#carouselReels-servicios .carousel-track{
-  align-items:stretch;           /* clave */
-}
-
-/* 2) Slide: que siempre tenga un “marco” interno consistente */
-#carouselReels-contable .carousel-slide,
-#carouselReels-comercial .carousel-slide,
-#carouselReels-nube .carousel-slide,
-#carouselReels-productividad .carousel-slide,
-#carouselReels-servicios .carousel-slide{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:100%;
-  padding:14px;                  /* look uniforme */
-}
-
-/* 3) Si NO hay .reel-embed y el iframe viene directo: lo convertimos a Shorts */
-#carouselReels-contable .carousel-slide > iframe,
-#carouselReels-comercial .carousel-slide > iframe,
-#carouselReels-nube .carousel-slide > iframe,
-#carouselReels-productividad .carousel-slide > iframe,
-#carouselReels-servicios .carousel-slide > iframe{
-  /* “tarjeta” 9:16 */
-  aspect-ratio:9/16;
-  height:auto;
-  width:clamp(240px, 52vw, 360px);  /* desktop se ve PRO, no enorme */
-  max-height:100%;
-  border:0;
-
-  border-radius:14px;
-  overflow:hidden;
-  background:#050812;
-  border:1px solid rgba(255,255,255,.10);
-}
-
-/* 4) En móvil sí puede usar más ancho */
-@media (max-width:980px){
-  #carouselReels-contable .carousel-slide > iframe,
-  #carouselReels-comercial .carousel-slide > iframe,
-  #carouselReels-nube .carousel-slide > iframe,
-  #carouselReels-productividad .carousel-slide > iframe,
-  #carouselReels-servicios .carousel-slide > iframe{
-    width:100%;
-    max-width:420px;  /* evita que se deforme en pantallas muy anchas */
-  }
-}
-
-/* 5) Si SÍ existe .reel-embed, mantenlo “full” dentro del alto del track */
-#carouselReels-contable .reel-embed,
-#carouselReels-comercial .reel-embed,
-#carouselReels-nube .reel-embed,
-#carouselReels-productividad .reel-embed,
-#carouselReels-servicios .reel-embed{
-  height:100%;
-  min-height:0;
-}
-
-/* (Opcional) “zoom” suave para reducir barras internas del player */
-#carouselReels-contable .carousel-slide > iframe,
-#carouselReels-comercial .carousel-slide > iframe,
-#carouselReels-nube .carousel-slide > iframe,
-#carouselReels-productividad .carousel-slide > iframe,
-#carouselReels-servicios .carousel-slide > iframe,
-.reel-embed iframe{
-  transform:scale(1.06);
-  transform-origin:center;
-}
-@media (max-width:520px){
-  #carouselReels-contable .carousel-slide > iframe,
-  #carouselReels-comercial .carousel-slide > iframe,
-  #carouselReels-nube .carousel-slide > iframe,
-  #carouselReels-productividad .carousel-slide > iframe,
-  #carouselReels-servicios .carousel-slide > iframe,
-  .reel-embed iframe{
-    transform:scale(1.03);
-  }
-}
-
-
-/* =========================================================
-   FIX: Centrado vertical real de columna izquierda vs Reels
-   (SOLO DESKTOP) — aplica a TODOS los paneles
-========================================================= */
-@media (min-width:981px){
-  /* 1) Mata el centering del helper align-center dentro de este módulo */
-  #productos-con .grid-2.align-center.section-cq{align-items:stretch !important;}
-
-  /* 2) Columna izquierda centrada como bloque */
-  #productos-con .panel-productos .section-cq > div:first-child{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;   /* <-- centro vertical */
-    height:100%;
-    min-height:0;
-  }
-
-  /* 3) Cards no deben forzar altura rara */
-  #productos-con .cards.cards-products{flex:0 0 auto;}
-
-  /* 4) CTA: debe formar parte del bloque centrado (no margin-top:auto) */
-  #productos-con .prod-cta-bottom{
-    margin-top:12px !important;
-  }
-
-  /* 5) Columna reels: que también estire completo */
-  #productos-con .reels-home-card{height:100%;}
-  #productos-con .reels-home-card > .body{
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    min-height:0;
-  }
-}
-
-/* Mobile: flujo normal */
-@media (max-width:980px){
-  #productos-con .panel-productos .section-cq > div:first-child{display:block;height:auto;}
-}
-/* =========================================================
-   FIX: Quitar “barras negras” arriba/abajo en REELS de SISTEMAS
-   Causa: track con altura fija + iframe full height
-   Solución: track auto + iframe 9:16 con alto natural
-========================================================= */
-
-/* 1) SISTEMAS: el track NO debe tener height fijo */
-#carouselReels-contable .carousel-track,
-#carouselReels-comercial .carousel-track,
-#carouselReels-nube .carousel-track,
-#carouselReels-productividad .carousel-track{
-  height:auto !important;
-  min-height:0 !important;
-  max-height:none !important;
-  align-items:stretch;
-}
-
-/* 2) Slide: que se adapte a lo que mide el iframe */
-#carouselReels-contable .carousel-slide,
-#carouselReels-comercial .carousel-slide,
-#carouselReels-nube .carousel-slide,
-#carouselReels-productividad .carousel-slide{
-  height:auto !important;
-  padding:14px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-/* 3) Iframe (Short): tamaño 9:16 => ya no sobra espacio arriba/abajo */
-#carouselReels-contable .carousel-slide > iframe,
-#carouselReels-comercial .carousel-slide > iframe,
-#carouselReels-nube .carousel-slide > iframe,
-#carouselReels-productividad .carousel-slide > iframe{
-  width:clamp(240px, 52vw, 360px);
-  aspect-ratio:9/16;
-  height:auto !important;
-  max-height:none !important;
-
-  border-radius:14px;
-  background:#050812;
-  border:1px solid rgba(255,255,255,.10);
-  display:block;
-}
-
-/* 4) Mobile: que use más ancho pero mantiene 9:16 */
-@media (max-width:980px){
-  #carouselReels-contable .carousel-slide > iframe,
-  #carouselReels-comercial .carousel-slide > iframe,
-  #carouselReels-nube .carousel-slide > iframe,
-  #carouselReels-productividad .carousel-slide > iframe{
-    width:100%;
-    max-width:420px;
-  }
-}
-
-/* 5) Anula tu regla global que los estiraba a 100% alto/ancho */
-#carouselReels-contable iframe,
-#carouselReels-comercial iframe,
-#carouselReels-nube iframe,
-#carouselReels-productividad iframe{
-  width:auto !important;
-  height:auto !important;
-}
