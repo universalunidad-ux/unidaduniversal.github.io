@@ -320,3 +320,68 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 #faq{padding-bottom:28px}
 #contacto{padding-top:28px}
 @media (min-width:981px){#faq{padding-bottom:34px}#contacto{padding-top:34px}}
+
+
+(() => {
+  const D = document;
+  const root = D.documentElement;
+
+  const px = (n) => `${Math.max(0, Math.round(n))}px`;
+
+  const getTop = (el) => {
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    return r.top + window.scrollY;
+  };
+
+  const getBottom = (el) => {
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    return r.bottom + window.scrollY;
+  };
+
+  const getHeaderOffset = () => {
+    // usa tu token si existe
+    const gh = getComputedStyle(root).getPropertyValue("--gh-height").trim();
+    const n = parseFloat(gh || "0");
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  const setSplits = () => {
+    const headerOffset = getHeaderOffset();
+
+    const sistemas = D.getElementById("productos-con");
+    const sectores = D.getElementById("sectores");
+    const servicios = D.getElementById("servicios");
+    const promos = D.getElementById("promociones");
+
+    // 1) Antes de iniciar Sistemas (inicio de #productos-con)
+    const s1 = getTop(sistemas);
+    // 2) Fin de Sectores
+    const s2 = getBottom(sectores);
+    // 3) Fin de Servicios (incluye reels de servicios, porque viven dentro de #servicios)
+    const s3 = getBottom(servicios);
+    // 4) Inicio de Promos
+    const s4 = getTop(promos);
+
+    // Ajuste: restar header para que el corte “visualmente” caiga donde inicia el bloque
+    if (s1 != null) root.style.setProperty("--split-sistemas", px(s1 - headerOffset));
+    if (s2 != null) root.style.setProperty("--split-sectores-end", px(s2 - headerOffset));
+    if (s3 != null) root.style.setProperty("--split-servicios-end", px(s3 - headerOffset));
+    if (s4 != null) root.style.setProperty("--split-promos", px(s4 - headerOffset));
+  };
+
+  const rafSet = () => requestAnimationFrame(setSplits);
+
+  // Boot
+  if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", rafSet, { once: true });
+  else rafSet();
+
+  // Recalcular cuando cambian alturas reales (fuentes, imágenes, carruseles)
+  window.addEventListener("load", rafSet, { once: true });
+  window.addEventListener("resize", rafSet);
+
+  // Si tus carruseles cambian de alto al switchear tabs, llama esto:
+  window.addEventListener("splitbg:update", rafSet);
+})();
+
