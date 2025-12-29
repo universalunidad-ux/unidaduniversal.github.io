@@ -1,20 +1,65 @@
 /* =========================================================
-   Expiriti - mainindex.css (FINAL CONSOLIDADO + PageSpeed/CLS)
-   - SIN duplicados (HERO, section-cq, prod-tabs, REELS)
-   - FIX: Controles YouTube clicables (dots no tapan iframe)
-   - FIX: Reels/Sistemas/Servicios con frame 9:16 serio (sin barras raras)
-   - Minificado “humano” + comentarios útiles (copy/paste)
+   Expiriti - mainindex.css (FINAL CONSOLIDADO + FIX SPLITS)
+   - SIN duplicados (1 :root / 1 body bg)
+   - FIX fondo: no más “blanco” + splits estables
+   - Mantiene: HERO, section-cq, prod-tabs, REELS 9:16
+   - Mantiene: controles YouTube clicables (dots no tapan iframe)
+   - Mantiene: patch align Sistemas vs Reels (desktop)
 ========================================================= */
 
 /* ===== [0] TOKENS + BASE ===== */
-:root{--bg:#070b12;--bg-2:#0a111b;--card:#111723;--card-2:#0f1622;--surface:#0d1522;--surface-2:#0b1220;--muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--maxw:1200px;--radius:14px;--radius-lg:18px;--shadow:0 10px 30px rgba(0,0,0,.25);--border:1px solid rgba(255,255,255,.085);--gap:14px;--tap:44px;--gh-height:68px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px)}
+:root{
+  --bg:#070b12;--bg-2:#0a111b;--card:#111723;--card-2:#0f1622;--surface:#0d1522;--surface-2:#0b1220;
+  --muted:#95a2b3;--text:#e8eef6;--brand:#2dd4bf;--brand-2:#60a5fa;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;
+  --maxw:1200px;--radius:14px;--radius-lg:18px;--shadow:0 10px 30px rgba(0,0,0,.25);
+  --border:1px solid rgba(255,255,255,.085);--gap:14px;--tap:44px;--gh-height:68px;
+  --safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px);
+
+  /* Splits (JS puede actualizarlos; defaults seguros) */
+  --split-hero: 740px;      /* fin de HERO */
+  --split-promos: 1650px;   /* inicio de PROMOS */
+  --split-contacto: 2550px; /* inicio de CONTACTO */
+}
 *{box-sizing:border-box}
 html,body{height:100%;width:100%;max-width:100%}
 html,body{overflow-x:hidden}
 @supports(overflow:clip){html,body{overflow-x:clip}}
 html,body{overscroll-behavior-x:none}
-body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);line-height:1.45;background:radial-gradient(1100px 720px at 14% -10%,rgba(45,212,191,.11),transparent 55%),radial-gradient(900px 640px at 86% 6%,rgba(96,165,250,.10),transparent 58%),linear-gradient(180deg,rgba(255,255,255,.02),transparent 34%),var(--bg);position:relative;padding-top:calc(var(--gh-height) + var(--safe-top));padding-left:var(--safe-left);padding-right:var(--safe-right)}
+
+/* Anti-blanco garantizado */
+html{background-color:var(--bg-2)}
+body{background-color:var(--bg-2)}
+
+/* Fondo por tramos + radiales (ÚNICO) */
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+  line-height:1.45;
+  position:relative;
+  padding-top:calc(var(--gh-height) + var(--safe-top));
+  padding-left:var(--safe-left);
+  padding-right:var(--safe-right);
+
+  background:
+    radial-gradient(1100px 720px at 14% -10%, rgba(45,212,191,.11), transparent 55%),
+    radial-gradient(900px 640px at 86% 6%, rgba(96,165,250,.10), transparent 58%),
+    linear-gradient(180deg,
+      var(--bg) 0,
+      var(--bg) var(--split-hero),
+      var(--bg-2) var(--split-hero),
+
+      var(--bg-2) var(--split-promos),
+      var(--bg)   var(--split-promos),
+
+      var(--bg)   var(--split-contacto),
+      var(--bg-2) var(--split-contacto),
+      var(--bg-2) 100%
+    );
+}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018),rgba(255,255,255,.018) 1px,transparent 1px,transparent 3px);mix-blend-mode:overlay;opacity:.22}
+
 img,video{max-width:100%;height:auto;display:block}
 iframe{max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -92,10 +137,7 @@ button,input,select,textarea{font:inherit}
 @media (min-width:980px){.carousel-track{min-height:320px}.carousel-nav .dot{width:14px;height:14px}}
 .hero-slide img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;display:block;background:#0b0f14}
 
-/* ===== [6B] CAROUSEL Reels (CRÍTICO: no tapar controles del iframe) =====
-   - Para carruseles de Reels: dots NO van encima del video (layout normal).
-   - Resultado: controles YouTube clicables (desktop/mobile).
-*/
+/* ===== [6B] CAROUSEL Reels (no tapar controles iframe) ===== */
 .carousel[id^="carouselReels"] .carousel-nav{position:static;bottom:auto;left:auto;right:auto;margin:10px 0 0;padding:6px 10px;pointer-events:auto;background:transparent}
 .carousel[id^="carouselReels"] .carousel-track{min-height:0!important;height:auto!important;max-height:none!important}
 .carousel[id^="carouselReels"] .carousel-slide{display:flex;align-items:center;justify-content:center;padding:14px}
@@ -126,7 +168,7 @@ button,input,select,textarea{font:inherit}
 .svc-featured:before{content:"";position:absolute;inset:-2px;background:linear-gradient(90deg,rgba(45,212,191,.35),rgba(96,165,250,.35));opacity:.12;filter:blur(16px);pointer-events:none}
 .svc-featured:focus-visible{outline:2px solid rgba(45,212,191,.65);outline-offset:2px}
 
-/* ===== [9] REELS (tabs + frame 9:16 serio) ===== */
+/* ===== [9] REELS (tabs + frame 9:16) ===== */
 .reels-home-card .reel-title{margin:0 0 10px;font-weight:900;letter-spacing:.1px;color:rgba(232,238,246,.96);min-height:22px}
 .reel-sys-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
 .reel-tab{min-height:var(--tap);border-radius:14px;border:var(--border);background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);padding:10px 8px;cursor:pointer;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center}
@@ -135,7 +177,6 @@ button,input,select,textarea{font:inherit}
 .reel-tab.active{border-color:rgba(96,165,250,.45);background:rgba(96,165,250,.10)}
 @media (max-width:520px){.reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
-/* Reels embed: SIEMPRE 9:16, centrado, sin “barras negras” de layout */
 .reel-embed{position:relative;aspect-ratio:9/16;width:min(380px,100%);border-radius:14px;overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);min-height:clamp(300px,56vh,560px);margin:0 auto}
 .reel-embed iframe,.reel-embed .yt-thumb{position:absolute;inset:0;width:100%;height:100%}
 .reel-embed iframe{border:0;pointer-events:auto}
@@ -145,7 +186,6 @@ button,input,select,textarea{font:inherit}
 .reel-embed .yt-play:before{content:"";position:absolute;left:21px;top:17px;width:0;height:0;border-left:14px solid rgba(232,238,246,.92);border-top:10px solid transparent;border-bottom:10px solid transparent}
 @media (max-width:520px){.reel-embed{width:min(420px,100%);min-height:clamp(280px,54vh,520px)}}
 
-/* Si el iframe viene DIRECTO (sin .reel-embed): lo “envolvemos” visualmente vía CSS */
 .carousel[id^="carouselReels"] .carousel-slide>iframe{aspect-ratio:9/16;width:min(380px,100%);height:auto;border-radius:14px;overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);display:block;pointer-events:auto}
 @media (max-width:980px){.carousel[id^="carouselReels"] .carousel-slide>iframe{width:min(420px,100%)}}
 
@@ -208,7 +248,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .map-cover-title{font-weight:900;text-align:center}
 .map-cover-cta{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap);padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#020617;font-size:13px;font-weight:900}
 
-/* ===== [15] OVERRIDES “MOBILE 2x2” (si tus grids usan !important) ===== */
+/* ===== [15] OVERRIDES “MOBILE 2x2” ===== */
 .hero-gallery-card,.hero-gallery-card .carousel,.hero-gallery-card .carousel-track{max-width:100%}
 .hero-gallery-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;padding:12px 12px 14px!important}
 .hero-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;gap:0!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;border:var(--border)!important;background:rgba(255,255,255,.03)!important}
@@ -222,12 +262,12 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .reel-tab img{width:auto!important;height:52px!important;max-width:170px!important;object-fit:contain!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;display:block!important;margin:0 auto!important}
 @media (max-width:420px){.reel-tab{min-height:82px!important;padding:12px!important}.reel-tab img{height:46px!important;max-width:160px!important}}
 
-/* Servicios: aquí sí dejamos el texto en 2 líneas */
+/* Servicios: texto en 2 líneas */
 #carouselReels-servicios .reel-tab span,#carouselReels-servicios ~ * .reel-tab span{display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;font-size:.86rem!important;font-weight:900!important;line-height:1.1!important;margin-top:8px!important}
 #carouselReels-servicios .reel-tab,#carouselReels-servicios ~ * .reel-tab{gap:6px!important;min-height:96px!important;padding:12px 10px!important}
 #carouselReels-servicios .reel-tab img,#carouselReels-servicios ~ * .reel-tab img{height:44px!important;max-width:150px!important}
 
-/* ===== [16] PROD-TABS FINAL (ÚNICO) + FIX overflow en flex ===== */
+/* ===== [16] PROD-TABS FINAL (ÚNICO) ===== */
 .prod-tabs-shell{flex:1 1 auto;min-width:0}
 .prod-tabs{min-width:0;max-width:100%;display:flex;gap:10px;align-items:center;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding:6px 4px;scrollbar-width:none}
 .prod-tabs::-webkit-scrollbar{height:0}
@@ -239,7 +279,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .prod-tabs .tab:focus-visible,.prod-tabs>button:focus-visible,.prod-tabs>a:focus-visible{outline:2px solid rgba(96,165,250,.75);outline-offset:2px}
 @media (max-width:520px){.productos-inline-bar{flex-wrap:wrap}.prod-cta{width:100%}}
 
-/* ===== [17] section-cq FINAL (ÚNICO) + CTA abajo + centrado vertical (desktop) ===== */
+/* ===== [17] section-cq FINAL ===== */
 .section-cq{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
 @media (min-width:980px){.section-cq{grid-template-columns:1fr 1fr;align-items:stretch}}
 .prod-cta-mid{display:none!important}
@@ -250,150 +290,33 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .prod-cta-bottom .cta-big:focus-visible{outline:2px solid rgba(96,165,250,.75);outline-offset:2px}
 .prod-cta-bottom .cta-big .cta-sub{display:block;font-size:.95rem;color:rgba(232,238,246,.78);line-height:1.25}
 
-/* ===== [18] PageSpeed / CLS + separación HERO->SISTEMAS (ÚNICO) ===== */
-#productos-con{
-  content-visibility:auto;
-  contain-intrinsic-size:560px;
-  min-height:560px;
-  contain:layout paint;
-  padding-bottom:44px;
-  margin-bottom:26px;
-  margin-top:24px; /* separación HERO -> Sistemas */
-}
-@media (min-width:980px){
-  #productos-con{margin-top:34px}
-}
-@media (max-width:980px){
-  #productos-con{
-    contain-intrinsic-size:500px;
-    min-height:500px;
-    padding-bottom:32px;
-    margin-bottom:22px;
-  }
-}
-
-
+/* ===== [18] PageSpeed/CLS + separación HERO->SISTEMAS ===== */
+#productos-con{content-visibility:auto;contain-intrinsic-size:560px;min-height:560px;contain:layout paint;padding-bottom:44px;margin-bottom:26px;margin-top:24px}
+@media (min-width:980px){#productos-con{margin-top:34px}}
+@media (max-width:980px){#productos-con{contain-intrinsic-size:500px;min-height:500px;padding-bottom:32px;margin-bottom:22px}}
 
 /* ===== [19] UTIL ===== */
 [hidden]{display:none!important}
 
-/* ===== PATCH FINAL ÚNICO (FIX HUECO + ALIGN) ===== */
-
-/* Desktop: 2 filas
-   - Fila 1: "Sistemas + tabs" a lo ancho
-   - Fila 2: Izq (cards+CTA) / Der (Reels) alineados verticalmente
-*/
+/* ===== [20] PATCH FINAL ÚNICO (ALIGN SISTEMAS VS REELS) ===== */
 @media (min-width:980px){
-  /* 1) Container: 2 cols + 2 filas */
-  #productos-con > .container{
-    display:grid !important;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
-    gap: var(--gap, 14px);
-    align-items: stretch;
-  }
-
-  /* 2) Header (Sistemas + tabs) ocupa las 2 columnas arriba */
-  #productos-con .productos-inline-bar{
-    grid-column: 1 / -1;
-    grid-row: 1;
-    align-self: start;
-    margin: 0 0 12px !important;
-  }
-
-  /* 3) Panel activo vive en la fila 2 y ocupa las 2 cols,
-        adentro creamos el layout 2 columnas */
-  #productos-con .panel-productos:not(.hidden){
-    grid-column: 1 / -1;
-    grid-row: 2;
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--gap, 14px);
-    align-items: center; /* ✅ aquí se logra el centrado vertical */
-  }
-
-  /* 4) Evita que el grid interno (grid-2) estorbe */
-  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{
-    display: contents;
-  }
-
-  /* 5) Izquierda: cards + CTA */
-  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > div:first-child{
-    grid-column: 1 / 2;
-    min-width: 0;
-    display:flex;
-    flex-direction:column;
-    gap: 12px;
-  }
-
-  /* 6) Derecha: Reels */
-  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > .reels-home-card{
-    grid-column: 2 / 3;
-    min-width: 0;
-    height: 100%;
-  }
-
-  /* Limpieza */
-  #productos-con .section-cq{ margin-top:0 !important; padding-top:0 !important; }
+  #productos-con > .container{display:grid!important;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr;gap:var(--gap,14px);align-items:stretch}
+  #productos-con .productos-inline-bar{grid-column:1/-1;grid-row:1;align-self:start;margin:0 0 12px!important}
+  #productos-con .panel-productos:not(.hidden){grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:1fr 1fr;gap:var(--gap,14px);align-items:center}
+  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{display:contents}
+  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>div:first-child{grid-column:1/2;min-width:0;display:flex;flex-direction:column;gap:12px}
+  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>.reels-home-card{grid-column:2/3;min-width:0;height:100%}
+  #productos-con .section-cq{margin-top:0!important;padding-top:0!important}
 }
-
-/* Mobile: vuelve a flujo normal */
 @media (max-width:979px){
-  #productos-con > .container{ display:block !important; }
-  #productos-con .panel-productos,
-  #productos-con .panel-productos .grid-2.section-cq{
-    display:block !important;
-  }
+  #productos-con > .container{display:block!important}
+  #productos-con .panel-productos,#productos-con .panel-productos .grid-2.section-cq{display:block!important}
 }
 
+/* ===== [21] Fondo por tramos: mantener secciones transparentes ===== */
+#main-content,main,.section-full,#productos-con,#sectores,#servicios,#promociones,#faq,#contacto{background:transparent!important}
 
-
-
-
-
-:root{
-  --bg:#070b12;
-  --bg-2:#0a111b;
-
-  /* Se actualizan por JS */
-  --split-hero: 560px;     /* fin del hero */
-  --split-promos: 1400px;  /* inicio de promociones */
-  --split-contacto: 2200px;/* inicio de contacto */
-}
-
-/* Fondo “por tramos” (3 cortes) */
-body{
-  background:
-    radial-gradient(1100px 720px at 14% -10%, rgba(45,212,191,.11), transparent 55%),
-    radial-gradient(900px 640px at 86% 6%, rgba(96,165,250,.10), transparent 58%),
-    linear-gradient(180deg,
-      var(--bg) 0,
-      var(--bg) var(--split-hero),
-      var(--bg-2) var(--split-hero),
-
-      var(--bg-2) var(--split-promos),
-      var(--bg)   var(--split-promos),
-
-      var(--bg)   var(--split-contacto),
-      var(--bg-2) var(--split-contacto),
-      var(--bg-2) 100%
-    );
-  background-repeat:no-repeat;
-}
-
-/* Evita que secciones “pinten” encima y te maten el efecto */
-#main-content, main, .section-full,
-#productos-con,#sectores,#servicios,#promociones,#faq,#contacto{
-  background: transparent !important;
-}
-
-/* Separación: final de FAQ vs inicio de Contacto */
-#faq{ padding-bottom: 28px; }
-#contacto{ padding-top: 28px; }
-
-/* (Opcional) si quieres aún más aire visual */
-@media (min-width: 981px){
-  #faq{ padding-bottom: 34px; }
-  #contacto{ padding-top: 34px; }
-}
-
+/* ===== [22] Separación FAQ vs Contacto ===== */
+#faq{padding-bottom:28px}
+#contacto{padding-top:28px}
+@media (min-width:981px){#faq{padding-bottom:34px}#contacto{padding-top:34px}}
