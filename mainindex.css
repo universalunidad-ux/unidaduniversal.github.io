@@ -390,3 +390,30 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   grid-column:auto !important;
 }
 
+/* ===== Fondo global alineado al final del HERO ===== */
+:root{
+  --bg:#070b12;
+  --bg-2:#0a111b;
+  --bg-split: 560px; /* fallback si JS aún no corre */
+}
+
+/* Importante: evita que otras secciones “pinten” fondos raros encima */
+html,body{min-height:100%}
+body{
+  background:
+    linear-gradient(
+      180deg,
+      var(--bg) 0,
+      var(--bg) var(--bg-split),
+      var(--bg-2) var(--bg-split),
+      var(--bg-2) 100%
+    );
+  background-repeat:no-repeat;
+}
+
+/* Si tu HERO o secciones traen su propio fondo, quítalo para que mande el body */
+#hero, #hero-gallery, .hero, .hero-gallery,
+#productos-con, #productos, .section-cq{
+  background: transparent !important;
+}
+
