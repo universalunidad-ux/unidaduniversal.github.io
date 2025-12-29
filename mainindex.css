@@ -308,10 +308,19 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>.reels-home-card{grid-column:2/3;min-width:0;height:100%}
   #productos-con .section-cq{margin-top:0!important;padding-top:0!important}
 }
-@media (max-width:979px){
+@media (max-width:980px){
   #productos-con > .container{display:block!important}
-  #productos-con .panel-productos,#productos-con .panel-productos .grid-2.section-cq{display:block!important}
+
+  /* ✅ SOLO el panel activo */
+  #productos-con .panel-productos:not(.hidden){display:block!important}
+
+  /* ✅ refuerza ocultar los demás (y va DESPUÉS) */
+  #productos-con .panel-productos.hidden{display:none!important}
+
+  /* layout interno del panel activo */
+  #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{display:block!important}
 }
+
 
 /* ===== [21] Fondo por tramos: mantener secciones transparentes ===== */
 #main-content,main,.section-full,#productos-con,#sectores,#servicios,#promociones,#faq,#contacto{background:transparent!important}
