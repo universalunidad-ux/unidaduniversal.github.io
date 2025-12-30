@@ -849,3 +849,64 @@ html, body{
 }
 
 
+
+/* ===== Resumen MXN (Total + letra) — centrado y compacto ===== */
+#combined-wrap{
+  display:flex;
+  justify-content:center;
+}
+
+#combined-wrap .combined-summary{
+  width:min(720px, 100%);           /* no ocupa todo; responsive */
+  margin:14px auto 0;
+  padding:14px 16px;
+  border-radius:14px;
+}
+
+/* Header: Total centrado visualmente y compacto */
+#combined-wrap .cs-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+#combined-wrap .cs-title{
+  font-weight:800;
+  letter-spacing:.2px;
+  font-size:14px;
+  opacity:.95;
+}
+
+#combined-wrap .total-amount{
+  font-size:16px;
+  font-weight:900;
+}
+
+/* Bloque punteado (importe en letra) */
+#combined-wrap .amount-letter{
+  border:1px dashed rgba(255,255,255,.16);
+  border-radius:12px;
+  padding:10px 12px;
+  font-weight:700;
+  letter-spacing:.2px;
+  line-height:1.25;
+  white-space:normal;
+  word-break:break-word;
+}
+
+/* Compactación extra si usas la clase combined-tight */
+#combined-wrap .combined-tight{
+  padding:12px 14px;
+}
+
+/* Mobile: aún más compacto */
+@media (max-width: 520px){
+  #combined-wrap .combined-summary{
+    width:min(520px, 100%);
+    padding:12px 12px;
+  }
+  #combined-wrap .total-amount{ font-size:15px; }
+  #combined-wrap .amount-letter{ padding:10px; font-size:13px; }
+}
