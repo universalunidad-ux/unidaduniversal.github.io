@@ -1,20 +1,62 @@
 // === GUARD GLOBAL PARA NUBE ===
 if(document?.body?.getAttribute("data-calc")==="nube"||window.__EXPIRITI_FORCE_NUBE__===true){
-  console.log("calculadora.js v13.2: saltado COMPLETO (modo Nube activo)");
+  console.log("calculadora.js v13.2a: saltado COMPLETO (modo Nube activo)");
   window.CalculadoraContpaqi=window.CalculadoraContpaqi||{init(){},setSecondarySystem(){},setTertiarySystem(){},updateCombinedSummary(){}};
 }else{
 
-/* calculadora.js v13.2 — CENTAVOS (MXN) + FIX Resumen (MXN + letra) + getNum robusto */
+/* calculadora.js v13.2a — CENTAVOS (MXN) + FIX Subtotal/IVA (incluye instalación) + Resumen (MXN + letra) + getNum robusto
+   - SIN redondeo a enteros: todo con 2 decimales
+   - round2(): redondeo financiero a centavos en cada paso (evita 0.16 flotante)
+   - mxnLetra exportada a window (ya no sale “pendiente”)
+   - getNum soporta signo “−” (U+2212) y comas/centavos */
 (function(){
 "use strict";
-console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instalación + resumen MXN/letra");
+console.log("calculadora.js v13.2a cargado — centavos + subtotal incluye instalación + resumen MXN/letra");
 
-  // ========================= Helpers (PATCH: SIN redondeo) =========================
+  // ========================= Helpers =========================
   var money=new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",minimumFractionDigits:2,maximumFractionDigits:2});
-  function fmt(v){v=Number(v||0);return money.format(isFinite(v)?v:0)}          /* MXN con centavos */
-  function pct(v){return((v||0)*100).toFixed(0)+"%"}                           /* % */
+  function fmt(v){v=Number(v||0);return money.format(isFinite(v)?v:0)} /* MXN con centavos */
+  function pct(v){return((v||0)*100).toFixed(0)+"%"}                  /* % */
+  function round2(x){return Math.round((Number(x)||0)*100)/100}       /* redondeo a centavos */
   function safeHasTable(id){var el=document.getElementById(id);return!!(el&&el.querySelector&&el.querySelector("table"))}
   function recomputeAll(){window.dispatchEvent(new Event("calc-recompute"))}
+
+  /* =========================================================
+     mxnLetra — Convierte número a letra (MXN)
+     Ej: 6948.40 -> SEIS MIL NOVECIENTOS CUARENTA Y OCHO PESOS 40/100 M.N.
+  ========================================================= */
+  function mxnLetra(n){
+    n=Number(n||0);
+    var enteros=Math.floor(n);
+    var centavos=Math.round((n-enteros)*100).toString().padStart(2,"0");
+
+    function u(n){return["","UNO","DOS","TRES","CUATRO","CINCO","SEIS","SIETE","OCHO","NUEVE"][n]}
+    function d(n){return["","DIEZ","VEINTE","TREINTA","CUARENTA","CINCUENTA","SESENTA","SETENTA","OCHENTA","NOVENTA"][n]}
+    function c(n){return["","CIENTO","DOSCIENTOS","TRESCIENTOS","CUATROCIENTOS","QUINIENTOS","SEISCIENTOS","SETECIENTOS","OCHOCIENTOS","NOVECIENTOS"][n]}
+
+    function seccion(n,divisor,singular,plural){
+      var cientos=Math.floor(n/divisor), resto=n-(cientos*divisor), texto="";
+      if(cientos>0)texto=(cientos===1?singular:plural);
+      if(resto>0)texto+=(texto?" ":"")+num(resto);
+      return texto;
+    }
+    function num(n){
+      if(n===0)return"CERO";
+      if(n<10)return u(n);
+      if(n<20)return["DIEZ","ONCE","DOCE","TRECE","CATORCE","QUINCE","DIECISÉIS","DIECISIETE","DIECIOCHO","DIECINUEVE"][n-10];
+      if(n<100){
+        if(n<30)return["VEINTE","VEINTIUNO","VEINTIDÓS","VEINTITRÉS","VEINTICUATRO","VEINTICINCO","VEINTISÉIS","VEINTISIETE","VEINTIOCHO","VEINTINUEVE"][n-20];
+        var dec=Math.floor(n/10), uni=n%10;
+        return d(dec)+(uni?" Y "+u(uni):"");
+      }
+      if(n===100)return"CIEN";
+      if(n<1000)return c(Math.floor(n/100))+(n%100?" "+num(n%100):"");
+      if(n<1000000)return seccion(n,1000,"MIL","MIL");
+      return seccion(n,1000000,"UN MILLÓN","MILLONES");
+    }
+    return num(enteros)+" PESOS "+centavos+"/100 M.N.";
+  }
+  window.mxnLetra=mxnLetra; /* PATCH: exporta para usar en resumen */
 
   // ===== Parche CSS mínimo para asegurar el form (no rompe tu main.css)
   (function(){
@@ -35,12 +77,12 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
     var allPrices=window.preciosContpaqi||{}, systemPrices=allPrices[sistemaName];
     if(!systemPrices){container.innerHTML='<p style="margin:0">Error: faltan precios para <strong>'+sistemaName+"</strong>.</p>";return}
 
-    // ---------- Título ----------
+    // Título
     var title=document.createElement("h4");
     title.textContent=sistemaName+" — Calculadora";
     container.appendChild(title);
 
-    // ---------- Formulario ----------
+    // Formulario
     var form=document.createElement("form"); form.className="calc-form";
 
     // 1) Licencia
@@ -76,10 +118,9 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
         '<span><strong>Instalación (opcional)</strong> — Servicio ofrecido por <strong>Expiriti</strong> para instalar en tu equipo tu sistema.</span>'+
       "</label></div>";
     form.appendChild(instWrap);
-
     container.appendChild(form);
 
-    // ---------- Resultados ----------
+    // Resultados
     var results=document.createElement("div"); results.className="calc-results";
     var table=document.createElement("table"); table.className="calc-table";
     table.innerHTML=
@@ -120,9 +161,11 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
         if(hasRFC){rfcSel.appendChild(new Option("MonoRFC","MonoRFC")); rfcSel.appendChild(new Option("MultiRFC","MultiRFC"));}
       }
 
+      // Default MultiRFC si existe
       var multi=Array.from(rfcSel.options).find(function(o){return/multirfc/i.test(o.text)});
       if(multi)rfcSel.value=multi.value;
       if(rfcSel.options.length===0)rfcLabel.style.display="none";
+
       calculateAndRender();
     }
 
@@ -131,53 +174,59 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
     function calcInstallationGross(){
       var on=instCheckbox(); if(!on||!on.checked)return 0;
       var usuarios=Math.max(1,parseInt(userInput.value||"1",10)||1);
-      if(usuarios===1)return 800;
-      return 800+(usuarios-1)*750;
+      return usuarios===1?800:800+(usuarios-1)*750;
     }
 
     // ----------------- Cálculo -----------------
     function calculateAndRender(){
       var lic=licenciaSel.value, op=opSel.value||"", rfcType=rfcSel.value;
       var usuarios=Math.max(1,parseInt(userInput.value||"1",10)||1);
-
-      var base=0,usuariosAddImporte=0,usuariosExtras=0;
+      var base=0, usuariosAddImporte=0, usuariosExtras=0;
 
       if(lic==="nueva"||lic==="renovacion"){
         var anual=systemPrices.anual||{}, datosLic=anual[rfcType]||null;
         if(!datosLic)return writeZeros();
+
         base=Number((lic==="nueva")?(datosLic.precio_base||0):(datosLic.renovacion!=null?datosLic.renovacion:(datosLic.precio_base||0)));
+
         var perUser=Number((datosLic.usuario_en_red!=null)?datosLic.usuario_en_red:((datosLic.usuario_adicional!=null)?datosLic.usuario_adicional:0));
         usuariosExtras=Math.max(usuarios-1,0);
         usuariosAddImporte=usuariosExtras*perUser;
+
       }else{
         var trad=systemPrices.tradicional||{};
         if(op==="crecimiento_usuario"){
           var perUser2=Number((trad.crecimiento_usuario&&trad.crecimiento_usuario.usuario_adicional)||0);
           base=0; usuariosExtras=Math.max(usuarios-1,0); usuariosAddImporte=usuariosExtras*perUser2;
+
         }else if(op==="actualizacion"||op==="especial"){
           var datos=trad[op]||null; if(!datos)return writeZeros();
           base=Number(datos.precio_base||0);
           var perUser3=Number((datos.usuario_adicional!=null)?datos.usuario_adicional:((trad.crecimiento_usuario&&trad.crecimiento_usuario.usuario_adicional)||0));
           usuariosExtras=Math.max(usuarios-1,0);
           usuariosAddImporte=usuariosExtras*perUser3;
+
         }else return writeZeros();
       }
 
       var subtotalSistemas=base+usuariosAddImporte;
 
-      // -15% paquete (2 o 3) excluye XML
+      // -15% por paquete (2 o 3); excluye XML
       var discountPct=0;
       if((safeHasTable("calc-secondary")||safeHasTable("calc-tertiary"))&&sistemaName.indexOf("XML en Línea")===-1)discountPct=0.15;
-      var discountAmt=subtotalSistemas*discountPct;
-      var afterDiscount=subtotalSistemas-discountAmt;
 
-      // instalación 50% desc
+      var discountAmt=round2(subtotalSistemas*discountPct);
+      var afterDiscount=round2(subtotalSistemas-discountAmt);
+
+      // instalación 50% desc (neto)
       var instGross=calcInstallationGross();
-      var instDiscount=instGross*0.5;
-      var instNet=instGross-instDiscount;
+      var instDiscount=round2(instGross*0.5);
+      var instNet=round2(instGross-instDiscount);
 
-      // IVA (PATCH: base imponible = sistemas(desc) + instalación(neta))
-      var baseImponible=afterDiscount+instNet, iva=baseImponible*0.16, total=baseImponible+iva;
+      // IVA (PATCH): base imponible = sistemas(desc) + instalación(neta)
+      var baseImponible=round2(afterDiscount+instNet);
+      var iva=round2(baseImponible*0.16);
+      var total=round2(baseImponible+iva);
 
       // Render
       document.getElementById("base"+idSuffix).textContent=fmt(base);
@@ -187,8 +236,9 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
       document.getElementById("instdisc"+idSuffix).textContent=(instGross>0?("− "+fmt(instDiscount)):fmt(0));
       document.getElementById("sub"+idSuffix).textContent=fmt(baseImponible);
       document.getElementById("iva"+idSuffix).textContent=fmt(iva);
-      document.getElementById("tot"+idSuffix).innerHTML="<strong>"+fmt(total)+"</strong>";
+      document.getElementById("tot"+idSuffix).innerHTML="<strong>"+fmt(total)+"</strong>"; /* no textContent (mantiene bold) */
 
+      // Mostrar/ocultar filas
       document.getElementById("tr-uadd"+idSuffix).style.display=(usuariosExtras>0)?"":"none";
       document.getElementById("tr-disc"+idSuffix).style.display=(discountPct>0)?"":"none";
       var instOn=instCheckbox(), showInst=!!(instOn&&instOn.checked);
@@ -218,6 +268,8 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
     licenciaSel.addEventListener("change",refreshOptions);
     opSel.addEventListener("change",function(){
       var lic=licenciaSel.value, op=opSel.value;
+
+      // Tradicional + crecimiento: oculta RFC
       if(lic==="tradicional"&&op==="crecimiento_usuario"){rfcLabel.style.display="none";}
       else{
         if(rfcSel.options.length===0){
@@ -226,7 +278,10 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
             var anual=systemPrices.anual||{};
             if(anual.MonoRFC)rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));
             if(anual.MultiRFC)rfcSel.appendChild(new Option("MultiRFC","MultiRFC"));
-          }else{rfcSel.appendChild(new Option("MonoRFC","MonoRFC")); rfcSel.appendChild(new Option("MultiRFC","MultiRFC"));}
+          }else{
+            rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));
+            rfcSel.appendChild(new Option("MultiRFC","MultiRFC"));
+          }
           var m=Array.from(rfcSel.options).find(function(o){return/multirfc/i.test(o.text)}); if(m)rfcSel.value=m.value;
         }
         rfcLabel.style.display="inline-block";
@@ -237,37 +292,37 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
     userInput.addEventListener("change",calculateAndRender);
     var chk=document.getElementById("instOn"+idSuffix); if(chk)chk.addEventListener("change",calculateAndRender);
     window.addEventListener("calc-recompute",calculateAndRender);
-    refreshOptions();
+
+    refreshOptions(); // init
   }
 
-  // =================== Resumen combinado (PATCH: aquí va lo de MXN + letra) =====================
+  // =================== Resumen combinado (MXN + letra) =====================
   function updateCombinedSummary(combinedSelector){
     if(!combinedSelector)combinedSelector="#combined-wrap";
     var combined=document.querySelector(combinedSelector); if(!combined)return;
 
-    // PATCH: parse robusto con comas/centavos y signo "−"
+    // parse robusto: soporta comas/centavos/signo “−”
     function getNum(id){
       var el=document.getElementById(id); if(!el)return 0;
       var s=(el.textContent||"").trim();
+      s=s.replace(/\u2212/g,"-");                /* PATCH: “−” -> "-" */
       s=s.replace(/\s/g,"").replace(/[^\d.,-]/g,"").replace(/,/g,"");
       var n=parseFloat(s); return isNaN(n)?0:n;
     }
 
-    var e1=!!document.getElementById("tot1");
-    var e2=!!document.getElementById("tot2");
-    var e3=!!document.getElementById("tot3");
+    var e1=!!document.getElementById("tot1"),
+        e2=!!document.getElementById("tot2"),
+        e3=!!document.getElementById("tot3");
+
     combined.innerHTML="";
 
-    // PATCH: aunque sea 1 sistema, aquí metemos “Precios en MXN + letra”
+    // 1 sistema: muestra “Precios en MXN + letra”
     if(!e2&&!e3){
       var t=getNum("tot1");
       combined.innerHTML=
         '<div class="combined-summary">'+
           '<div class="cs-head">'+
-            '<div>'+
-              '<h4>Precios en MXN (Moneda Nacional)</h4>'+
-              '<div class="hint">Importe en número y letra</div>'+
-            '</div>'+
+            '<div><h4>Precios en MXN (Moneda Nacional)</h4><div class="hint">Importe en número y letra</div></div>'+
             '<div class="total-amount"><strong>'+fmt(t)+'</strong></div>'+
           '</div>'+
           '<div class="amount-letter">'+(window.mxnLetra?mxnLetra(t):'Importe en letra: (pendiente función mxnLetra)')+'</div>'+
@@ -284,16 +339,14 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
     if(e2){filas.push({label:"Subtotal "+n2+" (sistemas + instalación)",val:getNum("sub2")});totales.push(getNum("tot2"));ivaTotal+=getNum("iva2")}
     if(e3){filas.push({label:"Subtotal "+n3+" (sistemas + instalación)",val:getNum("sub3")});totales.push(getNum("tot3"));ivaTotal+=getNum("iva3")}
 
-    var totalCombinado=totales.reduce(function(a,b){return a+b},0);
+    var totalCombinado=round2(totales.reduce(function(a,b){return a+b},0));
+    ivaTotal=round2(ivaTotal);
 
     var box=document.createElement("div");
     box.className="combined-summary";
     box.innerHTML=
       '<div class="cs-head">'+
-        '<div>'+
-          '<h4>Precios en MXN (Moneda Nacional)</h4>'+
-          '<div class="hint">Importe en número y letra</div>'+
-        '</div>'+
+        '<div><h4>Precios en MXN (Moneda Nacional)</h4><div class="hint">Importe en número y letra</div></div>'+
         '<div class="total-amount"><strong>'+fmt(totalCombinado)+'</strong></div>'+
       '</div>'+
       '<div class="amount-letter">'+(window.mxnLetra?mxnLetra(totalCombinado):'Importe en letra: (pendiente función mxnLetra)')+'</div>'+
@@ -342,7 +395,7 @@ console.log("calculadora.js v13.2 cargado — centavos + subtotal incluye instal
 
   // Auto-init
   function autoInit(){
-    if(window.__EXPIRITI_FORCE_NUBE__===true||document.body.getAttribute("data-calc")==="nube"){console.log("v13.2: cancelado autoInit porque hay calculadora NUBE");return;}
+    if(window.__EXPIRITI_FORCE_NUBE__===true||document.body.getAttribute("data-calc")==="nube"){console.log("v13.2a: cancelado autoInit porque hay calculadora NUBE");return;}
     var app=document.getElementById("app");
     var sys=app&&app.dataset?app.dataset.system:null;
     if(sys&&document.querySelector("#calc-primary"))window.CalculadoraContpaqi.init({systemName:sys});
