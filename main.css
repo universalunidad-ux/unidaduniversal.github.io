@@ -1009,3 +1009,39 @@ body > .arrowCircle{display:none!important}
 /* 8) (Opcional) si tu CSS viejo tenía este centrado “cuando hay 2 cols”
       elimínalo o déjalo después de este patch (este manda). */
 
+/* =========================================================
+   EXPIRITI — 2 CALCS: “Agregar 3er sistema” ABAJO y CENTRADO
+   Requiere: <html class="has-calc-2">
+========================================================= */
+
+@media (min-width: 981px){
+
+  /* 2 calculadoras: SOLO 2 columnas arriba */
+  html.has-calc-2 .calc-row{
+    display:grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap:14px;
+    align-items:start;
+  }
+
+  /* Coloca las 2 calcs en la fila 1 */
+  html.has-calc-2 #calc-primary{grid-column:1}
+  html.has-calc-2 #calc-secondary{display:block!important;grid-column:2}
+
+  /* Panel “Agregar un tercer sistema” -> fila 2, centrado */
+  html.has-calc-2 #calc-slot-2{
+    grid-column:1 / -1 !important;     /* ocupa ambas columnas */
+    justify-self:center !important;    /* centra el bloque */
+    align-self:start !important;
+    margin-top:6px;
+  }
+
+  /* Ancho “bonito” del panel (ajústalo si quieres) */
+  html.has-calc-2 #calc-slot-2.placeholder{
+    width:100% !important;
+    max-width: 760px !important;       /* <— tamaño centrado */
+    height:auto !important;
+  }
+}
+
+/* Mobile: sigue apilado (no tocar) */
