@@ -319,14 +319,17 @@ console.log("calculadora.js v13.2a cargado — centavos + subtotal incluye insta
     // 1 sistema: muestra “Precios en MXN + letra”
     if(!e2&&!e3){
       var t=getNum("tot1");
-      combined.innerHTML=
-        '<div class="combined-summary">'+
-          '<div class="cs-head">'+
-            '<div><h4>Precios en MXN (Moneda Nacional)</h4><div class="hint">Importe en número y letra</div></div>'+
-            '<div class="total-amount"><strong>'+fmt(t)+'</strong></div>'+
-          '</div>'+
-          '<div class="amount-letter">'+(window.mxnLetra?mxnLetra(t):'Importe en letra: (pendiente función mxnLetra)')+'</div>'+
-        '</div>';
+combined.innerHTML=
+  '<div class="combined-summary combined-tight">'+
+    '<div class="cs-head">'+
+      '<div class="cs-title">Total:</div>'+
+      '<div class="total-amount"><strong>'+fmt(t)+'</strong></div>'+
+    '</div>'+
+    '<div class="amount-letter">'+(window.mxnLetra?mxnLetra(t):"")+'</div>'+
+  '</div>';
+
+
+      
       combined.hidden=false; return;
     }
 
@@ -344,20 +347,21 @@ console.log("calculadora.js v13.2a cargado — centavos + subtotal incluye insta
 
     var box=document.createElement("div");
     box.className="combined-summary";
-    box.innerHTML=
-      '<div class="cs-head">'+
-        '<div><h4>Precios en MXN (Moneda Nacional)</h4><div class="hint">Importe en número y letra</div></div>'+
-        '<div class="total-amount"><strong>'+fmt(totalCombinado)+'</strong></div>'+
-      '</div>'+
-      '<div class="amount-letter">'+(window.mxnLetra?mxnLetra(totalCombinado):'Importe en letra: (pendiente función mxnLetra)')+'</div>'+
-      '<table class="combined-table">'+
-      '  <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>'+
-      "  <tbody>"+
-        filas.map(function(f){return"<tr><td>"+f.label+"</td><td>"+fmt(f.val)+"</td></tr>"}).join("")+
-      "    <tr><td>IVA total (sistemas + instalación)</td><td>"+fmt(ivaTotal)+"</td></tr>"+
-      "    <tr><td><strong>Total combinado</strong></td><td><strong>"+fmt(totalCombinado)+"</strong></td></tr>"+
-      "  </tbody>"+
-      "</table>";
+box.innerHTML=
+  '<div class="cs-head">'+
+    '<div class="cs-title">Total:</div>'+
+    '<div class="total-amount"><strong>'+fmt(totalCombinado)+'</strong></div>'+
+  '</div>'+
+  '<div class="amount-letter">'+(window.mxnLetra?mxnLetra(totalCombinado):"")+'</div>'+
+  '<table class="combined-table">'+
+  '  <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>'+
+  '  <tbody>'+
+       filas.map(function(f){return"<tr><td>"+f.label+"</td><td>"+fmt(f.val)+"</td></tr>"}).join("")+
+  '    <tr><td>IVA total (sistemas + instalación)</td><td>'+fmt(ivaTotal)+'</td></tr>'+
+  '    <tr><td><strong>Total combinado</strong></td><td><strong>'+fmt(totalCombinado)+'</strong></td></tr>'+
+  '  </tbody>'+
+  '</table>';
+
     combined.appendChild(box);
     combined.hidden=false;
   }
