@@ -427,3 +427,56 @@ html.gh-open #gh-drawer.gh-drawer{transform:translate3d(0,0,0)}
    [25] Ocultar SOLO el título superior en Beneficios (si aplica)
 ========================================================= */
 #beneficios .grid-2>div:first-child>h2.title-gradient{display:none!important}
+
+/* =========================================================
+   EXPIRITI — FIX: quitar “bloque vacío” entre calculadoras
+   - Cuando hay 2 calcs: oculta #calc-slot-2 (ya no se usa)
+   - Muestra y centra el panel de “Agregar un tercer sistema”
+   - Cuando hay 3 calcs: oculta panel de “Agregar un tercer sistema”
+========================================================= */
+
+/* 2 calculadoras */
+html.has-calc-2 #calc-slot-2,
+body.has-calc-2 #calc-slot-2{
+  display:none!important;
+}
+
+/* En 2 calcs, el panel “Agregar un tercer sistema” debe aparecer y centrarse */
+html.has-calc-2 #add-more-panel,
+body.has-calc-2 #add-more-panel{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:stretch!important;
+  grid-column:1 / -1!important;
+  width:100%!important;
+  margin-top:14px!important;
+}
+
+/* Limita ancho “bonito” del panel en desktop */
+@media (min-width: 981px){
+  html.has-calc-2 #add-more-panel,
+  body.has-calc-2 #add-more-panel{
+    padding:0!important;           /* el padding va en .note */
+    background:transparent!important;
+    border:0!important;
+    box-shadow:none!important;
+  }
+  html.has-calc-2 #add-more-panel .note,
+  body.has-calc-2 #add-more-panel .note{
+    width:min(980px,100%)!important;
+    margin:0 auto!important;
+  }
+}
+
+/* 3 calculadoras: ya no necesitas “Agregar un tercer sistema” */
+html.has-calc-3 #add-more-panel,
+body.has-calc-3 #add-more-panel{
+  display:none!important;
+}
+
+/* Si por cualquier razón aparece, evita que “reserve” altura rara */
+#calc-slot-2:empty,
+#add-more-panel:empty{
+  display:none!important;
+}
+
