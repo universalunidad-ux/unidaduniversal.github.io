@@ -27,16 +27,20 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
     function safeHasTable(id) { var el = document.getElementById(id); return !!(el && el.querySelector && el.querySelector("table")); }
     function recomputeAll() { window.dispatchEvent(new Event("calc-recompute")); }
 
-// ======= Clase de layout para CSS (sin :has()) =======
-function setCalcCountClass() {
-  var has2 = !!(document.querySelector("#calc-secondary table"));
-  var has3 = !!(document.querySelector("#calc-tertiary table"));
 
-  // 2 calc = has2 y NO has3
-  var is2 = has2 && !has3;
-  var is3 = has3;
+    function setCalcCountClass() {
+  var has2 =
+    !!(document.querySelector("#calc-secondary table")) ||
+    !!(document.querySelector("#calc-tertiary table")); // tu caso actual
 
-  // Aplica en HTML y BODY (por si tu CSS usa cualquiera)
+  // 3 calc: si algún día agregas un cuarto contenedor real, aquí ajustas.
+  // Por ahora: tratamos "3 calc" como: secondary + tertiary (si existen ambos)
+  var hasSecondary = !!(document.querySelector("#calc-secondary table"));
+  var hasTertiary  = !!(document.querySelector("#calc-tertiary table"));
+  var is3 = hasSecondary && hasTertiary;
+
+  var is2 = has2 && !is3;
+
   [document.documentElement, document.body].forEach(function(el){
     if(!el) return;
     el.classList.toggle("has-calc-2", is2);
