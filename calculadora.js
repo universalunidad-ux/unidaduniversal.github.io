@@ -25,38 +25,41 @@ console.log("calculadora.js v13.2a cargado — centavos + subtotal incluye insta
      mxnLetra — Convierte número a letra (MXN)
      Ej: 6948.40 -> SEIS MIL NOVECIENTOS CUARENTA Y OCHO PESOS 40/100 M.N.
   ========================================================= */
-  function mxnLetra(n){
-    n=Number(n||0);
-    var enteros=Math.floor(n);
-    var centavos=Math.round((n-enteros)*100).toString().padStart(2,"0");
+function mxnLetra(n){
+  n=Number(n||0);
+  var enteros=Math.floor(n);
+  var centavos=Math.round((n-enteros)*100).toString().padStart(2,"0");
 
-    function u(n){return["","UNO","DOS","TRES","CUATRO","CINCO","SEIS","SIETE","OCHO","NUEVE"][n]}
-    function d(n){return["","DIEZ","VEINTE","TREINTA","CUARENTA","CINCUENTA","SESENTA","SETENTA","OCHENTA","NOVENTA"][n]}
-    function c(n){return["","CIENTO","DOSCIENTOS","TRESCIENTOS","CUATROCIENTOS","QUINIENTOS","SEISCIENTOS","SETECIENTOS","OCHOCIENTOS","NOVECIENTOS"][n]}
+  function u(n){return["","UNO","DOS","TRES","CUATRO","CINCO","SEIS","SIETE","OCHO","NUEVE"][n]}
+  function d(n){return["","DIEZ","VEINTE","TREINTA","CUARENTA","CINCUENTA","SESENTA","SETENTA","OCHENTA","NOVENTA"][n]}
+  function c(n){return["","CIENTO","DOSCIENTOS","TRESCIENTOS","CUATROCIENTOS","QUINIENTOS","SEISCIENTOS","SETECIENTOS","OCHOCIENTOS","NOVECIENTOS"][n]}
 
-    function seccion(n,divisor,singular,plural){
-      var cientos=Math.floor(n/divisor), resto=n-(cientos*divisor), texto="";
-      if(cientos>0)texto=(cientos===1?singular:plural);
-      if(resto>0)texto+=(texto?" ":"")+num(resto);
-      return texto;
+  function num(n){
+    if(n===0)return"CERO";
+    if(n<10)return u(n);
+    if(n<20)return["DIEZ","ONCE","DOCE","TRECE","CATORCE","QUINCE","DIECISÉIS","DIECISIETE","DIECIOCHO","DIECINUEVE"][n-10];
+    if(n<100){
+      if(n<30)return["VEINTE","VEINTIUNO","VEINTIDÓS","VEINTITRÉS","VEINTICUATRO","VEINTICINCO","VEINTISÉIS","VEINTISIETE","VEINTIOCHO","VEINTINUEVE"][n-20];
+      var dec=Math.floor(n/10), uni=n%10;
+      return d(dec)+(uni?" Y "+u(uni):"");
     }
-    function num(n){
-      if(n===0)return"CERO";
-      if(n<10)return u(n);
-      if(n<20)return["DIEZ","ONCE","DOCE","TRECE","CATORCE","QUINCE","DIECISÉIS","DIECISIETE","DIECIOCHO","DIECINUEVE"][n-10];
-      if(n<100){
-        if(n<30)return["VEINTE","VEINTIUNO","VEINTIDÓS","VEINTITRÉS","VEINTICUATRO","VEINTICINCO","VEINTISÉIS","VEINTISIETE","VEINTIOCHO","VEINTINUEVE"][n-20];
-        var dec=Math.floor(n/10), uni=n%10;
-        return d(dec)+(uni?" Y "+u(uni):"");
-      }
-      if(n===100)return"CIEN";
-      if(n<1000)return c(Math.floor(n/100))+(n%100?" "+num(n%100):"");
-      if(n<1000000)return seccion(n,1000,"MIL","MIL");
-      return seccion(n,1000000,"UN MILLÓN","MILLONES");
+    if(n===100)return"CIEN";
+    if(n<1000)return c(Math.floor(n/100))+(n%100?" "+num(n%100):"");
+    if(n<1000000){
+      var miles=Math.floor(n/1000), resto=n%1000;
+      var txt=(miles===1?"MIL":(num(miles)+" MIL"));
+      return txt+(resto?(" "+num(resto)):"");
     }
-    return num(enteros)+" PESOS "+centavos+"/100 M.N.";
+    // millones
+    var mill=Math.floor(n/1000000), restoM=n%1000000;
+    var txtM=(mill===1?"UN MILLÓN":(num(mill)+" MILLONES"));
+    return txtM+(restoM?(" "+num(restoM)):"");
   }
-  window.mxnLetra=mxnLetra; /* PATCH: exporta para usar en resumen */
+
+  return num(enteros)+" PESOS "+centavos+"/100 M.N.";
+}
+window.mxnLetra = mxnLetra;
+
 
   // ===== Parche CSS mínimo para asegurar el form (no rompe tu main.css)
   (function(){
