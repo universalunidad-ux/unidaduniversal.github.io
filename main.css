@@ -910,3 +910,9 @@ html, body{
   #combined-wrap .total-amount{ font-size:15px; }
   #combined-wrap .amount-letter{ padding:10px; font-size:13px; }
 }
+
+/* Centrar “¿Agregar un tercer sistema?” cuando hay 2 columnas (desktop) */
+@media (min-width: 981px){
+  .calc-row #calc-slot-2{grid-column:1/-1;justify-self:center}
+  .calc-row #calc-slot-2.placeholder{width:100%;max-width:620px}
+}
