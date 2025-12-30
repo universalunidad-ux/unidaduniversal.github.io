@@ -910,3 +910,28 @@ html, body{
   #combined-wrap .total-amount{ font-size:15px; }
   #combined-wrap .amount-letter{ padding:10px; font-size:13px; }
 }
+
+/* =========================================================
+   EXPIRITI — Centrar panel "Agregar un tercer sistema"
+   - Solo cuando hay 2 columnas (desktop)
+   - Mantiene tamaño (no full width)
+========================================================= */
+
+/* Desktop (2 columnas activas) */
+@media (min-width: 981px){
+
+  /* 1) El panel ocupa toda la fila (2 columnas) */
+  .calc-row #calc-slot-2{
+    grid-column: 1 / -1;
+    justify-self: center;     /* centra el bloque dentro de la fila */
+    align-self: start;
+  }
+
+  /* 2) Mantener "misma dimensión" (no se estira) */
+  .calc-row #calc-slot-2.placeholder{
+    width: 100%;
+    max-width: 620px;         /* ajusta 560–700 según tu gusto */
+  }
+}
+
+/* Tablet/Móvil ya es 1 columna => no necesitas nada extra */
