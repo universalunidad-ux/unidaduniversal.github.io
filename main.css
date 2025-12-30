@@ -818,3 +818,34 @@ html, body{
   }
 }
 
+/* ===== CALC v13.2 — importes alineados + MXN/letra bonito ===== */
+.calc-container .calc-table th:last-child,
+.calc-container .calc-table td:last-child,
+.combined-table th:last-child,
+.combined-table td:last-child{
+  text-align:right!important;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
+}
+
+/* Bloque resumen MXN + letra */
+.combined-summary .cs-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-end;
+  flex-wrap:wrap;
+}
+.combined-summary .total-amount{font-weight:900;font-size:18px}
+.combined-summary .amount-letter{
+  margin-top:8px;
+  padding:10px 12px;
+  border:1px dashed rgba(148,163,184,.35);
+  background:rgba(17,23,35,.45);
+  border-radius:12px;
+  color:#cfe3ff;
+  line-height:1.25;
+}
+
+
