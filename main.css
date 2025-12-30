@@ -1045,3 +1045,30 @@ body > .arrowCircle{display:none!important}
 }
 
 /* Mobile: sigue apilado (no tocar) */
+
+/* =========================================================
+   EXPIRITI — 2 CALCS: “Agregar 3er sistema” CENTRADO real
+   (cuando <html class="has-calc-2">)
+========================================================= */
+
+@media (min-width: 981px){
+
+  /* La fila del panel ocupa 2 columnas pero el “card” se centra */
+  html.has-calc-2 #calc-slot-2{
+    grid-column: 1 / -1 !important;
+    display: flex !important;              /* clave: centrar contenido interno */
+    justify-content: center !important;
+    align-items: stretch;
+    margin-top: 10px;
+  }
+
+  /* El card/placeholder NO debe ser 100% ancho, sino centrado */
+  html.has-calc-2 #calc-slot-2.placeholder,
+  html.has-calc-2 #calc-slot-2 > .placeholder{
+    width: min(760px, 100%) !important;    /* ajusta 760 si quieres más/menos */
+    max-width: 760px !important;
+    margin: 0 auto !important;
+    justify-self: center !important;
+  }
+}
+
