@@ -713,3 +713,108 @@ html, body{
   overflow-x:hidden;
 }
 
+/* =========================================================
+   EXPIRITI — CALCULADORA FIX CSS
+   - Importes alineados a la derecha
+   - Números “parejitos” (tabular nums)
+   - Total más visible (bold real)
+   - Bloque inferior (Resumen combinado → MXN + número/letra)
+========================================================= */
+
+/* ===== 1) TABLA CALCULADORA: alinear importes ===== */
+.calc-container .calc-table th:last-child,
+.calc-container .calc-table td:last-child{
+  text-align:right!important;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
+}
+
+/* Total más fuerte visualmente */
+.calc-container .calc-table td:last-child strong{
+  font-weight:900;
+}
+
+/* ===== 2) RESUMEN COMBINADO → LOOK DE “LEYENDA MXN” ===== */
+.combined-summary{
+  background:linear-gradient(180deg,#0e1826,#0f1622);
+  border:1px solid #1c2533;
+  border-radius:16px;
+  padding:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+/* Título */
+.combined-summary h4{
+  margin:0 0 8px;
+  font-weight:800;
+}
+
+/* Texto secundario (MXN / número y letra) */
+.combined-summary .hint{
+  font-size:12px;
+  color:#aebbd0;
+  opacity:.9;
+}
+
+/* Total principal (número) */
+.combined-summary .total-amount,
+.combined-summary > div > div:last-child{
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+  font-weight:900;
+}
+
+/* ===== 3) BLOQUE “IMPORTE EN LETRA” ===== */
+.combined-summary .amount-letter{
+  margin-top:10px;
+  padding:10px 12px;
+  border:1px dashed rgba(148,163,184,.35);
+  border-radius:12px;
+  background:rgba(14,23,36,.35);
+  font-weight:700;
+  line-height:1.35;
+}
+
+/* ===== 4) TABLA DENTRO DEL RESUMEN COMBINADO ===== */
+.combined-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  margin-top:10px;
+  border:1px solid #1e2b3c;
+  border-radius:12px;
+  overflow:hidden;
+  background:#0e1724;
+}
+
+.combined-table th,
+.combined-table td{
+  padding:10px 12px;
+  border-bottom:1px solid #1e2b3c;
+}
+
+.combined-table th:last-child,
+.combined-table td:last-child{
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+
+.combined-table tr:last-child td{
+  border-bottom:none;
+}
+
+.combined-table strong{
+  font-weight:900;
+}
+
+/* ===== 5) MOBILE POLISH ===== */
+@media(max-width:768px){
+  .combined-summary{
+    padding:12px;
+  }
+  .combined-summary > div{
+    gap:8px;
+  }
+}
+
