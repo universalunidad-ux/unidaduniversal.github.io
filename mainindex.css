@@ -571,3 +571,80 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .carousel[id^="carouselReels"] .carousel-slide{
   padding:6px 10px !important; /* antes 8px/10px */
 }
+
+/* =========================================================
+   FIX HERO (mobile + desktop): evita “aplastado”
+   - Card derecho con ALTO REAL del fold
+   - Carrusel se estira (flex) y track ocupa 100%
+   - Imagen sin aspect-ratio forzado (no cuadrado)
+========================================================= */
+
+/* Fold real (ya lo tienes) + pequeño ajuste de “aire” */
+:root{
+  --fold-h:calc(100svh - var(--gh-height,68px) - var(--safe-top,0px));
+  --hero-card-gap:14px; /* aire interno global */
+}
+
+/* HERO siempre a fold (en mobile y desktop) */
+.hero.section-full{padding:0!important}
+.hero{min-height:var(--fold-h)!important;display:flex!important;align-items:center!important;padding:0!important}
+.hero .container{width:100%;padding-top:14px!important;padding-bottom:14px!important}
+
+/* Card derecho: alto real en TODOS los tamaños */
+.hero-gallery-card{
+  height:calc(var(--fold-h) - var(--hero-card-gap)) !important;
+  max-height:none !important;
+  min-height:520px !important; /* evita que se colapse en móviles altos */
+  display:flex !important;
+  flex-direction:column !important;
+  overflow:hidden !important;
+}
+
+/* Carrusel del hero se estira */
+.hero-gallery-card .hero-carousel{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+}
+
+/* Track y slides ocupan alto total */
+.hero-gallery-card .carousel-track{
+  height:100% !important;
+  min-height:0 !important;
+  align-items:center !important;
+}
+.hero-gallery-card .carousel-slide{
+  height:100% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+/* Imagen: NO cuadrada, NO recorte, NO aplastado */
+.hero-slide img{
+  width:100% !important;
+  height:100% !important;
+  aspect-ratio:auto !important; /* mata tu base 1/1 */
+  object-fit:contain !important;
+  object-position:center !important;
+}
+
+/* En mobile: reduce un poco el mínimo para evitar overflow */
+@media(max-width:520px){
+  .hero-gallery-card{min-height:480px !important}
+}
+@media(max-width:380px){
+  .hero-gallery-card{min-height:450px !important}
+}
+
+
+/* FIX REELS (mobile + desktop): menos alto para que quepan flechas/dots */
+:root{
+  --reel-h-min:200px;
+  --reel-h-mid:32svh;
+  --reel-h-max:440px;
+}
+@media(min-width:980px){
+  :root{--reel-h-mid:40vh;--reel-h-max:520px}
+}
+.carousel[id^="carouselReels"] .carousel-slide{padding:6px 10px !important}
+
