@@ -648,3 +648,45 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 }
 .carousel[id^="carouselReels"] .carousel-slide{padding:6px 10px !important}
 
+/* =========================================================
+   FIX REELS -15% SOLO en: Sistemas (#productos-con) y Servicios (#servicios)
+   - Reduce altura ~15% manteniendo 9:16
+   - No toca otros reels fuera de esas secciones
+========================================================= */
+
+/* 1) Baja “knobs” en esas secciones (afecta .reel-embed y iframes directos) */
+#productos-con, #servicios{
+  --reel-h-min:204px;   /* 240 -> 204  (-15%) */
+  --reel-h-mid:36svh;   /* 42svh -> ~36svh */
+  --reel-h-max:442px;   /* 520 -> 442  (-15%) */
+}
+
+/* 2) Desktop: si estabas subiendo mucho (52vh/640), bájalo también ~15% */
+@media(min-width:980px){
+  #productos-con, #servicios{
+    --reel-w:410px;      /* opcional (ligero) */
+    --reel-h-mid:44vh;   /* 52vh -> 44vh */
+    --reel-h-max:544px;  /* 640 -> 544 */
+  }
+}
+
+/* 3) Quita “aire” extra del slide para que NO se vea más alto de lo necesario */
+#productos-con .carousel[id^="carouselReels"] .carousel-slide,
+#servicios     .carousel[id^="carouselReels"] .carousel-slide{
+  padding:6px 10px !important; /* reduce padding vertical */
+}
+
+/* 4) Asegura que el wrapper use esos valores sí o sí */
+#productos-con .reel-embed,
+#servicios     .reel-embed{
+  min-height:clamp(var(--reel-h-min), var(--reel-h-mid), var(--reel-h-max)) !important;
+}
+
+/* 5) Si en algunos reels usas iframe directo (sin .reel-embed), igual aplica */
+#productos-con .carousel[id^="carouselReels"] .carousel-slide>iframe,
+#servicios     .carousel[id^="carouselReels"] .carousel-slide>iframe{
+  width:min(var(--reel-w),100%) !important;
+  height:auto !important;
+  max-height:var(--reel-h-max) !important;
+}
+
