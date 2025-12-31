@@ -411,3 +411,187 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 #faq{padding-bottom:28px}
 #contacto{padding-top:28px}
 @media(min-width:981px){#faq{padding-bottom:34px}#contacto{padding-top:34px}}
+
+/* =========================================================
+   PATCH v2025.12.31 — REELS FIT + TABS EXACTOS A TU HTML
+   - Sistemas: reel no empuja cards (desktop/mobile)
+   - Servicios: tabs 3 columnas (responsive) + en XS baja a 2
+   - Servicios: en mobile muestra solo 3 tabs (como pediste)
+   - Tabs: logos grandes estilo HERO + menos aire arriba
+========================================================= */
+
+/* ========== A) Recorte aire arriba en reels (Sistemas/Servicios) ========== */
+#productos-con .reels-home-card .body,
+#servicios .reels-home-card .body{padding:12px!important}
+#productos-con .reels-home-card .title-gradient,
+#servicios .reels-home-card .title-gradient{margin:0 0 4px!important}
+#productos-con .reels-home-card .hint,
+#servicios .reels-home-card .hint{margin:0 0 6px!important}
+#productos-con .reels-home-card .reel-title,
+#servicios .reels-home-card .reel-title{
+  margin:0 0 6px!important;min-height:18px!important;line-height:1.15!important;
+  font-weight:900;letter-spacing:.1px;color:rgba(232,238,246,.96)
+}
+
+/* ========== B) Reel “fit” por viewport (evita scroll vertical por reel) ========== */
+/* Ajusta knobs globales si no los tienes */
+:root{
+  --reel-w:380px;
+  --reel-h-min:220px;
+  --reel-h-mid:40svh; /* clave: usa svh en mobile */
+  --reel-h-max:520px;
+}
+
+/* Aplica a iframes directos en slides (tu caso) */
+.carousel[id^="carouselReels-"] .carousel-slide>iframe{
+  width:min(var(--reel-w),100%)!important;
+  height:auto!important;
+  aspect-ratio:9/16!important;
+  border-radius:14px!important;
+  overflow:hidden!important;
+  background:#050812!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  display:block!important
+}
+
+/* Importante: el slide NO debe estirar la altura infinita */
+.carousel[id^="carouselReels-"] .carousel-slide{
+  align-items:center!important;justify-content:center!important
+}
+
+/* Limita el “alto visual” del contenedor del reel con clamp() */
+.carousel[id^="carouselReels-"] .carousel-track{
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important
+}
+.carousel[id^="carouselReels-"] .carousel-slide{
+  padding:10px 10px 8px!important
+}
+
+/* En desktop deja crecer un poco más */
+@media(min-width:980px){
+  :root{--reel-w:420px;--reel-h-mid:52vh;--reel-h-max:640px}
+}
+
+/* XS (iPhone SE / Android chico): baja el target del reel */
+@media(max-width:380px){
+  :root{--reel-w:340px;--reel-h-mid:34svh;--reel-h-max:420px}
+}
+
+/* ========== C) Tabs reels (todos): estilo HERO (logo grande, sin “cuadro vacío”) ========== */
+#productos-con .reel-sys-tabs,
+#servicios .reel-sys-tabs{
+  display:grid!important;
+  gap:12px!important;
+  padding:12px 12px 14px!important;
+  margin-top:12px!important;
+  overflow:visible!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  max-width:100%!important
+}
+
+/* Default: 2 columnas (tus panels contable/comercial/nube/productividad) */
+#productos-con .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+
+/* Botón tab tipo “tile” */
+#productos-con .reel-tab,
+#servicios .reel-tab{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  min-height:86px!important;
+  padding:14px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.085)!important;
+  background:rgba(255,255,255,.02)!important;
+  box-shadow:none!important;
+  cursor:pointer!important
+}
+#productos-con .reel-tab.active,
+#servicios .reel-tab.active{
+  border-color:rgba(96,165,250,.45)!important;
+  background:rgba(96,165,250,.10)!important
+}
+
+/* Imagen del tab: grande y “logo”, no mini-icono */
+#productos-con .reel-tab img,
+#servicios .reel-tab img{
+  width:auto!important;
+  height:52px!important;
+  max-width:180px!important;
+  object-fit:contain!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  display:block!important;
+  margin:0 auto!important
+}
+
+/* Texto bajo imagen (solo donde existe <span>) */
+#servicios .reel-tab span{
+  margin-top:8px!important;
+  font-size:.86rem!important;
+  font-weight:900!important;
+  color:rgba(232,238,246,.94)!important;
+  line-height:1.1!important
+}
+
+/* ========== D) SERVICIOS: 3 columnas (responsive) ========== */
+/* Ojo: en Servicios tus tabs están dentro de #servicios, no en #productos-con */
+#servicios .reels-home-card .reel-sys-tabs{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  padding:10px 8px 12px!important;
+  gap:10px!important
+}
+#servicios .reels-home-card .reel-tab{
+  min-height:78px!important;
+  padding:12px 10px!important;
+  border-radius:14px!important;
+  background:rgba(255,255,255,.015)!important;
+  border:1px solid rgba(255,255,255,.07)!important
+}
+#servicios .reels-home-card .reel-tab img{
+  height:46px!important;
+  max-width:160px!important
+}
+/* Si el texto es largo, clamp a 2 líneas */
+#servicios .reels-home-card .reel-tab span{
+  display:-webkit-box!important;
+  -webkit-line-clamp:2!important;
+  -webkit-box-orient:vertical!important;
+  overflow:hidden!important;
+  max-width:100%!important
+}
+
+/* XS: en pantallas muy chicas, Servicios baja a 2 columnas para que no se amontone */
+@media(max-width:380px){
+  #servicios .reels-home-card .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #servicios .reels-home-card .reel-tab{min-height:82px!important;padding:12px!important}
+  #servicios .reels-home-card .reel-tab img{height:44px!important;max-width:150px!important}
+}
+
+/* ========== E) MOBILE: “mostrar hasta 3 primeros iconos” (Servicios) ========== */
+/* Esto cumple tu petición de img4: muestra 3 tabs al inicio sin mover HTML */
+@media(max-width:720px){
+  #servicios .reels-home-card .reel-sys-tabs .reel-tab{display:none!important}
+  #servicios .reels-home-card .reel-sys-tabs .reel-tab:nth-child(-n+3){display:flex!important}
+  /* Mantén 3 columnas solo si caben; en 360-380px ya cae a 2 por regla XS */
+  #servicios .reels-home-card .reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+
+/* ========== F) SISTEMAS: asegurar que cards + reel se alineen y no desborden ========== */
+#productos-con .grid-2.section-cq{align-items:center!important}
+#productos-con .cards.cards-products{align-content:start}
+#productos-con .reels-home-card{min-height:0}
+#productos-con .reels-home-card .carousel{max-width:100%}
+
+/* ========== G) Flechas: en mobile off, desktop on SOLO en HERO (como ya manejas) ========== */
+@media(max-width:980px){
+  .carousel[id^="carouselReels-"] .arrowCircle{display:none!important}
+}
+
