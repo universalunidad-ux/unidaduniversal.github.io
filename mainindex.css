@@ -426,51 +426,106 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 /* ===== [24] Oculta título dinámico reel SOLO en servicios (si existe) ===== */
 #reelTitle-servicios{display:none!important}
 
-
 /* =========================================================
-   PATCH — HERO dots debajo (mobile)
-   - Dots NO encima del banner
-   - Barra más transparente
-   - Ancho se ajusta a # de dots
+   PATCH FINAL — HERO (img + dots) + REELS -15%
+   - HERO: NO deformar imágenes (usa cover real)
+   - HERO: dots abajo del banner (mobile + desktop)
+   - Barra dots: más transparente + ancho fit-content
+   - REELS: -15% altura proporcional (Servicios + Sistemas)
 ========================================================= */
-@media (max-width: 980px){
 
-  /* El carrusel del HERO no debe recortar la barra de dots */
-  #heroGalleryCarousel.carousel{overflow:visible!important;}
+/* =========================
+   [A] HERO: layout en columna (track arriba, dots abajo)
+   ========================= */
+#heroGalleryCarousel.carousel{
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important; /* mantiene recorte del banner */
+}
 
-  /* La navegación deja de ser "absolute" y se vuelve bloque debajo */
-  #heroGalleryCarousel .carousel-nav{
-    position:static!important;
-    left:auto!important; right:auto!important; bottom:auto!important;
+/* Track ocupa el alto disponible */
+#heroGalleryCarousel .carousel-track{
+  flex:1 1 auto!important;
+  height:100%!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
 
-    /* ancho según contenido (dots) */
-    width:fit-content!important;
-    max-width:calc(100% - 24px);
-    margin:10px auto 0!important;
+/* Slides a alto completo (sin estirar) */
+#heroGalleryCarousel .carousel-slide{
+  height:100%!important;
+  display:flex!important;
+  align-items:stretch!important;
+  justify-content:stretch!important;
+}
 
-    /* estilo de barra (más transparente) */
-    padding:6px 10px!important;
-    gap:8px!important;
-    border-radius:999px!important;
-    background:rgba(7,10,18,.28)!important;       /* más transparente */
-    border:1px solid rgba(255,255,255,.10)!important;
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
+/* Imagen: llena el área sin deformar (corta si hace falta) */
+#heroGalleryCarousel .hero-slide img,
+#heroGalleryCarousel .carousel-slide img{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:cover!important;           /* si quieres TODO visible: cambia a contain */
+  object-position:center!important;
+  transform:none!important;
+}
 
-    /* importante: en tu base tenías pointer-events:none */
-    pointer-events:auto!important;
+/* =========================
+   [B] HERO: dots ABAJO (SIEMPRE) + barra más ligera + fit al contenido
+   ========================= */
+#heroGalleryCarousel .carousel-nav{
+  position:static!important;             /* deja de ir encima del banner */
+  left:auto!important; right:auto!important; bottom:auto!important;
 
-    /* que no se estire a todo el ancho */
-    justify-content:center!important;
-  }
+  width:fit-content!important;           /* se adapta al # de dots */
+  max-width:calc(100% - 24px)!important;
+  margin:10px auto 12px!important;
 
-  /* Dots un poco más compactos en mobile */
+  padding:6px 10px!important;
+  gap:8px!important;
+  border-radius:999px!important;
+
+  background:rgba(7,10,18,.24)!important; /* MÁS transparente */
+  border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+
+  pointer-events:auto!important;         /* importante si tu base tenía none */
+  justify-content:center!important;
+}
+
+/* Dots: un poco más compactos y consistentes */
+#heroGalleryCarousel .carousel-nav .dot{
+  width:12px!important;
+  height:12px!important;
+  border-radius:999px!important;
+}
+
+/* Desktop: dots ligeramente más pequeños (opcional) */
+@media (min-width:981px){
   #heroGalleryCarousel .carousel-nav .dot{
-    width:12px!important;
-    height:12px!important;
+    width:11px!important;
+    height:11px!important;
   }
 }
-/* -15% real por proporción (9/16) */
-:root{ --reel-w:323px; } /* 380 * 0.85 = 323 */
-@media(min-width:980px){ :root{ --reel-w:357px; } } /* 420 * 0.85 = 357 (si en desktop usas 420) */
 
+/* =========================
+   [C] REELS -15% altura REAL (Servicios + Sistemas) proporcional
+   - Afecta a .reel-embed (tu wrapper 9:16) sin romper clamp/svh
+   ========================= */
+:root{ --reel-scale:.85; } /* -15% */
+
+/* Reduce altura clamp (min/mid/max) para todos los dispositivos */
+.reel-embed{
+  min-height:clamp(
+    calc(var(--reel-h-min) * var(--reel-scale)),
+    calc(var(--reel-h-mid) * var(--reel-scale)),
+    calc(var(--reel-h-max) * var(--reel-scale))
+  )!important;
+}
+
+/* (Opcional pero recomendado) Mantén el 9:16 más “cerrado” sin afectar layout:
+   reducimos también el ancho objetivo (se ve más compacto, y baja altura en consecuencia) */
+:root{ --reel-w:calc(380px * var(--reel-scale)); }
+@media(min-width:980px){ :root{ --reel-w:calc(420px * var(--reel-scale)); } }
+@media(max-width:380px){ :root{ --reel-w:calc(340px * var(--reel-scale)); } }
