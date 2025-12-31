@@ -425,3 +425,52 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 
 /* ===== [24] Oculta título dinámico reel SOLO en servicios (si existe) ===== */
 #reelTitle-servicios{display:none!important}
+
+
+/* =========================================================
+   PATCH — HERO dots debajo (mobile)
+   - Dots NO encima del banner
+   - Barra más transparente
+   - Ancho se ajusta a # de dots
+========================================================= */
+@media (max-width: 980px){
+
+  /* El carrusel del HERO no debe recortar la barra de dots */
+  #heroGalleryCarousel.carousel{overflow:visible!important;}
+
+  /* La navegación deja de ser "absolute" y se vuelve bloque debajo */
+  #heroGalleryCarousel .carousel-nav{
+    position:static!important;
+    left:auto!important; right:auto!important; bottom:auto!important;
+
+    /* ancho según contenido (dots) */
+    width:fit-content!important;
+    max-width:calc(100% - 24px);
+    margin:10px auto 0!important;
+
+    /* estilo de barra (más transparente) */
+    padding:6px 10px!important;
+    gap:8px!important;
+    border-radius:999px!important;
+    background:rgba(7,10,18,.28)!important;       /* más transparente */
+    border:1px solid rgba(255,255,255,.10)!important;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+
+    /* importante: en tu base tenías pointer-events:none */
+    pointer-events:auto!important;
+
+    /* que no se estire a todo el ancho */
+    justify-content:center!important;
+  }
+
+  /* Dots un poco más compactos en mobile */
+  #heroGalleryCarousel .carousel-nav .dot{
+    width:12px!important;
+    height:12px!important;
+  }
+}
+/* -15% real por proporción (9/16) */
+:root{ --reel-w:323px; } /* 380 * 0.85 = 323 */
+@media(min-width:980px){ :root{ --reel-w:357px; } } /* 420 * 0.85 = 357 (si en desktop usas 420) */
+
