@@ -152,6 +152,7 @@ function initTabsProductos(){
     tabs.forEach(t=>t.classList.toggle("active",t===btn));
     panels.forEach(p=>p.classList.toggle("hidden",p.id!==targetId));
     scrollTabIntoView(btn,behavior)
+     window.dispatchEvent(new Event("splitbg:update"));
   }
   tabs.forEach(btn=>{if(btn.dataset.bound==="1")return;btn.dataset.bound="1";on(btn,"click",()=>activar(btn,"smooth"))});
   const tabInicial=document.getElementById("tab-contable");
@@ -540,6 +541,8 @@ function initReelsTabs(){
       const reels0=cfg?.reelsBySys?.[sysKey]||[];
       cfg?.carousel?.querySelector(".carousel-track")?.scrollTo({left:0,behavior:"auto"});
       setSingleLineReelTitle(cfg,reels0[0]?.title||"")
+       window.dispatchEvent(new Event("splitbg:update"));
+
     })
   })
 }
@@ -649,46 +652,10 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
 })();
 
 
-(function(){
-  "use strict";
-
-  function setBgSplit(){
-    const hero =
-      document.querySelector('#hero-gallery') ||
-      document.querySelector('#hero') ||
-      document.querySelector('.hero-gallery') ||
-      document.querySelector('.hero');
-
-    if(!hero) return;
-
-    // Altura real del hero dentro del documento
-    const split = hero.offsetTop + hero.offsetHeight;
-
-    // Set CSS var en :root
-    document.documentElement.style.setProperty('--bg-split', split + 'px');
-  }
-
-  // Corre cuando ya renderizó layout
-  window.addEventListener('load', setBgSplit, { once:true });
-
-  // Recalcula en resize/orientación
-  window.addEventListener('resize', () => {
-    window.requestAnimationFrame(setBgSplit);
-  });
-
-  // Si tus imágenes/iframes cambian la altura después, recalcula 1 vez extra
-  setTimeout(setBgSplit, 250);
-  setTimeout(setBgSplit, 1000);
-})();
-
- /* =========================================================
-   SPLIT BG — calcula cortes reales por secciones
-   - split-sistemas: inicio #productos-con
-   - split-sectores-end: fin #sectores
-   - split-servicios-end: fin #servicios
-   - split-promos: inicio #promociones
-========================================================= */
 (() => {
+  if (window.__EXPIRITI_SPLITBG__) return;
+  window.__EXPIRITI_SPLITBG__ = true;
+
   const D = document;
   const root = D.documentElement;
 
@@ -707,7 +674,6 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
   };
 
   const getHeaderOffset = () => {
-    // usa tu token si existe
     const gh = getComputedStyle(root).getPropertyValue("--gh-height").trim();
     const n = parseFloat(gh || "0");
     return Number.isFinite(n) ? n : 0;
@@ -716,21 +682,16 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
   const setSplits = () => {
     const headerOffset = getHeaderOffset();
 
-    const sistemas = D.getElementById("productos-con");
-    const sectores = D.getElementById("sectores");
+    const sistemas  = D.getElementById("productos-con");
+    const sectores  = D.getElementById("sectores");
     const servicios = D.getElementById("servicios");
-    const promos = D.getElementById("promociones");
+    const promos    = D.getElementById("promociones");
 
-    // 1) Antes de iniciar Sistemas (inicio de #productos-con)
     const s1 = getTop(sistemas);
-    // 2) Fin de Sectores
     const s2 = getBottom(sectores);
-    // 3) Fin de Servicios (incluye reels de servicios, porque viven dentro de #servicios)
     const s3 = getBottom(servicios);
-    // 4) Inicio de Promos
     const s4 = getTop(promos);
 
-    // Ajuste: restar header para que el corte “visualmente” caiga donde inicia el bloque
     if (s1 != null) root.style.setProperty("--split-sistemas", px(s1 - headerOffset));
     if (s2 != null) root.style.setProperty("--split-sectores-end", px(s2 - headerOffset));
     if (s3 != null) root.style.setProperty("--split-servicios-end", px(s3 - headerOffset));
@@ -739,15 +700,16 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
 
   const rafSet = () => requestAnimationFrame(setSplits);
 
-  // Boot
   if (D.readyState === "loading") D.addEventListener("DOMContentLoaded", rafSet, { once: true });
   else rafSet();
 
-  // Recalcular cuando cambian alturas reales (fuentes, imágenes, carruseles)
   window.addEventListener("load", rafSet, { once: true });
   window.addEventListener("resize", rafSet);
+  window.addEventListener("orientationchange", rafSet);
 
-  // Si tus carruseles cambian de alto al switchear tabs, llama esto:
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(rafSet).catch(()=>{});
+  }
+
   window.addEventListener("splitbg:update", rafSet);
 })();
-
