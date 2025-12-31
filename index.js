@@ -250,7 +250,10 @@ function buildHeroGallerySlides(groupKey,sysKey){
     else img.loading="lazy";
 
     slide.appendChild(img);
-    fragTrack.appendChild(slide);
+// === HERO SLIDE: BLUR-FILL (usa el src final ya prefijado) ===
+slide.classList.add("blur-fill");
+slide.style.setProperty("--blur-src", `url("${img.src}")`);
+fragTrack.appendChild(slide);
 
     const dot=document.createElement("button");
     dot.type="button";
@@ -390,7 +393,15 @@ function renderReelThumb(wrap){
   const btn=wrap.querySelector(".yt-thumb");
   btn&&btn.dataset.bound!=="1"&&(btn.dataset.bound="1",on(btn,"click",()=>{stopAllReels();renderReelIframe(wrap)}))
 }
-function renderReelIframe(wrap){const id=wrap.dataset.ytid,title=wrap.dataset.title||"";wrap.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1" title="${title}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`}
+function renderReelIframe(wrap){
+  const id=wrap.dataset.ytid,title=wrap.dataset.title||"";
+  // blindaje
+  wrap.classList.add("blur-fill");
+  if(!wrap.style.getPropertyValue("--blur-src")){
+    wrap.style.setProperty("--blur-src", `url("https://i.ytimg.com/vi/${id}/hqdefault.jpg")`);
+  }
+  wrap.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1" title="${title}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+}
 function stopAllReels(){
   document.querySelectorAll(".reel-embed").forEach(w=>{w.querySelector("iframe")&&renderReelThumb(w)});
   document.querySelectorAll(".yt-lite").forEach(node=>{
@@ -416,11 +427,18 @@ function buildReelsSlides(panelKey,sysKey){
   reels.forEach((reel,idx)=>{
     const slide=document.createElement("div");
     slide.className="carousel-slide"+(idx===0?" is-active":"");
-    const wrap=document.createElement("div");
-    wrap.className="reel-embed";
-    wrap.dataset.ytid=reel.id;
-    wrap.dataset.title=reel.title;
-    renderReelThumb(wrap);
+const wrap=document.createElement("div");
+wrap.className="reel-embed blur-fill";
+wrap.dataset.ytid=reel.id;
+wrap.dataset.title=reel.title || "";
+
+// ✅ thumb url para blur (maxres puede fallar; tu <img> ya hace fallback)
+// Para el blur conviene usar hqdefault que siempre existe
+const thumbUrl = `https://i.ytimg.com/vi/${reel.id}/hqdefault.jpg`;
+wrap.style.setProperty("--blur-src", `url("${thumbUrl}")`);
+
+renderReelThumb(wrap);
+
     slide.appendChild(wrap);
     track.appendChild(slide);
 
