@@ -817,5 +817,70 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   background:transparent !important;
 }
 
+/* =========================================================
+   PATCH v2025.12.31c — REELS: tamaño REAL + menos aire
+   - Baja reels en #productos-con y #servicios
+   - Reduce padding/márgenes arriba del bloque de reels
+========================================================= */
+
+/* 1) REELS más chicos por ANCHO (9/16 => baja alto automáticamente) */
+#productos-con, #servicios{
+  --reel-w:300px !important;   /* antes ~380 */
+}
+
+/* Desktop: un poco más grande, pero aún reducido */
+@media(min-width:980px){
+  #productos-con, #servicios{
+    --reel-w:335px !important; /* antes 420/410/380 */
+  }
+}
+
+/* Asegura que el iframe/directo use el ancho nuevo sí o sí */
+#productos-con .carousel[id^="carouselReels"] .carousel-slide > iframe,
+#servicios     .carousel[id^="carouselReels"] .carousel-slide > iframe{
+  width:min(var(--reel-w),100%) !important;
+}
+
+/* Asegura que .reel-embed use el ancho nuevo sí o sí */
+#productos-con .reel-embed,
+#servicios     .reel-embed{
+  width:min(var(--reel-w),100%) !important;
+  min-height:unset !important; /* para que NO “empuje” por clamp viejo */
+}
+
+/* 2) MENOS “AIRE” arriba/abajo del bloque de reels (lo que muestras en tu img1) */
+#productos-con .reels-home-card .body,
+#servicios     .reels-home-card .body{
+  padding-top:8px !important;
+  padding-bottom:10px !important;
+}
+
+#productos-con .reels-home-card .title-gradient,
+#servicios     .reels-home-card .title-gradient{
+  margin:0 0 2px !important;
+}
+
+#productos-con .reels-home-card .hint,
+#servicios     .reels-home-card .hint{
+  margin:0 0 4px !important;
+}
+
+#productos-con .reels-home-card .reel-title,
+#servicios     .reels-home-card .reel-title{
+  margin:0 0 4px !important;
+}
+
+/* 3) Quita padding extra del slide (ese “aire” dentro del carrusel) */
+#productos-con .carousel[id^="carouselReels"] .carousel-slide,
+#servicios     .carousel[id^="carouselReels"] .carousel-slide{
+  padding:4px 8px !important;
+}
+
+/* 4) Tabs reels: menos espacio arriba */
+#productos-con .reels-home-card .reel-sys-tabs,
+#servicios     .reels-home-card .reel-sys-tabs{
+  margin-top:8px !important;
+  padding-top:10px !important;
+}
 
 
