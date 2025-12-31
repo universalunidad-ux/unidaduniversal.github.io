@@ -733,4 +733,89 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   padding:6px 10px !important;
 }
 
+/* =========================================================
+   PATCH v2025.12.31b — REELS -15% EXTRA (Sistemas + Servicios)
+   - Baja otro ~15% solo en #productos-con y #servicios
+========================================================= */
+#productos-con, #servicios{
+  --reel-h-min:173px;   /* 204 -> 173  (-15%) */
+  --reel-h-mid:31svh;   /* 36svh -> 31svh (-~14%) */
+  --reel-h-max:376px;   /* 442 -> 376 (-15%) */
+}
+
+/* Desktop: baja también (si usas override grande en desktop) */
+@media(min-width:980px){
+  #productos-con, #servicios{
+    --reel-h-mid:38vh;  /* 44vh -> 38vh */
+    --reel-h-max:462px; /* 544 -> 462 */
+  }
+}
+
+/* Reduce aire extra del slide en esas secciones */
+#productos-con .carousel[id^="carouselReels"] .carousel-slide,
+#servicios     .carousel[id^="carouselReels"] .carousel-slide{
+  padding:4px 10px !important;
+}
+
+/* =========================================================
+   PATCH v2025.12.31b — BLUR FILL (quita franjas negras)
+   - Aplica a slides con IMG y a .reel-embed usando thumb como fuente
+========================================================= */
+
+/* Contenedor genérico para blur-fill vía variable: --blur-src */
+.blur-fill{
+  position:relative;
+  overflow:hidden;
+  border-radius:inherit;
+  background:#050812; /* fallback */
+}
+
+/* Fondo blur */
+.blur-fill::before{
+  content:"";
+  position:absolute;
+  inset:-18px;
+  background-image:var(--blur-src);
+  background-size:cover;
+  background-position:center;
+  filter:blur(18px) saturate(1.05);
+  transform:scale(1.08);
+  opacity:.92;
+  z-index:0;
+}
+
+/* Capa oscura ligera encima para que se vea “premium” */
+.blur-fill::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.35));
+  z-index:0;
+}
+
+/* El contenido real arriba */
+.blur-fill > img,
+.blur-fill > iframe,
+.blur-fill .yt-thumb,
+.blur-fill .yt-thumb img{
+  position:relative;
+  z-index:1;
+}
+
+/* IMPORTANTE: imágenes del carrusel que quieres en “contain” */
+.blur-fill > img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+  background:transparent !important;
+}
+
+/* Reels: el wrapper ya es 9:16; dejamos “contain” visual y blur detrás */
+.reel-embed.blur-fill iframe{
+  background:transparent !important;
+}
+
+
 
