@@ -250,10 +250,9 @@ function buildHeroGallerySlides(groupKey,sysKey){
     else img.loading="lazy";
 
     slide.appendChild(img);
-// === HERO SLIDE: BLUR-FILL (usa el src final ya prefijado) ===
-slide.classList.add("blur-fill");
-slide.style.setProperty("--blur-src", `url("${img.src}")`);
+// HERO sin blur (imagen completa)
 fragTrack.appendChild(slide);
+
 
     const dot=document.createElement("button");
     dot.type="button";
