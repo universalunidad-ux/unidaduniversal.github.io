@@ -5,7 +5,7 @@
    - Wheel patch SOLO si overflow horizontal
    - Listeners “bound” (evita duplicados)
    - HERO Gallery: grupos + tabs + dots + arrows + scroll sync
-   - REELS: título 1-línea + flechas off si 1 + scroll sync
+   - REELS: título 1-línea + flechas off si 1 + scroll sync 
    - FIX PERF/CLS: cache offsets + lock altura CORRECTO (bloquea .carousel, no solo track)
    - Servicios: pager (mobile) + dots (re-init safe + N páginas)
    - Promos: filtro (hidden-only)
