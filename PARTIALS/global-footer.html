@@ -73,6 +73,33 @@
 .gf-logo-card{min-height:96px;padding:8px 12px}  /* antes 82px / 6px 10px */
 .gf-logo-card img{height:62px}                    /* antes 52px */
 
+/* =========================
+   PATCH V8.2 — Aliados más “estrecho” + Marcas más grandes
+   - Aliados: cards menos anchos (evita “margen lateral” vacío)
+   - Marcas: menos aire arriba/abajo + logos más grandes
+   - ESET: boost extra
+========================= */
+
+/* 1) ALIADOS: cards más angostos y centrados */
+.gf-allies{align-items:center} /* centramos porque ahora el card no será 100% */
+.gf-ally-card{
+  width:clamp(180px,18vw,240px); /* 👈 estrecho, responsive, sin verse mini */
+  padding:10px 12px;            /* reduce aire interno */
+  margin:0 auto;
+}
+.gf-ally-card img{height:56px}  /* logo un poco más grande */
+
+/* 2) MARCAS: quitar aire vertical + agrandar logos horizontales */
+.gf-logo-card{
+  min-height:86px;              /* menos alto = menos aire arriba/abajo */
+  padding:4px 10px;             /* menos padding vertical */
+}
+.gf-logo-card img{
+  height:64px;                  /* más grande (compensa whitespace de los .webp) */
+}
+
+/* 3) ESET: más grande todavía (suele verse chico) */
+.gf-logo-card img[data-src*="eset"]{height:72px}
 
   
 </style>
