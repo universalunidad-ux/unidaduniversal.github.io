@@ -84,7 +84,9 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
         return txtM + (restoM ? (" " + num(restoM)) : "");
       }
 
-      return num(enteros) + " PESOS " + centavos + "/100 M.N.";
+var centInt = parseInt(centavos, 10) || 0;
+if (centInt === 0) return num(enteros) + " PESOS 00/100 M.N.";
+return num(enteros) + " PESOS CON " + num(centInt) + " CENTAVOS " + centavos + "/100 M.N.";
     }
     window.mxnLetra = mxnLetra;
 
@@ -142,29 +144,31 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
 
       // 5) Instalación (opcional)
       var instWrap = document.createElement("div"); instWrap.className = "inst-wrap";
-      instWrap.innerHTML =
-        '<div class="instalacion-box"><label>' +
-        '<input type="checkbox" id="instOn' + idSuffix + '" checked>' +
-        '<span><strong>Instalación (opcional)</strong> — Servicio ofrecido por <strong>Expiriti</strong> para instalar en tu equipo tu sistema.</span>' +
-        "</label></div>";
+instWrap.innerHTML =
+  '<div class="instalacion-box"><label>' +
+  '<input type="checkbox" id="instOn' + idSuffix + '" checked>' +
+  '<span><strong id="instLblSTRONG' + idSuffix + '">Instalación (opcional)</strong> — Servicio ofrecido por <strong>Expiriti</strong> para instalar en tu equipo tu sistema.</span>' +
+  "</label></div>";
+
       form.appendChild(instWrap);
       container.appendChild(form);
 
       // Resultados
       var results = document.createElement("div"); results.className = "calc-results";
       var table = document.createElement("table"); table.className = "calc-table";
-      table.innerHTML =
-        '<thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>' +
-        "<tbody>" +
-        '  <tr id="tr-base' + idSuffix + '"><td>Precio base</td><td id="base' + idSuffix + '">$0.00</td></tr>' +
-        '  <tr id="tr-uadd' + idSuffix + '"><td>Usuarios adicionales</td><td id="uadd' + idSuffix + '">$0.00</td></tr>' +
-        '  <tr id="tr-disc' + idSuffix + '"><td>Descuento (sistemas)</td><td id="disc' + idSuffix + '">0% / $0.00</td></tr>' +
-        '  <tr id="tr-inst' + idSuffix + '"><td>Instalación (opcional)</td><td id="inst' + idSuffix + '">$0.00</td></tr>' +
-        '  <tr id="tr-instdisc' + idSuffix + '"><td>Descuento por primer servicio (instalación 50%)</td><td id="instdisc' + idSuffix + '">$0.00</td></tr>' +
-        '  <tr id="tr-sub' + idSuffix + '"><td>Subtotal (sistemas + instalación)</td><td id="sub' + idSuffix + '">$0.00</td></tr>' +
-        '  <tr id="tr-iva' + idSuffix + '"><td>IVA (16%)</td><td id="iva' + idSuffix + '">$0.00</td></tr>' +
-        '  <tr id="tr-tot' + idSuffix + '"><td><strong>Total</strong></td><td id="tot' + idSuffix + '"><strong>$0.00</strong></td></tr>' +
-        "</tbody>";
+table.innerHTML =
+  '<thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>' +
+  "<tbody>" +
+  '  <tr id="tr-base' + idSuffix + '"><td id="lbl-base' + idSuffix + '">Precio base</td><td id="base' + idSuffix + '">$0.00</td></tr>' +
+  '  <tr id="tr-uadd' + idSuffix + '"><td id="lbl-uadd' + idSuffix + '">Usuarios adicionales</td><td id="uadd' + idSuffix + '">$0.00</td></tr>' +
+  '  <tr id="tr-disc' + idSuffix + '"><td id="lbl-disc' + idSuffix + '">Descuento (sistema)</td><td id="disc' + idSuffix + '">0% / $0.00</td></tr>' +
+  '  <tr id="tr-inst' + idSuffix + '"><td id="lbl-inst' + idSuffix + '">Instalación</td><td id="inst' + idSuffix + '">$0.00</td></tr>' +
+  '  <tr id="tr-instdisc' + idSuffix + '"><td id="lbl-instdisc' + idSuffix + '">Descuento por primer servicio (instalación 50%)</td><td id="instdisc' + idSuffix + '">$0.00</td></tr>' +
+  '  <tr id="tr-sub' + idSuffix + '"><td id="lbl-sub' + idSuffix + '">Subtotal</td><td id="sub' + idSuffix + '">$0.00</td></tr>' +
+  '  <tr id="tr-iva' + idSuffix + '"><td id="lbl-iva' + idSuffix + '">IVA (16%)</td><td id="iva' + idSuffix + '">$0.00</td></tr>' +
+  '  <tr id="tr-tot' + idSuffix + '"><td id="lbl-tot' + idSuffix + '"><strong>Total</strong></td><td id="tot' + idSuffix + '"><strong>$0.00</strong></td></tr>' +
+  "</tbody>";
+
       results.appendChild(table); container.appendChild(results);
 
       // -------- Opciones dependientes --------
@@ -253,6 +257,42 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
         var instDiscount = round2(instGross * 0.5);
         var instNet = round2(instGross - instDiscount);
 
+        // ===== Labels dinámicos (sistema + instalación/es) =====
+var instOn = instCheckbox();
+var instCount = (instOn && instOn.checked) ? usuarios : 0; // si son 3 usuarios => 3 instalaciones
+
+var instWord = (instCount === 1 ? "Instalación" : "Instalaciones");
+var instLabel = instCount > 0 ? (instWord + " (" + instCount + ")") : "Instalación";
+
+var inst50Label = "Descuento por primer servicio (" + (instCount === 1 ? "instalación" : "instalaciones") + " 50%)";
+
+var subLabel = "Subtotal (sistema + " + (instCount === 1 ? "instalación" : "instalaciones") + ")";
+
+// aplica labels
+var elLblInst = document.getElementById("lbl-inst" + idSuffix);
+if (elLblInst) elLblInst.textContent = instLabel;
+
+var elLblInstDisc = document.getElementById("lbl-instdisc" + idSuffix);
+if (elLblInstDisc) elLblInstDisc.textContent = inst50Label;
+
+var elLblSub = document.getElementById("lbl-sub" + idSuffix);
+if (elLblSub) elLblSub.textContent = subLabel;
+
+// descuento: siempre singular como pediste
+var elLblDisc = document.getElementById("lbl-disc" + idSuffix);
+if (elLblDisc) elLblDisc.textContent = "Descuento (sistema)";
+        // ===== También sincroniza el texto del checkbox (form) =====
+var strong = document.getElementById("instLblSTRONG" + idSuffix);
+if (strong) {
+  if (!instOn || !instOn.checked) {
+    strong.textContent = "Instalación (opcional)";
+  } else {
+    strong.textContent = (instCount === 1 ? "Instalación" : "Instalaciones") + " (" + instCount + ")";
+  }
+}
+
+
+
         // IVA: base imponible = sistemas(desc) + instalación(neta)
         var baseImponible = round2(afterDiscount + instNet);
         var iva = round2(baseImponible * 0.16);
@@ -260,7 +300,9 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
 
         // Render
         document.getElementById("base" + idSuffix).textContent = fmt(base);
-        document.getElementById("uadd" + idSuffix).textContent = fmt(usuariosAddImporte) + (usuariosExtras > 0 ? (" (" + usuariosExtras + " extras)") : "");
+document.getElementById("uadd" + idSuffix).textContent =
+  fmt(usuariosAddImporte) +
+  (usuariosExtras > 0 ? (" (" + usuariosExtras + " " + (usuariosExtras === 1 ? "extra" : "extras") + ")") : "");
         document.getElementById("disc" + idSuffix).textContent = pct(discountPct) + " / " + fmt(discountAmt);
         document.getElementById("inst" + idSuffix).textContent = fmt(instGross);
         document.getElementById("instdisc" + idSuffix).textContent = (instGross > 0 ? ("− " + fmt(instDiscount)) : fmt(0));
@@ -271,7 +313,9 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
         // Mostrar/ocultar filas
         document.getElementById("tr-uadd" + idSuffix).style.display = (usuariosExtras > 0) ? "" : "none";
         document.getElementById("tr-disc" + idSuffix).style.display = (discountPct > 0) ? "" : "none";
-        var instOn = instCheckbox(), showInst = !!(instOn && instOn.checked);
+var showInst = !!(instOn && instOn.checked);
+document.getElementById("tr-inst" + idSuffix).style.display = showInst ? "" : "none";
+document.getElementById("tr-instdisc" + idSuffix).style.display = showInst ? "" : "none";
         document.getElementById("tr-inst" + idSuffix).style.display = showInst ? "" : "none";
         document.getElementById("tr-instdisc" + idSuffix).style.display = showInst ? "" : "none";
 
@@ -366,11 +410,24 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
       var n1 = (document.getElementById("calc-primary") && document.getElementById("calc-primary").dataset.systemName) || "Sistema 1";
       var n2 = (document.getElementById("calc-secondary") && document.getElementById("calc-secondary").dataset.systemName) || "Sistema 2";
       var n3 = (document.getElementById("calc-tertiary") && document.getElementById("calc-tertiary").dataset.systemName) || "Sistema 3";
+function instCountFor(idSuffix){
+  var chk = document.getElementById("instOn" + idSuffix);
+  if (!chk || !chk.checked) return 0;
+  var u = document.getElementById("usr" + idSuffix);
+  var n = Math.max(1, parseInt((u && u.value) || "1", 10) || 1);
+  return n;
+}
+function instLabelFor(idSuffix){
+  var n = instCountFor(idSuffix);
+  return (n === 1 ? "instalación" : "instalaciones");
+}
 
+
+      
       var filas = [], totales = [], ivaTotal = 0;
-      if (e1) { filas.push({ label: "Subtotal " + n1 + " (sistemas + instalación)", val: getNum("sub1") }); totales.push(getNum("tot1")); ivaTotal += getNum("iva1"); }
-      if (e2) { filas.push({ label: "Subtotal " + n2 + " (sistemas + instalación)", val: getNum("sub2") }); totales.push(getNum("tot2")); ivaTotal += getNum("iva2"); }
-      if (e3) { filas.push({ label: "Subtotal " + n3 + " (sistemas + instalación)", val: getNum("sub3") }); totales.push(getNum("tot3")); ivaTotal += getNum("iva3"); }
+if (e1) { filas.push({ label: "Subtotal " + n1 + " e " + instLabelFor("1"), val: getNum("sub1") }); totales.push(getNum("tot1")); ivaTotal += getNum("iva1"); }
+if (e2) { filas.push({ label: "Subtotal " + n2 + " e " + instLabelFor("2"), val: getNum("sub2") }); totales.push(getNum("tot2")); ivaTotal += getNum("iva2"); }
+if (e3) { filas.push({ label: "Subtotal " + n3 + " e " + instLabelFor("3"), val: getNum("sub3") }); totales.push(getNum("tot3")); ivaTotal += getNum("iva3"); }
 
       var totalCombinado = round2(totales.reduce(function (a, b) { return a + b; }, 0));
       ivaTotal = round2(ivaTotal);
@@ -387,8 +444,9 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
         '  <thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead>' +
         '  <tbody>' +
         filas.map(function (f) { return "<tr><td>" + f.label + "</td><td>" + fmt(f.val) + "</td></tr>"; }).join("") +
-        '    <tr><td>IVA total (sistemas + instalación)</td><td>' + fmt(ivaTotal) + '</td></tr>' +
-        '    <tr><td><strong>Total combinado</strong></td><td><strong>' + fmt(totalCombinado) + '</strong></td></tr>' +
+'    <tr><td>IVA total</td><td>' + fmt(ivaTotal) + '</td></tr>' +
+'    <tr><td><strong>Total</strong></td><td><strong>' + fmt(totalCombinado) + '</strong></td></tr>' +
+
         '  </tbody>' +
         '</table>';
 
