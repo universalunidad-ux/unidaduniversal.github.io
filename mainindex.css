@@ -1,11 +1,10 @@
 /* =========================================================
-   Expiriti - mainindex.css (FULL + CONSOLIDADO + REELS FIT)
-   - 1 :root / 1 body background (sin duplicados)
+   Expiriti - mainindex.css (FULL + CONSOLIDADO + REELS FIT) — CLEAN
+   - 1 :root / 1 body background
    - HERO + Sistemas + Reels 9:16 + Promos + FAQ + Contacto
-   - Reels: Servicios=3 cols (mobile+desktop) | demás=2 cols (mobile+desktop)
-   - Reels: menos aire arriba + iconos “tipo HERO” (logo grande)
-   - Fit: reel usa svh/dvh + clamp para no empujar iconos
-   - PageSpeed: content-visibility/contain donde aplica, sin :has()
+   - Reels: Servicios=3 cols (mobile+desktop) | demás=2 cols
+   - Fit: svh + clamp | sin :has()
+   - SIN parches repetidos (PATCH ÚNICO al final)
 ========================================================= */
 
 /* ===== [0] TOKENS + BASE ===== */
@@ -21,11 +20,8 @@
   --split-hero:740px;--split-promos:1650px;--split-contacto:2550px;
   --split-sistemas:680px;--split-sectores-end:1400px;--split-servicios-end:2200px;--split-promos-2:2600px;
 
-  /* Reel fit knobs */
-  --reel-w:380px;               /* ancho ideal */
-  --reel-h-min:240px;           /* alto mínimo */
-  --reel-h-mid:42svh;           /* alto “target” (viewport real mobile) */
-  --reel-h-max:520px;           /* alto máximo */
+  /* Reel fit knobs (ÚNICO) */
+  --reel-w:380px;--reel-h-min:240px;--reel-h-mid:42svh;--reel-h-max:520px;
 }
 *{box-sizing:border-box}
 html,body{height:100%;width:100%;max-width:100%}
@@ -34,8 +30,7 @@ html,body{overflow-x:hidden;overscroll-behavior-x:none}
 html{background-color:var(--bg-2)}
 body{
   margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);line-height:1.45;
-  position:relative;
-  padding-top:calc(var(--gh-height) + var(--safe-top));
+  position:relative;padding-top:calc(var(--gh-height) + var(--safe-top));
   padding-left:var(--safe-left);padding-right:var(--safe-right);
   background:
     radial-gradient(1100px 720px at 14% -10%, rgba(45,212,191,.11), transparent 55%),
@@ -44,10 +39,8 @@ body{
       var(--bg) 0,
       var(--bg) var(--split-hero),
       var(--bg-2) var(--split-hero),
-
       var(--bg-2) var(--split-promos),
       var(--bg)   var(--split-promos),
-
       var(--bg)   var(--split-contacto),
       var(--bg-2) var(--split-contacto),
       var(--bg-2) 100%
@@ -68,15 +61,8 @@ button,input,select,textarea{font:inherit}
 .section-full{padding:34px 0}
 .grid-2{display:grid;grid-template-columns:1fr;gap:var(--gap)}
 .v-center,.align-center{align-items:center}
-@media(min-width:980px){
-  .container{padding-left:max(18px,var(--safe-left));padding-right:max(18px,var(--safe-right))}
-  .grid-2{grid-template-columns:1fr 1fr}
-}
-
-/* Mobile: menos aire lateral en HERO y Sistemas */
-@media(max-width:720px){
-  .hero .container,#productos-con>.container{padding-left:max(12px,var(--safe-left))!important;padding-right:max(12px,var(--safe-right))!important}
-}
+@media(min-width:980px){.container{padding-left:max(18px,var(--safe-left));padding-right:max(18px,var(--safe-right))}.grid-2{grid-template-columns:1fr 1fr}}
+@media(max-width:720px){.hero .container,#productos-con>.container{padding-left:max(12px,var(--safe-left))!important;padding-right:max(12px,var(--safe-right))!important}}
 
 /* ===== [2] PLACEHOLDERS (CLS) ===== */
 #header-placeholder{display:block;min-height:var(--gh-height)}
@@ -122,26 +108,16 @@ button,input,select,textarea{font:inherit}
 .hero-tab img{width:44px;height:44px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.10)}
 .hero-tab span{font-weight:900;color:rgba(232,238,246,.95)}
 .hero-tab.active{border-color:rgba(96,165,250,.40);background:rgba(96,165,250,.10)}
-@media(min-width:980px){
-  .hero{padding:40px 0 18px}
-  .hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}
-  .hero h1{font-size:2.25rem}
-}
-@media(max-width:520px){
-  .hero-gallery-groups{margin:6px 0 12px;gap:10px}
-  .hero-gallery-header{padding:10px 14px 7px}
-}
+@media(min-width:980px){.hero{padding:40px 0 18px}.hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}.hero h1{font-size:2.25rem}}
+@media(max-width:520px){.hero-gallery-groups{margin:6px 0 12px;gap:10px}.hero-gallery-header{padding:10px 14px 7px}}
 
-/* HERO tabs (para que se vean “completos” y sin scroll raro) */
+/* HERO tabs (tile logos) */
 .hero-gallery-card,.hero-gallery-card .carousel,.hero-gallery-card .carousel-track{max-width:100%}
 .hero-gallery-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;padding:12px 12px 14px!important}
 .hero-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;gap:0!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;border:var(--border)!important;background:rgba(255,255,255,.03)!important}
 .hero-tab span{display:none!important}
 .hero-tab img{width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;display:block!important;margin:0 auto!important;aspect-ratio:170/52!important}
-@media(max-width:420px){
-  .hero-tab{min-height:82px!important;padding:12px!important}
-  .hero-tab img{height:46px!important;max-width:165px!important}
-}
+@media(max-width:420px){.hero-tab{min-height:82px!important;padding:12px!important}.hero-tab img{height:46px!important;max-width:165px!important}}
 
 /* ===== [6] CAROUSEL (base) ===== */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,.10);background:var(--card-2)}
@@ -193,14 +169,14 @@ button,input,select,textarea{font:inherit}
 .svc-featured:before{content:"";position:absolute;inset:-2px;background:linear-gradient(90deg,rgba(45,212,191,.35),rgba(96,165,250,.35));opacity:.12;filter:blur(16px);pointer-events:none}
 .svc-featured:focus-visible{outline:2px solid rgba(45,212,191,.65);outline-offset:2px}
 
-/* ===== [9] REELS (tabs + frame 9:16) ===== */
-/* Recorte “aire arriba” (Sistemas + Servicios) */
+/* ===== [9] REELS (base) ===== */
+/* Aire arriba reducido */
 .reels-home-card .body{padding:12px!important}
 .reels-home-card .title-gradient{margin:0 0 4px!important}
 .reels-home-card .hint{margin:0 0 6px!important}
 .reels-home-card .reel-title{margin:0 0 6px!important;min-height:18px!important;line-height:1.15!important;font-weight:900;letter-spacing:.1px;color:rgba(232,238,246,.96)}
 
-/* Reel fit: evita que empuje iconos hacia abajo */
+/* Reel embed (wrapper) */
 .reel-embed{
   position:relative;aspect-ratio:9/16;width:min(var(--reel-w),100%);
   border-radius:14px;overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);
@@ -209,65 +185,18 @@ button,input,select,textarea{font:inherit}
 }
 .reel-embed iframe,.reel-embed .yt-thumb{position:absolute;inset:0;width:100%;height:100%}
 .reel-embed iframe{border:0;pointer-events:auto}
-.reel-embed .yt-thumb{border:0;background:transparent;padding:0;margin:0;cursor:pointer}
-.reel-embed .yt-thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.reel-embed .yt-play{position:absolute;left:16px;bottom:16px;width:54px;height:54px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.20);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.reel-embed .yt-play:before{content:"";position:absolute;left:21px;top:17px;width:0;height:0;border-left:14px solid rgba(232,238,246,.92);border-top:10px solid transparent;border-bottom:10px solid transparent}
 
 /* Iframes directos dentro de slide */
 .carousel[id^="carouselReels"] .carousel-slide>iframe{
   aspect-ratio:9/16;width:min(var(--reel-w),100%);height:auto;border-radius:14px;overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);display:block;pointer-events:auto
 }
 
-/* Tabs reels: HOMOLOGADOS a HERO (logo grande, sin padding “cuadro vacío”) */
-.reel-sys-tabs{
-  display:grid!important;gap:12px!important;padding:12px 12px 14px!important;margin-top:12px;
-  overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;max-width:100%
-}
-.reel-tab{
-  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;
-  min-height:86px!important;padding:14px!important;border-radius:14px!important;
-  border:1px solid rgba(255,255,255,.085)!important;background:rgba(255,255,255,.02)!important;box-shadow:none!important;
-  cursor:pointer;color:rgba(232,238,246,.92)
-}
-.reel-tab img{
-  width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;
-  padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;display:block!important;margin:0 auto!important
-}
+/* Tabs reels: estilo HERO */
+.reel-sys-tabs{display:grid!important;gap:12px!important;padding:12px 12px 14px!important;margin-top:12px;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;max-width:100%;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.reel-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;border:1px solid rgba(255,255,255,.085)!important;background:rgba(255,255,255,.02)!important;box-shadow:none!important;cursor:pointer;color:rgba(232,238,246,.92)}
+.reel-tab img{width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;display:block!important;margin:0 auto!important}
 .reel-tab span{margin-top:8px!important;font-size:.86rem!important;font-weight:900!important;color:rgba(232,238,246,.94);line-height:1.1}
 .reel-tab.active{border-color:rgba(96,165,250,.45)!important;background:rgba(96,165,250,.10)!important}
-
-/* GRID DEFAULT: demás reels = 2 columnas (mobile + desktop) */
-.reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-
-/* SERVICIOS: 3 columnas SOLO aquí (mobile + desktop) */
-#carouselReels-servicios + .reel-sys-tabs{
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  padding:10px 8px 12px!important;gap:10px!important
-}
-#carouselReels-servicios + .reel-sys-tabs .reel-tab{
-  min-height:78px!important;padding:12px 10px!important;border-radius:14px!important;
-  background:rgba(255,255,255,.015)!important;border:1px solid rgba(255,255,255,.07)!important
-}
-#carouselReels-servicios + .reel-sys-tabs .reel-tab span{
-  display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;
-  overflow:hidden!important;max-width:100%!important
-}
-#carouselReels-servicios + .reel-sys-tabs .reel-tab img{height:48px!important;max-width:170px!important}
-
-/* Micro override: iPhone SE / Android chico */
-@media(max-width:380px){
-  :root{--reel-w:340px;--reel-h-mid:36svh;--reel-h-max:420px}
-  #carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .reel-tab{min-height:82px!important;padding:12px!important}
-  .reel-tab img{height:46px!important;max-width:160px!important}
-  .reel-tab span{font-size:.84rem!important}
-}
-
-/* Desktop: reel puede crecer un poco, pero sin romper “fit” */
-@media(min-width:980px){
-  :root{--reel-w:420px;--reel-h-mid:52vh;--reel-h-max:640px}
-}
 
 /* ===== [10] VIDEOS (lite embed) ===== */
 .videos-grid{display:grid;grid-template-columns:1fr;gap:12px}
@@ -315,9 +244,8 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   .hero .container{padding-left:max(14px,var(--safe-left));padding-right:max(14px,var(--safe-right))}
   .hero-gallery-header h2{font-size:1rem}
   .product-card:hover{transform:none}
-  #servicios.section-full{padding:22px 0!important} /* reduce altura sección servicios en mobile */
+  #servicios.section-full{padding:22px 0!important}
 }
-@media(min-width:980px){.cards-services{grid-auto-flow:row dense}.cards-services>article:last-child{grid-column:1/-1}}
 
 /* Servicios pager (si lo usas) */
 .svc-dots{display:none;gap:10px;justify-content:center;margin-top:12px}
@@ -343,10 +271,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 
 /* ===== [15] PROD-TABS FINAL (ÚNICO) ===== */
 .prod-tabs-shell{flex:1 1 auto;min-width:0}
-.prod-tabs{
-  min-width:0;max-width:100%;display:flex;gap:10px;align-items:center;flex-wrap:nowrap;
-  overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding:6px 4px;scrollbar-width:none
-}
+.prod-tabs{min-width:0;max-width:100%;display:flex;gap:10px;align-items:center;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding:6px 4px;scrollbar-width:none}
 .prod-tabs::-webkit-scrollbar{height:0}
 .prod-tabs>*{flex:0 0 auto;white-space:nowrap}
 .prod-tabs .tab,.prod-tabs>button,.prod-tabs>a{
@@ -413,579 +338,57 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 @media(min-width:981px){#faq{padding-bottom:34px}#contacto{padding-top:34px}}
 
 /* =========================================================
-   PATCH v2025.12.31 — REELS FIT + TABS EXACTOS A TU HTML
-   - Sistemas: reel no empuja cards (desktop/mobile)
-   - Servicios: tabs 3 columnas (responsive) + en XS baja a 2
-   - Servicios: en mobile muestra solo 3 tabs (como pediste)
-   - Tabs: logos grandes estilo HERO + menos aire arriba
+   PATCH ÚNICO v2025.12.31 — FOLD + REELS + SERVICIOS TABS
+   (ÚNICO: aquí vive todo lo “extra”, sin duplicar arriba)
 ========================================================= */
 
-/* ========== A) Recorte aire arriba en reels (Sistemas/Servicios) ========== */
-#productos-con .reels-home-card .body,
-#servicios .reels-home-card .body{padding:12px!important}
-#productos-con .reels-home-card .title-gradient,
-#servicios .reels-home-card .title-gradient{margin:0 0 4px!important}
-#productos-con .reels-home-card .hint,
-#servicios .reels-home-card .hint{margin:0 0 6px!important}
-#productos-con .reels-home-card .reel-title,
-#servicios .reels-home-card .reel-title{
-  margin:0 0 6px!important;min-height:18px!important;line-height:1.15!important;
-  font-weight:900;letter-spacing:.1px;color:rgba(232,238,246,.96)
-}
+/* 1) HERO: full fold real + centrado vertical (sin aire extra) */
+:root{--fold-h:calc(100svh - var(--gh-height,68px) - var(--safe-top,0px));--hero-pad-y:14px;--hero-gap:18px}
+.hero.section-full{padding:0!important}
+.hero{min-height:var(--fold-h);display:flex;align-items:center;padding:0!important}
+.hero .container{width:100%;padding-top:var(--hero-pad-y)!important;padding-bottom:var(--hero-pad-y)!important}
+.hero-grid{align-items:center!important}
+@media(min-width:980px){.hero-grid{min-height:var(--fold-h);gap:var(--hero-gap)!important}}
 
-/* ========== B) Reel “fit” por viewport (evita scroll vertical por reel) ========== */
-/* Ajusta knobs globales si no los tienes */
-:root{
-  --reel-w:380px;
-  --reel-h-min:220px;
-  --reel-h-mid:40svh; /* clave: usa svh en mobile */
-  --reel-h-max:520px;
-}
+/* 2) HERO gallery: que “quepa” mejor */
+.hero-gallery-card{max-height:clamp(520px,calc(var(--fold-h) - 18px),720px);display:flex;flex-direction:column;overflow:hidden}
+.hero-gallery-groups{margin:6px 0 10px!important}
 
-/* Aplica a iframes directos en slides (tu caso) */
-.carousel[id^="carouselReels-"] .carousel-slide>iframe{
-  width:min(var(--reel-w),100%)!important;
-  height:auto!important;
-  aspect-ratio:9/16!important;
-  border-radius:14px!important;
-  overflow:hidden!important;
-  background:#050812!important;
-  border:1px solid rgba(255,255,255,.10)!important;
-  display:block!important
-}
+/* 3) HERO imgs: no recorte (600x600) */
+.hero-slide img{object-fit:contain!important;object-position:center!important}
+.hero-gallery-card .carousel-track{align-items:center}
+.hero-gallery-card .carousel-slide{display:flex;align-items:center;justify-content:center}
 
-/* Importante: el slide NO debe estirar la altura infinita */
-.carousel[id^="carouselReels-"] .carousel-slide{
-  align-items:center!important;justify-content:center!important
-}
+/* 4) SISTEMAS: tabs más cerca + sección baja un poco (sin pelear con CLS) */
+#productos-con{padding-top:18px!important}
+@media(min-width:980px){#productos-con{padding-top:22px!important}}
+#productos-con .productos-inline-bar{margin:0 0 10px!important}
+#productos-con .prod-tabs{margin-top:6px!important;margin-bottom:8px!important}
 
-/* Limita el “alto visual” del contenedor del reel con clamp() */
-.carousel[id^="carouselReels-"] .carousel-track{
-  min-height:0!important;
-  height:auto!important;
-  max-height:none!important
-}
-.carousel[id^="carouselReels-"] .carousel-slide{
-  padding:10px 10px 8px!important
-}
+/* 5) REELS: Servicios 3 columnas + XS 2 columnas */
+#carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important;padding:10px 8px 12px!important;gap:10px!important}
+#carouselReels-servicios + .reel-sys-tabs .reel-tab{min-height:78px!important;padding:12px 10px!important;border-radius:14px!important;background:rgba(255,255,255,.015)!important;border:1px solid rgba(255,255,255,.07)!important}
+#carouselReels-servicios + .reel-sys-tabs .reel-tab img{height:48px!important;max-width:170px!important}
+#carouselReels-servicios + .reel-sys-tabs .reel-tab span{display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;max-width:100%!important}
 
-/* En desktop deja crecer un poco más */
-@media(min-width:980px){
-  :root{--reel-w:420px;--reel-h-mid:52vh;--reel-h-max:640px}
-}
-
-/* XS (iPhone SE / Android chico): baja el target del reel */
+/* XS knobs + grid servicios a 2 */
 @media(max-width:380px){
-  :root{--reel-w:340px;--reel-h-mid:34svh;--reel-h-max:420px}
+  :root{--reel-w:340px;--reel-h-mid:36svh;--reel-h-max:420px}
+  #carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .reel-tab{min-height:82px!important;padding:12px!important}
+  .reel-tab img{height:46px!important;max-width:160px!important}
+  .reel-tab span{font-size:.84rem!important}
 }
 
-/* ========== C) Tabs reels (todos): estilo HERO (logo grande, sin “cuadro vacío”) ========== */
-#productos-con .reel-sys-tabs,
-#servicios .reel-sys-tabs{
-  display:grid!important;
-  gap:12px!important;
-  padding:12px 12px 14px!important;
-  margin-top:12px!important;
-  overflow:visible!important;
-  -webkit-mask-image:none!important;
-  mask-image:none!important;
-  max-width:100%!important
-}
+/* Desktop: reel crece un poco */
+@media(min-width:980px){:root{--reel-w:420px;--reel-h-mid:52vh;--reel-h-max:640px}}
 
-/* Default: 2 columnas (tus panels contable/comercial/nube/productividad) */
-#productos-con .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-
-/* Botón tab tipo “tile” */
-#productos-con .reel-tab,
-#servicios .reel-tab{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-  text-align:center!important;
-  min-height:86px!important;
-  padding:14px!important;
-  border-radius:14px!important;
-  border:1px solid rgba(255,255,255,.085)!important;
-  background:rgba(255,255,255,.02)!important;
-  box-shadow:none!important;
-  cursor:pointer!important
-}
-#productos-con .reel-tab.active,
-#servicios .reel-tab.active{
-  border-color:rgba(96,165,250,.45)!important;
-  background:rgba(96,165,250,.10)!important
-}
-
-/* Imagen del tab: grande y “logo”, no mini-icono */
-#productos-con .reel-tab img,
-#servicios .reel-tab img{
-  width:auto!important;
-  height:52px!important;
-  max-width:180px!important;
-  object-fit:contain!important;
-  padding:0!important;
-  background:transparent!important;
-  border:0!important;
-  border-radius:0!important;
-  display:block!important;
-  margin:0 auto!important
-}
-
-/* Texto bajo imagen (solo donde existe <span>) */
-#servicios .reel-tab span{
-  margin-top:8px!important;
-  font-size:.86rem!important;
-  font-weight:900!important;
-  color:rgba(232,238,246,.94)!important;
-  line-height:1.1!important
-}
-
-/* ========== D) SERVICIOS: 3 columnas (responsive) ========== */
-/* Ojo: en Servicios tus tabs están dentro de #servicios, no en #productos-con */
-#servicios .reels-home-card .reel-sys-tabs{
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  padding:10px 8px 12px!important;
-  gap:10px!important
-}
-#servicios .reels-home-card .reel-tab{
-  min-height:78px!important;
-  padding:12px 10px!important;
-  border-radius:14px!important;
-  background:rgba(255,255,255,.015)!important;
-  border:1px solid rgba(255,255,255,.07)!important
-}
-#servicios .reels-home-card .reel-tab img{
-  height:46px!important;
-  max-width:160px!important
-}
-/* Si el texto es largo, clamp a 2 líneas */
-#servicios .reels-home-card .reel-tab span{
-  display:-webkit-box!important;
-  -webkit-line-clamp:2!important;
-  -webkit-box-orient:vertical!important;
-  overflow:hidden!important;
-  max-width:100%!important
-}
-
-/* XS: en pantallas muy chicas, Servicios baja a 2 columnas para que no se amontone */
-@media(max-width:380px){
-  #servicios .reels-home-card .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  #servicios .reels-home-card .reel-tab{min-height:82px!important;padding:12px!important}
-  #servicios .reels-home-card .reel-tab img{height:44px!important;max-width:150px!important}
-}
-
-/* ========== E) MOBILE: “mostrar hasta 3 primeros iconos” (Servicios) ========== */
-/* Esto cumple tu petición de img4: muestra 3 tabs al inicio sin mover HTML */
+/* 6) Mobile: en servicios muestra solo 3 tabs */
 @media(max-width:720px){
   #servicios .reels-home-card .reel-sys-tabs .reel-tab{display:none!important}
   #servicios .reels-home-card .reel-sys-tabs .reel-tab:nth-child(-n+3){display:flex!important}
-  /* Mantén 3 columnas solo si caben; en 360-380px ya cae a 2 por regla XS */
   #servicios .reels-home-card .reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 }
 
-/* ========== F) SISTEMAS: asegurar que cards + reel se alineen y no desborden ========== */
-#productos-con .grid-2.section-cq{align-items:center!important}
-#productos-con .cards.cards-products{align-content:start}
-#productos-con .reels-home-card{min-height:0}
-#productos-con .reels-home-card .carousel{max-width:100%}
-
-/* ========== G) Flechas: en mobile off, desktop on SOLO en HERO (como ya manejas) ========== */
-@media(max-width:980px){
-  .carousel[id^="carouselReels-"] .arrowCircle{display:none!important}
-}
-
-
-/* =========================================================
-   PATCH FOLD (pegar AL FINAL del mainindex.css actual)
-   - Hero pegado bajo header
-   - Hero gallery entra mejor en el fold
-   - Tabs de sistemas más cerca del grid
-   - Reels -10% altura proporcional
-========================================================= */
-
-/* HERO pegado debajo del header (sin aire extra) */
-.hero.section-full{
-  padding-top:calc(var(--gh-height,68px) + 10px) !important;
-  padding-bottom:14px !important;
-}
-
-/* Hero: feeling full-fold */
-.hero-grid{
-  min-height:calc(100vh - var(--gh-height,68px) - 12px) !important;
-  align-items:center !important;
-}
-
-/* Hero gallery: card con altura controlada para entrar en el fold */
-.hero-gallery-card{
-  max-height:clamp(420px, calc(100vh - var(--gh-height,68px) - 90px), 560px) !important;
-  display:flex !important;
-  flex-direction:column !important;
-  overflow:hidden !important;
-}
-
-/* Carrusel hero: altura dinámica dentro del fold */
-.hero-carousel .carousel-track{
-  height:clamp(240px, calc(100vh - var(--gh-height,68px) - 260px), 360px) !important;
-}
-
-/* SISTEMAS: tabs más pegados al grid */
-.productos-inline-bar{margin:0 0 10px !important;}
-.prod-tabs{margin-top:8px !important;padding-bottom:2px !important;}
-.panel-productos{margin-top:10px !important;}
-
-/* REELS: -10% proporcional (sistemas + servicios) */
-:root{ --reel-scale:.90; }
-.reel-embed{
-  transform:scale(var(--reel-scale)) !important;
-  transform-origin:center !important;
-}
-
-/* Desktop fold-fit para reels del panel (si te sigue haciendo scroll) */
-@media(min-width:981px){
-  .panel-productos .reels-home-card .carousel-track{
-    height:clamp(340px, calc(100vh - var(--gh-height,68px) - 340px), 520px) !important;
-  }
-}
-
-/* Mobile: evitar recortes en hero */
-@media(max-width:980px){
-  .hero-gallery-card{max-height:none !important;}
-  .hero-carousel .carousel-track{height:clamp(240px,46vh,320px) !important;}
-  :root{ --reel-scale:.92; }
-}
-
-/* =========================
-   Expiriti PATCH v2025.12.31-FOLD-FIX
-   - HERO: full fold + centrado vertical + sin aire bajo header
-   - HERO gallery: card/track más “fit”
-   - SISTEMAS: baja bloque + tabs cerca del grid
-   - REELS: -10% alto + sin “scroll dentro del iframe” + borde/glow menos agresivo
-   - ACTIVE/HOLD: tabs hero + iconos hero (persistente)
-========================= */
-
-/* --- 1) HERO: ocupar 1er fold real (menos header) y centrar --- */
-:root{--fold:calc(100svh - var(--gh-height,68px));--hero-gap:18px;--tabs-gap:10px;--reel-scale:.90;--reel-frame:rgba(45,212,191,.18);--reel-glow:rgba(96,165,250,.12)}
-/* usa svh/dvh para iOS/Chrome; fallback a vh */
-@supports(height:100svh){.hero,#hero,#hero-gallery{min-height:var(--fold)}}
-@supports not (height:100svh){.hero,#hero,#hero-gallery{min-height:calc(100vh - var(--gh-height,68px))}}
-
-.hero,#hero,#hero-gallery{padding-top:0!important;margin-top:0!important;display:flex;align-items:center;scroll-margin-top:calc(var(--gh-height,68px) + 10px)}
-/* tu contenedor principal dentro del hero (ajusta selector si tu markup difiere) */
-.hero .container,#hero .container,#hero-gallery .container{width:100%;padding-top:14px!important;padding-bottom:14px!important}
-.hero .hero-grid,#hero .hero-grid,#hero-gallery .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--hero-gap);align-items:center}
-/* si en tu CSS ya es grid, esto solo “corrige” el alineado vertical */
-@media(max-width:980px){.hero .hero-grid,#hero .hero-grid,#hero-gallery .hero-grid{grid-template-columns:1fr;align-items:stretch}}
-
-/* --- 2) HERO Gallery: sin aire arriba, que “quepa” mejor en fold --- */
-.hero-gallery-card,#heroGalleryCard,.hero .hero-gallery-card{margin-top:0!important}
-.hero-gallery-card .title,#heroGalleryTitle{margin:0 0 8px!important}
-/* tabs del hero (Contables/Comerciales/Nube/Productividad) más compactos y pegados al contenido */
-.hero-gallery-groups,#heroGalleryGroups{margin:6px 0 10px!important;gap:10px}
-.hero-group-tab{padding:8px 14px;border-radius:999px;transition:transform .12s ease,background .12s ease,border-color .12s ease}
-.hero-group-tab.active,.hero-group-tab[aria-selected="true"]{background:rgba(45,212,191,.14);border-color:rgba(45,212,191,.55);box-shadow:0 0 0 2px rgba(45,212,191,.18) inset}
-/* “hold” al click */
-.hero-group-tab:active{transform:translateY(1px) scale(.99)}
-
-/* iconos (sistemas) del hero: mismo “hold/active” persistente */
-.hero-tab{border-radius:14px;transition:transform .12s ease,background .12s ease,border-color .12s ease,box-shadow .12s ease}
-.hero-tab.active,.hero-tab[aria-selected="true"]{background:rgba(96,165,250,.12);border-color:rgba(96,165,250,.45);box-shadow:0 0 0 2px rgba(96,165,250,.18) inset}
-.hero-tab:active{transform:translateY(1px) scale(.985)}
-.hero-tab:focus-visible,.hero-group-tab:focus-visible{outline:2px solid rgba(45,212,191,.55);outline-offset:2px}
-
-/* --- 3) Imágenes del HERO (600x600 se recortan): bajar agresividad del crop --- */
-/* Si tus slides usan img directo: */
-#heroGalleryCarousel .hero-slide img,.hero-slide img{width:100%;height:auto;max-height:min(52svh,560px);object-fit:contain!important;object-position:center center}
-/* Si tu contenedor fuerza alto fijo, esto ayuda a que no “corte” */
-#heroGalleryCarousel .carousel-track,.hero .carousel-track{align-items:center}
-#heroGalleryCarousel .carousel-slide,.hero .carousel-slide{display:flex;align-items:center;justify-content:center}
-
-/* --- 4) SISTEMAS: bajar bloque y acercar tabs al grid --- */
-#productos-con{padding-top:26px!important}
-#productos-con .productos-inline-bar{margin:0 0 10px!important}
-#productos-con .prod-tabs-shell{gap:10px!important}
-#productos-con .prod-tabs{margin-top:6px!important;margin-bottom:10px!important}
-#productos-con .panel-productos{margin-top:8px!important}
-/* si “Sistemas CONTPAQi” quedó demasiado arriba por scroll-margin o padding global */
-#productos-con .prod-title{margin:0 0 8px!important}
-
-/* --- 5) REELS: -10% altura proporcional + quitar scroll interno del iframe --- */
-/* Contenedor reel (tu clase base) */
-.reel-embed{transform:scale(var(--reel-scale));transform-origin:center top}
-/* OJO: scaling reduce visual sin cambiar layout; si te genera “aire” abajo, compénsalo: */
-.reel-embed{margin-bottom:-4%}
-/* evita que el iframe cree scroll interno por tamaño mal calculado */
-.reel-embed iframe{display:block;width:100%;height:100%;border:0;overflow:hidden}
-/* si tu wrapper controla el alto por ratio, fuerza 9:16 más estable */
-.reel-embed{aspect-ratio:9/16;max-height:min(62svh,720px)}
-/* reduce marco azul fuerte (border/glow) */
-.reels-card,.reel-card,.card.reels-card{border-color:var(--reel-frame)!important;box-shadow:0 18px 40px rgba(0,0,0,.35),0 0 0 1px var(--reel-frame) inset,0 0 32px var(--reel-glow)!important}
-/* el “marco” interno del carrusel de reels (si aplica) */
-.carousel.reels,.carousel[id^="carouselReels"],.carousel[id*="Reels"]{box-shadow:none!important;border-color:rgba(255,255,255,.10)!important}
-
-/* --- 6) SERVICIOS: alinear top de grid con top del reel --- */
-#servicios .container{padding-top:18px!important}
-#servicios .services-grid,#servicios .services-wrap,#servicios .grid-services{align-items:start!important}
-#servicios .reels-card,#servicios .card.reels-card{margin-top:0!important}
-#servicios h2,#servicios .section-title{margin-top:0!important}
-
-/* --- 7) Evitar scroll “dentro del reel” por pads/overflow del slide --- */
-.carousel-slide .reel-embed{overflow:hidden}
-.carousel-slide{overflow:hidden}
-
-/* --- 8) Mobile: prioriza fold (menos aire, controles accesibles) --- */
-@media(max-width:980px){
-  .hero,#hero,#hero-gallery{align-items:flex-start}
-  #heroGalleryCarousel .hero-slide img,.hero-slide img{max-height:min(46svh,480px)}
-  .reel-embed{max-height:min(58svh,640px);margin-bottom:-6%}
-  #productos-con{padding-top:18px!important}
-  #productos-con .prod-tabs{gap:8px}
-}
-
-
-/* === Expiriti PATCH v2025.12.31-FOLD-FIX (pegar al final) === */
-/* OBJ: (1) HERO centrado vertical y full-fold, (2) Sistemas tabs pegados al grid + reels sin scroll, (3) Servicios alineado y menos “aire”, (4) Reel frame menos “azul”, (5) Hero imgs sin recorte */
-
-/* ---------- [A] Helpers anti “hover pegado” / focus ---------- */
-.hero-group-tab:focus:not(:focus-visible),
-.hero-tab:focus:not(:focus-visible),
-.prod-tabs .tab:focus:not(:focus-visible),
-.reel-tab:focus:not(:focus-visible){outline:none}
-.hero-group-tab,.hero-tab,.prod-tabs .tab,.reel-tab{-webkit-tap-highlight-color:transparent}
-
-/* “Hold” visual (como tus iconos que quedan marcados): usa .active (JS) + :active */
-.hero-group-tab.active,.hero-group-tab:active,
-.hero-tab.active,.hero-tab:active,
-.prod-tabs .tab.active,.prod-tabs .tab:active,
-.reel-tab.active,.reel-tab:active{
-  box-shadow:0 0 0 2px rgba(45,212,191,.28),0 10px 26px rgba(0,0,0,.28);
-  border-color:rgba(45,212,191,.45)
-}
-
-/* ---------- [B] HERO: ocupar 1er fold y centrar verticalmente ---------- */
-/* Soporta #hero-gallery / #hero / .hero-gallery / .hero */
-#hero-gallery,#hero,.hero-gallery,.hero{
-  /* sin “aire” extra arriba: el header ya ocupa su espacio */
-  padding-top:0!important;
-  margin-top:0!important;
-  /* alto útil del fold (si tu header es sticky con --gh-height) */
-  min-height:calc(100svh - var(--gh-height,68px));
-  display:flex;
-  align-items:center; /* ✅ centra vertical */
-}
-@media(min-width:981px){
-  #hero-gallery .container,#hero .container,.hero-gallery .container,.hero .container{
-    /* asegura que el grid interno también se estire y centre */
-    min-height:calc(100svh - var(--gh-height,68px));
-    display:grid;
-    align-items:center; /* ✅ centra vertical dentro del grid */
-  }
-}
-
-/* Card de “Conoce más…”: que no se coma el fold */
-#heroGalleryCarousel,.hero #heroGalleryCarousel,.hero-gallery #heroGalleryCarousel{
-  /* limita alto del carrusel al fold real */
-  max-height:clamp(340px,calc(100svh - var(--gh-height,68px) - 210px),560px);
-}
-#heroGalleryCarousel .carousel-track,
-.hero #heroGalleryCarousel .carousel-track,
-.hero-gallery #heroGalleryCarousel .carousel-track{max-height:inherit}
-
-/* Imágenes del HERO: evitar recorte (600x600 no debe “cortarse”) */
-#heroGalleryCarousel .hero-slide img,
-.hero #heroGalleryCarousel .hero-slide img,
-.hero-gallery #heroGalleryCarousel .hero-slide img{
-  width:100%;
-  height:100%;
-  object-fit:contain!important; /* ✅ no recorta */
-  background:rgba(10,17,27,.55);
-  border-radius:14px;
-}
-
-/* ---------- [C] Sistemas: bajar bloque (título + tabs) y pegar tabs al grid ---------- */
-/* baja un poco toda la sección de sistemas para que no se “pegue” al top */
-#productos-con,#productos-con .container{scroll-margin-top:calc(var(--gh-height,68px) + 10px)}
-#productos-con{padding-top:18px!important} /* ✅ baja la sección */
-#productos-con .productos-inline-bar{margin-bottom:10px!important} /* tabs + título más cerca del contenido */
-#productos-con .prod-tabs-shell{gap:10px!important}
-#productos-con .prod-tabs{margin-top:6px!important;margin-bottom:8px!important}
-
-/* si tus tabs “Contables/Comerciales/Nube/Productividad” están arriba (como en img2), reduce su “aire” */
-#productos-con .prod-tabs .tab{padding:.55rem .95rem!important}
-
-/* ---------- [D] Reels (Sistemas + Servicios): -10% alto, sin scroll dentro, proporción correcta ---------- */
-/* Marco “azul fuerte”: bájalo (menos glow + borde más suave) */
-.reels-card,.reels-card.card,
-#reelsCard,.reels-panel,.reels-wrap{
-  box-shadow:0 10px 30px rgba(0,0,0,.22)!important;
-  border:1px solid rgba(96,165,250,.18)!important; /* ✅ menos azul */
-}
-
-/* Quitar “aire” arriba dentro del card de reels */
-.reels-card .card-head,
-.reels-card .reels-head,
-.reels-card > h3,
-.reels-card > h4{
-  margin-top:0!important;
-  padding-top:10px!important; /* ✅ menos aire */
-}
-
-/* El contenedor del embed NO debe scrollear */
-.reel-embed{position:relative;overflow:hidden!important;border-radius:16px}
-.reel-embed iframe,.reel-embed .yt-thumb{position:absolute;inset:0;width:100%;height:100%;border:0}
-
-/* Altura/ratio del reel: vertical 9:16 y 10% menos alto */
-:root{--reel-max:560px} /* ajustable */
-.reels-card .reel-embed,
-#carouselReels-contable .reel-embed,
-#carouselReels-comercial .reel-embed,
-#carouselReels-nube .reel-embed,
-#carouselReels-productividad .reel-embed,
-#carouselReels-servicios .reel-embed{
-  aspect-ratio:9/16;
-  max-height:calc(var(--reel-max)*.90); /* ✅ -10% */
-  min-height:420px;
-  height:auto;
-}
-
-/* Evita que el carrusel deje “scroll interno” por tamaños raros */
-.carousel{overflow:hidden}
-.carousel-track{overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
-.carousel-track::-webkit-scrollbar{display:none}
-
-/* ---------- [E] Servicios: alinear título “Servicios” a la altura del card de reels ---------- */
-/* intenta alinear el encabezado con la fila del grid donde vive reels */
-#servicios .container{padding-top:18px!important}
-#servicios h2,#servicios .section-title,#servicios .title{
-  margin-top:0!important;
-  padding-top:0!important;
-  line-height:1.05!important;
-}
-/* reduce el “aire” sobre el card de reels de servicios */
-#servicios .reels-card{margin-top:0!important}
-
-/* ---------- [F] Mobile ajustes (evitar recortes) ---------- */
-@media(max-width:980px){
-  #hero-gallery,#hero,.hero-gallery,.hero{min-height:calc(100svh - var(--gh-height,68px))}
-  #heroGalleryCarousel{max-height:clamp(300px,calc(100svh - var(--gh-height,68px) - 240px),520px)}
-  :root{--reel-max:520px}
-  #productos-con{padding-top:14px!important}
-}
-
-
-/* =========================================================
-   Expiriti PATCH ÚNICO v2025.12.31 — HERO FULL-FOLD + SISTEMAS BAJAR
-   Pegar al FINAL de mainindex.css
-   OBJ:
-   (1) HERO como img2: full altura pantalla + centrado vertical (desktop/mobile)
-   (2) Hero gallery no “compactada”: carrusel ocupa altura disponible
-   (3) Imágenes hero sin recorte (contain)
-   (4) Sistemas (título + tabs) menos “arriba” (como img3)
-========================================================= */
-
-/* ---------- 1) HERO: full fold real (svh/dvh) ---------- */
-:root{
-  --fold-h: calc(100svh - var(--gh-height,68px) - var(--safe-top,0px));
-  --hero-pad-y: 14px;     /* padding vertical dentro del hero */
-  --hero-gap: 18px;
-}
-
-/* el body ya tiene padding-top del header; el hero NO debe sumar “aire” extra */
-.hero.section-full{
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-}
-
-/* el hero ocupa el fold y centra verticalmente */
-.hero{
-  min-height: var(--fold-h) !important;
-  display: flex !important;
-  align-items: center !important;
-}
-
-/* el grid interno se centra y no queda “abajo” */
-.hero .container.hero-grid{
-  width: 100%;
-  padding-top: var(--hero-pad-y) !important;
-  padding-bottom: var(--hero-pad-y) !important;
-  align-items: center !important; /* para grid */
-  row-gap: var(--hero-gap) !important;
-}
-
-/* desktop: asegura 2 columnas y centrado */
-@media(min-width:980px){
-  .hero .container.hero-grid{
-    min-height: var(--fold-h) !important;
-    grid-template-columns: 1.05fr .95fr !important;
-  }
-}
-
-/* mobile: evita “compactado” y deja respirar lo justo */
-@media(max-width:980px){
-  .hero{
-    align-items: flex-start !important; /* en mobile se ve más natural */
-  }
-  .hero .container.hero-grid{
-    padding-top: 12px !important;
-    padding-bottom: 12px !important;
-  }
-}
-
-/* ---------- 2) HERO gallery card: que el carrusel crezca dentro del fold ---------- */
-.hero-gallery-card{
-  display: flex !important;
-  flex-direction: column !important;
-  overflow: hidden !important;
-  /* limita la card para que quepa en el fold sin empujar el texto */
-  max-height: clamp(520px, calc(var(--fold-h) - 18px), 720px) !important;
-}
-
-/* header/tabs no deben comerse altura de más */
-.hero-gallery-header{flex: 0 0 auto !important;}
-.hero-gallery-groups{flex: 0 0 auto !important; margin: 6px 0 10px !important;}
-.hero-gallery-tabs{flex: 0 0 auto !important;}
-
-/* carrusel: toma el espacio restante */
-.hero-carousel{flex: 1 1 auto !important; display:flex !important; flex-direction:column !important;}
-.hero-carousel .carousel-track{
-  flex: 1 1 auto !important;
-  min-height: 240px !important;
-  height: auto !important;     /* deja que flex mande */
-}
-
-/* imagen hero: NO recorta (contain) */
-.hero-slide img{
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;
-  object-position: center center !important;
-  background: rgba(10,17,27,.55);
-}
-
-/* ---------- 3) “Sistemas CONTPAQi” estaba muy arriba: bájalo ---------- */
-#productos-con{
-  /* tu CSS trae margin-top:24px; aquí lo controlamos para que no quede “pegado” */
-  margin-top: 18px !important;
-  padding-top: 18px !important;
-}
-
-/* acerca tabs al contenido (sin que se vea “flotando arriba”) */
-#productos-con .productos-inline-bar{
-  margin: 0 0 12px !important;
-}
-
-/* en desktop, evita que la grilla “align-center” suba demasiado el bloque izquierdo */
-@media(min-width:980px){
-  #productos-con .grid-2.section-cq{
-    align-items: start !important;
-  }
-}
-
-/* en mobile: un poco menos padding para no alargar */
-@media(max-width:980px){
-  #productos-con{
-    margin-top: 14px !important;
-    padding-top: 14px !important;
-  }
-}
-
+/* 7) Reels: sin flechas en mobile (reels), hero conserva flechas */
+@media(max-width:980px){.carousel[id^="carouselReels"] .arrowCircle{display:none!important}}
