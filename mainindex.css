@@ -559,7 +559,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 }
 
 /* muestra el banner completo (sin crop) */
-#heroGalleryCarousel .carousel-slide.hero-slide > img{
+#heroGalleryCarousel .carousel-slide.hero-slide img
   width:100%;
   height:100%;
   object-fit:contain;       /* <- clave: no recorta */
@@ -568,10 +568,84 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 }
 
 /* HERO panorámico pero banner cuadrado completo */
-#heroGalleryCarousel .carousel-slide.hero-slide > img{
+#heroGalleryCarousel .carousel-slide.hero-slide img
   width:100%;
   height:100%;
   object-fit:contain;
   object-position:center;
+}
+
+/* =========================================================
+   PATCH FINAL — HERO (banners 600x600) + dots abajo
+   - Sin recorte (contain)
+   - Dots fuera del banner, abajo
+   - Barra de dots más transparente y ancho automático
+========================================================= */
+
+/* 1) El carrusel HERO se comporta como columna: track arriba, nav abajo */
+#heroGalleryCarousel.carousel{
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+}
+
+/* 2) Track ocupa el espacio disponible */
+#heroGalleryCarousel .carousel-track{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  height:100%!important;
+  overflow:hidden!important;
+
+  /* Si quieres que SIEMPRE sea cuadrado (recomendado para 600x600): */
+  aspect-ratio:1/1;
+}
+
+/* 3) Slides llenan el alto del track */
+#heroGalleryCarousel .carousel-slide{
+  height:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* 4) Imagen HERO: SIEMPRE completa (no crop) */
+#heroGalleryCarousel .carousel-slide.hero-slide img{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:contain!important;     /* <- clave */
+  object-position:center!important;
+  background:transparent!important;
+}
+
+/* 5) Dots ABAJO (no overlay) + barra ligera y fit */
+#heroGalleryCarousel .carousel-nav{
+  position:static!important;
+  width:fit-content!important;
+  max-width:calc(100% - 24px)!important;
+  margin:10px auto 12px!important;
+  padding:6px 10px!important;
+  gap:8px!important;
+  border-radius:999px!important;
+
+  background:rgba(7,10,18,.22)!important; /* más transparente */
+  border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+
+  pointer-events:auto!important;
+  justify-content:center!important;
+}
+
+/* 6) Dots un poco más compactos */
+#heroGalleryCarousel .carousel-nav .dot{
+  width:12px!important;
+  height:12px!important;
+  border-radius:999px!important;
+}
+@media(min-width:981px){
+  #heroGalleryCarousel .carousel-nav .dot{
+    width:11px!important;height:11px!important;
+  }
 }
 
