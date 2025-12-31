@@ -710,3 +710,27 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   }
 }
 
+/* =========================================================
+   FIX REAL: Reels -15% (Sistemas + Servicios)
+   - Con aspect-ratio 9/16, bajar ancho baja alto
+========================================================= */
+
+/* Mobile/tablet: 380px -> ~323px (-15%) */
+#productos-con, #servicios{
+  --reel-w:323px !important;
+}
+
+/* Desktop: 420px -> ~357px (-15%) */
+@media(min-width:980px){
+  #productos-con, #servicios{
+    --reel-w:357px !important;
+  }
+}
+
+/* Opcional: menos aire vertical del slide (no cambia el 9:16, solo el padding) */
+#productos-con .carousel[id^="carouselReels"] .carousel-slide,
+#servicios     .carousel[id^="carouselReels"] .carousel-slide{
+  padding:6px 10px !important;
+}
+
+
