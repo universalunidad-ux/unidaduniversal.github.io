@@ -1079,3 +1079,36 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   background:transparent !important;
 }
 
+/* REELS Sistemas + Servicios: NO scroll vertical */
+#productos-con .carousel[id^="carouselReels"],
+#servicios     .carousel[id^="carouselReels"]{
+  overflow:hidden!important;
+}
+
+#productos-con .carousel[id^="carouselReels"] .carousel-track,
+#servicios     .carousel[id^="carouselReels"] .carousel-track{
+  overflow:hidden!important;
+  align-items:center!important;
+}
+
+#productos-con .carousel[id^="carouselReels"] .carousel-slide,
+#servicios     .carousel[id^="carouselReels"] .carousel-slide{
+  overflow:hidden!important;
+  padding:6px 8px!important;
+}
+
+#productos-con .reel-embed,
+#servicios     .reel-embed{
+  overflow:hidden!important;
+  min-height:auto!important;
+  max-height:none!important;
+}
+
+#productos-con .reel-embed iframe,
+#servicios     .reel-embed iframe{
+  display:block!important;
+  height:100%!important;
+  max-height:100%!important;
+  overflow:hidden!important;
+}
+
