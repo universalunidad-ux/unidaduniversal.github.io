@@ -595,3 +595,63 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   .carousel[id^="carouselReels-"] .arrowCircle{display:none!important}
 }
 
+
+/* =========================================================
+   PATCH FOLD (pegar AL FINAL del mainindex.css actual)
+   - Hero pegado bajo header
+   - Hero gallery entra mejor en el fold
+   - Tabs de sistemas más cerca del grid
+   - Reels -10% altura proporcional
+========================================================= */
+
+/* HERO pegado debajo del header (sin aire extra) */
+.hero.section-full{
+  padding-top:calc(var(--gh-height,68px) + 10px) !important;
+  padding-bottom:14px !important;
+}
+
+/* Hero: feeling full-fold */
+.hero-grid{
+  min-height:calc(100vh - var(--gh-height,68px) - 12px) !important;
+  align-items:center !important;
+}
+
+/* Hero gallery: card con altura controlada para entrar en el fold */
+.hero-gallery-card{
+  max-height:clamp(420px, calc(100vh - var(--gh-height,68px) - 90px), 560px) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  overflow:hidden !important;
+}
+
+/* Carrusel hero: altura dinámica dentro del fold */
+.hero-carousel .carousel-track{
+  height:clamp(240px, calc(100vh - var(--gh-height,68px) - 260px), 360px) !important;
+}
+
+/* SISTEMAS: tabs más pegados al grid */
+.productos-inline-bar{margin:0 0 10px !important;}
+.prod-tabs{margin-top:8px !important;padding-bottom:2px !important;}
+.panel-productos{margin-top:10px !important;}
+
+/* REELS: -10% proporcional (sistemas + servicios) */
+:root{ --reel-scale:.90; }
+.reel-embed{
+  transform:scale(var(--reel-scale)) !important;
+  transform-origin:center !important;
+}
+
+/* Desktop fold-fit para reels del panel (si te sigue haciendo scroll) */
+@media(min-width:981px){
+  .panel-productos .reels-home-card .carousel-track{
+    height:clamp(340px, calc(100vh - var(--gh-height,68px) - 340px), 520px) !important;
+  }
+}
+
+/* Mobile: evitar recortes en hero */
+@media(max-width:980px){
+  .hero-gallery-card{max-height:none !important;}
+  .hero-carousel .carousel-track{height:clamp(240px,46vh,320px) !important;}
+  :root{ --reel-scale:.92; }
+}
+
