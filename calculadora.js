@@ -28,32 +28,32 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
     function recomputeAll() { window.dispatchEvent(new Event("calc-recompute")); }
 
 
-    function setCalcCountClass() {
-  var has2 =
-    !!(document.querySelector("#calc-secondary table")) ||
-    !!(document.querySelector("#calc-tertiary table")); // tu caso actual
+function setCalcCountClass() {
+  var hasSecondary = !!document.querySelector("#calc-secondary table");
+  var hasTertiary  = !!document.querySelector("#calc-tertiary table");
 
-  // 3 calc: si algún día agregas un cuarto contenedor real, aquí ajustas.
-  // Por ahora: tratamos "3 calc" como: secondary + tertiary (si existen ambos)
-  var hasSecondary = !!(document.querySelector("#calc-secondary table"));
-  var hasTertiary  = !!(document.querySelector("#calc-tertiary table"));
   var is3 = hasSecondary && hasTertiary;
-
-  var is2 = has2 && !is3;
+  var is2 = (hasSecondary || hasTertiary) && !is3;
 
   [document.documentElement, document.body].forEach(function(el){
     if(!el) return;
+
     el.classList.toggle("has-calc-2", is2);
     el.classList.toggle("has-calc-3", is3);
-    if(is3) el.classList.remove("has-calc-2");
-function markEmpty(sel){
-  var el=document.querySelector(sel);if(!el)return;
-  el.classList.toggle("calc-empty",!el.querySelector("table"));
-}
-markEmpty("#calc-secondary");
-markEmpty("#calc-tertiary");
+    if (is3) el.classList.remove("has-calc-2");
+  });
 
-    
+  // Marca vacíos (para que CSS los oculte)
+  markEmpty("#calc-secondary");
+  markEmpty("#calc-tertiary");
+}
+
+function markEmpty(sel){
+  var el = document.querySelector(sel);
+  if(!el) return;
+  el.classList.toggle("calc-empty", !el.querySelector("table"));
+}
+
   });
 }
 
