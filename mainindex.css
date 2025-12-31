@@ -690,3 +690,23 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   max-height:var(--reel-h-max) !important;
 }
 
+/* =========================================================
+   FIX: Servicios mobile — mostrar TODOS los tabs (7)
+========================================================= */
+@media(max-width:720px){
+  #servicios .reels-home-card .reel-sys-tabs .reel-tab{
+    display:flex !important; /* anula el display:none */
+  }
+  /* grid responsive: 3 columnas en mobile (se envuelve en filas) */
+  #servicios .reels-home-card .reel-sys-tabs{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  }
+}
+
+/* XS: en pantallas muy angostas, 2 columnas para que no se aplaste */
+@media(max-width:380px){
+  #servicios .reels-home-card .reel-sys-tabs{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
