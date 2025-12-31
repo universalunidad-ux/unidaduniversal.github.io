@@ -46,6 +46,15 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
     el.classList.toggle("has-calc-2", is2);
     el.classList.toggle("has-calc-3", is3);
     if(is3) el.classList.remove("has-calc-2");
+function markEmpty(sel){
+  var el=document.querySelector(sel);if(!el)return;
+  el.classList.toggle("calc-empty",!el.querySelector("table"));
+}
+markEmpty("#calc-secondary");
+markEmpty("#calc-tertiary");
+markEmpty("#calc-slot-2");
+
+    
   });
 }
 
