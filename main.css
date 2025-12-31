@@ -480,3 +480,13 @@ body.has-calc-3 #add-more-panel{
   display:none!important;
 }
 
+/* === EXPIRITI PATCH CALC LAYOUT (compact + center + remove empty gap) === */
+@media(min-width:981px){#calc-primary.calc-container,#calc-primary .calc-container{max-width:820px;margin:0 auto}#calc-primary .calc-results table{max-width:640px}#calc-primary form{max-width:820px;margin:0 auto}}
+@media(min-width:981px){.calc-row{align-items:center!important}#calc-slot-2{align-self:center!important}#calc-slot-2.placeholder{height:auto!important;min-height:unset!important;padding:10px 0!important}#calc-slot-2.placeholder>.note{max-width:520px!important;margin:0 auto!important}#calc-slot-2 .note{margin:0 auto!important}}
+@media(min-width:981px){html.has-calc-2 .calc-row,body.has-calc-2 .calc-row{align-items:start!important}}
+html.has-calc-2 #calc-slot-2,body.has-calc-2 #calc-slot-2,html.has-calc-3 #calc-slot-2,body.has-calc-3 #calc-slot-2{display:none!important}
+#calc-slot-2.placeholder{background:transparent!important;border:0!important;box-shadow:none!important}
+#calc-slot-2 .note{border:1px dashed rgba(148,163,184,.28)!important;background:rgba(17,23,35,.28)!important}
+#calc-slot-2:empty{display:none!important}
+
+
