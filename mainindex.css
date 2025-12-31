@@ -609,7 +609,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 }
 
 /* 4) Imagen HERO: SIEMPRE completa (no crop) */
-#heroGalleryCarousel .carousel-slide.hero-slide img{
+#heroGalleryCarousel .hero-slide img{
   width:100%!important;
   height:100%!important;
   display:block!important;
@@ -648,4 +648,25 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
     width:11px!important;height:11px!important;
   }
 }
+/* ===== PATCH FINAL: HERO 600x600 + dots abajo (parser-safe) ===== */
+#heroGalleryCarousel.carousel{display:flex!important;flex-direction:column!important;overflow:hidden!important}
+#heroGalleryCarousel .carousel-track{
+  flex:1 1 auto!important;min-height:0!important;height:100%!important;overflow:hidden!important;
+  aspect-ratio:1/1;
+}
+#heroGalleryCarousel .carousel-slide{height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important}
+#heroGalleryCarousel .hero-slide img{
+  width:100%!important;height:100%!important;display:block!important;
+  object-fit:contain!important;object-position:center!important;background:transparent!important
+}
+#heroGalleryCarousel .carousel-nav{
+  position:static!important;width:fit-content!important;max-width:calc(100% - 24px)!important;
+  margin:10px auto 12px!important;padding:6px 10px!important;gap:8px!important;border-radius:999px!important;
+  background:rgba(7,10,18,.22)!important;border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  pointer-events:auto!important;justify-content:center!important
+}
+#heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
+@media(min-width:981px){#heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}}
+
 
