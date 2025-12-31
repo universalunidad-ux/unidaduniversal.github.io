@@ -1188,3 +1188,32 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 }
 
 
+/* =========================================================
+   FIX HERO FINAL: SIN blur + SIN marco azul
+   - Banner cubre TODO el carrusel (cover)
+   - Fondo fuerte SOLO en la barra de dots
+========================================================= */
+#heroGalleryCarousel.carousel{background:transparent !important;border-color:rgba(255,255,255,.10) !important;}
+#heroGalleryCarousel .carousel-track{background:transparent !important;min-height:0 !important;}
+#heroGalleryCarousel .carousel-slide{background:transparent !important;padding:0 !important;}
+#heroGalleryCarousel .hero-slide img{
+  background:transparent !important;   /* mata el azul/oscuro de la img */
+  width:100% !important;
+  height:100% !important;
+  aspect-ratio:auto !important;        /* mata el 1/1 que tenías */
+  object-fit:cover !important;         /* llena todo */
+  object-position:center !important;
+  display:block !important;
+}
+
+/* La “barra” de dots sí puede tener fondo oscuro (lo que pediste) */
+#heroGalleryCarousel .carousel-nav{
+  background:rgba(7,10,18,.55) !important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:14px;
+  margin:0 10px 10px;
+  pointer-events:auto;
+}
+
