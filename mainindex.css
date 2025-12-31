@@ -475,4 +475,68 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 #heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
 @media(min-width:981px){#heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}}
 
+/* =========================================================
+   PATCH v2025.12.31 — FIX REELS BLANCO + ALIGN SERVICIOS + HERO SIN RECORTE
+   - Reels: thumbnail 16:9 -> cover dentro de 9:16 (adiós fondo blanco)
+   - Servicios desktop: subir card reels y alinear con título/columna
+   - Hero desktop: evitar recorte (contain en vez de cover)
+========================================================= */
+
+/* ============ 1) REELS: quitar “fondo blanco” y que ocupe TODO el 9:16 ============ */
+.reel-embed{background:#050812!important}
+.reel-embed .yt-thumb{
+  all:unset;
+  position:absolute;inset:0;
+  display:block;
+  background:#050812;
+  cursor:pointer;
+}
+.reel-embed .yt-thumb img{
+  width:100%!important;height:100%!important;
+  display:block!important;
+  object-fit:cover!important;         /* <- CLAVE: llena el 9:16 */
+  object-position:center!important;
+}
+.reel-embed .yt-play{pointer-events:none}
+.reel-embed iframe{
+  background:#050812!important;       /* por si YT pinta “flash” */
+  border:0!important;
+}
+
+/* (opcional) si el slide trae padding grande y sientes “marco” extra */
+.carousel[id^="carouselReels"] .carousel-slide{padding:12px!important}
+@media(min-width:980px){
+  .carousel[id^="carouselReels"] .carousel-slide{padding:14px!important}
+}
+
+/* ============ 2) SERVICIOS: subir/alinear carrusel reels en desktop ============ */
+@media(min-width:980px){
+  /* Asegura 2 columnas (cards / reels) alineadas arriba */
+  #servicios .grid-2{align-items:start!important}
+
+  /* El card de reels NO debe “bajar” respecto a la columna de cards */
+  #servicios .reels-home-card{
+    margin-top:0!important;
+    align-self:start!important;
+  }
+
+  /* Título “Reels de servicios…” en blanco (sin gradiente) */
+  #servicios .reels-home-card .title-gradient{
+    background:none!important;
+    color:rgba(232,238,246,.96)!important;
+  }
+}
+
+/* ============ 3) HERO: evitar recorte arriba/abajo (IMG2) ============ */
+/* Tú lo dejaste en cover al final; cámbialo aquí a contain para NO cortar */
+#heroGalleryCarousel .hero-slide img{
+  object-fit:contain!important;
+  object-position:center!important;
+  background:transparent!important;
+}
+
+/* Si quieres que el hero “llene” más sin recortar, reduce un poco padding vertical */
+@media(min-width:980px){
+  .hero .container{padding-top:12px!important;padding-bottom:12px!important}
+}
 
