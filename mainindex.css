@@ -510,3 +510,64 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   padding:8px 10px !important;
 }
 
+
+/* ===== FIX HERO (match img4): card derecho con alto REAL del fold ===== */
+@media(min-width:980px){
+  .hero{min-height:var(--fold-h)!important}
+  .hero-grid{min-height:var(--fold-h)!important}
+
+  /* el card debe “medir” el fold, no solo limitarse */
+  .hero-gallery-card{
+    height:calc(var(--fold-h) - 28px) !important; /* ajusta 28px si quieres +/− aire */
+    max-height:none !important;
+    min-height:560px !important;
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  /* el carrusel se estira y NO se deja dominar por min-heights globales */
+  .hero-gallery-card .hero-carousel{flex:1 1 auto !important; min-height:0 !important}
+  .hero-gallery-card .carousel-track{
+    height:100% !important;
+    min-height:0 !important;
+    align-items:center !important;
+  }
+  .hero-gallery-card .carousel-slide{
+    height:100% !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+
+  /* la imagen ocupa el alto del slide sin deformarse */
+  .hero-slide img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    aspect-ratio:auto !important; /* mata el 1/1 del base si te estaba “cuadrando” */
+  }
+}
+
+/* ===== FIX REELS: menos alto para que quepan flechas + dots ===== */
+
+/* baja el alto “default” del reel (tú decides números) */
+:root{
+  --reel-h-min:210px;
+  --reel-h-mid:34svh;   /* antes 42svh */
+  --reel-h-max:460px;   /* antes 520px */
+}
+
+/* en desktop no lo hagas gigantesco (ahorita lo subes a 52vh/640px) */
+@media(min-width:980px){
+  :root{
+    --reel-w:410px;      /* leve */
+    --reel-h-mid:40vh;   /* antes 52vh */
+    --reel-h-max:520px;  /* antes 640px */
+  }
+}
+
+/* opcional: reduce padding vertical del slide para que no “crezca” */
+.carousel[id^="carouselReels"] .carousel-slide{
+  padding:6px 10px !important; /* antes 8px/10px */
+}
