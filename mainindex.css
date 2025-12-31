@@ -741,3 +741,134 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   #productos-con{padding-top:18px!important}
   #productos-con .prod-tabs{gap:8px}
 }
+
+
+/* === Expiriti PATCH v2025.12.31-FOLD-FIX (pegar al final) === */
+/* OBJ: (1) HERO centrado vertical y full-fold, (2) Sistemas tabs pegados al grid + reels sin scroll, (3) Servicios alineado y menos “aire”, (4) Reel frame menos “azul”, (5) Hero imgs sin recorte */
+
+/* ---------- [A] Helpers anti “hover pegado” / focus ---------- */
+.hero-group-tab:focus:not(:focus-visible),
+.hero-tab:focus:not(:focus-visible),
+.prod-tabs .tab:focus:not(:focus-visible),
+.reel-tab:focus:not(:focus-visible){outline:none}
+.hero-group-tab,.hero-tab,.prod-tabs .tab,.reel-tab{-webkit-tap-highlight-color:transparent}
+
+/* “Hold” visual (como tus iconos que quedan marcados): usa .active (JS) + :active */
+.hero-group-tab.active,.hero-group-tab:active,
+.hero-tab.active,.hero-tab:active,
+.prod-tabs .tab.active,.prod-tabs .tab:active,
+.reel-tab.active,.reel-tab:active{
+  box-shadow:0 0 0 2px rgba(45,212,191,.28),0 10px 26px rgba(0,0,0,.28);
+  border-color:rgba(45,212,191,.45)
+}
+
+/* ---------- [B] HERO: ocupar 1er fold y centrar verticalmente ---------- */
+/* Soporta #hero-gallery / #hero / .hero-gallery / .hero */
+#hero-gallery,#hero,.hero-gallery,.hero{
+  /* sin “aire” extra arriba: el header ya ocupa su espacio */
+  padding-top:0!important;
+  margin-top:0!important;
+  /* alto útil del fold (si tu header es sticky con --gh-height) */
+  min-height:calc(100svh - var(--gh-height,68px));
+  display:flex;
+  align-items:center; /* ✅ centra vertical */
+}
+@media(min-width:981px){
+  #hero-gallery .container,#hero .container,.hero-gallery .container,.hero .container{
+    /* asegura que el grid interno también se estire y centre */
+    min-height:calc(100svh - var(--gh-height,68px));
+    display:grid;
+    align-items:center; /* ✅ centra vertical dentro del grid */
+  }
+}
+
+/* Card de “Conoce más…”: que no se coma el fold */
+#heroGalleryCarousel,.hero #heroGalleryCarousel,.hero-gallery #heroGalleryCarousel{
+  /* limita alto del carrusel al fold real */
+  max-height:clamp(340px,calc(100svh - var(--gh-height,68px) - 210px),560px);
+}
+#heroGalleryCarousel .carousel-track,
+.hero #heroGalleryCarousel .carousel-track,
+.hero-gallery #heroGalleryCarousel .carousel-track{max-height:inherit}
+
+/* Imágenes del HERO: evitar recorte (600x600 no debe “cortarse”) */
+#heroGalleryCarousel .hero-slide img,
+.hero #heroGalleryCarousel .hero-slide img,
+.hero-gallery #heroGalleryCarousel .hero-slide img{
+  width:100%;
+  height:100%;
+  object-fit:contain!important; /* ✅ no recorta */
+  background:rgba(10,17,27,.55);
+  border-radius:14px;
+}
+
+/* ---------- [C] Sistemas: bajar bloque (título + tabs) y pegar tabs al grid ---------- */
+/* baja un poco toda la sección de sistemas para que no se “pegue” al top */
+#productos-con,#productos-con .container{scroll-margin-top:calc(var(--gh-height,68px) + 10px)}
+#productos-con{padding-top:18px!important} /* ✅ baja la sección */
+#productos-con .productos-inline-bar{margin-bottom:10px!important} /* tabs + título más cerca del contenido */
+#productos-con .prod-tabs-shell{gap:10px!important}
+#productos-con .prod-tabs{margin-top:6px!important;margin-bottom:8px!important}
+
+/* si tus tabs “Contables/Comerciales/Nube/Productividad” están arriba (como en img2), reduce su “aire” */
+#productos-con .prod-tabs .tab{padding:.55rem .95rem!important}
+
+/* ---------- [D] Reels (Sistemas + Servicios): -10% alto, sin scroll dentro, proporción correcta ---------- */
+/* Marco “azul fuerte”: bájalo (menos glow + borde más suave) */
+.reels-card,.reels-card.card,
+#reelsCard,.reels-panel,.reels-wrap{
+  box-shadow:0 10px 30px rgba(0,0,0,.22)!important;
+  border:1px solid rgba(96,165,250,.18)!important; /* ✅ menos azul */
+}
+
+/* Quitar “aire” arriba dentro del card de reels */
+.reels-card .card-head,
+.reels-card .reels-head,
+.reels-card > h3,
+.reels-card > h4{
+  margin-top:0!important;
+  padding-top:10px!important; /* ✅ menos aire */
+}
+
+/* El contenedor del embed NO debe scrollear */
+.reel-embed{position:relative;overflow:hidden!important;border-radius:16px}
+.reel-embed iframe,.reel-embed .yt-thumb{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* Altura/ratio del reel: vertical 9:16 y 10% menos alto */
+:root{--reel-max:560px} /* ajustable */
+.reels-card .reel-embed,
+#carouselReels-contable .reel-embed,
+#carouselReels-comercial .reel-embed,
+#carouselReels-nube .reel-embed,
+#carouselReels-productividad .reel-embed,
+#carouselReels-servicios .reel-embed{
+  aspect-ratio:9/16;
+  max-height:calc(var(--reel-max)*.90); /* ✅ -10% */
+  min-height:420px;
+  height:auto;
+}
+
+/* Evita que el carrusel deje “scroll interno” por tamaños raros */
+.carousel{overflow:hidden}
+.carousel-track{overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+.carousel-track::-webkit-scrollbar{display:none}
+
+/* ---------- [E] Servicios: alinear título “Servicios” a la altura del card de reels ---------- */
+/* intenta alinear el encabezado con la fila del grid donde vive reels */
+#servicios .container{padding-top:18px!important}
+#servicios h2,#servicios .section-title,#servicios .title{
+  margin-top:0!important;
+  padding-top:0!important;
+  line-height:1.05!important;
+}
+/* reduce el “aire” sobre el card de reels de servicios */
+#servicios .reels-card{margin-top:0!important}
+
+/* ---------- [F] Mobile ajustes (evitar recortes) ---------- */
+@media(max-width:980px){
+  #hero-gallery,#hero,.hero-gallery,.hero{min-height:calc(100svh - var(--gh-height,68px))}
+  #heroGalleryCarousel{max-height:clamp(300px,calc(100svh - var(--gh-height,68px) - 240px),520px)}
+  :root{--reel-max:520px}
+  #productos-con{padding-top:14px!important}
+}
+
