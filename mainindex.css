@@ -655,3 +655,89 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   :root{ --reel-scale:.92; }
 }
 
+/* =========================
+   Expiriti PATCH v2025.12.31-FOLD-FIX
+   - HERO: full fold + centrado vertical + sin aire bajo header
+   - HERO gallery: card/track más “fit”
+   - SISTEMAS: baja bloque + tabs cerca del grid
+   - REELS: -10% alto + sin “scroll dentro del iframe” + borde/glow menos agresivo
+   - ACTIVE/HOLD: tabs hero + iconos hero (persistente)
+========================= */
+
+/* --- 1) HERO: ocupar 1er fold real (menos header) y centrar --- */
+:root{--fold:calc(100svh - var(--gh-height,68px));--hero-gap:18px;--tabs-gap:10px;--reel-scale:.90;--reel-frame:rgba(45,212,191,.18);--reel-glow:rgba(96,165,250,.12)}
+/* usa svh/dvh para iOS/Chrome; fallback a vh */
+@supports(height:100svh){.hero,#hero,#hero-gallery{min-height:var(--fold)}}
+@supports not (height:100svh){.hero,#hero,#hero-gallery{min-height:calc(100vh - var(--gh-height,68px))}}
+
+.hero,#hero,#hero-gallery{padding-top:0!important;margin-top:0!important;display:flex;align-items:center;scroll-margin-top:calc(var(--gh-height,68px) + 10px)}
+/* tu contenedor principal dentro del hero (ajusta selector si tu markup difiere) */
+.hero .container,#hero .container,#hero-gallery .container{width:100%;padding-top:14px!important;padding-bottom:14px!important}
+.hero .hero-grid,#hero .hero-grid,#hero-gallery .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--hero-gap);align-items:center}
+/* si en tu CSS ya es grid, esto solo “corrige” el alineado vertical */
+@media(max-width:980px){.hero .hero-grid,#hero .hero-grid,#hero-gallery .hero-grid{grid-template-columns:1fr;align-items:stretch}}
+
+/* --- 2) HERO Gallery: sin aire arriba, que “quepa” mejor en fold --- */
+.hero-gallery-card,#heroGalleryCard,.hero .hero-gallery-card{margin-top:0!important}
+.hero-gallery-card .title,#heroGalleryTitle{margin:0 0 8px!important}
+/* tabs del hero (Contables/Comerciales/Nube/Productividad) más compactos y pegados al contenido */
+.hero-gallery-groups,#heroGalleryGroups{margin:6px 0 10px!important;gap:10px}
+.hero-group-tab{padding:8px 14px;border-radius:999px;transition:transform .12s ease,background .12s ease,border-color .12s ease}
+.hero-group-tab.active,.hero-group-tab[aria-selected="true"]{background:rgba(45,212,191,.14);border-color:rgba(45,212,191,.55);box-shadow:0 0 0 2px rgba(45,212,191,.18) inset}
+/* “hold” al click */
+.hero-group-tab:active{transform:translateY(1px) scale(.99)}
+
+/* iconos (sistemas) del hero: mismo “hold/active” persistente */
+.hero-tab{border-radius:14px;transition:transform .12s ease,background .12s ease,border-color .12s ease,box-shadow .12s ease}
+.hero-tab.active,.hero-tab[aria-selected="true"]{background:rgba(96,165,250,.12);border-color:rgba(96,165,250,.45);box-shadow:0 0 0 2px rgba(96,165,250,.18) inset}
+.hero-tab:active{transform:translateY(1px) scale(.985)}
+.hero-tab:focus-visible,.hero-group-tab:focus-visible{outline:2px solid rgba(45,212,191,.55);outline-offset:2px}
+
+/* --- 3) Imágenes del HERO (600x600 se recortan): bajar agresividad del crop --- */
+/* Si tus slides usan img directo: */
+#heroGalleryCarousel .hero-slide img,.hero-slide img{width:100%;height:auto;max-height:min(52svh,560px);object-fit:contain!important;object-position:center center}
+/* Si tu contenedor fuerza alto fijo, esto ayuda a que no “corte” */
+#heroGalleryCarousel .carousel-track,.hero .carousel-track{align-items:center}
+#heroGalleryCarousel .carousel-slide,.hero .carousel-slide{display:flex;align-items:center;justify-content:center}
+
+/* --- 4) SISTEMAS: bajar bloque y acercar tabs al grid --- */
+#productos-con{padding-top:26px!important}
+#productos-con .productos-inline-bar{margin:0 0 10px!important}
+#productos-con .prod-tabs-shell{gap:10px!important}
+#productos-con .prod-tabs{margin-top:6px!important;margin-bottom:10px!important}
+#productos-con .panel-productos{margin-top:8px!important}
+/* si “Sistemas CONTPAQi” quedó demasiado arriba por scroll-margin o padding global */
+#productos-con .prod-title{margin:0 0 8px!important}
+
+/* --- 5) REELS: -10% altura proporcional + quitar scroll interno del iframe --- */
+/* Contenedor reel (tu clase base) */
+.reel-embed{transform:scale(var(--reel-scale));transform-origin:center top}
+/* OJO: scaling reduce visual sin cambiar layout; si te genera “aire” abajo, compénsalo: */
+.reel-embed{margin-bottom:-4%}
+/* evita que el iframe cree scroll interno por tamaño mal calculado */
+.reel-embed iframe{display:block;width:100%;height:100%;border:0;overflow:hidden}
+/* si tu wrapper controla el alto por ratio, fuerza 9:16 más estable */
+.reel-embed{aspect-ratio:9/16;max-height:min(62svh,720px)}
+/* reduce marco azul fuerte (border/glow) */
+.reels-card,.reel-card,.card.reels-card{border-color:var(--reel-frame)!important;box-shadow:0 18px 40px rgba(0,0,0,.35),0 0 0 1px var(--reel-frame) inset,0 0 32px var(--reel-glow)!important}
+/* el “marco” interno del carrusel de reels (si aplica) */
+.carousel.reels,.carousel[id^="carouselReels"],.carousel[id*="Reels"]{box-shadow:none!important;border-color:rgba(255,255,255,.10)!important}
+
+/* --- 6) SERVICIOS: alinear top de grid con top del reel --- */
+#servicios .container{padding-top:18px!important}
+#servicios .services-grid,#servicios .services-wrap,#servicios .grid-services{align-items:start!important}
+#servicios .reels-card,#servicios .card.reels-card{margin-top:0!important}
+#servicios h2,#servicios .section-title{margin-top:0!important}
+
+/* --- 7) Evitar scroll “dentro del reel” por pads/overflow del slide --- */
+.carousel-slide .reel-embed{overflow:hidden}
+.carousel-slide{overflow:hidden}
+
+/* --- 8) Mobile: prioriza fold (menos aire, controles accesibles) --- */
+@media(max-width:980px){
+  .hero,#hero,#hero-gallery{align-items:flex-start}
+  #heroGalleryCarousel .hero-slide img,.hero-slide img{max-height:min(46svh,480px)}
+  .reel-embed{max-height:min(58svh,640px);margin-bottom:-6%}
+  #productos-con{padding-top:18px!important}
+  #productos-con .prod-tabs{gap:8px}
+}
