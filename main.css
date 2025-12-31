@@ -545,3 +545,29 @@ body.has-calc-3 #calc-tertiary.calc-empty{
   display:none!important;
 }
 
+/* =========================================================
+   EXPIRITI — FIX: carrusel muy separado en desktop
+   Causa: #calc-primary tenía max-width + margin:auto (se centraba)
+========================================================= */
+@media(min-width:981px){
+  /* 1) Quita el “centrado” del primary que abre el hueco */
+  #calc-primary{
+    max-width:none!important;
+    margin:0!important;
+    justify-self:stretch!important;
+  }
+
+  /* 2) Ajusta la grilla para que el panel quede más cerca */
+  .calc-row{
+    grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr)!important;
+    gap:12px!important;
+    align-items:start!important;
+  }
+
+  /* 3) Panel/carrusel: controla ancho y alineación */
+  #calc-slot-2{
+    justify-self:end!important;
+    width:min(420px,100%)!important;
+  }
+}
+
