@@ -872,3 +872,120 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   #productos-con{padding-top:14px!important}
 }
 
+
+/* =========================================================
+   Expiriti PATCH ÚNICO v2025.12.31 — HERO FULL-FOLD + SISTEMAS BAJAR
+   Pegar al FINAL de mainindex.css
+   OBJ:
+   (1) HERO como img2: full altura pantalla + centrado vertical (desktop/mobile)
+   (2) Hero gallery no “compactada”: carrusel ocupa altura disponible
+   (3) Imágenes hero sin recorte (contain)
+   (4) Sistemas (título + tabs) menos “arriba” (como img3)
+========================================================= */
+
+/* ---------- 1) HERO: full fold real (svh/dvh) ---------- */
+:root{
+  --fold-h: calc(100svh - var(--gh-height,68px) - var(--safe-top,0px));
+  --hero-pad-y: 14px;     /* padding vertical dentro del hero */
+  --hero-gap: 18px;
+}
+
+/* el body ya tiene padding-top del header; el hero NO debe sumar “aire” extra */
+.hero.section-full{
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* el hero ocupa el fold y centra verticalmente */
+.hero{
+  min-height: var(--fold-h) !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* el grid interno se centra y no queda “abajo” */
+.hero .container.hero-grid{
+  width: 100%;
+  padding-top: var(--hero-pad-y) !important;
+  padding-bottom: var(--hero-pad-y) !important;
+  align-items: center !important; /* para grid */
+  row-gap: var(--hero-gap) !important;
+}
+
+/* desktop: asegura 2 columnas y centrado */
+@media(min-width:980px){
+  .hero .container.hero-grid{
+    min-height: var(--fold-h) !important;
+    grid-template-columns: 1.05fr .95fr !important;
+  }
+}
+
+/* mobile: evita “compactado” y deja respirar lo justo */
+@media(max-width:980px){
+  .hero{
+    align-items: flex-start !important; /* en mobile se ve más natural */
+  }
+  .hero .container.hero-grid{
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+}
+
+/* ---------- 2) HERO gallery card: que el carrusel crezca dentro del fold ---------- */
+.hero-gallery-card{
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  /* limita la card para que quepa en el fold sin empujar el texto */
+  max-height: clamp(520px, calc(var(--fold-h) - 18px), 720px) !important;
+}
+
+/* header/tabs no deben comerse altura de más */
+.hero-gallery-header{flex: 0 0 auto !important;}
+.hero-gallery-groups{flex: 0 0 auto !important; margin: 6px 0 10px !important;}
+.hero-gallery-tabs{flex: 0 0 auto !important;}
+
+/* carrusel: toma el espacio restante */
+.hero-carousel{flex: 1 1 auto !important; display:flex !important; flex-direction:column !important;}
+.hero-carousel .carousel-track{
+  flex: 1 1 auto !important;
+  min-height: 240px !important;
+  height: auto !important;     /* deja que flex mande */
+}
+
+/* imagen hero: NO recorta (contain) */
+.hero-slide img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: rgba(10,17,27,.55);
+}
+
+/* ---------- 3) “Sistemas CONTPAQi” estaba muy arriba: bájalo ---------- */
+#productos-con{
+  /* tu CSS trae margin-top:24px; aquí lo controlamos para que no quede “pegado” */
+  margin-top: 18px !important;
+  padding-top: 18px !important;
+}
+
+/* acerca tabs al contenido (sin que se vea “flotando arriba”) */
+#productos-con .productos-inline-bar{
+  margin: 0 0 12px !important;
+}
+
+/* en desktop, evita que la grilla “align-center” suba demasiado el bloque izquierdo */
+@media(min-width:980px){
+  #productos-con .grid-2.section-cq{
+    align-items: start !important;
+  }
+}
+
+/* en mobile: un poco menos padding para no alargar */
+@media(max-width:980px){
+  #productos-con{
+    margin-top: 14px !important;
+    padding-top: 14px !important;
+  }
+}
+
