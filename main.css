@@ -715,3 +715,158 @@ body.has-calc-3 #calc-tertiary.calc-empty{
   box-shadow:none !important;
 }
 
+/* =========================================================
+   EXPIRITI — PATCH ÚNICO (DEFINITIVO)
+   Objetivo:
+   - Todas las calculadoras (1/2/3) usan MISMO “tamaño” (como 3-up)
+   - En 1 calc: NO se alarga (queda <= ~media página) y el panel derecho queda centrado
+   - En 2 calcs: 2 columnas centradas, mismas medidas
+   - En 3 calcs: 3 columnas centradas, mismas medidas
+   - Mantiene el panel “Agregar 3er sistema” abajo en 2 calcs
+========================================================= */
+
+:root{
+  /* Ajusta aquí si quieres más/menos ancho */
+  --calcW: 420px;   /* ancho máximo de cada calculadora (tamaño “3-up”) */
+  --panelW: 520px;  /* ancho del panel/carrusel derecho */
+}
+
+/* --- Desktop base: 1 calc + panel derecho --- */
+@media (min-width:981px){
+
+  /* Reemplaza cualquier grid anterior */
+  .calc-row{
+    display:grid !important;
+    grid-template-columns: minmax(0,var(--calcW)) minmax(0,var(--panelW)) !important;
+    gap:14px !important;
+    align-items:start !important;
+
+    /* Esto evita que el bloque completo se vea “raro”:
+       deja el calc a la izquierda y el panel en la derecha */
+    justify-content:space-between !important;
+  }
+
+  /* 1) Calculadora principal: NO se estira */
+  #calc-primary{
+    grid-column:1 !important;
+    width:100% !important;
+    max-width:var(--calcW) !important;
+    justify-self:start !important;
+    margin:0 !important;
+  }
+
+  /* 2) Panel derecho (slot-2): centrado en su columna derecha */
+  #calc-slot-2{
+    grid-column:2 !important;
+    width:100% !important;
+    max-width:var(--panelW) !important;
+    justify-self:end !important;      /* columna derecha */
+    align-self:center !important;     /* centrado vertical respecto a la calc */
+    margin:0 !important;
+  }
+
+  /* Si slot-2 usa .placeholder, quítale “card” para que no meta aire raro */
+  #calc-slot-2.placeholder{
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    padding:0 !important;
+    min-height:unset !important;
+    height:auto !important;
+  }
+
+  /* Asegura que el carrusel interno no “empuje” el ancho */
+  .icons-carousel{
+    width:100% !important;
+    max-width:var(--panelW) !important;
+    margin:0 auto !important;
+  }
+
+  /* --- MODO 2 CALCS: 2 columnas con MISMO ancho que 3-up, centradas --- */
+  html.has-calc-2 .calc-row,
+  body.has-calc-2 .calc-row{
+    grid-template-columns: repeat(2, minmax(0,var(--calcW))) !important;
+    justify-content:center !important; /* centra el bloque de 2 calcs */
+    align-items:start !important;
+  }
+
+  html.has-calc-2 #calc-secondary,
+  body.has-calc-2 #calc-secondary{
+    display:block !important;
+    width:100% !important;
+    max-width:var(--calcW) !important;
+    justify-self:stretch !important;
+  }
+
+  /* En 2 calcs NO debe existir el panel derecho en medio */
+  html.has-calc-2 #calc-slot-2,
+  body.has-calc-2 #calc-slot-2{
+    display:none !important;
+  }
+
+  /* Panel “Agregar 3er sistema” centrado abajo (mismo ancho que resumen) */
+  html.has-calc-2 #add-more-panel,
+  body.has-calc-2 #add-more-panel{
+    display:flex !important;
+    grid-column:1 / -1 !important;
+    justify-content:center !important;
+    margin-top:14px !important;
+  }
+  html.has-calc-2 #add-more-panel .note,
+  body.has-calc-2 #add-more-panel .note{
+    width:min(720px,100%) !important;
+    margin:0 auto !important;
+    text-align:center !important;
+  }
+
+  /* --- MODO 3 CALCS: 3 columnas MISMO ancho, centradas --- */
+  html.has-calc-3 .calc-row,
+  body.has-calc-3 .calc-row{
+    grid-template-columns: repeat(3, minmax(0,var(--calcW))) !important;
+    justify-content:center !important; /* centra el bloque de 3 calcs */
+    align-items:start !important;
+  }
+
+  html.has-calc-3 #calc-secondary,
+  body.has-calc-3 #calc-secondary,
+  html.has-calc-3 #calc-tertiary,
+  body.has-calc-3 #calc-tertiary{
+    display:block !important;
+    width:100% !important;
+    max-width:var(--calcW) !important;
+  }
+
+  /* En 3 calcs no hay panel derecho ni add-more */
+  html.has-calc-3 #calc-slot-2,
+  body.has-calc-3 #calc-slot-2,
+  html.has-calc-3 #add-more-panel,
+  body.has-calc-3 #add-more-panel{
+    display:none !important;
+  }
+}
+
+/* --- Mobile/Tablet: 1 columna siempre (sin cambios de tu intención) --- */
+@media (max-width:980px){
+  .calc-row{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+    justify-content:stretch !important;
+  }
+  #calc-primary,#calc-secondary,#calc-tertiary,#calc-slot-2,#add-more-panel{
+    max-width:none !important;
+    width:100% !important;
+  }
+}
+
+/* Si secondary/tertiary vienen vacíos, NO deben reservar espacio */
+#calc-secondary.calc-empty,
+#calc-tertiary.calc-empty{
+  display:none !important;
+  min-height:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
