@@ -27,8 +27,15 @@
   --fold-h:calc(100svh - var(--gh-height,68px) - var(--safe-top,0px));
   --hero-pad-y:14px;--hero-gap:18px;
 
-  /* reels knobs */
-  --reel-w:380px;--reel-h-min:240px;--reel-h-mid:42svh;--reel-h-max:520px;
+/* reels knobs (con escala global) */
+:root{
+  --reel-scale:.85; /* -15% real */
+  --reel-w:380px;
+  --reel-h-min:calc(240px * var(--reel-scale));
+  --reel-h-mid:calc(42svh * var(--reel-scale));
+  --reel-h-max:calc(520px * var(--reel-scale));
+}
+
 }
 *{box-sizing:border-box}
 html,body{height:100%;width:100%;max-width:100%}
@@ -452,3 +459,86 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 #heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
 @media(min-width:981px){#heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}}
 
+/* ===== PATCH FINAL (REEMPLAZO): HERO sin cuadrado + dots abajo + blur más transparente ===== */
+#heroGalleryCarousel{height:100%!important}
+
+/* el contenedor NO recorta la nav; quien recorta es el “track” */
+#heroGalleryCarousel.carousel{
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:visible!important;
+}
+
+/* track: recorta y mantiene el borde del carrusel */
+#heroGalleryCarousel .carousel-track{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  height:100%!important;
+  overflow:hidden!important;
+}
+
+/* slides centrados */
+#heroGalleryCarousel .carousel-slide{
+  height:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* imagen contenida (sin marco) */
+#heroGalleryCarousel .hero-slide img{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  background:transparent!important;
+}
+
+/* NAV: abajo de la imagen, ancho según dots, blur más transparente */
+#heroGalleryCarousel .carousel-nav{
+  position:static!important;
+  width:max-content!important;
+  max-width:calc(100% - 24px)!important;
+  margin:10px auto 12px!important;
+  padding:6px 10px!important;
+  gap:8px!important;
+  border-radius:999px!important;
+
+  /* más transparente */
+  background:rgba(7,10,18,.14)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+
+  pointer-events:auto!important;
+  justify-content:center!important;
+}
+
+#heroGalleryCarousel .carousel-nav .dot{
+  width:12px!important;
+  height:12px!important;
+  border-radius:999px!important;
+}
+
+/* desktop: dots un poco más chicos */
+@media(min-width:981px){
+  #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}
+}
+
+/* ===== OVERRIDES RESPONSIVE DE REELS (AL FINAL) ===== */
+@media(max-width:380px){
+  :root{
+    --reel-w:340px;
+    --reel-h-mid:calc(36svh * var(--reel-scale));
+    --reel-h-max:calc(420px * var(--reel-scale));
+  }
+}
+
+@media(min-width:980px){
+  :root{
+    --reel-w:420px;
+    --reel-h-mid:calc(52vh * var(--reel-scale));
+    --reel-h-max:calc(640px * var(--reel-scale));
+  }
+}
