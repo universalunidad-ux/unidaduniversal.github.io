@@ -420,44 +420,42 @@ function buildReelsSlides(panelKey,sysKey){
   track.innerHTML="";nav.innerHTML="";
   setArrowsEnabled(prev,next,reels.length>1);
 
-  reels.forEach((reel,idx)=>{
-    const slide=document.createElement("div");
-    slide.className="carousel-slide"+(idx===0?" is-active":"");
-const slide=document.createElement("div");
-slide.className="carousel-slide"+(idx===0?" is-active":"");
+reels.forEach((reel,idx)=>{
+  const slide=document.createElement("div");
+  slide.className="carousel-slide"+(idx===0?" is-active":"");
 
-// ✅ el blur va en el SLIDE (marco), no en el reel
-slide.classList.add("blur-frame");
-const thumbUrl = `https://i.ytimg.com/vi/${reel.id}/hqdefault.jpg`;
-slide.style.setProperty("--blur-src", `url("${thumbUrl}")`);
+  // ✅ blur en el SLIDE (marco)
+  slide.classList.add("blur-frame");
+  const thumbUrl=`https://i.ytimg.com/vi/${reel.id}/hqdefault.jpg`;
+  slide.style.setProperty("--blur-src",`url("${thumbUrl}")`);
 
-const wrap=document.createElement("div");
-wrap.className="reel-embed"; // ✅ limpio (sin blur)
-wrap.dataset.ytid=reel.id;
-wrap.dataset.title=reel.title || "";
+  // ✅ reel limpio (sin blur)
+  const wrap=document.createElement("div");
+  wrap.className="reel-embed";
+  wrap.dataset.ytid=reel.id;
+  wrap.dataset.title=reel.title||"";
 
-renderReelThumb(wrap);
+  renderReelThumb(wrap);
 
-slide.appendChild(wrap);
-track.appendChild(slide);
+  slide.appendChild(wrap);
+  track.appendChild(slide);
 
-
-    const dot=document.createElement("button");
-    dot.type="button";
-    dot.className="dot"+(idx===0?" active":"");
-    dot.setAttribute("aria-label","Ir al reel "+(idx+1));
-    on(dot,"click",()=>{
-      const slides=QA(".carousel-slide",track);
-      slides.forEach(s=>s.classList.remove("is-active"));
-      slides[idx]?.classList.add("is-active");
-      QA(".dot",nav).forEach(d=>d.classList.remove("active"));
-      dot.classList.add("active");
-      track.scrollTo({left:slides[idx].offsetLeft,behavior:"smooth"});
-      stopAllReels();
-      setSingleLineReelTitle(cfg,reel.title||"")
-    });
-    nav.appendChild(dot)
+  const dot=document.createElement("button");
+  dot.type="button";
+  dot.className="dot"+(idx===0?" active":"");
+  dot.setAttribute("aria-label","Ir al reel "+(idx+1));
+  on(dot,"click",()=>{
+    const slides=QA(".carousel-slide",track);
+    slides.forEach(s=>s.classList.remove("is-active"));
+    slides[idx]?.classList.add("is-active");
+    QA(".dot",nav).forEach(d=>d.classList.remove("active"));
+    dot.classList.add("active");
+    track.scrollTo({left:slides[idx].offsetLeft,behavior:"smooth"});
+    stopAllReels();
+    setSingleLineReelTitle(cfg,reel.title||"")
   });
+  nav.appendChild(dot);
+});
 
   reels[0]?.title&&setSingleLineReelTitle(cfg,reels[0].title);
 
