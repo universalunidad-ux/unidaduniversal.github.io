@@ -54,9 +54,6 @@ function markEmpty(sel){
   el.classList.toggle("calc-empty", !el.querySelector("table"));
 }
 
-  });
-}
-
     /* =========================================================
        mxnLetra — Convierte número a letra (MXN)
        Ej: 6948.40 -> SEIS MIL NOVECIENTOS CUARENTA Y OCHO PESOS 40/100 M.N.
