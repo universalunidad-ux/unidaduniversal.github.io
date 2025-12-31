@@ -883,4 +883,92 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   padding-top:10px !important;
 }
 
+/* =========================================================
+   FIX REAL BLUR-FILL (HERO + REELS)
+   - Requiere que JS setee: style="--blur-src:url('...')"
+========================================================= */
+
+/* Base blur-fill */
+.blur-fill{
+  position:relative;
+  overflow:hidden;
+  border-radius:inherit;
+  background:#050812; /* fallback */
+}
+
+/* Fondo blur (usa la misma imagen/thumbnail) */
+.blur-fill::before{
+  content:"";
+  position:absolute;
+  inset:-22px;
+  background-image:var(--blur-src);
+  background-size:cover;
+  background-position:center;
+  filter:blur(22px) saturate(1.08);
+  transform:scale(1.10);
+  opacity:.95;
+  z-index:0;
+}
+
+/* Velo sutil arriba para que se vea premium */
+.blur-fill::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.36));
+  z-index:0;
+}
+
+/* Contenido real arriba del blur */
+.blur-fill > *{
+  position:relative;
+  z-index:1;
+}
+
+/* =========================
+   HERO: aplica blur al SLIDE
+========================= */
+#heroGalleryCarousel .carousel-slide.blur-fill{
+  background:transparent !important;
+}
+
+/* Evita que el track ponga “caja” oscura visible detrás */
+#heroGalleryCarousel .carousel,
+#heroGalleryCarousel .carousel-track{
+  background:transparent !important;
+}
+
+/* Imagen “contain” pero con blur detrás (sin franjas negras) */
+#heroGalleryCarousel .carousel-slide.blur-fill img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  background:transparent !important;
+  display:block;
+}
+
+/* =========================
+   REELS: blur al WRAPPER
+========================= */
+#productos-con .reel-embed.blur-fill,
+#servicios     .reel-embed.blur-fill{
+  background:transparent !important;
+}
+
+/* Si usas thumb con <img>, lo dejamos “contain” y blur detrás */
+.reel-embed.blur-fill .yt-thumb img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important; /* mantiene imagen completa */
+  object-position:center !important;
+  background:transparent !important;
+  display:block;
+}
+
+/* El iframe arriba del blur */
+.reel-embed.blur-fill iframe{
+  background:transparent !important;
+  display:block;
+}
 
