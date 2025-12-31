@@ -1,73 +1,56 @@
 <footer class="gf" role="contentinfo" id="gf-root">
 <style>
-/*=== GLOBAL FOOTER (COMPACTO) ===*/
+/*=========================================================
+  Expiriti - GLOBAL FOOTER (V8) — 4 COLUMNAS + LOGOS 2x2
+  - Columnas: Contacto | Marcas | Presencia nacional | (vacío/espaciador opcional NO) -> aquí: Aliados integrado en Marcas
+  - Se elimina: Formas de pago
+  - Marcas: 2x2 (CONTPAQi, Microsoft, HP, ESET) con menos “aire”
+  - Rutas: master root + buildPath (igual que tu header)
+  - Fade-in: .is-loaded
+=========================================================*/
 .gf{margin-top:40px;background:var(--bg,#0b0f14);border-top:1px solid rgba(255,255,255,.06);color:var(--text,#e8eef6);font-family:system-ui,-apple-system,sans-serif}
 .gf *{box-sizing:border-box}
 .gf-container{max-width:var(--maxw,1200px);margin:0 auto;padding:22px 16px}
 
-/* ===== GRID (sin Formas de pago ni Marcas) ===== */
-.gf-grid{display:grid;grid-template-columns:2fr 1.7fr 1.6fr;gap:18px}
-
+/*=== GRID 4 COLUMNAS ===*/
+.gf-grid{display:grid;grid-template-columns:2fr 1.3fr 1.6fr 1.3fr;gap:18px}
 .gf h3.gf-title{margin:0 0 8px;font-size:16px;color:var(--text);text-align:center;font-weight:700}
 .gf .gf-hint{color:var(--muted,#95a2b3);font-size:13px}
 
-/* CONTACTO */
+/*=== CONTACTO ===*/
 .gf-contact{display:flex;flex-direction:column;gap:8px}
 .gf-row{display:flex;gap:8px;align-items:flex-start;font-size:14px}
 .gf-ico{width:18px;height:18px;opacity:.95;flex:0 0 18px;object-fit:contain}
 .gf a{color:var(--text);text-decoration:none;transition:color .2s}
 .gf a:hover{text-decoration:underline;color:#fff}
 
-/* CARDS (Map + Logos) */
+/*=== CARDS / PRESENCIA ===*/
 .gf-presence{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .gf-map-card{background:var(--card,#111723);border:1px solid rgba(255,255,255,.08);border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:14px}
 .gf-map-card img{width:100%;max-width:190px;height:auto;display:block}
 .gf-presence p{margin:0;font-size:13px;color:var(--muted,#cbd5f5);max-width:22rem;line-height:1.4}
 
-/* ===== LOGOS 2x2 (menos “aire” y más compactos) ===== */
-.gf-logos{display:flex;flex-direction:column;gap:10px;align-items:center}
-.gf-logos-grid{
-  width:100%;
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-.gf-logo-card{
-  background:var(--card,#111723);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:6px 10px;             /* menos padding = menos aire */
-  min-height:84px;              /* más compacto */
-  box-shadow:0 10px 26px rgba(0,0,0,.35);
-}
-.gf-logo-card img{
-  height:52px;                  /* más grande = menos “aire” percibido */
-  max-width:100%;
-  width:auto;
-  object-fit:contain;
-  display:block;
-}
-.gf-logo-card.is-wide{grid-column:1/-1;min-height:78px}
-.gf-logo-card.is-wide img{height:46px}
+/*=== MARCAS (LOGOS 2x2) — menos aire ===*/
+.gf-brands{display:flex;flex-direction:column;gap:10px;align-items:center}
+.gf-logos-grid{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.gf-logo-card{background:var(--card,#111723);border:1px solid rgba(255,255,255,.08);border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:6px 10px;min-height:82px}
+.gf-logo-card img{height:52px;max-width:100%;width:auto;object-fit:contain;display:block}
 
-/* BOTTOM & RESPONSIVE */
+/*=== ALIADOS (col 4) ===*/
+.gf-allies{display:flex;flex-direction:column;gap:12px;align-items:center}
+.gf-ally-card{background:var(--card,#111723);border:1px solid rgba(255,255,255,.08);border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(0,0,0,.35);padding:8px 12px;min-height:82px;width:100%}
+.gf-ally-card img{height:46px;max-width:100%;width:auto;object-fit:contain;display:block}
+
+/*=== BOTTOM ===*/
 .gf-bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.06);padding-top:14px;margin-top:16px}
 .gf-brandmini{display:flex;align-items:center;gap:10px}
 .gf-brandmini img{width:50px;height:50px;border-radius:8px;object-fit:cover;background:#1e293b}
 
-@media(max-width:980px){
-  .gf-grid{grid-template-columns:1fr 1fr}
-  /* en tablet: contacto + presencia en 2 cols, logos a 2 cols o full según te guste */
-}
-@media(max-width:640px){
-  .gf-grid{grid-template-columns:1fr}
-  .gf-bottom{flex-direction:column;gap:8px;align-items:flex-start}
-}
+/*=== RESPONSIVE ===*/
+@media(max-width:980px){.gf-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.gf-grid{grid-template-columns:1fr}.gf-bottom{flex-direction:column;gap:8px;align-items:flex-start}}
 
-/* FIX JS LOAD */
+/*=== FADE-IN IMÁGENES ===*/
 .gf img{opacity:0;transition:opacity .3s ease}
 .gf img.is-loaded{opacity:1}
 </style>
@@ -75,7 +58,9 @@
 <div class="gf-container">
   <div class="gf-grid" aria-label="Información de pie de página">
 
-    <!-- CONTACTO -->
+    <!-- =======================================================
+         1) CONTACTO
+    ======================================================== -->
     <section aria-labelledby="gf-contacto">
       <h3 id="gf-contacto" class="gf-title">Contacto</h3>
       <div class="gf-contact">
@@ -98,46 +83,48 @@
       </div>
     </section>
 
-    <!-- PRESENCIA -->
+    <!-- =======================================================
+         2) MARCAS (2x2) — 4º icono: ESET
+    ======================================================== -->
+    <section aria-labelledby="gf-marcas">
+      <h3 id="gf-marcas" class="gf-title">Marcas</h3>
+      <div class="gf-brands" aria-label="Marcas">
+        <div class="gf-logos-grid" aria-label="Logos 2x2">
+          <div class="gf-logo-card"><img class="js-abs-src" data-src="IMG/contpaqi.webp" alt="CONTPAQi" width="180" height="60"></div>
+          <div class="gf-logo-card"><img class="js-abs-src" data-src="IMG/microsoft.webp" alt="Microsoft" width="180" height="60"></div>
+          <div class="gf-logo-card"><img class="js-abs-src" data-src="IMG/hpserver.webp" alt="HP ProLiant Servers" width="180" height="60"></div>
+          <div class="gf-logo-card"><img class="js-abs-src" data-src="IMG/eset.webp" alt="ESET" width="180" height="60"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         3) PRESENCIA NACIONAL
+    ======================================================== -->
     <section aria-labelledby="gf-presencia">
       <h3 id="gf-presencia" class="gf-title">Presencia nacional</h3>
       <div class="gf-presence">
-        <div class="gf-map-card">
-          <img class="js-abs-src" data-src="IMG/mexico.webp" alt="Mapa México" width="190" height="120">
-        </div>
+        <div class="gf-map-card"><img class="js-abs-src" data-src="IMG/mexico.webp" alt="Mapa México" width="190" height="120"></div>
         <p>Atendemos clientes en los 32 estados de la República Mexicana.</p>
       </div>
     </section>
 
-    <!-- LOGOS (2x2) -->
-    <section aria-labelledby="gf-logos">
-      <h3 id="gf-logos" class="gf-title">Marcas y aliados</h3>
-
-      <div class="gf-logos">
-        <div class="gf-logos-grid" aria-label="Logos de marcas y aliados">
-          <div class="gf-logo-card">
-            <img class="js-abs-src" data-src="IMG/contpaqi.webp" alt="CONTPAQi" width="180" height="60">
-          </div>
-          <div class="gf-logo-card">
-            <img class="js-abs-src" data-src="IMG/microsoft.webp" alt="Microsoft" width="180" height="60">
-          </div>
-          <div class="gf-logo-card">
-            <img class="js-abs-src" data-src="IMG/hpserver.webp" alt="HP ProLiant Servers" width="180" height="60">
-          </div>
-          <div class="gf-logo-card">
-            <img class="js-abs-src" data-src="IMG/bni.webp" alt="BNI" width="150" height="48">
-          </div>
-
-          <!-- Si quieres conservar Ligo sin “romper” el 2x2, lo dejo como fila extra centrada -->
-          <div class="gf-logo-card is-wide">
-            <img class="js-abs-src" data-src="IMG/ligo.webp" alt="Ligo" width="150" height="48">
-          </div>
-        </div>
+    <!-- =======================================================
+         4) ALIADOS (columna 4) — integrado visualmente (no mezcla con Marcas)
+    ======================================================== -->
+    <section aria-labelledby="gf-aliados">
+      <h3 id="gf-aliados" class="gf-title">Aliados</h3>
+      <div class="gf-allies" aria-label="Aliados">
+        <div class="gf-ally-card"><img class="js-abs-src" data-src="IMG/bni.webp" alt="BNI" width="150" height="48"></div>
+        <div class="gf-ally-card"><img class="js-abs-src" data-src="IMG/ligo.webp" alt="Ligo" width="150" height="48"></div>
       </div>
     </section>
 
   </div>
 
+  <!-- =========================================================
+       BOTTOM: BRAND + LEGALES
+  ========================================================== -->
   <div class="gf-bottom" aria-label="Información legal">
     <div class="gf-brandmini">
       <img class="js-abs-src" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="50" height="50">
@@ -154,53 +141,55 @@
 </div>
 
 <script>
+/*=========================================================
+  Expiriti - Footer Router (V8)
+  - buildPath: convierte data-src/data-href en rutas absolutas
+  - GitHub Pages + dominio custom
+=========================================================*/
 (function(){
   "use strict";
   function getMasterRoot(){
-    const meta = document.querySelector('meta[name="expiriti-base"]');
-    if (meta && meta.content){
-      let r = meta.content.trim();
-      if (!r.startsWith("/")) r = "/" + r;
-      if (!r.endsWith("/")) r = r + "/";
+    const meta=document.querySelector('meta[name="expiriti-base"]');
+    if(meta&&meta.content){
+      let r=meta.content.trim();
+      if(!r.startsWith("/")) r="/"+r;
+      if(!r.endsWith("/")) r=r+"/";
       return r;
     }
-    const path = window.location.pathname;
-    const parts = path.split("/").filter(Boolean);
-    if (window.location.hostname.includes("github.io") && parts.length > 0){
-      return "/" + parts[0] + "/";
-    }
+    const path=window.location.pathname;
+    const parts=path.split("/").filter(Boolean);
+    if(window.location.hostname.includes("github.io")&&parts.length>0) return "/"+parts[0]+"/";
     return "/";
   }
-  const ROOT = getMasterRoot();
-
+  const ROOT=getMasterRoot();
   function buildPath(raw){
-    if (!raw) return "#";
-    if (/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw)) return raw;
-    const clean = raw.replace(/^\//,"");
-    return window.location.origin + ROOT + clean;
+    if(!raw) return "#";
+    if(/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw)) return raw;
+    const clean=raw.replace(/^\//,"");
+    return window.location.origin+ROOT+clean;
   }
 
-  const footer = document.getElementById("gf-root");
-  if(footer){
-    const imgs = footer.querySelectorAll(".js-abs-src");
-    imgs.forEach(img => {
-      const raw = img.getAttribute("data-src");
-      if(raw){
-        img.src = buildPath(raw);
-        img.onload = () => img.classList.add("is-loaded");
-        if(img.complete) img.classList.add("is-loaded");
-      }
-    });
+  const footer=document.getElementById("gf-root");
+  if(!footer) return;
 
-    const links = footer.querySelectorAll(".js-abs-href");
-    links.forEach(a => {
-      const raw = a.getAttribute("data-href");
-      if(raw) a.href = buildPath(raw);
-    });
+  /* Imágenes */
+  footer.querySelectorAll(".js-abs-src").forEach(img=>{
+    const raw=img.getAttribute("data-src");
+    if(!raw) return;
+    img.src=buildPath(raw);
+    img.onload=()=>img.classList.add("is-loaded");
+    if(img.complete) img.classList.add("is-loaded");
+  });
 
-    const ySpan = document.getElementById("gf-year");
-    if(ySpan) ySpan.textContent = new Date().getFullYear();
-  }
+  /* Links */
+  footer.querySelectorAll(".js-abs-href").forEach(a=>{
+    const raw=a.getAttribute("data-href");
+    if(raw) a.href=buildPath(raw);
+  });
+
+  /* Año */
+  const ySpan=document.getElementById("gf-year");
+  if(ySpan) ySpan.textContent=new Date().getFullYear();
 })();
 </script>
 </footer>
