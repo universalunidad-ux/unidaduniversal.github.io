@@ -19,22 +19,18 @@
   --safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
   --safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px);
 
+  /* fold real */
+  --fold-h:calc(100svh - var(--gh-height,68px) - var(--safe-top,0px));
+  --hero-pad-y:14px;--hero-gap:18px;
+
   /* REELS (-15% global) */
   --reel-scale:.85;
   --reel-h-min:calc(240px * var(--reel-scale));
   --reel-h-mid:calc(42svh * var(--reel-scale));
   --reel-h-max:calc(520px * var(--reel-scale));
+} /* <- CIERRA :root AQUÍ */
 
-  /* split bg (fallback si no hay JS splitbg) */
-  --split-hero:740px;--split-promos:1650px;--split-contacto:2550px;
-  --split-sistemas:680px;--split-sectores-end:1400px;--split-servicios-end:2200px;--split-promos-2:2600px;
 
-  /* fold real */
-  --fold-h:calc(100svh - var(--gh-height,68px) - var(--safe-top,0px));
-  --hero-pad-y:14px;--hero-gap:18px;
-}
-
-/* ===== REELS: overrides responsivos (FUERA de :root) ===== */
 @media(max-width:380px){
   :root{
     --reel-h-mid:calc(36svh * var(--reel-scale));
