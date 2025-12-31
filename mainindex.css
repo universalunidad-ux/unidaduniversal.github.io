@@ -1035,3 +1035,35 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   align-items:stretch;
 }
 
+/* =========================================================
+   TABS/BADGES: evita recorte inferior (mobile+desktop)
+========================================================= */
+
+/* contenedores típicos de tabs */
+.prod-tabs,
+.hero-gallery-groups,
+.hero-gallery-tabs,
+#heroGalleryGroups,
+#heroGalleryTabs,
+#sistemasTabs,
+.sistemas-tabs,
+.promo-tabs,
+.promo-filters{
+  overflow:visible !important;     /* clave: que no recorte */
+  padding-bottom:10px;             /* aire para la “panza” del pill */
+}
+
+/* Si algún card/section padre está recortando, esto lo neutraliza */
+.section-cq,
+#productos-con,
+#servicios,
+#promociones{
+  overflow:visible;
+}
+
+/* los botones tipo pill a veces se recortan por line-height bajo */
+.prod-tabs .tab,
+.hero-group-tab{
+  line-height:1.15;
+}
+
