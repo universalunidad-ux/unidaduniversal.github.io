@@ -19,6 +19,12 @@
   --safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
   --safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px);
 
+  /* REELS (-15% global) */
+  --reel-scale:.85;
+  --reel-h-min:calc(240px * var(--reel-scale));
+  --reel-h-mid:calc(42svh * var(--reel-scale));
+  --reel-h-max:calc(520px * var(--reel-scale));
+
   /* split bg (fallback si no hay JS splitbg) */
   --split-hero:740px;--split-promos:1650px;--split-contacto:2550px;
   --split-sistemas:680px;--split-sectores-end:1400px;--split-servicios-end:2200px;--split-promos-2:2600px;
@@ -26,13 +32,9 @@
   /* fold real */
   --fold-h:calc(100svh - var(--gh-height,68px) - var(--safe-top,0px));
   --hero-pad-y:14px;--hero-gap:18px;
-
-:root{
-  --reel-scale:.85; /* -15% */
-  --reel-h-min:calc(240px * var(--reel-scale));
-  --reel-h-mid:calc(42svh * var(--reel-scale));
-  --reel-h-max:calc(520px * var(--reel-scale));
 }
+
+/* ===== REELS: overrides responsivos (FUERA de :root) ===== */
 @media(max-width:380px){
   :root{
     --reel-h-mid:calc(36svh * var(--reel-scale));
@@ -47,7 +49,6 @@
 }
 
 
-}
 *{box-sizing:border-box}
 html,body{height:100%;width:100%;max-width:100%}
 html,body{overflow-x:hidden;overscroll-behavior-x:none}
@@ -236,13 +237,11 @@ button,input,select,textarea{font:inherit}
 .reels-home-card .hint{margin:0 0 6px!important}
 .reels-home-card .reel-title{margin:0 0 6px!important;min-height:18px!important;line-height:1.15!important;font-weight:900;letter-spacing:.1px;color:rgba(232,238,246,.96)}
 .reel-embed{
-/* ===== FIX REELS: tamaño controlado por ALTURA (no por ancho) ===== */
-.reel-embed{
   position:relative;
   aspect-ratio:9/16;
-  height:clamp(var(--reel-h-min),var(--reel-h-mid),var(--reel-h-max)); /* <- manda la altura */
-  width:auto;                           /* <- el ancho lo calcula el aspect-ratio */
-  max-width:100%;                       /* <- nunca se pasa del card */
+  height:clamp(var(--reel-h-min),var(--reel-h-mid),var(--reel-h-max));
+  width:auto;
+  max-width:100%;
   border-radius:14px;
   overflow:hidden;
   background:#050812;
@@ -250,11 +249,7 @@ button,input,select,textarea{font:inherit}
   margin:0 auto;
 }
 .reel-embed iframe,.reel-embed .yt-thumb{position:absolute;inset:0;width:100%;height:100%}
-
-.reel-embed iframe,.reel-embed .yt-thumb{position:absolute;inset:0;width:100%;height:100%}
 .reel-embed iframe{border:0;pointer-events:auto;background:#050812}
-.reel-embed .yt-thumb{border:0;background:transparent;padding:0;cursor:pointer}
-.reel-embed .yt-thumb img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;display:block;background:#050812!important}
 
 /* reels tabs (estilo “logos”) */
 .reel-sys-tabs{display:grid!important;gap:12px!important;padding:12px 12px 14px!important;margin-top:12px;overflow:visible!important;max-width:100%;grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -457,128 +452,26 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 
 
 
+/* ===== HERO FULL-BLEED + dots abajo (ÚNICO) ===== */
+#heroGalleryCarousel.carousel{display:flex!important;flex-direction:column!important;overflow:visible!important}
+#heroGalleryCarousel .carousel-track{flex:1 1 auto!important;min-height:0!important;height:100%!important;overflow:hidden!important}
+#heroGalleryCarousel .carousel-slide{height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
 
-/* ===== PATCH FINAL: HERO 600x600 + dots abajo (parser-safe) ===== */
-#heroGalleryCarousel{height:100%!important}
-#heroGalleryCarousel.carousel{display:flex!important;flex-direction:column!important;overflow:hidden!important}
-#heroGalleryCarousel .carousel-track{
-  flex:1 1 auto!important;min-height:0!important;height:100%!important;overflow:hidden!important;
-  aspect-ratio:1/1;
-}
-#heroGalleryCarousel .carousel-slide{height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important}
+/* Full-bleed hasta flechas */
 #heroGalleryCarousel .hero-slide img{
   width:100%!important;height:100%!important;display:block!important;
-  object-fit:contain!important;object-position:center!important;background:transparent!important
+  object-fit:cover!important;object-position:center!important;background:transparent!important
 }
+
+/* dots abajo, blur más transparente y ancho según dots */
 #heroGalleryCarousel .carousel-nav{
-  position:static!important;width:fit-content!important;max-width:calc(100% - 24px)!important;
+  position:static!important;width:max-content!important;max-width:calc(100% - 24px)!important;
   margin:10px auto 12px!important;padding:6px 10px!important;gap:8px!important;border-radius:999px!important;
-  background:rgba(7,10,18,.22)!important;border:1px solid rgba(255,255,255,.10)!important;
+  background:rgba(7,10,18,.14)!important;border:1px solid rgba(255,255,255,.10)!important;
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   pointer-events:auto!important;justify-content:center!important
 }
 #heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
 @media(min-width:981px){#heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}}
 
-/* ===== PATCH FINAL (REEMPLAZO): HERO sin cuadrado + dots abajo + blur más transparente ===== */
-#heroGalleryCarousel{height:100%!important}
-
-/* el contenedor NO recorta la nav; quien recorta es el “track” */
-#heroGalleryCarousel.carousel{
-  display:flex!important;
-  flex-direction:column!important;
-  overflow:visible!important;
-}
-
-/* track: recorta y mantiene el borde del carrusel */
-#heroGalleryCarousel .carousel-track{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  height:100%!important;
-  overflow:hidden!important;
-}
-
-/* slides centrados */
-#heroGalleryCarousel .carousel-slide{
-  height:100%!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-
-/* imagen contenida (sin marco) */
-#heroGalleryCarousel .hero-slide img{
-  width:100%!important;
-  height:100%!important;
-  display:block!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  background:transparent!important;
-}
-
-/* NAV: abajo de la imagen, ancho según dots, blur más transparente */
-#heroGalleryCarousel .carousel-nav{
-  position:static!important;
-  width:max-content!important;
-  max-width:calc(100% - 24px)!important;
-  margin:10px auto 12px!important;
-  padding:6px 10px!important;
-  gap:8px!important;
-  border-radius:999px!important;
-
-  /* más transparente */
-  background:rgba(7,10,18,.14)!important;
-  border:1px solid rgba(255,255,255,.10)!important;
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-
-  pointer-events:auto!important;
-  justify-content:center!important;
-}
-
-#heroGalleryCarousel .carousel-nav .dot{
-  width:12px!important;
-  height:12px!important;
-  border-radius:999px!important;
-}
-
-/* desktop: dots un poco más chicos */
-@media(min-width:981px){
-  #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}
-}
-
-/* ===== OVERRIDES RESPONSIVE DE REELS (AL FINAL) ===== */
-@media(max-width:380px){
-  :root{
-    --reel-w:340px;
-    --reel-h-mid:calc(36svh * var(--reel-scale));
-    --reel-h-max:calc(420px * var(--reel-scale));
-  }
-}
-
-@media(min-width:980px){
-  :root{
-    --reel-w:420px;
-    --reel-h-mid:calc(52vh * var(--reel-scale));
-    --reel-h-max:calc(640px * var(--reel-scale));
-  }
-}
-
-/* ===== FIX HERO FULL-BLEED (imagen de flecha a flecha) ===== */
-#heroGalleryCarousel .carousel-track{min-height:0!important}
-#heroGalleryCarousel .carousel-slide{padding:0!important}
-
-/* Quita “contain” y llena todo el carrusel */
-#heroGalleryCarousel .hero-slide img{
-  width:100%!important;
-  height:100%!important;
-  object-fit:cover!important;      /* <- clave */
-  object-position:center!important;
-  background:transparent!important;
-}
-
-   /* ===== REELS mobile: menos padding para que no se “aplasten” ===== */
-@media(max-width:980px){
-  .carousel[id^="carouselReels"] .carousel-slide{padding:10px!important}
-}
 
