@@ -380,8 +380,17 @@ function initHeroGallery(){
    9) REELS: DATA (TUS DATAS)
 ========================================================= */
 const REELS_DATA={contable:{titleEl:Q("#reelTitle-contable"),carousel:Q("#carouselReels-contable"),defaultSys:"contabilidad",reelsBySys:{contabilidad:[{id:"yblBsFFv6bc",title:"Contabilidad y Contabiliza te ayudan en la DIOT"},{id:"BIhYNn2O0og",title:"Evita errores en la DIOT con Contabilidad"},{id:"rESYB37TP-M",title:"Declaración anual en 5 pasos con Contabilidad"},{id:"LqptaBOF7h4",title:"Fernanda redujo su carga contable con Contabilidad"}],nominas:[{id:"gae67GDse30",title:"Nóminas y Personia | Checador por GPS"},{id:"8-2rT99euog",title:"Nóminas | Software #1 en México"},{id:"2eVOzoBoP6s",title:"Nóminas | Automatiza tus procesos"},{id:"nLRgiOPQM80",title:"App Colabora gratis con Nóminas"},{id:"MfiiX1La2vQ",title:"Qué hace CONTPAQi Nóminas por ti"}],bancos:[{id:"3YUbSEyU678",title:"Conciliación bancaria en 3 pasos con Bancos"},{id:"LC1Ccpv_jzo",title:"4 señales de que necesitas Bancos"}],xml:[{id:"nhoUDNnGQ90",title:"El día que José dejó de sufrir con el SAT descargando CFDIs"}]}},comercial:{titleEl:Q("#reelTitle-comercial"),carousel:Q("#carouselReels-comercial"),defaultSys:"pro",reelsBySys:{start:[{id:"XvBHmrMRv64",title:"Trazabilidad avanzada en inventarios"}],pro:[{id:"-SJq6t2SM7c",title:"Flujo completo con Comercial Pro"},{id:"rEYzPXOX1_Y",title:"Comercial Pro: control total de inventario"}],premium:[{id:"IYwNBfmWxJU",title:"Controla tus inventarios con Comercial Premium"},{id:"_Krv5nTyFuY",title:"Notas de venta más rápido en Comercial Premium"},{id:"HmgOQrasCVw",title:"Notas de venta en Comercial Premium"},{id:"WGPOzQ1GsSE",title:"Documentos por WhatsApp en Comercial Premium"}],factura:[{id:"nMEgM_BvxTs",title:"Factura Electrónica v13 | Novedades"},{id:"IA5-tguZzCc",title:"Carta Porte CFDI 3.1 en Factura Electrónica"},{id:"2uBSGZHLsGs",title:"Factura Electrónica para sector notarial"}]}},nube:{titleEl:Q("#reelTitle-nube"),carousel:Q("#carouselReels-nube"),defaultSys:"contabiliza",reelsBySys:{contabiliza:[{id:"yblBsFFv6bc",title:"Contabilidad y Contabiliza te ayudan en la DIOT"}],personia:[{id:"gae67GDse30",title:"Nóminas y Personia | Checador por GPS"}],vende:[{id:"AxadLJcVo4M",title:"Caso de éxito CONTPAQi Vende"},{id:"UPyufjDByNc",title:"Testimonio CONTPAQi Vende"},{id:"Grx1woHMGsU",title:"Vende en la nube"},{id:"2Ty_SD8B_FU",title:"Vende | Carta Porte fácil y rápida"}]}},productividad:{titleEl:Q("#reelTitle-productividad"),carousel:Q("#carouselReels-productividad"),defaultSys:"evalua",reelsBySys:{analiza:[{id:"wr-eeR3eE7w",title:"Analiza | Conciliación fiscal y bancaria"},{id:"gAIGxMHaCLQ",title:"Analiza | Identifica descuadres CFDIs y Nóminas"},{id:"iEQM_21OmBI",title:"Conciliación fiscal y contable con Analiza"}],evalua:[{id:"Cn1A4-GJiNs",title:"Evalúa"}],colabora:[{id:"XJQDFDowH0U",title:"Colabora, app sin costo con Nóminas"},{id:"nLRgiOPQM80",title:"App Colabora gratis con Nóminas"}]}},
-                  servicios:{titleEl:null,carousel:Q("#carouselReels-servicios"),defaultSys:"polizas",reelsBySys:{implementaciones:[{id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"}],migraciones:[{id:"4QqrKkTPZ6U",title:"Testimonio Uriel: Migración a CONTPAQi"}],desarrollos:[{id:"JkrDOjWV1Gs",title:"Testimonio Sara: Soft Restaurant"},{id:"uBl5UWkwbr8",title:"Testimonio Luis: Desarrollo en Nóminas"}],servidores:[{id:"Vmf2CcSd8G4",title:"Testimonio Erika: Servidores Virtuales"}],cursos:[{id:"TgAkwNt4YCA",title:"Testimonio Ana: Curso Contabilidad"}],soporte:[{id:"inPKGICgxLc",title:"Testimonio Jaquie: Soporte Técnico"}],polizas:[{id:"sTvwf2ISsJU"}]}};
+servicios:{titleEl:null,carousel:Q("#carouselReels-servicios"),defaultSys:"polizas",reelsBySys:{
+  implementaciones:[{id:"aHGJ-TNpJ-U",title:"Testimonio Martha: Implementación Contable"}],
+  migraciones:[{id:"4QqrKkTPZ6U",title:"Testimonio Uriel: Migración a CONTPAQi"}],
+  desarrollos:[{id:"JkrDOjWV1Gs",title:"Testimonio Sara: Soft Restaurant"},{id:"uBl5UWkwbr8",title:"Testimonio Luis: Desarrollo en Nóminas"}],
+  servidores:[{id:"Vmf2CcSd8G4",title:"Testimonio Erika: Servidores Virtuales"}],
+  cursos:[{id:"TgAkwNt4YCA",title:"Testimonio Ana: Curso Contabilidad"}],
+  soporte:[{id:"inPKGICgxLc",title:"Testimonio Jaquie: Soporte Técnico"}],
+  polizas:[{id:"sTvwf2ISsJU"}]
+}}};
 
+                  
 /* 10) REELS helpers ========================= */
 function setArrowsEnabled(prev,next,enabled){[prev,next].forEach(btn=>{if(!btn)return;btn.style.pointerEvents=enabled?"":"none";btn.style.opacity=enabled?"":"0.35";btn.setAttribute("aria-disabled",enabled?"false":"true");btn.classList.toggle("is-disabled",!enabled);"disabled"in btn&&(btn.disabled=!enabled)})}
 function setSingleLineReelTitle(c,t){if(!c||!c.titleEl)return;c.titleEl.textContent=t||""}
@@ -451,12 +460,12 @@ reels.forEach((reel,idx)=>{
     dot.classList.add("active");
     track.scrollTo({left:slides[idx].offsetLeft,behavior:"smooth"});
     stopAllReels();
-    setSingleLineReelTitle(cfg,reel.title||"")
+panelKey!=="servicios"&&setSingleLineReelTitle(cfg,reel.title||"");
   });
   nav.appendChild(dot);
 });
 
-  reels[0]?.title&&setSingleLineReelTitle(cfg,reels[0].title);
+  panelKey!=="servicios"&&reels[0]?.title&&setSingleLineReelTitle(cfg,reels[0].title);
 
   requestAnimationFrame(()=>{
     unlock();
@@ -488,7 +497,7 @@ function initReelsCarousel(panelKey){
       dotsFor().forEach((d,k)=>d.classList.toggle("active",k===idx));
       track.scrollTo({left:slides[idx].offsetLeft,behavior:"smooth"});
       const sys=cfg._activeSys||cfg.defaultSys,reels=cfg.reelsBySys[sys]||[];
-      setSingleLineReelTitle(cfg,reels[idx]?.title||"");
+panelKey!=="servicios"&&setSingleLineReelTitle(cfg,reels[idx]?.title||"");
       stopAllReels()
     };
     on(prev,"click",()=>{const slides=slidesFor();if(slides.length<=1)return;const i=slides.findIndex(s=>s.classList.contains("is-active"));goTo(i-1)});
@@ -506,7 +515,7 @@ function initReelsCarousel(panelKey){
       slides.forEach((s,k)=>s.classList.toggle("is-active",k===idx));
       dotsFor().forEach((d,k)=>d.classList.toggle("active",k===idx));
       const sys=cfg._activeSys||cfg.defaultSys,reels=cfg.reelsBySys[sys]||[];
-      setSingleLineReelTitle(cfg,reels[idx]?.title||"") /* 🚫 NO stopAllReels() aquí */
+panelKey!=="servicios"&&setSingleLineReelTitle(cfg,reels[idx]?.title||""); /* no stopAllReels aquí */
     };
     on(track,"scroll",()=>{raf&&cancelAnimationFrame(raf);raf=requestAnimationFrame(syncFromScroll)},{passive:true});
     on(window,"resize",()=>{lastIdx=-1;const slides=slidesFor();slides.length&&buildOffsetsCache(track,slides);syncFromScroll()})
@@ -555,7 +564,7 @@ function initReelsTabs(){
       buildReelsSlides(panelKey,sysKey);
       const reels0=cfg?.reelsBySys?.[sysKey]||[];
       cfg?.carousel?.querySelector(".carousel-track")?.scrollTo({left:0,behavior:"auto"});
-      setSingleLineReelTitle(cfg,reels0[0]?.title||"")
+      panelKey!=="servicios"&&setSingleLineReelTitle(cfg,reels0[0]?.title||"");
        window.dispatchEvent(new Event("splitbg:update"));
 
     })
