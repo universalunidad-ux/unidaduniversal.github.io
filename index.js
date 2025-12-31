@@ -242,7 +242,7 @@ function buildHeroGallerySlides(groupKey,sysKey){
     const img=document.createElement("img");
     img.src=prefix(item.src);
     img.alt=item.title||sys.label||"Expiriti";
-    img.width=550;img.height=550;
+img.width=600;img.height=600;
     img.decoding="async";
 
     const isLCP=(groupKey===HERO_GALLERY.defaultGroup&&sysKey===g.defaultSys&&idx===0);
