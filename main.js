@@ -523,3 +523,20 @@ links.forEach(a=>a.addEventListener("click",close));
 D.addEventListener("keydown",e=>{if(e.key==="Escape")close()})})();
 
 })();
+
+// Expiriti: reel-fit (opcional) — ajusta altura del reel según viewport real
+(() => {
+  const root = document.documentElement;
+  const apply = () => {
+    const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    // reserva aprox: header + paddings + títulos/tabs (ajusta si quieres)
+    const reserve = Math.max(220, Math.min(320, Math.round(vh * 0.28)));
+    const max = Math.max(320, Math.min(640, vh - reserve));
+    root.style.setProperty('--reel-h-mid', Math.round(max * 0.78) + 'px');
+    root.style.setProperty('--reel-h-max', Math.round(max) + 'px');
+  };
+  apply();
+  window.addEventListener('resize', apply, { passive:true });
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', apply, { passive:true });
+})();
+
