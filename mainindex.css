@@ -529,3 +529,18 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 :root{ --reel-w:calc(380px * var(--reel-scale)); }
 @media(min-width:980px){ :root{ --reel-w:calc(420px * var(--reel-scale)); } }
 @media(max-width:380px){ :root{ --reel-w:calc(340px * var(--reel-scale)); } }
+
+/* ===== FIX: HERO sin recorte (no “cortadas”) ===== */
+#heroGalleryCarousel .hero-slide,
+#heroGalleryCarousel .carousel-slide{
+  background:#050812!important; /* o tu card-2 */
+}
+
+#heroGalleryCarousel .hero-slide img,
+#heroGalleryCarousel .carousel-slide img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;     /* <- clave */
+  object-position:center!important;
+}
+
