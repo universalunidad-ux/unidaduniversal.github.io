@@ -1,10 +1,11 @@
 /* =========================================================
-   Expiriti - mainindex.css (FINAL CONSOLIDADO + FIX SPLITS)
-   - SIN duplicados (1 :root / 1 body bg)
-   - FIX fondo: no más “blanco” + splits estables
-   - Mantiene: HERO, section-cq, prod-tabs, REELS 9:16
-   - Mantiene: controles YouTube clicables (dots no tapan iframe)
-   - Mantiene: patch align Sistemas vs Reels (desktop)
+   Expiriti - mainindex.css (FINAL ÚNICO + CONSOLIDADO)
+   - 1 :root (tokens + safe-area + splits)
+   - 1 body background (splits por secciones)
+   - HERO + sistemas + reels 9:16 + promos + forms
+   - Reels: Servicios=3 columnas, demás=2 (MOBILE + DESKTOP)
+   - Iconos Reels “tipo HERO” (logo grande, sin padding raro)
+   - PageSpeed: sin :has(), sin sombras pesadas, content-visibility donde conviene
 ========================================================= */
 
 /* ===== [0] TOKENS + BASE ===== */
@@ -16,50 +17,38 @@
   --safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
   --safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px);
 
-  /* Splits (JS puede actualizarlos; defaults seguros) */
-  --split-hero: 740px;      /* fin de HERO */
-  --split-promos: 1650px;   /* inicio de PROMOS */
-  --split-contacto: 2550px; /* inicio de CONTACTO */
+  /* Splits (fallback; si luego usas JS para recalcular, que actualice estos) */
+  --split-sistemas:680px;--split-sectores-end:1400px;--split-servicios-end:2200px;--split-promos:2600px;
 }
 *{box-sizing:border-box}
 html,body{height:100%;width:100%;max-width:100%}
 html,body{overflow-x:hidden}
 @supports(overflow:clip){html,body{overflow-x:clip}}
 html,body{overscroll-behavior-x:none}
-
-/* Anti-blanco garantizado */
 html{background-color:var(--bg-2)}
-body{background-color:var(--bg-2)}
-
-/* Fondo por tramos + radiales (ÚNICO) */
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  color:var(--text);
-  line-height:1.45;
-  position:relative;
-  padding-top:calc(var(--gh-height) + var(--safe-top));
-  padding-left:var(--safe-left);
-  padding-right:var(--safe-right);
-
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);line-height:1.45;position:relative;
+  padding-top:calc(var(--gh-height) + var(--safe-top));padding-left:var(--safe-left);padding-right:var(--safe-right);
   background:
-    radial-gradient(1100px 720px at 14% -10%, rgba(45,212,191,.11), transparent 55%),
-    radial-gradient(900px 640px at 86% 6%, rgba(96,165,250,.10), transparent 58%),
+    radial-gradient(1100px 720px at 14% -10%,rgba(45,212,191,.11),transparent 55%),
+    radial-gradient(900px 640px at 86% 6%,rgba(96,165,250,.10),transparent 58%),
     linear-gradient(180deg,
       var(--bg) 0,
-      var(--bg) var(--split-hero),
-      var(--bg-2) var(--split-hero),
+      var(--bg) var(--split-sistemas),
+      var(--bg-2) var(--split-sistemas),
+
+      var(--bg-2) var(--split-sectores-end),
+      var(--bg)   var(--split-sectores-end),
+
+      var(--bg)   var(--split-servicios-end),
+      var(--bg-2) var(--split-servicios-end),
 
       var(--bg-2) var(--split-promos),
       var(--bg)   var(--split-promos),
-
-      var(--bg)   var(--split-contacto),
-      var(--bg-2) var(--split-contacto),
-      var(--bg-2) 100%
+      var(--bg)   100%
     );
+  background-repeat:no-repeat;
 }
 body::before{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018),rgba(255,255,255,.018) 1px,transparent 1px,transparent 3px);mix-blend-mode:overlay;opacity:.22}
-
 img,video{max-width:100%;height:auto;display:block}
 iframe{max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -119,7 +108,7 @@ button,input,select,textarea{font:inherit}
 .hero-tab img{width:44px;height:44px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.10)}
 .hero-tab span{font-weight:900;color:rgba(232,238,246,.95)}
 .hero-tab.active{border-color:rgba(96,165,250,.40);background:rgba(96,165,250,.10)}
-@media (min-width:980px){.hero{padding:40px 0 18px}.hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}.hero h1{font-size:2.25rem}.hero-gallery-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:980px){.hero{padding:40px 0 18px}.hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}.hero h1{font-size:2.25rem}}
 @media (max-width:520px){.hero-gallery-groups{margin:6px 0 12px;gap:10px}.hero-gallery-header{padding:10px 14px 7px}}
 
 /* ===== [6] CAROUSEL (base) ===== */
@@ -168,14 +157,15 @@ button,input,select,textarea{font:inherit}
 .svc-featured:before{content:"";position:absolute;inset:-2px;background:linear-gradient(90deg,rgba(45,212,191,.35),rgba(96,165,250,.35));opacity:.12;filter:blur(16px);pointer-events:none}
 .svc-featured:focus-visible{outline:2px solid rgba(45,212,191,.65);outline-offset:2px}
 
-/* ===== [9] REELS (tabs + frame 9:16) ===== */
+/* ===== [9] REELS (frame 9:16 + tabs) ===== */
 .reels-home-card .reel-title{margin:0 0 10px;font-weight:900;letter-spacing:.1px;color:rgba(232,238,246,.96);min-height:22px}
-.reel-sys-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+
+/* Base “normal” (se ajusta por patch final al final) */
+.reel-sys-tabs{display:grid;gap:10px;margin-top:12px}
 .reel-tab{min-height:var(--tap);border-radius:14px;border:var(--border);background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);padding:10px 8px;cursor:pointer;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center}
 .reel-tab img{width:44px;height:44px;object-fit:contain;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);padding:6px}
 .reel-tab span{font-size:.84rem;font-weight:900;color:rgba(232,238,246,.94);line-height:1.1}
 .reel-tab.active{border-color:rgba(96,165,250,.45);background:rgba(96,165,250,.10)}
-@media (max-width:520px){.reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
 .reel-embed{position:relative;aspect-ratio:9/16;width:min(380px,100%);border-radius:14px;overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);min-height:clamp(300px,56vh,560px);margin:0 auto}
 .reel-embed iframe,.reel-embed .yt-thumb{position:absolute;inset:0;width:100%;height:100%}
@@ -184,8 +174,6 @@ button,input,select,textarea{font:inherit}
 .reel-embed .yt-thumb img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 .reel-embed .yt-play{position:absolute;left:16px;bottom:16px;width:54px;height:54px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.20);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .reel-embed .yt-play:before{content:"";position:absolute;left:21px;top:17px;width:0;height:0;border-left:14px solid rgba(232,238,246,.92);border-top:10px solid transparent;border-bottom:10px solid transparent}
-@media (max-width:520px){.reel-embed{width:min(420px,100%);min-height:clamp(280px,54vh,520px)}}
-
 .carousel[id^="carouselReels"] .carousel-slide>iframe{aspect-ratio:9/16;width:min(380px,100%);height:auto;border-radius:14px;overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);display:block;pointer-events:auto}
 @media (max-width:980px){.carousel[id^="carouselReels"] .carousel-slide>iframe{width:min(420px,100%)}}
 
@@ -242,32 +230,13 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 @media (min-width:980px){.cards-services.is-carousel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}.cards-services.is-carousel .svc-page{display:contents}.svc-dots{display:none}}
 
 /* ===== [14] MAP ===== */
-.map-embed{position:relative;width:100%;aspect-ratio:16/9;min-height:260px;border-radius:var(--radius-lg);overflow:hidden;border:var(--border);background:linear-gradient(180deg, rgba(96,165,250,.10), rgba(45,212,191,.08))}
+.map-embed{position:relative;width:100%;aspect-ratio:16/9;min-height:260px;border-radius:var(--radius-lg);overflow:hidden;border:var(--border);background:linear-gradient(180deg,rgba(96,165,250,.10),rgba(45,212,191,.08))}
 .map-embed iframe{width:100%;height:100%;border:0;display:block}
-.map-cover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-decoration:none;color:var(--text);padding:14px;background:linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.55))}
+.map-cover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-decoration:none;color:var(--text);padding:14px;background:linear-gradient(180deg,rgba(0,0,0,.30),rgba(0,0,0,.55))}
 .map-cover-title{font-weight:900;text-align:center}
 .map-cover-cta{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap);padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#020617;font-size:13px;font-weight:900}
 
-/* ===== [15] OVERRIDES “MOBILE 2x2” ===== */
-.hero-gallery-card,.hero-gallery-card .carousel,.hero-gallery-card .carousel-track{max-width:100%}
-.hero-gallery-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;padding:12px 12px 14px!important}
-.hero-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;gap:0!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;border:var(--border)!important;background:rgba(255,255,255,.03)!important}
-.hero-tab span{display:none!important}
-.hero-tab img{width:auto!important;height:52px!important;max-width:170px!important;object-fit:contain!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;display:block!important;margin:0 auto!important;aspect-ratio:170/52!important}
-@media (max-width:420px){.hero-tab{min-height:82px!important;padding:12px!important}.hero-tab img{height:46px!important;max-width:160px!important}}
-
-.reel-sys-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;padding:12px 12px 14px!important}
-.reel-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;gap:0!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;border:var(--border)!important;background:rgba(255,255,255,.03)!important}
-.reel-tab span{display:none!important}
-.reel-tab img{width:auto!important;height:52px!important;max-width:170px!important;object-fit:contain!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;display:block!important;margin:0 auto!important}
-@media (max-width:420px){.reel-tab{min-height:82px!important;padding:12px!important}.reel-tab img{height:46px!important;max-width:160px!important}}
-
-/* Servicios: texto en 2 líneas */
-#carouselReels-servicios .reel-tab span,#carouselReels-servicios ~ * .reel-tab span{display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;font-size:.86rem!important;font-weight:900!important;line-height:1.1!important;margin-top:8px!important}
-#carouselReels-servicios .reel-tab,#carouselReels-servicios ~ * .reel-tab{gap:6px!important;min-height:96px!important;padding:12px 10px!important}
-#carouselReels-servicios .reel-tab img,#carouselReels-servicios ~ * .reel-tab img{height:44px!important;max-width:150px!important}
-
-/* ===== [16] PROD-TABS FINAL (ÚNICO) ===== */
+/* ===== [15] PROD-TABS FINAL ===== */
 .prod-tabs-shell{flex:1 1 auto;min-width:0}
 .prod-tabs{min-width:0;max-width:100%;display:flex;gap:10px;align-items:center;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding:6px 4px;scrollbar-width:none}
 .prod-tabs::-webkit-scrollbar{height:0}
@@ -279,7 +248,7 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .prod-tabs .tab:focus-visible,.prod-tabs>button:focus-visible,.prod-tabs>a:focus-visible{outline:2px solid rgba(96,165,250,.75);outline-offset:2px}
 @media (max-width:520px){.productos-inline-bar{flex-wrap:wrap}.prod-cta{width:100%}}
 
-/* ===== [17] section-cq FINAL ===== */
+/* ===== [16] section-cq + ALIGN SISTEMAS VS REELS (desktop) ===== */
 .section-cq{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
 @media (min-width:980px){.section-cq{grid-template-columns:1fr 1fr;align-items:stretch}}
 .prod-cta-mid{display:none!important}
@@ -290,15 +259,6 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .prod-cta-bottom .cta-big:focus-visible{outline:2px solid rgba(96,165,250,.75);outline-offset:2px}
 .prod-cta-bottom .cta-big .cta-sub{display:block;font-size:.95rem;color:rgba(232,238,246,.78);line-height:1.25}
 
-/* ===== [18] PageSpeed/CLS + separación HERO->SISTEMAS ===== */
-#productos-con{content-visibility:auto;contain-intrinsic-size:560px;min-height:560px;contain:layout paint;padding-bottom:44px;margin-bottom:26px;margin-top:24px}
-@media (min-width:980px){#productos-con{margin-top:34px}}
-@media (max-width:980px){#productos-con{contain-intrinsic-size:500px;min-height:500px;padding-bottom:32px;margin-bottom:22px}}
-
-/* ===== [19] UTIL ===== */
-[hidden]{display:none!important}
-
-/* ===== [20] PATCH FINAL ÚNICO (ALIGN SISTEMAS VS REELS) ===== */
 @media (min-width:980px){
   #productos-con > .container{display:grid!important;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr;gap:var(--gap,14px);align-items:stretch}
   #productos-con .productos-inline-bar{grid-column:1/-1;grid-row:1;align-self:start;margin:0 0 12px!important}
@@ -310,344 +270,69 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 }
 @media (max-width:980px){
   #productos-con > .container{display:block!important}
-
-  /* ✅ SOLO el panel activo */
   #productos-con .panel-productos:not(.hidden){display:block!important}
-
-  /* ✅ refuerza ocultar los demás (y va DESPUÉS) */
   #productos-con .panel-productos.hidden{display:none!important}
-
-  /* layout interno del panel activo */
   #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{display:block!important}
 }
 
+/* ===== [17] PageSpeed/CLS ===== */
+#productos-con{content-visibility:auto;contain-intrinsic-size:560px;min-height:560px;contain:layout paint;padding-bottom:44px;margin-bottom:26px;margin-top:24px}
+@media (min-width:980px){#productos-con{margin-top:34px}}
+@media (max-width:980px){#productos-con{contain-intrinsic-size:500px;min-height:500px;padding-bottom:32px;margin-bottom:22px}}
+[hidden]{display:none!important}
 
-/* ===== [21] Fondo por tramos: mantener secciones transparentes ===== */
+/* ===== [18] Fondo por tramos: secciones transparentes + separación FAQ/Contacto ===== */
 #main-content,main,.section-full,#productos-con,#sectores,#servicios,#promociones,#faq,#contacto{background:transparent!important}
-
-/* ===== [22] Separación FAQ vs Contacto ===== */
 #faq{padding-bottom:28px}
 #contacto{padding-top:28px}
 @media (min-width:981px){#faq{padding-bottom:34px}#contacto{padding-top:34px}}
 
 /* =========================================================
-   Expiriti — SPLIT BACKGROUND (dinámico por secciones)
-   Cortes:
-   - split-sistemas: inicio de #productos-con
-   - split-sectores-end: fin de #sectores
-   - split-servicios-end: fin de #servicios (incluye reels servicios)
-   - split-promos: inicio de #promociones
-========================================================= */
-:root{
-  --bg:#070b12;
-  --bg-2:#0a111b;
-
-  /* valores fallback (si JS tarda) */
-  --split-sistemas: 680px;
-  --split-sectores-end: 1400px;
-  --split-servicios-end: 2200px;
-  --split-promos: 2600px;
-}
-
-/* Fondo por tramos */
-body{
-  background:
-    radial-gradient(1100px 720px at 14% -10%, rgba(45,212,191,.11), transparent 55%),
-    radial-gradient(900px 640px at 86% 6%, rgba(96,165,250,.10), transparent 58%),
-    linear-gradient(180deg,
-      /* Tramo 1: hasta antes de Sistemas */
-      var(--bg) 0,
-      var(--bg) var(--split-sistemas),
-      var(--bg-2) var(--split-sistemas),
-
-      /* Tramo 2: Sistemas + Sectores (hasta fin de Sectores) */
-      var(--bg-2) var(--split-sectores-end),
-      var(--bg)   var(--split-sectores-end),
-
-      /* Tramo 3: Servicios (hasta fin de Servicios) */
-      var(--bg)   var(--split-servicios-end),
-      var(--bg-2) var(--split-servicios-end),
-
-      /* Tramo 4: Promociones en adelante */
-      var(--bg-2) var(--split-promos),
-      var(--bg)   var(--split-promos),
-      var(--bg)   100%
-    );
-  background-repeat:no-repeat;
-}
-
-/* Asegura que las secciones no “tapen” el efecto */
-#main-content, main, .section-full,
-#productos-con,#sectores,#servicios,#promociones,#faq,#contacto{
-  background:transparent!important;
-}
-
-/* Aire entre FAQ y Contacto (opcional, como ya lo tenías) */
-#faq{padding-bottom:28px}
-#contacto{padding-top:28px}
-@media (min-width:981px){
-  #faq{padding-bottom:34px}
-  #contacto{padding-top:34px}
-}
-
-/* =========================================================
-   EXPIRITI — PATCH MOBILE REELS (SERVICIOS + CONTABLE)
-   Objetivos (SOLO MOBILE/TABLET):
-   1) Tabs/iconos de Reels visibles sin scroll (especialmente Servicios)
-   2) Servicios: tabs en 3 columnas (3xN) + menos aire lateral/horizontal
-   3) Menos “marco/sombra/rectángulo” en cada icono
-   4) Recortar “aire arriba” en cards de reels (Servicios + otros)
-   5) Ajustar altura 9:16 para que no empuje los tabs hacia abajo
-   PageSpeed: solo CSS, sin filtros pesados, sin :has(), sin layouts caros
+   [19] PATCH ÚNICO FINAL — REELS + ICONOS
+   - Servicios: 3 columnas (mobile + desktop)
+   - Demás: 2 columnas (mobile + desktop)
+   - Iconos “tipo HERO” (logo grande)
+   - Recorte aire arriba + altura reel mobile
+   - iPhone SE / Android chico
 ========================================================= */
 
-/* ========== 0) Scope SOLO <=980px ========== */
-@media (max-width:980px){
-
-/* ---------- 1) Recorta aire arriba en cards de reels (img3) ---------- */
-/* Aplica a todos tus reels-home-card: contable/comercial/nube/productividad/servicios */
-.reels-home-card .body{padding:12px 12px 12px!important}
-.reels-home-card .title-gradient{margin:0 0 4px!important}
-.reels-home-card .hint{margin:0 0 6px!important}
-.reels-home-card .reel-title{margin:0 0 6px!important;min-height:18px!important;line-height:1.15}
-
-/* También recorta aire dentro del carrusel de reels (top/bottom) */
-.carousel[id^="carouselReels"] .carousel-slide{padding:10px 10px 8px!important}
-
-/* Dots debajo del video: compactos */
-.carousel[id^="carouselReels"] .carousel-nav{margin:8px 0 0!important;padding:4px 8px!important;gap:8px!important}
-.carousel[id^="carouselReels"] .carousel-nav .dot{width:14px;height:14px;border-radius:999px}
-
-/* Flechas: en mobile normalmente ya ocultas; si aparecen, que no “roben” layout */
-.carousel[id^="carouselReels"] .arrowCircle{width:40px;height:40px}
-
-/* ---------- 2) Ajuste PRO de altura del Reel (9:16) para que quepan tabs ---------- */
-/* La clave: reducir “alto mínimo” y usar svh para pantallas reales móviles */
-.reel-embed{
-  width:min(360px,100%)!important;
-  min-height:clamp(240px,38svh,420px)!important; /* ↓ antes era muy alto */
-  margin:0 auto!important
-}
-/* Si usas iframes directos dentro del slide */
-.carousel[id^="carouselReels"] .carousel-slide>iframe{
-  width:min(360px,100%)!important;
-  aspect-ratio:9/16!important;
-  height:auto!important
-}
-
-/* ---------- 3) Tabs/iconos de reels: base más densa (menos aire lateral) ---------- */
-/* Esto asegura que el grid de tabs no tenga padding “gordo” alrededor */
-.reel-sys-tabs{padding:10px 8px 10px!important;gap:10px!important}
-
-/* Reduce el “marco” del icono: menos background, borde más fino, menos sombra */
-.reel-tab{
-  min-height:70px!important;
-  padding:10px 8px!important;
-  border-radius:12px!important;
-  border:1px solid rgba(255,255,255,.08)!important;  /* más fino */
-  background:rgba(255,255,255,.02)!important;        /* menos bloque */
-  box-shadow:none!important;                          /* adiós glow/sombra */
-}
-.reel-tab img{
-  width:40px!important;height:40px!important;
-  padding:4px!important;
-  border-radius:10px!important;
-  border:1px solid rgba(255,255,255,.10)!important;
-  background:rgba(255,255,255,.02)!important
-}
-.reel-tab span{margin-top:4px!important}
-
-/* ---------- 4) Servicios: tabs 3 columnas + ultra compacto (tu pedido principal) ---------- */
-/* Tu HTML: #carouselReels-servicios seguido del .reel-sys-tabs */
-#carouselReels-servicios + .reel-sys-tabs{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important; /* “3x3” visual */
-  padding:10px 8px 12px!important;                         /* menos aire lateral */
-  gap:10px!important
-}
-/* En servicios, el texto puede ocupar 2 líneas SIN crecer demasiado */
-#carouselReels-servicios + .reel-sys-tabs .reel-tab span{
-  display:-webkit-box!important;
-  -webkit-line-clamp:2!important;
-  -webkit-box-orient:vertical!important;
-  overflow:hidden!important;
-  font-size:.84rem!important;
-  line-height:1.05!important
-}
-/* Servicios: reduce todavía más el “rectángulo” */
-#carouselReels-servicios + .reel-sys-tabs .reel-tab{
-  min-height:68px!important;
-  padding:9px 7px!important;
-  border-radius:12px!important;
-  background:rgba(255,255,255,.015)!important;
-  border:1px solid rgba(255,255,255,.07)!important
-}
-#carouselReels-servicios + .reel-sys-tabs .reel-tab img{
-  width:38px!important;height:38px!important;
-  padding:4px!important;
-  border-radius:10px!important
-}
-
-/* ---------- 5) Contable (y otros): evita que tabs queden “cortados” abajo ---------- */
-/* Si quieres 3 columnas también en contable/comercial/nube/productividad, activa esto: */
-.reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-
-/* Pero en pantallas MUY chicas, 2 columnas mejora legibilidad */
-@media (max-width:380px){
-  .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  #carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-
-/* ---------- 6) Extra: reduce aire en la sección Servicios antes de los reels (si aplica) ---------- */
-/* Tu sección #servicios es .section-full: reduce padding vertical solo en mobile */
-#servicios.section-full{padding:22px 0!important}
-
-}
-
-
-
-/* =========================================================
-   EXPIRITI — PATCH MOBILE REELS (SERVICIOS=3 COLS, DEMÁS=2)
-   - Servicios: tabs 3 columnas (3xN), menos aire, menos marco/sombra
-   - Otros Reels (contable/comercial/nube/productividad): tabs 2 columnas
-   - Recorta aire arriba en cards reels (img3)
-   - Ajusta altura 9:16 para que no empuje tabs (mejor “sin scroll”)
-   - Micro-overrides para iPhone SE / Android chico
-========================================================= */
-@media (max-width:980px){
-
-/* 1) Recorte de aire arriba (cards reels) */
-.reels-home-card .body{padding:12px!important}
-.reels-home-card .title-gradient{margin:0 0 4px!important}
-.reels-home-card .hint{margin:0 0 6px!important}
-.reels-home-card .reel-title{margin:0 0 6px!important;min-height:18px!important;line-height:1.15}
-
-/* 2) Carrusel reels: padding compacto + dots compactos */
-.carousel[id^="carouselReels"] .carousel-slide{padding:10px 10px 8px!important}
-.carousel[id^="carouselReels"] .carousel-nav{margin:8px 0 0!important;padding:4px 8px!important;gap:8px!important;position:static!important}
-.carousel[id^="carouselReels"] .carousel-nav .dot{width:14px;height:14px}
-
-/* 3) Altura reel 9:16 (clave para quepan tabs) */
-.reel-embed{width:min(360px,100%)!important;min-height:clamp(240px,38svh,420px)!important;margin:0 auto!important}
-.carousel[id^="carouselReels"] .carousel-slide>iframe{width:min(360px,100%)!important;aspect-ratio:9/16!important;height:auto!important}
-
-/* 4) Tabs reels: base densa (menos marco/sombra/aire) */
-.reel-sys-tabs{padding:10px 8px 12px!important;gap:10px!important}
-.reel-tab{min-height:70px!important;padding:10px 8px!important;border-radius:12px!important;border:1px solid rgba(255,255,255,.08)!important;background:rgba(255,255,255,.02)!important;box-shadow:none!important}
-.reel-tab img{width:40px!important;height:40px!important;padding:4px!important;border-radius:10px!important;border:1px solid rgba(255,255,255,.10)!important;background:rgba(255,255,255,.02)!important}
-.reel-tab span{margin-top:4px!important}
-
-/* =========================================================
-   5) GRID DE TABS: DEMÁS=2 columnas (DEFAULT MOBILE)
-   (Importante: NO 3 columnas global)
-========================================================= */
-.reel-sys-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
-
-/* =========================================================
-   6) SERVICIOS: 3 columnas SOLO aquí
-   Tu HTML: #carouselReels-servicios + .reel-sys-tabs
-========================================================= */
-#carouselReels-servicios + .reel-sys-tabs{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  padding:10px 8px 12px!important;
-  gap:10px!important
-}
-#carouselReels-servicios + .reel-sys-tabs .reel-tab{
-  min-height:68px!important;
-  padding:9px 7px!important;
-  border-radius:12px!important;
-  background:rgba(255,255,255,.015)!important;
-  border:1px solid rgba(255,255,255,.07)!important
-}
-#carouselReels-servicios + .reel-sys-tabs .reel-tab img{width:38px!important;height:38px!important}
-#carouselReels-servicios + .reel-sys-tabs .reel-tab span{
-  display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;
-  overflow:hidden!important;font-size:.84rem!important;line-height:1.05!important
-}
-
-/* 7) Ajuste fino: iPhone SE / Android chico (pantallas muy bajas/angostas) */
-@media (max-width:380px){
-  /* Servicios: baja a 2 columnas si no cabe (prioriza “sin scroll”) */
-  #carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  /* Reduce aún más altura del reel */
-  .reel-embed{min-height:clamp(220px,34svh,380px)!important}
-  .carousel[id^="carouselReels"] .carousel-slide>iframe{width:min(340px,100%)!important}
-  /* Tabs más compactos */
-  .reel-tab{min-height:66px!important;padding:9px 7px!important}
-  .reel-tab img{width:38px!important;height:38px!important}
-}
-
-/* 8) Extra: reduce padding vertical de la sección Servicios (solo mobile) */
-#servicios.section-full{padding:22px 0!important}
-
-}
-
-/* =========================================================
-EXPIRITI — PATCH ICONOS + REELS (SERVICIOS=3 COLS, DEMÁS=2)
-- Servicios: 3 columnas en MOBILE + DESKTOP
-- Demás Reels: 2 columnas en MOBILE + DESKTOP
-- Menos aire arriba (cards reels) + menos aire en slides
-- Homologa iconos (se vean como HERO: logo grande, sin padding)
-- Reduce márgenes laterales en HERO y #productos-con (mobile)
-- Micro override iPhone SE / Android chico
-========================================================= */
-
-/* ===== 0) Menos margen lateral (mobile) en HERO y carrusel sistemas ===== */
+/* A) Menos margen lateral (mobile) */
 @media (max-width:720px){
   .hero .container,#productos-con>.container{padding-left:max(12px,var(--safe-left))!important;padding-right:max(12px,var(--safe-right))!important}
 }
 
-/* ===== 1) Recorte “aire arriba” en Reels (aplica a servicios y sistemas) ===== */
-.reels-home-card .body{padding:12px 12px 12px!important}
+/* B) Recorta “aire arriba” reels (servicios + sistemas) */
+.reels-home-card .body{padding:12px!important}
 .reels-home-card .title-gradient{margin:0 0 4px!important}
 .reels-home-card .hint{margin:0 0 6px!important}
 .reels-home-card .reel-title{margin:0 0 6px!important;min-height:18px!important;line-height:1.15!important}
-
-/* Dentro del carrusel reels: menos padding arriba/abajo */
 .carousel[id^="carouselReels"] .carousel-slide{padding:10px 10px 8px!important}
 .carousel[id^="carouselReels"] .carousel-nav{margin:8px 0 0!important;padding:4px 8px!important;gap:8px!important;position:static!important}
 .carousel[id^="carouselReels"] .carousel-nav .dot{width:14px!important;height:14px!important}
 
-/* ===== 2) Altura reel 9:16 más “real” para que quepan los iconos ===== */
-.reel-embed{width:min(360px,100%)!important;min-height:clamp(240px,38svh,420px)!important;margin:0 auto!important}
-.carousel[id^="carouselReels"] .carousel-slide>iframe{width:min(360px,100%)!important;aspect-ratio:9/16!important;height:auto!important;border-radius:14px!important}
+/* C) Altura reel (mobile) para que quepan tabs */
+@media (max-width:980px){
+  .reel-embed{width:min(360px,100%)!important;min-height:clamp(240px,38svh,420px)!important;margin:0 auto!important}
+  .carousel[id^="carouselReels"] .carousel-slide>iframe{width:min(360px,100%)!important;aspect-ratio:9/16!important;height:auto!important}
+}
 
-/* ===== 3) HOMOLOGA ICONOS: que se vean como HERO (logo grande, sin “cuadro vacío”) ===== */
-/* Aplica a botones tipo tabs de reels (sistemas/servicios) */
+/* D) Tabs/iconos “tipo HERO” (logo grande) */
 .reel-sys-tabs{display:grid!important;gap:12px!important;padding:12px 12px 14px!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important}
 .reel-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;border:1px solid rgba(255,255,255,.085)!important;background:rgba(255,255,255,.02)!important;box-shadow:none!important}
-
-/* LOGO GRANDE (tipo HERO) — clave para tu screenshot “chiquito” */
-.reel-tab img{
-  width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;
-  padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;display:block!important;margin:0 auto!important
-}
-
-/* Si en algunos tabs aún hay texto, lo controlas así */
+.reel-tab img{width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;display:block!important;margin:0 auto!important}
 .reel-tab span{margin-top:8px!important;font-size:.86rem!important;font-weight:900!important;line-height:1.1!important}
 
-/* ===== 4) GRID: DEMÁS REELS = 2 columnas (MOBILE + DESKTOP) ===== */
+/* E) DEFAULT: demás reels = 2 columnas (mobile + desktop) */
 .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 
-/* ===== 5) SERVICIOS = 3 columnas (MOBILE + DESKTOP) ===== */
-/* Tu estructura (por tus CSS previos): #carouselReels-servicios + .reel-sys-tabs */
+/* F) Servicios = 3 columnas (mobile + desktop) */
 #carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important;padding:10px 8px 12px!important;gap:10px!important}
-
-/* En servicios: menos “aire lateral / marco” todavía (tu pedido) */
-#carouselReels-servicios + .reel-sys-tabs .reel-tab{
-  min-height:78px!important;padding:12px 10px!important;border-radius:14px!important;
-  background:rgba(255,255,255,.015)!important;border:1px solid rgba(255,255,255,.07)!important
-}
-#carouselReels-servicios + .reel-sys-tabs .reel-tab span{
-  display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;
-  overflow:hidden!important;max-width:100%!important;margin-top:8px!important
-}
+#carouselReels-servicios + .reel-sys-tabs .reel-tab{min-height:78px!important;padding:12px 10px!important;border-radius:14px!important;background:rgba(255,255,255,.015)!important;border:1px solid rgba(255,255,255,.07)!important}
+#carouselReels-servicios + .reel-sys-tabs .reel-tab span{display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;max-width:100%!important;margin-top:8px!important}
 #carouselReels-servicios + .reel-sys-tabs .reel-tab img{height:48px!important;max-width:170px!important}
 
-/* ===== 6) Micro override: iPhone SE / Android chico ===== */
+/* G) Micro override: iPhone SE / Android chico */
 @media (max-width:380px){
-  /* Mantén Servicios en 3 si cabe; si no, baja a 2 para evitar scroll excesivo */
   #carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   .reel-embed{min-height:clamp(220px,34svh,380px)!important}
   .reel-tab{min-height:82px!important;padding:12px!important}
@@ -655,7 +340,5 @@ EXPIRITI — PATCH ICONOS + REELS (SERVICIOS=3 COLS, DEMÁS=2)
   .reel-tab span{font-size:.84rem!important}
 }
 
-/* ===== 7) Ajuste extra: sección servicios menos alta en mobile (opcional) ===== */
+/* H) Servicios: reduce padding vertical en mobile */
 @media (max-width:980px){#servicios.section-full{padding:22px 0!important}}
-
-
