@@ -489,3 +489,33 @@ html.has-calc-2 #calc-slot-2,body.has-calc-2 #calc-slot-2,html.has-calc-3 #calc-
 #calc-slot-2 .note{border:1px dashed rgba(148,163,184,.28)!important;background:rgba(17,23,35,.28)!important}
 #calc-slot-2:empty{display:none!important}
 
+/* =========================================================
+   EXPIRITI — PATCH: ocultar contenedores vacíos (calc-empty)
+   - Evita el “bloque azul” (#calc-tertiary / #calc-secondary vacíos)
+   - Sin :has(), usa la clase que ya pone tu JS (markEmpty)
+========================================================= */
+
+/* Oculta cualquier calc marcado como vacío (solo lo aplicas a secondary/tertiary/slot2) */
+#calc-secondary.calc-empty,
+#calc-tertiary.calc-empty,
+#calc-slot-2.calc-empty{
+  display:none!important;
+  min-height:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+/* Si por reglas de layout se “re-muestran” en has-calc-2/3, esto gana */
+html.has-calc-2 #calc-secondary.calc-empty,
+body.has-calc-2 #calc-secondary.calc-empty,
+html.has-calc-2 #calc-tertiary.calc-empty,
+body.has-calc-2 #calc-tertiary.calc-empty,
+html.has-calc-3 #calc-secondary.calc-empty,
+body.has-calc-3 #calc-secondary.calc-empty,
+html.has-calc-3 #calc-tertiary.calc-empty,
+body.has-calc-3 #calc-tertiary.calc-empty{
+  display:none!important;
+}
+
