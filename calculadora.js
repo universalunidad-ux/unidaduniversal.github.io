@@ -52,7 +52,6 @@ function markEmpty(sel){
 }
 markEmpty("#calc-secondary");
 markEmpty("#calc-tertiary");
-markEmpty("#calc-slot-2");
 
     
   });
