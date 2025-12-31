@@ -53,6 +53,28 @@
 /*=== FADE-IN IMÁGENES ===*/
 .gf img{opacity:0;transition:opacity .3s ease}
 .gf img.is-loaded{opacity:1}
+/* =========================
+   PATCH V8.1 — Ajustes visuales
+   - Aliados: sin márgenes laterales raros (stretch)
+   - Presencia: menos padding vertical + mapa más grande
+   - Marcas: logos más grandes (compensa whitespace de los .webp)
+========================= */
+
+/* 1) ALIADOS: estirar en vez de centrar */
+.gf-allies{align-items:stretch}              /* antes center */
+.gf-ally-card{width:100%;padding:10px 14px}  /* un poco más “card”, sin aire lateral feo */
+.gf-ally-card img{height:54px}               /* logo más grande */
+
+/* 2) PRESENCIA: quita “aire” arriba/abajo */
+.gf-map-card{padding:8px}                    /* antes 14px */
+.gf-map-card img{max-width:240px}            /* antes 190px, llena más la tarjeta */
+
+/* 3) MARCAS: más grandes (whitespace en los archivos) */
+.gf-logo-card{min-height:96px;padding:8px 12px}  /* antes 82px / 6px 10px */
+.gf-logo-card img{height:62px}                    /* antes 52px */
+
+
+  
 </style>
 
 <div class="gf-container">
