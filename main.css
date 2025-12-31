@@ -519,3 +519,29 @@ body.has-calc-3 #calc-tertiary.calc-empty{
   display:none!important;
 }
 
+/* =========================================================
+   EXPIRITI — PATCH: ocultar SOLO calculadoras vacías
+   (NO ocultar #calc-slot-2 porque ahí vive tu carrusel/panel)
+========================================================= */
+
+#calc-secondary.calc-empty,
+#calc-tertiary.calc-empty{
+  display:none!important;
+  min-height:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+html.has-calc-2 #calc-secondary.calc-empty,
+body.has-calc-2 #calc-secondary.calc-empty,
+html.has-calc-2 #calc-tertiary.calc-empty,
+body.has-calc-2 #calc-tertiary.calc-empty,
+html.has-calc-3 #calc-secondary.calc-empty,
+body.has-calc-3 #calc-secondary.calc-empty,
+html.has-calc-3 #calc-tertiary.calc-empty,
+body.has-calc-3 #calc-tertiary.calc-empty{
+  display:none!important;
+}
+
