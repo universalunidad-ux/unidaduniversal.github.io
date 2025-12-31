@@ -972,3 +972,66 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
   display:block;
 }
 
+/* =========================================================
+   REELS: BLUR fuera (marco) + reel limpio
+========================================================= */
+
+/* El slide ahora será el “marco” visible donde quieres el blur */
+.carousel .carousel-slide{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;                 /* espacio visible del marco */
+  box-sizing:border-box;
+}
+
+/* capa blur SOLO del marco */
+.carousel .carousel-slide.blur-frame::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:16px;           /* redondeo del marco */
+  background-image:var(--blur-src);
+  background-size:cover;
+  background-position:center;
+  filter:blur(18px);
+  transform:scale(1.08);
+  opacity:.55;
+  z-index:0;
+}
+
+/* “velo” para que el blur no se vea sucio */
+.carousel .carousel-slide.blur-frame::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:16px;
+  background:linear-gradient(180deg, rgba(7,11,18,.35), rgba(7,11,18,.60));
+  z-index:1;
+}
+
+/* El reel real arriba del blur */
+.carousel .carousel-slide .reel-embed{
+  position:relative;
+  z-index:2;
+  width:min(420px, 92vw);       /* controla ancho máximo del reel */
+  aspect-ratio:9/16;
+  border-radius:14px;
+  overflow:hidden;              /* recorta iframe/thumb al borde */
+  background:#000;
+}
+
+/* El iframe y el thumb ocupan el contenedor */
+.carousel .carousel-slide .reel-embed iframe,
+.carousel .carousel-slide .reel-embed .yt-thumb{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* Evita que el track “aplane” alturas en mobile */
+.carousel .carousel-track{
+  align-items:stretch;
+}
+
