@@ -50,6 +50,89 @@
 /* FADE */
 .gf img{opacity:0;transition:.3s}
 .gf img.is-loaded{opacity:1}
+  /* ======================
+   V8.4+ Typo & UX polish
+   (Pegarlo al final)
+====================== */
+
+/* 1) Tipografía más grande (sin romper layout) */
+.gf{font-size:15px; line-height:1.45;}
+.gf-title{font-size:17px; letter-spacing:.2px;}
+.gf-hint{font-size:13.5px;}
+.gf-row{font-size:15px;}
+
+/* En pantallas grandes, un poco más de presencia */
+@media(min-width:981px){
+  .gf{font-size:15.5px}
+  .gf-title{font-size:18px}
+}
+
+/* 2) “Tarjeta” con hover/focus accesible (sin costo alto) */
+.gf-logo-card,
+.gf-ally-card,
+.gf-map-card{
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease, background-color .16s ease;
+  will-change:transform;
+}
+
+/* Hover mouse */
+.gf-logo-card:hover,
+.gf-ally-card:hover,
+.gf-map-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(45,212,191,.35); /* brand */
+  box-shadow:0 14px 34px rgba(0,0,0,.42);
+}
+
+/* 3) Efecto “tap” en mobile + feedback al dedo */
+.gf-logo-card:active,
+.gf-ally-card:active,
+.gf-map-card:active{
+  transform:translateY(0) scale(.99);
+  box-shadow:0 10px 22px rgba(0,0,0,.35);
+}
+
+/* 4) Mejor UX en imágenes: leve realce al pasar */
+.gf-logo-card img,
+.gf-ally-card img,
+.gf-map-card img{
+  transition:transform .16s ease, filter .16s ease, opacity .3s;
+}
+
+.gf-logo-card:hover img,
+.gf-ally-card:hover img,
+.gf-map-card:hover img{
+  transform:scale(1.02);
+  filter:saturate(1.05) contrast(1.03);
+}
+
+/* 5) Enlaces: subrayado “bonito” y focus visible */
+.gf a{
+  text-decoration-thickness:1px;
+  text-underline-offset:3px;
+  text-decoration-color:rgba(45,212,191,.35);
+}
+
+.gf a:hover{
+  text-decoration-color:rgba(45,212,191,.75);
+}
+
+/* Focus accesible (teclado) en cards si decides hacerlas “focusables” */
+.gf-logo-card:focus-within,
+.gf-ally-card:focus-within,
+.gf-map-card:focus-within{
+  outline:2px solid rgba(45,212,191,.55);
+  outline-offset:2px;
+}
+
+/* 6) Respeta usuarios con motion reducido */
+@media (prefers-reduced-motion: reduce){
+  .gf-logo-card,.gf-ally-card,.gf-map-card,
+  .gf-logo-card img,.gf-ally-card img,.gf-map-card img{
+    transition:none !important;
+  }
+}
+
 </style>
 
 <div class="gf-container">
