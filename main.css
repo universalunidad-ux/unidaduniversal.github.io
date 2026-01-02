@@ -1051,3 +1051,94 @@ body.has-calc-3 #calc-tertiary.calc-empty{
   background:transparent !important;
   box-shadow:none !important;
 }
+
+
+/* =========================================================
+   PATCH UI — Beneficios (listSlider) centrado tipo card vertical
+   - Icono centrado
+   - Título en negritas debajo del icono
+   - Descripción abajo
+========================================================= */
+.listItem{
+  grid-template-columns:1fr !important;
+  text-align:center !important;
+  justify-items:center !important;
+}
+.listIcon{
+  justify-self:center !important;
+  margin:0 auto !important;
+}
+.listItem strong{
+  display:block !important;
+  margin-top:2px !important;
+}
+.listItem div>div{
+  margin-top:2px !important;
+}
+/* =========================================================
+   PATCH UI — Feature cards centradas (icono arriba)
+========================================================= */
+.feature-grid .fcard{
+  text-align:center !important;
+  justify-items:center !important;
+}
+.feature-grid .fhead{
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:10px !important;
+}
+.feature-grid .ficon{
+  margin:0 auto !important;
+}
+.feature-grid .fcard h4{
+  text-align:center !important;
+}
+.feature-grid .fcard p{
+  text-align:center !important;
+}
+
+/* =========================================================
+   PATCH UI — FAQ texto justificado
+========================================================= */
+.faq-item p{
+  text-align:justify;
+  text-justify:inter-word;
+  hyphens:auto;
+}
+
+/* =========================================================
+   PATCH UI — Pills con affordance + pressed + mobile scroll
+========================================================= */
+.pill{
+  min-height:44px;                 /* estándar touch */
+  padding:10px 14px !important;
+  border-radius:999px !important;
+  border:1px solid rgba(148,163,184,.35) !important;
+  background:rgba(15,23,42,.65) !important;
+  box-shadow:0 6px 16px rgba(0,0,0,.22);
+}
+.pill:active{
+  transform:translateY(1px) scale(.99);
+  box-shadow:0 3px 10px rgba(0,0,0,.18);
+}
+.pill.active{
+  border-color:transparent !important;
+  box-shadow:0 10px 22px rgba(0,0,0,.28);
+}
+
+/* Mobile: si no caben, que se desplacen horizontalmente (patrón actual) */
+@media(max-width:768px){
+  .pillbar{
+    flex-wrap:nowrap !important;
+    overflow-x:auto !important;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    gap:10px !important;
+    padding-bottom:6px;
+  }
+  .pill{
+    flex:0 0 auto;
+    scroll-snap-align:start;
+    white-space:nowrap;
+  }
+}
