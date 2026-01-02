@@ -554,3 +554,15 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 #heroGalleryCarousel .carousel-slide{
   background:var(--card-2)!important;
 }
+
+
+
+/*==== EXPIRITI: H-TABS UNIFICADO (HERO/PROD/PROMO) ====*/
+.hero-gallery-groups,.prod-tabs,.promo-filters{-webkit-overflow-scrolling:touch;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain;scroll-snap-type:x proximity}
+.hero-gallery-groups::-webkit-scrollbar,.prod-tabs::-webkit-scrollbar,.promo-filters::-webkit-scrollbar{display:none}
+.hero-gallery-groups{display:block}
+.prod-tabs,.promo-filters{display:flex;flex-wrap:nowrap;gap:10px;align-items:center}
+.hero-gallery-groups>*{display:inline-flex;vertical-align:middle;margin-right:10px}
+.prod-tabs>*,:where(.promo-filters>*){flex:0 0 auto}
+.hero-gallery-groups>*,.prod-tabs>*,.promo-filters>*{scroll-snap-align:start}
+@media(pointer:fine){.hero-gallery-groups,.prod-tabs,.promo-filters{scroll-snap-type:none}}
