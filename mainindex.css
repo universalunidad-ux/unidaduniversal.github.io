@@ -566,3 +566,18 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 .prod-tabs>*,:where(.promo-filters>*){flex:0 0 auto}
 .hero-gallery-groups>*,.prod-tabs>*,.promo-filters>*{scroll-snap-align:start}
 @media(pointer:fine){.hero-gallery-groups,.prod-tabs,.promo-filters{scroll-snap-type:none}}
+/*==== EXPIRITI FIX: H-SCROLL TABS (mata overflow:visible del [23]) ====*/
+@media(max-width:980px){
+  .hero-gallery-groups,.prod-tabs,.promo-filters{
+    overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-x:contain!important;touch-action:pan-x!important;scrollbar-width:none!important;
+  }
+  .hero-gallery-groups::-webkit-scrollbar,.prod-tabs::-webkit-scrollbar,.promo-filters::-webkit-scrollbar{display:none!important}
+  .hero-gallery-groups,.prod-tabs,.promo-filters{flex-wrap:nowrap!important}
+  .hero-gallery-groups>*,.prod-tabs>*,.promo-filters>*{flex:0 0 auto!important;white-space:nowrap!important}
+}
+/* Desktop: promos puede wrap (como lo traías) */
+@media(min-width:981px){.promo-filters{flex-wrap:wrap!important;overflow:visible!important}}
+/* “recorte inferior” sin romper overflow */
+.prod-tabs,.hero-gallery-groups,.promo-filters{padding-bottom:10px!important}
+
