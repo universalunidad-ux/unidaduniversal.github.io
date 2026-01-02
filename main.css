@@ -1107,38 +1107,47 @@ body.has-calc-3 #calc-tertiary.calc-empty{
 }
 
 /* =========================================================
-   PATCH UI — Pills con affordance + pressed + mobile scroll
+   PATCH UI — Pills SIN scroll (máxima descubribilidad en mobile)
 ========================================================= */
+
+/* Pills: se ven como botones reales */
 .pill{
-  min-height:44px;                 /* estándar touch */
-  padding:10px 14px !important;
-  border-radius:999px !important;
+  min-height:44px;
+  padding:10px 12px !important;
+  border-radius:14px !important; /* más “button” que chip */
   border:1px solid rgba(148,163,184,.35) !important;
-  background:rgba(15,23,42,.65) !important;
+  background:rgba(15,23,42,.70) !important;
   box-shadow:0 6px 16px rgba(0,0,0,.22);
+  font-weight:800 !important;
+  line-height:1.15 !important;
 }
 .pill:active{
-  transform:translateY(1px) scale(.99);
+  transform:translateY(1px);
   box-shadow:0 3px 10px rgba(0,0,0,.18);
 }
 .pill.active{
+  background:linear-gradient(145deg,var(--brand),var(--brand-2)) !important;
+  color:#0b0f14 !important;
   border-color:transparent !important;
   box-shadow:0 10px 22px rgba(0,0,0,.28);
 }
 
-/* Mobile: si no caben, que se desplacen horizontalmente (patrón actual) */
+/* Desktop/tablet: pueden ir en fila y wrap normal */
+.pillbar{
+  flex-wrap:wrap !important;
+  gap:10px !important;
+}
+
+/* Mobile: que se vean TODOS, sin scroll, en “botones” apilados */
 @media(max-width:768px){
   .pillbar{
-    flex-wrap:nowrap !important;
-    overflow-x:auto !important;
-    -webkit-overflow-scrolling:touch;
-    scroll-snap-type:x mandatory;
+    display:grid !important;
+    grid-template-columns:1fr !important; /* 1 columna = máxima claridad */
     gap:10px !important;
-    padding-bottom:6px;
   }
   .pill{
-    flex:0 0 auto;
-    scroll-snap-align:start;
-    white-space:nowrap;
+    width:100% !important;
+    justify-content:center !important;
+    text-align:center !important;
   }
 }
