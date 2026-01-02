@@ -1151,3 +1151,19 @@ body.has-calc-3 #calc-tertiary.calc-empty{
     text-align:center !important;
   }
 }
+@media(max-width:768px){
+  .pillbar{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important; /* 2 columnas */
+    gap:10px !important;
+  }
+  .pill{
+    width:100% !important;
+    text-align:center !important;
+  }
+  /* Si son 3 pills, el último ocupa toda la fila para que se vea balanceado */
+  .pillbar .pill:last-child{
+    grid-column:1 / -1 !important;
+  }
+}
+
