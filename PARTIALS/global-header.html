@@ -115,8 +115,32 @@ body{padding-top:var(--gh-offset)}
 
 /* ===== ACTIONS ===== */
 .gh-actions{display:flex;align-items:center;gap:10px}
-.gh-btn-tel{display:none;background:var(--gh-brand);color:#0f172a;padding:6px 14px;border-radius:99px;font-weight:700;font-size:13px;text-decoration:none}
-@media(min-width:600px){.gh-btn-tel{display:inline-block}}
+
+/* Botón WhatsApp (icono + número) */
+.gh-btn-wa{
+  display:none;
+  align-items:center;
+  gap:10px;
+  padding:7px 14px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:900;
+  letter-spacing:.01em;
+  color:#0b1220;
+  background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));
+  box-shadow:0 14px 30px rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.12);
+}
+@media(min-width:600px){.gh-btn-wa{display:inline-flex}}
+
+.gh-wa-ico{
+  width:18px;height:18px;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 14px rgba(0,0,0,.25));
+}
+.gh-wa-num{font-size:13.5px;line-height:1}
+
+/* Burger */
 .gh-burger{
   background:rgba(15,23,42,.9);
   border:1px solid rgba(255,255,255,.22);
@@ -487,7 +511,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
     <!-- Actions -->
     <div class="gh-actions">
-      <a class="gh-btn-tel" href="tel:+525568437918">55 6843 7918</a>
+<a class="gh-btn-wa" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">
+  <img class="gh-wa-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp">
+  <span class="gh-wa-num">55 6843 7918</span>
+</a>
       <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
     </div>
 
