@@ -576,3 +576,19 @@ input:focus,select:focus,textarea:focus{border-color:rgba(96,165,250,.45)}
 /* “recorte inferior” sin romper overflow */
 .prod-tabs,.hero-gallery-groups,.promo-filters{padding-bottom:10px!important}
 
+/* FAQ: justificar SOLO el texto de respuesta */
+.faq-item p{
+  text-align:justify;
+  text-justify:inter-word;
+  hyphens:auto;
+}
+
+/* En mobile chico, mejor lectura sin justificar */
+@media(max-width:520px){
+  .faq-item p{
+    text-align:left;
+    hyphens:none;
+  }
+}
+
+
