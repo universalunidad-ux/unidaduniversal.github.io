@@ -1,452 +1,158 @@
 <!-- =========================================================
-  Expiriti - GLOBAL HEADER (V7 + MOBILE UI/UX V5) + MEGA V5 PATCH (RESPONSIVE)
-  - Desktop: mega “Sistemas” estilo V5 (cards vertical + imagen ancha) + responsive cols
-  - Desktop: dropdown “Servicios” normal (no mega)
-  - Mobile: drawer V5 (Sistemas tabs + Servicios carrusel 2 páginas)
+  Expiriti - GLOBAL HEADER (V7 + MOBILE UI/UX V5) + MEGA V5 PATCH (RESPONSIVE) — UPDATED
+  CAMBIOS (enero 2026):
+  - Desktop: “Servicios” ahora es MEGA (ancho, estilo similar a “Sistemas”)
+    * Destaca “Pólizas” con un “flow/hover” (glow + borde + ligero lift) y badge “Recomendado”
+  - Desktop: Se mantiene “Promociones” visible
+  - Desktop: Se mantiene SIN “Ver servicios” dentro de mega (como pediste)
+  - Mobile: Se mantiene drawer V5 + FIX promociones index.html#promociones
   - Rutas: V7 master root + buildPath (data-href / data-src -> href/src ABSOLUTOS)
-  - Hide on scroll: solo barra (#gh-bar)
-  - FIX: Promociones en móvil (index.html#promociones) garantizado + scroll
 ========================================================= -->
 <header class="gh" id="gh-header" role="banner">
 <style>
 /* ===== TOKENS ===== */
-:root{
-  --gh-bg:rgba(7,10,16,.95);
-  --gh-border:rgba(255,255,255,.08);
-  --gh-panel:rgba(10,14,23,.98);
-  --gh-text:#e8eef6;
-  --gh-muted:#94a3b8;
-  --gh-brand:#2dd4bf;
-  --gh-brand2:#60a5fa;
-  --gh-maxw:1200px;
-  --gh-height:68px;
-  --gh-offset:68px;
-}
-
-/* ===== OFFSET GLOBAL (evita que el header tape el contenido) ===== */
-html{scroll-padding-top:calc(var(--gh-offset) + 20px)}
-body{padding-top:var(--gh-offset)}
-
+:root{--gh-bg:rgba(7,10,16,.95);--gh-border:rgba(255,255,255,.08);--gh-panel:rgba(10,14,23,.98);--gh-text:#e8eef6;--gh-muted:#94a3b8;--gh-brand:#2dd4bf;--gh-brand2:#60a5fa;--gh-maxw:1200px;--gh-height:68px;--gh-offset:68px}
+/* ===== OFFSET GLOBAL ===== */
+html{scroll-padding-top:calc(var(--gh-offset) + 20px)}body{padding-top:var(--gh-offset)}
 /* ===== WRAPPER ===== */
-.gh{position:fixed;top:0;left:0;right:0;z-index:9999;font-family:system-ui,-apple-system,sans-serif}
-.gh *{box-sizing:border-box}
-
+.gh{position:fixed;top:0;left:0;right:0;z-index:2147483000;font-family:system-ui,-apple-system,sans-serif}.gh *{box-sizing:border-box}
 /* ===== TOP BAR (hide only this) ===== */
-.gh-bar{
-  height:var(--gh-height);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  background:var(--gh-bg);
-  border-bottom:1px solid var(--gh-border);
-  transition:transform .3s ease;
-  will-change:transform;
-}
-.gh-bar.is-hidden{transform:translateY(-100%)}
-
-.gh-container{
-  max-width:var(--gh-maxw);
-  margin:0 auto;
-  padding:0 clamp(15px,4vw,24px);
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-}
-
-/* ===== BRAND (DESKTOP/MOBILE) ===== */
-.gh-brand{
-  display:flex;align-items:center;gap:12px;
-  text-decoration:none;color:var(--gh-text);
-  padding:4px;border-radius:12px;transition:background .2s;
-}
-.gh-brand:hover{background:rgba(255,255,255,.05)}
+.gh-bar{height:var(--gh-height);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:var(--gh-bg);border-bottom:1px solid var(--gh-border);transition:transform .3s ease;will-change:transform;z-index:2147483001}.gh-bar.is-hidden{transform:translateY(-100%)}
+.gh-container{max-width:var(--gh-maxw);margin:0 auto;padding:0 clamp(15px,4vw,24px);height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+/* ===== BRAND ===== */
+.gh-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--gh-text);padding:4px;border-radius:12px;transition:background .2s}.gh-brand:hover{background:rgba(255,255,255,.05)}
 .gh-brand img{width:42px;height:42px;border-radius:10px;object-fit:cover;background:#1e293b}
 .gh-brand-txt{line-height:1.2;display:flex;flex-direction:column;min-width:0}
-.gh-brand-txt .n{font-weight:700;font-size:16px;color:#fff;letter-spacing:-0.01em;white-space:nowrap}
+.gh-brand-txt .n{font-weight:700;font-size:16px;color:#fff;letter-spacing:-.01em;white-space:nowrap}
 .gh-brand-txt .s{font-size:12px;color:var(--gh-muted);white-space:nowrap}
-
 /* ===== DESKTOP NAV ===== */
-.gh-nav{display:none}
-@media(min-width:1024px){.gh-nav{display:block}}
+.gh-nav{display:none}@media(min-width:1024px){.gh-nav{display:block}}
 .gh-nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;align-items:center}
-.gh-nav a{
-  color:var(--gh-text);
-  text-decoration:none;
-  font-size:16px;
-  font-weight:800;
-  letter-spacing:.01em;
-  transition:color .2s;
-  padding:10px 0;
-  position:relative;
-  white-space:nowrap;
-}
-
+.gh-nav a{color:var(--gh-text);text-decoration:none;font-size:16px;font-weight:900;letter-spacing:.01em;transition:color .2s;padding:10px 0;position:relative;white-space:nowrap}
 .gh-nav a:hover{color:#fff}
-.gh-nav a::after{
-  content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;
-  background:var(--gh-brand);
-  transform:scaleX(0);transform-origin:right;transition:transform .3s ease
-}
+.gh-nav a::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--gh-brand);transform:scaleX(0);transform-origin:right;transition:transform .3s ease}
 .gh-nav a:hover::after{transform:scaleX(1);transform-origin:left}
-
-/* ===== DESKTOP DROPDOWN / MEGA BASE ===== */
+/* ===== DROPDOWN BASE ===== */
 .gh-dd-wrap{position:relative}
-.gh-dd-menu{
-  position:absolute;top:100%;left:50%;
-  transform:translate(-50%,15px);
-  background:var(--gh-panel);
-  border:1px solid var(--gh-border);
-  padding:10px;border-radius:12px;min-width:220px;
-  opacity:0;visibility:hidden;transition:.2s ease;
-  box-shadow:0 10px 30px -10px rgba(0,0,0,.5);
-}
-.gh-dd-wrap:hover .gh-dd-menu,
-.gh-dd-wrap:focus-within .gh-dd-menu{
-  opacity:1;visibility:visible;transform:translate(-50%,0)
-}
-.gh-dd-menu a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;white-space:nowrap}
-.gh-dd-menu a:hover{background:rgba(255,255,255,.05);color:var(--gh-brand)}
-
-/* ===== “ESTILO VIEJO” SOLO PARA DROPDOWN NORMAL (NO MEGA) ===== */
-.gh-dd-menu:not(.mega) .gh-col h4{
-  color:var(--gh-muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;
-  margin:0 0 10px;padding-bottom:5px;border-bottom:1px solid var(--gh-border);
-}
-.gh-dd-menu:not(.mega) .gh-item{display:flex;align-items:flex-start;gap:10px;padding:8px;border-radius:8px;transition:.2s}
-.gh-dd-menu:not(.mega) .gh-item:hover{background:rgba(255,255,255,.04)}
-.gh-dd-menu:not(.mega) .gh-item img{width:32px;height:32px;object-fit:contain}
-.gh-dd-menu:not(.mega) .gh-item div{display:flex;flex-direction:column;min-width:0}
-.gh-dd-menu:not(.mega) .gh-item b{font-size:13px;color:#fff}
-.gh-dd-menu:not(.mega) .gh-item span{font-size:11px;color:var(--gh-muted)}
-
+.gh-dd-menu{position:absolute;top:100%;left:50%;transform:translate(-50%,15px);background:var(--gh-panel);border:1px solid var(--gh-border);padding:10px;border-radius:12px;min-width:220px;opacity:0;visibility:hidden;transition:.2s ease;box-shadow:0 10px 30px -10px rgba(0,0,0,.5)}
+.gh-dd-wrap:hover .gh-dd-menu,.gh-dd-wrap:focus-within .gh-dd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
+/* ===== DROPDOWN NORMAL (fallback) ===== */
+.gh-dd-menu:not(.mega) a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;white-space:nowrap}
+.gh-dd-menu:not(.mega) a:hover{background:rgba(255,255,255,.05);color:var(--gh-brand)}
 /* ===== ACTIONS ===== */
 .gh-actions{display:flex;align-items:center;gap:10px}
-
-/* Botón WhatsApp (icono + número) */
-.gh-btn-wa{
-  display:none;
-  align-items:center;
-  gap:10px;
-  padding:7px 14px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:900;
-  letter-spacing:.01em;
-  color:#0b1220;
-  background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));
-  box-shadow:0 14px 30px rgba(0,0,0,.25);
-  border:1px solid rgba(255,255,255,.12);
-}
+/* WhatsApp */
+.gh-btn-wa{display:none;align-items:center;gap:10px;padding:7px 14px;border-radius:999px;text-decoration:none;font-weight:900;letter-spacing:.01em;color:#0b1220;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));box-shadow:0 14px 30px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12)}
 @media(min-width:600px){.gh-btn-wa{display:inline-flex}}
-
-.gh-wa-ico{
-  width:18px;height:18px;
-  object-fit:contain;
-  filter:drop-shadow(0 8px 14px rgba(0,0,0,.25));
-}
+.gh-wa-ico{width:18px;height:18px;object-fit:contain;filter:drop-shadow(0 8px 14px rgba(0,0,0,.25))}
 .gh-wa-num{font-size:13.5px;line-height:1}
-
 /* Burger */
-.gh-burger{
-  background:rgba(15,23,42,.9);
-  border:1px solid rgba(255,255,255,.22);
-  color:#fff;font-size:18px;
-  padding:8px 10px;border-radius:12px;
-  cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
-}
+.gh-burger{background:rgba(15,23,42,.9);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:18px;padding:8px 10px;border-radius:12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 @media(min-width:1024px){.gh-burger{display:none}}
-
 /* =========================================================
-   MOBILE DRAWER (UI/UX V5: tabs + carrusel)
+   MOBILE DRAWER V5
 ========================================================= */
-.gh-dim{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.55);
-  opacity:0;visibility:hidden;
-  transition:.18s ease;
-  z-index:10010;
-}
-.gh-drawer{
-  position:fixed;top:0;right:0;bottom:0;
-  width:min(92vw,420px);
-  background:rgba(8,11,18,.98);
-  border-left:1px solid rgba(255,255,255,.08);
-  transform:translateX(105%);
-  transition:.25s cubic-bezier(.4,0,.2,1);
-  z-index:10011;
-  display:flex;flex-direction:column;
-}
+.gh-dim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.18s ease;z-index:2147483646}
+.gh-drawer{position:fixed;top:0;right:0;bottom:0;width:min(92vw,420px);background:rgba(8,11,18,.98);border-left:1px solid rgba(255,255,255,.08);transform:translateX(105%);transition:.25s cubic-bezier(.4,0,.2,1);z-index:2147483647;display:flex;flex-direction:column}
 html.gh-open .gh-dim{opacity:1;visibility:visible}
 html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-dim[hidden],.gh-drawer[hidden]{display:none!important}
-
-.gh-drawer-head{
-  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
-  padding:14px;border-bottom:1px solid rgba(255,255,255,.06);
-}
+.gh-drawer-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px;border-bottom:1px solid rgba(255,255,255,.06)}
 .gh-dtitle-row{display:flex;align-items:center;gap:10px}
 .gh-dtitle-logo{width:26px;height:26px;border-radius:8px;object-fit:cover;background:#111723}
 .gh-dtitle-name{color:#fff;font-weight:900;letter-spacing:.02em;line-height:1}
 .gh-dtitle-sub{color:var(--gh-muted);font-size:12px;font-weight:650;margin-top:2px;line-height:1.1}
-.gh-close{
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(15,23,42,.9);
-  color:var(--gh-text);
-  border-radius:12px;padding:8px 10px;
-  font-size:16px;line-height:1;cursor:pointer;
-}
-.gh-drawer-body{
-  flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;
-  padding:12px 14px 40px;
-}
-
+.gh-close{border:1px solid rgba(255,255,255,.18);background:rgba(15,23,42,.9);color:var(--gh-text);border-radius:12px;padding:8px 10px;font-size:16px;line-height:1;cursor:pointer}
+.gh-drawer-body{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:12px 14px 40px}
 /* Quick CTA */
 .gh-mcta-ico{margin-top:12px;display:flex;gap:10px}
-.gh-ctabtn{
-  flex:1;display:flex;align-items:center;justify-content:center;gap:10px;
-  padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);
-  border:1px solid rgba(255,255,255,.12);
-  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-  box-shadow:0 18px 40px rgba(0,0,0,.30);
-  font-weight:800;letter-spacing:.01em;
-}
+.gh-ctabtn{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));box-shadow:0 18px 40px rgba(0,0,0,.30);font-weight:800;letter-spacing:.01em}
 .gh-ctabtn:hover{border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
 .gh-ctaico{width:22px;height:22px;object-fit:contain;filter:drop-shadow(0 8px 16px rgba(0,0,0,.30));opacity:.95}
-
-/* Sistemas (tabs) */
+/* Mobile Sistemas */
 .gh-acc{border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden}
 .gh-msys,.gh-msvc{padding:10px 10px 14px;margin-top:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);border-radius:18px}
-
-/* Mobile: Sistemas + “por categoría” en la misma línea */
-.gh-msys-head{
-  padding:6px 4px 10px;
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:10px;
-}
+.gh-msys-head{padding:6px 4px 10px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
 .gh-msys-title{color:#fff;font-weight:800;letter-spacing:.01em;font-size:14px}
 .gh-msys-sub{color:var(--gh-muted);font-size:12px;margin-top:0;line-height:1.1;white-space:nowrap}
-
 .gh-catbar{display:flex;gap:8px;overflow:auto;padding:2px 2px 10px;scrollbar-width:none}
 .gh-catbar::-webkit-scrollbar{display:none}
-.gh-cat{
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(17,23,35,.55);
-  color:var(--gh-text);
-  padding:9px 12px;border-radius:999px;
-  font-size:12px;font-weight:700;white-space:nowrap;
-  transition:transform .15s ease,background .15s ease,border-color .15s ease;
-}
+.gh-cat{border:1px solid rgba(255,255,255,.10);background:rgba(17,23,35,.55);color:var(--gh-text);padding:9px 12px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;transition:transform .15s ease,background .15s ease,border-color .15s ease}
 .gh-cat:active{transform:scale(.98)}
-.gh-cat.is-active{
-  background:linear-gradient(90deg,rgba(45,212,191,.20),rgba(96,165,250,.18));
-  border-color:rgba(45,212,191,.38);
-  box-shadow:0 10px 24px rgba(0,0,0,.25)
-}
+.gh-cat.is-active{background:linear-gradient(90deg,rgba(45,212,191,.20),rgba(96,165,250,.18));border-color:rgba(45,212,191,.38);box-shadow:0 10px 24px rgba(0,0,0,.25)}
 .gh-panel{margin-top:6px}
 .gh-panel.is-open{animation:ghFadeUp .18s ease both}
 @keyframes ghFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
 .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.gh-mcard{
-  display:flex;flex-direction:column;gap:8px;
-  padding:10px;border-radius:16px;text-decoration:none;color:var(--gh-text);
-  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
-  border:1px solid rgba(255,255,255,.07);
-  box-shadow:0 18px 40px rgba(0,0,0,.30);
-  transition:transform .16s ease,border-color .16s ease,background .16s ease;
-  min-height:118px;
-}
+.gh-mcard{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:16px;text-decoration:none;color:var(--gh-text);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.07);box-shadow:0 18px 40px rgba(0,0,0,.30);transition:transform .16s ease,border-color .16s ease,background .16s ease;min-height:118px}
 .gh-mcard:hover{transform:translateY(-1px);border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
 .gh-mimg{width:100%;height:44px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35));opacity:.98}
 .gh-mmeta{display:flex;flex-direction:column;gap:2px;min-width:0}
 .gh-mmeta strong{color:#fff;font-weight:800;font-size:13px;line-height:1.15}
 .gh-mmeta span{color:var(--gh-muted);font-size:11px;line-height:1.25}
 .gh-mcard-ghost{opacity:0;pointer-events:none;background:transparent;border-color:transparent;box-shadow:none}
-
-/* Promo */
-.gh-mpromo{
-  display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px;border-radius:16px;
-  text-decoration:none;color:var(--gh-text);
-  border:1px solid rgba(255,255,255,.10);
-  background:linear-gradient(90deg,rgba(245,158,11,.12),rgba(45,212,191,.08));
-  box-shadow:0 18px 40px rgba(0,0,0,.30)
-}
+/* Promo Mobile */
+.gh-mpromo{display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);border:1px solid rgba(255,255,255,.10);background:linear-gradient(90deg,rgba(245,158,11,.12),rgba(45,212,191,.08));box-shadow:0 18px 40px rgba(0,0,0,.30)}
 .gh-mpromo-ico{width:22px;height:22px;object-fit:contain;opacity:.95}
 .gh-mpromo-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
 .gh-mpromo-txt strong{color:#fff;font-weight:900;font-size:13px}
 .gh-mpromo-txt span{color:var(--gh-muted);font-size:11px}
 .gh-mpromo-chip{margin-left:auto;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;color:#020617;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
-
-/* Servicios (carrusel) */
+/* Mobile Servicios (carrusel) */
 .gh-msvc{margin-top:12px}
 .gh-svcwrap{position:relative;margin-top:6px;border-radius:18px}
-.gh-svctrack{
-  display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
-  gap:12px;padding:2px 2px 8px;scrollbar-width:none
-}
+.gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:12px;padding:2px 2px 8px;scrollbar-width:none}
 .gh-svctrack::-webkit-scrollbar{display:none}
 .gh-svcpage{flex:0 0 100%;scroll-snap-align:start}
 .gh-mgrid-svc{margin-top:6px}
-.gh-svcarrow{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:36px;height:36px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(10,14,23,.75);
-  color:#fff;display:inline-flex;align-items:center;justify-content:center;
-  font-size:20px;line-height:1;cursor:pointer;z-index:5;
-  box-shadow:0 12px 28px rgba(0,0,0,.35)
-}
+.gh-svcarrow{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(10,14,23,.75);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;z-index:5;box-shadow:0 12px 28px rgba(0,0,0,.35)}
 .gh-svcarrow:hover{border-color:rgba(45,212,191,.25)}
 .gh-svcarrow:active{transform:translateY(-50%) scale(.98)}
-.gh-svcarrow.prev{left:6px}
-.gh-svcarrow.next{right:6px}
+.gh-svcarrow.prev{left:6px}.gh-svcarrow.next{right:6px}
 .gh-svcdots{display:flex;justify-content:center;gap:8px;margin-top:8px}
 .gh-svcdots .dot{width:8px;height:8px;border-radius:999px;border:0;background:rgba(255,255,255,.22);cursor:pointer}
 .gh-svcdots .dot.is-active{width:18px;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
-
-@media(prefers-reduced-motion:reduce){
-  .gh-brand,.gh-nav a::after,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar{transition:none!important}
-}
-
+@media(prefers-reduced-motion:reduce){.gh-brand,.gh-nav a::after,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar{transition:none!important}}
 /* =========================================================
-   PATCH: Mega menú Desktop responsive (cards + icono ancho)
-   - Solo afecta .gh-dd-menu.mega.gh-mega (Sistemas)
+   DESKTOP MEGA (SISTEMAS + SERVICIOS) — mismo “look”
 ========================================================= */
-@media (min-width:1024px){
-
-  /* Caja del mega */
-  .gh-dd-menu.mega.gh-mega{
-    width:min(980px,calc(100vw - 24px));
-    padding:20px;
-    border-radius:18px;
-    border:1px solid rgba(255,255,255,.08);
-    background:var(--gh-panel);
-    box-shadow:0 18px 45px rgba(0,0,0,.60);
-
-    /* blinda posicionamiento independiente del dropdown normal */
-    left:50%;
-    transform:translate(-50%,15px);
-
-    display:grid;
-    gap:16px;
-
-    /* default: 4 columnas */
-    grid-template-columns:repeat(4,minmax(0,1fr));
-  }
-  .gh-dd-wrap:hover .gh-dd-menu.mega.gh-mega,
-  .gh-dd-wrap:focus-within .gh-dd-menu.mega.gh-mega{
-    transform:translate(-50%,0);
-  }
-
-  /* Columna */
-  .gh-dd-menu.mega.gh-mega .gh-col{
-    border-radius:16px;
-    padding:12px;
-    background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);
-    border:1px solid rgba(255,255,255,.06);
-    min-width:0;
-  }
-
-  /* Encabezado de columna */
-  .gh-dd-menu.mega.gh-mega .gh-col h4{
-    margin:0 0 8px;
-    font-size:12px;
-    letter-spacing:.14em;
-    color:var(--gh-muted);
-    text-transform:uppercase;
-    opacity:.75;
-    border-bottom:none;
-    padding-bottom:0;
-  }
-
-  /* Cada item: card vertical */
-  .gh-dd-menu.mega.gh-mega a.gh-item{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:10px;
-
-    padding:12px;
-    border-radius:12px;
-    text-decoration:none;
-    color:var(--gh-text);
-
-    border:1px solid transparent;
-    background:transparent;
-    transition:.18s ease;
-    min-width:0;
-  }
-  .gh-dd-menu.mega.gh-mega a.gh-item:hover{
-    background:rgba(255,255,255,.05);
-    border-color:rgba(255,255,255,.10);
-  }
-
-  /* Imagen ancha */
-  .gh-dd-menu.mega.gh-mega a.gh-item img{
-    width:min(220px,100%);
-    height:auto;
-    aspect-ratio:20/7;
-    object-fit:contain;
-    display:block;
-    flex:0 0 auto;
-    filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));
-    opacity:.95;
-  }
-
-  /* Texto */
-  .gh-dd-menu.mega.gh-mega a.gh-item div{
-    display:flex;flex-direction:column;gap:4px;min-width:0;
-  }
-  .gh-dd-menu.mega.gh-mega a.gh-item b{
-    font-size:13px;
-    font-weight:650;
-    color:#fff;
-    line-height:1.15;
-  }
-  .gh-dd-menu.mega.gh-mega a.gh-item span{
-    margin:0;
-    font-size:11px;
-    line-height:1.35;
-    color:var(--gh-muted);
-    white-space:normal;
-  }
+@media(min-width:1024px){
+/* Caja mega base */
+.gh-dd-menu.mega.gh-mega,.gh-dd-menu.mega.gh-mega-svc{width:min(980px,calc(100vw - 24px));padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:var(--gh-panel);box-shadow:0 18px 45px rgba(0,0,0,.60);left:50%;transform:translate(-50%,15px);display:grid;gap:16px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.gh-dd-wrap:hover .gh-dd-menu.mega.gh-mega,.gh-dd-wrap:focus-within .gh-dd-menu.mega.gh-mega{transform:translate(-50%,0)}
+.gh-dd-wrap:hover .gh-dd-menu.mega.gh-mega-svc,.gh-dd-wrap:focus-within .gh-dd-menu.mega.gh-mega-svc{transform:translate(-50%,0)}
+/* Columna */
+.gh-dd-menu.mega.gh-mega .gh-col,.gh-dd-menu.mega.gh-mega-svc .gh-col{border-radius:16px;padding:12px;background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);border:1px solid rgba(255,255,255,.06);min-width:0}
+.gh-dd-menu.mega.gh-mega .gh-col h4,.gh-dd-menu.mega.gh-mega-svc .gh-col h4{margin:0 0 8px;font-size:12px;letter-spacing:.14em;color:var(--gh-muted);text-transform:uppercase;opacity:.75;border-bottom:none;padding-bottom:0}
+/* Item card vertical */
+.gh-dd-menu.mega.gh-mega a.gh-item,.gh-dd-menu.mega.gh-mega-svc a.gh-item{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:12px;border-radius:12px;text-decoration:none;color:var(--gh-text);border:1px solid transparent;background:transparent;transition:.18s ease;min-width:0}
+.gh-dd-menu.mega.gh-mega a.gh-item:hover,.gh-dd-menu.mega.gh-mega-svc a.gh-item:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.10)}
+/* Imagen ancha */
+.gh-dd-menu.mega.gh-mega a.gh-item img,.gh-dd-menu.mega.gh-mega-svc a.gh-item img{width:min(220px,100%);height:auto;aspect-ratio:20/7;object-fit:contain;display:block;flex:0 0 auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));opacity:.95}
+/* Texto */
+.gh-dd-menu.mega.gh-mega a.gh-item div,.gh-dd-menu.mega.gh-mega-svc a.gh-item div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.gh-dd-menu.mega.gh-mega a.gh-item b,.gh-dd-menu.mega.gh-mega-svc a.gh-item b{font-size:13px;font-weight:650;color:#fff;line-height:1.15}
+.gh-dd-menu.mega.gh-mega a.gh-item span,.gh-dd-menu.mega.gh-mega-svc a.gh-item span{margin:0;font-size:11px;line-height:1.35;color:var(--gh-muted);white-space:normal}
+/* ===== DESTACADO PÓLIZAS (flow/glow) ===== */
+.gh-dd-menu.mega.gh-mega-svc a.gh-item.is-featured{position:relative;background:linear-gradient(180deg,rgba(45,212,191,.10),rgba(96,165,250,.06));border-color:rgba(45,212,191,.24)}
+.gh-dd-menu.mega.gh-mega-svc a.gh-item.is-featured::before{content:"";position:absolute;inset:-1px;border-radius:13px;background:radial-gradient(70% 80% at 20% 0%,rgba(45,212,191,.35),transparent 60%),radial-gradient(70% 80% at 100% 20%,rgba(96,165,250,.28),transparent 55%);opacity:.55;pointer-events:none}
+.gh-dd-menu.mega.gh-mega-svc a.gh-item.is-featured:hover{transform:translateY(-2px);border-color:rgba(45,212,191,.40);box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.gh-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.02em;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));color:#041016}
 }
-
-/* Breakpoints del mega (solo desktop) */
-@media (min-width:1024px) and (max-width:1199px){
-  .gh-dd-menu.mega.gh-mega{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    width:min(860px,calc(100vw - 24px));
-  }
+/* Breakpoints del mega */
+@media(min-width:1024px) and (max-width:1199px){
+.gh-dd-menu.mega.gh-mega,.gh-dd-menu.mega.gh-mega-svc{grid-template-columns:repeat(2,minmax(0,1fr));width:min(860px,calc(100vw - 24px))}
 }
-@media (min-width:1200px) and (max-width:1399px){
-  .gh-dd-menu.mega.gh-mega{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    width:min(940px,calc(100vw - 24px));
-  }
+@media(min-width:1200px) and (max-width:1399px){
+.gh-dd-menu.mega.gh-mega,.gh-dd-menu.mega.gh-mega-svc{grid-template-columns:repeat(3,minmax(0,1fr));width:min(940px,calc(100vw - 24px))}
 }
-@media (min-width:1400px){
-  .gh-dd-menu.mega.gh-mega{
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    width:min(1000px,calc(100vw - 24px));
-  }
+@media(min-width:1400px){
+.gh-dd-menu.mega.gh-mega,.gh-dd-menu.mega.gh-mega-svc{grid-template-columns:repeat(4,minmax(0,1fr));width:min(1000px,calc(100vw - 24px))}
 }
-
 /* Imagen más contenida en pantallas grandes */
-@media (min-width:1200px){
-  .gh-dd-menu.mega.gh-mega a.gh-item img{
-    width:clamp(110px,9vw,150px);
-  }
+@media(min-width:1200px){
+.gh-dd-menu.mega.gh-mega a.gh-item img,.gh-dd-menu.mega.gh-mega-svc a.gh-item img{width:clamp(110px,9vw,150px)}
 }
-
-/* ====== FIX: Drawer siempre encima de todo ====== */
-.gh{ z-index:2147483000; }          /* header wrapper top */
-.gh-bar{ z-index:2147483001; }       /* barra arriba */
-.gh-dim{ z-index:2147483646; }       /* overlay */
-.gh-drawer{ z-index:2147483647; }    /* drawer */
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
@@ -467,6 +173,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
       <ul>
         <li><a class="js-link" data-href="index.html">Inicio</a></li>
 
+        <!-- ===================== SISTEMAS (MEGA) ===================== -->
         <li class="gh-dd-wrap">
           <a class="js-link" data-href="index.html#productos-con" aria-haspopup="true">Sistemas ▾</a>
           <div class="gh-dd-menu mega gh-mega" role="menu" aria-label="Sistemas">
@@ -486,28 +193,52 @@ html.gh-open .gh-drawer{transform:translateX(0)}
             </div>
             <div class="gh-col">
               <h4>Nube</h4>
-              <a class="gh-item js-link" data-href="SISTEMAS/contabiliza.html"><img class="js-img" data-src="IMG/contabiliza.webp" alt=""><div><b>Contabiliza</b><span>Contador móvil</span></div></a>
-              <a class="gh-item js-link" data-href="SISTEMAS/vende.html"><img class="js-img" data-src="IMG/vende.webp" alt=""><div><b>Vende</b><span>Factura web</span></div></a>
-              <a class="gh-item js-link" data-href="SISTEMAS/personia.html"><img class="js-img" data-src="IMG/personia.webp" alt=""><div><b>Personia</b><span>Nómina nube</span></div></a>
-              <a class="gh-item js-link" data-href="SISTEMAS/analiza.html"><img class="js-img" data-src="IMG/analiza.webp" alt=""><div><b>Analiza</b><span>Dashboards</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/contabiliza.html"><img class="js-img" data-src="IMG/contabiliza.webp" alt=""><div><b>Contabiliza</b><span>Contabilidad en la nube</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/vende.html"><img class="js-img" data-src="IMG/vende.webp" alt=""><div><b>Vende</b><span>Punto de venta web</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/personia.html"><img class="js-img" data-src="IMG/personia.webp" alt=""><div><b>Personia</b><span>Gestión de personal</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/colabora.html"><img class="js-img" data-src="IMG/colabora.webp" alt=""><div><b>Colabora</b><span>Gratis · App móvil</span></div></a>
             </div>
             <div class="gh-col">
-              <h4>Servicios</h4>
-              <a class="gh-item js-link" data-href="index.html#promociones"><img class="js-img" data-src="IMG/etiqueta-de-precio.webp" alt=""><div><b>Promociones</b><span>Descuentos</span></div></a>
-              <a class="gh-item js-link" data-href="index.html#servicios"><img class="js-img" data-src="IMG/020-code.webp" alt=""><div><b>Ver servicios</b><span>Implementación y soporte</span></div></a>
+              <h4>Productividad</h4>
+              <a class="gh-item js-link" data-href="SISTEMAS/analiza.html"><img class="js-img" data-src="IMG/analiza.webp" alt=""><div><b>Analiza</b><span>Dashboards y BI</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/evalua.html"><img class="js-img" data-src="IMG/evalua.webp" alt=""><div><b>Evalúa</b><span>NOM-035 y clima laboral</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/despachos.html"><img class="js-img" data-src="IMG/despachos.webp" alt=""><div><b>Despachos</b><span>Operación integral</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/colabora.html"><img class="js-img" data-src="IMG/colabora.webp" alt=""><div><b>Colabora</b><span>Flow · Gratis</span></div></a>
             </div>
           </div>
         </li>
 
+        <!-- ===================== SERVICIOS (MEGA) ===================== -->
         <li class="gh-dd-wrap">
           <a class="js-link" data-href="index.html#servicios" aria-haspopup="true">Servicios ▾</a>
-          <div class="gh-dd-menu" role="menu" aria-label="Servicios">
-            <a class="js-link" data-href="SERVICIOS/polizas.html">🛡️ Pólizas de Soporte</a>
-            <a class="js-link" data-href="SERVICIOS/implementaciones.html">⚙️ Implementaciones</a>
-            <a class="js-link" data-href="SERVICIOS/migraciones.html">🔄 Migraciones</a>
-            <a class="js-link" data-href="SERVICIOS/cursos.html">🎓 Cursos</a>
-            <a class="js-link" data-href="SERVICIOS/servidoresvirtuales.html">☁️ Servidores Virtuales</a>
-            <a class="js-link" data-href="SERVICIOS/desarrollos.html">💻 Desarrollos</a>
+          <div class="gh-dd-menu mega gh-mega-svc" role="menu" aria-label="Servicios">
+            <div class="gh-col">
+              <h4>Soporte</h4>
+              <a class="gh-item js-link is-featured" data-href="SERVICIOS/polizas.html">
+                <img class="js-img" data-src="IMG/021-maintenance.webp" alt="">
+                <div>
+                  <span class="gh-badge">Recomendado</span>
+                  <b>Pólizas anuales</b>
+                  <span>Soporte continuo y preventivo</span>
+                </div>
+              </a>
+              <a class="gh-item js-link" data-href="SERVICIOS/soporte.html"><img class="js-img" data-src="IMG/021-maintenance.webp" alt=""><div><b>Soporte técnico</b><span>Remoto + WhatsApp</span></div></a>
+            </div>
+            <div class="gh-col">
+              <h4>Implementación</h4>
+              <a class="gh-item js-link" data-href="SERVICIOS/implementaciones.html"><img class="js-img" data-src="IMG/025-meeting.webp" alt=""><div><b>Implementaciones</b><span>Instalación y puesta en marcha</span></div></a>
+              <a class="gh-item js-link" data-href="SERVICIOS/migraciones.html"><img class="js-img" data-src="IMG/018-transfer.webp" alt=""><div><b>Migraciones</b><span>Datos limpios y validados</span></div></a>
+            </div>
+            <div class="gh-col">
+              <h4>Capacitación</h4>
+              <a class="gh-item js-link" data-href="SERVICIOS/cursos.html"><img class="js-img" data-src="IMG/024-education.webp" alt=""><div><b>Cursos</b><span>Capacitación para tu equipo</span></div></a>
+              <a class="gh-item js-link" data-href="SERVICIOS/desarrollos.html"><img class="js-img" data-src="IMG/020-code.webp" alt=""><div><b>Desarrollos</b><span>Integraciones y automatización</span></div></a>
+            </div>
+            <div class="gh-col">
+              <h4>Infraestructura</h4>
+              <a class="gh-item js-link" data-href="SERVICIOS/servidoresvirtuales.html"><img class="js-img" data-src="IMG/023-stairs.webp" alt=""><div><b>Servidores virtuales</b><span>Acceso remoto seguro</span></div></a>
+              <a class="gh-item js-link" data-href="SERVICIOS/desarrollos.html"><img class="js-img" data-src="IMG/020-code.webp" alt=""><div><b>Automatización</b><span>Flujos y reportes</span></div></a>
+            </div>
           </div>
         </li>
 
@@ -518,10 +249,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
     <!-- Actions -->
     <div class="gh-actions">
-<a class="gh-btn-wa" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">
-  <img class="gh-wa-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp">
-  <span class="gh-wa-num">55 6843 7918</span>
-</a>
+      <a class="gh-btn-wa" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">
+        <img class="gh-wa-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp">
+        <span class="gh-wa-num">55 6843 7918</span>
+      </a>
       <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
     </div>
 
@@ -586,20 +317,22 @@ html.gh-open .gh-drawer{transform:translateX(0)}
           </div>
         </div>
 
+        <!-- Mobile: Nube (incluye Colabora; NO incluye Despachos) -->
         <div class="gh-panel" data-panel="nube" role="tabpanel" hidden>
           <div class="gh-mgrid">
             <a class="gh-mcard js-link" data-href="SISTEMAS/contabiliza.html"><img class="gh-mimg js-img" data-src="IMG/contabiliza.webp" alt=""><div class="gh-mmeta"><strong>Contabiliza</strong><span>Contabilidad en la nube</span></div></a>
             <a class="gh-mcard js-link" data-href="SISTEMAS/analiza.html"><img class="gh-mimg js-img" data-src="IMG/analiza.webp" alt=""><div class="gh-mmeta"><strong>Analiza</strong><span>Dashboards y BI</span></div></a>
-            <a class="gh-mcard js-link" data-href="SISTEMAS/despachos.html"><img class="gh-mimg js-img" data-src="IMG/despachos.webp" alt=""><div class="gh-mmeta"><strong>Despachos</strong><span>Gestión integral</span></div></a>
             <a class="gh-mcard js-link" data-href="SISTEMAS/vende.html"><img class="gh-mimg js-img" data-src="IMG/vende.webp" alt=""><div class="gh-mmeta"><strong>Vende</strong><span>Punto de venta nube</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/colabora.html"><img class="gh-mimg js-img" data-src="IMG/colabora.webp" alt=""><div class="gh-mmeta"><strong>Colabora</strong><span>Flow · Gratis</span></div></a>
           </div>
         </div>
 
+        <!-- Mobile: Productividad (incluye Despachos; NO incluye Colabora) -->
         <div class="gh-panel" data-panel="prod" role="tabpanel" hidden>
           <div class="gh-mgrid">
             <a class="gh-mcard js-link" data-href="SISTEMAS/evalua.html"><img class="gh-mimg js-img" data-src="IMG/evalua.webp" alt=""><div class="gh-mmeta"><strong>Evalúa</strong><span>Clima laboral y NOM-035</span></div></a>
-            <a class="gh-mcard js-link" data-href="SISTEMAS/colabora.html"><img class="gh-mimg js-img" data-src="IMG/colabora.webp" alt=""><div class="gh-mmeta"><strong>Colabora</strong><span>Seguimiento móvil</span></div></a>
             <a class="gh-mcard js-link" data-href="SISTEMAS/personia.html"><img class="gh-mimg js-img" data-src="IMG/personia.webp" alt=""><div class="gh-mmeta"><strong>Personia</strong><span>Gestión de personal</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/despachos.html"><img class="gh-mimg js-img" data-src="IMG/despachos.webp" alt=""><div class="gh-mmeta"><strong>Despachos</strong><span>Gestión integral</span></div></a>
             <div class="gh-mcard gh-mcard-ghost" aria-hidden="true"></div>
           </div>
         </div>
@@ -623,7 +356,6 @@ html.gh-open .gh-drawer{transform:translateX(0)}
         <button class="gh-svcarrow prev" type="button" aria-label="Servicios anteriores">‹</button>
 
         <div class="gh-svctrack" id="gh-svctrack" role="region" aria-label="Carrusel de servicios" tabindex="0">
-          <!-- Página 1 -->
           <div class="gh-svcpage" aria-label="Servicios página 1">
             <div class="gh-mgrid gh-mgrid-svc">
               <a class="gh-mcard js-link" data-href="SERVICIOS/polizas.html"><img class="gh-mimg js-img" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Pólizas anuales</strong><span>Soporte continuo y preventivo</span></div></a>
@@ -633,7 +365,6 @@ html.gh-open .gh-drawer{transform:translateX(0)}
             </div>
           </div>
 
-          <!-- Página 2 -->
           <div class="gh-svcpage" aria-label="Servicios página 2">
             <div class="gh-mgrid gh-mgrid-svc">
               <a class="gh-mcard js-link" data-href="SERVICIOS/servidoresvirtuales.html"><img class="gh-mimg js-img" data-src="IMG/023-stairs.webp" alt=""><div class="gh-mmeta"><strong>Servidores virtuales</strong><span>Acceso remoto seguro</span></div></a>
@@ -665,284 +396,5 @@ html.gh-open .gh-drawer{transform:translateX(0)}
    - hide on scroll (solo barra)
    - FIX: Promociones en móvil (index.html#promociones) garantizado + scroll
 ========================================================= */
-(function(){
-  "use strict";
-  // Permite reintentar si el header aún no existe
-  if (window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__ghInited) return;
-
-  const Q  = (s, c=document)=>c.querySelector(s);
-  const QA = (s, c=document)=>Array.from(c.querySelectorAll(s));
-
-  /* ===== 1) MASTER ROOT (V7) ===== */
-  function getMasterRoot(){
-    const meta = document.querySelector('meta[name="expiriti-base"]');
-    if (meta && meta.content){
-      let r = meta.content.trim();
-      if (!r.startsWith("/")) r = "/" + r;
-      if (!r.endsWith("/")) r = r + "/";
-      return r;
-    }
-    const path = window.location.pathname;
-    const parts = path.split("/").filter(Boolean);
-    if (window.location.hostname.includes("github.io") && parts.length > 0){
-      return "/" + parts[0] + "/";
-    }
-    return "/";
-  }
-  const ROOT = getMasterRoot();
-
-  function buildPath(raw){
-    if (!raw) return "#";
-    if (/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw)) return raw;
-    if (raw.startsWith("#")) return window.location.origin + ROOT + "index.html" + raw;
-    const clean = raw.replace(/^\//,"");
-    return window.location.origin + ROOT + clean;
-  }
-
-  /* ===== 2) APPLY PATHS (data-href / data-src) ===== */
-  function applySafePaths(container=document){
-    QA(".js-link[data-href]", container).forEach(a=>{
-      const raw = a.getAttribute("data-href");
-      if (raw) a.href = buildPath(raw);
-    });
-
-    QA(".js-img[data-src]", container).forEach(img=>{
-      const raw = img.getAttribute("data-src");
-      if (!raw) return;
-      img.src = buildPath(raw);
-      img.onerror = function(){
-        this.style.opacity = "0.5";
-        this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
-      };
-    });
-  }
-
-  /* ===== 3) OFFSET TOP (evita solape) ===== */
-  function syncOffset(){
-    const bar = Q("#gh-bar");
-    const h = bar ? bar.offsetHeight : 68;
-    document.documentElement.style.setProperty("--gh-offset", h + "px");
-  }
-
-  /* ===== 4) HIDE ON SCROLL (solo barra) ===== */
-  function initScrollHide(){
-    const bar = Q("#gh-bar");
-    if (!bar) return;
-    let last = window.scrollY || 0;
-
-    window.addEventListener("scroll", ()=>{
-      if (document.documentElement.classList.contains("gh-open")) return;
-      const y = window.scrollY || 0;
-      if (y > 60 && y > last) bar.classList.add("is-hidden");
-      else bar.classList.remove("is-hidden");
-      last = y;
-    }, {passive:true});
-  }
-
-  /* ===== 5) MOBILE: SISTEMAS TABS ===== */
-  function initMobileSystems(){
-    const root = Q("#gh-msys");
-    if (!root || root.__inited) return;
-    root.__inited = true;
-
-    const cats   = QA(".gh-cat", root);
-    const panels = QA(".gh-panel", root);
-    const KEY = "expiriti_mobile_sys_cat";
-    const saved = localStorage.getItem(KEY);
-
-    function setCat(cat){
-      cats.forEach(b=>{
-        const on = b.dataset.cat === cat;
-        b.classList.toggle("is-active", on);
-        b.setAttribute("aria-selected", on ? "true" : "false");
-      });
-      panels.forEach(p=>{
-        const on = p.dataset.panel === cat;
-        p.classList.toggle("is-open", on);
-        p.hidden = !on;
-      });
-      localStorage.setItem(KEY, cat);
-    }
-
-    cats.forEach(b=>b.addEventListener("click", ()=>setCat(b.dataset.cat)));
-    setCat(saved || "contables");
-  }
-
-  /* ===== 6) MOBILE: SERVICIOS CAROUSEL ===== */
-  function initMobileServices(){
-    const root  = Q("#gh-msvc");
-    const track = Q("#gh-svctrack");
-    if (!root || !track || root.__inited) return;
-    root.__inited = true;
-
-    const pages = QA(".gh-svcpage", track);
-    const prev  = Q(".gh-svcarrow.prev", root);
-    const next  = Q(".gh-svcarrow.next", root);
-    const dots  = QA(".gh-svcdots .dot", root);
-
-    const idxFromScroll = ()=>{
-      const w = track.clientWidth || 1;
-      return Math.round(track.scrollLeft / w);
-    };
-
-    const goTo = (i)=>{
-      const w = track.clientWidth || 1;
-      const n = Math.max(0, Math.min(i, pages.length - 1));
-      track.scrollTo({left: n * w, behavior: "smooth"});
-    };
-
-    const sync = ()=>{
-      const i = idxFromScroll();
-      dots.forEach((d,k)=>d.classList.toggle("is-active", k === i));
-      if (prev){
-        prev.disabled = (i === 0);
-        prev.style.opacity = prev.disabled ? ".35" : "1";
-      }
-      if (next){
-        next.disabled = (i === pages.length - 1);
-        next.style.opacity = next.disabled ? ".35" : "1";
-      }
-    };
-
-    prev && prev.addEventListener("click", (e)=>{e.preventDefault(); goTo(idxFromScroll() - 1);});
-    next && next.addEventListener("click", (e)=>{e.preventDefault(); goTo(idxFromScroll() + 1);});
-    dots.forEach((d,i)=>d.addEventListener("click", (e)=>{e.preventDefault(); goTo(i);}));
-
-    track.addEventListener("scroll", ()=>requestAnimationFrame(sync), {passive:true});
-    window.addEventListener("resize", sync, {passive:true});
-    sync();
-  }
-
-  /* ===== 7) DRAWER OPEN/CLOSE ===== */
-  function toggleDrawer(open){
-    const drawer = Q("#gh-drawer");
-    const dim    = Q("#gh-dim");
-    const burger = Q("#gh-burger");
-    const bar    = Q("#gh-bar");
-    if (!drawer || !dim || !burger) return;
-
-    if (open){
-      bar && bar.classList.remove("is-hidden");
-      drawer.hidden = false; dim.hidden = false; void drawer.offsetWidth;
-      document.documentElement.classList.add("gh-open");
-      drawer.setAttribute("aria-hidden", "false");
-      burger.setAttribute("aria-expanded", "true");
-      document.body.style.overflow = "hidden";
-
-      // Asegura rutas e inicializa UI móvil
-      applySafePaths(Q("#gh-header"));
-      initMobileSystems();
-      initMobileServices();
-    } else {
-      document.documentElement.classList.remove("gh-open");
-      drawer.setAttribute("aria-hidden", "true");
-      burger.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
-
-      setTimeout(()=>{
-        if (!document.documentElement.classList.contains("gh-open")){
-          dim.hidden = true;
-          drawer.hidden = true;
-        }
-      }, 250);
-    }
-  }
-
-  /* ===== 8) WIRING (sin onclick inline) ===== */
-  function bind(){
-    document.addEventListener("click", (e)=>{
-      const b = e.target.closest("#gh-burger");
-      if (b){
-        e.preventDefault();
-        toggleDrawer(!document.documentElement.classList.contains("gh-open"));
-        return;
-      }
-
-      if (e.target.closest("#gh-close") || e.target.matches("#gh-dim")){
-        e.preventDefault();
-        toggleDrawer(false);
-        return;
-      }
-
-      // ===== FIX: Promociones en móvil (index.html#promociones) garantizado + scroll =====
-      const a = e.target.closest(".gh-drawer a");
-      if (a){
-        const href = a.getAttribute("href") || "";
-
-        // Solo intercepta el caso index.html#promociones
-        const isIndexPromo = /index\.html#promociones$/i.test(href);
-
-        if (isIndexPromo){
-          e.preventDefault();
-
-          // 1) cierra drawer primero (libera overflow)
-          toggleDrawer(false);
-
-          // 2) navega a index#promociones
-          setTimeout(()=>{
-            window.location.href = href;
-
-            // 3) si ya estás en index, fuerza scroll al ancla
-            setTimeout(()=>{
-              const el = document.getElementById("promociones");
-              if (el) el.scrollIntoView({ behavior:"smooth", block:"start" });
-            }, 60);
-
-          }, 280);
-
-          return;
-        }
-
-        // Default: cierra drawer sin interferir navegación normal
-        setTimeout(()=>toggleDrawer(false), 120);
-      }
-
-    }, {passive:false});
-
-    document.addEventListener("keydown", (e)=>{
-      if (e.key === "Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
-    });
-
-    window.addEventListener("pageshow", (ev)=>{ if (ev.persisted) toggleDrawer(false); });
-  }
-
-  // ===== 9) BOOT =====
-  function boot(){
-    const header = Q("#gh-header");
-    if (!header) return;
-
-    if (header.__ghInited) return;          // evita doble init por reintentos
-    header.__ghInited = true;               // marca init OK
-    window.__EXPIRITI_GH_V7MOBILE__ = true; // ahora sí
-
-    applySafePaths(header);
-    syncOffset();
-    initScrollHide();
-    bind();
-    toggleDrawer(false);
-  }
-
-  // 1) Intenta ya mismo (sirve si el script va después del header)
-  boot();
-
-  // 2) Reintenta en DOMContentLoaded
-  document.addEventListener("DOMContentLoaded", boot, { once:true });
-
-  // 3) Recalcula offset en resize
-  window.addEventListener("resize", syncOffset, { passive:true });
-
-  // 4) OBSERVER robusto: si el header aparece tarde
-  function startObserver(){
-    const observer = new MutationObserver(()=>{
-      const header = Q("#gh-header");
-      if (!header) return;
-      if (!header.__ghInited) boot();
-    });
-    observer.observe(document.body, { childList:true, subtree:true });
-  }
-
-  if (document.body) startObserver();
-  else document.addEventListener("DOMContentLoaded", startObserver, { once:true });
-
-})();
+(function(){"use strict";if(window.__EXPIRITI_GH_V7MOBILE__&&document.getElementById("gh-header")?.__ghInited)return;const Q=(s,c=document)=>c.querySelector(s),QA=(s,c=document)=>Array.from(c.querySelectorAll(s));function getMasterRoot(){const m=document.querySelector('meta[name="expiriti-base"]');if(m&&m.content){let r=m.content.trim();return r.startsWith("/")||(r="/"+r),r.endsWith("/")||(r=r+"/"),r}const p=window.location.pathname.split("/").filter(Boolean);return window.location.hostname.includes("github.io")&&p.length>0?"/"+p[0]+"/":"/"}const ROOT=getMasterRoot();function buildPath(raw){if(!raw)return"#";if(/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw))return raw;if(raw.startsWith("#"))return window.location.origin+ROOT+"index.html"+raw;const clean=raw.replace(/^\//,"");return window.location.origin+ROOT+clean}function applySafePaths(container=document){QA(".js-link[data-href]",container).forEach(a=>{const r=a.getAttribute("data-href");r&&(a.href=buildPath(r))}),QA(".js-img[data-src]",container).forEach(img=>{const r=img.getAttribute("data-src");r&&(img.src=buildPath(r),img.onerror=function(){this.style.opacity="0.5",this.src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"})})}function syncOffset(){const bar=Q("#gh-bar"),h=bar?bar.offsetHeight:68;document.documentElement.style.setProperty("--gh-offset",h+"px")}function initScrollHide(){const bar=Q("#gh-bar");if(!bar)return;let last=window.scrollY||0;window.addEventListener("scroll",()=>{if(document.documentElement.classList.contains("gh-open"))return;const y=window.scrollY||0;y>60&&y>last?bar.classList.add("is-hidden"):bar.classList.remove("is-hidden"),last=y},{passive:true})}function initMobileSystems(){const root=Q("#gh-msys");if(!root||root.__inited)return;root.__inited=true;const cats=QA(".gh-cat",root),panels=QA(".gh-panel",root),KEY="expiriti_mobile_sys_cat",saved=localStorage.getItem(KEY);function setCat(cat){cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle("is-active",on),b.setAttribute("aria-selected",on?"true":"false")}),panels.forEach(p=>{const on=p.dataset.panel===cat;p.classList.toggle("is-open",on),p.hidden=!on}),localStorage.setItem(KEY,cat)}cats.forEach(b=>b.addEventListener("click",()=>setCat(b.dataset.cat))),setCat(saved||"contables")}function initMobileServices(){const root=Q("#gh-msvc"),track=Q("#gh-svctrack");if(!root||!track||root.__inited)return;root.__inited=true;const pages=QA(".gh-svcpage",track),prev=Q(".gh-svcarrow.prev",root),next=Q(".gh-svcarrow.next",root),dots=QA(".gh-svcdots .dot",root),idxFromScroll=()=>{const w=track.clientWidth||1;return Math.round(track.scrollLeft/w)},goTo=i=>{const w=track.clientWidth||1,n=Math.max(0,Math.min(i,pages.length-1));track.scrollTo({left:n*w,behavior:"smooth"})},sync=()=>{const i=idxFromScroll();dots.forEach((d,k)=>d.classList.toggle("is-active",k===i)),prev&&(prev.disabled=i===0,prev.style.opacity=prev.disabled?".35":"1"),next&&(next.disabled=i===pages.length-1,next.style.opacity=next.disabled?".35":"1")};prev&&prev.addEventListener("click",e=>{e.preventDefault(),goTo(idxFromScroll()-1)}),next&&next.addEventListener("click",e=>{e.preventDefault(),goTo(idxFromScroll()+1)}),dots.forEach((d,i)=>d.addEventListener("click",e=>{e.preventDefault(),goTo(i)})),track.addEventListener("scroll",()=>requestAnimationFrame(sync),{passive:true}),window.addEventListener("resize",sync,{passive:true}),sync()}function toggleDrawer(open){const drawer=Q("#gh-drawer"),dim=Q("#gh-dim"),burger=Q("#gh-burger"),bar=Q("#gh-bar");if(!drawer||!dim||!burger)return;open?(bar&&bar.classList.remove("is-hidden"),drawer.hidden=false,dim.hidden=false,void drawer.offsetWidth,document.documentElement.classList.add("gh-open"),drawer.setAttribute("aria-hidden","false"),burger.setAttribute("aria-expanded","true"),document.body.style.overflow="hidden",applySafePaths(Q("#gh-header")),initMobileSystems(),initMobileServices()):(document.documentElement.classList.remove("gh-open"),drawer.setAttribute("aria-hidden","true"),burger.setAttribute("aria-expanded","false"),document.body.style.overflow="",setTimeout(()=>{document.documentElement.classList.contains("gh-open")||(dim.hidden=true,drawer.hidden=true)},250))}function bind(){document.addEventListener("click",e=>{const b=e.target.closest("#gh-burger");if(b)return e.preventDefault(),void toggleDrawer(!document.documentElement.classList.contains("gh-open"));if(e.target.closest("#gh-close")||e.target.matches("#gh-dim"))return e.preventDefault(),void toggleDrawer(false);const a=e.target.closest(".gh-drawer a");if(a){const href=a.getAttribute("href")||"",isIndexPromo=/index\.html#promociones$/i.test(href);if(isIndexPromo)return e.preventDefault(),toggleDrawer(false),void setTimeout(()=>{window.location.href=href,setTimeout(()=>{const el=document.getElementById("promociones");el&&el.scrollIntoView({behavior:"smooth",block:"start"})},60)},280);setTimeout(()=>toggleDrawer(false),120)}},{passive:false}),document.addEventListener("keydown",e=>{e.key==="Escape"&&document.documentElement.classList.contains("gh-open")&&toggleDrawer(false)}),window.addEventListener("pageshow",ev=>{ev.persisted&&toggleDrawer(false)})}function boot(){const header=Q("#gh-header");if(!header||header.__ghInited)return;header.__ghInited=true,window.__EXPIRITI_GH_V7MOBILE__=true,applySafePaths(header),syncOffset(),initScrollHide(),bind(),toggleDrawer(false)}boot(),document.addEventListener("DOMContentLoaded",boot,{once:true}),window.addEventListener("resize",syncOffset,{passive:true});function startObserver(){const o=new MutationObserver(()=>{const h=Q("#gh-header");h&&!h.__ghInited&&boot()});o.observe(document.body,{childList:true,subtree:true})}document.body?startObserver():document.addEventListener("DOMContentLoaded",startObserver,{once:true})})();
 </script>
