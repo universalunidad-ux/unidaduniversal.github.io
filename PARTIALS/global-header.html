@@ -211,8 +211,85 @@ Objetivo: look más refinado + menos costo de blur/shadow + mejor accesibilidad
   .gh-svcdots{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(255,255,255,.08)}
 }
 
-  /* === DEBUG: si esto NO se ve, tu CSS NO está cargando/está cacheado === */
-#gh-header .gh-bar{outline:4px solid #ff2d55!important}
+/* === Expiriti GH — UI/UX V2 (VISIBLE) + PageSpeed SAFE =======================
+- Cambios notorios sin romper layout
+- Más especificidad (#gh-header) para que SÍ gane el patch
+============================================================================= */
+
+/* 1) NAV más “2026”: tamaño + tracking + contraste */
+@media(min-width:1024px){
+  #gh-header .gh-nav a{font-size:16.5px!important;letter-spacing:.012em!important}
+  #gh-header .gh-nav ul{gap:30px!important}
+  #gh-header .gh-nav a{opacity:.96}
+  #gh-header .gh-nav a:hover{opacity:1}
+}
+
+/* 2) Barra superior: glass más limpio y menos “pesado” */
+#gh-header .gh-bar{
+  backdrop-filter:blur(10px)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+  background:rgba(7,10,16,.90)!important; /* más “glass”, visible */
+  border-bottom:1px solid rgba(255,255,255,.10)!important;
+}
+
+/* 3) WhatsApp button: más premium (sin exagerar) */
+#gh-header .gh-btn-wa{
+  box-shadow:0 10px 24px rgba(0,0,0,.22)!important;
+  border-color:rgba(255,255,255,.16)!important;
+}
+#gh-header .gh-wa-ico{filter:none!important}
+
+/* 4) Mega menus: más “clean card” (visible) */
+@media(min-width:1024px){
+  #gh-header .gh-dd-menu.mega{
+    border-radius:20px!important;
+    padding:18px!important;
+    box-shadow:0 22px 60px rgba(0,0,0,.62)!important; /* visible */
+  }
+  #gh-header .gh-col{
+    background:linear-gradient(180deg,rgba(255,255,255,.030),rgba(255,255,255,.012))!important;
+    border-color:rgba(255,255,255,.08)!important;
+  }
+  #gh-header .gh-subbar{
+    padding:10px 12px!important;
+    border-radius:16px!important;
+    background:rgba(255,255,255,.045)!important; /* más visible */
+    border-color:rgba(255,255,255,.10)!important;
+    font-size:14.5px!important;
+  }
+  #gh-header .gh-subbar svg{filter:none!important} /* menos costo */
+}
+
+/* 5) Dots: pill con blur (TU IMG), claramente visible */
+#gh-header .gh-svcdots{
+  display:flex!important;justify-content:center!important;align-items:center!important;
+  gap:8px!important;margin-top:10px!important;
+  padding:9px 14px!important;border-radius:999px!important;
+  width:max-content!important;max-width:100%!important;
+  margin-left:auto!important;margin-right:auto!important;
+  background:rgba(255,255,255,.07)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  backdrop-filter:blur(8px)!important;-webkit-backdrop-filter:blur(8px)!important;
+}
+#gh-header .gh-svcdots .dot{background:rgba(255,255,255,.26)!important}
+#gh-header .gh-svcdots .dot.is-active{width:18px!important}
+
+/* 6) Highlight “Pólizas”: más fino pero notorio */
+#gh-header .gh-star{
+  border-color:rgba(45,212,191,.42)!important;
+  box-shadow:0 20px 44px rgba(0,0,0,.40)!important;
+}
+#gh-header .gh-star::before{opacity:.62!important;filter:blur(9px)!important}
+@media(min-width:1024px){
+  #gh-header .gh-item.is-featured{
+    border-color:rgba(45,212,191,.28)!important;
+    background:linear-gradient(180deg,rgba(45,212,191,.11),rgba(96,165,250,.05))!important;
+  }
+  #gh-header .gh-item.is-featured::before{opacity:.58!important;filter:blur(9px)!important}
+}
+
+/* 7) PageSpeed: reduce drop-shadow masivo en mobile cards */
+#gh-header .gh-mimg{filter:none!important}
 
 </style>
 
