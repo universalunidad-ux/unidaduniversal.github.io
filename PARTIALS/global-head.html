@@ -6,21 +6,16 @@
   (function(){try{
     var KEY="expiriti_theme";
     var saved=localStorage.getItem(KEY);
-    var prefersLight=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches;
-    var theme=saved||(prefersLight?"light":"dark");
+    var prefersLight=window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+    var theme=saved || (prefersLight ? "light" : "dark");
     document.documentElement.dataset.theme=theme;
   }catch(e){}})();
   </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#0b0f14" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="index, follow" />
-<meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)">
-
+  <meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)">
 
   <!-- Base GH Pages (repo) -->
   <meta name="expiriti-base" content="/unidaduniversal.github.io/" />
@@ -32,21 +27,17 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:image" class="js-abs-meta" data-path="IMG/expiriti_og.webp" />
 
-  <!-- Fonts (estable para CLS: sin media=print/onload) -->
-<!-- Fonts (reduce bloqueo sin hacks agresivos) -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-<link rel="preload" as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-<link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-
-<noscript>
+  <!-- Fonts (estable para CLS) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-</noscript>
-
+  <noscript>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  </noscript>
 
   <!-- Preconnect YouTube -->
   <link rel="preconnect" href="https://www.youtube-nocookie.com" />
@@ -62,9 +53,9 @@
   <link rel="icon" type="image/png" sizes="512x512" class="js-abs" data-href="IMG/android-chrome-512x512.png" />
 
   <!-- CSS global -->
-<link rel="stylesheet" href="/unidaduniversal.github.io/mainindex.css" />
+  <link rel="stylesheet" href="/unidaduniversal.github.io/mainindex.css" />
 
-  <!-- Hero (siempre arriba, ok preload) -->
+  <!-- Hero -->
   <link rel="preload" as="image" href="/unidaduniversal.github.io/IMG/primera.webp" fetchpriority="high" />
 
   <!-- Normaliza rutas absolutas para OG + favicons (GH Pages + local) -->
@@ -76,10 +67,10 @@
       if (!root.startsWith("/")) root = "/" + root;
       if (!root.endsWith("/")) root = root + "/";
 
-      var abs = function (p) {
-        var cleanP = String(p || "").replace(/^\//, "");
-        return location.origin + root + cleanP;
-      };
+      function abs(p){
+        var clean = String(p || "").replace(/^\//, "");
+        return location.origin + root + clean;
+      }
 
       // Favicons (usa .js-abs + data-href)
       var links = document.querySelectorAll('link.js-abs[data-href]');
@@ -92,6 +83,12 @@
       for (var j = 0; j < metas.length; j++) {
         metas[j].setAttribute('content', abs(metas[j].getAttribute('data-path')));
       }
+
+      // (Opcional, por si algún día usas data-href/data-src en head)
+      var a = document.querySelectorAll('[data-href]');
+      for (var k = 0; k < a.length; k++) a[k].href = abs(a[k].getAttribute('data-href'));
+      var s = document.querySelectorAll('[data-src]');
+      for (var m = 0; m < s.length; m++) s[m].src = abs(s[m].getAttribute('data-src'));
     })();
   </script>
 </head>
