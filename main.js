@@ -547,4 +547,3 @@ W.addEventListener("resize",apply,{passive:true});
 W.visualViewport&&W.visualViewport.addEventListener("resize",apply,{passive:true});
 })();
 
-})();
