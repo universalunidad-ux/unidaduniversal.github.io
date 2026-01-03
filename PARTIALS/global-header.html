@@ -144,6 +144,26 @@ html.gh-open .gh-drawer{transform:translateX(0)}
   @media(min-width:1200px){.gh-item img{width:clamp(110px,9vw,150px)}}
 }
 @media(prefers-reduced-motion:reduce){.gh-brand,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar,.gh-mcard,.gh-nav a{transition:none!important}}
+/* ===== THEME TOGGLE (compacto + premium) ===== */
+.gh-theme{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:12px;cursor:pointer;
+  background:rgba(15,23,42,.90);
+  border:1px solid rgba(255,255,255,.22);
+  color:var(--gh-text);
+  transition:transform .15s ease,background .15s ease,border-color .15s ease;
+}
+.gh-theme:hover{transform:translateY(-1px);border-color:rgba(45,212,191,.28)}
+.gh-theme:active{transform:translateY(0) scale(.98)}
+.gh-theme svg{display:block}
+
+/* En claro (usa tokens ya ajustados en theme.css) */
+html[data-theme="light"] .gh-theme{
+  background:rgba(255,255,255,.85);
+  border:1px solid rgba(2,6,23,.14);
+  color:#0b1220;
+}
+
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
@@ -273,6 +293,21 @@ html.gh-open .gh-drawer{transform:translateX(0)}
       <a class="gh-btn-wa" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">
         <img class="gh-wa-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp"><span class="gh-wa-num">55 6843 7918</span>
       </a>
+     <!-- Toggle modo (claro/oscuro) -->
+<button class="gh-theme" id="gh-theme" type="button"
+  aria-label="Cambiar modo claro/oscuro" aria-pressed="false" title="Modo claro">
+  <span class="gh-theme-ico" aria-hidden="true">
+    <!-- Icono “Sun/Moon” minimal (inline, sin librerías) -->
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3v2"></path><path d="M12 19v2"></path>
+      <path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path>
+      <path d="M3 12h2"></path><path d="M19 12h2"></path>
+      <path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path>
+      <path d="M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10z"></path>
+    </svg>
+  </span>
+</button>
+
       <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
     </div>
   </div>
@@ -397,7 +432,8 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 function getMasterRoot(){const m=document.querySelector('meta[name="expiriti-base"]');if(m&&m.content){let r=m.content.trim();if(!r.startsWith("/"))r="/"+r;if(!r.endsWith("/"))r=r+"/";return r}const p=window.location.pathname.split("/").filter(Boolean);return window.location.hostname.includes("github.io")&&p.length>0?"/"+p[0]+"/":"/"}
 const ROOT=getMasterRoot();
 function buildPath(raw){if(!raw)return"#";if(/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw))return raw;if(raw.startsWith("#"))return window.location.origin+ROOT+"index.html"+raw;const clean=raw.replace(/^\//,"");return window.location.origin+ROOT+clean}
-function applySafePaths(container=document){QA(".js-link[data-href]",container).forEach(a=>{const r=a.getAttribute("data-href");if(r)a.href=buildPath(r)});QA(".js-img[data-src]",container).forEach(img=>{const r=img.getAttribute("data-src");if(r){img.src=buildPath(r);img.onerror=function(){this.style.opacity="0.5";this.src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1 1%27%3E%3C/svg%3E"}}})}
+function applySafePaths(container=document){QA(".js-link[data-href]",container).forEach(a=>{const r=a.getAttribute("data-href");if(r)a.href=buildPath(r)});QA(".js-img[data-src]",container).forEach(img=>{const r=img.getAttribute("data-src");if(r){img.src=buildPath(r);img.onerror=function(){this.style.opacity="0.5";this.src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1 1%27%3E%3C/svg%3E"}}})}initThemeToggle();
+
 function syncOffset(){const bar=Q("#gh-bar"),h=bar?bar.offsetHeight:68;document.documentElement.style.setProperty("--gh-offset",h+"px")}
 function initScrollHide(){const bar=Q("#gh-bar");if(!bar)return;let last=window.scrollY||0;window.addEventListener("scroll",()=>{if(document.documentElement.classList.contains("gh-open"))return;const y=window.scrollY||0;y>60&&y>last?bar.classList.add("is-hidden"):bar.classList.remove("is-hidden");last=y},{passive:true})}
 function initMobileSystems(){const root=Q("#gh-msys");if(!root||root.__inited)return;root.__inited=true;const cats=QA(".gh-cat",root),panels=QA(".gh-panel",root),KEY="expiriti_mobile_sys_cat",saved=localStorage.getItem(KEY);
@@ -423,5 +459,33 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.documentEl
 window.addEventListener("pageshow",ev=>{if(ev.persisted)toggleDrawer(false)})}
 function boot(){const header=Q("#gh-header");if(!header||header.__ghInited)return;header.__ghInited=true;window.__EXPIRITI_GH_V7MOBILE__=true;applySafePaths(header);syncOffset();initScrollHide();bind();toggleDrawer(false)}
 boot();document.addEventListener("DOMContentLoaded",boot,{once:true});window.addEventListener("resize",syncOffset,{passive:true});
+function initThemeToggle(){
+  const btn=Q("#gh-theme");
+  if(!btn||btn.__inited)return;
+  btn.__inited=true;
+
+  const KEY="expiriti_theme";
+  const root=document.documentElement;
+
+  function syncUI(){
+    const t=root.dataset.theme==="light"?"light":"dark";
+    btn.setAttribute("aria-pressed",t==="light"?"true":"false");
+    btn.title=t==="light"?"Modo oscuro":"Modo claro";
+  }
+  function setTheme(t){
+    root.dataset.theme=t;
+    try{localStorage.setItem(KEY,t);}catch(e){}
+    syncUI();
+  }
+
+  btn.addEventListener("click",function(e){
+    e.preventDefault();
+    const cur=root.dataset.theme==="light"?"light":"dark";
+    setTheme(cur==="light"?"dark":"light");
+  });
+
+  syncUI();
+}
 })();
+ 
 </script>
