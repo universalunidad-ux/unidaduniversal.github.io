@@ -1,8 +1,26 @@
 <head>
   <meta charset="utf-8" />
+
+  <!-- ===== THEME (early apply, NO FOUC) ===== -->
+  <script>
+  (function(){try{
+    var KEY="expiriti_theme";
+    var saved=localStorage.getItem(KEY);
+    var prefersLight=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches;
+    var theme=saved||(prefersLight?"light":"dark");
+    document.documentElement.dataset.theme=theme;
+  }catch(e){}})();
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0b0f14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)">
+
 
   <!-- Base GH Pages (repo) -->
   <meta name="expiriti-base" content="/unidaduniversal.github.io/" />
