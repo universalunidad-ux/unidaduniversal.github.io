@@ -1,12 +1,9 @@
 <!-- =========================================================
-  Expiriti - GLOBAL HEADER (V7 + MOBILE UI/UX V5) + MEGA V5 PATCH (RESPONSIVE) — UPDATED
-  CAMBIOS (enero 2026):
-  - Desktop: “Servicios” ahora es MEGA (ancho, estilo similar a “Sistemas”)
-    * Destaca “Pólizas” con un “flow/hover” (glow + borde + ligero lift) y badge “Recomendado”
-  - Desktop: Se mantiene “Promociones” visible
-  - Desktop: Se mantiene SIN “Ver servicios” dentro de mega (como pediste)
-  - Mobile: Se mantiene drawer V5 + FIX promociones index.html#promociones
-  - Rutas: V7 master root + buildPath (data-href / data-src -> href/src ABSOLUTOS)
+Expiriti - GLOBAL HEADER (V7 + MOBILE UI/UX V5) + MEGA V5 PATCH — JAN 2026
+- SISTEMAS: barras superiores tipo captura (icono verde + “Escritorio / Soluciones nube / RRHH…”)
+- SERVICIOS (DESKTOP): mega ancho; categorización: Pólizas (solo) / Puesta en marcha / Crecimiento / Operación
+- Pólizas: highlight consistente (desktop + mobile) sin romper 2x2 en mobile
+- MOBILE: Nube orden = Contabiliza, Personia, Vende, Colabora | Productividad = Evalúa, Analiza, Despachos + ghost
 ========================================================= -->
 <header class="gh" id="gh-header" role="banner">
 <style>
@@ -36,21 +33,17 @@ html{scroll-padding-top:calc(var(--gh-offset) + 20px)}body{padding-top:var(--gh-
 .gh-dd-wrap{position:relative}
 .gh-dd-menu{position:absolute;top:100%;left:50%;transform:translate(-50%,15px);background:var(--gh-panel);border:1px solid var(--gh-border);padding:10px;border-radius:12px;min-width:220px;opacity:0;visibility:hidden;transition:.2s ease;box-shadow:0 10px 30px -10px rgba(0,0,0,.5)}
 .gh-dd-wrap:hover .gh-dd-menu,.gh-dd-wrap:focus-within .gh-dd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
-/* ===== DROPDOWN NORMAL (fallback) ===== */
-.gh-dd-menu:not(.mega) a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;white-space:nowrap}
-.gh-dd-menu:not(.mega) a:hover{background:rgba(255,255,255,.05);color:var(--gh-brand)}
 /* ===== ACTIONS ===== */
 .gh-actions{display:flex;align-items:center;gap:10px}
-/* WhatsApp */
 .gh-btn-wa{display:none;align-items:center;gap:10px;padding:7px 14px;border-radius:999px;text-decoration:none;font-weight:900;letter-spacing:.01em;color:#0b1220;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));box-shadow:0 14px 30px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12)}
 @media(min-width:600px){.gh-btn-wa{display:inline-flex}}
 .gh-wa-ico{width:18px;height:18px;object-fit:contain;filter:drop-shadow(0 8px 14px rgba(0,0,0,.25))}
 .gh-wa-num{font-size:13.5px;line-height:1}
-/* Burger */
 .gh-burger{background:rgba(15,23,42,.9);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:18px;padding:8px 10px;border-radius:12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 @media(min-width:1024px){.gh-burger{display:none}}
+
 /* =========================================================
-   MOBILE DRAWER V5
+MOBILE DRAWER V5 (igual layout)
 ========================================================= */
 .gh-dim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.18s ease;z-index:2147483646}
 .gh-drawer{position:fixed;top:0;right:0;bottom:0;width:min(92vw,420px);background:rgba(8,11,18,.98);border-left:1px solid rgba(255,255,255,.08);transform:translateX(105%);transition:.25s cubic-bezier(.4,0,.2,1);z-index:2147483647;display:flex;flex-direction:column}
@@ -64,102 +57,83 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-dtitle-sub{color:var(--gh-muted);font-size:12px;font-weight:650;margin-top:2px;line-height:1.1}
 .gh-close{border:1px solid rgba(255,255,255,.18);background:rgba(15,23,42,.9);color:var(--gh-text);border-radius:12px;padding:8px 10px;font-size:16px;line-height:1;cursor:pointer}
 .gh-drawer-body{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:12px 14px 40px}
-/* Quick CTA */
 .gh-mcta-ico{margin-top:12px;display:flex;gap:10px}
 .gh-ctabtn{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));box-shadow:0 18px 40px rgba(0,0,0,.30);font-weight:800;letter-spacing:.01em}
 .gh-ctabtn:hover{border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
 .gh-ctaico{width:22px;height:22px;object-fit:contain;filter:drop-shadow(0 8px 16px rgba(0,0,0,.30));opacity:.95}
+
 /* Mobile Sistemas */
 .gh-acc{border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden}
 .gh-msys,.gh-msvc{padding:10px 10px 14px;margin-top:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);border-radius:18px}
 .gh-msys-head{padding:6px 4px 10px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
 .gh-msys-title{color:#fff;font-weight:800;letter-spacing:.01em;font-size:14px}
 .gh-msys-sub{color:var(--gh-muted);font-size:12px;margin-top:0;line-height:1.1;white-space:nowrap}
-.gh-catbar{display:flex;gap:8px;overflow:auto;padding:2px 2px 10px;scrollbar-width:none}
-.gh-catbar::-webkit-scrollbar{display:none}
+.gh-catbar{display:flex;gap:8px;overflow:auto;padding:2px 2px 10px;scrollbar-width:none}.gh-catbar::-webkit-scrollbar{display:none}
 .gh-cat{border:1px solid rgba(255,255,255,.10);background:rgba(17,23,35,.55);color:var(--gh-text);padding:9px 12px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;transition:transform .15s ease,background .15s ease,border-color .15s ease}
 .gh-cat:active{transform:scale(.98)}
 .gh-cat.is-active{background:linear-gradient(90deg,rgba(45,212,191,.20),rgba(96,165,250,.18));border-color:rgba(45,212,191,.38);box-shadow:0 10px 24px rgba(0,0,0,.25)}
-.gh-panel{margin-top:6px}
-.gh-panel.is-open{animation:ghFadeUp .18s ease both}
-@keyframes ghFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.gh-panel{margin-top:6px}.gh-panel.is-open{animation:ghFadeUp .18s ease both}@keyframes ghFadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.gh-mcard{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:16px;text-decoration:none;color:var(--gh-text);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.07);box-shadow:0 18px 40px rgba(0,0,0,.30);transition:transform .16s ease,border-color .16s ease,background .16s ease;min-height:118px}
+.gh-mcard{position:relative;isolation:isolate;display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:16px;text-decoration:none;color:var(--gh-text);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.07);box-shadow:0 18px 40px rgba(0,0,0,.30);transition:transform .16s ease,border-color .16s ease,background .16s ease;min-height:118px}
 .gh-mcard:hover{transform:translateY(-1px);border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(255,255,255,.02))}
 .gh-mimg{width:100%;height:44px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35));opacity:.98}
 .gh-mmeta{display:flex;flex-direction:column;gap:2px;min-width:0}
 .gh-mmeta strong{color:#fff;font-weight:800;font-size:13px;line-height:1.15}
 .gh-mmeta span{color:var(--gh-muted);font-size:11px;line-height:1.25}
 .gh-mcard-ghost{opacity:0;pointer-events:none;background:transparent;border-color:transparent;box-shadow:none}
-/* Promo Mobile */
-.gh-mpromo{display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px;border-radius:16px;text-decoration:none;color:var(--gh-text);border:1px solid rgba(255,255,255,.10);background:linear-gradient(90deg,rgba(245,158,11,.12),rgba(45,212,191,.08));box-shadow:0 18px 40px rgba(0,0,0,.30)}
-.gh-mpromo-ico{width:22px;height:22px;object-fit:contain;opacity:.95}
-.gh-mpromo-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
-.gh-mpromo-txt strong{color:#fff;font-weight:900;font-size:13px}
-.gh-mpromo-txt span{color:var(--gh-muted);font-size:11px}
-.gh-mpromo-chip{margin-left:auto;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;color:#020617;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
+
 /* Mobile Servicios (carrusel) */
 .gh-msvc{margin-top:12px}
 .gh-svcwrap{position:relative;margin-top:6px;border-radius:18px}
-.gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:12px;padding:2px 2px 8px;scrollbar-width:none}
-.gh-svctrack::-webkit-scrollbar{display:none}
+.gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:12px;padding:2px 2px 8px;scrollbar-width:none}.gh-svctrack::-webkit-scrollbar{display:none}
 .gh-svcpage{flex:0 0 100%;scroll-snap-align:start}
 .gh-mgrid-svc{margin-top:6px}
 .gh-svcarrow{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(10,14,23,.75);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;z-index:5;box-shadow:0 12px 28px rgba(0,0,0,.35)}
-.gh-svcarrow:hover{border-color:rgba(45,212,191,.25)}
-.gh-svcarrow:active{transform:translateY(-50%) scale(.98)}
+.gh-svcarrow:hover{border-color:rgba(45,212,191,.25)}.gh-svcarrow:active{transform:translateY(-50%) scale(.98)}
 .gh-svcarrow.prev{left:6px}.gh-svcarrow.next{right:6px}
 .gh-svcdots{display:flex;justify-content:center;gap:8px;margin-top:8px}
 .gh-svcdots .dot{width:8px;height:8px;border-radius:999px;border:0;background:rgba(255,255,255,.22);cursor:pointer}
 .gh-svcdots .dot.is-active{width:18px;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
-@media(prefers-reduced-motion:reduce){.gh-brand,.gh-nav a::after,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar{transition:none!important}}
+
+/* ===== PÓLIZAS DESTACADO (MOBILE + DESKTOP) =====
+- “Brilloso” tipo tu IMG1, pero controlado para que NO desaparezca en desktop
+*/
+.gh-star{border-color:rgba(45,212,191,.32)!important;background:linear-gradient(180deg,rgba(45,212,191,.12),rgba(96,165,250,.06))!important;box-shadow:0 22px 48px rgba(0,0,0,.42)!important}
+.gh-star::before{content:"";position:absolute;inset:-2px;border-radius:18px;pointer-events:none;opacity:.85;background:radial-gradient(90% 70% at 10% 0%,rgba(45,212,191,.45),transparent 60%),radial-gradient(70% 70% at 95% 15%,rgba(96,165,250,.35),transparent 58%);filter:blur(10px);z-index:-1}
+.gh-star::after{content:"Recomendado";position:absolute;top:10px;left:10px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:#041016;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));box-shadow:0 12px 26px rgba(0,0,0,.35)}
+@media(min-width:1024px){.gh-star:hover{transform:translateY(-2px)!important;border-color:rgba(45,212,191,.48)!important}}
+
 /* =========================================================
-   DESKTOP MEGA (SISTEMAS + SERVICIOS) — mismo “look”
+DESKTOP MEGA (SISTEMAS + SERVICIOS) — look tipo captura
 ========================================================= */
 @media(min-width:1024px){
-/* Caja mega base */
-.gh-dd-menu.mega.gh-mega,.gh-dd-menu.mega.gh-mega-svc{width:min(980px,calc(100vw - 24px));padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:var(--gh-panel);box-shadow:0 18px 45px rgba(0,0,0,.60);left:50%;transform:translate(-50%,15px);display:grid;gap:16px;grid-template-columns:repeat(4,minmax(0,1fr))}
-.gh-dd-wrap:hover .gh-dd-menu.mega.gh-mega,.gh-dd-wrap:focus-within .gh-dd-menu.mega.gh-mega{transform:translate(-50%,0)}
-.gh-dd-wrap:hover .gh-dd-menu.mega.gh-mega-svc,.gh-dd-wrap:focus-within .gh-dd-menu.mega.gh-mega-svc{transform:translate(-50%,0)}
-/* Columna */
-.gh-dd-menu.mega.gh-mega .gh-col,.gh-dd-menu.mega.gh-mega-svc .gh-col{border-radius:16px;padding:12px;background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);border:1px solid rgba(255,255,255,.06);min-width:0}
-.gh-dd-menu.mega.gh-mega .gh-col h4,.gh-dd-menu.mega.gh-mega-svc .gh-col h4{margin:0 0 8px;font-size:12px;letter-spacing:.14em;color:var(--gh-muted);text-transform:uppercase;opacity:.75;border-bottom:none;padding-bottom:0}
-/* Item card vertical */
-.gh-dd-menu.mega.gh-mega a.gh-item,.gh-dd-menu.mega.gh-mega-svc a.gh-item{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:12px;border-radius:12px;text-decoration:none;color:var(--gh-text);border:1px solid transparent;background:transparent;transition:.18s ease;min-width:0}
-.gh-dd-menu.mega.gh-mega a.gh-item:hover,.gh-dd-menu.mega.gh-mega-svc a.gh-item:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.10)}
-/* Imagen ancha */
-.gh-dd-menu.mega.gh-mega a.gh-item img,.gh-dd-menu.mega.gh-mega-svc a.gh-item img{width:min(220px,100%);height:auto;aspect-ratio:20/7;object-fit:contain;display:block;flex:0 0 auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));opacity:.95}
-/* Texto */
-.gh-dd-menu.mega.gh-mega a.gh-item div,.gh-dd-menu.mega.gh-mega-svc a.gh-item div{display:flex;flex-direction:column;gap:4px;min-width:0}
-.gh-dd-menu.mega.gh-mega a.gh-item b,.gh-dd-menu.mega.gh-mega-svc a.gh-item b{font-size:13px;font-weight:650;color:#fff;line-height:1.15}
-.gh-dd-menu.mega.gh-mega a.gh-item span,.gh-dd-menu.mega.gh-mega-svc a.gh-item span{margin:0;font-size:11px;line-height:1.35;color:var(--gh-muted);white-space:normal}
-/* ===== DESTACADO PÓLIZAS (flow/glow) ===== */
-.gh-dd-menu.mega.gh-mega-svc a.gh-item.is-featured{position:relative;background:linear-gradient(180deg,rgba(45,212,191,.10),rgba(96,165,250,.06));border-color:rgba(45,212,191,.24)}
-.gh-dd-menu.mega.gh-mega-svc a.gh-item.is-featured::before{content:"";position:absolute;inset:-1px;border-radius:13px;background:radial-gradient(70% 80% at 20% 0%,rgba(45,212,191,.35),transparent 60%),radial-gradient(70% 80% at 100% 20%,rgba(96,165,250,.28),transparent 55%);opacity:.55;pointer-events:none}
-.gh-dd-menu.mega.gh-mega-svc a.gh-item.is-featured:hover{transform:translateY(-2px);border-color:rgba(45,212,191,.40);box-shadow:0 18px 40px rgba(0,0,0,.45)}
-.gh-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.02em;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));color:#041016}
+/* Mega base */
+.gh-dd-menu.mega{width:min(980px,calc(100vw - 24px));padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:var(--gh-panel);box-shadow:0 18px 45px rgba(0,0,0,.60);left:50%;transform:translate(-50%,15px);display:grid;gap:16px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.gh-dd-wrap:hover .gh-dd-menu.mega,.gh-dd-wrap:focus-within .gh-dd-menu.mega{transform:translate(-50%,0)}
+/* Col */
+.gh-col{border-radius:16px;padding:12px;background:radial-gradient(circle at top left,rgba(255,255,255,.03),transparent 55%);border:1px solid rgba(255,255,255,.06);min-width:0}
+/* Barra superior tipo captura (icono verde + label) */
+.gh-subbar{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:12px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);box-shadow:inset 0 -1px 0 rgba(255,255,255,.06);font-weight:900;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.gh-subbar svg{width:18px;height:18px;flex:0 0 auto;color:var(--gh-brand);filter:drop-shadow(0 6px 14px rgba(0,0,0,.35))}
+.gh-col h4{margin:0 0 10px;font-size:12px;letter-spacing:.14em;color:var(--gh-muted);text-transform:uppercase;opacity:.75}
+/* Item card vertical (imagen ancha) */
+.gh-item{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:12px;border-radius:12px;text-decoration:none;color:var(--gh-text);border:1px solid transparent;background:transparent;transition:.18s ease;min-width:0}
+.gh-item:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.10)}
+.gh-item img{width:min(220px,100%);height:auto;aspect-ratio:20/7;object-fit:contain;display:block;flex:0 0 auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));opacity:.95}
+.gh-item div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.gh-item b{font-size:13px;font-weight:650;color:#fff;line-height:1.15}
+.gh-item span{margin:0;font-size:11px;line-height:1.35;color:var(--gh-muted);white-space:normal}
+/* Pólizas (desktop) destacado, consistente con .gh-star (sin “desaparecer”) */
+.gh-item.is-featured{isolation:isolate;border-color:rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.10),rgba(96,165,250,.05))}
+.gh-item.is-featured::before{content:"";position:absolute;inset:-2px;border-radius:14px;pointer-events:none;opacity:.75;background:radial-gradient(80% 70% at 10% 0%,rgba(45,212,191,.45),transparent 60%),radial-gradient(70% 70% at 95% 15%,rgba(96,165,250,.32),transparent 58%);filter:blur(10px);z-index:-1}
+.gh-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.02em;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));color:#041016;width:max-content;box-shadow:0 12px 26px rgba(0,0,0,.35)}
+/* Breakpoints mega */
+@media(min-width:1024px) and (max-width:1199px){.gh-dd-menu.mega{grid-template-columns:repeat(2,minmax(0,1fr));width:min(860px,calc(100vw - 24px))}}
+@media(min-width:1200px) and (max-width:1399px){.gh-dd-menu.mega{grid-template-columns:repeat(3,minmax(0,1fr));width:min(940px,calc(100vw - 24px))}}
+@media(min-width:1400px){.gh-dd-menu.mega{grid-template-columns:repeat(4,minmax(0,1fr));width:min(1000px,calc(100vw - 24px))}}
+@media(min-width:1200px){.gh-item img{width:clamp(110px,9vw,150px)}}
 }
-  .gh-subhead{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:12px 12px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);box-shadow:inset 0 -1px 0 rgba(255,255,255,.06);font-weight:900;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:#fff}
-.gh-subhead svg{width:18px;height:18px;color:var(--gh-brand);opacity:1;flex:0 0 auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35))}
-
-/* opcional: que el título h4 (Contables/Comerciales/Nube/Productividad)
-   no compita visualmente con la barra */  
-  .gh-col h4{margin:0 0 10px;font-size:12px;letter-spacing:.14em;color:var(--gh-muted);text-transform:uppercase;opacity:.75}
-
-/* Breakpoints del mega */
-@media(min-width:1024px) and (max-width:1199px){
-.gh-dd-menu.mega.gh-mega,.gh-dd-menu.mega.gh-mega-svc{grid-template-columns:repeat(2,minmax(0,1fr));width:min(860px,calc(100vw - 24px))}
-}
-@media(min-width:1200px) and (max-width:1399px){
-.gh-dd-menu.mega.gh-mega,.gh-dd-menu.mega.gh-mega-svc{grid-template-columns:repeat(3,minmax(0,1fr));width:min(940px,calc(100vw - 24px))}
-}
-@media(min-width:1400px){
-.gh-dd-menu.mega.gh-mega,.gh-dd-menu.mega.gh-mega-svc{grid-template-columns:repeat(4,minmax(0,1fr));width:min(1000px,calc(100vw - 24px))}
-}
-/* Imagen más contenida en pantallas grandes */
-@media(min-width:1200px){
-.gh-dd-menu.mega.gh-mega a.gh-item img,.gh-dd-menu.mega.gh-mega-svc a.gh-item img{width:clamp(110px,9vw,150px)}
-}
+@media(prefers-reduced-motion:reduce){.gh-brand,.gh-nav a::after,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar,.gh-mcard{transition:none!important}}
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
@@ -169,10 +143,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
     <!-- Brand -->
     <a class="gh-brand js-link" data-href="index.html" aria-label="Inicio Expiriti">
       <img class="js-img" data-src="IMG/expiritilogo.webp" alt="Logo" width="42" height="42">
-      <div class="gh-brand-txt">
-        <span class="n">ExpIRI TI</span>
-        <span class="s">Expertos CONTPAQi</span>
-      </div>
+      <div class="gh-brand-txt"><span class="n">ExpIRI TI</span><span class="s">Expertos CONTPAQi</span></div>
     </a>
 
     <!-- Desktop nav -->
@@ -183,69 +154,112 @@ html.gh-open .gh-drawer{transform:translateX(0)}
         <!-- ===================== SISTEMAS (MEGA) ===================== -->
         <li class="gh-dd-wrap">
           <a class="js-link" data-href="index.html#productos-con" aria-haspopup="true">Sistemas ▾</a>
-          <div class="gh-dd-menu mega gh-mega" role="menu" aria-label="Sistemas">
+          <div class="gh-dd-menu mega" role="menu" aria-label="Sistemas">
+
             <div class="gh-col">
+              <div class="gh-subbar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>
+                Escritorio
+              </div>
               <h4>Contables</h4>
               <a class="gh-item js-link" data-href="SISTEMAS/contabilidad.html"><img class="js-img" data-src="IMG/contabilidad.webp" alt=""><div><b>Contabilidad</b><span>Pólizas y XML</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/nominas.html"><img class="js-img" data-src="IMG/nominas.webp" alt=""><div><b>Nóminas</b><span>Cálculo exacto</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/bancos.html"><img class="js-img" data-src="IMG/bancos.webp" alt=""><div><b>Bancos</b><span>Tesorería</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/xmlenlinea.html"><img class="js-img" data-src="IMG/xml.webp" alt=""><div><b>XML en Línea+</b><span>CFDI del SAT</span></div></a>
             </div>
+
             <div class="gh-col">
+              <div class="gh-subbar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>
+                Escritorio
+              </div>
               <h4>Comerciales</h4>
               <a class="gh-item js-link" data-href="SISTEMAS/comercialpremium.html"><img class="js-img" data-src="IMG/comercialpremium.webp" alt=""><div><b>Premium</b><span>Gestión total</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/comercialpro.html"><img class="js-img" data-src="IMG/comercialpro.webp" alt=""><div><b>Pro</b><span>Multisucursal</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/comercialstart.html"><img class="js-img" data-src="IMG/comercialstart.webp" alt=""><div><b>Start</b><span>Inventario básico</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/facturaelectronica.html"><img class="js-img" data-src="IMG/factura.webp" alt=""><div><b>Factura</b><span>CFDI 4.0</span></div></a>
             </div>
+
             <div class="gh-col">
+              <div class="gh-subbar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>
+                Soluciones nube
+              </div>
               <h4>Nube</h4>
               <a class="gh-item js-link" data-href="SISTEMAS/contabiliza.html"><img class="js-img" data-src="IMG/contabiliza.webp" alt=""><div><b>Contabiliza</b><span>Contabilidad en la nube</span></div></a>
-              <a class="gh-item js-link" data-href="SISTEMAS/vende.html"><img class="js-img" data-src="IMG/vende.webp" alt=""><div><b>Vende</b><span>Punto de venta web</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/personia.html"><img class="js-img" data-src="IMG/personia.webp" alt=""><div><b>Personia</b><span>Gestión de personal</span></div></a>
-              <a class="gh-item js-link" data-href="SISTEMAS/colabora.html"><img class="js-img" data-src="IMG/colabora.webp" alt=""><div><b>Colabora</b><span>Gratis · App móvil</span></div></a>
-            </div>
-            <div class="gh-col">
-              <h4>Productividad</h4>
-              <a class="gh-item js-link" data-href="SISTEMAS/analiza.html"><img class="js-img" data-src="IMG/analiza.webp" alt=""><div><b>Analiza</b><span>Dashboards y BI</span></div></a>
-              <a class="gh-item js-link" data-href="SISTEMAS/evalua.html"><img class="js-img" data-src="IMG/evalua.webp" alt=""><div><b>Evalúa</b><span>NOM-035 y clima laboral</span></div></a>
-              <a class="gh-item js-link" data-href="SISTEMAS/despachos.html"><img class="js-img" data-src="IMG/despachos.webp" alt=""><div><b>Despachos</b><span>Operación integral</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/vende.html"><img class="js-img" data-src="IMG/vende.webp" alt=""><div><b>Vende</b><span>Punto de venta web</span></div></a>
               <a class="gh-item js-link" data-href="SISTEMAS/colabora.html"><img class="js-img" data-src="IMG/colabora.webp" alt=""><div><b>Colabora</b><span>Flow · Gratis</span></div></a>
             </div>
+
+            <div class="gh-col">
+              <div class="gh-subbar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 10l9 5 9-5"/><path d="M3 15l9 5 9-5"/></svg>
+                RRHH y colaboración
+              </div>
+              <h4>Productividad</h4>
+              <a class="gh-item js-link" data-href="SISTEMAS/evalua.html"><img class="js-img" data-src="IMG/evalua.webp" alt=""><div><b>Evalúa</b><span>NOM-035 y clima laboral</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/analiza.html"><img class="js-img" data-src="IMG/analiza.webp" alt=""><div><b>Analiza</b><span>Dashboards y BI</span></div></a>
+              <a class="gh-item js-link" data-href="SISTEMAS/despachos.html"><img class="js-img" data-src="IMG/despachos.webp" alt=""><div><b>Despachos</b><span>Operación integral</span></div></a>
+              <!-- (opcional) el 4to en desktop puede existir; si NO lo quieres, lo quitamos -->
+              <a class="gh-item js-link" data-href="SISTEMAS/colabora.html"><img class="js-img" data-src="IMG/colabora.webp" alt=""><div><b>Colabora</b><span>Flow · Gratis</span></div></a>
+            </div>
+
           </div>
         </li>
 
         <!-- ===================== SERVICIOS (MEGA) ===================== -->
         <li class="gh-dd-wrap">
           <a class="js-link" data-href="index.html#servicios" aria-haspopup="true">Servicios ▾</a>
-          <div class="gh-dd-menu mega gh-mega-svc" role="menu" aria-label="Servicios">
+          <div class="gh-dd-menu mega" role="menu" aria-label="Servicios">
+
+            <!-- PÓLIZAS (CATEGORÍA PROPIA) -->
             <div class="gh-col">
-              <h4>Soporte</h4>
+              <div class="gh-subbar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                Pólizas
+              </div>
+              <h4>Todo incluido</h4>
               <a class="gh-item js-link is-featured" data-href="SERVICIOS/polizas.html">
                 <img class="js-img" data-src="IMG/021-maintenance.webp" alt="">
-                <div>
-                  <span class="gh-badge">Recomendado</span>
-                  <b>Pólizas anuales</b>
-                  <span>Soporte continuo y preventivo</span>
-                </div>
+                <div><span class="gh-badge">Recomendado</span><b>Pólizas anuales</b><span>Soporte + capacitación + mejoras</span></div>
               </a>
-              <a class="gh-item js-link" data-href="SERVICIOS/soporte.html"><img class="js-img" data-src="IMG/021-maintenance.webp" alt=""><div><b>Soporte técnico</b><span>Remoto + WhatsApp</span></div></a>
             </div>
+
+            <!-- PUESTA EN MARCHA -->
             <div class="gh-col">
-              <h4>Implementación</h4>
+              <div class="gh-subbar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6"/><path d="M8 8l4 4 4-4"/><path d="M5 22h14"/></svg>
+                Puesta en marcha
+              </div>
+              <h4>Arranque</h4>
               <a class="gh-item js-link" data-href="SERVICIOS/implementaciones.html"><img class="js-img" data-src="IMG/025-meeting.webp" alt=""><div><b>Implementaciones</b><span>Instalación y puesta en marcha</span></div></a>
               <a class="gh-item js-link" data-href="SERVICIOS/migraciones.html"><img class="js-img" data-src="IMG/018-transfer.webp" alt=""><div><b>Migraciones</b><span>Datos limpios y validados</span></div></a>
+              <a class="gh-item js-link" data-href="SERVICIOS/soporte.html"><img class="js-img" data-src="IMG/021-maintenance.webp" alt=""><div><b>Soporte técnico</b><span>Atención remota + WhatsApp</span></div></a>
             </div>
+
+            <!-- CRECIMIENTO -->
             <div class="gh-col">
-              <h4>Capacitación</h4>
+              <div class="gh-subbar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3-3 3 2 5-6"/></svg>
+                Crecimiento
+              </div>
+              <h4>Habilitar equipo</h4>
               <a class="gh-item js-link" data-href="SERVICIOS/cursos.html"><img class="js-img" data-src="IMG/024-education.webp" alt=""><div><b>Cursos</b><span>Capacitación para tu equipo</span></div></a>
               <a class="gh-item js-link" data-href="SERVICIOS/desarrollos.html"><img class="js-img" data-src="IMG/020-code.webp" alt=""><div><b>Desarrollos</b><span>Integraciones y automatización</span></div></a>
             </div>
+
+            <!-- OPERACIÓN -->
             <div class="gh-col">
-              <h4>Infraestructura</h4>
+              <div class="gh-subbar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg>
+                Operación
+              </div>
+              <h4>Infra & continuidad</h4>
               <a class="gh-item js-link" data-href="SERVICIOS/servidoresvirtuales.html"><img class="js-img" data-src="IMG/023-stairs.webp" alt=""><div><b>Servidores virtuales</b><span>Acceso remoto seguro</span></div></a>
               <a class="gh-item js-link" data-href="SERVICIOS/desarrollos.html"><img class="js-img" data-src="IMG/020-code.webp" alt=""><div><b>Automatización</b><span>Flujos y reportes</span></div></a>
             </div>
+
           </div>
         </li>
 
@@ -257,8 +271,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
     <!-- Actions -->
     <div class="gh-actions">
       <a class="gh-btn-wa" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">
-        <img class="gh-wa-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp">
-        <span class="gh-wa-num">55 6843 7918</span>
+        <img class="gh-wa-ico js-img" data-src="IMG/whatsapp.svg" alt="WhatsApp"><span class="gh-wa-num">55 6843 7918</span>
       </a>
       <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
     </div>
@@ -271,15 +284,10 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
 <aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true" hidden>
   <div class="gh-drawer-head">
-    <div class="gh-dtitle">
-      <div class="gh-dtitle-row">
-        <img class="gh-dtitle-logo js-img" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="26" height="26">
-        <div>
-          <div class="gh-dtitle-name">ExpIRI TI</div>
-          <div class="gh-dtitle-sub">Expertos en CONTPAQi</div>
-        </div>
-      </div>
-    </div>
+    <div class="gh-dtitle"><div class="gh-dtitle-row">
+      <img class="gh-dtitle-logo js-img" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="26" height="26">
+      <div><div class="gh-dtitle-name">ExpIRI TI</div><div class="gh-dtitle-sub">Expertos en CONTPAQi</div></div>
+    </div></div>
     <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
   </div>
 
@@ -293,10 +301,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
     <!-- ===================== SISTEMAS (MÓVIL: TABS) ===================== -->
     <section class="gh-acc gh-msys" id="gh-msys" aria-label="Sistemas (móvil)">
-      <div class="gh-msys-head">
-        <div class="gh-msys-title">Sistemas</div>
-        <div class="gh-msys-sub">por categoría</div>
-      </div>
+      <div class="gh-msys-head"><div class="gh-msys-title">Sistemas</div><div class="gh-msys-sub">por categoría</div></div>
 
       <div class="gh-catbar" role="tablist" aria-label="Categorías de sistemas">
         <button class="gh-cat is-active" type="button" data-cat="contables" role="tab" aria-selected="true">Contables</button>
@@ -324,40 +329,31 @@ html.gh-open .gh-drawer{transform:translateX(0)}
           </div>
         </div>
 
-        <!-- Mobile: Nube (incluye Colabora; NO incluye Despachos) -->
+        <!-- Mobile: Nube (orden pedido) -->
         <div class="gh-panel" data-panel="nube" role="tabpanel" hidden>
           <div class="gh-mgrid">
             <a class="gh-mcard js-link" data-href="SISTEMAS/contabiliza.html"><img class="gh-mimg js-img" data-src="IMG/contabiliza.webp" alt=""><div class="gh-mmeta"><strong>Contabiliza</strong><span>Contabilidad en la nube</span></div></a>
-            <a class="gh-mcard js-link" data-href="SISTEMAS/analiza.html"><img class="gh-mimg js-img" data-src="IMG/analiza.webp" alt=""><div class="gh-mmeta"><strong>Analiza</strong><span>Dashboards y BI</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/personia.html"><img class="gh-mimg js-img" data-src="IMG/personia.webp" alt=""><div class="gh-mmeta"><strong>Personia</strong><span>Gestión de personal</span></div></a>
             <a class="gh-mcard js-link" data-href="SISTEMAS/vende.html"><img class="gh-mimg js-img" data-src="IMG/vende.webp" alt=""><div class="gh-mmeta"><strong>Vende</strong><span>Punto de venta nube</span></div></a>
             <a class="gh-mcard js-link" data-href="SISTEMAS/colabora.html"><img class="gh-mimg js-img" data-src="IMG/colabora.webp" alt=""><div class="gh-mmeta"><strong>Colabora</strong><span>Flow · Gratis</span></div></a>
           </div>
         </div>
 
-        <!-- Mobile: Productividad (incluye Despachos; NO incluye Colabora) -->
+        <!-- Mobile: Productividad (orden pedido + ghost) -->
         <div class="gh-panel" data-panel="prod" role="tabpanel" hidden>
           <div class="gh-mgrid">
             <a class="gh-mcard js-link" data-href="SISTEMAS/evalua.html"><img class="gh-mimg js-img" data-src="IMG/evalua.webp" alt=""><div class="gh-mmeta"><strong>Evalúa</strong><span>Clima laboral y NOM-035</span></div></a>
-            <a class="gh-mcard js-link" data-href="SISTEMAS/personia.html"><img class="gh-mimg js-img" data-src="IMG/personia.webp" alt=""><div class="gh-mmeta"><strong>Personia</strong><span>Gestión de personal</span></div></a>
+            <a class="gh-mcard js-link" data-href="SISTEMAS/analiza.html"><img class="gh-mimg js-img" data-src="IMG/analiza.webp" alt=""><div class="gh-mmeta"><strong>Analiza</strong><span>Dashboards y BI</span></div></a>
             <a class="gh-mcard js-link" data-href="SISTEMAS/despachos.html"><img class="gh-mimg js-img" data-src="IMG/despachos.webp" alt=""><div class="gh-mmeta"><strong>Despachos</strong><span>Gestión integral</span></div></a>
             <div class="gh-mcard gh-mcard-ghost" aria-hidden="true"></div>
           </div>
         </div>
       </div>
-
-      <a class="gh-mpromo js-link" data-href="index.html#promociones" aria-label="Promociones">
-        <img class="gh-mpromo-ico js-img" data-src="IMG/etiqueta-de-precio.webp" alt="">
-        <div class="gh-mpromo-txt"><strong>Promociones</strong><span>Ver descuentos activos</span></div>
-        <span class="gh-mpromo-chip">Ver</span>
-      </a>
     </section>
 
-    <!-- ===================== SERVICIOS (MÓVIL: CAROUSEL) ===================== -->
+    <!-- ===================== SERVICIOS (MÓVIL: CAROUSEL 2x2 igual) ===================== -->
     <section class="gh-acc gh-msvc" id="gh-msvc" aria-label="Servicios (móvil)">
-      <div class="gh-msys-head">
-        <div class="gh-msys-title">Servicios</div>
-        <div class="gh-msys-sub" aria-hidden="true"></div>
-      </div>
+      <div class="gh-msys-head"><div class="gh-msys-title">Servicios</div><div class="gh-msys-sub" aria-hidden="true"></div></div>
 
       <div class="gh-svcwrap" aria-roledescription="carousel">
         <button class="gh-svcarrow prev" type="button" aria-label="Servicios anteriores">‹</button>
@@ -365,7 +361,8 @@ html.gh-open .gh-drawer{transform:translateX(0)}
         <div class="gh-svctrack" id="gh-svctrack" role="region" aria-label="Carrusel de servicios" tabindex="0">
           <div class="gh-svcpage" aria-label="Servicios página 1">
             <div class="gh-mgrid gh-mgrid-svc">
-              <a class="gh-mcard js-link" data-href="SERVICIOS/polizas.html"><img class="gh-mimg js-img" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Pólizas anuales</strong><span>Soporte continuo y preventivo</span></div></a>
+              <!-- PÓLIZAS: MISMO GRID 2x2, SOLO MÁS “BRILLO” (clase gh-star) -->
+              <a class="gh-mcard gh-star js-link" data-href="SERVICIOS/polizas.html"><img class="gh-mimg js-img" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Pólizas anuales</strong><span>Soporte continuo y preventivo</span></div></a>
               <a class="gh-mcard js-link" data-href="SERVICIOS/implementaciones.html"><img class="gh-mimg js-img" data-src="IMG/025-meeting.webp" alt=""><div class="gh-mmeta"><strong>Implementaciones</strong><span>Instalación y puesta en marcha</span></div></a>
               <a class="gh-mcard js-link" data-href="SERVICIOS/migraciones.html"><img class="gh-mimg js-img" data-src="IMG/018-transfer.webp" alt=""><div class="gh-mmeta"><strong>Migraciones</strong><span>Datos limpios y validados</span></div></a>
               <a class="gh-mcard js-link" data-href="SERVICIOS/desarrollos.html"><img class="gh-mimg js-img" data-src="IMG/020-code.webp" alt=""><div class="gh-mmeta"><strong>Desarrollos</strong><span>Integraciones y automatización</span></div></a>
@@ -397,11 +394,11 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 
 <script>
 /* =========================================================
-   Expiriti Header (V7 ROOT) + Mobile UI/UX V5
-   - master root + buildPath (absoluto)
-   - drawer + tabs + carrusel servicios
-   - hide on scroll (solo barra)
-   - FIX: Promociones en móvil (index.html#promociones) garantizado + scroll
+Expiriti Header (V7 ROOT) + Mobile UI/UX V5
+- master root + buildPath (absoluto)
+- drawer + tabs + carrusel servicios
+- hide on scroll (solo barra)
+- FIX: Promociones en móvil (si lo agregas después)
 ========================================================= */
-(function(){"use strict";if(window.__EXPIRITI_GH_V7MOBILE__&&document.getElementById("gh-header")?.__ghInited)return;const Q=(s,c=document)=>c.querySelector(s),QA=(s,c=document)=>Array.from(c.querySelectorAll(s));function getMasterRoot(){const m=document.querySelector('meta[name="expiriti-base"]');if(m&&m.content){let r=m.content.trim();return r.startsWith("/")||(r="/"+r),r.endsWith("/")||(r=r+"/"),r}const p=window.location.pathname.split("/").filter(Boolean);return window.location.hostname.includes("github.io")&&p.length>0?"/"+p[0]+"/":"/"}const ROOT=getMasterRoot();function buildPath(raw){if(!raw)return"#";if(/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw))return raw;if(raw.startsWith("#"))return window.location.origin+ROOT+"index.html"+raw;const clean=raw.replace(/^\//,"");return window.location.origin+ROOT+clean}function applySafePaths(container=document){QA(".js-link[data-href]",container).forEach(a=>{const r=a.getAttribute("data-href");r&&(a.href=buildPath(r))}),QA(".js-img[data-src]",container).forEach(img=>{const r=img.getAttribute("data-src");r&&(img.src=buildPath(r),img.onerror=function(){this.style.opacity="0.5",this.src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"})})}function syncOffset(){const bar=Q("#gh-bar"),h=bar?bar.offsetHeight:68;document.documentElement.style.setProperty("--gh-offset",h+"px")}function initScrollHide(){const bar=Q("#gh-bar");if(!bar)return;let last=window.scrollY||0;window.addEventListener("scroll",()=>{if(document.documentElement.classList.contains("gh-open"))return;const y=window.scrollY||0;y>60&&y>last?bar.classList.add("is-hidden"):bar.classList.remove("is-hidden"),last=y},{passive:true})}function initMobileSystems(){const root=Q("#gh-msys");if(!root||root.__inited)return;root.__inited=true;const cats=QA(".gh-cat",root),panels=QA(".gh-panel",root),KEY="expiriti_mobile_sys_cat",saved=localStorage.getItem(KEY);function setCat(cat){cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle("is-active",on),b.setAttribute("aria-selected",on?"true":"false")}),panels.forEach(p=>{const on=p.dataset.panel===cat;p.classList.toggle("is-open",on),p.hidden=!on}),localStorage.setItem(KEY,cat)}cats.forEach(b=>b.addEventListener("click",()=>setCat(b.dataset.cat))),setCat(saved||"contables")}function initMobileServices(){const root=Q("#gh-msvc"),track=Q("#gh-svctrack");if(!root||!track||root.__inited)return;root.__inited=true;const pages=QA(".gh-svcpage",track),prev=Q(".gh-svcarrow.prev",root),next=Q(".gh-svcarrow.next",root),dots=QA(".gh-svcdots .dot",root),idxFromScroll=()=>{const w=track.clientWidth||1;return Math.round(track.scrollLeft/w)},goTo=i=>{const w=track.clientWidth||1,n=Math.max(0,Math.min(i,pages.length-1));track.scrollTo({left:n*w,behavior:"smooth"})},sync=()=>{const i=idxFromScroll();dots.forEach((d,k)=>d.classList.toggle("is-active",k===i)),prev&&(prev.disabled=i===0,prev.style.opacity=prev.disabled?".35":"1"),next&&(next.disabled=i===pages.length-1,next.style.opacity=next.disabled?".35":"1")};prev&&prev.addEventListener("click",e=>{e.preventDefault(),goTo(idxFromScroll()-1)}),next&&next.addEventListener("click",e=>{e.preventDefault(),goTo(idxFromScroll()+1)}),dots.forEach((d,i)=>d.addEventListener("click",e=>{e.preventDefault(),goTo(i)})),track.addEventListener("scroll",()=>requestAnimationFrame(sync),{passive:true}),window.addEventListener("resize",sync,{passive:true}),sync()}function toggleDrawer(open){const drawer=Q("#gh-drawer"),dim=Q("#gh-dim"),burger=Q("#gh-burger"),bar=Q("#gh-bar");if(!drawer||!dim||!burger)return;open?(bar&&bar.classList.remove("is-hidden"),drawer.hidden=false,dim.hidden=false,void drawer.offsetWidth,document.documentElement.classList.add("gh-open"),drawer.setAttribute("aria-hidden","false"),burger.setAttribute("aria-expanded","true"),document.body.style.overflow="hidden",applySafePaths(Q("#gh-header")),initMobileSystems(),initMobileServices()):(document.documentElement.classList.remove("gh-open"),drawer.setAttribute("aria-hidden","true"),burger.setAttribute("aria-expanded","false"),document.body.style.overflow="",setTimeout(()=>{document.documentElement.classList.contains("gh-open")||(dim.hidden=true,drawer.hidden=true)},250))}function bind(){document.addEventListener("click",e=>{const b=e.target.closest("#gh-burger");if(b)return e.preventDefault(),void toggleDrawer(!document.documentElement.classList.contains("gh-open"));if(e.target.closest("#gh-close")||e.target.matches("#gh-dim"))return e.preventDefault(),void toggleDrawer(false);const a=e.target.closest(".gh-drawer a");if(a){const href=a.getAttribute("href")||"",isIndexPromo=/index\.html#promociones$/i.test(href);if(isIndexPromo)return e.preventDefault(),toggleDrawer(false),void setTimeout(()=>{window.location.href=href,setTimeout(()=>{const el=document.getElementById("promociones");el&&el.scrollIntoView({behavior:"smooth",block:"start"})},60)},280);setTimeout(()=>toggleDrawer(false),120)}},{passive:false}),document.addEventListener("keydown",e=>{e.key==="Escape"&&document.documentElement.classList.contains("gh-open")&&toggleDrawer(false)}),window.addEventListener("pageshow",ev=>{ev.persisted&&toggleDrawer(false)})}function boot(){const header=Q("#gh-header");if(!header||header.__ghInited)return;header.__ghInited=true,window.__EXPIRITI_GH_V7MOBILE__=true,applySafePaths(header),syncOffset(),initScrollHide(),bind(),toggleDrawer(false)}boot(),document.addEventListener("DOMContentLoaded",boot,{once:true}),window.addEventListener("resize",syncOffset,{passive:true});function startObserver(){const o=new MutationObserver(()=>{const h=Q("#gh-header");h&&!h.__ghInited&&boot()});o.observe(document.body,{childList:true,subtree:true})}document.body?startObserver():document.addEventListener("DOMContentLoaded",startObserver,{once:true})})();
+(function(){"use strict";if(window.__EXPIRITI_GH_V7MOBILE__&&document.getElementById("gh-header")?.__ghInited)return;const Q=(s,c=document)=>c.querySelector(s),QA=(s,c=document)=>Array.from(c.querySelectorAll(s));function getMasterRoot(){const m=document.querySelector('meta[name="expiriti-base"]');if(m&&m.content){let r=m.content.trim();return r.startsWith("/")||(r="/"+r),r.endsWith("/")||(r=r+"/"),r}const p=window.location.pathname.split("/").filter(Boolean);return window.location.hostname.includes("github.io")&&p.length>0?"/"+p[0]+"/":"/"}const ROOT=getMasterRoot();function buildPath(raw){if(!raw)return"#";if(/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw))return raw;if(raw.startsWith("#"))return window.location.origin+ROOT+"index.html"+raw;const clean=raw.replace(/^\//,"");return window.location.origin+ROOT+clean}function applySafePaths(container=document){QA(".js-link[data-href]",container).forEach(a=>{const r=a.getAttribute("data-href");r&&(a.href=buildPath(r))}),QA(".js-img[data-src]",container).forEach(img=>{const r=img.getAttribute("data-src");r&&(img.src=buildPath(r),img.onerror=function(){this.style.opacity="0.5",this.src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1 1%27%3E%3C/svg%3E"})})}function syncOffset(){const bar=Q("#gh-bar"),h=bar?bar.offsetHeight:68;document.documentElement.style.setProperty("--gh-offset",h+"px")}function initScrollHide(){const bar=Q("#gh-bar");if(!bar)return;let last=window.scrollY||0;window.addEventListener("scroll",()=>{if(document.documentElement.classList.contains("gh-open"))return;const y=window.scrollY||0;y>60&&y>last?bar.classList.add("is-hidden"):bar.classList.remove("is-hidden"),last=y},{passive:true})}function initMobileSystems(){const root=Q("#gh-msys");if(!root||root.__inited)return;root.__inited=true;const cats=QA(".gh-cat",root),panels=QA(".gh-panel",root),KEY="expiriti_mobile_sys_cat",saved=localStorage.getItem(KEY);function setCat(cat){cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle("is-active",on),b.setAttribute("aria-selected",on?"true":"false")}),panels.forEach(p=>{const on=p.dataset.panel===cat;p.classList.toggle("is-open",on),p.hidden=!on}),localStorage.setItem(KEY,cat)}cats.forEach(b=>b.addEventListener("click",()=>setCat(b.dataset.cat))),setCat(saved||"contables")}function initMobileServices(){const root=Q("#gh-msvc"),track=Q("#gh-svctrack");if(!root||!track||root.__inited)return;root.__inited=true;const pages=QA(".gh-svcpage",track),prev=Q(".gh-svcarrow.prev",root),next=Q(".gh-svcarrow.next",root),dots=QA(".gh-svcdots .dot",root),idxFromScroll=()=>{const w=track.clientWidth||1;return Math.round(track.scrollLeft/w)},goTo=i=>{const w=track.clientWidth||1,n=Math.max(0,Math.min(i,pages.length-1));track.scrollTo({left:n*w,behavior:"smooth"})},sync=()=>{const i=idxFromScroll();dots.forEach((d,k)=>d.classList.toggle("is-active",k===i)),prev&&(prev.disabled=i===0,prev.style.opacity=prev.disabled?".35":"1"),next&&(next.disabled=i===pages.length-1,next.style.opacity=next.disabled?".35":"1")};prev&&prev.addEventListener("click",e=>{e.preventDefault(),goTo(idxFromScroll()-1)}),next&&next.addEventListener("click",e=>{e.preventDefault(),goTo(idxFromScroll()+1)}),dots.forEach((d,i)=>d.addEventListener("click",e=>{e.preventDefault(),goTo(i)})),track.addEventListener("scroll",()=>requestAnimationFrame(sync),{passive:true}),window.addEventListener("resize",sync,{passive:true}),sync()}function toggleDrawer(open){const drawer=Q("#gh-drawer"),dim=Q("#gh-dim"),burger=Q("#gh-burger"),bar=Q("#gh-bar");if(!drawer||!dim||!burger)return;open?(bar&&bar.classList.remove("is-hidden"),drawer.hidden=false,dim.hidden=false,void drawer.offsetWidth,document.documentElement.classList.add("gh-open"),drawer.setAttribute("aria-hidden","false"),burger.setAttribute("aria-expanded","true"),document.body.style.overflow="hidden",applySafePaths(Q("#gh-header")),initMobileSystems(),initMobileServices()):(document.documentElement.classList.remove("gh-open"),drawer.setAttribute("aria-hidden","true"),burger.setAttribute("aria-expanded","false"),document.body.style.overflow="",setTimeout(()=>{document.documentElement.classList.contains("gh-open")||(dim.hidden=true,drawer.hidden=true)},250))}function bind(){document.addEventListener("click",e=>{const b=e.target.closest("#gh-burger");if(b)return e.preventDefault(),void toggleDrawer(!document.documentElement.classList.contains("gh-open"));if(e.target.closest("#gh-close")||e.target.matches("#gh-dim"))return e.preventDefault(),void toggleDrawer(false);const a=e.target.closest(".gh-drawer a");a&&setTimeout(()=>toggleDrawer(false),120)},{passive:false}),document.addEventListener("keydown",e=>{e.key==="Escape"&&document.documentElement.classList.contains("gh-open")&&toggleDrawer(false)}),window.addEventListener("pageshow",ev=>{ev.persisted&&toggleDrawer(false)})}function boot(){const header=Q("#gh-header");if(!header||header.__ghInited)return;header.__ghInited=true,window.__EXPIRITI_GH_V7MOBILE__=true,applySafePaths(header),syncOffset(),initScrollHide(),bind(),toggleDrawer(false)}boot(),document.addEventListener("DOMContentLoaded",boot,{once:true}),window.addEventListener("resize",syncOffset,{passive:true});})();
 </script>
