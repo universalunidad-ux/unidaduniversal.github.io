@@ -134,6 +134,84 @@ DESKTOP MEGA (SISTEMAS + SERVICIOS) — look tipo captura
 @media(min-width:1200px){.gh-item img{width:clamp(110px,9vw,150px)}}
 }
 @media(prefers-reduced-motion:reduce){.gh-brand,.gh-nav a::after,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar,.gh-mcard{transition:none!important}}
+
+  /* === Expiriti GH — UI/UX + PageSpeed PATCH (2026) =========================
+Objetivo: look más refinado + menos costo de blur/shadow + mejor accesibilidad
+- Reduce repaints: blur solo en barra, no en paneles internos
+- Enfoca: focus-visible en navegación y tarjetas
+- Glass controlado: “transparencia elegante” sin sobrecargar GPU
+========================================================================== */
+
+/* 1) Micro-ajuste tipográfico (2025/2026: densidad + legibilidad) */
+.gh-nav a{font-weight:850;letter-spacing:.008em}
+.gh-brand-txt .n{font-weight:800;letter-spacing:-.015em}
+.gh-brand-txt .s{letter-spacing:.01em}
+
+/* 2) Focus visible (accesibilidad + “premium”) */
+.gh a:focus-visible,.gh button:focus-visible{outline:2px solid rgba(45,212,191,.75);outline-offset:3px;border-radius:12px}
+.gh a:focus:not(:focus-visible),.gh button:focus:not(:focus-visible){outline:none}
+
+/* 3) Menos costo GPU: blur “solo donde aporta” */
+.gh-bar{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)} /* antes 12px */
+.gh-dd-menu{backdrop-filter:none;-webkit-backdrop-filter:none} /* evita blur doble en megas */
+
+/* 4) Sombras más “modernas” y ligeras (menos spread, menos repaints) */
+.gh-dd-menu{box-shadow:0 16px 40px rgba(0,0,0,.48)} /* antes 10/30 -10px */
+.gh-mcard{box-shadow:0 14px 34px rgba(0,0,0,.28)} /* menos pesado */
+.gh-svcarrow{box-shadow:0 10px 22px rgba(0,0,0,.30)}
+
+/* 5) Hover/press más consistente (tendencia: micro-interacciones suaves) */
+.gh-mcard:hover{transform:translateY(-1px)}
+.gh-mcard:active{transform:translateY(0) scale(.99)}
+.gh-item:hover{transform:translateY(-1px)} /* desktop mega */
+@media(min-width:1024px){.gh-item{transition:transform .18s ease,background .18s ease,border-color .18s ease}}
+
+/* 6) Reduce filters costosos: drop-shadow solo en assets clave */
+.gh-mimg,.gh-wa-ico,.gh-ctaico{filter:none} /* quita drop-shadow global */
+.gh-brand img{filter:drop-shadow(0 8px 16px rgba(0,0,0,.22))} /* solo logo */
+@media(min-width:1024px){
+  .gh-item img{filter:drop-shadow(0 6px 14px rgba(0,0,0,.26))} /* solo mega */
+}
+
+/* 7) “Glass bar” de dots (tu referencia IMG): más fino y adaptable al # de dots */
+.gh-svcdots{
+  display:flex;justify-content:center;align-items:center;gap:8px;
+  margin-top:10px;padding:8px 12px;border-radius:999px;
+  width:max-content;max-width:100%;margin-left:auto;margin-right:auto;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.gh-svcdots .dot{width:8px;height:8px;background:rgba(255,255,255,.26)}
+.gh-svcdots .dot.is-active{width:18px}
+
+/* 8) Highlight “brilloso” pero fino (no raro en desktop): Pólizas */
+.gh-star{border-color:rgba(45,212,191,.34)!important}
+.gh-star::before{opacity:.60;filter:blur(9px)} /* menos exagerado */
+@media(min-width:1024px){
+  .gh-item.is-featured{border-color:rgba(45,212,191,.26)}
+  .gh-item.is-featured::before{opacity:.55;filter:blur(9px)}
+}
+
+/* 9) “Barra superior” de columnas (mega): menos alto + más “badge-like” */
+@media(min-width:1024px){
+  .gh-subbar{padding:10px 12px;font-size:14.5px;letter-spacing:.05em}
+  .gh-subbar svg{opacity:.95}
+}
+
+/* 10) Reduce layout thrash: evita cambios grandes en hover */
+.gh-nav a::after{height:2px;opacity:.9}
+
+/* 11) Preferencias usuario (reduce motion/transparency) */
+@media(prefers-reduced-motion:reduce){
+  .gh-item,.gh-mcard{transition:none!important}
+}
+@media(prefers-reduced-transparency:reduce){
+  .gh-bar{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(7,10,16,.98)}
+  .gh-svcdots{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(255,255,255,.08)}
+}
+
+  
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
