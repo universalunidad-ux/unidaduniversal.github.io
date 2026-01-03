@@ -423,277 +423,272 @@ html[data-theme="light"] .gh-theme{
 
 <script>
 <script>
+<script>
 /* =========================================================
  Expiriti Header (V7 ROOT) + Mobile UI/UX V5 — HARDENED
- - PRIORIDAD: applySafePaths() corre primero (links/imgs vivos)
- - localStorage SAFE (no rompe en Safari privado / restricciones)
- - drawer + tabs + carrusel servicios
- - hide on scroll (solo barra)
+ - FIX: localStorage safe (no rompe links/imagenes)
+ - FIX: buildPath soporta file:// (origin "null")
+ - Mantiene: drawer + tabs + carrusel + hide on scroll
 ========================================================= */
 (function(){
   "use strict";
+  if(window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__ghInited) return;
 
-  // Evita doble init
-  var headerEl = document.getElementById("gh-header");
-  if (window.__EXPIRITI_GH_V7MOBILE__ && headerEl && headerEl.__ghInited) return;
+  const Q  = (s,c=document)=>c.querySelector(s);
+  const QA = (s,c=document)=>Array.from(c.querySelectorAll(s));
 
-  var Q  = function(s,c){ return (c||document).querySelector(s); };
-  var QA = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
-
-  function safeGet(key){
-    try{ return localStorage.getItem(key); }catch(e){ return null; }
-  }
-  function safeSet(key,val){
-    try{ localStorage.setItem(key,val); }catch(e){}
-  }
+  /* ---------- Safe storage (evita que el header se rompa) ---------- */
+  const storage = {
+    get(key){
+      try{ return window.localStorage ? localStorage.getItem(key) : null; }catch(e){ return null; }
+    },
+    set(key,val){
+      try{ if(window.localStorage) localStorage.setItem(key,val); }catch(e){}
+    }
+  };
 
   function getMasterRoot(){
-    var m = document.querySelector('meta[name="expiriti-base"]');
+    const m=document.querySelector('meta[name="expiriti-base"]');
     if(m && m.content){
-      var r = (m.content||"").trim();
+      let r=m.content.trim();
       if(!r.startsWith("/")) r="/"+r;
       if(!r.endsWith("/")) r=r+"/";
       return r;
     }
-    var p = (window.location.pathname||"").split("/").filter(Boolean);
-    return (window.location.hostname.indexOf("github.io")>-1 && p.length>0) ? ("/"+p[0]+"/") : "/";
+    const p=window.location.pathname.split("/").filter(Boolean);
+    return (window.location.hostname.includes("github.io") && p.length>0) ? ("/"+p[0]+"/") : "/";
   }
-  var ROOT = getMasterRoot();
+  const ROOT=getMasterRoot();
 
+  /* ---------- buildPath robusto (GH Pages + dominio + file://) ---------- */
   function buildPath(raw){
     if(!raw) return "#";
+
+    // Protocolos completos
     if(/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw)) return raw;
 
-    // anchors del index
-    if(raw.charAt(0)==="#"){
+    // Si ya viene absolute path (/IMG/..., /SISTEMAS/...)
+    if(raw.startsWith("/")){
+      // En file:// no existe origin válido; usa relativo a ROOT
+      if(window.location.protocol === "file:" || window.location.origin === "null"){
+        return raw; // en file:// "/" es "root" del disco, pero al menos no produce "null/..."
+      }
+      return window.location.origin + raw;
+    }
+
+    // Hash: siempre apunta a index.html dentro de ROOT (tu regla original)
+    if(raw.startsWith("#")){
+      if(window.location.protocol === "file:" || window.location.origin === "null"){
+        return ROOT + "index.html" + raw; // relativo
+      }
       return window.location.origin + ROOT + "index.html" + raw;
     }
-    var clean = raw.replace(/^\//,"");
+
+    const clean = raw.replace(/^\//,"");
+    if(window.location.protocol === "file:" || window.location.origin === "null"){
+      return ROOT + clean; // relativo (file://)
+    }
     return window.location.origin + ROOT + clean;
   }
 
-  // CLAVE: esto es lo que “revive” links e imágenes
-  function applySafePaths(container){
-    container = container || document;
+  function applySafePaths(container=document){
+    try{
+      QA(".js-link[data-href]",container).forEach(a=>{
+        const r=a.getAttribute("data-href");
+        if(r) a.setAttribute("href", buildPath(r));
+      });
 
-    QA(".js-link[data-href]", container).forEach(function(a){
-      var r = a.getAttribute("data-href");
-      if(r) a.setAttribute("href", buildPath(r));
-    });
-
-    QA(".js-img[data-src]", container).forEach(function(img){
-      var r = img.getAttribute("data-src");
-      if(!r) return;
-      img.setAttribute("src", buildPath(r));
-      if(!img.__errBound){
-        img.__errBound = true;
+      QA(".js-img[data-src]",container).forEach(img=>{
+        const r=img.getAttribute("data-src");
+        if(!r) return;
+        img.setAttribute("src", buildPath(r));
         img.onerror = function(){
-          this.style.opacity = "0.55";
-          this.src = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1 1%27%3E%3C/svg%3E";
+          this.style.opacity="0.5";
+          this.src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1 1%27%3E%3C/svg%3E";
         };
-      }
-    });
+      });
+    }catch(e){
+      // No dejes que un error mate todo el header
+    }
   }
 
   function syncOffset(){
-    var bar = Q("#gh-bar");
-    var h = bar ? bar.offsetHeight : 68;
+    const bar=Q("#gh-bar"), h=bar?bar.offsetHeight:68;
     document.documentElement.style.setProperty("--gh-offset", h+"px");
   }
 
   function initScrollHide(){
-    var bar = Q("#gh-bar");
-    if(!bar) return;
-
-    var last = window.scrollY || 0;
-    window.addEventListener("scroll", function(){
+    const bar=Q("#gh-bar"); if(!bar) return;
+    let last=window.scrollY||0;
+    window.addEventListener("scroll", ()=>{
       if(document.documentElement.classList.contains("gh-open")) return;
-      var y = window.scrollY || 0;
-      if(y>60 && y>last) bar.classList.add("is-hidden");
-      else bar.classList.remove("is-hidden");
-      last = y;
+      const y=window.scrollY||0;
+      (y>60 && y>last) ? bar.classList.add("is-hidden") : bar.classList.remove("is-hidden");
+      last=y;
     }, {passive:true});
   }
 
   function initMobileSystems(){
-    var root = Q("#gh-msys");
+    const root=Q("#gh-msys");
     if(!root || root.__inited) return;
-    root.__inited = true;
+    root.__inited=true;
 
-    var cats   = QA(".gh-cat", root);
-    var panels = QA(".gh-panel", root);
-    var KEY    = "expiriti_mobile_sys_cat";
-    var saved  = safeGet(KEY); // <-- SAFE
+    const cats=QA(".gh-cat",root);
+    const panels=QA(".gh-panel",root);
+    const KEY="expiriti_mobile_sys_cat";
+    const saved=storage.get(KEY);
 
     function setCat(cat){
-      cats.forEach(function(b){
-        var on = (b.dataset.cat === cat);
-        b.classList.toggle("is-active", on);
-        b.setAttribute("aria-selected", on ? "true" : "false");
+      cats.forEach(b=>{
+        const on=b.dataset.cat===cat;
+        b.classList.toggle("is-active",on);
+        b.setAttribute("aria-selected", on?"true":"false");
       });
-      panels.forEach(function(p){
-        var on = (p.dataset.panel === cat);
-        p.classList.toggle("is-open", on);
-        p.hidden = !on;
+      panels.forEach(p=>{
+        const on=p.dataset.panel===cat;
+        p.classList.toggle("is-open",on);
+        p.hidden=!on;
       });
-      safeSet(KEY, cat); // <-- SAFE
+      storage.set(KEY,cat);
     }
 
-    cats.forEach(function(b){
-      b.addEventListener("click", function(){ setCat(b.dataset.cat); });
-    });
-
+    cats.forEach(b=>b.addEventListener("click", ()=>setCat(b.dataset.cat)));
     setCat(saved || "contables");
   }
 
   function initMobileServices(){
-    var root  = Q("#gh-msvc");
-    var track = Q("#gh-svctrack");
+    const root=Q("#gh-msvc"), track=Q("#gh-svctrack");
     if(!root || !track || root.__inited) return;
-    root.__inited = true;
+    root.__inited=true;
 
-    var pages = QA(".gh-svcpage", track);
-    var prev  = Q(".gh-svcarrow.prev", root);
-    var next  = Q(".gh-svcarrow.next", root);
-    var dots  = QA(".gh-svcdots .dot", root);
+    const pages=QA(".gh-svcpage",track);
+    const prev=Q(".gh-svcarrow.prev",root);
+    const next=Q(".gh-svcarrow.next",root);
+    const dots=QA(".gh-svcdots .dot",root);
 
-    function idxFromScroll(){
-      var w = track.clientWidth || 1;
-      return Math.round(track.scrollLeft / w);
-    }
-    function goTo(i){
-      var w = track.clientWidth || 1;
-      var n = Math.max(0, Math.min(i, pages.length-1));
-      track.scrollTo({left:n*w, behavior:"smooth"});
-    }
-    function sync(){
-      var i = idxFromScroll();
-      dots.forEach(function(d,k){ d.classList.toggle("is-active", k===i); });
-      if(prev){ prev.disabled = (i===0); prev.style.opacity = prev.disabled ? ".35" : "1"; }
-      if(next){ next.disabled = (i===pages.length-1); next.style.opacity = next.disabled ? ".35" : "1"; }
-    }
+    const idxFromScroll=()=>{ const w=track.clientWidth||1; return Math.round(track.scrollLeft/w); };
+    const goTo=i=>{
+      const w=track.clientWidth||1;
+      const n=Math.max(0,Math.min(i,pages.length-1));
+      track.scrollTo({left:n*w,behavior:"smooth"});
+    };
+    const sync=()=>{
+      const i=idxFromScroll();
+      dots.forEach((d,k)=>d.classList.toggle("is-active",k===i));
+      if(prev){ prev.disabled=i===0; prev.style.opacity=prev.disabled?".35":"1"; }
+      if(next){ next.disabled=i===pages.length-1; next.style.opacity=next.disabled?".35":"1"; }
+    };
 
-    if(prev) prev.addEventListener("click", function(e){ e.preventDefault(); goTo(idxFromScroll()-1); });
-    if(next) next.addEventListener("click", function(e){ e.preventDefault(); goTo(idxFromScroll()+1); });
-    dots.forEach(function(d,i){ d.addEventListener("click", function(e){ e.preventDefault(); goTo(i); }); });
+    if(prev) prev.addEventListener("click", e=>{ e.preventDefault(); goTo(idxFromScroll()-1); });
+    if(next) next.addEventListener("click", e=>{ e.preventDefault(); goTo(idxFromScroll()+1); });
+    dots.forEach((d,i)=>d.addEventListener("click", e=>{ e.preventDefault(); goTo(i); }));
 
-    track.addEventListener("scroll", function(){ requestAnimationFrame(sync); }, {passive:true});
+    track.addEventListener("scroll", ()=>requestAnimationFrame(sync), {passive:true});
     window.addEventListener("resize", sync, {passive:true});
     sync();
   }
 
   function toggleDrawer(open){
-    var drawer = Q("#gh-drawer");
-    var dim    = Q("#gh-dim");
-    var burger = Q("#gh-burger");
-    var bar    = Q("#gh-bar");
+    const drawer=Q("#gh-drawer"), dim=Q("#gh-dim"), burger=Q("#gh-burger"), bar=Q("#gh-bar");
     if(!drawer || !dim || !burger) return;
 
     if(open){
       if(bar) bar.classList.remove("is-hidden");
-      drawer.hidden = false; dim.hidden = false;
+      drawer.hidden=false; dim.hidden=false;
       void drawer.offsetWidth;
       document.documentElement.classList.add("gh-open");
       drawer.setAttribute("aria-hidden","false");
       burger.setAttribute("aria-expanded","true");
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow="hidden";
 
-      // Re-aplica por si el DOM cambió por parciales
+      // IMPORTANT: asegura links/imgs al abrir
       applySafePaths(Q("#gh-header"));
-
       initMobileSystems();
       initMobileServices();
     }else{
       document.documentElement.classList.remove("gh-open");
       drawer.setAttribute("aria-hidden","true");
       burger.setAttribute("aria-expanded","false");
-      document.body.style.overflow = "";
-      setTimeout(function(){
+      document.body.style.overflow="";
+      setTimeout(()=>{
         if(!document.documentElement.classList.contains("gh-open")){
-          dim.hidden = true; drawer.hidden = true;
+          dim.hidden=true; drawer.hidden=true;
         }
       }, 250);
     }
   }
 
   function bind(){
-    document.addEventListener("click", function(e){
-      var b = e.target.closest("#gh-burger");
-      if(b){
-        e.preventDefault();
-        toggleDrawer(!document.documentElement.classList.contains("gh-open"));
-        return;
-      }
+    document.addEventListener("click", e=>{
+      const b=e.target.closest("#gh-burger");
+      if(b){ e.preventDefault(); toggleDrawer(!document.documentElement.classList.contains("gh-open")); return; }
+
       if(e.target.closest("#gh-close") || e.target.matches("#gh-dim")){
         e.preventDefault(); toggleDrawer(false); return;
       }
-      var a = e.target.closest(".gh-drawer a");
-      if(a) setTimeout(function(){ toggleDrawer(false); }, 120);
+
+      const a=e.target.closest(".gh-drawer a");
+      if(a) setTimeout(()=>toggleDrawer(false),120);
     }, {passive:false});
 
-    document.addEventListener("keydown", function(e){
+    document.addEventListener("keydown", e=>{
       if(e.key==="Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
     });
 
-    window.addEventListener("pageshow", function(ev){
-      if(ev.persisted) toggleDrawer(false);
-    });
+    window.addEventListener("pageshow", ev=>{ if(ev.persisted) toggleDrawer(false); });
   }
 
   function initThemeToggle(){
-    var btn = Q("#gh-theme");
+    const btn=Q("#gh-theme");
     if(!btn || btn.__inited) return;
-    btn.__inited = true;
+    btn.__inited=true;
 
-    var KEY = "expiriti_theme";
-    var root = document.documentElement;
+    const KEY="expiriti_theme";
+    const root=document.documentElement;
 
     function syncUI(){
-      var t = (root.dataset.theme==="light") ? "light" : "dark";
+      const t=(root.dataset.theme==="light") ? "light" : "dark";
       btn.setAttribute("aria-pressed", t==="light" ? "true" : "false");
       btn.title = (t==="light") ? "Modo oscuro" : "Modo claro";
     }
+
     function setTheme(t){
-      root.dataset.theme = t;
-      safeSet(KEY, t); // <-- SAFE
+      root.dataset.theme=t;
+      storage.set(KEY,t);
       syncUI();
     }
 
-    btn.addEventListener("click", function(e){
+    // Cargar tema guardado sin romper
+    const saved=storage.get(KEY);
+    if(saved==="light" || saved==="dark") root.dataset.theme=saved;
+
+    btn.addEventListener("click", e=>{
       e.preventDefault();
-      var cur = (root.dataset.theme==="light") ? "light" : "dark";
+      const cur=(root.dataset.theme==="light") ? "light" : "dark";
       setTheme(cur==="light" ? "dark" : "light");
     });
-
-    // Si ya tienes theme.css, puedes leer preferencia:
-    var saved = safeGet(KEY);
-    if(saved==="light" || saved==="dark") root.dataset.theme = saved;
 
     syncUI();
   }
 
   function boot(){
-    var header = Q("#gh-header");
+    const header=Q("#gh-header");
     if(!header || header.__ghInited) return;
+    header.__ghInited=true;
+    window.__EXPIRITI_GH_V7MOBILE__=true;
 
-    header.__ghInited = true;
-    window.__EXPIRITI_GH_V7MOBILE__ = true;
-
-    // 1) PRIMERÍSIMO: revive links e imágenes
-    applySafePaths(header);
-
-    // 2) Luego lo demás
     initThemeToggle();
+    applySafePaths(header);   // FIX principal: links + imgs en desktop desde el arranque
     syncOffset();
     initScrollHide();
     bind();
     toggleDrawer(false);
   }
 
-  // Ejecuta ya y también en DOMContentLoaded (por parciales)
-  try{ boot(); }catch(e){}
-  document.addEventListener("DOMContentLoaded", function(){ try{ boot(); }catch(e){} }, {once:true});
-  window.addEventListener("resize", function(){ try{ syncOffset(); }catch(e){} }, {passive:true});
+  boot();
+  document.addEventListener("DOMContentLoaded", boot, {once:true});
+  window.addEventListener("resize", syncOffset, {passive:true});
 })();
 </script>
+
 
