@@ -1230,4 +1230,31 @@ body.has-calc-3 #calc-tertiary.calc-empty{
     0 12px 28px rgba(0,0,0,.4);
 }
 
+/* =========================================================
+   EXPIRITI — FIX: quitar títulos blancos arriba de videos
+   (¿Qué hace el sistema? / ¿Para quién va dirigido?)
+========================================================= */
+
+/* Oculta títulos directos arriba del carrusel */
+section > h3,
+section > h4{
+  display:none !important;
+}
+
+/* Oculta títulos dentro de cards encima de carruseles */
+.card.body > h3,
+.card.body > h4{
+  display:none !important;
+}
+
+/* Extra seguridad: títulos justo antes del carousel */
+.carousel{
+  margin-top:0 !important;
+}
+.carousel:has(+ h3),
+.carousel:has(+ h4){
+  margin-top:0 !important;
+}
+
+
 
