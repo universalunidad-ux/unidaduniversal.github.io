@@ -253,6 +253,153 @@ Cambios NOTORIOS (sin romper layout):
 }
 #gh-header .gh-star::after{content:"Servicio 360°"!important} /* cambia el texto del tag del brillo */
 
+
+  /* === Expiriti GH — FIT SIN SCROLL + UI/UX 2026 (PATCH FINAL) =========
+   - Objetivo: que el drawer quepa verticalmente sin scroll (en móvil)
+   - Mantiene 2x2 en Sistemas y 2x2 en Servicios
+   - Cambios VISIBLES en desktop mega (borde/glass/jerarquía)
+====================================================================== */
+
+/* ------------------  A) Drawer “NO SCROLL” (móvil) ------------------ */
+.gh-drawer{height:100dvh} /* usa dvh real (Safari/Chrome modernos) */
+.gh-drawer-body{overflow:hidden} /* clave: sin scroll interno */
+@supports not (height:100dvh){.gh-drawer{height:100vh}} /* fallback */
+
+/* Head compacto + CTA arriba */
+.gh-drawer-head{
+  padding:10px 12px;
+  gap:10px;
+}
+.gh-dtitle-txt{min-width:0}
+.gh-dtitle-name{font-size:14px}
+.gh-dtitle-sub{
+  font-size:11px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  opacity:.9;
+}
+
+/* CTA compactas (en head) */
+.gh-head-cta{display:flex;align-items:center;gap:8px}
+.gh-headbtn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 10px;border-radius:14px;
+  text-decoration:none;color:var(--gh-text);
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  font-weight:900;letter-spacing:.01em;
+}
+.gh-headbtn:hover{border-color:rgba(45,212,191,.26)}
+.gh-headico{font-size:14px;line-height:1}
+.gh-headtxt{font-size:12px;line-height:1;white-space:nowrap}
+.gh-close{padding:9px 10px}
+
+/* ------------------  B) Compactación por altura ------------------ */
+/* Ajusta todo con clamp para que en pantallas cortas quepa SIN scroll */
+:root{
+  --gh-d-gap:clamp(8px,1.2vh,12px);
+  --gh-d-pad:clamp(10px,1.5vh,14px);
+  --gh-card-minh:clamp(92px,12vh,118px);
+  --gh-img-h:clamp(34px,4.2vh,44px);
+  --gh-tab-py:clamp(8px,1.1vh,10px);
+  --gh-tab-px:clamp(10px,1.6vh,12px);
+  --gh-h2:clamp(12px,1.8vh,14px);
+  --gh-sub:clamp(10px,1.5vh,12px);
+}
+
+/* Wrapper del drawer body más “tetris” */
+.gh-drawer-body{
+  padding:var(--gh-d-pad);
+  padding-bottom:var(--gh-d-pad);
+  display:flex;
+  flex-direction:column;
+  gap:var(--gh-d-gap);
+}
+
+/* Sistemas: tabs + grid 2x2, más compactos */
+.gh-msys,.gh-msvc{margin-top:0}
+.gh-msys-head{padding:0 2px 6px}
+.gh-msys-title{font-size:var(--gh-h2)}
+.gh-msys-sub{font-size:var(--gh-sub)}
+.gh-catbar{padding:0 0 6px}
+.gh-cat{padding:var(--gh-tab-py) var(--gh-tab-px);font-size:12px}
+
+/* Cards: mismas 2x2, pero más bajas */
+.gh-mgrid{gap:var(--gh-d-gap)}
+.gh-mcard{
+  min-height:var(--gh-card-minh);
+  padding:clamp(9px,1.2vh,10px);
+  border-radius:16px;
+}
+.gh-mimg{height:var(--gh-img-h)}
+.gh-mmeta strong{font-size:clamp(12px,1.8vh,13px)}
+.gh-mmeta span{font-size:clamp(10px,1.5vh,11px)}
+
+/* Servicios: carrusel sin flechas “grandes” que roben alto */
+.gh-svcwrap{margin-top:0}
+.gh-svcarrow{width:34px;height:34px}
+.gh-svcdots{
+  margin-top:8px;
+  padding:7px 10px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.gh-svcdots .dot{background:rgba(255,255,255,.26)}
+
+/* Si la pantalla es MUY baja: reduce subtexto (sin romper layout) */
+@media (max-height:720px){
+  .gh-dtitle-sub{display:none}
+  .gh-msys-sub{display:none}
+  .gh-mmeta span{display:none} /* aquí ganas muchísimo alto */
+}
+
+/* ------------------  C) “Brillo” Pólizas más notorio (mobile+desktop) ------------------ */
+.gh-star{
+  border-color:rgba(45,212,191,.40)!important;
+  background:
+    radial-gradient(120% 90% at 10% 0%, rgba(45,212,191,.18), transparent 55%),
+    radial-gradient(90% 80% at 90% 10%, rgba(96,165,250,.14), transparent 58%),
+    linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02))!important;
+}
+.gh-star::before{opacity:.75;filter:blur(10px)}
+.gh-star::after{content:"RECOMENDADO";letter-spacing:.06em}
+
+/* ------------------  D) Desktop mega: cambios VISIBLES sin romper tu look ------------------ */
+@media(min-width:1024px){
+  /* panel más “separado” y legible */
+  .gh-dd-menu.mega{
+    border-color:rgba(255,255,255,.10);
+    box-shadow:0 26px 70px rgba(0,0,0,.62);
+    background:
+      radial-gradient(120% 90% at 0% 0%, rgba(45,212,191,.10), transparent 60%),
+      radial-gradient(110% 90% at 100% 0%, rgba(96,165,250,.08), transparent 62%),
+      var(--gh-panel);
+  }
+  .gh-col{
+    border-color:rgba(255,255,255,.08);
+    background:
+      radial-gradient(90% 70% at 20% 0%, rgba(255,255,255,.05), transparent 55%),
+      rgba(255,255,255,.02);
+  }
+  /* barra superior más “pill” y clara */
+  .gh-subbar{
+    background:rgba(255,255,255,.04);
+    border-color:rgba(255,255,255,.10);
+    box-shadow:inset 0 -1px 0 rgba(255,255,255,.08);
+  }
+  /* hover con micro movimiento (se percibe más) */
+  .gh-item:hover{transform:translateY(-2px)}
+  .gh-item.is-featured{
+    border-color:rgba(45,212,191,.34);
+    background:
+      radial-gradient(110% 90% at 10% 0%, rgba(45,212,191,.16), transparent 60%),
+      linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  }
+}
+
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
@@ -401,22 +548,31 @@ Cambios NOTORIOS (sin romper layout):
 <!-- ===================== OVERLAY + DRAWER (MOBILE V5) ===================== -->
 <div class="gh-dim" id="gh-dim" hidden></div>
 
-<aside class="gh-drawer" id="gh-drawer" aria-label="Menú móvil" aria-hidden="true" hidden>
-  <div class="gh-drawer-head">
-    <div class="gh-dtitle"><div class="gh-dtitle-row">
-      <img class="gh-dtitle-logo js-img" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="26" height="26">
-      <div><div class="gh-dtitle-name">ExpIRI TI</div><div class="gh-dtitle-sub">Expertos en CONTPAQi</div></div>
-    </div></div>
+<!-- ===================== DRAWER HEAD (COMPACT) ===================== -->
+<div class="gh-drawer-head">
+  <div class="gh-dtitle-row">
+    <img class="gh-dtitle-logo js-img" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="26" height="26">
+    <div class="gh-dtitle-txt">
+      <div class="gh-dtitle-name">ExpIRI TI</div>
+      <div class="gh-dtitle-sub">Expertos en CONTPAQi</div>
+    </div>
+  </div>
+
+  <!-- CTA compactas (arriba, para que TODO quepa sin scroll) -->
+  <div class="gh-head-cta" aria-label="Contacto rápido">
+    <a class="gh-headbtn" href="tel:+525568437918" aria-label="Llamar">
+      <span class="gh-headico">📞</span><span class="gh-headtxt">Llamar</span>
+    </a>
+    <a class="gh-headbtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <span class="gh-headico">💬</span><span class="gh-headtxt">WhatsApp</span>
+    </a>
     <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
   </div>
+</div>
+
 
   <div class="gh-drawer-body">
 
-    <!-- Quick CTA -->
-    <div class="gh-mcta-ico" aria-label="Contacto rápido">
-      <a class="gh-ctabtn" href="tel:+525568437918"><img class="gh-ctaico js-img" data-src="IMG/034-telefono.webp" alt="">Llamar</a>
-      <a class="gh-ctabtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener"><img class="gh-ctaico js-img" data-src="IMG/whatsapp.svg" alt="">WhatsApp</a>
-    </div>
 
     <!-- ===================== SISTEMAS (MÓVIL: TABS) ===================== -->
     <section class="gh-acc gh-msys" id="gh-msys" aria-label="Sistemas (móvil)">
