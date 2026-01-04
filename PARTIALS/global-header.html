@@ -1,63 +1,73 @@
 <!-- =========================================================
- Expiriti - GLOBAL HEADER (V7 + MOBILE UI/UX V5) + MEGA V5 PATCH — JAN 2026 (FIXED + FALLBACKS)
+ Expiriti - GLOBAL HEADER (V7 + MOBILE UI/UX V5) + MEGA V5 — JAN 2026 (BLINDADO)
  - Fallbacks CRÍTICOS:
    1) TODOS los <a class="js-link" data-href> incluyen href="#" (evita links “muertos” si falla JS)
-   2) TODOS los <img class="js-img" data-src> incluyen src PLACEHOLDER 1x1 (evita rutas relativas rotas en subpáginas)
+   2) TODOS los <img class="js-img" data-src> incluyen src PLACEHOLDER 1x1 (evita rutas relativas rotas)
+ - FIX 404 (GH Pages): ROOT robusto + buildPath seguro para subpáginas
  - Drawer móvil: tabs Sistemas + carrusel Servicios
  - Hide on scroll: solo barra (#gh-bar)
+ - Theme toggle (light/dark) con storage safe
 ========================================================= -->
 <header class="gh" id="gh-header" role="banner"><style>
-/* ===== TOKENS + OFFSET (V7 CORREGIDO) ===== */
-:root {
-  --gh-bg: rgba(7,10,16,.95);
-  --gh-border: rgba(255,255,255,.08);
-  --gh-panel: rgba(10,14,23,.98);
-  --gh-text: #e8eef6;
-  --gh-muted: #94a3b8;
-  --gh-brand: #2dd4bf;
-  --gh-brand2: #60a5fa;
-  --gh-maxw: 1200px;
-  --gh-height: 68px;
-  --gh-offset: 68px;
-}
-
-/* ===== MODO CLARO (FALTABA ESTO) ===== */
-html[data-theme="light"] {
-  --gh-bg: rgba(255,255,255,.92);
-  --gh-border: rgba(0,0,0,.10);
-  --gh-panel: #ffffff;
-  --gh-text: #0f172a;       /* Texto oscuro */
-  --gh-muted: #64748b;
-  --gh-brand: #0d9488;      /* Verde más oscuro para contraste */
-  --gh-brand2: #2563eb;     /* Azul más oscuro */
-}
-/* Ajuste extra para modo claro en links y bordes */
-html[data-theme="light"] .gh-brand img { background: #e2e8f0; }
-html[data-theme="light"] .gh-nav a:hover { color:var(--gh-brand2); background:rgba(0,0,0,.05)!important; }
-html[data-theme="light"] .gh-burger { color:#0f172a; background:rgba(255,255,255,.9); border-color:rgba(0,0,0,.15); }
-
+/* ===== TOKENS + OFFSET ===== */
+:root{--gh-bg:rgba(7,10,16,.95);--gh-border:rgba(255,255,255,.08);--gh-panel:rgba(10,14,23,.98);--gh-text:#e8eef6;--gh-muted:#94a3b8;--gh-brand:#2dd4bf;--gh-brand2:#60a5fa;--gh-maxw:1200px;--gh-height:68px;--gh-offset:68px;--gh-glass:rgba(7,10,16,.86);--gh-glass-2:rgba(10,14,23,.94);--gh-stroke:rgba(255,255,255,.12);--gh-d-gap:clamp(8px,1.2vh,12px);--gh-d-pad:clamp(10px,1.5vh,14px);--gh-card-minh:clamp(92px,12vh,118px);--gh-img-h:clamp(34px,4.2vh,44px);--gh-tab-py:clamp(8px,1.1vh,10px);--gh-tab-px:clamp(10px,1.6vh,12px);--gh-h2:clamp(12px,1.8vh,14px);--gh-sub:clamp(10px,1.5vh,12px)}
+/* ===== LIGHT THEME ===== */
+html[data-theme="light"]{--gh-bg:rgba(255,255,255,.92);--gh-border:rgba(0,0,0,.10);--gh-panel:#fff;--gh-text:#0f172a;--gh-muted:#64748b;--gh-brand:#0d9488;--gh-brand2:#2563eb;--gh-glass:rgba(255,255,255,.88);--gh-glass-2:rgba(255,255,255,.98);--gh-stroke:rgba(2,6,23,.14)}
 html{scroll-padding-top:calc(var(--gh-offset) + 20px)}body{padding-top:var(--gh-offset)}
- 
- /* ===== WRAPPER + BAR ===== */
+/* ===== SHELL + BAR ===== */
 .gh{position:fixed;top:0;left:0;right:0;z-index:2147483000;font-family:system-ui,-apple-system,sans-serif}.gh *{box-sizing:border-box}
-.gh-bar{height:var(--gh-height);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:var(--gh-bg);border-bottom:1px solid var(--gh-border);transition:transform .3s ease;will-change:transform;z-index:2147483001;position:relative}
+.gh-bar{height:var(--gh-height);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:var(--gh-glass);border-bottom:1px solid rgba(255,255,255,.12);transition:transform .3s ease;will-change:transform;z-index:2147483001;position:relative;box-shadow:0 18px 45px rgba(0,0,0,.38)}
+html[data-theme="light"] .gh-bar{box-shadow:0 18px 45px rgba(2,6,23,.10)!important}
+.gh-bar::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,rgba(45,212,191,0),rgba(45,212,191,.85),rgba(96,165,250,.85),rgba(96,165,250,0));opacity:.9;pointer-events:none}
 .gh-bar.is-hidden{transform:translateY(-100%)}
 .gh-container{max-width:var(--gh-maxw);margin:0 auto;padding:0 clamp(15px,4vw,24px);height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
 /* ===== BRAND ===== */
 .gh-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--gh-text);padding:4px;border-radius:12px;transition:background .2s;min-width:0}
 .gh-brand:hover{background:rgba(255,255,255,.05)}
+html[data-theme="light"] .gh-brand:hover{background:rgba(2,6,23,.05)}
 .gh-brand img{width:42px;height:42px;border-radius:10px;object-fit:cover;background:#1e293b}
+html[data-theme="light"] .gh-brand img{background:#e2e8f0}
 .gh-brand-txt{line-height:1.2;display:flex;flex-direction:column;min-width:0}
-.gh-brand-txt .n{font-weight:700;font-size:16px;color:#fff;letter-spacing:-.01em;white-space:nowrap}
+.gh-brand-txt .n{font-weight:800;font-size:16px;letter-spacing:-.01em;white-space:nowrap;color:#fff}
+html[data-theme="light"] .gh-brand-txt .n{color:#0b1220}
 .gh-brand-txt .s{font-size:12px;color:var(--gh-muted);white-space:nowrap}
 /* ===== DESKTOP NAV ===== */
 .gh-nav{display:none}@media(min-width:1024px){.gh-nav{display:block}}
-.gh-nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;align-items:center}
-.gh-nav a{color:var(--gh-text);text-decoration:none;font-size:16px;font-weight:900;letter-spacing:.01em;transition:color .2s;padding:10px 0;position:relative;white-space:nowrap}
-.gh-nav a:hover{color:#fff}
+.gh-nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;align-items:center}
+#gh-header .gh-nav a{color:var(--gh-text);text-decoration:none;font-size:17px;font-weight:900;letter-spacing:.01em;padding:10px 12px;border-radius:999px;transition:background .18s ease,color .18s ease,transform .18s ease;white-space:nowrap}
+#gh-header .gh-nav a:hover{background:rgba(255,255,255,.06);transform:translateY(-1px);color:#fff}
+html[data-theme="light"] #gh-header .gh-nav a:hover{background:rgba(2,6,23,.05)!important;color:var(--gh-brand2)!important}
+/* ===== DROPDOWNS ===== */
 .gh-dd-wrap{position:relative}
-.gh-dd-menu{position:absolute;top:100%;left:50%;transform:translate(-50%,15px);background:var(--gh-panel);border:1px solid var(--gh-border);padding:10px;border-radius:12px;min-width:220px;opacity:0;visibility:hidden;transition:.2s ease;box-shadow:0 10px 30px -10px rgba(0,0,0,.5)}
+.gh-dd-menu{position:absolute;top:100%;left:50%;transform:translate(-50%,15px);opacity:0;visibility:hidden;transition:.2s ease;z-index:20}
 .gh-dd-wrap:hover .gh-dd-menu,.gh-dd-wrap:focus-within .gh-dd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
+/* ===== MEGA ===== */
+@media(min-width:1024px){
+.gh-dd-menu.mega{width:min(980px,calc(100vw - 24px));padding:18px;border-radius:22px;border:1px solid rgba(255,255,255,.14);background:var(--gh-glass-2);box-shadow:0 26px 80px rgba(0,0,0,.72);display:grid;gap:16px;grid-template-columns:repeat(4,minmax(0,1fr));overflow:hidden;position:absolute}
+html[data-theme="light"] .gh-dd-menu.mega{box-shadow:0 26px 80px rgba(2,6,23,.18)!important}
+.gh-dd-menu.mega::before{content:"";position:absolute;left:-20%;right:-20%;top:-50px;height:120px;background:radial-gradient(closest-side at 50% 70%,rgba(45,212,191,.28),transparent 65%),radial-gradient(closest-side at 72% 70%,rgba(96,165,250,.20),transparent 65%);filter:blur(10px);opacity:.95;pointer-events:none}
+.gh-col{border-radius:18px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.040),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.10);min-width:0;position:relative}
+html[data-theme="light"] .gh-col{border-color:rgba(2,6,23,.10)!important;background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))!important}
+.gh-subbar{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 -1px 0 rgba(255,255,255,.06);font-weight:900;font-size:14.5px;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+html[data-theme="light"] .gh-subbar{color:#0b1220!important;border-color:rgba(2,6,23,.12)!important;background:rgba(2,6,23,.03)!important}
+.gh-subbar svg{width:18px;height:18px;flex:0 0 auto;color:var(--gh-brand);filter:drop-shadow(0 10px 18px rgba(0,0,0,.35))}
+.gh-col h4{margin:0 0 10px;font-size:12px;letter-spacing:.14em;color:var(--gh-muted);text-transform:uppercase;opacity:.75}
+.gh-item{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:12px;border-radius:12px;text-decoration:none;color:var(--gh-text);border:1px solid transparent;background:transparent;transition:.18s ease;min-width:0}
+.gh-item:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.10);transform:translateY(-2px)}
+html[data-theme="light"] .gh-item:hover{background:rgba(2,6,23,.04)!important;border-color:rgba(2,6,23,.10)!important}
+.gh-item img{width:min(220px,100%);height:auto;aspect-ratio:20/7;object-fit:contain;display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));opacity:.95}
+.gh-item div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.gh-item b{font-size:13px;font-weight:750;color:#fff;line-height:1.15}
+html[data-theme="light"] .gh-item b{color:#0b1220}
+.gh-item span{margin:0;font-size:11px;line-height:1.35;color:var(--gh-muted);white-space:normal}
+.gh-item.is-featured{isolation:isolate;border-color:rgba(45,212,191,.34);background:radial-gradient(110% 90% at 10% 0%,rgba(45,212,191,.16),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02))}
+.gh-item.is-featured::before{content:"";position:absolute;inset:-2px;border-radius:14px;pointer-events:none;opacity:.75;background:radial-gradient(80% 70% at 10% 0%,rgba(45,212,191,.45),transparent 60%),radial-gradient(70% 70% at 95% 15%,rgba(96,165,250,.32),transparent 58%);filter:blur(10px);z-index:-1}
+.gh-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.02em;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));color:#041016;width:max-content;box-shadow:0 12px 26px rgba(0,0,0,.35)}
+@media(min-width:1024px) and (max-width:1199px){.gh-dd-menu.mega{grid-template-columns:repeat(2,minmax(0,1fr));width:min(860px,calc(100vw - 24px))}}
+@media(min-width:1200px) and (max-width:1399px){.gh-dd-menu.mega{grid-template-columns:repeat(3,minmax(0,1fr));width:min(940px,calc(100vw - 24px))}}
+@media(min-width:1400px){.gh-dd-menu.mega{grid-template-columns:repeat(4,minmax(0,1fr));width:min(1000px,calc(100vw - 24px))}}
+@media(min-width:1200px){.gh-item img{width:clamp(110px,9vw,150px)}}
+}
 /* ===== ACTIONS ===== */
 .gh-actions{display:flex;align-items:center;gap:10px}
 .gh-btn-wa{display:none;align-items:center;gap:10px;padding:7px 14px;border-radius:999px;text-decoration:none;font-weight:900;letter-spacing:.01em;color:#0b1220;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));box-shadow:0 14px 30px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12)}
@@ -66,7 +76,13 @@ html{scroll-padding-top:calc(var(--gh-offset) + 20px)}body{padding-top:var(--gh-
 .gh-wa-num{font-size:13.5px;line-height:1}
 .gh-burger{background:rgba(15,23,42,.9);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:18px;padding:8px 10px;border-radius:12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 @media(min-width:1024px){.gh-burger{display:none}}
-/* ========================================================= MOBILE DRAWER V5 ========================================================= */
+html[data-theme="light"] .gh-burger{color:#0f172a;background:rgba(255,255,255,.9);border-color:rgba(0,0,0,.15)}
+/* ===== THEME BTN ===== */
+.gh-theme{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;cursor:pointer;background:rgba(15,23,42,.90);border:1px solid rgba(255,255,255,.22);color:var(--gh-text);transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.gh-theme:hover{transform:translateY(-1px);border-color:rgba(45,212,191,.28)}
+.gh-theme:active{transform:translateY(0) scale(.98)}
+html[data-theme="light"] .gh-theme{background:rgba(255,255,255,.85);border:1px solid rgba(2,6,23,.14);color:#0b1220}
+/* ===== MOBILE DRAWER ===== */
 .gh-dim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.18s ease;z-index:2147483646}
 .gh-drawer{position:fixed;top:0;right:0;bottom:0;width:min(92vw,420px);background:rgba(8,11,18,.98);border-left:1px solid rgba(255,255,255,.08);transform:translateX(105%);transition:.25s cubic-bezier(.4,0,.2,1);z-index:2147483647;display:flex;flex-direction:column;height:100dvh}
 @supports not (height:100dvh){.gh-drawer{height:100vh}}
@@ -80,17 +96,15 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-dtitle-name{color:#fff;font-weight:900;letter-spacing:.02em;line-height:1;font-size:14px}
 .gh-dtitle-sub{color:var(--gh-muted);font-size:11px;font-weight:650;margin-top:2px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.9}
 .gh-close{border:1px solid rgba(255,255,255,.18);background:rgba(15,23,42,.9);color:var(--gh-text);border-radius:12px;padding:9px 10px;font-size:16px;line-height:1;cursor:pointer}
-.gh-drawer-body{flex:1 1 auto;overflow:hidden;overscroll-behavior:contain;padding:var(--gh-d-pad);padding-bottom:var(--gh-d-pad);display:flex;flex-direction:column;gap:var(--gh-d-gap)}
-/* CTA head */
+.gh-drawer-body{flex:1 1 auto;overflow:hidden;overscroll-behavior:contain;padding:var(--gh-d-pad);display:flex;flex-direction:column;gap:var(--gh-d-gap)}
+@media (max-height:720px){.gh-dtitle-sub{display:none}.gh-msys-sub{display:none}.gh-mmeta span{display:none}}
+/* ===== CTA HEAD ===== */
 .gh-head-cta{display:flex;align-items:center;gap:8px;flex:0 0 auto}
 .gh-headbtn{display:inline-flex;align-items:center;gap:8px;padding:9px 10px;border-radius:14px;text-decoration:none;color:var(--gh-text);border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));font-weight:900;letter-spacing:.01em}
 .gh-headbtn:hover{border-color:rgba(45,212,191,.26)}
 .gh-headico{font-size:14px;line-height:1}
 .gh-headtxt{font-size:12px;line-height:1;white-space:nowrap}
-/* ========================================================= “FIT SIN SCROLL” ========================================================= */
-:root{--gh-d-gap:clamp(8px,1.2vh,12px);--gh-d-pad:clamp(10px,1.5vh,14px);--gh-card-minh:clamp(92px,12vh,118px);--gh-img-h:clamp(34px,4.2vh,44px);--gh-tab-py:clamp(8px,1.1vh,10px);--gh-tab-px:clamp(10px,1.6vh,12px);--gh-h2:clamp(12px,1.8vh,14px);--gh-sub:clamp(10px,1.5vh,12px)}
-@media (max-height:720px){.gh-dtitle-sub{display:none}.gh-msys-sub{display:none}.gh-mmeta span{display:none}}
-/* ========================================================= Mobile Sistemas ========================================================= */
+/* ===== MOBILE SISTEMAS ===== */
 .gh-acc{border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.03);border-radius:16px;overflow:hidden}
 .gh-msys,.gh-msvc{padding:10px 10px 14px;margin-top:0;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);border-radius:18px}
 .gh-msys-head{padding:0 2px 6px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
@@ -109,7 +123,7 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-mmeta strong{color:#fff;font-weight:800;font-size:clamp(12px,1.8vh,13px);line-height:1.15}
 .gh-mmeta span{color:var(--gh-muted);font-size:clamp(10px,1.5vh,11px);line-height:1.25}
 .gh-mcard-ghost{opacity:0;pointer-events:none;background:transparent;border-color:transparent;box-shadow:none}
-/* ========================================================= Mobile Servicios ========================================================= */
+/* ===== MOBILE SERVICIOS ===== */
 .gh-msvc{margin-top:var(--gh-d-gap)}
 .gh-svcwrap{position:relative;margin-top:0;border-radius:18px}
 .gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:12px;padding:2px 2px 8px;scrollbar-width:none}.gh-svctrack::-webkit-scrollbar{display:none}
@@ -120,170 +134,123 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-svcdots{display:flex;justify-content:center;gap:8px;margin-top:8px;padding:7px 10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);position:relative;border-radius:999px}
 .gh-svcdots .dot{width:8px;height:8px;border-radius:999px;border:0;background:rgba(255,255,255,.26);cursor:pointer}
 .gh-svcdots .dot.is-active{width:18px;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2))}
-/* ========================================================= PÓLIZAS DESTACADO ========================================================= */
+/* ===== DESTACADOS ===== */
 .gh-star{border-color:rgba(45,212,191,.40)!important;background:radial-gradient(120% 90% at 10% 0%,rgba(45,212,191,.18),transparent 55%),radial-gradient(90% 80% at 90% 10%,rgba(96,165,250,.14),transparent 58%),linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02))!important}
 .gh-star::before{content:"";position:absolute;inset:-2px;border-radius:18px;pointer-events:none;opacity:.75;background:radial-gradient(90% 70% at 10% 0%,rgba(45,212,191,.45),transparent 60%),radial-gradient(70% 70% at 95% 15%,rgba(96,165,250,.35),transparent 58%);filter:blur(10px);z-index:-1}
 .gh-star::after{content:"RECOMENDADO";position:absolute;top:10px;left:10px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#041016;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));box-shadow:0 12px 26px rgba(0,0,0,.35)}
-/* ========================================================= DESKTOP MEGA ========================================================= */
-#gh-header{--gh-glass:rgba(7,10,16,.86);--gh-glass-2:rgba(10,14,23,.94);--gh-stroke:rgba(255,255,255,.12)}
-#gh-header .gh-bar{background:var(--gh-glass)!important;border-bottom:1px solid rgba(255,255,255,.12)!important;box-shadow:0 18px 45px rgba(0,0,0,.38)!important}
-#gh-header .gh-bar::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,rgba(45,212,191,0),rgba(45,212,191,.85),rgba(96,165,250,.85),rgba(96,165,250,0));opacity:.9;pointer-events:none}
-@media(min-width:1024px){
-#gh-header .gh-nav a{font-size:17px!important;padding:10px 12px!important;border-radius:999px!important;transition:background .18s ease,color .18s ease,transform .18s ease!important}
-#gh-header .gh-nav a::after{display:none!important}
-#gh-header .gh-nav a:hover{background:rgba(255,255,255,.06)!important;transform:translateY(-1px)!important;color:#fff!important}
-.gh-dd-menu.mega{width:min(980px,calc(100vw - 24px));padding:18px;border-radius:22px;border:1px solid rgba(255,255,255,.14);background:var(--gh-glass-2)!important;box-shadow:0 26px 80px rgba(0,0,0,.72)!important;left:50%;transform:translate(-50%,15px);display:grid;gap:16px;grid-template-columns:repeat(4,minmax(0,1fr));overflow:hidden;position:absolute}
-.gh-dd-wrap:hover .gh-dd-menu.mega,.gh-dd-wrap:focus-within .gh-dd-menu.mega{transform:translate(-50%,0)}
-.gh-dd-menu.mega::before{content:"";position:absolute;left:-20%;right:-20%;top:-50px;height:120px;background:radial-gradient(closest-side at 50% 70%,rgba(45,212,191,.28),transparent 65%),radial-gradient(closest-side at 72% 70%,rgba(96,165,250,.20),transparent 65%);filter:blur(10px);opacity:.95;pointer-events:none}
-.gh-col{border-radius:18px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.040),rgba(255,255,255,.015))!important;border:1px solid rgba(255,255,255,.10)!important;min-width:0;position:relative}
-.gh-subbar{display:flex;align-items:center;gap:10px;margin:0 0 12px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.16)!important;box-shadow:inset 0 -1px 0 rgba(255,255,255,.06);font-weight:900;font-size:14.5px!important;letter-spacing:.06em;text-transform:uppercase;color:#fff}
-.gh-subbar svg{width:18px;height:18px;flex:0 0 auto;color:var(--gh-brand)!important;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35))!important}
-.gh-col h4{margin:0 0 10px;font-size:12px;letter-spacing:.14em;color:var(--gh-muted);text-transform:uppercase;opacity:.75}
-.gh-item{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:12px;border-radius:12px;text-decoration:none;color:var(--gh-text);border:1px solid transparent;background:transparent;transition:.18s ease;min-width:0}
-.gh-item:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.10);transform:translateY(-2px)}
-.gh-item img{width:min(220px,100%);height:auto;aspect-ratio:20/7;object-fit:contain;display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35));opacity:.95}
-.gh-item div{display:flex;flex-direction:column;gap:4px;min-width:0}
-.gh-item b{font-size:13px;font-weight:650;color:#fff;line-height:1.15}
-.gh-item span{margin:0;font-size:11px;line-height:1.35;color:var(--gh-muted);white-space:normal}
-.gh-item.is-featured{isolation:isolate;border-color:rgba(45,212,191,.34);background:radial-gradient(110% 90% at 10% 0%,rgba(45,212,191,.16),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02))}
-.gh-item.is-featured::before{content:"";position:absolute;inset:-2px;border-radius:14px;pointer-events:none;opacity:.75;background:radial-gradient(80% 70% at 10% 0%,rgba(45,212,191,.45),transparent 60%),radial-gradient(70% 70% at 95% 15%,rgba(96,165,250,.32),transparent 58%);filter:blur(10px);z-index:-1}
-.gh-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.02em;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));color:#041016;width:max-content;box-shadow:0 12px 26px rgba(0,0,0,.35)}
-@media(min-width:1024px) and (max-width:1199px){.gh-dd-menu.mega{grid-template-columns:repeat(2,minmax(0,1fr));width:min(860px,calc(100vw - 24px))}}
-@media(min-width:1200px) and (max-width:1399px){.gh-dd-menu.mega{grid-template-columns:repeat(3,minmax(0,1fr));width:min(940px,calc(100vw - 24px))}}
-@media(min-width:1400px){.gh-dd-menu.mega{grid-template-columns:repeat(4,minmax(0,1fr));width:min(1000px,calc(100vw - 24px))}}
-@media(min-width:1200px){.gh-item img{width:clamp(110px,9vw,150px)}}
-}
+/* ===== REDUCE MOTION ===== */
 @media(prefers-reduced-motion:reduce){.gh-brand,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar,.gh-mcard,.gh-nav a{transition:none!important}}
-/* ===== THEME TOGGLE ===== */
-.gh-theme{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;cursor:pointer;background:rgba(15,23,42,.90);border:1px solid rgba(255,255,255,.22);color:var(--gh-text);transition:transform .15s ease,background .15s ease,border-color .15s ease}
-.gh-theme:hover{transform:translateY(-1px);border-color:rgba(45,212,191,.28)}
-.gh-theme:active{transform:translateY(0) scale(.98)}
-.gh-theme svg{display:block}
-html[data-theme="light"] .gh-theme{background:rgba(255,255,255,.85);border:1px solid rgba(2,6,23,.14);color:#0b1220}
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
 <div class="gh-bar" id="gh-bar"><div class="gh-container">
-<!-- Brand -->
-<a class="gh-brand js-link" href="#" data-href="index.html" aria-label="Inicio Expiriti">
-  <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/expiritilogo.webp" alt="Logo" width="42" height="42">
-  <div class="gh-brand-txt"><span class="n">ExpIRI TI</span><span class="s">Expertos CONTPAQi</span></div>
-</a>
-
-<!-- Desktop nav -->
-<nav class="gh-nav" aria-label="Principal"><ul>
-  <li><a class="js-link" href="#" data-href="index.html">Inicio</a></li>
-
-  <!-- ===================== SISTEMAS (MEGA) ===================== -->
-  <li class="gh-dd-wrap">
-    <a class="js-link" href="#" data-href="index.html#productos-con" aria-haspopup="true">Sistemas ▾</a>
-    <div class="gh-dd-menu mega" role="menu" aria-label="Sistemas">
-      <div class="gh-col">
-        <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Escritorio</div>
-        <h4>Contables</h4>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/contabilidad.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contabilidad.webp" alt=""><div><b>Contabilidad</b><span>Pólizas y XML</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/nominas.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/nominas.webp" alt=""><div><b>Nóminas</b><span>Cálculo exacto</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/bancos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/bancos.webp" alt=""><div><b>Bancos</b><span>Tesorería</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/xmlenlinea.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/xml.webp" alt=""><div><b>XML en Línea+</b><span>CFDI del SAT</span></div></a>
-      </div>
-
-      <div class="gh-col">
-        <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Escritorio</div>
-        <h4>Comerciales</h4>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/comercialpremium.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialpremium.webp" alt=""><div><b>Premium</b><span>Gestión total</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/comercialpro.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialpro.webp" alt=""><div><b>Pro</b><span>Multisucursal</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/comercialstart.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialstart.webp" alt=""><div><b>Start</b><span>Inventario básico</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/facturaelectronica.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/factura.webp" alt=""><div><b>Factura</b><span>CFDI 4.0</span></div></a>
-      </div>
-
-      <div class="gh-col">
-        <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>Nube</div>
-        <h4>Nube</h4>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/contabiliza.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contabiliza.webp" alt=""><div><b>Contabiliza</b><span>Contabilidad en la nube</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/personia.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/personia.webp" alt=""><div><b>Personia</b><span>Gestión de personal</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/vende.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/vende.webp" alt=""><div><b>Vende</b><span>Punto de venta web</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/colabora.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/colabora.webp" alt=""><div><b>Colabora</b><span>Flow · Gratis</span></div></a>
-      </div>
-
-      <div class="gh-col">
-        <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>Nube</div>
-        <h4>Productividad</h4>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/evalua.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/evalua.webp" alt=""><div><b>Evalúa</b><span>NOM-035 y clima laboral</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/analiza.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/analiza.webp" alt=""><div><b>Analiza</b><span>Dashboards y BI</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/despachos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/despachos.webp" alt=""><div><b>Despachos</b><span>Operación integral</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SISTEMAS/colabora.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/colabora.webp" alt=""><div><b>Colabora</b><span>Flow · Gratis</span></div></a>
-      </div>
-    </div>
-  </li>
-
-  <!-- ===================== SERVICIOS (MEGA) ===================== -->
-  <li class="gh-dd-wrap">
-    <a class="js-link" href="#" data-href="index.html#servicios" aria-haspopup="true">Servicios ▾</a>
-    <div class="gh-dd-menu mega" role="menu" aria-label="Servicios">
-      <div class="gh-col">
-        <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z"/><path d="M9 12l2 2 4-4"/></svg>Pólizas</div>
-        <h4>Todo en uno</h4>
-        <a class="gh-item js-link is-featured" href="#" data-href="SERVICIOS/polizas.html">
-          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/021-maintenance.webp" alt="">
-          <div><span class="gh-badge">Servicio 360°</span><b>Póliza anual</b><span>Acompañamiento integral para tu operación</span></div>
-        </a>
-      </div>
-
-      <div class="gh-col">
-        <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6"/><path d="M8 8l4 4 4-4"/><path d="M5 22h14"/></svg>ATENCIÓN A SU CASO</div>
-        <h4>PROCESOS ESTRUCTURADOS</h4>
-        <a class="gh-item js-link" href="#" data-href="SERVICIOS/implementaciones.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/025-meeting.webp" alt=""><div><b>Implementaciones</b><span>Instalación y puesta en marcha</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SERVICIOS/soporte.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/021-maintenance.webp" alt=""><div><b>Soporte técnico</b><span>Atención remota + WhatsApp</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SERVICIOS/migraciones.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/018-transfer.webp" alt=""><div><b>Migraciones</b><span>Datos limpios y validados</span></div></a>
-      </div>
-
-      <div class="gh-col">
-        <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3-3 3 2 5-6"/></svg>CRECIMIENTO</div>
-        <h4>PARA EL DÍA A DÍA</h4>
-        <a class="gh-item js-link" href="#" data-href="SERVICIOS/cursos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/024-education.webp" alt=""><div><b>Cursos</b><span>Capacitación para tu equipo</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SERVICIOS/desarrollos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/020-code.webp" alt=""><div><b>Desarrollos</b><span>Integraciones y automatización</span></div></a>
-      </div>
-
-      <div class="gh-col">
-        <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg>OPERACIÓN</div>
-        <h4>SOLUCIONES DE TRABAJO</h4>
-        <a class="gh-item js-link" href="#" data-href="SERVICIOS/servidoresvirtuales.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/023-stairs.webp" alt=""><div><b>Servidores virtuales</b><span>Acceso remoto seguro</span></div></a>
-        <a class="gh-item js-link" href="#" data-href="SERVICIOS/desarrollos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/020-code.webp" alt=""><div><b>Automatización</b><span>Flujos y reportes</span></div></a>
-      </div>
-    </div>
-  </li>
-
-  <li><a class="js-link" href="#" data-href="index.html#promociones">Promociones</a></li>
-  <li><a class="js-link" href="#" data-href="index.html#contacto">Contacto</a></li>
-</ul></nav>
-
-<!-- Actions -->
-<div class="gh-actions">
-  <a class="gh-btn-wa" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">
-    <img class="gh-wa-ico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/whatsapp.svg" alt="WhatsApp"><span class="gh-wa-num">55 6843 7918</span>
+  <!-- Brand -->
+  <a class="gh-brand js-link" href="#" data-href="index.html" aria-label="Inicio Expiriti">
+    <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/expiritilogo.webp" alt="Logo" width="42" height="42">
+    <div class="gh-brand-txt"><span class="n">ExpIRI TI</span><span class="s">Expertos CONTPAQi</span></div>
   </a>
-  <!-- Toggle modo (claro/oscuro) -->
-  <button class="gh-theme" id="gh-theme" type="button" aria-label="Cambiar modo claro/oscuro" aria-pressed="false" title="Modo claro">
-    <span class="gh-theme-ico" aria-hidden="true">
+
+  <!-- Desktop nav -->
+  <nav class="gh-nav" aria-label="Principal"><ul>
+    <li><a class="js-link" href="#" data-href="index.html">Inicio</a></li>
+
+    <!-- ===================== SISTEMAS (MEGA) ===================== -->
+    <li class="gh-dd-wrap">
+      <a class="js-link" href="#" data-href="index.html#productos-con" aria-haspopup="true">Sistemas ▾</a>
+      <div class="gh-dd-menu mega" role="menu" aria-label="Sistemas">
+        <div class="gh-col">
+          <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Escritorio</div>
+          <h4>Contables</h4>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/contabilidad.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contabilidad.webp" alt=""><div><b>Contabilidad</b><span>Pólizas y XML</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/nominas.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/nominas.webp" alt=""><div><b>Nóminas</b><span>Cálculo exacto</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/bancos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/bancos.webp" alt=""><div><b>Bancos</b><span>Tesorería</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/xmlenlinea.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/xml.webp" alt=""><div><b>XML en Línea+</b><span>CFDI del SAT</span></div></a>
+        </div>
+
+        <div class="gh-col">
+          <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 19h6"/></svg>Escritorio</div>
+          <h4>Comerciales</h4>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/comercialpremium.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialpremium.webp" alt=""><div><b>Premium</b><span>Gestión total</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/comercialpro.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialpro.webp" alt=""><div><b>Pro</b><span>Multisucursal</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/comercialstart.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialstart.webp" alt=""><div><b>Start</b><span>Inventario básico</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/facturaelectronica.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/factura.webp" alt=""><div><b>Factura</b><span>CFDI 4.0</span></div></a>
+        </div>
+
+        <div class="gh-col">
+          <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>Nube</div>
+          <h4>Nube</h4>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/contabiliza.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contabiliza.webp" alt=""><div><b>Contabiliza</b><span>Contabilidad en la nube</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/personia.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/personia.webp" alt=""><div><b>Personia</b><span>Gestión de personal</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/vende.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/vende.webp" alt=""><div><b>Vende</b><span>Punto de venta web</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/colabora.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/colabora.webp" alt=""><div><b>Colabora</b><span>Flow · Gratis</span></div></a>
+        </div>
+
+        <div class="gh-col">
+          <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 14a5 5 0 0 1 9.7-1.5A4 4 0 1 1 17 19H8a4 4 0 0 1-1-7.85"/></svg>Nube</div>
+          <h4>Productividad</h4>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/evalua.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/evalua.webp" alt=""><div><b>Evalúa</b><span>NOM-035 y clima laboral</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/analiza.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/analiza.webp" alt=""><div><b>Analiza</b><span>Dashboards y BI</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/despachos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/despachos.webp" alt=""><div><b>Despachos</b><span>Operación integral</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SISTEMAS/colabora.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/colabora.webp" alt=""><div><b>Colabora</b><span>Flow · Gratis</span></div></a>
+        </div>
+      </div>
+    </li>
+
+    <!-- ===================== SERVICIOS (MEGA) ===================== -->
+    <li class="gh-dd-wrap">
+      <a class="js-link" href="#" data-href="index.html#servicios" aria-haspopup="true">Servicios ▾</a>
+      <div class="gh-dd-menu mega" role="menu" aria-label="Servicios">
+        <div class="gh-col">
+          <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z"/><path d="M9 12l2 2 4-4"/></svg>Pólizas</div>
+          <h4>Todo en uno</h4>
+          <a class="gh-item js-link is-featured" href="#" data-href="SERVICIOS/polizas.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/021-maintenance.webp" alt=""><div><span class="gh-badge">Servicio 360°</span><b>Póliza anual</b><span>Acompañamiento integral para tu operación</span></div></a>
+        </div>
+
+        <div class="gh-col">
+          <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6"/><path d="M8 8l4 4 4-4"/><path d="M5 22h14"/></svg>ATENCIÓN A SU CASO</div>
+          <h4>PROCESOS ESTRUCTURADOS</h4>
+          <a class="gh-item js-link" href="#" data-href="SERVICIOS/implementaciones.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/025-meeting.webp" alt=""><div><b>Implementaciones</b><span>Instalación y puesta en marcha</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SERVICIOS/soporte.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/021-maintenance.webp" alt=""><div><b>Soporte técnico</b><span>Atención remota + WhatsApp</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SERVICIOS/migraciones.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/018-transfer.webp" alt=""><div><b>Migraciones</b><span>Datos limpios y validados</span></div></a>
+        </div>
+
+        <div class="gh-col">
+          <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3-3 3 2 5-6"/></svg>CRECIMIENTO</div>
+          <h4>PARA EL DÍA A DÍA</h4>
+          <a class="gh-item js-link" href="#" data-href="SERVICIOS/cursos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/024-education.webp" alt=""><div><b>Cursos</b><span>Capacitación para tu equipo</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SERVICIOS/desarrollos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/020-code.webp" alt=""><div><b>Desarrollos</b><span>Integraciones y automatización</span></div></a>
+        </div>
+
+        <div class="gh-col">
+          <div class="gh-subbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/></svg>OPERACIÓN</div>
+          <h4>SOLUCIONES DE TRABAJO</h4>
+          <a class="gh-item js-link" href="#" data-href="SERVICIOS/servidoresvirtuales.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/023-stairs.webp" alt=""><div><b>Servidores virtuales</b><span>Acceso remoto seguro</span></div></a>
+          <a class="gh-item js-link" href="#" data-href="SERVICIOS/desarrollos.html"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/020-code.webp" alt=""><div><b>Automatización</b><span>Flujos y reportes</span></div></a>
+        </div>
+      </div>
+    </li>
+
+    <li><a class="js-link" href="#" data-href="index.html#promociones">Promociones</a></li>
+    <li><a class="js-link" href="#" data-href="index.html#contacto">Contacto</a></li>
+  </ul></nav>
+
+  <!-- Actions -->
+  <div class="gh-actions">
+    <a class="gh-btn-wa" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">
+      <img class="gh-wa-ico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/whatsapp.svg" alt="WhatsApp"><span class="gh-wa-num">55 6843 7918</span>
+    </a>
+    <button class="gh-theme" id="gh-theme" type="button" aria-label="Cambiar modo claro/oscuro" aria-pressed="false" title="Modo claro">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 3v2"></path><path d="M12 19v2"></path>
-        <path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path>
-        <path d="M3 12h2"></path><path d="M19 12h2"></path>
-        <path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path>
-        <path d="M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10z"></path>
+        <path d="M12 3v2"></path><path d="M12 19v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M3 12h2"></path><path d="M19 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path><path d="M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10z"></path>
       </svg>
-    </span>
-  </button>
-
-  <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
-</div>
-
+    </button>
+    <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
+  </div>
 </div></div>
 
 <!-- ===================== OVERLAY + DRAWER (MOBILE V5) ===================== -->
 <div class="gh-dim" id="gh-dim" hidden></div>
 
-<!-- ===================== DRAWER (FIXED: ahora SÍ existe) ===================== -->
 <aside class="gh-drawer" id="gh-drawer" aria-hidden="true" hidden>
   <div class="gh-drawer-head">
     <div class="gh-dtitle-row">
@@ -352,7 +319,6 @@ html[data-theme="light"] .gh-theme{background:rgba(255,255,255,.85);border:1px s
       <div class="gh-msys-head"><div class="gh-msys-title">Servicios</div><div class="gh-msys-sub" aria-hidden="true"></div></div>
       <div class="gh-svcwrap" aria-roledescription="carousel">
         <button class="gh-svcarrow prev" type="button" aria-label="Servicios anteriores">‹</button>
-
         <div class="gh-svctrack" id="gh-svctrack" role="region" aria-label="Carrusel de servicios" tabindex="0">
           <div class="gh-svcpage" aria-label="Servicios página 1"><div class="gh-mgrid">
             <a class="gh-mcard gh-star js-link" href="#" data-href="SERVICIOS/polizas.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/021-maintenance.webp" alt=""><div class="gh-mmeta"><strong>Pólizas anuales</strong><span>Soporte continuo y preventivo</span></div></a>
@@ -360,7 +326,6 @@ html[data-theme="light"] .gh-theme{background:rgba(255,255,255,.85);border:1px s
             <a class="gh-mcard js-link" href="#" data-href="SERVICIOS/migraciones.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/018-transfer.webp" alt=""><div class="gh-mmeta"><strong>Migraciones</strong><span>Datos limpios y validados</span></div></a>
             <a class="gh-mcard js-link" href="#" data-href="SERVICIOS/desarrollos.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/020-code.webp" alt=""><div class="gh-mmeta"><strong>Desarrollos</strong><span>Integraciones y automatización</span></div></a>
           </div></div>
-
           <div class="gh-svcpage" aria-label="Servicios página 2"><div class="gh-mgrid">
             <a class="gh-mcard js-link" href="#" data-href="SERVICIOS/servidoresvirtuales.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/023-stairs.webp" alt=""><div class="gh-mmeta"><strong>Servidores virtuales</strong><span>Acceso remoto seguro</span></div></a>
             <a class="gh-mcard js-link" href="#" data-href="SERVICIOS/cursos.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/024-education.webp" alt=""><div class="gh-mmeta"><strong>Cursos</strong><span>Capacitación para tu equipo</span></div></a>
@@ -368,10 +333,8 @@ html[data-theme="light"] .gh-theme{background:rgba(255,255,255,.85);border:1px s
             <div class="gh-mcard gh-mcard-ghost" aria-hidden="true"></div>
           </div></div>
         </div>
-
         <button class="gh-svcarrow next" type="button" aria-label="Servicios siguientes">›</button>
       </div>
-
       <div class="gh-svcdots" aria-label="Paginación de servicios">
         <button class="dot is-active" type="button" aria-label="Ir a página 1"></button>
         <button class="dot" type="button" aria-label="Ir a página 2"></button>
@@ -383,226 +346,120 @@ html[data-theme="light"] .gh-theme{background:rgba(255,255,255,.85);border:1px s
 
 <script>
 /* =========================================================
- Expiriti Header (V7 ROOT) + Mobile UI/UX V5 — FIXED + HARDENED
- - buildPath (GH Pages + local) para links e imágenes
+ Expiriti Header JS (V7 + Mobile V5) — BLINDADO
+ - ROOT robusto (evita 404 en GH Pages desde subpáginas /SISTEMAS/... )
+ - buildPath seguro (GH Pages + dominio + local/file)
+ - applySafePaths: setea href/src desde data-href/data-src
  - Drawer + tabs + carrusel servicios
  - Hide on scroll (solo barra)
- - Storage safe (localStorage puede fallar en algunos contextos)
+ - Theme toggle con storage safe
 ========================================================= */
-(function(){
-"use strict";
-if(window.__EXPIRITI_GH_V7MOBILE__ && document.getElementById("gh-header")?.__ghInited) return;
-
-const Q=(s,c=document)=>c.querySelector(s);
-const QA=(s,c=document)=>Array.from(c.querySelectorAll(s));
-const BLANK_SVG="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
-
-const storage={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
-
+(function(){'use strict';
+if(window.__EXPIRITI_GH_V7MOBILE__&&document.getElementById('gh-header')?.__ghInited)return;
+const Q=(s,c=document)=>c.querySelector(s),QA=(s,c=document)=>Array.from(c.querySelectorAll(s));
+const BLANK="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
+const storage={get:k=>{try{return localStorage.getItem(k)}catch(_){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(_){}}};
+const ORIGIN=(location.origin&&location.origin!=='null')?location.origin:'';
 function getMasterRoot(){
   const m=document.querySelector('meta[name="expiriti-base"]');
-  if(m && m.content){
-    let r=m.content.trim();
-    if(!r.startsWith("/")) r="/"+r;
-    if(!r.endsWith("/")) r=r+"/";
-    return r;
-  }
-  const p=window.location.pathname.split("/").filter(Boolean);
-  return (window.location.hostname.includes("github.io") && p.length>0) ? ("/"+p[0]+"/") : "/";
+  if(m&&m.content){let r=m.content.trim();if(!r.startsWith('/'))r='/'+r;if(!r.endsWith('/'))r=r+'/';return r;}
+  const host=location.hostname||'',seg=(location.pathname||'/').split('/').filter(Boolean),first=(seg[0]||'').toLowerCase();
+  const RESERVED=new Set(['sistemas','servicios','migraciones','implementaciones','desarrollos','img','images','css','js','assets']);
+  if(host.includes('github.io')){if(seg.length>0&&!RESERVED.has(first))return '/'+seg[0]+'/';return '/';}
+  return '/';
 }
 const ROOT=getMasterRoot();
-
+const join=(a,b)=>(a.replace(/\/+$/,'')+'/'+b.replace(/^\/+/,'')).replace(/\/{2,}/g,'/');
 function buildPath(raw){
-  if(!raw) return "#";
-  if(/^(http|https|mailto|tel|whatsapp|sms):/i.test(raw)) return raw;
-  if(raw.startsWith("#")) return window.location.origin + ROOT + "index.html" + raw;
-  const clean=raw.replace(/^\//,"");
-  return window.location.origin + ROOT + clean;
+  if(!raw)return '#';
+  if(/^(https?:|mailto:|tel:|whatsapp:|sms:)/i.test(raw))return raw;
+  if(raw.startsWith('#')){const base=join(ROOT,'index.html')+raw;return ORIGIN?ORIGIN+base:base;}
+  const out=join(ROOT,raw.replace(/^\//,''));return ORIGIN?ORIGIN+out:out;
 }
-
 function applySafePaths(container=document){
-  QA(".js-link[data-href]",container).forEach(a=>{
-    const r=a.getAttribute("data-href");
-    if(r) a.href=buildPath(r);
-  });
-  QA(".js-img[data-src]",container).forEach(img=>{
-    const r=img.getAttribute("data-src");
-    if(!r) return;
+  QA('.js-link[data-href]',container).forEach(a=>{const r=a.getAttribute('data-href');if(r)a.href=buildPath(r)});
+  QA('.js-img[data-src]',container).forEach(img=>{
+    const r=img.getAttribute('data-src');if(!r)return;
     img.src=buildPath(r);
-    img.onerror=function(){
-      this.style.opacity="0.5";
-      this.src=BLANK_SVG;
-    };
+    img.onerror=function(){this.onerror=null;this.style.opacity='.55';this.src=BLANK;};
   });
 }
-
-function syncOffset(){
-  const bar=Q("#gh-bar"),h=bar?bar.offsetHeight:68;
-  document.documentElement.style.setProperty("--gh-offset",h+"px");
-}
-
+function syncOffset(){const bar=Q('#gh-bar'),h=bar?bar.offsetHeight:68;document.documentElement.style.setProperty('--gh-offset',h+'px')}
 function initScrollHide(){
-  const bar=Q("#gh-bar"); if(!bar) return;
-  let last=window.scrollY||0;
-  window.addEventListener("scroll",()=>{
-    if(document.documentElement.classList.contains("gh-open")) return;
-    const y=window.scrollY||0;
-    (y>60 && y>last) ? bar.classList.add("is-hidden") : bar.classList.remove("is-hidden");
-    last=y;
+  const bar=Q('#gh-bar');if(!bar)return;let last=window.scrollY||0;
+  window.addEventListener('scroll',()=>{if(document.documentElement.classList.contains('gh-open'))return;
+    const y=window.scrollY||0;(y>60&&y>last)?bar.classList.add('is-hidden'):bar.classList.remove('is-hidden');last=y;
   },{passive:true});
 }
-
 function initMobileSystems(){
-  const root=Q("#gh-msys");
-  if(!root || root.__inited) return;
-  root.__inited=true;
-
-  const cats=QA(".gh-cat",root);
-  const panels=QA(".gh-panel",root);
-  const KEY="expiriti_mobile_sys_cat";
-  const saved=storage.get(KEY);
-
+  const root=Q('#gh-msys');if(!root||root.__inited)return;root.__inited=true;
+  const cats=QA('.gh-cat',root),panels=QA('.gh-panel',root),KEY='expiriti_mobile_sys_cat',saved=storage.get(KEY);
   function setCat(cat){
-    cats.forEach(b=>{
-      const on=b.dataset.cat===cat;
-      b.classList.toggle("is-active",on);
-      b.setAttribute("aria-selected",on?"true":"false");
-    });
-    panels.forEach(p=>{
-      const on=p.dataset.panel===cat;
-      p.classList.toggle("is-open",on);
-      p.hidden=!on;
-    });
+    cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle('is-active',on);b.setAttribute('aria-selected',on?'true':'false')});
+    panels.forEach(p=>{const on=p.dataset.panel===cat;p.classList.toggle('is-open',on);p.hidden=!on});
     storage.set(KEY,cat);
   }
-
-  cats.forEach(b=>b.addEventListener("click",()=>setCat(b.dataset.cat)));
-  setCat(saved || "contables");
+  cats.forEach(b=>b.addEventListener('click',()=>setCat(b.dataset.cat)));
+  setCat(saved||'contables');
 }
-
 function initMobileServices(){
-  const root=Q("#gh-msvc"),track=Q("#gh-svctrack");
-  if(!root || !track || root.__inited) return;
-  root.__inited=true;
-
-  const pages=QA(".gh-svcpage",track);
-  const prev=Q(".gh-svcarrow.prev",root);
-  const next=Q(".gh-svcarrow.next",root);
-  const dots=QA(".gh-svcdots .dot",root);
-
+  const root=Q('#gh-msvc'),track=Q('#gh-svctrack');if(!root||!track||root.__inited)return;root.__inited=true;
+  const pages=QA('.gh-svcpage',track),prev=Q('.gh-svcarrow.prev',root),next=Q('.gh-svcarrow.next',root),dots=QA('.gh-svcdots .dot',root);
   const idxFromScroll=()=>{const w=track.clientWidth||1;return Math.round(track.scrollLeft/w)};
-  const goTo=i=>{
-    const w=track.clientWidth||1;
-    const n=Math.max(0,Math.min(i,pages.length-1));
-    track.scrollTo({left:n*w,behavior:"smooth"});
+  const goTo=i=>{const w=track.clientWidth||1,n=Math.max(0,Math.min(i,pages.length-1));track.scrollTo({left:n*w,behavior:'smooth'})};
+  const sync=()=>{const i=idxFromScroll();dots.forEach((d,k)=>d.classList.toggle('is-active',k===i));
+    if(prev){prev.disabled=i===0;prev.style.opacity=prev.disabled?'.35':'1'}
+    if(next){next.disabled=i===pages.length-1;next.style.opacity=next.disabled?'.35':'1'}
   };
-  const sync=()=>{
-    const i=idxFromScroll();
-    dots.forEach((d,k)=>d.classList.toggle("is-active",k===i));
-    if(prev){prev.disabled=i===0;prev.style.opacity=prev.disabled?".35":"1";}
-    if(next){next.disabled=i===pages.length-1;next.style.opacity=next.disabled?".35":"1";}
-  };
-
-  if(prev) prev.addEventListener("click",e=>{e.preventDefault();goTo(idxFromScroll()-1);});
-  if(next) next.addEventListener("click",e=>{e.preventDefault();goTo(idxFromScroll()+1);});
-  dots.forEach((d,i)=>d.addEventListener("click",e=>{e.preventDefault();goTo(i);}));
-
-  track.addEventListener("scroll",()=>requestAnimationFrame(sync),{passive:true});
-  window.addEventListener("resize",sync,{passive:true});
+  if(prev)prev.addEventListener('click',e=>{e.preventDefault();goTo(idxFromScroll()-1)});
+  if(next)next.addEventListener('click',e=>{e.preventDefault();goTo(idxFromScroll()+1)});
+  dots.forEach((d,i)=>d.addEventListener('click',e=>{e.preventDefault();goTo(i)}));
+  track.addEventListener('scroll',()=>requestAnimationFrame(sync),{passive:true});
+  window.addEventListener('resize',sync,{passive:true});
   sync();
 }
-
 function toggleDrawer(open){
-  const drawer=Q("#gh-drawer"),dim=Q("#gh-dim"),burger=Q("#gh-burger"),bar=Q("#gh-bar");
-  if(!drawer || !dim || !burger) return;
-
+  const drawer=Q('#gh-drawer'),dim=Q('#gh-dim'),burger=Q('#gh-burger'),bar=Q('#gh-bar');
+  if(!drawer||!dim||!burger)return;
   if(open){
-    if(bar) bar.classList.remove("is-hidden");
-    drawer.hidden=false; dim.hidden=false;
-    void drawer.offsetWidth;
-    document.documentElement.classList.add("gh-open");
-    drawer.setAttribute("aria-hidden","false");
-    burger.setAttribute("aria-expanded","true");
-    document.body.style.overflow="hidden";
-    applySafePaths(Q("#gh-header"));
-    initMobileSystems();
-    initMobileServices();
+    if(bar)bar.classList.remove('is-hidden');
+    drawer.hidden=false;dim.hidden=false;void drawer.offsetWidth;
+    document.documentElement.classList.add('gh-open');
+    drawer.setAttribute('aria-hidden','false');
+    burger.setAttribute('aria-expanded','true');
+    document.body.style.overflow='hidden';
+    applySafePaths(Q('#gh-header'));initMobileSystems();initMobileServices();
   }else{
-    document.documentElement.classList.remove("gh-open");
-    drawer.setAttribute("aria-hidden","true");
-    burger.setAttribute("aria-expanded","false");
-    document.body.style.overflow="";
-    setTimeout(()=>{
-      if(!document.documentElement.classList.contains("gh-open")){
-        dim.hidden=true; drawer.hidden=true;
-      }
-    },250);
+    document.documentElement.classList.remove('gh-open');
+    drawer.setAttribute('aria-hidden','true');
+    burger.setAttribute('aria-expanded','false');
+    document.body.style.overflow='';
+    setTimeout(()=>{if(!document.documentElement.classList.contains('gh-open')){dim.hidden=true;drawer.hidden=true}},250);
   }
 }
-
 function bind(){
-  document.addEventListener("click",e=>{
-    const b=e.target.closest("#gh-burger");
-    if(b){e.preventDefault();toggleDrawer(!document.documentElement.classList.contains("gh-open"));return;}
-    if(e.target.closest("#gh-close") || e.target.matches("#gh-dim")){e.preventDefault();toggleDrawer(false);return;}
-    const a=e.target.closest(".gh-drawer a");
-    if(a) setTimeout(()=>toggleDrawer(false),120);
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('#gh-burger');if(b){e.preventDefault();toggleDrawer(!document.documentElement.classList.contains('gh-open'));return;}
+    if(e.target.closest('#gh-close')||e.target.matches('#gh-dim')){e.preventDefault();toggleDrawer(false);return;}
+    const a=e.target.closest('.gh-drawer a');if(a)setTimeout(()=>toggleDrawer(false),120);
   },{passive:false});
-
-  document.addEventListener("keydown",e=>{
-    if(e.key==="Escape" && document.documentElement.classList.contains("gh-open")) toggleDrawer(false);
-  });
-
-  window.addEventListener("pageshow",ev=>{if(ev.persisted) toggleDrawer(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.documentElement.classList.contains('gh-open'))toggleDrawer(false)});
+  window.addEventListener('pageshow',ev=>{if(ev.persisted)toggleDrawer(false)});
 }
-
 function initThemeToggle(){
-  const btn=Q("#gh-theme");
-  if(!btn || btn.__inited) return;
-  btn.__inited=true;
-
-  const KEY="expiriti_theme";
-  const root=document.documentElement;
-
-  function syncUI(){
-    const t=(root.dataset.theme==="light") ? "light" : "dark";
-    btn.setAttribute("aria-pressed",t==="light"?"true":"false");
-    btn.title=(t==="light")?"Modo oscuro":"Modo claro";
-  }
-
-  function setTheme(t){
-    root.dataset.theme=t;
-    storage.set(KEY,t);
-    syncUI();
-  }
-
-  btn.addEventListener("click",e=>{
-    e.preventDefault();
-    const cur=(root.dataset.theme==="light") ? "light" : "dark";
-    setTheme(cur==="light" ? "dark" : "light");
-  });
-
-  const saved=storage.get(KEY);
-  if(saved==="light" || saved==="dark") root.dataset.theme=saved;
-  syncUI();
+  const btn=Q('#gh-theme');if(!btn||btn.__inited)return;btn.__inited=true;
+  const KEY='expiriti_theme',root=document.documentElement;
+  const sync=()=>{const t=(root.dataset.theme==='light')?'light':'dark';btn.setAttribute('aria-pressed',t==='light'?'true':'false');btn.title=(t==='light')?'Modo oscuro':'Modo claro'};
+  const set=t=>{root.dataset.theme=t;storage.set(KEY,t);sync()};
+  btn.addEventListener('click',e=>{e.preventDefault();set((root.dataset.theme==='light')?'dark':'light')});
+  const saved=storage.get(KEY);if(saved==='light'||saved==='dark')root.dataset.theme=saved;sync();
 }
-
 function boot(){
-  const header=Q("#gh-header");
-  if(!header || header.__ghInited) return;
-  header.__ghInited=true;
-  window.__EXPIRITI_GH_V7MOBILE__=true;
-
-  initThemeToggle();
-  applySafePaths(header);
-  syncOffset();
-  initScrollHide();
-  bind();
-  toggleDrawer(false);
+  const header=Q('#gh-header');if(!header||header.__ghInited)return;
+  header.__ghInited=true;window.__EXPIRITI_GH_V7MOBILE__=true;
+  initThemeToggle();applySafePaths(header);syncOffset();initScrollHide();bind();toggleDrawer(false);
 }
-
-boot();
-document.addEventListener("DOMContentLoaded",boot,{once:true});
-window.addEventListener("resize",syncOffset,{passive:true});
+boot();document.addEventListener('DOMContentLoaded',boot,{once:true});
+window.addEventListener('resize',syncOffset,{passive:true});
 })();
 </script>
