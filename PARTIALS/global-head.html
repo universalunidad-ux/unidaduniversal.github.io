@@ -1,7 +1,8 @@
 <!-- =========================================================
- Expiriti - GLOBAL HEAD
+ Expiriti - GLOBAL HEAD (BLINDADO v2026.01.04)
+ - Base: meta[name="expiriti-base"] => "/unidaduniversal.github.io/"
+ - Absolutiza OG + favicons SIN romper https:// (usa URL())
 ========================================================= -->
-
 <head>
   <meta charset="utf-8" />
 
@@ -35,42 +36,44 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
 
-  <!-- CSS global (NO dependas de JS para cargarlo) -->
+  <!-- CSS global -->
   <link rel="stylesheet" href="/unidaduniversal.github.io/mainindex.css" />
 
-  <!-- Preload hero (absoluto correcto) -->
+  <!-- Preload hero -->
   <link rel="preload" as="image" href="/unidaduniversal.github.io/IMG/primera.webp" fetchpriority="high" />
 
-  <!-- Favicons (pueden seguir con data-href si tu script los vuelve absolutos) -->
+  <!-- Favicons -->
   <link rel="apple-touch-icon" sizes="180x180" class="js-abs" data-href="IMG/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" class="js-abs" data-href="IMG/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" class="js-abs" data-href="IMG/favicon-16x16.png" />
   <link rel="manifest" class="js-abs" data-href="IMG/site.webmanifest" />
   <link rel="icon" class="js-abs" data-href="IMG/favicon.ico" />
 
-  <!-- Absolutiza OG + favicons -->
+  <!-- Absolutiza OG + favicons (URL() safe) -->
   <script>
   (function () {
-    var meta = document.querySelector('meta[name="expiriti-base"]');
-    var root = (meta && meta.content) ? meta.content : "/";
+    try{
+      var meta = document.querySelector('meta[name="expiriti-base"]');
+      var root = (meta && meta.content) ? meta.content.trim() : "/";
+      if (!root.startsWith("/")) root = "/" + root;
+      if (!root.endsWith("/")) root = root + "/";
 
-    if (!root.startsWith("/")) root = "/" + root;
-    if (!root.endsWith("/")) root = root + "/";
+      // Base absoluta del sitio (ej: https://dominio.com/unidaduniversal.github.io/)
+      var baseAbs = new URL(root, (location.origin && location.origin !== "null") ? location.origin : location.href).toString();
 
-    var origin = (location.origin && location.origin !== "null") ? location.origin : "";
+      function abs(p){
+        p = String(p || "").replace(/^\/+/, "");
+        return new URL(p, baseAbs).toString();
+      }
 
-    function abs(p){
-      var clean = String(p || "").replace(/^\//, "");
-      return (origin + root + clean).replace(/\/{2,}/g,"/");
-    }
+      document.querySelectorAll('link.js-abs[data-href]').forEach(function (l) {
+        l.href = abs(l.getAttribute("data-href"));
+      });
 
-    document.querySelectorAll('link.js-abs[data-href]').forEach(function (l) {
-      l.href = abs(l.getAttribute("data-href"));
-    });
-
-    document.querySelectorAll('meta.js-abs-meta[data-path]').forEach(function (m) {
-      m.setAttribute("content", abs(m.getAttribute("data-path")));
-    });
+      document.querySelectorAll('meta.js-abs-meta[data-path]').forEach(function (m) {
+        m.setAttribute("content", abs(m.getAttribute("data-path")));
+      });
+    }catch(e){}
   })();
   </script>
 </head>
