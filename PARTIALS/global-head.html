@@ -1,11 +1,15 @@
 <head>
   <meta charset="utf-8" />
 
+  <!-- Base GH Pages (carpeta del sitio) -->
+  <meta name="expiriti-base" content="/unidaduniversal.github.io/" />
+
+  <!-- Theme early -->
   <script>
   (function(){try{
     var KEY="expiriti_theme";
     var saved=localStorage.getItem(KEY);
-    var theme=saved||(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");
+    var theme=saved||(window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light":"dark");
     document.documentElement.dataset.theme=theme;
   }catch(e){}})();
   </script>
@@ -15,65 +19,54 @@
   <meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)">
 
-
+  <!-- OG -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="ExpIRI TI | Distribuidor CONTPAQi" />
   <meta property="og:locale" content="es_MX" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:image" class="js-abs-meta" data-path="IMG/expiriti_og.webp" />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" /></noscript>
 
-  <link rel="preconnect" href="https://www.youtube-nocookie.com" />
-  <link rel="preconnect" href="https://i.ytimg.com" />
+  <!-- CSS global (NO dependas de JS para cargarlo) -->
+  <link rel="stylesheet" href="/unidaduniversal.github.io/mainindex.css" />
 
+  <!-- Preload hero (absoluto correcto) -->
+  <link rel="preload" as="image" href="/unidaduniversal.github.io/IMG/primera.webp" fetchpriority="high" />
+
+  <!-- Favicons (pueden seguir con data-href si tu script los vuelve absolutos) -->
   <link rel="apple-touch-icon" sizes="180x180" class="js-abs" data-href="IMG/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" class="js-abs" data-href="IMG/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" class="js-abs" data-href="IMG/favicon-16x16.png" />
   <link rel="manifest" class="js-abs" data-href="IMG/site.webmanifest" />
   <link rel="icon" class="js-abs" data-href="IMG/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="192x192" class="js-abs" data-href="IMG/android-chrome-192x192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" class="js-abs" data-href="IMG/android-chrome-512x512.png" />
 
-  <link rel="stylesheet" class="js-abs" data-href="mainindex.css" />
-
-  <link rel="preload" as="image" class="js-abs" data-href="IMG/primera.webp" fetchpriority="high" />
-
+  <!-- Absolutiza OG + favicons -->
   <script>
-    (function(){
-      var m=document.querySelector('meta[name="expiriti-base"]');
-      // Detecta Root igual que el Header: Meta > GitHub Repo > Raíz
-      var r="/";
-      if(m&&m.content){ r=m.content.trim(); }
-      else if(location.hostname.includes("github.io")){
-        var seg=location.pathname.split("/").filter(Boolean);
-        if(seg.length>0 && !seg[0].includes(".")) r="/"+seg[0]+"/";
-      }
-      if(!r.startsWith("/")) r="/"+r; if(!r.endsWith("/")) r=r+"/";
-      
-      var origin = (location.origin && location.origin !== "null") ? location.origin : "";
+  (function () {
+    var meta = document.querySelector('meta[name="expiriti-base"]');
+    var root = (meta && meta.content) ? meta.content : "/";
 
-      function abs(p){
-        if(!p)return"#";
-        var full = r + p.replace(/^\//,"");
-        return origin + full.replace(/\/{2,}/g,"/");
-      }
+    if (!root.startsWith("/")) root = "/" + root;
+    if (!root.endsWith("/")) root = root + "/";
 
-      // 1. Links (CSS, Favicons, Preload)
-      var links = document.querySelectorAll('link.js-abs[data-href]');
-      for(var i=0; i<links.length; i++){
-        links[i].href = abs(links[i].getAttribute('data-href'));
-      }
+    var origin = (location.origin && location.origin !== "null") ? location.origin : "";
 
-      // 2. Meta Tags (OG Image)
-      var metas = document.querySelectorAll('meta.js-abs-meta[data-path]');
-      for(var j=0; j<metas.length; j++){
-        metas[j].setAttribute('content', abs(metas[j].getAttribute('data-path')));
-      }
-    })();
+    function abs(p){
+      var clean = String(p || "").replace(/^\//, "");
+      return (origin + root + clean).replace(/\/{2,}/g,"/");
+    }
+
+    document.querySelectorAll('link.js-abs[data-href]').forEach(function (l) {
+      l.href = abs(l.getAttribute("data-href"));
+    });
+
+    document.querySelectorAll('meta.js-abs-meta[data-path]').forEach(function (m) {
+      m.setAttribute("content", abs(m.getAttribute("data-path")));
+    });
+  })();
   </script>
 </head>
