@@ -7,10 +7,38 @@
  - Hide on scroll: solo barra (#gh-bar)
 ========================================================= -->
 <header class="gh" id="gh-header" role="banner"><style>
-/* ===== TOKENS + OFFSET ===== */
-:root{--gh-bg:rgba(7,10,16,.95);--gh-border:rgba(255,255,255,.08);--gh-panel:rgba(10,14,23,.98);--gh-text:#e8eef6;--gh-muted:#94a3b8;--gh-brand:#2dd4bf;--gh-brand2:#60a5fa;--gh-maxw:1200px;--gh-height:68px;--gh-offset:68px}
+/* ===== TOKENS + OFFSET (V7 CORREGIDO) ===== */
+:root {
+  --gh-bg: rgba(7,10,16,.95);
+  --gh-border: rgba(255,255,255,.08);
+  --gh-panel: rgba(10,14,23,.98);
+  --gh-text: #e8eef6;
+  --gh-muted: #94a3b8;
+  --gh-brand: #2dd4bf;
+  --gh-brand2: #60a5fa;
+  --gh-maxw: 1200px;
+  --gh-height: 68px;
+  --gh-offset: 68px;
+}
+
+/* ===== MODO CLARO (FALTABA ESTO) ===== */
+html[data-theme="light"] {
+  --gh-bg: rgba(255,255,255,.92);
+  --gh-border: rgba(0,0,0,.10);
+  --gh-panel: #ffffff;
+  --gh-text: #0f172a;       /* Texto oscuro */
+  --gh-muted: #64748b;
+  --gh-brand: #0d9488;      /* Verde más oscuro para contraste */
+  --gh-brand2: #2563eb;     /* Azul más oscuro */
+}
+/* Ajuste extra para modo claro en links y bordes */
+html[data-theme="light"] .gh-brand img { background: #e2e8f0; }
+html[data-theme="light"] .gh-nav a:hover { color:var(--gh-brand2); background:rgba(0,0,0,.05)!important; }
+html[data-theme="light"] .gh-burger { color:#0f172a; background:rgba(255,255,255,.9); border-color:rgba(0,0,0,.15); }
+
 html{scroll-padding-top:calc(var(--gh-offset) + 20px)}body{padding-top:var(--gh-offset)}
-/* ===== WRAPPER + BAR ===== */
+ 
+ /* ===== WRAPPER + BAR ===== */
 .gh{position:fixed;top:0;left:0;right:0;z-index:2147483000;font-family:system-ui,-apple-system,sans-serif}.gh *{box-sizing:border-box}
 .gh-bar{height:var(--gh-height);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:var(--gh-bg);border-bottom:1px solid var(--gh-border);transition:transform .3s ease;will-change:transform;z-index:2147483001;position:relative}
 .gh-bar.is-hidden{transform:translateY(-100%)}
