@@ -20,7 +20,7 @@
 ========================= */
 .page-index .hero.section-full{padding:0!important}
 .page-index .hero{
-  min-height:calc(100svh - var(--gh-height,68px) - env(safe-area-inset-top,0px));
+  min-height:calc(var(--ix-hero,100svh) - var(--gh-height,68px) - env(safe-area-inset-top,0px));
   display:flex;
   align-items:center;
   padding:0!important;
@@ -381,10 +381,7 @@
   }
 }
 
-/* 1) HERO: tú ya lo defines en (1). Aquí solo lo hacemos dvh/svh-safe sin duplicar padding */
-.page-index .hero{
-  min-height: calc(var(--ix-hero) - var(--gh-height,68px) - env(safe-area-inset-top,0px));
-}
+
 
 /* 2) PRODUCTOS y SERVICIOS: min-height elástico */
 .page-index #productos-con,
@@ -440,3 +437,5 @@
   .page-index #productos-con .carousel[id^="carouselReels"] .carousel-track,
   .page-index #servicios .carousel[id^="carouselReels"] .carousel-track{overflow:hidden !important}
 }
+
+.page-index .hero{border-top:0!important}
