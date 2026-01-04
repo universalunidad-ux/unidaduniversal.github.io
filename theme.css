@@ -1,8 +1,8 @@
 /* =========================================================
-  Expiriti — theme.css (GLOBAL) v2026.01
+  Expiriti — theme.css (GLOBAL) v2026.01 FINAL
   - Tokens (dark default) + Light override (html[data-theme="light"])
   - Base/Reset + UI components compartidos
-  - “Patches incluidos” para: pills, listSlider, fcards, carousels, reels,
+  - Canon global: pills, listSlider, fcards, carousels, reels,
     tablas, FAQ, TOC y Servicios Complementarios (.svc-*)
 ========================================================= */
 
@@ -21,25 +21,31 @@
   --maxw:1200px;
   --radius:14px;--radius-lg:18px;--radius-md:12px;--radius-pill:999px;
   --shadow:0 12px 34px rgba(0,0,0,.28);
+
   --border:1px solid rgba(255,255,255,.085);
   --border-strong:1px solid rgba(148,163,184,.35);
 
   --gap:14px;
   --tap:44px;
 
-  /* header height (si ya lo usas en index) */
   --gh-height:68px;
 
-  /* safe areas */
   --safe-top:env(safe-area-inset-top,0px);
   --safe-bottom:env(safe-area-inset-bottom,0px);
   --safe-left:env(safe-area-inset-left,0px);
   --safe-right:env(safe-area-inset-right,0px);
+
+  /* base surfaces for components (evita hardcodes) */
+  --panel:rgba(15,23,42,.55);
+  --panel-2:rgba(15,23,42,.45);
+  --ink:rgba(232,238,246,.92);
+
+  /* section divider */
+  --section-divider:rgba(255,255,255,.06);
 }
 
 /* =========================
    0B) LIGHT OVERRIDE
-   (no rompe dark actual)
 ========================= */
 html[data-theme="light"]{
   color-scheme:light;
@@ -53,6 +59,12 @@ html[data-theme="light"]{
   --border:1px solid rgba(2,6,23,.10);
   --border-strong:1px solid rgba(2,6,23,.18);
   --shadow:0 12px 30px rgba(2,6,23,.10);
+
+  --panel:rgba(2,6,23,.03);
+  --panel-2:rgba(2,6,23,.03);
+  --ink:rgba(11,18,32,.90);
+
+  --section-divider:rgba(2,6,23,.08);
 }
 
 /* =========================
@@ -94,9 +106,8 @@ html,body{overflow-x:hidden;overscroll-behavior-x:none}
   overflow-x:hidden;
 }
 
-/* Secciones (suave) */
-section{padding:22px 0;border-top:1px solid rgba(255,255,255,.06)}
-html[data-theme="light"] section{border-top:1px solid rgba(2,6,23,.08)}
+/* Secciones */
+section{padding:22px 0;border-top:1px solid var(--section-divider)}
 
 /* Tipografía base */
 h1,h2,h3,h4,h5{margin:0 0 6px}
@@ -151,6 +162,7 @@ html[data-theme="light"] .badge{background:rgba(2,6,23,.03);color:rgba(11,18,32,
 .btn-grad-green{border-color:rgba(45,212,191,.35);background:linear-gradient(135deg,#22c55e,var(--brand));color:#02130f}
 .btn-grad-blue{border-color:rgba(96,165,250,.35);background:linear-gradient(135deg,#2563eb,#60a5fa);color:#eff6ff}
 .btn-ghost{background:rgba(15,23,42,.85);color:var(--text);border:1px solid rgba(148,163,184,.6)}
+html[data-theme="light"] .btn-ghost{background:rgba(255,255,255,.88);color:rgba(11,18,32,.92)}
 @media(max-width:520px){.btn{width:100%}}
 
 /* =========================
@@ -174,19 +186,19 @@ html[data-theme="light"] .card{
 .card.body{padding:14px}
 
 /* =========================
-   5) PILLS (PATCH GLOBAL)
+   5) PILLS (GLOBAL)
 ========================= */
 .pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
 .pill{
   padding:8px 12px;border-radius:var(--radius-pill);
   border:1px solid rgba(30,41,59,.85);
-  background:linear-gradient(180deg,#0f172a,#020617);
+  background:linear-gradient(180deg,rgba(15,23,42,1),rgba(2,6,23,1));
   color:var(--text);cursor:pointer;font-weight:900;font-size:13px;line-height:1.2;
   display:inline-flex;align-items:center;gap:6px;
   transition:background .15s ease,border-color .15s ease,transform .12s ease,box-shadow .12s ease,color .15s ease;
 }
 html[data-theme="light"] .pill{
-  background:linear-gradient(180deg,#ffffff,#f2f6ff);
+  background:linear-gradient(180deg,var(--surface),var(--surface-2));
   border-color:rgba(2,6,23,.15);
   color:rgba(11,18,32,.92);
 }
@@ -211,7 +223,7 @@ html[data-theme="light"] .arrowCircle{background:rgba(255,255,255,.70);border-co
 .arrowCircle.is-disabled{opacity:.35;pointer-events:none}
 
 /* =========================
-   7) LIST SLIDER (PATCH GLOBAL)
+   7) LIST SLIDER (GLOBAL)
 ========================= */
 .listSlider{display:flex;flex-direction:column;position:relative;padding-bottom:50px;min-height:220px}
 .listTrack{overflow:hidden;flex:1;display:flex;scroll-behavior:smooth}
@@ -233,23 +245,25 @@ html[data-theme="light"] .listSlider .listIcon{background:rgba(2,6,23,.04)}
 .listSlider .arrowCircle.prev{right:46px}
 
 /* =========================
-   8) FEATURE GRID + FCARD (PATCH GLOBAL)
+   8) FEATURE GRID + FCARD (GLOBAL)
 ========================= */
 .feature-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:12px}
 @media(max-width:480px){.feature-grid{grid-template-columns:1fr}}
 
 .fcard{
-  background:linear-gradient(180deg,#0b1120,#020617);
+  background:linear-gradient(180deg,rgba(11,17,32,1),rgba(2,6,23,1));
   border-radius:var(--radius-md);
   border:var(--border);
   padding:14px 14px 12px;
   display:flex;flex-direction:column;gap:8px;
 }
-html[data-theme="light"] .fcard{background:linear-gradient(180deg,#ffffff,#f2f6ff)}
+html[data-theme="light"] .fcard{background:linear-gradient(180deg,var(--surface),var(--surface-2))}
 .fcard .fhead{display:flex;align-items:center;justify-content:center;min-height:92px;margin-bottom:6px}
+
+/* logos */
 .logo-sistema{
   max-width:220px;max-height:76px;width:auto;height:auto;object-fit:contain;display:block;
-  border-radius:12px;background:rgba(2,6,23,.6);
+  border-radius:12px;background:rgba(2,6,23,.60);
   border:1px solid rgba(148,163,184,.25);
   padding:10px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
 }
@@ -275,7 +289,7 @@ html[data-theme="light"] .fcard .ficon{background:rgba(2,6,23,.03)}
 }
 
 /* =========================
-   9) CAROUSEL (PATCH GLOBAL)
+   9) CAROUSEL (GLOBAL)
 ========================= */
 .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(148,163,184,.18);background:var(--card-2)}
 .carousel-track{
@@ -297,10 +311,9 @@ html[data-theme="light"] .fcard .ficon{background:rgba(2,6,23,.03)}
 
 .carousel-nav{
   display:flex;gap:8px;justify-content:center;
-  padding:10px;background:rgba(15,23,42,.45);
+  padding:10px;background:var(--panel-2);
   border-top:1px solid rgba(148,163,184,.18);
 }
-html[data-theme="light"] .carousel-nav{background:rgba(2,6,23,.03)}
 .dot{width:10px;height:10px;border-radius:999px;background:rgba(148,163,184,.25);border:0;opacity:.8;cursor:pointer}
 .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
 
@@ -308,7 +321,7 @@ html[data-theme="light"] .carousel-nav{background:rgba(2,6,23,.03)}
 body>.arrowCircle{display:none!important}
 
 /* =========================
-   10) REELS (PATCH GLOBAL)
+   10) REELS (GLOBAL)
 ========================= */
 .reels-card{display:flex;flex-direction:column;gap:10px}
 .reels-card>.title-gradient{font-size:clamp(1.05rem,2.2vw,1.25rem);font-weight:900;line-height:1.25;margin-bottom:6px}
@@ -332,12 +345,12 @@ body>.arrowCircle{display:none!important}
 .reel-embed iframe{position:absolute;inset:0;width:100%!important;height:100%!important;border:0;display:block}
 
 /* =========================
-   11) TABLAS (PATCH GLOBAL)
+   11) TABLAS (GLOBAL)
 ========================= */
 .table-like{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
-.table-like thead{background:rgba(15,23,42,.55)}
-html[data-theme="light"] .table-like thead{background:rgba(2,6,23,.03)}
+.table-like thead{background:var(--panel-2)}
 .table-like th,.table-like td{padding:8px 10px;border-bottom:1px solid rgba(51,65,85,.45);text-align:left;vertical-align:top}
+html[data-theme="light"] .table-like th,.table-like td{border-bottom:1px solid rgba(2,6,23,.10)}
 .table-like th{font-weight:800}
 .table-like td{color:rgba(203,213,225,.95)}
 html[data-theme="light"] .table-like td{color:rgba(51,65,85,.92)}
@@ -352,26 +365,28 @@ html[data-theme="light"] .table-like td{color:rgba(51,65,85,.92)}
   border-bottom:1px solid rgba(148,163,184,.2);
   font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
 }
+html[data-theme="light"] .pricing-table-nube thead th{border-bottom:1px solid rgba(2,6,23,.12)}
 .pricing-table-nube td{
   padding:16px;border-bottom:1px solid rgba(148,163,184,.1);
   vertical-align:middle;
 }
+html[data-theme="light"] .pricing-table-nube td{border-bottom:1px solid rgba(2,6,23,.08)}
 .pricing-table-nube .plan-name{font-weight:900;width:35%}
 .pricing-table-nube .price{text-align:right;font-weight:900;color:var(--brand-2);white-space:nowrap}
 @media(max-width:900px){.pricing-table-nube{min-width:760px}}
 
 /* =========================
-   12) FAQ + TOC (PATCH GLOBAL)
+   12) FAQ + TOC (GLOBAL)
 ========================= */
 .faq-wrap{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-.faq-item{border-radius:var(--radius-md);border:var(--border);background:rgba(15,23,42,.55);padding:10px 12px}
-html[data-theme="light"] .faq-item{background:rgba(2,6,23,.03)}
+.faq-item{border-radius:var(--radius-md);border:var(--border);background:var(--panel);padding:10px 12px}
 .faq-item>summary{cursor:pointer;list-style:none;font-weight:900;font-size:13px;outline:none}
 .faq-item>summary::-webkit-details-marker{display:none}
 .faq-item[open]{background:rgba(2,6,23,.40)}
 html[data-theme="light"] .faq-item[open]{background:#fff}
 .faq-item p{margin-top:8px;font-size:13px}
 
+/* TOC (solo si existe en DOM) */
 .toc{
   position:fixed;right:12px;bottom:14px;z-index:30;
   background:rgba(15,23,42,.92);
@@ -391,7 +406,6 @@ html[data-theme="light"] .toc{background:rgba(255,255,255,.90)}
 
 /* =========================
    13) SERVICIOS COMPLEMENTARIOS (CANON GLOBAL)
-   - Solo afecta cuando existen .svc-* en el DOM
 ========================= */
 .svc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;align-items:start}
 .svc-grid>*{min-width:0}
@@ -400,12 +414,12 @@ html[data-theme="light"] .toc{background:rgba(255,255,255,.90)}
   display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
   padding:12px;border-radius:16px;
   border:1px solid rgba(148,163,184,.18);
-  background:linear-gradient(180deg,#0b1120,#020617);
+  background:linear-gradient(180deg,rgba(11,17,32,1),rgba(2,6,23,1));
   box-shadow:0 10px 28px rgba(0,0,0,.20);
   cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
   transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .16s ease;
 }
-html[data-theme="light"] .svc-link{background:linear-gradient(180deg,#fff,#f2f6ff)}
+html[data-theme="light"] .svc-link{background:linear-gradient(180deg,var(--surface),var(--surface-2))}
 .svc-link:hover{transform:translateY(-1px);border-color:rgba(96,165,250,.45);box-shadow:0 14px 35px rgba(0,0,0,.22)}
 .svc-text{display:flex;flex-direction:column;gap:4px;min-width:0}
 .svc-title{font-size:14px;font-weight:900;line-height:1.2}
@@ -414,11 +428,10 @@ html[data-theme="light"] .svc-link{background:linear-gradient(180deg,#fff,#f2f6f
   font-size:12px;font-weight:900;
   padding:6px 10px;border-radius:999px;
   border:1px solid rgba(148,163,184,.35);
-  background:rgba(15,23,42,.45);
+  background:var(--panel-2);
   white-space:nowrap;
   align-self:flex-start;
 }
-html[data-theme="light"] .svc-pill{background:rgba(2,6,23,.03)}
 @media(max-width:768px){
   .svc-grid{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:4px 4px 10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
   .svc-list{flex:0 0 100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;scroll-snap-align:start}
