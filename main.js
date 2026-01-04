@@ -1,4 +1,4 @@
-/* =========================================================
+f/* =========================================================
  Expiriti - main.js (FINAL) — MINIFICADO + COMENTARIOS (CORREGIDO)
  - Partials robustos (GH user-site + local/subcarpetas) + normaliza rutas
  - FIX: .js-link[data-href] ahora pasa por abs() y SIEMPRE setea href
@@ -421,8 +421,10 @@ wrap.hidden=!1;
 };
 
 const row=D.getElementById("calc-row");if(!row)return;
-const slot2=D.getElementById("calc-slot-2")||D.getElementById("calc-secondary");
-const slot3=D.getElementById("calc-tertiary");
+const slot2=D.getElementById("calc-slot-2");
+const secondary=D.getElementById("calc-secondary");
+
+                                                 const slot3=D.getElementById("calc-tertiary");
 const addMore=D.getElementById("add-more-panel");
 const pick2=D.getElementById("icons-sec-sys");
 const pick3=D.getElementById("icons-third-sys");
@@ -437,15 +439,34 @@ renderPicker("icons-sec-sys",ex,selected.secondary);
 renderPicker("icons-third-sys",ex,selected.tertiary);
 };
 const showMore=()=>{if(addMore)addMore.style.display=selected.secondary?"":"none"};
+if(pick2)pick2.addEventListener("click",e=>{
+  const btn=e.target.closest(".sys-icon"); if(!btn) return;
+  const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
 
-if(pick2)pick2.addEventListener("click",e=>{const btn=e.target.closest(".sys-icon");if(!btn)return;
-const sys=btn.dataset.sys;if(!hasPrices(sys))return;
-selected.secondary=sys;if(selected.tertiary===sys)selected.tertiary=null;
-if(slot2&&slot2.id==="calc-slot-2"){slot2.className="calc-container";slot2.id="calc-secondary"}
-if(W.CalculadoraContpaqi&&W.CalculadoraContpaqi.setSecondarySystem)
-W.CalculadoraContpaqi.setSecondarySystem(sys,{secondarySelector:"#calc-secondary",combinedSelector:"#combined-wrap",onCombined:renderCombined});
-refresh();showMore();
+  selected.secondary=sys;
+  if(selected.tertiary===sys) selected.tertiary=null;
+
+  if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setSecondarySystem){
+    W.CalculadoraContpaqi.setSecondarySystem(sys,{
+      secondarySelector:"#calc-secondary",
+      combinedSelector:"#combined-wrap",
+      onCombined:renderCombined
+    });
+  }
+
+  showSecondary();
+  refresh();
+  showMore();
 });
+
+
+                                                 
+                                                 const showSecondary=()=>{
+  if(slot2) slot2.style.display="none";
+  if(secondary) secondary.style.display="block";
+  if(addMore) addMore.style.display=""; // habilita picker 3er sistema
+};
+
 
 if(pick3)pick3.addEventListener("click",e=>{const btn=e.target.closest(".sys-icon");if(!btn)return;
 const sys=btn.dataset.sys;if(!hasPrices(sys)||sys===selected.secondary)return;
