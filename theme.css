@@ -535,3 +535,260 @@ html[data-theme="light"] .fcard .ficon{
 /* Dots: feedback al presionar */
 .dot:active{transform:scale(.92)}
 
+
+/* =========================================================
+   PATCH v2026.01 — Servicios/Sistemas UI (Light Contrast + Mobile Center)
+   - Más contraste en light (sin tocar dark)
+   - Quita aro gris de iconos circulares (listSlider)
+   - Mobile: icono centrado + título bold abajo + texto centrado
+   - fcards: icon arriba centrado + h4 centrado + p centrado
+   - Botones: Amarillo/Verde/Coral (re-skin de .btn-grad-*)
+   - Frame contrastante para logos/íconos blancos (light)
+========================================================= */
+
+/* ===== A) ACCENTS ===== */
+:root{--acc-amber:#E8AC36;--acc-green:#1B8B80;--acc-coral:#F05A66;--acc-ink:#071018}
+
+/* ===== B) HERO Servicios/Sistemas (back link + badges legibles en light) ===== */
+.hero .hint{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:var(--border);background:var(--panel-2);text-decoration:none}
+.hero .hint:hover{text-decoration:none;transform:translateY(-1px);box-shadow:var(--shadow)}
+html[data-theme="light"] .hero .hint{background:rgba(255,255,255,.92);border:1px solid rgba(2,6,23,.14);box-shadow:0 10px 22px rgba(2,6,23,.08)}
+html[data-theme="light"] .hero h1{color:rgba(11,18,32,.96)}
+html[data-theme="light"] .hero .badges .badge{background:rgba(2,6,23,.035);border:1px solid rgba(2,6,23,.14);color:rgba(11,18,32,.88)}
+
+/* ===== C) LIGHT: “más contraste premium” (solo servicios/sistemas si existen) ===== */
+html[data-theme="light"]{--panel:rgba(2,6,23,.04);--panel-2:rgba(2,6,23,.05)}
+html[data-theme="light"] .card{border:1px solid rgba(2,6,23,.14);box-shadow:0 14px 34px rgba(2,6,23,.12)}
+html[data-theme="light"] section{border-top:1px solid rgba(2,6,23,.08)}
+html[data-theme="light"] .title-gradient{filter:saturate(1.05) contrast(1.05)}
+
+/* ===== D) BOTONES (mapea tus clases existentes a tu paleta) ===== */
+.btn-grad-green{border-color:rgba(27,139,128,.40)!important;background:linear-gradient(135deg,#1B8B80,#2dd4bf)!important;color:#03110f!important}
+.btn-grad-blue{border-color:rgba(240,90,102,.40)!important;background:linear-gradient(135deg,#F05A66,#ff7a84)!important;color:#1a0a0c!important}
+.btn-grad-amber{border-color:rgba(232,172,54,.45)!important;background:linear-gradient(135deg,#E8AC36,#ffd07a)!important;color:#1a1205!important}
+.btn:hover{filter:saturate(1.02) contrast(1.02)}
+.btn:active{transform:translateY(1px) scale(.99)}
+
+/* ===== E) LIST SLIDER: quitar aro gris + mejorar layout ===== */
+.listSlider .listIcon{border:0!important;box-shadow:none!important}
+html[data-theme="light"] .listSlider{background:transparent}
+html[data-theme="light"] .listSlider .listIcon{background:rgba(255,255,255,.88)!important;box-shadow:0 10px 22px rgba(2,6,23,.10)!important}
+html[data-theme="light"] .listSlider .listIcon img{background:var(--logo-frame-bg);border:1px solid rgba(2,6,23,.12);box-shadow:0 0 0 1px rgba(96,165,250,.12);border-radius:999px}
+
+/* Mobile: icono arriba, texto centrado (solo listSlider) */
+@media(max-width:680px){
+  .listItem{flex-direction:column;align-items:center;gap:10px;padding:8px 0;text-align:center}
+  .listItem strong{font-size:14px;letter-spacing:.04em}
+  .listItem div{font-size:13px}
+  .listSlider{padding-bottom:54px}
+  .listSlider .arrowCircle.prev{right:50% ;transform:translateX(-54px)}
+  .listSlider .arrowCircle.next{right:50% ;transform:translateX(54px)}
+}
+
+/* ===== F) FEATURE CARDS: icono centrado + título centrado + texto centrado ===== */
+.feature-grid .fcard{gap:10px}
+.feature-grid .fcard .fhead{flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;text-align:center!important;gap:10px!important;min-height:auto!important;margin:0 0 6px!important}
+.feature-grid .fcard .ficon{width:92px!important;height:92px!important;flex:0 0 92px!important;padding:16px!important;border-radius:22px!important}
+.feature-grid .fcard .fhead h4{font-size:15px!important;line-height:1.25!important;margin:0!important;font-weight:950!important}
+.feature-grid .fcard p{margin:0!important;text-align:center!important}
+
+/* Pills (tablist) estilo “segmented / agency 2025-26” */
+.pillbar{justify-content:center;gap:10px}
+.pill{border-radius:999px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+html[data-theme="light"] .pill{background:rgba(255,255,255,.88);border-color:rgba(2,6,23,.14);box-shadow:0 10px 22px rgba(2,6,23,.08)}
+html[data-theme="light"] .pill:hover{border-color:rgba(96,165,250,.45)}
+.pill.active{background:linear-gradient(135deg,#22c55e,var(--acc-green));border-color:rgba(27,139,128,.55);color:#02130f}
+
+/* Mobile: pillbar scroll suave */
+@media(max-width:680px){
+  .pillbar{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:6px 2px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+  .pill{scroll-snap-align:start;white-space:nowrap}
+}
+
+/* ===== G) FRAME contrastante para logos/íconos blancos (LIGHT) ===== */
+html[data-theme="light"]{
+  --logo-frame-bg:linear-gradient(180deg,rgba(11,18,32,.10),rgba(11,18,32,.03));
+  --logo-frame-border:1px solid rgba(2,6,23,.16);
+  --logo-frame-ring:0 0 0 1px rgba(96,165,250,.16);
+  --logo-frame-shadow:0 10px 26px rgba(2,6,23,.10);
+}
+html[data-theme="light"] .logo-sistema,
+html[data-theme="light"] .fcard .ficon,
+html[data-theme="light"] .listSlider .listIcon img{
+  background:var(--logo-frame-bg)!important;
+  border:var(--logo-frame-border)!important;
+  box-shadow:var(--logo-frame-ring),var(--logo-frame-shadow)!important;
+}
+html[data-theme="light"] .logo-sistema{padding:12px!important;border-radius:16px!important}
+/* =========================================================
+   Expiriti — THEME PATCH (Servicios + Sistemas) v2026.01.04-UI
+   - Light: más contraste premium (sin romper dark)
+   - ListSlider: sin aro gris + mobile centrado tipo “card”
+   - Feature cards: icono centrado + título bold centrado + texto centrado
+   - Tablas (.table-like): scroll horizontal en mobile (Servicios/Sistemas)
+   - Botones: mapeo a paleta (Amarillo/Verde/Coral)
+========================================================= */
+
+/* ===== 0) ACCENTS ===== */
+:root{
+  --acc-amber:#E8AC36;
+  --acc-green:#1B8B80;
+  --acc-coral:#F05A66;
+  --acc-ink:#071018;
+}
+
+/* ===== 1) HERO “hint” + badges (mejor legibilidad) ===== */
+.container.hero>.hint{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 12px;border-radius:999px;
+  border:var(--border);background:var(--panel-2);
+  text-decoration:none;
+}
+.container.hero>.hint:hover{transform:translateY(-1px);box-shadow:var(--shadow);text-decoration:none}
+
+/* Light: back link + badges con mejor contraste */
+html[data-theme="light"] .container.hero>.hint{
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(2,6,23,.14);
+  box-shadow:0 10px 22px rgba(2,6,23,.08);
+}
+html[data-theme="light"] .container.hero .badges .badge{
+  background:rgba(2,6,23,.035);
+  border:1px solid rgba(2,6,23,.14);
+  color:rgba(11,18,32,.90);
+}
+
+/* ===== 2) LIGHT: contraste premium (cards/tables/pills) ===== */
+html[data-theme="light"]{
+  --panel:rgba(2,6,23,.04);
+  --panel-2:rgba(2,6,23,.05);
+}
+html[data-theme="light"] .card{
+  border:1px solid rgba(2,6,23,.14);
+  box-shadow:0 14px 34px rgba(2,6,23,.12);
+}
+html[data-theme="light"] .title-gradient{filter:saturate(1.05) contrast(1.05)}
+html[data-theme="light"] .pill{
+  background:rgba(255,255,255,.88);
+  border-color:rgba(2,6,23,.14);
+  box-shadow:0 10px 22px rgba(2,6,23,.08);
+}
+html[data-theme="light"] .pill:hover{border-color:rgba(96,165,250,.45)}
+
+/* ===== 3) BOTONES: mapeo paleta ===== */
+.btn-grad-green{
+  border-color:rgba(27,139,128,.40)!important;
+  background:linear-gradient(135deg,#1B8B80,#2dd4bf)!important;
+  color:#03110f!important;
+}
+.btn-grad-blue{
+  border-color:rgba(240,90,102,.40)!important;
+  background:linear-gradient(135deg,#F05A66,#ff7a84)!important;
+  color:#1a0a0c!important;
+}
+/* “Purple” lo dejo como acento azul/púrpura (si quieres coral/amber me dices) */
+.btn-grad-purple{
+  border-color:rgba(96,165,250,.45)!important;
+  background:linear-gradient(135deg,#60a5fa,#a78bfa)!important;
+  color:#071018!important;
+}
+.btn-grad-amber{
+  border-color:rgba(232,172,54,.45)!important;
+  background:linear-gradient(135deg,#E8AC36,#ffd07a)!important;
+  color:#1a1205!important;
+}
+.btn:hover{filter:saturate(1.02) contrast(1.02)}
+.btn:active{transform:translateY(1px) scale(.99)}
+
+/* ===== 4) LIST SLIDER: quitar aro gris + layout centrado ===== */
+.listSlider .listIcon{border:0!important;box-shadow:none!important;background:transparent!important}
+.listSlider .listIcon img{
+  display:block;width:100%;height:auto;border-radius:999px;
+}
+html[data-theme="light"] .listSlider .listIcon{
+  background:rgba(255,255,255,.88)!important;
+  box-shadow:0 10px 22px rgba(2,6,23,.10)!important;
+  border:1px solid rgba(2,6,23,.12)!important;
+  border-radius:999px;
+  padding:10px;
+}
+
+/* Mobile “card”: icon centrado, título bold abajo, texto centrado */
+@media(max-width:680px){
+  .listSlider .listItem{
+    display:flex;flex-direction:column;align-items:center;
+    gap:10px;text-align:center;
+    padding:10px 0;
+  }
+  .listSlider .listIcon{width:78px;height:78px;display:flex;align-items:center;justify-content:center}
+  .listSlider .listItem strong{font-size:14px;font-weight:950;letter-spacing:.06em}
+  .listSlider .listItem>div:last-child{max-width:36ch}
+  .listSlider .listItem>div:last-child div{font-size:13px;opacity:.95}
+
+  /* flechas centradas abajo como “pager” */
+  .listSlider{padding-bottom:54px;position:relative}
+  .listSlider .arrowCircle.prev{position:absolute;left:50%;bottom:8px;transform:translateX(-54px)}
+  .listSlider .arrowCircle.next{position:absolute;left:50%;bottom:8px;transform:translateX(54px)}
+}
+
+/* ===== 5) FEATURE GRID (fcard): centrado pro ===== */
+.feature-grid .fcard{gap:10px}
+.feature-grid .fcard .fhead{
+  display:flex;flex-direction:column!important;
+  align-items:center!important;justify-content:flex-start!important;
+  gap:10px!important;text-align:center!important;
+  margin:0 0 6px!important;min-height:auto!important;
+}
+.feature-grid .fcard .ficon{
+  width:92px!important;height:92px!important;flex:0 0 92px!important;
+  padding:16px!important;border-radius:22px!important;
+}
+.feature-grid .fcard .fhead h4{
+  margin:0!important;font-size:15px!important;line-height:1.25!important;
+  font-weight:950!important;
+}
+.feature-grid .fcard p{margin:0!important;text-align:center!important}
+
+/* Listas dentro de fcard (Servicios): que no se vean “chuecas” */
+.feature-grid .fcard .imp-list{margin:10px auto 0;max-width:48ch;padding-left:18px;text-align:left}
+@media(max-width:680px){
+  .feature-grid .fcard .imp-list{max-width:38ch}
+}
+
+/* ===== 6) TABLAS (Comparativas): scroll horizontal en mobile (Servicios/Sistemas) ===== */
+.table-like{width:100%}
+
+/* wrapper automático por CSS: hacemos el contenedor scrolleable */
+@media(max-width:860px){
+  .card.body>.table-like,
+  .card.body table.table-like{
+    display:block;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-gutter:stable both-edges;
+    border-radius:14px;
+  }
+  .card.body>.table-like thead,
+  .card.body table.table-like thead{position:sticky;top:0}
+  .card.body>.table-like{padding:0}
+  .card.body table.table-like{min-width:720px} /* fuerza columnas a no aplastarse */
+}
+
+/* Light: tabla con mejor contraste */
+html[data-theme="light"] .table-like{
+  border:1px solid rgba(2,6,23,.14);
+  box-shadow:0 10px 26px rgba(2,6,23,.08);
+}
+html[data-theme="light"] .table-like th,
+html[data-theme="light"] .table-like td{
+  border-color:rgba(2,6,23,.12);
+}
+html[data-theme="light"] .table-like .highlight{
+  background:rgba(27,139,128,.10);
+  color:rgba(11,18,32,.92);
+}
+
+/* ===== 7) Reels card (Servicios) — asegura look pro con 1 reel ===== */
+.carousel.is-single .arrowCircle{display:none!important}
+.carousel.is-single .carousel-nav{display:none!important}
+.reels-card .reel-title{margin:6px 0 10px;text-align:center}
