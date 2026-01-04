@@ -424,164 +424,836 @@ html.gh-open #gh-drawer.gh-drawer{transform:translate3d(0,0,0)}
 }
 
 /* =========================================================
-   EXPIRITI — PATCH FINAL ÚNICO (SISTEMAS)
-   - Sin :has()
-   - Sin parches duplicados
-   - Layout estable calculadoras 1/2/3
-   - Pills consistentes (desktop wrap + mobile 2 cols)
-   - Beneficios/Features centrados sin romper layout
-   - NO ocultar encabezados globales
+   [25] Ocultar SOLO el título superior en Beneficios (si aplica)
+========================================================= */
+#beneficios .grid-2>div:first-child>h2.title-gradient{display:none!important}
+
+/* =========================================================
+   EXPIRITI — FIX: quitar “bloque vacío” entre calculadoras
+   - Cuando hay 2 calcs: oculta #calc-slot-2 (ya no se usa)
+   - Muestra y centra el panel de “Agregar un tercer sistema”
+   - Cuando hay 3 calcs: oculta panel de “Agregar un tercer sistema”
 ========================================================= */
 
-/* ---------- 1) NO ocultar headers globales (elimina el “section > h3/h4”) ---------- */
-section>h3,section>h4,.card.body>h3,.card.body>h4{display:revert!important}
+/* 2 calculadoras */
+html.has-calc-2 #calc-slot-2,
+body.has-calc-2 #calc-slot-2{
+  display:none!important;
+}
 
-/* Si solo quieres ocultar títulos “blancos” específicos arriba de videos:
-   (ya los tienes como .yt-title; no uses h3/h4 global) */
-#videos .yt-title{display:block} /* (por si algún patch anterior lo escondió) */
+/* En 2 calcs, el panel “Agregar un tercer sistema” debe aparecer y centrarse */
+html.has-calc-2 #add-more-panel,
+body.has-calc-2 #add-more-panel{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:stretch!important;
+  grid-column:1 / -1!important;
+  width:100%!important;
+  margin-top:14px!important;
+}
 
-/* ---------- 2) CALC LAYOUT ÚNICO 1/2/3 (desktop) ---------- */
-@media(min-width:981px){
-  :root{
-    --calc-col-min:560px;
-    --calc-col-max:760px;
-    --panel-col-min:380px;
-    --panel-col-max:560px;
-  }
-
-  .calc-row{
-    display:grid!important;
-    gap:14px!important;
-    grid-template-columns:
-      minmax(var(--calc-col-min),var(--calc-col-max))
-      minmax(var(--panel-col-min),var(--panel-col-max))!important;
-    justify-content:center!important;
-    align-items:stretch!important;
-  }
-
-  #calc-primary{
-    width:100%!important;
-    max-width:var(--calc-col-max)!important;
-    margin:0!important;
-    justify-self:stretch!important;
-    grid-column:1!important;
-  }
-
-  #calc-slot-2{
-    width:100%!important;
-    max-width:var(--panel-col-max)!important;
-    margin:0!important;
-    justify-self:center!important;
-    align-self:center!important;
-    grid-column:2!important;
-  }
-
-  #calc-slot-2.placeholder{
+/* Limita ancho “bonito” del panel en desktop */
+@media (min-width: 981px){
+  html.has-calc-2 #add-more-panel,
+  body.has-calc-2 #add-more-panel{
+    padding:0!important;           /* el padding va en .note */
     background:transparent!important;
     border:0!important;
     box-shadow:none!important;
-    padding:0!important;
-    min-height:unset!important;
-    height:auto!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
   }
-
-  /* 2 CALCS */
-  html.has-calc-2 .calc-row,body.has-calc-2 .calc-row{
-    grid-template-columns:
-      minmax(var(--calc-col-min),var(--calc-col-max))
-      minmax(var(--calc-col-min),var(--calc-col-max))!important;
-    justify-content:center!important;
-  }
-  html.has-calc-2 #calc-secondary,body.has-calc-2 #calc-secondary{
-    display:block!important;
-    width:100%!important;
-    max-width:var(--calc-col-max)!important;
-    grid-column:2!important;
-  }
-  html.has-calc-2 #calc-slot-2,body.has-calc-2 #calc-slot-2{display:none!important}
-  html.has-calc-2 #add-more-panel,body.has-calc-2 #add-more-panel{
-    display:flex!important;
-    grid-column:1/-1!important;
-    justify-content:center!important;
-    margin-top:14px!important;
-  }
-  html.has-calc-2 #add-more-panel .note,body.has-calc-2 #add-more-panel .note{
-    width:min(760px,100%)!important;
+  html.has-calc-2 #add-more-panel .note,
+  body.has-calc-2 #add-more-panel .note{
+    width:min(980px,100%)!important;
     margin:0 auto!important;
-    text-align:center!important;
   }
-
-  /* 3 CALCS */
-  html.has-calc-3 .calc-row,body.has-calc-3 .calc-row{
-    grid-template-columns:minmax(420px,1fr) minmax(420px,1fr) minmax(420px,1fr)!important;
-    justify-content:center!important;
-  }
-  html.has-calc-3 #calc-secondary,body.has-calc-3 #calc-secondary,
-  html.has-calc-3 #calc-tertiary,body.has-calc-3 #calc-tertiary{
-    display:block!important;width:100%!important;max-width:var(--calc-col-max)!important;
-  }
-  html.has-calc-3 #calc-slot-2,body.has-calc-3 #calc-slot-2,
-  html.has-calc-3 #add-more-panel,body.has-calc-3 #add-more-panel{display:none!important}
 }
 
-/* Mobile/tablet: 1 columna siempre */
-@media(max-width:980px){
-  .calc-row{display:grid!important;grid-template-columns:1fr!important;gap:14px!important}
-  #calc-primary,#calc-secondary,#calc-tertiary,#calc-slot-2,#add-more-panel{width:100%!important;max-width:none!important}
+/* 3 calculadoras: ya no necesitas “Agregar un tercer sistema” */
+html.has-calc-3 #add-more-panel,
+body.has-calc-3 #add-more-panel{
+  display:none!important;
 }
 
-/* Oculta SOLO calcs vacías (secondary/tertiary) */
-#calc-secondary.calc-empty,#calc-tertiary.calc-empty{
-  display:none!important;min-height:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important;
+/* Si por cualquier razón aparece, evita que “reserve” altura rara */
+#calc-slot-2:empty,
+#add-more-panel:empty{
+  display:none!important;
 }
 
-/* ---------- 3) ICONS WRAP (panel derecho) consistente ---------- */
+/* === EXPIRITI PATCH CALC LAYOUT (compact + center + remove empty gap) === */
+@media(min-width:981px){#calc-primary.calc-container,#calc-primary .calc-container{max-width:820px;margin:0 auto}#calc-primary .calc-results table{max-width:640px}#calc-primary form{max-width:820px;margin:0 auto}}
+@media(min-width:981px){.calc-row{align-items:center!important}#calc-slot-2{align-self:center!important}#calc-slot-2.placeholder{height:auto!important;min-height:unset!important;padding:10px 0!important}#calc-slot-2.placeholder>.note{max-width:520px!important;margin:0 auto!important}#calc-slot-2 .note{margin:0 auto!important}}
+@media(min-width:981px){html.has-calc-2 .calc-row,body.has-calc-2 .calc-row{align-items:start!important}}
+html.has-calc-2 #calc-slot-2,body.has-calc-2 #calc-slot-2,html.has-calc-3 #calc-slot-2,body.has-calc-3 #calc-slot-2{display:none!important}
+#calc-slot-2.placeholder{background:transparent!important;border:0!important;box-shadow:none!important}
+#calc-slot-2 .note{border:1px dashed rgba(148,163,184,.28)!important;background:rgba(17,23,35,.28)!important}
+#calc-slot-2:empty{display:none!important}
+
+/* =========================================================
+   EXPIRITI — PATCH: ocultar contenedores vacíos (calc-empty)
+   - Evita el “bloque azul” (#calc-tertiary / #calc-secondary vacíos)
+   - Sin :has(), usa la clase que ya pone tu JS (markEmpty)
+========================================================= */
+
+/* Oculta cualquier calc marcado como vacío (solo lo aplicas a secondary/tertiary/slot2) */
+#calc-secondary.calc-empty,
+#calc-tertiary.calc-empty,
+#calc-slot-2.calc-empty{
+  display:none!important;
+  min-height:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+/* Si por reglas de layout se “re-muestran” en has-calc-2/3, esto gana */
+html.has-calc-2 #calc-secondary.calc-empty,
+body.has-calc-2 #calc-secondary.calc-empty,
+html.has-calc-2 #calc-tertiary.calc-empty,
+body.has-calc-2 #calc-tertiary.calc-empty,
+html.has-calc-3 #calc-secondary.calc-empty,
+body.has-calc-3 #calc-secondary.calc-empty,
+html.has-calc-3 #calc-tertiary.calc-empty,
+body.has-calc-3 #calc-tertiary.calc-empty{
+  display:none!important;
+}
+
+/* =========================================================
+   EXPIRITI — PATCH: ocultar SOLO calculadoras vacías
+   (NO ocultar #calc-slot-2 porque ahí vive tu carrusel/panel)
+========================================================= */
+
+#calc-secondary.calc-empty,
+#calc-tertiary.calc-empty{
+  display:none!important;
+  min-height:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+html.has-calc-2 #calc-secondary.calc-empty,
+body.has-calc-2 #calc-secondary.calc-empty,
+html.has-calc-2 #calc-tertiary.calc-empty,
+body.has-calc-2 #calc-tertiary.calc-empty,
+html.has-calc-3 #calc-secondary.calc-empty,
+body.has-calc-3 #calc-secondary.calc-empty,
+html.has-calc-3 #calc-tertiary.calc-empty,
+body.has-calc-3 #calc-tertiary.calc-empty{
+  display:none!important;
+}
+
+/* =========================================================
+   EXPIRITI — FIX: carrusel muy separado en desktop
+   Causa: #calc-primary tenía max-width + margin:auto (se centraba)
+========================================================= */
+@media(min-width:981px){
+  /* 1) Quita el “centrado” del primary que abre el hueco */
+  #calc-primary{
+    max-width:none!important;
+    margin:0!important;
+    justify-self:stretch!important;
+  }
+
+  /* 2) Ajusta la grilla para que el panel quede más cerca */
+  .calc-row{
+    grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr)!important;
+    gap:12px!important;
+    align-items:start!important;
+  }
+
+  /* 3) Panel/carrusel: controla ancho y alineación */
+  #calc-slot-2{
+    justify-self:end!important;
+    width:min(420px,100%)!important;
+  }
+}
+
+/* EXPIRITI PATCH FINAL: calc compact + carrusel centrado (desktop) + 3-up responsive */
+@media(min-width:981px){.calc-row{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,560px)!important;gap:14px!important;align-items:center!important}#calc-primary{justify-self:start!important;width:100%!important;max-width:860px!important;margin:0!important}#calc-primary .calc-container{max-width:860px!important}#calc-slot-2{justify-self:center!important;align-self:center!important;width:min(560px,100%)!important;max-width:560px!important;margin:0!important}#calc-slot-2.placeholder{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;min-height:unset!important;height:auto!important}}
 .icons-carousel{width:100%!important;max-width:560px!important;margin:0 auto!important;padding:0 46px!important}
-.icons-wrap{display:flex!important;flex-wrap:nowrap!important;gap:12px!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-behavior:smooth!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;padding:12px 6px!important;scroll-snap-type:x mandatory!important}
+.icons-wrap{display:flex!important;flex-wrap:nowrap!important;gap:12px!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-behavior:smooth!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;padding:12px 6px!important;scroll-snap-type:x mandatory!important;justify-content:flex-start!important;align-items:stretch!important}
 .sys-icon{flex:0 0 calc((100% - 24px)/3)!important;min-width:calc((100% - 24px)/3)!important;max-width:calc((100% - 24px)/3)!important;scroll-snap-align:start!important}
-@media(max-width:980px){.sys-icon{flex-basis:calc((100% - 12px)/2)!important;min-width:calc((100% - 12px)/2)!important;max-width:calc((100% - 12px)/2)!important}}
+@media(max-width:980px){.calc-row{grid-template-columns:1fr!important;align-items:stretch!important}#calc-primary{max-width:none!important}#calc-slot-2{width:100%!important;max-width:none!important;justify-self:stretch!important;align-self:stretch!important}.sys-icon{flex-basis:calc((100% - 12px)/2)!important;min-width:calc((100% - 12px)/2)!important;max-width:calc((100% - 12px)/2)!important}}
 @media(max-width:520px){.icons-carousel{padding:0 40px!important}.sys-icon{flex-basis:100%!important;min-width:100%!important;max-width:100%!important}}
+.icons-carousel .arrowCircle{top:50%!important;transform:translateY(-50%)!important}
+.icons-carousel .arrowCircle.prev{left:6px!important}.icons-carousel .arrowCircle.next{right:6px!important}
 
-/* ---------- 4) BENEFICIOS (listSlider) centrado tipo card ---------- */
-.listItem{grid-template-columns:1fr!important;text-align:center!important;justify-items:center!important}
-.listIcon{justify-self:center!important;margin:0 auto!important}
-.listItem strong{display:block!important;margin-top:2px!important}
-.listItem div>div{margin-top:2px!important}
 
-/* ---------- 5) FEATURE GRID centrado sin romper desktop ---------- */
-.feature-grid .fcard{text-align:center}
-.feature-grid .fhead{flex-direction:column;align-items:center;gap:10px}
-.feature-grid .ficon{margin:0 auto}
+/* =========================================================
+   EXPIRITI — PATCH ÚNICO: layout calculadoras (1/2/3) + panel centrado
+   - 1 calc: primary + panel (slot-2) a la derecha, centrado en su columna
+   - 2 calcs: primary + secondary (SIN nada en medio) + panel “tercer sistema” centrado abajo
+   - 3 calcs: 3 columnas, sin panel
+========================================================= */
 
-/* ---------- 6) PILLS consistentes (NO duplicadas) ---------- */
+@media (min-width:981px){
+
+  /* --- BASE desktop (modo 1 calc) --- */
+  .calc-row{
+    display:grid;
+    grid-template-columns: minmax(0,1.25fr) minmax(0,.75fr);
+    gap:14px;
+    align-items:start;
+  }
+
+  /* Asegura que el primary NO se auto-centre y no “abra” huecos */
+  #calc-primary{
+    max-width:none !important;
+    margin:0 !important;
+    justify-self:stretch !important;
+    grid-column:1 !important;
+  }
+
+  /* Slot-2 (panel/carrusel) centrado dentro de su columna */
+  #calc-slot-2{
+    grid-column:2 !important;
+    justify-self:center !important;  /* <-- clave: ya no “end” */
+    align-self:start !important;
+    width:min(520px,100%) !important;
+  }
+
+  /* Quita estilos visuales del placeholder del slot-2 (si lo usas) */
+  #calc-slot-2.placeholder{
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    padding:0 !important;
+  }
+
+  /* --- MODO 2 CALCS: 2 columnas limpias, sin slot-2 entre medio --- */
+  html.has-calc-2 .calc-row,
+  body.has-calc-2 .calc-row{
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important;
+    align-items:start !important;
+  }
+
+  html.has-calc-2 #calc-secondary,
+  body.has-calc-2 #calc-secondary{
+    display:block !important;
+    grid-column:2 !important; /* calc 2 a la derecha */
+  }
+
+  /* SIEMPRE oculta slot-2 en 2 calcs (para que NO quede “en medio”) */
+  html.has-calc-2 #calc-slot-2,
+  body.has-calc-2 #calc-slot-2{
+    display:none !important;
+  }
+
+  /* En 2 calcs, el panel “Agregar tercer sistema” aparece centrado abajo */
+  html.has-calc-2 #add-more-panel,
+  body.has-calc-2 #add-more-panel{
+    display:flex !important;
+    grid-column:1 / -1 !important;
+    justify-content:center !important;
+    margin-top:14px !important;
+  }
+
+  /* “Nube” punteada: mismo ancho que tu resumen/tabla (720px) */
+  html.has-calc-2 #add-more-panel .note,
+  body.has-calc-2 #add-more-panel .note{
+    width:min(720px,100%) !important;   /* <-- igual que combined-summary */
+    margin:0 auto !important;
+    text-align:center !important;       /* texto centrado */
+  }
+
+  /* Si quieres el texto del título + subtítulo centrado siempre */
+  html.has-calc-2 #add-more-panel .note strong,
+  body.has-calc-2 #add-more-panel .note strong,
+  html.has-calc-2 #add-more-panel .note small,
+  body.has-calc-2 #add-more-panel .note small{
+    text-align:center !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  /* --- MODO 3 CALCS: 3 columnas, sin panel --- */
+  html.has-calc-3 .calc-row,
+  body.has-calc-3 .calc-row{
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) !important;
+  }
+
+  html.has-calc-3 #calc-secondary,
+  body.has-calc-3 #calc-secondary{
+    display:block !important;
+    grid-column:2 !important;
+  }
+
+  html.has-calc-3 #calc-tertiary,
+  body.has-calc-3 #calc-tertiary{
+    display:block !important;
+    grid-column:3 !important;
+  }
+
+  html.has-calc-3 #add-more-panel,
+  body.has-calc-3 #add-more-panel{
+    display:none !important;
+  }
+
+  html.has-calc-3 #calc-slot-2,
+  body.has-calc-3 #calc-slot-2{
+    display:none !important;
+  }
+}
+
+/* MOBILE/TABLET: 1 columna siempre */
+@media (max-width:980px){
+  .calc-row{display:grid;grid-template-columns:1fr !important;gap:14px}
+  #calc-primary,#calc-secondary,#calc-tertiary,#calc-slot-2,#add-more-panel{grid-column:auto !important}
+}
+
+/* Extra: si secondary/tertiary están vacíos, no deben reservar nada */
+#calc-secondary.calc-empty,
+#calc-tertiary.calc-empty{
+  display:none !important;
+  min-height:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+/* =========================================================
+   EXPIRITI — PATCH ÚNICO (DEFINITIVO)
+   Objetivo:
+   - Todas las calculadoras (1/2/3) usan MISMO “tamaño” (como 3-up)
+   - En 1 calc: NO se alarga (queda <= ~media página) y el panel derecho queda centrado
+   - En 2 calcs: 2 columnas centradas, mismas medidas
+   - En 3 calcs: 3 columnas centradas, mismas medidas
+   - Mantiene el panel “Agregar 3er sistema” abajo en 2 calcs
+========================================================= */
+
+:root{
+  /* Ajusta aquí si quieres más/menos ancho */
+  --calcW: 420px;   /* ancho máximo de cada calculadora (tamaño “3-up”) */
+  --panelW: 520px;  /* ancho del panel/carrusel derecho */
+}
+
+/* --- Desktop base: 1 calc + panel derecho --- */
+@media (min-width:981px){
+
+  /* Reemplaza cualquier grid anterior */
+  .calc-row{
+    display:grid !important;
+    grid-template-columns: minmax(0,var(--calcW)) minmax(0,var(--panelW)) !important;
+    gap:14px !important;
+    align-items:start !important;
+
+    /* Esto evita que el bloque completo se vea “raro”:
+       deja el calc a la izquierda y el panel en la derecha */
+    justify-content:space-between !important;
+  }
+
+  /* 1) Calculadora principal: NO se estira */
+  #calc-primary{
+    grid-column:1 !important;
+    width:100% !important;
+    max-width:var(--calcW) !important;
+    justify-self:start !important;
+    margin:0 !important;
+  }
+
+  /* 2) Panel derecho (slot-2): centrado en su columna derecha */
+  #calc-slot-2{
+    grid-column:2 !important;
+    width:100% !important;
+    max-width:var(--panelW) !important;
+    justify-self:end !important;      /* columna derecha */
+    align-self:center !important;     /* centrado vertical respecto a la calc */
+    margin:0 !important;
+  }
+
+  /* Si slot-2 usa .placeholder, quítale “card” para que no meta aire raro */
+  #calc-slot-2.placeholder{
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    padding:0 !important;
+    min-height:unset !important;
+    height:auto !important;
+  }
+
+  /* Asegura que el carrusel interno no “empuje” el ancho */
+  .icons-carousel{
+    width:100% !important;
+    max-width:var(--panelW) !important;
+    margin:0 auto !important;
+  }
+
+  /* --- MODO 2 CALCS: 2 columnas con MISMO ancho que 3-up, centradas --- */
+  html.has-calc-2 .calc-row,
+  body.has-calc-2 .calc-row{
+    grid-template-columns: repeat(2, minmax(0,var(--calcW))) !important;
+    justify-content:center !important; /* centra el bloque de 2 calcs */
+    align-items:start !important;
+  }
+
+  html.has-calc-2 #calc-secondary,
+  body.has-calc-2 #calc-secondary{
+    display:block !important;
+    width:100% !important;
+    max-width:var(--calcW) !important;
+    justify-self:stretch !important;
+  }
+
+  /* En 2 calcs NO debe existir el panel derecho en medio */
+  html.has-calc-2 #calc-slot-2,
+  body.has-calc-2 #calc-slot-2{
+    display:none !important;
+  }
+
+  /* Panel “Agregar 3er sistema” centrado abajo (mismo ancho que resumen) */
+  html.has-calc-2 #add-more-panel,
+  body.has-calc-2 #add-more-panel{
+    display:flex !important;
+    grid-column:1 / -1 !important;
+    justify-content:center !important;
+    margin-top:14px !important;
+  }
+  html.has-calc-2 #add-more-panel .note,
+  body.has-calc-2 #add-more-panel .note{
+    width:min(720px,100%) !important;
+    margin:0 auto !important;
+    text-align:center !important;
+  }
+
+  /* --- MODO 3 CALCS: 3 columnas MISMO ancho, centradas --- */
+  html.has-calc-3 .calc-row,
+  body.has-calc-3 .calc-row{
+    grid-template-columns: repeat(3, minmax(0,var(--calcW))) !important;
+    justify-content:center !important; /* centra el bloque de 3 calcs */
+    align-items:start !important;
+  }
+
+  html.has-calc-3 #calc-secondary,
+  body.has-calc-3 #calc-secondary,
+  html.has-calc-3 #calc-tertiary,
+  body.has-calc-3 #calc-tertiary{
+    display:block !important;
+    width:100% !important;
+    max-width:var(--calcW) !important;
+  }
+
+  /* En 3 calcs no hay panel derecho ni add-more */
+  html.has-calc-3 #calc-slot-2,
+  body.has-calc-3 #calc-slot-2,
+  html.has-calc-3 #add-more-panel,
+  body.has-calc-3 #add-more-panel{
+    display:none !important;
+  }
+}
+
+/* --- Mobile/Tablet: 1 columna siempre (sin cambios de tu intención) --- */
+@media (max-width:980px){
+  .calc-row{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+    justify-content:stretch !important;
+  }
+  #calc-primary,#calc-secondary,#calc-tertiary,#calc-slot-2,#add-more-panel{
+    max-width:none !important;
+    width:100% !important;
+  }
+}
+
+/* Si secondary/tertiary vienen vacíos, NO deben reservar espacio */
+#calc-secondary.calc-empty,
+#calc-tertiary.calc-empty{
+  display:none !important;
+  min-height:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+
+/* =========================================================
+   EXPIRITI — PATCH FINAL REAL (IMG3 EN 1/2/3)
+   Objetivo:
+   - Calculadoras anchas (como img3) en 1/2/3
+   - En 1 calc: panel “Integra…” centrado en su columna derecha
+   - En 2 calcs: 2 columnas simétricas, mismas medidas (img3)
+   - En 3 calcs: 3 columnas equilibradas (si cabe), mismas “proporciones”
+========================================================= */
+
+:root{
+  /* Ajusta si quieres apenas más ancho/estrecho */
+  --calc-col-min: 560px;   /* mínimo razonable para que NO se “adelgace” */
+  --calc-col-max: 760px;   /* máximo para mantener estilo img3 */
+  --panel-col-min: 380px;  /* panel/carrusel */
+  --panel-col-max: 560px;
+}
+
+/* ------------------------------
+   DESKTOP: 1 calc + panel derecho
+--------------------------------*/
+@media (min-width:981px){
+  /* PISA cualquier grid anterior */
+  .calc-row{
+    display:grid !important;
+    gap:14px !important;
+
+    /* columnas tipo img3 */
+    grid-template-columns:
+      minmax(var(--calc-col-min), var(--calc-col-max))
+      minmax(var(--panel-col-min), var(--panel-col-max)) !important;
+
+    /* centra el bloque completo dentro del container */
+    justify-content:center !important;
+    align-items:stretch !important;
+  }
+
+  /* Calculadora: NO se estira a pantalla completa, queda como img3 */
+  #calc-primary{
+    width:100% !important;
+    max-width:var(--calc-col-max) !important;
+    margin:0 !important;
+    justify-self:stretch !important;
+  }
+
+  /* Panel derecho: centrado vertical y horizontal en su columna */
+  #calc-slot-2{
+    width:100% !important;
+    max-width:var(--panel-col-max) !important;
+    margin:0 !important;
+    justify-self:center !important;
+    align-self:center !important;     /* <-- centrado vertical */
+  }
+
+  /* Si slot-2 usa placeholder, que NO meta “card” ni altura rara */
+  #calc-slot-2.placeholder{
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
+    padding:0 !important;
+    min-height:unset !important;
+    height:auto !important;
+    display:flex !important;
+    align-items:center !important;    /* centra contenido dentro */
+    justify-content:center !important;
+  }
+
+  /* Carrusel dentro del panel: no debe empujar ni encogerse raro */
+  .icons-carousel{
+    width:100% !important;
+    max-width:var(--panel-col-max) !important;
+    margin:0 auto !important;
+  }
+}
+
+/* ------------------------------
+   DESKTOP: 2 CALCS (IMG3)
+--------------------------------*/
+@media (min-width:981px){
+  html.has-calc-2 .calc-row,
+  body.has-calc-2 .calc-row{
+    grid-template-columns:
+      minmax(var(--calc-col-min), var(--calc-col-max))
+      minmax(var(--calc-col-min), var(--calc-col-max)) !important;
+
+    justify-content:center !important; /* centra las 2 */
+    align-items:stretch !important;
+  }
+
+  html.has-calc-2 #calc-secondary,
+  body.has-calc-2 #calc-secondary{
+    display:block !important;
+    width:100% !important;
+    max-width:var(--calc-col-max) !important;
+    margin:0 !important;
+  }
+
+  /* En 2 calcs NO debe existir slot-2 en medio */
+  html.has-calc-2 #calc-slot-2,
+  body.has-calc-2 #calc-slot-2{
+    display:none !important;
+  }
+
+  /* Panel “Agregar 3er sistema” centrado abajo */
+  html.has-calc-2 #add-more-panel,
+  body.has-calc-2 #add-more-panel{
+    display:flex !important;
+    grid-column:1 / -1 !important;
+    justify-content:center !important;
+    margin-top:14px !important;
+  }
+
+  html.has-calc-2 #add-more-panel .note,
+  body.has-calc-2 #add-more-panel .note{
+    width:min(760px,100%) !important;  /* similar al “look” de tabla */
+    margin:0 auto !important;
+    text-align:center !important;
+  }
+}
+
+/* ------------------------------
+   DESKTOP: 3 CALCS (equilibrado)
+--------------------------------*/
+@media (min-width:981px){
+  html.has-calc-3 .calc-row,
+  body.has-calc-3 .calc-row{
+    grid-template-columns:
+      minmax(420px, 1fr)
+      minmax(420px, 1fr)
+      minmax(420px, 1fr) !important;
+
+    justify-content:center !important;
+    align-items:stretch !important;
+  }
+
+  html.has-calc-3 #calc-secondary,
+  body.has-calc-3 #calc-secondary,
+  html.has-calc-3 #calc-tertiary,
+  body.has-calc-3 #calc-tertiary{
+    display:block !important;
+    width:100% !important;
+    max-width:var(--calc-col-max) !important;
+    margin:0 !important;
+  }
+
+  /* En 3 calcs no hay panel ni add-more */
+  html.has-calc-3 #calc-slot-2,
+  body.has-calc-3 #calc-slot-2,
+  html.has-calc-3 #add-more-panel,
+  body.has-calc-3 #add-more-panel{
+    display:none !important;
+  }
+}
+
+/* ------------------------------
+   MOBILE/TABLET: 1 columna siempre
+--------------------------------*/
+@media (max-width:980px){
+  .calc-row{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+    justify-content:stretch !important;
+    align-items:stretch !important;
+  }
+  #calc-primary,#calc-secondary,#calc-tertiary,#calc-slot-2,#add-more-panel{
+    width:100% !important;
+    max-width:none !important;
+  }
+}
+
+/* Si secondary/tertiary vienen vacíos, no deben reservar nada */
+#calc-secondary.calc-empty,
+#calc-tertiary.calc-empty{
+  display:none !important;
+  min-height:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+
+/* =========================================================
+   PATCH UI — Beneficios (listSlider) centrado tipo card vertical
+   - Icono centrado
+   - Título en negritas debajo del icono
+   - Descripción abajo
+========================================================= */
+.listItem{
+  grid-template-columns:1fr !important;
+  text-align:center !important;
+  justify-items:center !important;
+}
+.listIcon{
+  justify-self:center !important;
+  margin:0 auto !important;
+}
+.listItem strong{
+  display:block !important;
+  margin-top:2px !important;
+}
+.listItem div>div{
+  margin-top:2px !important;
+}
+/* =========================================================
+   PATCH UI — Feature cards centradas (icono arriba)
+========================================================= */
+.feature-grid .fcard{
+  text-align:center !important;
+  justify-items:center !important;
+}
+.feature-grid .fhead{
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:10px !important;
+}
+.feature-grid .ficon{
+  margin:0 auto !important;
+}
+.feature-grid .fcard h4{
+  text-align:center !important;
+}
+.feature-grid .fcard p{
+  text-align:center !important;
+}
+
+/* =========================================================
+   PATCH UI — FAQ texto justificado
+========================================================= */
+.faq-item p{
+  text-align:justify;
+  text-justify:inter-word;
+  hyphens:auto;
+}
+
+/* =========================================================
+   PATCH UI — Pills SIN scroll (máxima descubribilidad en mobile)
+========================================================= */
+
+/* Pills: se ven como botones reales */
 .pill{
   min-height:44px;
-  padding:10px 14px!important;
-  border-radius:14px!important;
-  background:linear-gradient(180deg,#0f1724,#0b1220)!important;
-  border:1px solid rgba(148,163,184,.35)!important;
-  color:#dbe7ff!important;
-  font-weight:800!important;
-  line-height:1.15!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 16px rgba(0,0,0,.28);
-  transition:transform .12s ease,box-shadow .12s ease,background .18s ease,border-color .18s ease;
+  padding:10px 12px !important;
+  border-radius:14px !important; /* más “button” que chip */
+  border:1px solid rgba(148,163,184,.35) !important;
+  background:rgba(15,23,42,.70) !important;
+  box-shadow:0 6px 16px rgba(0,0,0,.22);
+  font-weight:800 !important;
+  line-height:1.15 !important;
+}
+.pill:active{
+  transform:translateY(1px);
+  box-shadow:0 3px 10px rgba(0,0,0,.18);
 }
 .pill.active{
-  background:linear-gradient(145deg,var(--brand),var(--brand-2))!important;
-  color:#081218!important;
-  border-color:transparent!important;
-  box-shadow:0 0 0 1px rgba(45,212,191,.45),0 12px 28px rgba(0,0,0,.4);
-}
-.pill:active{transform:translateY(1px) scale(.985);box-shadow:0 4px 12px rgba(0,0,0,.22)}
-.pillbar{display:flex;flex-wrap:wrap!important;gap:10px!important}
-@media(max-width:768px){
-  .pillbar{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
-  .pill{width:100%!important;text-align:center!important;justify-content:center!important}
-  .pillbar .pill:last-child{grid-column:1/-1!important}
+  background:linear-gradient(145deg,var(--brand),var(--brand-2)) !important;
+  color:#0b0f14 !important;
+  border-color:transparent !important;
+  box-shadow:0 10px 22px rgba(0,0,0,.28);
 }
 
+/* Desktop/tablet: pueden ir en fila y wrap normal */
+.pillbar{
+  flex-wrap:wrap !important;
+  gap:10px !important;
+}
+
+/* Mobile: que se vean TODOS, sin scroll, en “botones” apilados */
+@media(max-width:768px){
+  .pillbar{
+    display:grid !important;
+    grid-template-columns:1fr !important; /* 1 columna = máxima claridad */
+    gap:10px !important;
+  }
+  .pill{
+    width:100% !important;
+    justify-content:center !important;
+    text-align:center !important;
+  }
+}
+@media(max-width:768px){
+  .pillbar{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important; /* 2 columnas */
+    gap:10px !important;
+  }
+  .pill{
+    width:100% !important;
+    text-align:center !important;
+  }
+  /* Si son 3 pills, el último ocupa toda la fila para que se vea balanceado */
+  .pillbar .pill:last-child{
+    grid-column:1 / -1 !important;
+  }
+}
+
+/* =========================================================
+   UI FIX — Pills como BOTONES reales (no azules)
+   - Inactivo: neutro oscuro
+   - Activo: brand gradient
+========================================================= */
+
+.pill{
+  min-height:44px;
+  padding:10px 14px !important;
+  border-radius:14px !important;
+
+  /* 👇 CLAVE: quitamos el azul */
+  background:linear-gradient(
+    180deg,
+    #0f1724,
+    #0b1220
+  ) !important;
+
+  border:1px solid rgba(148,163,184,.35) !important;
+  color:#dbe7ff !important;
+
+  font-weight:800 !important;
+  line-height:1.15 !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 6px 16px rgba(0,0,0,.28);
+
+  transition:
+    transform .12s ease,
+    box-shadow .12s ease,
+    background .18s ease,
+    border-color .18s ease;
+}
+
+/* Estado activo (EL QUE DESTACA) */
+.pill.active{
+  background:linear-gradient(
+    145deg,
+    var(--brand),
+    var(--brand-2)
+  ) !important;
+
+  color:#081218 !important;
+  border-color:transparent !important;
+
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.38);
+}
+
+/* Feedback táctil */
+.pill:active{
+  transform:translateY(1px) scale(.985);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.22);
+}
+
+.pill.active{
+  box-shadow:
+    0 0 0 1px rgba(45,212,191,.45),
+    0 12px 28px rgba(0,0,0,.4);
+}
+
+/* =========================================================
+   EXPIRITI — FIX: quitar títulos blancos arriba de videos
+   (¿Qué hace el sistema? / ¿Para quién va dirigido?)
+========================================================= */
+
+/* Oculta títulos directos arriba del carrusel */
+section > h3,
+section > h4{
+  display:none !important;
+}
+
+/* Oculta títulos dentro de cards encima de carruseles */
+.card.body > h3,
+.card.body > h4{
+  display:none !important;
+}
+
+/* Extra seguridad: títulos justo antes del carousel */
+.carousel{
+  margin-top:0 !important;
+}
+.carousel:has(+ h3),
+.carousel:has(+ h4){
+  margin-top:0 !important;
+}
 
 
