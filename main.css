@@ -627,4 +627,45 @@ body.page-sistemas #carouselVideos .yt-wrap{aspect-ratio:16/9!important;min-heig
 /* VIDEOS: oculta títulos dentro de cards (evita texto suelto arriba-izq) */
 .page-sistemas #videos .yt-title{display:none!important}
 
+/* =========================================================
+   VIDEOS — ocultar títulos blancos y usar SOLO la barra superior
+========================================================= */
+.page-sistemas #videos .yt-title{display:none!important}
+
+/* Barra superior creada por JS (yt-titlesbar) */
+.page-sistemas #carouselVideos .yt-titlesbar{
+  position:sticky; top:0; z-index:4;
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  margin:0 0 10px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(45,212,191,.10);            /* “verde” suave */
+  border:1px solid rgba(45,212,191,.18);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.page-sistemas #carouselVideos .yt-titlesbar .yt-tab{
+  font-weight:800;
+  font-size:14px;
+  line-height:1.2;
+  color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+@media(max-width:768px){
+  .page-sistemas #carouselVideos .yt-titlesbar{
+    grid-template-columns:1fr;
+    gap:6px;
+    padding:10px 12px;
+  }
+}
+
+/* Evita que el sticky afecte el scroll horizontal del track */
+.page-sistemas #carouselVideos .carousel-track{position:relative}
+
+.page-sistemas #integra .sys{cursor:pointer}
+.page-sistemas #integra .sys:focus{outline:2px solid rgba(45,212,191,.55);outline-offset:3px}
+
+
 
