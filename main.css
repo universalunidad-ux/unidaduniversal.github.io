@@ -541,4 +541,45 @@ html[data-theme="light"] .page-sistemas .calc-container thead th{
   }
 }
 
+/* ===== PATCH FINAL ULTRA-ESPECÍFICO (SISTEMAS) ===== */
+
+/* A) Si se te “apagó” el scope por error en alguna página, esto obliga a que main actúe dentro de body.page-sistemas */
+body.page-sistemas{max-width:100%;overflow-x:hidden}
+
+/* B) HERO listSlider: iconos más grandes (sin aro) */
+body.page-sistemas .listSlider .listIcon{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+body.page-sistemas .listSlider .listIcon img{
+  width:76px!important;height:76px!important;object-fit:contain!important;display:block!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;
+}
+@media(min-width:981px){
+  body.page-sistemas .listSlider .listIcon img{width:84px!important;height:84px!important}
+}
+
+/* C) Flechas listSlider centradas en mobile (sí o sí) */
+@media(max-width:680px){
+  body.page-sistemas .listSlider{position:relative!important;padding-bottom:78px!important}
+  body.page-sistemas .listSlider .arrowCircle{
+    top:auto!important;bottom:12px!important;transform:none!important;
+  }
+  body.page-sistemas .listSlider .arrowCircle.prev{
+    left:50%!important;right:auto!important;transform:translateX(-58px)!important;
+  }
+  body.page-sistemas .listSlider .arrowCircle.next{
+    left:50%!important;right:auto!important;transform:translateX(58px)!important;
+  }
+}
+
+/* D) Funciones destacadas: iconos más grandes (ficon) */
+body.page-sistemas .feature-grid .ficon{
+  width:104px!important;height:104px!important;padding:18px!important;border-radius:22px!important;
+}
+@media(max-width:768px){
+  body.page-sistemas .feature-grid .ficon{width:92px!important;height:92px!important;padding:16px!important}
+}
+
+/* E) Videos: asegura altura aunque falle otro CSS */
+body.page-sistemas #carouselVideos .yt-wrap{aspect-ratio:16/9!important;min-height:180px}
+
+
 
