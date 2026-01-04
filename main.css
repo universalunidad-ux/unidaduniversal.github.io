@@ -582,4 +582,49 @@ body.page-sistemas .feature-grid .ficon{
 body.page-sistemas #carouselVideos .yt-wrap{aspect-ratio:16/9!important;min-height:180px}
 
 
+/* FEATURE GRID: 4 cols y última fila centrada (robusto con filtros) */
+@media(min-width:1200px){
+  .page-sistemas .feature-grid{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    justify-content:center!important;
+    gap:16px!important;
+  }
+  .page-sistemas .feature-grid .fcard{
+    flex:0 1 calc((100% - 48px)/4)!important; /* 4 cols (3 gaps) */
+    max-width:calc((100% - 48px)/4)!important;
+  }
+}
+
+/* 3 cols */
+@media(min-width:981px) and (max-width:1199px){
+  .page-sistemas .feature-grid{
+    display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:16px!important;
+  }
+  .page-sistemas .feature-grid .fcard{
+    flex:0 1 calc((100% - 32px)/3)!important;
+    max-width:calc((100% - 32px)/3)!important;
+  }
+}
+
+/* 2 cols */
+@media(max-width:980px){
+  .page-sistemas .feature-grid{
+    display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:14px!important;
+  }
+  .page-sistemas .feature-grid .fcard{
+    flex:0 1 calc((100% - 14px)/2)!important;
+    max-width:calc((100% - 14px)/2)!important;
+  }
+}
+
+/* 1 col */
+@media(max-width:520px){
+  .page-sistemas .feature-grid .fcard{flex:0 1 100%!important;max-width:100%!important}
+}
+
+
+/* VIDEOS: oculta títulos dentro de cards (evita texto suelto arriba-izq) */
+.page-sistemas #videos .yt-title{display:none!important}
+
 
