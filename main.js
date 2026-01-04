@@ -1,4 +1,4 @@
-f/* =========================================================
+/* =========================================================
  Expiriti - main.js (FINAL) — MINIFICADO + COMENTARIOS (CORREGIDO)
  - Partials robustos (GH user-site + local/subcarpetas) + normaliza rutas
  - FIX: .js-link[data-href] ahora pasa por abs() y SIEMPRE setea href
@@ -421,30 +421,66 @@ wrap.hidden=!1;
 };
 
 const row=D.getElementById("calc-row");if(!row)return;
-const slot2=D.getElementById("calc-slot-2");
-const secondary=D.getElementById("calc-secondary");
 
-                                                 const slot3=D.getElementById("calc-tertiary");
+/* placeholder fijo (NO se cambia) */
+const slot2=D.getElementById("calc-slot-2");
+let secondary=D.getElementById("calc-secondary");
+
+/* crea #calc-secondary dinámico justo después del placeholder */
+const ensureSecondary=()=>{
+  if(secondary) return secondary;
+  if(!slot2||!slot2.parentNode) return null;
+  secondary=D.createElement("div");
+  secondary.id="calc-secondary";
+  secondary.className="calc-container";
+  secondary.setAttribute("aria-label","Calculadora secundaria");
+  secondary.style.display="none";
+  slot2.insertAdjacentElement("afterend",secondary);
+  return secondary;
+};
+ensureSecondary();
+
+/* helpers mostrar/ocultar */
+const showSecondary=()=>{
+  ensureSecondary();
+  if(slot2) slot2.style.display="none";
+  if(secondary) secondary.style.display="block";
+};
+const hideSecondary=()=>{
+  if(secondary) secondary.style.display="none";
+  if(slot2) slot2.style.display="";
+};
+
+const slot3=D.getElementById("calc-tertiary");
 const addMore=D.getElementById("add-more-panel");
 const pick2=D.getElementById("icons-sec-sys");
 const pick3=D.getElementById("icons-third-sys");
 const selected={secondary:null,tertiary:null};
 const setSel=()=>new Set([selected.secondary,selected.tertiary].filter(Boolean));
 
-renderPicker("icons-sec-sys",new Set([PRIMARY]),null);
-renderPicker("icons-third-sys",new Set([PRIMARY]),null);
-
-const refresh=()=>{const ex=setSel();ex.add(PRIMARY);
-renderPicker("icons-sec-sys",ex,selected.secondary);
-renderPicker("icons-third-sys",ex,selected.tertiary);
-};
 const showMore=()=>{if(addMore)addMore.style.display=selected.secondary?"":"none"};
+
+const refresh=()=>{
+  const ex=setSel();
+  renderPicker("icons-sec-sys",ex,selected.secondary);
+  renderPicker("icons-third-sys",ex,selected.tertiary);
+};
+
+
+refresh();
+showMore();
+
+
+
+/* click 2do sistema */
 if(pick2)pick2.addEventListener("click",e=>{
   const btn=e.target.closest(".sys-icon"); if(!btn) return;
   const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
 
   selected.secondary=sys;
   if(selected.tertiary===sys) selected.tertiary=null;
+
+  ensureSecondary();
 
   if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setSecondarySystem){
     W.CalculadoraContpaqi.setSecondarySystem(sys,{
@@ -458,16 +494,7 @@ if(pick2)pick2.addEventListener("click",e=>{
   refresh();
   showMore();
 });
-
-
-                                                 
-                                                 const showSecondary=()=>{
-  if(slot2) slot2.style.display="none";
-  if(secondary) secondary.style.display="block";
-  if(addMore) addMore.style.display=""; // habilita picker 3er sistema
-};
-
-
+      /* click 3er sistema */
 if(pick3)pick3.addEventListener("click",e=>{const btn=e.target.closest(".sys-icon");if(!btn)return;
 const sys=btn.dataset.sys;if(!hasPrices(sys)||sys===selected.secondary)return;
 selected.tertiary=sys;if(slot3)slot3.style.display="block";
@@ -483,7 +510,11 @@ if(W.CalculadoraContpaqi&&W.CalculadoraContpaqi.init){
 D.body.setAttribute("data-calc","escritorio");
 W.CalculadoraContpaqi.init({systemName:PRIMARY,primarySelector:"#calc-primary",combinedSelector:"#combined-wrap"});
 }else console.warn("CalculadoraContpaqi.init no disponible");
-})})();
+});}); /* CIERRA sección 10 (DOMContentLoaded + IIFE) */
+
+
+                                                 
+        
 
 /* =========================================================
  11) COMPACTADOR (reacomoda UI calc si viene “suelta”)
