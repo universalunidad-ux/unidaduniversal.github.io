@@ -204,3 +204,92 @@ body>.arrowCircle{display:none!important}
 /* P2) Previene overflow horizontal por assets/iframes */
 .page-sistemas iframe{max-width:100%}
 /* ===== FIN ===== */
+
+/* ===================== Expiriti PATCH (SISTEMAS) v2026.01.04-P1 =====================
+   Objetivo: Funcionalidades + Videos + Integra + Comparativa mobile + Calc icons + Badges light
+   Scope: SOLO .page-sistemas (no toca index)
+==================================================================================== */
+
+/* === P1.1) FUNCIONALIDADES: icono centrado + texto abajo + centrado === */
+.page-sistemas .feature-grid{display:grid;gap:14px}
+.page-sistemas .feature-grid .fcard{display:grid;grid-template-rows:auto auto;align-content:start;justify-items:center;text-align:center;padding:16px;border-radius:16px;border:1px solid rgba(148,163,184,.18);background:rgba(15,23,42,.22)}
+.page-sistemas .feature-grid .fhead{display:grid;justify-items:center;gap:10px;margin:0}
+.page-sistemas .feature-grid .ficon{width:64px;height:64px;object-fit:contain;border-radius:14px;background:transparent;border:0;box-shadow:none}
+.page-sistemas .feature-grid .fcard h4{margin:0;font-size:14px;line-height:1.2}
+.page-sistemas .feature-grid .fcard p{margin:8px 0 0;opacity:.9;font-size:13px;line-height:1.35}
+
+/* === P1.2) VIDEOS DEL SISTEMA: centrado + responsive + nav usable === */
+.page-sistemas #videos .card.body{overflow:visible}
+.page-sistemas #carouselVideos{border-radius:16px;overflow:hidden;min-height:unset}
+.page-sistemas #carouselVideos .carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+.page-sistemas #carouselVideos .carousel-slide{min-width:100%;flex:0 0 100%;scroll-snap-align:start;display:flex;justify-content:center;align-items:stretch;padding:0 22px;box-sizing:border-box}
+@media(max-width:768px){.page-sistemas #carouselVideos .carousel-slide{padding:0 12px}}
+.page-sistemas #carouselVideos .yt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;width:min(980px,100%);margin:0 auto}
+@media(max-width:980px){.page-sistemas #carouselVideos .yt-grid{grid-template-columns:1fr}}
+.page-sistemas #carouselVideos .yt{border-radius:16px;border:1px solid rgba(148,163,184,.20);background:rgba(15,23,42,.22);padding:12px;overflow:hidden}
+.page-sistemas #carouselVideos .yt-title{display:block!important;margin:0 0 10px;text-align:center;font-weight:900;font-size:14px;color:var(--brand)}
+.page-sistemas #carouselVideos .yt-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.08)}
+.page-sistemas #carouselVideos .yt-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.page-sistemas #carouselVideos .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);z-index:10}
+.page-sistemas #carouselVideos .arrowCircle.prev{left:8px}
+.page-sistemas #carouselVideos .arrowCircle.next{right:8px}
+@media(max-width:768px){.page-sistemas #carouselVideos .arrowCircle{width:40px;height:40px}.page-sistemas #carouselVideos .arrowCircle.prev{left:6px}.page-sistemas #carouselVideos .arrowCircle.next{right:6px}}
+.page-sistemas #carouselVideos .carousel-nav{display:flex;gap:8px;justify-content:center;padding:10px 12px;border-top:1px solid rgba(148,163,184,.14);background:rgba(15,23,42,.20)}
+.page-sistemas #carouselVideos .dot{width:10px;height:10px;border-radius:999px;background:rgba(148,163,184,.28);border:0;opacity:.65;cursor:pointer}
+.page-sistemas #carouselVideos .dot.active{background:linear-gradient(145deg,var(--brand),var(--brand-2));opacity:1}
+
+/* === P1.3) INTEGRA: carouselX limpio + mobile scroll agradable === */
+.page-sistemas #integra .card.body{overflow:visible}
+.page-sistemas #integra .carouselX{position:relative;max-width:100%}
+.page-sistemas #integra .carouselX .track{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:8px 44px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.page-sistemas #integra .carouselX .sys{flex:0 0 calc((100% - 28px)/3);min-width:260px;border-radius:16px;padding:18px;display:flex;flex-direction:column;align-items:center;text-align:center;cursor:pointer;transition:transform .12s ease,border-color .18s ease,box-shadow .18s ease;border:1px solid rgba(148,163,184,.18);background:rgba(15,23,42,.22)}
+.page-sistemas #integra .carouselX .sys:hover{transform:translateY(-2px);border-color:rgba(96,165,250,.55);box-shadow:0 12px 28px rgba(0,0,0,.30)}
+.page-sistemas #integra .carouselX .sys img{width:min(240px,88%);height:62px;object-fit:contain;border-radius:14px;background:transparent;border:0;margin:6px auto 12px}
+.page-sistemas #integra .carouselX .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);z-index:10}
+.page-sistemas #integra .carouselX .arrowCircle.prev{left:8px}
+.page-sistemas #integra .carouselX .arrowCircle.next{right:8px}
+@media(max-width:980px){
+  .page-sistemas #integra .carouselX .sys{flex:0 0 86%;min-width:280px}
+  .page-sistemas #integra .carouselX .track{padding:8px 40px}
+}
+@media(max-width:520px){
+  .page-sistemas #integra .carouselX .sys{flex:0 0 92%;min-width:270px}
+  .page-sistemas #integra .carouselX .track{padding:8px 38px}
+}
+
+/* === P1.4) COMPARATIVA: mobile scrolleable (horizontal) === */
+.page-sistemas #comparativa .card.body{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.page-sistemas #comparativa .table-like{width:100%;min-width:860px;border-collapse:separate}
+@media(max-width:768px){.page-sistemas #comparativa .table-like{min-width:920px}}
+
+/* === P1.5) LISTSLIDER ICONOS: quitar aro/marco gris que reduce tamaño === */
+.page-sistemas .listIcon{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important}
+.page-sistemas .listIcon img{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;display:block;width:56px;height:56px;object-fit:contain}
+@media(min-width:981px){.page-sistemas .listIcon img{width:60px;height:60px}}
+
+/* === P1.6) CALCULADORA: icons-wrap sin “marco” + badges internos consistentes === */
+.page-sistemas .placeholder .note{background:rgba(17,23,35,.22)}
+.page-sistemas .icons-wrap{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:flex-start}
+.page-sistemas .icons-wrap img,
+.page-sistemas .icons-wrap .sys-icon img{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:12px!important}
+
+/* === P1.7) BADGES: consistentes en dark y light (scoped a Sistemas) === */
+.page-sistemas .badge,
+.page-sistemas .badges .badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 10px;border-radius:999px;
+  border:1px solid rgba(148,163,184,.28);
+  background:rgba(15,23,42,.22);
+  color:rgba(232,238,246,.92);
+  font-weight:800;font-size:12.5px;line-height:1
+}
+html[data-theme="light"] .page-sistemas .badge,
+html[data-theme="light"] .page-sistemas .badges .badge{
+  border-color:rgba(2,6,23,.14);
+  background:rgba(255,255,255,.82);
+  color:rgba(11,18,32,.92)
+}
+
+/* === P1.8) Seguridad: flechas sueltas fuera de carouseles (tu regla) === */
+.page-sistemas .carousel,.page-sistemas .carouselX,.page-sistemas .icons-carousel,.page-sistemas .listSlider{position:relative}
+body>.arrowCircle{display:none!important}
