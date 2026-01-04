@@ -1,211 +1,383 @@
 /* =========================================================
-   Expiriti — mainindex.css (INDEX ONLY) v2026.01.04
+   Expiriti — mainindex.css (INDEX ONLY) v2026.01.04-2
    Requiere: theme.css (GLOBAL)
    Scope: <body class="page-index">
-   - SOLO Index: HERO fold + Hero Gallery + Productos alignment + Servicios pager + Promos + Contacto/Mapa
+   - Restaura estilos base del index (layout/cards/carousel/forms/promos)
+   - Mantiene tus overrides: HERO fold + Hero Gallery + dots abajo + reels sin scroll
+   - CI friendly (sin :has())
 ========================================================= */
 
 /* =========================
-   0) Scope + offsets
+   0) Scope + vars locales
 ========================= */
-.page-index{scroll-padding-top:84px}
-@media(max-width:768px){.page-index{scroll-padding-top:68px}}
+.page-index{
+  scroll-padding-top:84px;
+  --ix-vh:1svh;
+  --ix-hero:100svh;
+  --ix-sec:92svh;
+  --ghh:var(--gh-height,68px);
+  --tap:var(--tap,44px);
+  --maxw:var(--maxw,1200px);
+  --gap:var(--gap,14px);
+  --radius:var(--radius,14px);
+  --radius-lg:var(--radius-lg,18px);
+  --shadow:var(--shadow,0 10px 30px rgba(0,0,0,.25));
+  --border:var(--border,1px solid rgba(255,255,255,.085));
+  --card:var(--card,#111723);
+  --card-2:var(--card-2,#0f1622);
+  --text:var(--text,#e8eef6);
+  --muted:var(--muted,#95a2b3);
+  --brand:var(--brand,#2dd4bf);
+  --brand-2:var(--brand-2,#60a5fa);
 
-/* Si theme ya maneja el padding-top por header, esto es redundante.
-   Si NO lo maneja, deja este bloque. */
-.page-index{padding-top:var(--gh-height,68px)}
+  /* Reels (-15% como traías) */
+  --reel-scale:.85;
+  --reel-h-min:calc(240px * var(--reel-scale));
+  --reel-h-mid:calc(42svh * var(--reel-scale));
+  --reel-h-max:calc(520px * var(--reel-scale));
+}
+@supports (height:100dvh){
+  .page-index{--ix-vh:1dvh;--ix-hero:100dvh;--ix-sec:92dvh}
+}
+@media(max-width:768px){.page-index{scroll-padding-top:68px}}
+@media(max-width:380px){
+  .page-index{
+    --reel-h-mid:calc(36svh * var(--reel-scale));
+    --reel-h-max:calc(420px * var(--reel-scale));
+  }
+}
+@media(min-width:980px){
+  .page-index{
+    --reel-h-mid:calc(52vh * var(--reel-scale));
+    --reel-h-max:calc(640px * var(--reel-scale));
+  }
+}
 
 /* =========================
-   1) HERO fold real (Index)
+   1) Reset util (solo index)
+========================= */
+.page-index *{box-sizing:border-box}
+.page-index img,.page-index video{max-width:100%;height:auto;display:block}
+.page-index iframe{max-width:100%}
+.page-index a{color:inherit;text-decoration:none}
+.page-index button,.page-index input,.page-index select,.page-index textarea{font:inherit}
+.page-index :focus-visible{outline:2px solid rgba(96,165,250,.75);outline-offset:2px}
+.page-index .hidden,.page-index [hidden]{display:none!important}
+
+/* =========================
+   2) Layout util
+========================= */
+.page-index .container,
+.page-index .section-full,
+.page-index .hero,
+.page-index .card,
+.page-index .cards,
+.page-index .promo-grid,
+.page-index .carousel,
+.page-index .carousel-track,
+.page-index .reel-sys-tabs{max-width:100%}
+
+.page-index .container{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.page-index .section-full{padding:34px 0}
+.page-index .grid-2{display:grid;grid-template-columns:1fr;gap:var(--gap)}
+.page-index .grid-2>*{min-width:0}
+.page-index .v-center,.page-index .align-center{align-items:center}
+
+@media(min-width:980px){
+  .page-index .container{
+    padding-left:max(18px,env(safe-area-inset-left,0px));
+    padding-right:max(18px,env(safe-area-inset-right,0px));
+  }
+  .page-index .grid-2{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+  .page-index .hero .container,
+  .page-index #productos-con>.container{
+    padding-left:max(12px,env(safe-area-inset-left,0px))!important;
+    padding-right:max(12px,env(safe-area-inset-right,0px))!important;
+  }
+}
+
+/* CLS placeholders */
+.page-index #header-placeholder{display:block;min-height:var(--ghh)}
+.page-index #footer-placeholder{display:block;min-height:260px}
+
+/* =========================
+   3) Typo / chips / botones
+========================= */
+.page-index .kicker{
+  display:inline-flex;gap:8px;align-items:center;
+  color:rgba(232,238,246,.92);font-weight:800;letter-spacing:.2px;
+  background:rgba(255,255,255,.04);border:var(--border);border-radius:999px;
+  padding:8px 12px;margin-bottom:10px
+}
+.page-index .lead{color:rgba(232,238,246,.86);margin:10px 0 0}
+.page-index .hint{color:rgba(149,162,179,.95);font-size:.94rem}
+.page-index .title-gradient,
+.page-index .gradient-word{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.page-index .badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border-radius:999px;padding:8px 12px;border:var(--border);
+  background:rgba(255,255,255,.04);color:rgba(232,238,246,.92);font-size:.92rem
+}
+.page-index .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.page-index .badge a{
+  text-decoration:underline;text-underline-offset:3px;
+  text-decoration-color:rgba(232,238,246,.35)
+}
+.page-index .badge a:hover{text-decoration-color:rgba(45,212,191,.7)}
+
+.page-index .btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:12px;padding:12px 14px;border:var(--border);
+  background:rgba(255,255,255,.04);color:rgba(232,238,246,.96);
+  cursor:pointer;transition:transform .12s ease,background .12s ease,border-color .12s ease;
+  min-height:var(--tap)
+}
+.page-index .btn:active{transform:translateY(1px)}
+.page-index .btn-sm{padding:10px 12px;border-radius:11px;min-height:40px}
+.page-index .btn-grad-green{border-color:rgba(45,212,191,.35);background:linear-gradient(180deg,rgba(45,212,191,.20),rgba(255,255,255,.03))}
+.page-index .btn-grad-blue{border-color:rgba(96,165,250,.35);background:linear-gradient(180deg,rgba(96,165,250,.20),rgba(255,255,255,.03))}
+.page-index .hero-btn{font-weight:900}
+
+/* =========================
+   4) Card base
+========================= */
+.page-index .card{
+  border:var(--border);
+  background:
+    radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.07),transparent 60%),
+    radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.06),transparent 60%),
+    linear-gradient(180deg,rgba(17,23,35,.92),rgba(17,23,35,.70));
+  border-radius:var(--radius);
+  box-shadow:var(--shadow)
+}
+.page-index .card .body{padding:16px}
+.page-index .card.body{padding:16px}
+
+/* =========================
+   5) HERO fold real (Index)
 ========================= */
 .page-index .hero.section-full{padding:0!important}
 .page-index .hero{
-  min-height:calc(var(--ix-hero,100svh) - var(--gh-height,68px) - env(safe-area-inset-top,0px));
-  display:flex;
-  align-items:center;
-  padding:0!important;
+  min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px));
+  display:flex;align-items:center;padding:0!important;border-top:0!important
 }
-.page-index .hero .container{
-  width:100%;
-  padding-top:14px!important;
-  padding-bottom:14px!important;
-}
+.page-index .hero .container{width:100%;padding-top:14px!important;padding-bottom:14px!important}
 .page-index .hero-grid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
 .page-index .hero-grid>*{min-width:0}
 .page-index .hero h1{margin:0;line-height:1.15;font-size:1.65rem}
 @media(min-width:980px){
-  .page-index .hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}
+  .page-index .hero-grid{grid-template-columns:1.05fr .95fr;gap:18px;min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px))}
   .page-index .hero h1{font-size:2.25rem}
 }
 
 /* =========================
-   2) HERO Gallery (Index)
-   - Ajustes específicos: alto del card, tabs tipo “logos”, dots abajo
+   6) HERO Gallery (tabs + card + dots abajo)
 ========================= */
-
-/* Card de galería: ocupa fold sin romper */
 .page-index .hero-gallery-card{
-  height:calc(100svh - var(--gh-height,68px) - env(safe-area-inset-top,0px) - 14px)!important;
+  height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px) - 14px)!important;
   min-height:480px!important;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
+  display:flex;flex-direction:column;overflow:hidden
 }
 @media(min-width:980px){.page-index .hero-gallery-card{min-height:560px!important}}
 
-/* Header del card */
 .page-index .hero-gallery-header{padding:10px 16px 8px;border-bottom:var(--border)}
 .page-index .hero-gallery-header h2{margin:0;font-size:1.05rem;line-height:1.15}
-@media(max-width:520px){.page-index .hero-gallery-header{padding:10px 14px 7px}.page-index .hero-gallery-header h2{font-size:1rem}}
+@media(max-width:520px){
+  .page-index .hero-gallery-header{padding:10px 14px 7px}
+  .page-index .hero-gallery-header h2{font-size:1rem}
+}
 
-/* Grupos (tabs horizontales) */
+/* grupos */
 .page-index .hero-gallery-groups{
-  display:flex;
-  gap:12px;
-  padding:8px 12px 0;
-  margin:8px 0 14px;
-  overflow-x:auto;
-  overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
+  display:flex;gap:12px;padding:8px 12px 0;margin:8px 0 14px;
+  overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  touch-action:pan-x;overscroll-behavior-x:contain
 }
 .page-index .hero-gallery-groups::-webkit-scrollbar{height:0}
 .page-index .hero-gallery-groups>*{flex:0 0 auto;white-space:nowrap}
 .page-index .hero-group-tab{
-  min-height:44px;
-  padding:10px 12px;
-  border-radius:999px;
-  border:var(--border);
-  background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.92);
-  font-weight:900;
-  cursor:pointer;
+  min-height:44px;padding:10px 12px;border-radius:999px;border:var(--border);
+  background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);
+  font-weight:900;cursor:pointer
 }
-.page-index .hero-group-tab.active{
-  border-color:rgba(45,212,191,.45);
-  background:rgba(45,212,191,.12);
-}
+.page-index .hero-group-tab.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}
 
-/* Tabs (logos grid) */
+/* tabs logos */
 .page-index .hero-gallery-tabs{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:12px!important;
-  padding:12px 12px 14px!important;
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;padding:12px 12px 14px!important
 }
 .page-index .hero-tab{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  min-height:86px!important;
-  padding:14px!important;
-  border-radius:14px!important;
-  border:var(--border)!important;
-  background:rgba(255,255,255,.03)!important;
-  cursor:pointer;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  min-height:86px!important;padding:14px!important;border-radius:14px!important;
+  border:var(--border)!important;background:rgba(255,255,255,.03)!important;cursor:pointer
 }
-.page-index .hero-tab.active{
-  border-color:rgba(96,165,250,.40)!important;
-  background:rgba(96,165,250,.10)!important;
-}
+.page-index .hero-tab.active{border-color:rgba(96,165,250,.40)!important;background:rgba(96,165,250,.10)!important}
 .page-index .hero-tab span{display:none!important}
 .page-index .hero-tab img{
-  width:auto!important;
-  height:52px!important;
-  max-width:180px!important;
-  object-fit:contain!important;
-  background:transparent!important;
-  border:0!important;
-  border-radius:0!important;
-  margin:0 auto!important;
-  display:block!important;
+  width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;
+  background:transparent!important;border:0!important;border-radius:0!important;margin:0 auto!important;display:block!important
 }
 @media(max-width:420px){
   .page-index .hero-tab{min-height:82px!important;padding:12px!important}
   .page-index .hero-tab img{height:46px!important;max-width:165px!important}
 }
 
-/* Hero carousel: flex para que dots queden “abajo” */
-.page-index #heroGalleryCarousel.carousel{
-  display:flex!important;
-  flex-direction:column!important;
-  overflow:visible!important;
+/* =========================
+   7) Carousel base (index)
+========================= */
+.page-index .carousel{
+  position:relative;border-radius:var(--radius);overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);background:var(--card-2)
 }
+.page-index .carousel-track{
+  display:flex;gap:0;overflow-x:auto;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+  min-height:240px
+}
+.page-index .carousel-slide{flex:0 0 100%;scroll-snap-align:start;position:relative}
+.page-index .carousel-nav{
+  position:absolute;left:0;right:0;bottom:8px;
+  display:flex;justify-content:center;gap:10px;padding:8px 10px;
+  z-index:3;pointer-events:none
+}
+.page-index .carousel-nav .dot{
+  pointer-events:auto;width:18px;height:18px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer
+}
+.page-index .carousel-nav .dot.active{background:rgba(45,212,191,.85);border-color:rgba(45,212,191,.95)}
+
+.page-index .arrowCircle{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:42px;height:42px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(7,10,16,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:rgba(232,238,246,.95);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:3
+}
+.page-index .arrowCircle .chev{font-size:22px;line-height:1}
+.page-index .arrowCircle.prev{left:10px}
+.page-index .arrowCircle.next{right:10px}
+.page-index .arrowCircle.is-disabled{opacity:.35}
+
+@media(min-width:980px){
+  .page-index .carousel-track{min-height:320px}
+  .page-index .carousel-nav .dot{width:14px;height:14px}
+}
+@media(max-width:980px){.page-index .arrowCircle{display:none}}
+@media(max-width:980px){.page-index .hero .arrowCircle{display:flex}} /* hero sí */
+
+/* =========================
+   8) HERO Carousel: dots abajo + contain (sin recorte)
+========================= */
+.page-index #heroGalleryCarousel{background:transparent!important;border-color:rgba(255,255,255,.10)!important}
+.page-index #heroGalleryCarousel.carousel{display:flex!important;flex-direction:column!important;overflow:visible!important}
 .page-index #heroGalleryCarousel .carousel-track{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  height:100%!important;
-  overflow:hidden!important;
+  flex:1 1 auto!important;min-height:0!important;height:100%!important;overflow:hidden!important
 }
 .page-index #heroGalleryCarousel .carousel-slide{
-  height:100%!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  padding:0!important;
+  height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important
 }
-
-/* IMAGEN: sin recorte (contain) para que no corte arriba/abajo */
 .page-index #heroGalleryCarousel .hero-slide img{
-  width:100%!important;
-  height:100%!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  background:transparent!important;
-  display:block!important;
+  width:100%!important;height:100%!important;display:block!important;
+  object-fit:contain!important;object-position:center!important;background:transparent!important
 }
-
-/* Dots: abajo, blur más transparente y ancho según dots */
+/* dots abajo, blur más transparente y ancho según dots */
 .page-index #heroGalleryCarousel .carousel-nav{
-  position:static!important;
-  width:max-content!important;
-  max-width:calc(100% - 24px)!important;
-  margin:10px auto 12px!important;
-  padding:6px 10px!important;
-  gap:8px!important;
-  border-radius:999px!important;
-  background:rgba(7,10,18,.14)!important;
-  border:1px solid rgba(255,255,255,.10)!important;
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  pointer-events:auto!important;
-  justify-content:center!important;
+  position:static!important;width:max-content!important;max-width:calc(100% - 24px)!important;
+  margin:10px auto 12px!important;padding:6px 10px!important;gap:8px!important;border-radius:999px!important;
+  background:rgba(7,10,18,.14)!important;border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  pointer-events:auto!important;justify-content:center!important
 }
 .page-index #heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
 @media(min-width:981px){.page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}}
 
-/* Flechas: hero sí puede mostrarlas en mobile */
-@media(max-width:980px){.page-index .hero .arrowCircle{display:flex}}
-
 /* =========================
-   3) Productos CONTPAQi (Index)
-   - Alignment desktop: barra izquierda + reels derecha ocupando alto completo
+   9) Productos: barra + tabs + grid + CTA abajo
 ========================= */
 .page-index .panel-productos.hidden{display:none!important}
+.page-index .productos-inline-bar{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:6px 0 14px}
+.page-index .prod-title{margin:0;font-size:1.1rem}
+.page-index .prod-title span{margin-left:6px;color:rgba(232,238,246,.75)}
 
-/* Estructura “section-cq” (Index) */
+.page-index .prod-tabs-shell{flex:1 1 auto;min-width:0}
+.page-index .prod-tabs{
+  min-width:0;max-width:100%;
+  display:flex;gap:10px;align-items:center;flex-wrap:nowrap;
+  overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
+  padding:6px 4px;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain
+}
+.page-index .prod-tabs::-webkit-scrollbar{height:0}
+.page-index .prod-tabs>*{flex:0 0 auto;white-space:nowrap}
+.page-index .prod-tabs .tab{
+  appearance:none;-webkit-appearance:none;
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 14px;min-height:40px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(7,10,18,.35);color:rgba(232,238,246,.92);
+  font-weight:900;letter-spacing:.1px;line-height:1;
+  cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 18px rgba(0,0,0,.20);
+  transition:transform .12s ease,background .12s ease,border-color .12s ease,box-shadow .12s ease
+}
+.page-index .prod-tabs .tab:active{transform:translateY(1px)}
+@media(hover:hover){.page-index .prod-tabs .tab:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.16)}}
+.page-index .prod-tabs .tab.active{
+  border-color:rgba(96,165,250,.55);background:rgba(96,165,250,.12);
+  box-shadow:0 0 0 2px rgba(96,165,250,.45),inset 0 1px 0 rgba(255,255,255,.08),0 10px 22px rgba(0,0,0,.22)
+}
+@media(max-width:520px){.page-index .productos-inline-bar{flex-wrap:wrap}}
+
+/* cards */
+.page-index .cards{display:grid;gap:12px}
+.page-index .cards-products{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:420px){.page-index .cards-products{grid-template-columns:1fr}}
+.page-index .product-card{
+  cursor:pointer;transition:transform .12s ease,border-color .12s ease,background .12s ease
+}
+@media(hover:hover){.page-index .product-card:hover{transform:translateY(-2px)}}
+.page-index .product-card:active{transform:translateY(1px)}
+.page-index .product-card p{margin:0;color:rgba(232,238,246,.82)}
+.page-index .product-card .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.page-index .logo-sistema{
+  width:100%;height:auto;border-radius:12px;border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.02);object-fit:contain
+}
+
+/* sección 2 columnas (cards + reels) */
 .page-index .section-cq{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
 @media(min-width:980px){.page-index .section-cq{grid-template-columns:1fr 1fr;align-items:stretch}}
 
 /* CTA abajo */
 .page-index .prod-cta-bottom{margin-top:12px}
 .page-index .prod-cta-bottom .cta-big{
-  width:100%;
-  min-height:96px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:6px;
-  padding:16px;
-  border-radius:14px;
-  border:1px solid rgba(96,165,250,.30);
-  background:linear-gradient(180deg,rgba(17,23,35,.92),rgba(10,17,27,.86));
-  color:rgba(232,238,246,.96);
-  text-align:left;
-  cursor:pointer;
-  transition:transform .12s ease,border-color .12s ease,background .12s ease;
+  width:100%;min-height:96px;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:16px;
+  border-radius:14px;border:1px solid rgba(96,165,250,.30);
+  background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.10),transparent 60%),
+           radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.10),transparent 60%),
+           linear-gradient(180deg,rgba(17,23,35,.92),rgba(10,17,27,.86));
+  color:rgba(232,238,246,.96);text-align:left;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25);
+  transition:transform .12s ease,border-color .12s ease,background .12s ease
 }
 .page-index .prod-cta-bottom .cta-big:active{transform:translateY(1px)}
+@media(hover:hover){
+  .page-index .prod-cta-bottom .cta-big:hover{
+    border-color:rgba(45,212,191,.40);
+    background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.14),transparent 60%),
+             radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.14),transparent 60%),
+             linear-gradient(180deg,rgba(17,23,35,.94),rgba(10,17,27,.88));
+  }
+}
 .page-index .prod-cta-bottom .cta-big .cta-sub{display:block;font-size:.95rem;color:rgba(232,238,246,.78);line-height:1.25}
 
 /* FIX mobile: separación CTA vs Reels */
@@ -217,437 +389,12 @@
 /* Alignment desktop avanzado (tu patrón) */
 @media(min-width:980px){
   .page-index #productos-con>.container{
-    display:grid!important;
-    grid-template-columns:1fr 1fr;
-    grid-template-rows:auto 1fr;
-    gap:var(--gap,14px);
-    align-items:start;
+    display:grid!important;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr;
+    gap:var(--gap,14px);align-items:start
   }
   .page-index #productos-con .productos-inline-bar{
-    grid-column:1/2;
-    grid-row:1;
-    margin:0 0 10px!important;
-    align-self:start;
+    grid-column:1/2;grid-row:1;margin:0 0 10px!important;align-self:start
   }
-  .page-index #productos-con .panel-productos:not(.hidden){display:contents!important}
-  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{display:contents!important}
-  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>div:first-child{
-    grid-column:1/2;
-    grid-row:2;
-    min-width:0;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>.reels-home-card{
-    grid-column:2/3;
-    grid-row:1/3;
-    min-width:0;
-    height:100%;
-    align-self:stretch;
-    margin-top:0!important;
-  }
-}
-@media(max-width:980px){
-  .page-index #productos-con>.container{display:block!important}
-  .page-index #productos-con .panel-productos:not(.hidden){display:block!important}
-  .page-index #productos-con .panel-productos.hidden{display:none!important}
-  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{display:block!important}
-}
-
-/* =========================
-   4) Reels (Index) — solo overrides
-   - Evita “scroll vertical interno”
-   - Ajusta padding slide
-========================= */
-.page-index .reels-home-card .body{padding:12px!important}
-.page-index .reels-home-card .reel-title{min-height:18px!important}
-
-/* Reels: no scroll vertical interno */
-.page-index #productos-con .carousel[id^="carouselReels"],
-.page-index #servicios .carousel[id^="carouselReels"]{overflow:hidden!important}
-.page-index #productos-con .carousel[id^="carouselReels"] .carousel-track,
-.page-index #servicios .carousel[id^="carouselReels"] .carousel-track{overflow:hidden!important;align-items:center!important}
-.page-index #productos-con .carousel[id^="carouselReels"] .carousel-slide,
-.page-index #servicios .carousel[id^="carouselReels"] .carousel-slide{overflow:hidden!important}
-
-/* Padding coherente */
-.page-index .carousel[id^="carouselReels"] .carousel-slide{padding:12px!important}
-@media(min-width:980px){.page-index .carousel[id^="carouselReels"] .carousel-slide{padding:14px!important}}
-
-/* Flechas de reels ocultas en mobile (hero conserva flechas) */
-@media(max-width:980px){.page-index .carousel[id^="carouselReels"] .arrowCircle{display:none!important}}
-
-/* Oculta el título dinámico reel SOLO en servicios (como lo traías) */
-.page-index #reelTitle-servicios{display:none!important}
-
-/* =========================
-   5) Servicios (Index)
-   - Alineación desktop + pager mobile (si lo usas)
-========================= */
-@media(min-width:980px){
-  .page-index #servicios .grid-2{align-items:start!important}
-  .page-index #servicios .reels-home-card{margin-top:0!important;align-self:start!important}
-  /* Si quieres el título en blanco (sin gradiente) */
-  .page-index #servicios .reels-home-card .title-gradient{
-    background:none!important;
-    color:rgba(232,238,246,.96)!important;
-  }
-}
-
-/* Pager mobile de servicios (solo si tu JS lo usa) */
-.page-index .svc-dots{display:none;gap:10px;justify-content:center;margin-top:12px}
-.page-index .svc-dots .dot{width:14px;height:14px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer}
-.page-index .svc-dots .dot.active{background:rgba(45,212,191,.85);border-color:rgba(45,212,191,.95)}
-@media(max-width:980px){
-  .page-index .cards-services.is-carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:2px 2px 10px;margin:0}
-  .page-index .cards-services.is-carousel .svc-page{flex:0 0 100%;max-width:100%;scroll-snap-align:start;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .page-index .svc-dots{display:flex}
-}
-@media(min-width:980px){
-  .page-index .cards-services.is-carousel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}
-  .page-index .cards-services.is-carousel .svc-page{display:contents}
-  .page-index .svc-dots{display:none}
-}
-
-/* =========================
-   6) Promociones (Index) — solo overrides
-========================= */
-@media(min-width:981px){
-  .page-index .promo-filters{flex-wrap:wrap!important;overflow:visible!important}
-}
-
-/* =========================
-   7) FAQ readability (Index)
-========================= */
-.page-index .faq-item p{
-  text-align:justify;
-  text-justify:inter-word;
-  hyphens:auto;
-}
-@media(max-width:520px){
-  .page-index .faq-item p{ text-align:left; hyphens:none; }
-}
-
-/* =========================
-   8) Mapa (Index) — altura SOLO desktop
-========================= */
-@media(min-width:981px){
-  .page-index .map-embed{
-    aspect-ratio:auto!important;
-    height:320px!important; /* 280–360 según prefieras */
-    min-height:0!important;
-  }
-  .page-index .map-embed iframe{height:100%!important}
-}
-
-/* =========================
-   9) Fondo por tramos (si theme usa background global)
-   - Mantiene secciones transparentes
-========================= */
-.page-index #main-content,
-.page-index main,
-.page-index .section-full,
-.page-index #productos-con,
-.page-index #sectores,
-.page-index #servicios,
-.page-index #promociones,
-.page-index #faq,
-.page-index #contacto{background:transparent!important}
-
-/* Separación FAQ vs Contacto */
-.page-index #faq{padding-bottom:28px}
-.page-index #contacto{padding-top:28px}
-@media(min-width:981px){.page-index #faq{padding-bottom:34px}.page-index #contacto{padding-top:34px}}
-
-
-/* =========================================================
-   INDEX — SECCIONES ELÁSTICAS (solo .page-index)
-   - No redefine :root global
-   - No pisa el HERO que ya tienes (solo mejora dvh/svh)
-========================================================= */
-
-/* Helpers locales al index (no global) */
-.page-index{
-  --ix-vh: 1svh;
-  --ix-hero: 100svh;
-  --ix-sec: 92svh; /* “casi pantalla” */
-}
-@supports (height: 100dvh){
-  .page-index{
-    --ix-vh: 1dvh;
-    --ix-hero: 100dvh;
-    --ix-sec: 92dvh;
-  }
-}
-
-
-
-/* 2) PRODUCTOS y SERVICIOS: min-height elástico */
-.page-index #productos-con,
-.page-index #servicios.section-full{
-  min-height: clamp(640px, calc(var(--ix-sec) - 10px), 980px);
-}
-@media(max-width:980px){
-  .page-index #productos-con,
-  .page-index #servicios.section-full{
-    min-height: clamp(520px, calc(78 * var(--ix-vh)), 860px);
-  }
-}
-
-/* 3) Desktop: columnas igualadas (cards vs reels) */
-@media(min-width:981px){
-  /* Productos: tu layout ya es grid master; aquí solo estiramos */
-  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > div:first-child,
-  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > .reels-home-card{
-    align-self: stretch !important;
-  }
-
-  /* Servicios: estirar columnas si usas .grid-2 */
-  .page-index #servicios .grid-2{align-items: stretch !important}
-  .page-index #servicios .grid-2 > *{align-self: stretch !important; min-height:0}
-}
-
-/* 4) Reels: ocupar altura disponible sin overflow interno (desktop) */
-@media(min-width:981px){
-  .page-index #productos-con .reels-home-card,
-  .page-index #servicios .reels-home-card{
-    display:flex;
-    flex-direction:column;
-    height:100%;
-  }
-  .page-index #productos-con .reels-home-card .body,
-  .page-index #servicios .reels-home-card .body{
-    display:flex;
-    flex-direction:column;
-    height:100%;
-    min-height:0;
-  }
-  .page-index #productos-con .carousel[id^="carouselReels"],
-  .page-index #servicios .carousel[id^="carouselReels"]{
-    flex:1 1 auto;
-    min-height:0;
-  }
-}
-
-/* 5) Mobile: sin recortes ni scroll interno en reels */
-@media(max-width:980px){
-  .page-index #productos-con .reels-home-card,
-  .page-index #servicios .reels-home-card{height:auto !important}
-  .page-index #productos-con .carousel[id^="carouselReels"] .carousel-track,
-  .page-index #servicios .carousel[id^="carouselReels"] .carousel-track{overflow:hidden !important}
-}
-
-.page-index .hero{border-top:0!important}
-
-
-/* =========================================================
-   Expiriti — mainindex.css (INDEX ONLY) v2026.01.04-FULL
-   Requiere: theme.css (GLOBAL)
-   Scope: <body class="page-index">
-   - Completa estilos faltantes del index sin duplicar global
-========================================================= */
-
-/* =========================
-   0) Scope + offsets
-========================= */
-.page-index{scroll-padding-top:84px;padding-top:var(--gh-height,68px)}
-@media(max-width:768px){.page-index{scroll-padding-top:68px}}
-
-/* Helpers locales (dvh/svh) */
-.page-index{--ix-vh:1svh;--ix-hero:100svh;--ix-sec:92svh}
-@supports(height:100dvh){.page-index{--ix-vh:1dvh;--ix-hero:100dvh;--ix-sec:92dvh}}
-
-/* =========================
-   1) HERO fold real (Index)
-========================= */
-.page-index .hero.section-full{padding:0!important;border-top:0!important}
-.page-index .hero{
-  min-height:calc(var(--ix-hero) - var(--gh-height,68px) - env(safe-area-inset-top,0px));
-  display:flex;align-items:center;padding:0!important
-}
-.page-index .hero .container{width:100%;padding-top:14px!important;padding-bottom:14px!important}
-.page-index .hero-grid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
-.page-index .hero-grid>*{min-width:0}
-.page-index .hero h1{margin:0;line-height:1.15;font-size:1.65rem}
-@media(min-width:980px){
-  .page-index .hero-grid{grid-template-columns:1.05fr .95fr;gap:18px}
-  .page-index .hero h1{font-size:2.25rem}
-}
-
-/* Kicker + hero buttons */
-.page-index .kicker{
-  display:inline-flex;align-items:center;gap:8px;
-  font-weight:900;font-size:12px;letter-spacing:.03em;
-  color:rgba(232,238,246,.92);
-  padding:8px 12px;border-radius:999px;
-  border:1px solid rgba(148,163,184,.22);
-  background:rgba(15,23,42,.55);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  margin:0 0 10px;
-}
-html[data-theme="light"] .page-index .kicker{
-  color:rgba(11,18,32,.90);
-  background:rgba(255,255,255,.75);
-  border-color:rgba(2,6,23,.16);
-}
-.page-index .hero-btn{min-height:48px;padding:12px 16px;font-size:14px;font-weight:900}
-
-/* =========================
-   2) HERO Gallery (Index)
-========================= */
-.page-index .hero-gallery-card{
-  height:calc(var(--ix-hero) - var(--gh-height,68px) - env(safe-area-inset-top,0px) - 14px)!important;
-  min-height:480px!important;display:flex;flex-direction:column;overflow:hidden
-}
-@media(min-width:980px){.page-index .hero-gallery-card{min-height:560px!important}}
-.page-index .hero-gallery-header{padding:10px 16px 8px;border-bottom:var(--border)}
-.page-index .hero-gallery-header h2{margin:0;font-size:1.05rem;line-height:1.15}
-@media(max-width:520px){.page-index .hero-gallery-header{padding:10px 14px 7px}.page-index .hero-gallery-header h2{font-size:1rem}}
-
-.page-index .hero-gallery-groups{
-  display:flex;gap:12px;padding:8px 12px 0;margin:8px 0 14px;
-  overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none
-}
-.page-index .hero-gallery-groups::-webkit-scrollbar{height:0}
-.page-index .hero-gallery-groups>*{flex:0 0 auto;white-space:nowrap}
-
-.page-index .hero-group-tab{
-  min-height:44px;padding:10px 12px;border-radius:999px;
-  border:var(--border);background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.92);font-weight:900;cursor:pointer;
-  transition:transform .12s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
-}
-.page-index .hero-group-tab:hover{transform:translateY(-1px);border-color:rgba(96,165,250,.35);box-shadow:0 10px 22px rgba(0,0,0,.18)}
-.page-index .hero-group-tab:active{transform:translateY(1px) scale(.99)}
-.page-index .hero-group-tab.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}
-
-.page-index .hero-gallery-tabs{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:12px!important;padding:12px 12px 14px!important
-}
-.page-index .hero-tab{
-  display:flex!important;align-items:center!important;justify-content:center!important;
-  min-height:86px!important;padding:14px!important;border-radius:14px!important;
-  border:var(--border)!important;background:rgba(255,255,255,.03)!important;
-  cursor:pointer;transition:transform .12s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
-}
-.page-index .hero-tab:hover{transform:translateY(-1px);border-color:rgba(96,165,250,.35)!important;box-shadow:0 10px 24px rgba(0,0,0,.18)}
-.page-index .hero-tab:active{transform:translateY(1px) scale(.99)}
-.page-index .hero-tab.active{border-color:rgba(96,165,250,.40)!important;background:rgba(96,165,250,.10)!important}
-.page-index .hero-tab span{display:none!important}
-.page-index .hero-tab img{
-  width:auto!important;height:52px!important;max-width:180px!important;
-  object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;
-  margin:0 auto!important;display:block!important
-}
-@media(max-width:420px){.page-index .hero-tab{min-height:82px!important;padding:12px!important}.page-index .hero-tab img{height:46px!important;max-width:165px!important}}
-
-.page-index #heroGalleryCarousel.carousel{display:flex!important;flex-direction:column!important;overflow:visible!important}
-.page-index #heroGalleryCarousel .carousel-track{flex:1 1 auto!important;min-height:0!important;height:100%!important;overflow:hidden!important}
-.page-index #heroGalleryCarousel .carousel-slide{height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
-.page-index #heroGalleryCarousel .hero-slide img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;background:transparent!important;display:block!important}
-
-/* Dots: “pill” blur */
-.page-index #heroGalleryCarousel .carousel-nav{
-  position:static!important;width:max-content!important;max-width:calc(100% - 24px)!important;
-  margin:10px auto 12px!important;padding:6px 10px!important;gap:8px!important;border-radius:999px!important;
-  background:rgba(7,10,18,.14)!important;border:1px solid rgba(255,255,255,.10)!important;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  pointer-events:auto!important;justify-content:center!important
-}
-html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav{
-  background:rgba(2,6,23,.06)!important;border-color:rgba(2,6,23,.10)!important
-}
-.page-index #heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
-@media(min-width:981px){.page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}}
-@media(max-width:980px){.page-index .hero .arrowCircle{display:flex}}
-
-/* =========================
-   3) Productos CONTPAQi (Index)
-========================= */
-.page-index .panel-productos.hidden{display:none!important}
-
-/* Barra + Tabs */
-.page-index .productos-inline-bar{position:sticky;top:calc(var(--gh-height,68px) + 10px);z-index:5}
-@media(max-width:980px){.page-index .productos-inline-bar{position:static;top:auto}}
-
-.page-index .prod-tabs-shell{
-  display:flex;align-items:flex-end;justify-content:space-between;gap:14px;
-  padding:10px 12px;border-radius:16px;border:var(--border);
-  background:rgba(15,23,42,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-}
-html[data-theme="light"] .page-index .prod-tabs-shell{
-  background:rgba(255,255,255,.78);
-}
-.page-index .prod-title{margin:0;font-size:1.25rem;font-weight:900;line-height:1.1}
-.page-index .prod-title span{display:block;font-size:.85rem;color:var(--muted);font-weight:800;margin-top:2px;letter-spacing:.03em;text-transform:uppercase}
-
-.page-index .prod-tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.page-index .prod-tabs .tab{
-  min-height:44px;padding:10px 12px;border-radius:999px;
-  border:1px solid rgba(148,163,184,.28);
-  background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.92);
-  font-weight:900;cursor:pointer;
-  transition:transform .12s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
-}
-html[data-theme="light"] .page-index .prod-tabs .tab{
-  background:rgba(2,6,23,.03);color:rgba(11,18,32,.90);border-color:rgba(2,6,23,.14);
-}
-.page-index .prod-tabs .tab:hover{transform:translateY(-1px);border-color:rgba(96,165,250,.40);box-shadow:0 10px 22px rgba(0,0,0,.16)}
-.page-index .prod-tabs .tab:active{transform:translateY(1px) scale(.99)}
-.page-index .prod-tabs .tab.active{
-  background:linear-gradient(135deg,#22c55e,var(--brand));
-  border-color:#4ade80;color:#022c22;
-  box-shadow:0 14px 28px rgba(34,197,94,.20);
-}
-
-/* Cards productos */
-.page-index .cards{display:grid;gap:14px}
-.page-index .cards-products{grid-template-columns:1fr}
-@media(min-width:980px){.page-index .cards-products{grid-template-columns:repeat(2,minmax(0,1fr))}}
-
-.page-index .product-card{cursor:pointer;transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease, filter .14s ease}
-.page-index .product-card:hover{transform:translateY(-2px);box-shadow:0 18px 48px rgba(0,0,0,.26);border-color:rgba(96,165,250,.35);filter:saturate(1.02)}
-.page-index .product-card:active{transform:translateY(1px) scale(.995)}
-.page-index .product-card .body{padding:14px}
-.page-index .product-card p{color:rgba(203,213,225,.92)}
-html[data-theme="light"] .page-index .product-card p{color:rgba(51,65,85,.92)}
-.page-index .product-card .foot{margin-top:10px;display:flex;justify-content:flex-end}
-
-.page-index .btn-sm{min-height:40px;padding:9px 12px;font-size:13px}
-.page-index .btn-vermas{text-decoration:none}
-.page-index .btn-vermas:hover{text-decoration:none}
-
-/* Estructura “section-cq” */
-.page-index .section-cq{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
-@media(min-width:980px){.page-index .section-cq{grid-template-columns:1fr 1fr;align-items:stretch}}
-
-/* CTA abajo */
-.page-index .prod-cta-bottom{margin-top:12px}
-.page-index .prod-cta-bottom .cta-big{
-  width:100%;min-height:96px;display:flex;flex-direction:column;justify-content:center;gap:6px;
-  padding:16px;border-radius:14px;border:1px solid rgba(96,165,250,.30);
-  background:linear-gradient(180deg,rgba(17,23,35,.92),rgba(10,17,27,.86));
-  color:rgba(232,238,246,.96);text-align:left;cursor:pointer;
-  transition:transform .12s ease,border-color .12s ease,background .12s ease,box-shadow .12s ease;
-}
-.page-index .prod-cta-bottom .cta-big:hover{transform:translateY(-1px);box-shadow:0 16px 40px rgba(0,0,0,.22);border-color:rgba(45,212,191,.40)}
-.page-index .prod-cta-bottom .cta-big:active{transform:translateY(1px) scale(.995)}
-.page-index .prod-cta-bottom .cta-big .cta-sub{display:block;font-size:.95rem;color:rgba(232,238,246,.78);line-height:1.25}
-@media(max-width:980px){
-  .page-index #productos-con .prod-cta-bottom{margin-bottom:16px!important}
-  .page-index #productos-con .reels-home-card{margin-top:16px!important}
-}
-
-/* Alignment desktop avanzado (tu patrón) */
-@media(min-width:980px){
-  .page-index #productos-con>.container{
-    display:grid!important;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr;
-    gap:var(--gap,14px);align-items:start;
-  }
-  .page-index #productos-con .productos-inline-bar{grid-column:1/2;grid-row:1;margin:0 0 10px!important;align-self:start}
   .page-index #productos-con .panel-productos:not(.hidden){display:contents!important}
   .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{display:contents!important}
   .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>div:first-child{
@@ -665,104 +412,142 @@ html[data-theme="light"] .page-index .product-card p{color:rgba(51,65,85,.92)}
 }
 
 /* =========================
-   4) Reels (Index) overrides + Reel tabs
+   10) Reels (Index)
 ========================= */
 .page-index .reels-home-card .body{padding:12px!important}
-.page-index .reels-home-card .reel-title{min-height:18px!important}
+.page-index .reels-home-card .title-gradient{margin:0 0 4px!important}
+.page-index .reels-home-card .hint{margin:0 0 6px!important}
+.page-index .reels-home-card .reel-title{
+  margin:0 0 6px!important;min-height:18px!important;line-height:1.15!important;
+  font-weight:900;letter-spacing:.1px;color:rgba(232,238,246,.96)
+}
 
-/* Sin scroll interno */
+/* nav reels fuera del iframe (estilo del FULL) */
+.page-index .carousel[id^="carouselReels"] .carousel-nav{
+  position:static;bottom:auto;left:auto;right:auto;
+  margin:8px 0 0;padding:4px 8px;pointer-events:auto;background:transparent;gap:8px
+}
+.page-index .carousel[id^="carouselReels"] .carousel-nav .dot{width:14px;height:14px}
+.page-index .carousel[id^="carouselReels"] .carousel-track{min-height:0!important;height:auto!important;max-height:none!important}
+.page-index .carousel[id^="carouselReels"] .carousel-slide{display:flex;align-items:center;justify-content:center;padding:12px 12px 10px;overflow:hidden!important}
+
+/* embed 9:16 + tamaños */
+.page-index .reel-embed{
+  position:relative;aspect-ratio:9/16;
+  height:clamp(var(--reel-h-min),var(--reel-h-mid),var(--reel-h-max));
+  width:auto;max-width:100%;
+  border-radius:14px;overflow:hidden;background:#050812;
+  border:1px solid rgba(255,255,255,.10);margin:0 auto
+}
+.page-index .reel-embed iframe,
+.page-index .reel-embed .yt-thumb{position:absolute;inset:0;width:100%;height:100%}
+.page-index .reel-embed iframe{border:0;pointer-events:auto;background:#050812}
+
+/* quitar “fondo blanco” thumbs (cover) */
+.page-index .reel-embed{background:#050812!important}
+.page-index .reel-embed .yt-thumb{position:absolute;inset:0;display:block;background:#050812;cursor:pointer}
+.page-index .reel-embed .yt-thumb img{width:100%!important;height:100%!important;display:block!important;object-fit:cover!important;object-position:center!important}
+.page-index .reel-embed iframe{background:#050812!important;border:0!important}
+
+/* blur-frame SOLO reels */
+.page-index .carousel[id^="carouselReels"] .carousel-slide.blur-frame{position:relative}
+.page-index .carousel[id^="carouselReels"] .carousel-slide.blur-frame::before{
+  content:"";position:absolute;inset:0;border-radius:16px;background-image:var(--blur-src);
+  background-size:cover;background-position:center;filter:blur(18px);transform:scale(1.08);opacity:.55;z-index:0
+}
+.page-index .carousel[id^="carouselReels"] .carousel-slide.blur-frame::after{
+  content:"";position:absolute;inset:0;border-radius:16px;
+  background:linear-gradient(180deg, rgba(7,11,18,.35), rgba(7,11,18,.60));z-index:1
+}
+.page-index .carousel[id^="carouselReels"] .carousel-slide .reel-embed{position:relative;z-index:2}
+
+/* Reels: NO scroll vertical interno */
 .page-index #productos-con .carousel[id^="carouselReels"],
 .page-index #servicios .carousel[id^="carouselReels"]{overflow:hidden!important}
 .page-index #productos-con .carousel[id^="carouselReels"] .carousel-track,
 .page-index #servicios .carousel[id^="carouselReels"] .carousel-track{overflow:hidden!important;align-items:center!important}
 .page-index #productos-con .carousel[id^="carouselReels"] .carousel-slide,
 .page-index #servicios .carousel[id^="carouselReels"] .carousel-slide{overflow:hidden!important}
+.page-index #productos-con .reel-embed,
+.page-index #servicios .reel-embed{overflow:hidden!important;max-height:none!important}
+.page-index #productos-con .reel-embed iframe,
+.page-index #servicios .reel-embed iframe{display:block!important;height:100%!important;max-height:100%!important;overflow:hidden!important}
 
-/* Padding coherente */
-.page-index .carousel[id^="carouselReels"] .carousel-slide{padding:12px!important}
-@media(min-width:980px){.page-index .carousel[id^="carouselReels"] .carousel-slide{padding:14px!important}}
+/* flechas reels ocultas en mobile (hero conserva flechas) */
 @media(max-width:980px){.page-index .carousel[id^="carouselReels"] .arrowCircle{display:none!important}}
-.page-index #reelTitle-servicios{display:none!important}
 
-/* Reel system tabs (los botoncitos con logos) */
+/* tabs reels */
 .page-index .reel-sys-tabs{
-  display:flex;gap:10px;flex-wrap:wrap;
-  margin-top:12px;padding-top:10px;border-top:1px solid rgba(148,163,184,.16);
+  display:grid!important;gap:12px!important;padding:12px 12px 14px!important;
+  margin-top:12px;overflow:visible!important;max-width:100%;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important
 }
 .page-index .reel-tab{
-  width:64px;height:64px;border-radius:16px;
-  border:1px solid rgba(148,163,184,.22);
-  background:rgba(255,255,255,.03);
-  display:inline-flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:transform .12s ease, border-color .15s ease, box-shadow .15s ease, background .15s ease, filter .15s ease;
-  -webkit-tap-highlight-color:transparent;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  text-align:center!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.085)!important;background:rgba(255,255,255,.02)!important;
+  box-shadow:none!important;cursor:pointer;color:rgba(232,238,246,.92)
 }
-.page-index .reel-tab img{width:44px;height:44px;object-fit:contain;display:block}
-.page-index .reel-tab span{display:none} /* en index los ocultas para compactar */
-.page-index .reel-tab:hover{transform:translateY(-1px);border-color:rgba(96,165,250,.35);box-shadow:0 12px 24px rgba(0,0,0,.18)}
-.page-index .reel-tab:active{transform:translateY(1px) scale(.99)}
-.page-index .reel-tab.active{
-  border-color:rgba(45,212,191,.55);
-  box-shadow:0 0 0 3px rgba(45,212,191,.18), 0 14px 26px rgba(0,0,0,.20);
-  filter:saturate(1.05);
+.page-index .reel-tab img{width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;margin:0 auto!important}
+.page-index .reel-tab span{margin-top:8px!important;font-size:.86rem!important;font-weight:900!important;color:rgba(232,238,246,.94);line-height:1.1}
+.page-index .reel-tab.active{border-color:rgba(96,165,250,.45)!important;background:rgba(96,165,250,.10)!important}
+
+/* servicios: tabs 3 cols */
+.page-index #carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important;padding:10px 8px 12px!important;gap:10px!important}
+.page-index #carouselReels-servicios + .reel-sys-tabs .reel-tab{min-height:78px!important;padding:12px 10px!important;background:rgba(255,255,255,.015)!important;border:1px solid rgba(255,255,255,.07)!important}
+.page-index #carouselReels-servicios + .reel-sys-tabs .reel-tab img{height:48px!important;max-width:170px!important}
+.page-index #carouselReels-servicios + .reel-sys-tabs .reel-tab span{
+  display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;
+  overflow:hidden!important;max-width:100%!important
 }
-html[data-theme="light"] .page-index .reel-tab{
-  background:rgba(255,255,255,.70);
-  border-color:rgba(2,6,23,.14);
+@media(max-width:380px){
+  .page-index #carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .page-index .reel-tab{min-height:82px!important;padding:12px!important}
+  .page-index .reel-tab img{height:46px!important;max-width:160px!important}
+  .page-index .reel-tab span{font-size:.84rem!important}
 }
-html[data-theme="light"] .page-index .reel-sys-tabs{border-top:1px solid rgba(2,6,23,.10)}
+
+/* ocultar título dinámico reel SOLO en servicios */
+.page-index #reelTitle-servicios{display:none!important}
 
 /* =========================
-   5) Servicios (Index)
+   11) Servicios (cards + pager)
 ========================= */
-.page-index .section-title{margin:0 0 10px}
-.page-index .section-title h2,.page-index .section-title h3{margin:0}
+.page-index .cards-services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:420px){.page-index .cards-services{grid-template-columns:1fr}}
+.page-index .svc-icon{width:44px;height:44px;object-fit:contain}
 
+.page-index .svc-featured{
+  border:1px solid rgba(45,212,191,.35);
+  background:
+    radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.16),transparent 60%),
+    radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.12),transparent 60%),
+    linear-gradient(180deg,rgba(17,23,35,.92),rgba(17,23,35,.70));
+  position:relative;overflow:hidden
+}
+.page-index .svc-featured:before{content:"";position:absolute;inset:-2px;background:linear-gradient(90deg,rgba(45,212,191,.35),rgba(96,165,250,.35));opacity:.12;filter:blur(16px);pointer-events:none}
+
+/* Servicios desktop: alinear arriba + título en blanco (como patch) */
 @media(min-width:980px){
   .page-index #servicios .grid-2{align-items:start!important}
   .page-index #servicios .reels-home-card{margin-top:0!important;align-self:start!important}
   .page-index #servicios .reels-home-card .title-gradient{background:none!important;color:rgba(232,238,246,.96)!important}
 }
 
-/* Servicios cards layout */
-.page-index .cards-services{display:grid;gap:12px}
-.page-index .cards-services .svc-page{min-width:0}
-.page-index .cards-services .svc-icon{width:56px;height:56px;object-fit:contain;display:block}
-.page-index .cards-services h3{
-  display:flex;align-items:center;gap:10px;margin:0 0 6px;
-  font-size:16px;font-weight:900;line-height:1.2;
-}
-.page-index .cards-services .body{margin:0;color:rgba(203,213,225,.92)}
-html[data-theme="light"] .page-index .cards-services .body{color:rgba(51,65,85,.92)}
-.page-index .chip{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:6px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.22);
-  background:rgba(255,255,255,.04);font-size:12px;font-weight:900;
-}
-html[data-theme="light"] .page-index .chip{background:rgba(2,6,23,.03);border-color:rgba(2,6,23,.12);color:rgba(11,18,32,.88)}
-
-/* Mobile carousel de servicios (tu JS puede agregar is-carousel) */
+/* pager dots */
 .page-index .svc-dots{display:none;gap:10px;justify-content:center;margin-top:12px}
 .page-index .svc-dots .dot{width:14px;height:14px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer}
 .page-index .svc-dots .dot.active{background:rgba(45,212,191,.85);border-color:rgba(45,212,191,.95)}
-html[data-theme="light"] .page-index .svc-dots .dot{border-color:rgba(2,6,23,.18);background:rgba(2,6,23,.06)}
-html[data-theme="light"] .page-index .svc-dots .dot.active{background:rgba(45,212,191,.75);border-color:rgba(45,212,191,.95)}
-
 @media(max-width:980px){
   .page-index .cards-services.is-carousel{
     display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
-    padding:2px 2px 10px;margin:0
+    padding:2px 2px 10px;margin:0;touch-action:pan-x;overscroll-behavior-x:contain
   }
   .page-index .cards-services.is-carousel .svc-page{
     flex:0 0 100%;max-width:100%;scroll-snap-align:start;
     display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px
   }
   .page-index .svc-dots{display:flex}
-  .page-index .svc-spacer{display:block}
-}
-@media(max-width:520px){
-  .page-index .cards-services.is-carousel .svc-page{grid-template-columns:1fr}
-  .page-index .svc-spacer{display:none}
 }
 @media(min-width:980px){
   .page-index .cards-services.is-carousel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}
@@ -771,136 +556,116 @@ html[data-theme="light"] .page-index .svc-dots .dot.active{background:rgba(45,21
 }
 
 /* =========================
-   6) Sectores (Index)
+   12) Promos
 ========================= */
-.page-index .features{margin:10px 0 0;padding-left:18px;color:rgba(203,213,225,.92);line-height:1.6}
-html[data-theme="light"] .page-index .features{color:rgba(51,65,85,.92)}
-.page-index .features li+li{margin-top:6px}
+.page-index .promo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(min-width:980px){.page-index .promo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:980px){
+  .page-index .promo-grid{grid-template-columns:1fr;gap:14px}
+  .page-index .promo-grid>img,.page-index .promo-item img{aspect-ratio:4/5}
+}
+@media(max-width:420px){.page-index .promo-grid>img,.page-index .promo-item img{aspect-ratio:1/1}}
 
-/* =========================
-   7) Promociones (Index)
-========================= */
+.page-index .promo-item{position:relative;margin:0;border-radius:var(--radius);overflow:hidden;border:var(--border);background:rgba(255,255,255,.03)}
+.page-index .promo-grid>img,.page-index .promo-item img{
+  width:100%;display:block;border-radius:var(--radius);border:var(--border);
+  background:rgba(255,255,255,.03);height:auto;aspect-ratio:1/1;object-fit:contain;object-position:center
+}
 .page-index .promo-filters{
-  display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px;
-  padding:10px;border-radius:16px;border:var(--border);
-  background:rgba(15,23,42,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 14px;
+  overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  touch-action:pan-x;overscroll-behavior-x:contain
 }
-html[data-theme="light"] .page-index .promo-filters{background:rgba(255,255,255,.78)}
+.page-index .promo-filters::-webkit-scrollbar{height:0}
 .page-index .promo-btn{
-  min-height:44px;padding:10px 12px;border-radius:999px;
-  border:1px solid rgba(148,163,184,.24);
-  background:rgba(255,255,255,.03);
-  color:rgba(232,238,246,.92);
-  font-weight:900;cursor:pointer;
-  transition:transform .12s ease, border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  min-height:var(--tap);border-radius:999px;border:var(--border);
+  background:rgba(255,255,255,.03);color:rgba(232,238,246,.90);
+  padding:10px 12px;cursor:pointer;flex:0 0 auto;white-space:nowrap
 }
-html[data-theme="light"] .page-index .promo-btn{background:rgba(2,6,23,.03);color:rgba(11,18,32,.90);border-color:rgba(2,6,23,.14)}
-.page-index .promo-btn:hover{transform:translateY(-1px);border-color:rgba(96,165,250,.38);box-shadow:0 10px 22px rgba(0,0,0,.16)}
-.page-index .promo-btn:active{transform:translateY(1px) scale(.99)}
-.page-index .promo-btn.active{background:linear-gradient(135deg,#22c55e,var(--brand));border-color:#4ade80;color:#022c22}
-
-.page-index .promo-grid{
-  display:grid;gap:12px;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-}
-@media(max-width:980px){.page-index .promo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.page-index .promo-grid{grid-template-columns:1fr}}
-
-.page-index .promo-grid>img,
-.page-index .promo-item{
-  border-radius:16px;overflow:hidden;border:1px solid rgba(148,163,184,.16);
-  background:rgba(15,23,42,.35);
-  box-shadow:0 12px 30px rgba(0,0,0,.18);
-}
-html[data-theme="light"] .page-index .promo-grid>img,
-html[data-theme="light"] .page-index .promo-item{
-  background:rgba(255,255,255,.85);
-  border-color:rgba(2,6,23,.10);
-  box-shadow:0 12px 30px rgba(2,6,23,.10);
-}
-.page-index .promo-grid>img{width:100%;height:auto;display:block}
-.page-index .promo-item img{width:100%;height:auto;display:block}
+.page-index .promo-btn.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}
+@media(min-width:981px){.page-index .promo-filters{flex-wrap:wrap!important;overflow:visible!important}}
 
 /* =========================
-   8) FAQ readability (Index)
+   13) FAQ + Forms
 ========================= */
-.page-index .faq-item p{text-align:justify;text-justify:inter-word;hyphens:auto}
+.page-index .faq-wrap{display:grid;gap:10px}
+.page-index .faq-item{border-radius:var(--radius);border:var(--border);background:rgba(255,255,255,.03);padding:10px 12px}
+.page-index .faq-item summary{cursor:pointer;font-weight:900;list-style:none}
+.page-index .faq-item summary::-webkit-details-marker{display:none}
+.page-index .faq-item p{color:rgba(232,238,246,.82);margin:10px 0 6px;text-align:justify;text-justify:inter-word;hyphens:auto}
 @media(max-width:520px){.page-index .faq-item p{text-align:left;hyphens:none}}
 
-/* =========================
-   9) Contacto + Form (Index)
-========================= */
-.page-index #contacto .badges{margin-top:10px}
-
-.page-index form label{display:block;margin:10px 0 6px;font-weight:900;font-size:13px;color:rgba(232,238,246,.92)}
-html[data-theme="light"] .page-index form label{color:rgba(11,18,32,.90)}
-.page-index form input,
-.page-index form select,
-.page-index form textarea{
-  width:100%;border-radius:14px;
-  border:1px solid rgba(148,163,184,.22);
-  background:rgba(255,255,255,.03);
-  color:var(--text);
-  padding:12px 12px;
-  outline:none;
-  transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+.page-index label{display:block;margin:10px 0 6px;color:rgba(232,238,246,.88);font-weight:900}
+.page-index input,.page-index select,.page-index textarea{
+  width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);color:rgba(232,238,246,.95);
+  padding:12px;outline:none
 }
-html[data-theme="light"] .page-index form input,
-html[data-theme="light"] .page-index form select,
-html[data-theme="light"] .page-index form textarea{
-  background:rgba(255,255,255,.92);
-  border-color:rgba(2,6,23,.14);
-  color:rgba(11,18,32,.92);
-}
-.page-index form input:focus,
-.page-index form select:focus,
-.page-index form textarea:focus{
-  border-color:rgba(96,165,250,.55);
-  box-shadow:0 0 0 4px rgba(96,165,250,.18);
-}
-.page-index form textarea{resize:vertical;min-height:120px}
+.page-index textarea{resize:vertical;min-height:120px}
+.page-index input:focus,.page-index select:focus,.page-index textarea:focus{border-color:rgba(96,165,250,.45)}
+.page-index .features{margin:10px 0 0;padding-left:18px;color:rgba(232,238,246,.84)}
+.page-index .features li{margin:8px 0}
+.page-index .features li::marker{color:rgba(45,212,191,.8)}
 
 /* =========================
-   10) Mapa (Index)
+   14) Mapa (lazy cover)
 ========================= */
-.page-index .map-card{padding:16px}
 .page-index .map-embed{
-  position:relative;border-radius:16px;overflow:hidden;
-  border:1px solid rgba(148,163,184,.16);
-  background:linear-gradient(180deg,rgba(2,6,23,.55),rgba(2,6,23,.25));
-  aspect-ratio:16/9;
+  position:relative;width:100%;
+  aspect-ratio:16/9;min-height:260px;
+  border-radius:var(--radius-lg);overflow:hidden;border:var(--border);
+  background:linear-gradient(180deg, rgba(96,165,250,.10), rgba(45,212,191,.08))
 }
-html[data-theme="light"] .page-index .map-embed{
-  background:linear-gradient(180deg,rgba(2,6,23,.06),rgba(2,6,23,.03));
-  border-color:rgba(2,6,23,.10);
-}
+.page-index .map-embed iframe{width:100%;height:100%;border:0;display:block}
 .page-index .map-cover{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
-  text-decoration:none;
-  padding:18px;
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  text-decoration:none;color:var(--text);padding:14px;
+  background:linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.55))
 }
-.page-index .map-cover-title{font-weight:900;font-size:16px;text-align:center}
+.page-index .map-cover-title{font-weight:900;text-align:center}
 .page-index .map-cover-cta{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:44px;padding:10px 14px;border-radius:999px;
-  border:1px solid rgba(148,163,184,.22);
-  background:rgba(255,255,255,.04);
-  font-weight:900;
-  transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+  display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap);
+  padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  color:#020617;font-size:13px;font-weight:900
 }
-.page-index .map-cover-cta:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(0,0,0,.20);border-color:rgba(45,212,191,.35)}
-.page-index .map-cover-cta:active{transform:translateY(1px) scale(.99)}
-html[data-theme="light"] .page-index .map-cover-cta{background:rgba(255,255,255,.78);border-color:rgba(2,6,23,.14);color:rgba(11,18,32,.90)}
-
-/* Altura SOLO desktop (tu preferencia) */
+/* reducir altura SOLO desktop */
 @media(min-width:981px){
   .page-index .map-embed{aspect-ratio:auto!important;height:320px!important;min-height:0!important}
+  .page-index .map-embed iframe{height:100%!important}
 }
 
 /* =========================
-   11) Fondo por tramos
+   15) Secciones elásticas + transparencia
 ========================= */
+.page-index #productos-con,
+.page-index #servicios.section-full{
+  min-height:clamp(640px, calc(var(--ix-sec) - 10px), 980px);
+}
+@media(max-width:980px){
+  .page-index #productos-con,
+  .page-index #servicios.section-full{
+    min-height:clamp(520px, calc(78 * var(--ix-vh)), 860px);
+  }
+}
+@media(min-width:981px){
+  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > div:first-child,
+  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq > .reels-home-card{align-self:stretch!important}
+  .page-index #servicios .grid-2{align-items:stretch!important}
+  .page-index #servicios .grid-2 > *{align-self:stretch!important;min-height:0}
+  .page-index #productos-con .reels-home-card,
+  .page-index #servicios .reels-home-card{display:flex;flex-direction:column;height:100%}
+  .page-index #productos-con .reels-home-card .body,
+  .page-index #servicios .reels-home-card .body{display:flex;flex-direction:column;height:100%;min-height:0}
+  .page-index #productos-con .carousel[id^="carouselReels"],
+  .page-index #servicios .carousel[id^="carouselReels"]{flex:1 1 auto;min-height:0}
+}
+@media(max-width:980px){
+  .page-index #productos-con .reels-home-card,
+  .page-index #servicios .reels-home-card{height:auto!important}
+}
+
+/* Fondo por tramos (theme manda background global) */
 .page-index #main-content,
 .page-index main,
 .page-index .section-full,
@@ -917,33 +682,10 @@ html[data-theme="light"] .page-index .map-cover-cta{background:rgba(255,255,255,
 @media(min-width:981px){.page-index #faq{padding-bottom:34px}.page-index #contacto{padding-top:34px}}
 
 /* =========================
-   12) Secciones elásticas
+   16) Ajustes mobile generales
 ========================= */
-.page-index #productos-con,
-.page-index #servicios.section-full{min-height:clamp(640px,calc(var(--ix-sec) - 10px),980px)}
 @media(max-width:980px){
-  .page-index #productos-con,
-  .page-index #servicios.section-full{min-height:clamp(520px,calc(78 * var(--ix-vh)),860px)}
+  .page-index .section-full{padding:26px 0}
+  .page-index .product-card:hover{transform:none}
+  .page-index #servicios.section-full{padding:22px 0!important}
 }
-@media(min-width:981px){
-  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>div:first-child,
-  .page-index #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>.reels-home-card{align-self:stretch!important}
-  .page-index #servicios .grid-2{align-items:stretch!important}
-  .page-index #servicios .grid-2>*{align-self:stretch!important;min-height:0}
-  .page-index #productos-con .reels-home-card,
-  .page-index #servicios .reels-home-card{display:flex;flex-direction:column;height:100%}
-  .page-index #productos-con .reels-home-card .body,
-  .page-index #servicios .reels-home-card .body{display:flex;flex-direction:column;height:100%;min-height:0}
-  .page-index #productos-con .carousel[id^="carouselReels"],
-  .page-index #servicios .carousel[id^="carouselReels"]{flex:1 1 auto;min-height:0}
-}
-@media(max-width:980px){
-  .page-index #productos-con .reels-home-card,
-  .page-index #servicios .reels-home-card{height:auto!important}
-  .page-index #productos-con .carousel[id^="carouselReels"] .carousel-track,
-  .page-index #servicios .carousel[id^="carouselReels"] .carousel-track{overflow:hidden!important}
-}
-
-
-
-
