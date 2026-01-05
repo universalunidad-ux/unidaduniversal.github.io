@@ -975,65 +975,94 @@ html[data-theme="light"] .btn-secondary{background:rgba(255,255,255,.92)}
 
 
 /* =========================================================
-   FIX ESPECÍFICO: CONTRASTE EN ELEMENTOS (Pestañas y Botones)
-   Agregado para corregir invisibilidad en modo claro
+   INDEX — LIGHT VISIBILITY PATCH (sin duplicados) v2026.01
+   Pegar AL FINAL de mainindex.css
 ========================================================= */
 
-/* 1. Botones de filtro en PROMOCIONES (.promo-btn) */
-html[data-theme="light"] .promo-btn {
-  color: #334155 !important;       /* Gris oscuro legible */
-  background: #ffffff !important;  /* Fondo blanco limpio */
-  border-color: #cbd5e1 !important; /* Borde gris visible */
-  font-weight: 600;
+/* A) PROMOCIONES — filtros */
+html[data-theme="light"] .page-index .promo-btn{
+  color:#334155!important;
+  background:#ffffff!important;
+  border-color:#cbd5e1!important;
+  font-weight:700!important;
+}
+html[data-theme="light"] .page-index .promo-btn.active{
+  background:rgba(45,212,191,.15)!important;
+  border-color:#0d9488!important;
+  color:#0f172a!important;
 }
 
-html[data-theme="light"] .promo-btn.active {
-  background: rgba(45,212,191,.15) !important; /* Fondo verde muy suave */
-  border-color: #0d9488 !important;            /* Borde verde oscuro */
-  color: #0f172a !important;                   /* Texto casi negro */
+/* B) REELS TABS (Servicios: Pólizas/Implementaciones/...) */
+html[data-theme="light"] .page-index .reel-tab{
+  background:#ffffff!important;
+  border-color:#e2e8f0!important;
+  box-shadow:0 2px 5px rgba(0,0,0,.05)!important;
+}
+html[data-theme="light"] .page-index .reel-tab span{
+  color:#475569!important;
+  font-weight:800!important;
+}
+html[data-theme="light"] .page-index .reel-tab.active{
+  background:rgba(96,165,250,.10)!important;
+  border-color:#3b82f6!important;
+}
+html[data-theme="light"] .page-index .reel-tab.active span{
+  color:#1e3a8a!important;
 }
 
-/* 2. Cuadrícula de iconos/reels (.reel-tab) */
-/* Esto arregla los cuadros de "Pólizas", "Implementaciones", etc. */
-html[data-theme="light"] .reel-tab {
-  background: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05) !important;
+/* C) TABS PRINCIPALES DE PRODUCTOS (Contables/Comerciales/Nube/...) */
+html[data-theme="light"] .page-index .prod-tabs .tab{
+  color:#334155!important;
+  background:#f8fafc!important;
+  border-color:#cbd5e1!important;
+  box-shadow:0 2px 4px rgba(0,0,0,.05)!important;
+}
+html[data-theme="light"] .page-index .prod-tabs .tab.active{
+  color:#0f172a!important;
+  background:#eff6ff!important;
+  border-color:#3b82f6!important;
 }
 
-/* El texto pequeño debajo del icono */
-html[data-theme="light"] .reel-tab span {
-  color: #475569 !important; /* Gris oscuro */
-  font-weight: 700 !important;
+/* D) HERO — tabs “grupos” (si hoy se ven lavados) */
+html[data-theme="light"] .page-index .hero-group-tab{
+  background:rgba(2,6,23,.06)!important;
+  border:1px solid rgba(2,6,23,.14)!important;
+  color:rgba(11,18,32,.92)!important;
+}
+html[data-theme="light"] .page-index .hero-group-tab.active{
+  background:rgba(45,212,191,.18)!important;
+  border-color:rgba(45,212,191,.45)!important;
+  color:rgba(11,18,32,.96)!important;
 }
 
-/* Estado activo de la cuadrícula */
-html[data-theme="light"] .reel-tab.active {
-  background: rgba(96,165,250,.10) !important; /* Azul muy suave */
-  border-color: #3b82f6 !important;            /* Borde azul fuerte */
-}
-html[data-theme="light"] .reel-tab.active span {
-  color: #1e3a8a !important; /* Azul marino */
+/* E) Textos en tarjetas de productos (evita “lavado”) */
+html[data-theme="light"] .page-index .product-card p,
+html[data-theme="light"] .page-index .product-card .lead,
+html[data-theme="light"] .page-index .product-card li{
+  color:#475569!important;
 }
 
-/* 3. Pestañas principales de productos (.prod-tabs .tab) */
-/* "Contables", "Comerciales", "Nube"... */
-html[data-theme="light"] .prod-tabs .tab {
-  color: #334155 !important;
-  background: #f8fafc !important;
-  border-color: #cbd5e1 !important;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+/* F) Sección “Sectores / ¿Por qué?” (en tu screenshot se pierde) */
+html[data-theme="light"] .page-index #sectores,
+html[data-theme="light"] .page-index #sectores *{
+  opacity:1!important;
+}
+html[data-theme="light"] .page-index #sectores h2,
+html[data-theme="light"] .page-index #sectores h3{
+  color:#0b1220!important;
+}
+html[data-theme="light"] .page-index #sectores p,
+html[data-theme="light"] .page-index #sectores li{
+  color:#334155!important;
 }
 
-html[data-theme="light"] .prod-tabs .tab.active {
-  color: #0f172a !important;
-  background: #eff6ff !important; /* Azul muy pálido */
-  border-color: #3b82f6 !important;
-}
-
-/* 4. Asegurar textos de párrafo en las tarjetas */
-html[data-theme="light"] .product-card p, 
-html[data-theme="light"] .product-card .lead, 
-html[data-theme="light"] .product-card li {
-  color: #475569 !important;
+/* G) Logos claros: “placa” detrás para contraste */
+html[data-theme="light"] .page-index .hero-tab img,
+html[data-theme="light"] .page-index .reel-tab img,
+html[data-theme="light"] .page-index .logo-sistema{
+  background:linear-gradient(180deg,rgba(11,18,32,.10),rgba(11,18,32,.03))!important;
+  border:1px solid rgba(2,6,23,.14)!important;
+  border-radius:16px!important;
+  padding:10px!important;
+  box-shadow:0 10px 26px rgba(2,6,23,.10)!important;
 }
