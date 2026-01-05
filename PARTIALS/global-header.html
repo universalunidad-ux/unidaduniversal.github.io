@@ -481,39 +481,42 @@ html[data-theme="light"] #gh-header .gh-svcdots{
   </div>
 </aside>
 </header>
+
 <script>
 /* =========================================================
- Expiriti Header JS (V7 + Mobile V5) — BLINDADO HARDENED
- - Fallback navegación por click (aunque href no se haya seteado)
- - MutationObserver: re-aplica rutas si el header/partial entra tarde
- - buildPath con URL() robusto
+ Expiriti Header JS (V7.1 + Mobile V5) — BLINDADO HARDENED FINAL
+ - ROOT: meta[name="expiriti-base"] manda; heurística solo fallback
+ - buildPath: URL() robusto (GH Pages + subcarpetas)
+ - applySafePaths: idempotente (no re-engancha onerror mil veces)
+ - Delegación click: data-href SIEMPRE manda (aunque href exista y esté mal)
+ - MutationObserver: throttle (evita loops y costo)
 ========================================================= */
 (function(){'use strict';
-if(window.__EXPIRITI_GH_V7MOBILE_HARDENED__) return;
-window.__EXPIRITI_GH_V7MOBILE_HARDENED__ = true;
+if(window.__EXPIRITI_GH_V71_HARDENED__) return;
+window.__EXPIRITI_GH_V71_HARDENED__=true;
 
-const D=document, W=window;
+const D=document,W=window;
 const Q=(s,c=D)=>c.querySelector(s);
 const QA=(s,c=D)=>Array.from(c.querySelectorAll(s));
 const BLANK="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
 const storage={get:k=>{try{return localStorage.getItem(k)}catch(_){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(_){}}};
 
+/* ---------------- ROOT ---------------- */
 function getRootFromMeta(){
   const m=Q('meta[name="expiriti-base"]');
   if(!m || !m.content) return null;
-  let r=m.content.trim();
+  let r=String(m.content).trim();
+  if(!r) return null;
   if(!r.startsWith('/')) r='/'+r;
   if(!r.endsWith('/')) r=r+'/';
   return r;
 }
-
 function getMasterRoot(){
-  // 1) Prefer meta ALWAYS (tu caso GH Pages)
   const metaRoot=getRootFromMeta();
   if(metaRoot) return metaRoot;
 
-  // 2) Fallback GH heurística
-  const host=location.hostname||'';
+  // Fallback GH heurística (último recurso)
+  const host=(location.hostname||'').toLowerCase();
   const seg=(location.pathname||'/').split('/').filter(Boolean);
   const first=(seg[0]||'').toLowerCase();
   const RESERVED=new Set(['sistemas','servicios','migraciones','implementaciones','desarrollos','img','images','css','js','assets']);
@@ -523,75 +526,72 @@ function getMasterRoot(){
   }
   return '/';
 }
+const ROOT=getMasterRoot();
 
-const ROOT = getMasterRoot();
-
-// base absoluta confiable
 function baseAbs(){
   try{
-    const origin = (location.origin && location.origin!=='null') ? location.origin : location.href;
-    return new URL(ROOT, origin).toString(); // ej: https://host/unidaduniversal.github.io/
-  }catch(_){
-    return ROOT;
-  }
+    const origin=(location.origin && location.origin!=='null')?location.origin:location.href;
+    return new URL(ROOT, origin).toString(); // https://host/unidaduniversal.github.io/
+  }catch(_){ return ROOT; }
 }
 
+/* ---------------- PATH ---------------- */
 function buildPath(raw){
-  raw = String(raw||'').trim();
+  raw=String(raw||'').trim();
   if(!raw) return '#';
 
-  // protocolos externos
+  // externos
   if(/^(https?:|mailto:|tel:|whatsapp:|sms:)/i.test(raw)) return raw;
 
-  // hash siempre a index
+  // hashes: siempre index.html#...
   if(raw.startsWith('#')){
-    try{
-      return new URL('index.html'+raw, baseAbs()).toString();
-    }catch(_){
-      return (ROOT.replace(/\/$/,'')+'/index.html')+raw;
-    }
+    try{ return new URL('index.html'+raw, baseAbs()).toString(); }
+    catch(_){ return (ROOT.replace(/\/$/,'')+'/index.html')+raw; }
   }
 
-  // ruta normal
-  try{
-    return new URL(raw.replace(/^\//,''), baseAbs()).toString();
-  }catch(_){
-    return (ROOT.replace(/\/$/,'')+'/'+raw.replace(/^\/+/,'')); // fallback
-  }
+  // normaliza: si viene "/IMG/..." lo tratamos como relativo al ROOT, no al dominio
+  raw = raw.replace(/^\/+/, ''); // evita que "/" te saque del repo
+  try{ return new URL(raw, baseAbs()).toString(); }
+  catch(_){ return (ROOT.replace(/\/$/,'')+'/'+raw); }
 }
 
+/* ---------------- APPLY (idempotente) ---------------- */
 function applySafePaths(container){
-  container = container || D;
+  container=container||D;
 
   // Links
-  QA('.js-link[data-href]', container).forEach(a=>{
-    const r=a.getAttribute('data-href');
-    if(r) a.href = buildPath(r);
+  QA('a.js-link[data-href]', container).forEach(a=>{
+    const raw=a.getAttribute('data-href');
+    if(!raw) return;
+    const want=buildPath(raw);
+    if(a.href!==want) a.href=want;
+    // marca para diagnósticos
+    a.dataset.ghResolved='1';
   });
 
   // Imágenes
-  QA('.js-img[data-src]', container).forEach(img=>{
-    const r=img.getAttribute('data-src');
-    if(!r) return;
-    const u=buildPath(r);
-    if(img.src !== u) img.src = u;
-    img.onerror=function(){
-      this.onerror=null;
-      this.style.opacity='.60';
-      this.src=BLANK;
-    };
-  });
+  QA('img.js-img[data-src]', container).forEach(img=>{
+    const raw=img.getAttribute('data-src');
+    if(!raw) return;
+    const want=buildPath(raw);
+    if(img.src!==want) img.src=want;
 
-  // Favicons / OG si usas js-abs*
-  QA('link.js-abs[data-href]', container).forEach(l=>{
-    const r=l.getAttribute('data-href'); if(r) l.href=buildPath(r);
-  });
-  QA('meta.js-abs-meta[data-path]', container).forEach(m=>{
-    const r=m.getAttribute('data-path'); if(r) m.setAttribute('content', buildPath(r));
+    // idempotente: no re-asignar onerror una y otra vez
+    if(img.dataset.ghOnErrBound!=='1'){
+      img.dataset.ghOnErrBound='1';
+      img.addEventListener('error', function(){
+        // evita loop si BLANK también falla (raro, pero posible)
+        if(this.dataset.ghErrored==='1') return;
+        this.dataset.ghErrored='1';
+        this.style.opacity='.60';
+        this.src=BLANK;
+      }, {once:true});
+    }
+    img.dataset.ghResolved='1';
   });
 }
 
-// ===== Drawer / UI (tu lógica, igual que la tuya) =====
+/* ---------------- UI ---------------- */
 function syncOffset(){
   const bar=Q('#gh-bar');
   const h=bar?bar.offsetHeight:68;
@@ -600,6 +600,8 @@ function syncOffset(){
 
 function initScrollHide(){
   const bar=Q('#gh-bar'); if(!bar) return;
+  if(bar.__hideBound) return; bar.__hideBound=true;
+
   let last=W.scrollY||0;
   W.addEventListener('scroll', ()=>{
     if(D.documentElement.classList.contains('gh-open')) return;
@@ -625,11 +627,10 @@ function initMobileSystems(){
     panels.forEach(p=>{
       const on=p.dataset.panel===cat;
       p.classList.toggle('is-open', on);
-      p.hidden = !on;
+      p.hidden=!on;
     });
     storage.set(KEY, cat);
   }
-
   cats.forEach(b=>b.addEventListener('click', ()=>setCat(b.dataset.cat)));
   setCat(saved || 'contables');
 }
@@ -648,24 +649,21 @@ function initMobileServices(){
     const w=track.clientWidth||1;
     return Math.round(track.scrollLeft / w);
   };
-
   const goTo=i=>{
     const w=track.clientWidth||1;
     const n=Math.max(0, Math.min(i, pages.length-1));
     track.scrollTo({left:n*w, behavior:'smooth'});
   };
-
   const sync=()=>{
     const i=idxFromScroll();
     dots.forEach((d,k)=>d.classList.toggle('is-active', k===i));
-    if(prev){ prev.disabled = i===0; prev.style.opacity = prev.disabled?'.35':'1'; }
-    if(next){ next.disabled = i===pages.length-1; next.style.opacity = next.disabled?'.35':'1'; }
+    if(prev){ prev.disabled=i===0; prev.style.opacity=prev.disabled?'.35':'1'; }
+    if(next){ next.disabled=i===pages.length-1; next.style.opacity=next.disabled?'.35':'1'; }
   };
 
   if(prev) prev.addEventListener('click', e=>{e.preventDefault(); goTo(idxFromScroll()-1);});
   if(next) next.addEventListener('click', e=>{e.preventDefault(); goTo(idxFromScroll()+1);});
   dots.forEach((d,i)=>d.addEventListener('click', e=>{e.preventDefault(); goTo(i);} ));
-
   track.addEventListener('scroll', ()=>W.requestAnimationFrame(sync), {passive:true});
   W.addEventListener('resize', sync, {passive:true});
   sync();
@@ -683,9 +681,9 @@ function toggleDrawer(open){
     burger.setAttribute('aria-expanded','true');
     D.body.style.overflow='hidden';
 
-    // aplica rutas SIEMPRE al abrir
+    // Re-aplica rutas al abrir (por si el partial entró tarde)
     const header=Q('#gh-header');
-    if(header){ applySafePaths(header); }
+    if(header) applySafePaths(header);
     initMobileSystems();
     initMobileServices();
   }else{
@@ -706,13 +704,13 @@ function initThemeToggle(){
   const sync=()=>{
     const t=(root.dataset.theme==='light')?'light':'dark';
     btn.setAttribute('aria-pressed', t==='light'?'true':'false');
-    btn.title = (t==='light') ? 'Modo oscuro' : 'Modo claro';
+    btn.title=(t==='light')?'Modo oscuro':'Modo claro';
   };
   const set=t=>{ root.dataset.theme=t; storage.set(KEY,t); sync(); };
 
   btn.addEventListener('click', e=>{
     e.preventDefault();
-    set((root.dataset.theme==='light') ? 'dark' : 'light');
+    set((root.dataset.theme==='light')?'dark':'light');
   });
 
   const saved=storage.get(KEY);
@@ -722,29 +720,30 @@ function initThemeToggle(){
 
 /* =========================================================
   BLINDAJE CLAVE:
-  Delegación de click -> si data-href existe, navega aunque href sea "#"
+  Delegación: data-href SIEMPRE manda, incluso si href está mal.
 ========================================================= */
 function bindBlindClicks(){
   if(D.__ghBlindClickBound) return;
-  D.__ghBlindClickBound = true;
+  D.__ghBlindClickBound=true;
 
   D.addEventListener('click', (e)=>{
-    const a = e.target.closest('a.js-link[data-href]');
+    const a=e.target.closest('a.js-link[data-href]');
     if(!a) return;
 
-    const raw = a.getAttribute('data-href');
+    const raw=a.getAttribute('data-href');
     if(!raw) return;
 
-    // Permite abrir en nueva pestaña si el usuario lo pide
+    const want=buildPath(raw);
     const isNewTab = a.target==='_blank' || e.metaKey || e.ctrlKey || e.button===1;
-    const url = buildPath(raw);
 
-    // si ya tiene href correcto, deja fluir
-    if(a.href && a.href !== '#' && a.href !== location.href+'#') return;
+    // Siempre forzamos href correcto (siempre)
+    if(a.href!==want) a.href=want;
 
+    // Si el navegador ya lo resolvería ok, lo dejamos fluir, excepto hashes (mejor controlar)
+    // Para evitar edge cases, controlamos todo.
     e.preventDefault();
-    if(isNewTab) { W.open(url, '_blank', 'noopener'); return; }
-    location.href = url;
+    if(isNewTab){ W.open(want, '_blank', 'noopener'); return; }
+    location.href=want;
   }, {passive:false});
 
   D.addEventListener('click', (e)=>{
@@ -753,7 +752,7 @@ function bindBlindClicks(){
     if(e.target.closest('#gh-close') || e.target.matches('#gh-dim')){
       e.preventDefault(); toggleDrawer(false); return;
     }
-    const inDrawerLink = e.target.closest('.gh-drawer a');
+    const inDrawerLink=e.target.closest('.gh-drawer a');
     if(inDrawerLink) setTimeout(()=>toggleDrawer(false), 120);
   }, {passive:false});
 
@@ -764,27 +763,38 @@ function bindBlindClicks(){
   W.addEventListener('pageshow', (ev)=>{ if(ev.persisted) toggleDrawer(false); });
 }
 
-/* =========================================================
-  MutationObserver: si el header/partial entra tarde, re-aplica rutas
-========================================================= */
+/* ---------------- OBSERVER (throttle) ---------------- */
 function observeLateHeader(){
   if(D.__ghObserverBound) return;
   D.__ghObserverBound=true;
 
-  const obs = new MutationObserver(()=>{
-    const header = Q('#gh-header');
+  let raf=0;
+  const run=()=>{
+    raf=0;
+    const header=Q('#gh-header');
     if(header){
       applySafePaths(header);
       syncOffset();
     }
+  };
+  const obs=new MutationObserver(()=>{
+    if(raf) return;
+    raf=W.requestAnimationFrame(run);
   });
   obs.observe(D.documentElement, {childList:true, subtree:true});
 }
 
+/* ---------------- BOOT ---------------- */
 function boot(){
   const header=Q('#gh-header');
   if(!header || header.__ghInited) return;
   header.__ghInited=true;
+
+  // Diagnóstico útil (solo si falta meta)
+  if(!getRootFromMeta()){
+    // No rompe, pero te avisa en consola para corregir página faltante
+    try{ console.warn('[Expiriti] Falta meta[name="expiriti-base"] en esta página. Usando fallback ROOT=', ROOT); }catch(_){}
+  }
 
   initThemeToggle();
   applySafePaths(header);
@@ -798,6 +808,5 @@ function boot(){
 boot();
 D.addEventListener('DOMContentLoaded', boot, {once:true});
 W.addEventListener('resize', syncOffset, {passive:true});
-
 })();
 </script>
