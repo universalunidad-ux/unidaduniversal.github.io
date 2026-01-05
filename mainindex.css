@@ -1066,3 +1066,19 @@ html[data-theme="light"] .page-index .logo-sistema{
   padding:10px!important;
   box-shadow:0 10px 26px rgba(2,6,23,.10)!important;
 }
+
+/* FIX: gradient-word visible en INDEX (dark + light) */
+.page-index .gradient-word{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2))!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+  font-weight:900;
+}
+
+/* En LIGHT: sube contraste (evita “lavado”) */
+html[data-theme="light"] .page-index .gradient-word{
+  filter:saturate(1.15) contrast(1.15);
+}
+
