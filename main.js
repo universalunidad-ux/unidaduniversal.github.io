@@ -386,20 +386,36 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
 })();
 
 /* =========================================================
- 10) CALCULADORA (hooks secundarios / terciarios) — BOOT SAFE
+ 10) CALCULADORA (hooks secundarios / terciarios) — ROBUSTO
+ - Corre aunque la sección llegue tarde (parciales/inyección)
+ - Se monta UNA sola vez por página (dataset flag)
 ========================================================= */
 (()=>{
 
   const bootCalc = () => {
+    // evita re-montajes
+    if (D.documentElement.dataset.calcHooksInit === "1") return;
+
     const app = D.getElementById("app");
-    const PRIMARY = (app && app.dataset && app.dataset.system) ? String(app.dataset.system).trim() : "";
-    if(!PRIMARY) return;
+    const row = D.getElementById("calc-row");
+    const pick2 = D.getElementById("icons-sec-sys");
+    const pick3 = D.getElementById("icons-third-sys");
+
+    // si aún no está la sección, salir sin marcar init (para reintentar)
+    if (!app || !row || !pick2) return;
+
+    const PRIMARY = (app.dataset.system || "").trim();
+    if (!PRIMARY) return;
+
+    // ya están los nodos base => marcamos init para no duplicar listeners
+    D.documentElement.dataset.calcHooksInit = "1";
 
     const moneyMX=new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
     const fmt=v=>moneyMX.format(Math.round(Number(v||0)));
     const hasPrices=n=>!!(W.preciosContpaqi&&W.preciosContpaqi[n]);
 
-    W.CATALOG_SISTEMAS=W.CATALOG_SISTEMAS||[
+    // Define catálogo SIEMPRE aquí (ahora sí quedará en window)
+    W.CATALOG_SISTEMAS = W.CATALOG_SISTEMAS || [
       {name:"CONTPAQi Contabilidad",img:"../IMG/contabilidadsq.webp"},
       {name:"CONTPAQi Bancos",img:"../IMG/bancossq.webp"},
       {name:"CONTPAQi Nóminas",img:"../IMG/nominassq.webp"},
@@ -411,7 +427,7 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
 
     const getPrecioDesde=name=>{
       const db=(W.preciosContpaqi&&W.preciosContpaqi[name])?W.preciosContpaqi[name]:null;
-      if(!db)return null;
+      if(!db) return null;
       if(db.anual&&db.anual.MultiRFC&&(db.anual.MultiRFC.precio_base||db.anual.MultiRFC.renovacion))
         return Number(db.anual.MultiRFC.precio_base||db.anual.MultiRFC.renovacion||0);
       if(db.anual&&db.anual.MonoRFC&&(db.anual.MonoRFC.precio_base||db.anual.MonoRFC.renovacion))
@@ -422,26 +438,26 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
     };
 
     const renderPicker=(id,exclude,active)=>{
-      const wrap=D.getElementById(id); if(!wrap) return;
+      const wrap=D.getElementById(id);
+      if(!wrap) return;
       wrap.innerHTML="";
       if(PRIMARY) exclude.add(PRIMARY);
 
       W.CATALOG_SISTEMAS.forEach(item=>{
         if(exclude.has(item.name)) return;
-
         const precio=getPrecioDesde(item.name);
+
         const btn=D.createElement("button");
         btn.className="sys-icon";
         btn.type="button";
         btn.dataset.sys=item.name;
         btn.title=item.name;
 
-        // (recomendado) normaliza ruta img si existe abs()
-        const imgSrc = (W.__EXP_ABS__ ? W.__EXP_ABS__(item.img) : item.img);
-
-        btn.innerHTML=(item.noDiscount?'<small class="sin15">sin -15%</small>':"")+
-          `<img src="${imgSrc}" alt="${item.name}"><strong>${item.name.replace("CONTPAQi ","")}</strong>`+
-          `<small class="sys-price">${precio!=null?("desde "+fmt(precio)):"precio no disp."}</small>`;
+        btn.innerHTML =
+          (item.noDiscount?'<small class="sin15">sin -15%</small>':"")+
+          `<img src="${item.img}" alt="${item.name}">
+           <strong>${item.name.replace("CONTPAQi ","")}</strong>
+           <small class="sys-price">${precio!=null?("desde "+fmt(precio)):"precio no disp."}</small>`;
 
         if(active&&active===item.name) btn.classList.add("active");
         wrap.appendChild(btn);
@@ -449,20 +465,22 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
     };
 
     const renderCombined=rows=>{
-      const wrap=D.getElementById("combined-wrap"),tbody=D.getElementById("combined-table-body");
+      const wrap=D.getElementById("combined-wrap");
+      const tbody=D.getElementById("combined-table-body");
       if(!wrap||!tbody) return;
       tbody.innerHTML="";
       rows.forEach(pair=>{
-        const tr=D.createElement("tr"),td1=D.createElement("td"),td2=D.createElement("td");
-        td1.textContent=pair[0]; td2.textContent=pair[1];
+        const tr=D.createElement("tr");
+        const td1=D.createElement("td");
+        const td2=D.createElement("td");
+        td1.textContent=pair[0];
+        td2.textContent=pair[1];
         td2.style.textAlign="right";
         tr.appendChild(td1); tr.appendChild(td2);
         tbody.appendChild(tr);
       });
       wrap.hidden=!1;
     };
-
-    const row=D.getElementById("calc-row"); if(!row) return;
 
     const slot2=D.getElementById("calc-slot-2");
     let secondary=D.getElementById("calc-secondary");
@@ -487,12 +505,11 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
 
     const slot3=D.getElementById("calc-tertiary");
     const addMore=D.getElementById("add-more-panel");
-    const pick2=D.getElementById("icons-sec-sys");
-    const pick3=D.getElementById("icons-third-sys");
 
     const selected={secondary:null,tertiary:null};
     const setSel=()=>new Set([selected.secondary,selected.tertiary].filter(Boolean));
-    const showMore=()=>{ if(addMore) addMore.style.display=selected.secondary?"":"none"; };
+
+    const showMore=()=>{ if(addMore) addMore.style.display = selected.secondary ? "" : "none"; };
 
     const refresh=()=>{
       const ex=setSel();
@@ -503,82 +520,75 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
     refresh();
     showMore();
 
-    if(pick2 && !pick2.dataset.bound){
-      pick2.dataset.bound="1";
-      pick2.addEventListener("click",e=>{
-        const btn=e.target.closest(".sys-icon"); if(!btn) return;
-        const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+    // listeners
+    pick2.addEventListener("click",e=>{
+      const btn=e.target.closest(".sys-icon"); if(!btn) return;
+      const sys=btn.dataset.sys;
 
-        selected.secondary=sys;
-        if(selected.tertiary===sys) selected.tertiary=null;
+      // OJO: aquí NO exijas precios para pintar; solo para calcular
+      selected.secondary=sys;
+      if(selected.tertiary===sys) selected.tertiary=null;
 
-        ensureSecondary();
+      ensureSecondary();
 
-        if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setSecondarySystem){
-          W.CalculadoraContpaqi.setSecondarySystem(sys,{
-            secondarySelector:"#calc-secondary",
-            combinedSelector:"#combined-wrap",
-            onCombined:renderCombined
-          });
-        }
+      if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setSecondarySystem){
+        W.CalculadoraContpaqi.setSecondarySystem(sys,{
+          secondarySelector:"#calc-secondary",
+          combinedSelector:"#combined-wrap",
+          onCombined:renderCombined
+        });
+      }
 
-        showSecondary();
-        refresh();
-        showMore();
-      });
-    }
+      showSecondary();
+      refresh();
+      showMore();
+    });
 
-    if(pick3 && !pick3.dataset.bound){
-      pick3.dataset.bound="1";
-      pick3.addEventListener("click",e=>{
-        const btn=e.target.closest(".sys-icon"); if(!btn) return;
-        const sys=btn.dataset.sys;
-        if(!hasPrices(sys) || sys===selected.secondary) return;
+    if(pick3) pick3.addEventListener("click",e=>{
+      const btn=e.target.closest(".sys-icon"); if(!btn) return;
+      const sys=btn.dataset.sys;
+      if(sys===selected.secondary) return;
 
-        selected.tertiary=sys;
-        if(slot3) slot3.style.display="block";
+      selected.tertiary=sys;
+      if(slot3) slot3.style.display="block";
 
-        if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setTertiarySystem){
-          W.CalculadoraContpaqi.setTertiarySystem(sys,{
-            tertiarySelector:"#calc-tertiary",
-            combinedSelector:"#combined-wrap",
-            onCombined:renderCombined
-          });
-        }
+      if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setTertiarySystem){
+        W.CalculadoraContpaqi.setTertiarySystem(sys,{
+          tertiarySelector:"#calc-tertiary",
+          combinedSelector:"#combined-wrap",
+          onCombined:renderCombined
+        });
+      }
 
-        if(addMore) addMore.style.display="none";
-        row.classList.add("has-three");
-        refresh();
-      });
-    }
+      if(addMore) addMore.style.display="none";
+      row.classList.add("has-three");
+      refresh();
+    });
 
-    if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.onCombinedSet){
+    if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.onCombinedSet)
       W.CalculadoraContpaqi.onCombinedSet(renderCombined);
-    }
 
     if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.init){
       D.body.setAttribute("data-calc","escritorio");
-      W.CalculadoraContpaqi.init({
-        systemName:PRIMARY,
-        primarySelector:"#calc-primary",
-        combinedSelector:"#combined-wrap"
-      });
+      W.CalculadoraContpaqi.init({systemName:PRIMARY,primarySelector:"#calc-primary",combinedSelector:"#combined-wrap"});
     } else {
       console.warn("CalculadoraContpaqi.init no disponible");
     }
   };
 
-  // Ejecuta seguro (antes/después de DOMContentLoaded)
-  if (D.readyState === "loading") {
-    D.addEventListener("DOMContentLoaded", bootCalc, { once: true });
-  } else {
-    bootCalc();
-  }
+  // 1) intenta ya
+  bootCalc();
 
-  // Re-ejecución segura en BFCache (y si vuelves atrás)
-  W.addEventListener("pageshow", () => { try{ bootCalc(); }catch(e){} });
+  // 2) intenta en load/pageshow
+  W.addEventListener("load", bootCalc);
+  W.addEventListener("pageshow", bootCalc);
+
+  // 3) observa DOM por si la sección llega tarde (parciales)
+  const mo = new MutationObserver(() => bootCalc());
+  mo.observe(D.documentElement, { childList:true, subtree:true });
 
 })();
+
 
  
 
