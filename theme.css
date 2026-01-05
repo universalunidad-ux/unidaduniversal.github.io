@@ -790,3 +790,39 @@ html[data-theme="light"] h3{color:rgba(11,18,32,.96)}
     max-width:980px; /* leve ajuste para que no se sienta “apretado” */
   }
 }
+
+/* =========================================================
+   GLOBAL — CONTRASTE LIGHT (blindado)
+   Pegar AL FINAL de theme.css
+========================================================= */
+html[data-theme="light"]{
+  /* Texto secundario: evita que se vaya a gris demasiado pálido */
+  --muted:#334155;
+}
+
+/* Evita textos/lists “lavados” por opacidades heredadas */
+html[data-theme="light"] .muted,
+html[data-theme="light"] .hint,
+html[data-theme="light"] p,
+html[data-theme="light"] li{
+  opacity:1!important;
+}
+
+/* Pills/tabs genéricos (si existen fuera del index) */
+html[data-theme="light"] .pill,
+html[data-theme="light"] .tabs button,
+html[data-theme="light"] .chips button{
+  color:rgba(11,18,32,.92)!important;
+}
+
+/* Dots bar en light: más visible pero sin “mancha” */
+html[data-theme="light"] .carousel-nav{
+  background:rgba(255,255,255,.60)!important;
+  border-top:1px solid rgba(2,6,23,.10)!important;
+}
+html[data-theme="light"] .dot{
+  background:rgba(2,6,23,.22)!important;
+}
+html[data-theme="light"] .dot.active{
+  background:rgba(45,212,191,.95)!important;
+}
