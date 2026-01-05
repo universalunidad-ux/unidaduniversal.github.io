@@ -140,6 +140,144 @@ html.gh-open .gh-drawer{transform:translateX(0)}
 .gh-star::after{content:"RECOMENDADO";position:absolute;top:10px;left:10px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#041016;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));box-shadow:0 12px 26px rgba(0,0,0,.35)}
 /* ===== REDUCE MOTION ===== */
 @media(prefers-reduced-motion:reduce){.gh-brand,.gh-dd-menu,.gh-dim,.gh-drawer,.gh-bar,.gh-mcard,.gh-nav a{transition:none!important}}
+/* =========================================================
+  PATCH V7 — FIX LIGHT + NO "CAPA BLANCA" + DRAWER RESPONSIVE
+  Pegar al FINAL del <style> del header
+========================================================= */
+
+/* 1) Aislar header de filtros globales (la típica "capa blanca") */
+#gh-header img,
+#gh-header svg{
+  mix-blend-mode: normal !important;
+  filter: none !important;              /* evita invert/brightness global */
+  opacity: 1 !important;                /* evita “lavado” */
+}
+
+/* Mantén sombras SOLO donde tú quieres */
+#gh-header .gh-item img,
+#gh-header .gh-mimg,
+#gh-header .gh-wa-ico{
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.22)) !important;
+}
+
+/* 2) Desktop Mega en LIGHT: fondo y textos con contraste premium */
+html[data-theme="light"] #gh-header .gh-dd-menu.mega{
+  background: rgba(255,255,255,.94) !important;
+  border-color: rgba(2,6,23,.10) !important;
+}
+
+html[data-theme="light"] #gh-header .gh-col{
+  background: linear-gradient(180deg, rgba(2,6,23,.015), rgba(2,6,23,.008)) !important;
+}
+
+html[data-theme="light"] #gh-header .gh-item{
+  color: #0b1220 !important;
+}
+
+html[data-theme="light"] #gh-header .gh-item span{
+  color: #475569 !important;
+}
+
+/* Quita cualquier “velo” en imágenes del mega en light */
+html[data-theme="light"] #gh-header .gh-item img{
+  background: transparent !important;
+  opacity: 1 !important;
+}
+
+/* 3) Drawer en LIGHT: actualmente tu drawer es oscuro fijo -> se pierde contraste */
+html[data-theme="light"] #gh-header .gh-dim{
+  background: rgba(2,6,23,.22) !important;
+}
+
+html[data-theme="light"] #gh-header .gh-drawer{
+  background: rgba(248,250,252,.98) !important;
+  border-left-color: rgba(2,6,23,.10) !important;
+}
+
+html[data-theme="light"] #gh-header .gh-drawer-head{
+  border-bottom-color: rgba(2,6,23,.10) !important;
+}
+
+html[data-theme="light"] #gh-header .gh-dtitle-name{
+  color:#0b1220 !important;
+}
+html[data-theme="light"] #gh-header .gh-dtitle-sub{
+  color:#475569 !important;
+}
+
+/* Botones top (Llamar/WhatsApp/Cerrar) visibles en light */
+html[data-theme="light"] #gh-header .gh-headbtn{
+  color:#0b1220 !important;
+  border-color: rgba(2,6,23,.14) !important;
+  background: rgba(255,255,255,.75) !important;
+}
+html[data-theme="light"] #gh-header .gh-close{
+  color:#0b1220 !important;
+  border-color: rgba(2,6,23,.16) !important;
+  background: rgba(255,255,255,.85) !important;
+}
+
+/* Contenedores internos */
+html[data-theme="light"] #gh-header .gh-acc,
+html[data-theme="light"] #gh-header .gh-msys,
+html[data-theme="light"] #gh-header .gh-msvc{
+  background: rgba(255,255,255,.70) !important;
+  border-color: rgba(2,6,23,.10) !important;
+}
+
+html[data-theme="light"] #gh-header .gh-msys-title{
+  color:#0b1220 !important;
+}
+html[data-theme="light"] #gh-header .gh-msys-sub{
+  color:#64748b !important;
+}
+
+/* Tabs de categorías legibles */
+html[data-theme="light"] #gh-header .gh-cat{
+  background: rgba(255,255,255,.80) !important;
+  border-color: rgba(2,6,23,.14) !important;
+  color:#0b1220 !important;
+}
+html[data-theme="light"] #gh-header .gh-cat.is-active{
+  background: linear-gradient(90deg, rgba(13,148,136,.16), rgba(37,99,235,.12)) !important;
+  border-color: rgba(13,148,136,.30) !important;
+}
+
+/* Cards del drawer legibles */
+html[data-theme="light"] #gh-header .gh-mcard{
+  background: rgba(255,255,255,.85) !important;
+  border-color: rgba(2,6,23,.10) !important;
+  box-shadow: 0 18px 40px rgba(2,6,23,.10) !important;
+}
+html[data-theme="light"] #gh-header .gh-mmeta strong{ color:#0b1220 !important; }
+html[data-theme="light"] #gh-header .gh-mmeta span{ color:#475569 !important; }
+
+/* 4) "Servicios gigante" en móvil: ajustar densidad en pantallas chicas */
+@media (max-width:420px){
+  #gh-header{
+    --gh-d-gap: 10px;
+    --gh-d-pad: 10px;
+    --gh-card-minh: 88px;
+    --gh-img-h: 34px;
+  }
+  #gh-header .gh-msys,
+  #gh-header .gh-msvc{
+    padding:10px 10px 12px;
+  }
+  #gh-header .gh-svcarrow{
+    width:32px; height:32px;
+  }
+  #gh-header .gh-svcdots{
+    padding:6px 10px;
+  }
+}
+
+/* 5) Si el “white layer” venía de backdrop/blur + fondos claros, suaviza */
+html[data-theme="light"] #gh-header .gh-svcdots{
+  background: rgba(2,6,23,.04) !important;
+  border-color: rgba(2,6,23,.10) !important;
+}
+
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
@@ -343,123 +481,323 @@ html.gh-open .gh-drawer{transform:translateX(0)}
   </div>
 </aside>
 </header>
-
 <script>
 /* =========================================================
- Expiriti Header JS (V7 + Mobile V5) — BLINDADO
- - ROOT robusto (evita 404 en GH Pages desde subpáginas /SISTEMAS/... )
- - buildPath seguro (GH Pages + dominio + local/file)
- - applySafePaths: setea href/src desde data-href/data-src
- - Drawer + tabs + carrusel servicios
- - Hide on scroll (solo barra)
- - Theme toggle con storage safe
+ Expiriti Header JS (V7 + Mobile V5) — BLINDADO HARDENED
+ - Fallback navegación por click (aunque href no se haya seteado)
+ - MutationObserver: re-aplica rutas si el header/partial entra tarde
+ - buildPath con URL() robusto
 ========================================================= */
 (function(){'use strict';
-if(window.__EXPIRITI_GH_V7MOBILE__&&document.getElementById('gh-header')?.__ghInited)return;
-const Q=(s,c=document)=>c.querySelector(s),QA=(s,c=document)=>Array.from(c.querySelectorAll(s));
+if(window.__EXPIRITI_GH_V7MOBILE_HARDENED__) return;
+window.__EXPIRITI_GH_V7MOBILE_HARDENED__ = true;
+
+const D=document, W=window;
+const Q=(s,c=D)=>c.querySelector(s);
+const QA=(s,c=D)=>Array.from(c.querySelectorAll(s));
 const BLANK="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
 const storage={get:k=>{try{return localStorage.getItem(k)}catch(_){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(_){}}};
-const ORIGIN=(location.origin&&location.origin!=='null')?location.origin:'';
+
+function getRootFromMeta(){
+  const m=Q('meta[name="expiriti-base"]');
+  if(!m || !m.content) return null;
+  let r=m.content.trim();
+  if(!r.startsWith('/')) r='/'+r;
+  if(!r.endsWith('/')) r=r+'/';
+  return r;
+}
+
 function getMasterRoot(){
-  const m=document.querySelector('meta[name="expiriti-base"]');
-  if(m&&m.content){let r=m.content.trim();if(!r.startsWith('/'))r='/'+r;if(!r.endsWith('/'))r=r+'/';return r;}
-  const host=location.hostname||'',seg=(location.pathname||'/').split('/').filter(Boolean),first=(seg[0]||'').toLowerCase();
+  // 1) Prefer meta ALWAYS (tu caso GH Pages)
+  const metaRoot=getRootFromMeta();
+  if(metaRoot) return metaRoot;
+
+  // 2) Fallback GH heurística
+  const host=location.hostname||'';
+  const seg=(location.pathname||'/').split('/').filter(Boolean);
+  const first=(seg[0]||'').toLowerCase();
   const RESERVED=new Set(['sistemas','servicios','migraciones','implementaciones','desarrollos','img','images','css','js','assets']);
-  if(host.includes('github.io')){if(seg.length>0&&!RESERVED.has(first))return '/'+seg[0]+'/';return '/';}
+  if(host.includes('github.io')){
+    if(seg.length>0 && !RESERVED.has(first)) return '/'+seg[0]+'/';
+    return '/';
+  }
   return '/';
 }
-const ROOT=getMasterRoot();
-const join=(a,b)=>(a.replace(/\/+$/,'')+'/'+b.replace(/^\/+/,'')).replace(/\/{2,}/g,'/');
-function buildPath(raw){
-  if(!raw)return '#';
-  if(/^(https?:|mailto:|tel:|whatsapp:|sms:)/i.test(raw))return raw;
-  if(raw.startsWith('#')){const base=join(ROOT,'index.html')+raw;return ORIGIN?ORIGIN+base:base;}
-  const out=join(ROOT,raw.replace(/^\//,''));return ORIGIN?ORIGIN+out:out;
+
+const ROOT = getMasterRoot();
+
+// base absoluta confiable
+function baseAbs(){
+  try{
+    const origin = (location.origin && location.origin!=='null') ? location.origin : location.href;
+    return new URL(ROOT, origin).toString(); // ej: https://host/unidaduniversal.github.io/
+  }catch(_){
+    return ROOT;
+  }
 }
-function applySafePaths(container=document){
-  QA('.js-link[data-href]',container).forEach(a=>{const r=a.getAttribute('data-href');if(r)a.href=buildPath(r)});
-  QA('.js-img[data-src]',container).forEach(img=>{
-    const r=img.getAttribute('data-src');if(!r)return;
-    img.src=buildPath(r);
-    img.onerror=function(){this.onerror=null;this.style.opacity='.55';this.src=BLANK;};
+
+function buildPath(raw){
+  raw = String(raw||'').trim();
+  if(!raw) return '#';
+
+  // protocolos externos
+  if(/^(https?:|mailto:|tel:|whatsapp:|sms:)/i.test(raw)) return raw;
+
+  // hash siempre a index
+  if(raw.startsWith('#')){
+    try{
+      return new URL('index.html'+raw, baseAbs()).toString();
+    }catch(_){
+      return (ROOT.replace(/\/$/,'')+'/index.html')+raw;
+    }
+  }
+
+  // ruta normal
+  try{
+    return new URL(raw.replace(/^\//,''), baseAbs()).toString();
+  }catch(_){
+    return (ROOT.replace(/\/$/,'')+'/'+raw.replace(/^\/+/,'')); // fallback
+  }
+}
+
+function applySafePaths(container){
+  container = container || D;
+
+  // Links
+  QA('.js-link[data-href]', container).forEach(a=>{
+    const r=a.getAttribute('data-href');
+    if(r) a.href = buildPath(r);
+  });
+
+  // Imágenes
+  QA('.js-img[data-src]', container).forEach(img=>{
+    const r=img.getAttribute('data-src');
+    if(!r) return;
+    const u=buildPath(r);
+    if(img.src !== u) img.src = u;
+    img.onerror=function(){
+      this.onerror=null;
+      this.style.opacity='.60';
+      this.src=BLANK;
+    };
+  });
+
+  // Favicons / OG si usas js-abs*
+  QA('link.js-abs[data-href]', container).forEach(l=>{
+    const r=l.getAttribute('data-href'); if(r) l.href=buildPath(r);
+  });
+  QA('meta.js-abs-meta[data-path]', container).forEach(m=>{
+    const r=m.getAttribute('data-path'); if(r) m.setAttribute('content', buildPath(r));
   });
 }
-function syncOffset(){const bar=Q('#gh-bar'),h=bar?bar.offsetHeight:68;document.documentElement.style.setProperty('--gh-offset',h+'px')}
+
+// ===== Drawer / UI (tu lógica, igual que la tuya) =====
+function syncOffset(){
+  const bar=Q('#gh-bar');
+  const h=bar?bar.offsetHeight:68;
+  D.documentElement.style.setProperty('--gh-offset', h+'px');
+}
+
 function initScrollHide(){
-  const bar=Q('#gh-bar');if(!bar)return;let last=window.scrollY||0;
-  window.addEventListener('scroll',()=>{if(document.documentElement.classList.contains('gh-open'))return;
-    const y=window.scrollY||0;(y>60&&y>last)?bar.classList.add('is-hidden'):bar.classList.remove('is-hidden');last=y;
-  },{passive:true});
+  const bar=Q('#gh-bar'); if(!bar) return;
+  let last=W.scrollY||0;
+  W.addEventListener('scroll', ()=>{
+    if(D.documentElement.classList.contains('gh-open')) return;
+    const y=W.scrollY||0;
+    (y>60 && y>last) ? bar.classList.add('is-hidden') : bar.classList.remove('is-hidden');
+    last=y;
+  }, {passive:true});
 }
+
 function initMobileSystems(){
-  const root=Q('#gh-msys');if(!root||root.__inited)return;root.__inited=true;
-  const cats=QA('.gh-cat',root),panels=QA('.gh-panel',root),KEY='expiriti_mobile_sys_cat',saved=storage.get(KEY);
+  const root=Q('#gh-msys'); if(!root || root.__inited) return; root.__inited=true;
+  const cats=QA('.gh-cat', root);
+  const panels=QA('.gh-panel', root);
+  const KEY='expiriti_mobile_sys_cat';
+  const saved=storage.get(KEY);
+
   function setCat(cat){
-    cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle('is-active',on);b.setAttribute('aria-selected',on?'true':'false')});
-    panels.forEach(p=>{const on=p.dataset.panel===cat;p.classList.toggle('is-open',on);p.hidden=!on});
-    storage.set(KEY,cat);
+    cats.forEach(b=>{
+      const on=b.dataset.cat===cat;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', on?'true':'false');
+    });
+    panels.forEach(p=>{
+      const on=p.dataset.panel===cat;
+      p.classList.toggle('is-open', on);
+      p.hidden = !on;
+    });
+    storage.set(KEY, cat);
   }
-  cats.forEach(b=>b.addEventListener('click',()=>setCat(b.dataset.cat)));
-  setCat(saved||'contables');
+
+  cats.forEach(b=>b.addEventListener('click', ()=>setCat(b.dataset.cat)));
+  setCat(saved || 'contables');
 }
+
 function initMobileServices(){
-  const root=Q('#gh-msvc'),track=Q('#gh-svctrack');if(!root||!track||root.__inited)return;root.__inited=true;
-  const pages=QA('.gh-svcpage',track),prev=Q('.gh-svcarrow.prev',root),next=Q('.gh-svcarrow.next',root),dots=QA('.gh-svcdots .dot',root);
-  const idxFromScroll=()=>{const w=track.clientWidth||1;return Math.round(track.scrollLeft/w)};
-  const goTo=i=>{const w=track.clientWidth||1,n=Math.max(0,Math.min(i,pages.length-1));track.scrollTo({left:n*w,behavior:'smooth'})};
-  const sync=()=>{const i=idxFromScroll();dots.forEach((d,k)=>d.classList.toggle('is-active',k===i));
-    if(prev){prev.disabled=i===0;prev.style.opacity=prev.disabled?'.35':'1'}
-    if(next){next.disabled=i===pages.length-1;next.style.opacity=next.disabled?'.35':'1'}
+  const root=Q('#gh-msvc');
+  const track=Q('#gh-svctrack');
+  if(!root || !track || root.__inited) return; root.__inited=true;
+
+  const pages=QA('.gh-svcpage', track);
+  const prev=Q('.gh-svcarrow.prev', root);
+  const next=Q('.gh-svcarrow.next', root);
+  const dots=QA('.gh-svcdots .dot', root);
+
+  const idxFromScroll=()=> {
+    const w=track.clientWidth||1;
+    return Math.round(track.scrollLeft / w);
   };
-  if(prev)prev.addEventListener('click',e=>{e.preventDefault();goTo(idxFromScroll()-1)});
-  if(next)next.addEventListener('click',e=>{e.preventDefault();goTo(idxFromScroll()+1)});
-  dots.forEach((d,i)=>d.addEventListener('click',e=>{e.preventDefault();goTo(i)}));
-  track.addEventListener('scroll',()=>requestAnimationFrame(sync),{passive:true});
-  window.addEventListener('resize',sync,{passive:true});
+
+  const goTo=i=>{
+    const w=track.clientWidth||1;
+    const n=Math.max(0, Math.min(i, pages.length-1));
+    track.scrollTo({left:n*w, behavior:'smooth'});
+  };
+
+  const sync=()=>{
+    const i=idxFromScroll();
+    dots.forEach((d,k)=>d.classList.toggle('is-active', k===i));
+    if(prev){ prev.disabled = i===0; prev.style.opacity = prev.disabled?'.35':'1'; }
+    if(next){ next.disabled = i===pages.length-1; next.style.opacity = next.disabled?'.35':'1'; }
+  };
+
+  if(prev) prev.addEventListener('click', e=>{e.preventDefault(); goTo(idxFromScroll()-1);});
+  if(next) next.addEventListener('click', e=>{e.preventDefault(); goTo(idxFromScroll()+1);});
+  dots.forEach((d,i)=>d.addEventListener('click', e=>{e.preventDefault(); goTo(i);} ));
+
+  track.addEventListener('scroll', ()=>W.requestAnimationFrame(sync), {passive:true});
+  W.addEventListener('resize', sync, {passive:true});
   sync();
 }
+
 function toggleDrawer(open){
-  const drawer=Q('#gh-drawer'),dim=Q('#gh-dim'),burger=Q('#gh-burger'),bar=Q('#gh-bar');
-  if(!drawer||!dim||!burger)return;
+  const drawer=Q('#gh-drawer'), dim=Q('#gh-dim'), burger=Q('#gh-burger'), bar=Q('#gh-bar');
+  if(!drawer || !dim || !burger) return;
+
   if(open){
-    if(bar)bar.classList.remove('is-hidden');
-    drawer.hidden=false;dim.hidden=false;void drawer.offsetWidth;
-    document.documentElement.classList.add('gh-open');
+    if(bar) bar.classList.remove('is-hidden');
+    drawer.hidden=false; dim.hidden=false; void drawer.offsetWidth;
+    D.documentElement.classList.add('gh-open');
     drawer.setAttribute('aria-hidden','false');
     burger.setAttribute('aria-expanded','true');
-    document.body.style.overflow='hidden';
-    applySafePaths(Q('#gh-header'));initMobileSystems();initMobileServices();
+    D.body.style.overflow='hidden';
+
+    // aplica rutas SIEMPRE al abrir
+    const header=Q('#gh-header');
+    if(header){ applySafePaths(header); }
+    initMobileSystems();
+    initMobileServices();
   }else{
-    document.documentElement.classList.remove('gh-open');
+    D.documentElement.classList.remove('gh-open');
     drawer.setAttribute('aria-hidden','true');
     burger.setAttribute('aria-expanded','false');
-    document.body.style.overflow='';
-    setTimeout(()=>{if(!document.documentElement.classList.contains('gh-open')){dim.hidden=true;drawer.hidden=true}},250);
+    D.body.style.overflow='';
+    setTimeout(()=>{ if(!D.documentElement.classList.contains('gh-open')){ dim.hidden=true; drawer.hidden=true; } }, 250);
   }
 }
-function bind(){
-  document.addEventListener('click',e=>{
-    const b=e.target.closest('#gh-burger');if(b){e.preventDefault();toggleDrawer(!document.documentElement.classList.contains('gh-open'));return;}
-    if(e.target.closest('#gh-close')||e.target.matches('#gh-dim')){e.preventDefault();toggleDrawer(false);return;}
-    const a=e.target.closest('.gh-drawer a');if(a)setTimeout(()=>toggleDrawer(false),120);
-  },{passive:false});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.documentElement.classList.contains('gh-open'))toggleDrawer(false)});
-  window.addEventListener('pageshow',ev=>{if(ev.persisted)toggleDrawer(false)});
-}
+
 function initThemeToggle(){
-  const btn=Q('#gh-theme');if(!btn||btn.__inited)return;btn.__inited=true;
-  const KEY='expiriti_theme',root=document.documentElement;
-  const sync=()=>{const t=(root.dataset.theme==='light')?'light':'dark';btn.setAttribute('aria-pressed',t==='light'?'true':'false');btn.title=(t==='light')?'Modo oscuro':'Modo claro'};
-  const set=t=>{root.dataset.theme=t;storage.set(KEY,t);sync()};
-  btn.addEventListener('click',e=>{e.preventDefault();set((root.dataset.theme==='light')?'dark':'light')});
-  const saved=storage.get(KEY);if(saved==='light'||saved==='dark')root.dataset.theme=saved;sync();
+  const btn=Q('#gh-theme');
+  if(!btn || btn.__inited) return; btn.__inited=true;
+
+  const KEY='expiriti_theme';
+  const root=D.documentElement;
+  const sync=()=>{
+    const t=(root.dataset.theme==='light')?'light':'dark';
+    btn.setAttribute('aria-pressed', t==='light'?'true':'false');
+    btn.title = (t==='light') ? 'Modo oscuro' : 'Modo claro';
+  };
+  const set=t=>{ root.dataset.theme=t; storage.set(KEY,t); sync(); };
+
+  btn.addEventListener('click', e=>{
+    e.preventDefault();
+    set((root.dataset.theme==='light') ? 'dark' : 'light');
+  });
+
+  const saved=storage.get(KEY);
+  if(saved==='light' || saved==='dark') root.dataset.theme=saved;
+  sync();
 }
+
+/* =========================================================
+  BLINDAJE CLAVE:
+  Delegación de click -> si data-href existe, navega aunque href sea "#"
+========================================================= */
+function bindBlindClicks(){
+  if(D.__ghBlindClickBound) return;
+  D.__ghBlindClickBound = true;
+
+  D.addEventListener('click', (e)=>{
+    const a = e.target.closest('a.js-link[data-href]');
+    if(!a) return;
+
+    const raw = a.getAttribute('data-href');
+    if(!raw) return;
+
+    // Permite abrir en nueva pestaña si el usuario lo pide
+    const isNewTab = a.target==='_blank' || e.metaKey || e.ctrlKey || e.button===1;
+    const url = buildPath(raw);
+
+    // si ya tiene href correcto, deja fluir
+    if(a.href && a.href !== '#' && a.href !== location.href+'#') return;
+
+    e.preventDefault();
+    if(isNewTab) { W.open(url, '_blank', 'noopener'); return; }
+    location.href = url;
+  }, {passive:false});
+
+  D.addEventListener('click', (e)=>{
+    const b=e.target.closest('#gh-burger');
+    if(b){ e.preventDefault(); toggleDrawer(!D.documentElement.classList.contains('gh-open')); return; }
+    if(e.target.closest('#gh-close') || e.target.matches('#gh-dim')){
+      e.preventDefault(); toggleDrawer(false); return;
+    }
+    const inDrawerLink = e.target.closest('.gh-drawer a');
+    if(inDrawerLink) setTimeout(()=>toggleDrawer(false), 120);
+  }, {passive:false});
+
+  D.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape' && D.documentElement.classList.contains('gh-open')) toggleDrawer(false);
+  });
+
+  W.addEventListener('pageshow', (ev)=>{ if(ev.persisted) toggleDrawer(false); });
+}
+
+/* =========================================================
+  MutationObserver: si el header/partial entra tarde, re-aplica rutas
+========================================================= */
+function observeLateHeader(){
+  if(D.__ghObserverBound) return;
+  D.__ghObserverBound=true;
+
+  const obs = new MutationObserver(()=>{
+    const header = Q('#gh-header');
+    if(header){
+      applySafePaths(header);
+      syncOffset();
+    }
+  });
+  obs.observe(D.documentElement, {childList:true, subtree:true});
+}
+
 function boot(){
-  const header=Q('#gh-header');if(!header||header.__ghInited)return;
-  header.__ghInited=true;window.__EXPIRITI_GH_V7MOBILE__=true;
-  initThemeToggle();applySafePaths(header);syncOffset();initScrollHide();bind();toggleDrawer(false);
+  const header=Q('#gh-header');
+  if(!header || header.__ghInited) return;
+  header.__ghInited=true;
+
+  initThemeToggle();
+  applySafePaths(header);
+  syncOffset();
+  initScrollHide();
+  bindBlindClicks();
+  observeLateHeader();
+  toggleDrawer(false);
 }
-boot();document.addEventListener('DOMContentLoaded',boot,{once:true});
-window.addEventListener('resize',syncOffset,{passive:true});
+
+boot();
+D.addEventListener('DOMContentLoaded', boot, {once:true});
+W.addEventListener('resize', syncOffset, {passive:true});
+
 })();
 </script>
