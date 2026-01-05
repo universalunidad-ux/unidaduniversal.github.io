@@ -826,3 +826,13 @@ html[data-theme="light"] .page-sistemas #carouselVideos .yt-title{
   }
 }
 
+/* =========================================================
+   PATCH — QUITAR “Video” gris arriba del video (solo título + iframe)
+========================================================= */
+#videos .yt small,
+#videos .yt .kicker,
+#videos .yt .muted{display:none !important;}
+
+/* Por si lo están metiendo con pseudo-elemento */
+#videos .yt::before,
+#videos .yt::after{content:none !important; display:none !important;}
