@@ -836,3 +836,9 @@ html[data-theme="light"] .page-sistemas #carouselVideos .yt-title{
 /* Por si lo están metiendo con pseudo-elemento */
 #videos .yt::before,
 #videos .yt::after{content:none !important; display:none !important;}
+
+/* Asegura visibilidad de botones en el picker */
+#icons-sec-sys, #icons-third-sys{display:flex;gap:12px;overflow:auto;padding:8px 2px}
+#icons-sec-sys .sys-icon, #icons-third-sys .sys-icon{flex:0 0 auto;min-width:190px}
+#icons-sec-sys .sys-icon img, #icons-third-sys .sys-icon img{width:54px;height:54px;object-fit:cover;border-radius:14px;display:block}
+
