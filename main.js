@@ -348,7 +348,14 @@ const track=root.querySelector(".track");if(!track)return;
 const items=Array.from(root.querySelectorAll(".sys"));
 items.forEach(it=>{it.setAttribute("role","link");it.setAttribute("tabindex","0");let touched=!1;
 const isMob=()=>W.matchMedia("(max-width: 768px)").matches;
-const go=()=>{const href=it.getAttribute("data-href");if(href)W.open(href,"_blank","noopener")};
+const go=()=>{
+  const href=it.getAttribute("data-href");
+  if(!href) return;
+
+  const abs = (W.__EXP_ABS__ ? W.__EXP_ABS__(href) : href);
+  /* Misma pestaña = 0 bloqueos y UX más natural */
+  location.href = abs;
+};
 it.addEventListener("click",e=>{e.preventDefault();if(isMob()&&!touched){touched=!0;it.classList.add("show-hover");setTimeout(()=>{touched=!1},2e3);return}go()});
 it.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}})
 });
