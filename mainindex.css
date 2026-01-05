@@ -973,3 +973,67 @@ html[data-theme="light"] section{
 html[data-theme="light"] .btn-secondary{background:rgba(255,255,255,.92)}
 .btn-link{background:transparent;border:0;padding:0;min-height:auto;text-decoration:underline;text-underline-offset:3px}
 
+
+/* =========================================================
+   FIX ESPECÍFICO: CONTRASTE EN ELEMENTOS (Pestañas y Botones)
+   Agregado para corregir invisibilidad en modo claro
+========================================================= */
+
+/* 1. Botones de filtro en PROMOCIONES (.promo-btn) */
+html[data-theme="light"] .promo-btn {
+  color: #334155 !important;       /* Gris oscuro legible */
+  background: #ffffff !important;  /* Fondo blanco limpio */
+  border-color: #cbd5e1 !important; /* Borde gris visible */
+  font-weight: 600;
+}
+
+html[data-theme="light"] .promo-btn.active {
+  background: rgba(45,212,191,.15) !important; /* Fondo verde muy suave */
+  border-color: #0d9488 !important;            /* Borde verde oscuro */
+  color: #0f172a !important;                   /* Texto casi negro */
+}
+
+/* 2. Cuadrícula de iconos/reels (.reel-tab) */
+/* Esto arregla los cuadros de "Pólizas", "Implementaciones", etc. */
+html[data-theme="light"] .reel-tab {
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05) !important;
+}
+
+/* El texto pequeño debajo del icono */
+html[data-theme="light"] .reel-tab span {
+  color: #475569 !important; /* Gris oscuro */
+  font-weight: 700 !important;
+}
+
+/* Estado activo de la cuadrícula */
+html[data-theme="light"] .reel-tab.active {
+  background: rgba(96,165,250,.10) !important; /* Azul muy suave */
+  border-color: #3b82f6 !important;            /* Borde azul fuerte */
+}
+html[data-theme="light"] .reel-tab.active span {
+  color: #1e3a8a !important; /* Azul marino */
+}
+
+/* 3. Pestañas principales de productos (.prod-tabs .tab) */
+/* "Contables", "Comerciales", "Nube"... */
+html[data-theme="light"] .prod-tabs .tab {
+  color: #334155 !important;
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+}
+
+html[data-theme="light"] .prod-tabs .tab.active {
+  color: #0f172a !important;
+  background: #eff6ff !important; /* Azul muy pálido */
+  border-color: #3b82f6 !important;
+}
+
+/* 4. Asegurar textos de párrafo en las tarjetas */
+html[data-theme="light"] .product-card p, 
+html[data-theme="light"] .product-card .lead, 
+html[data-theme="light"] .product-card li {
+  color: #475569 !important;
+}
