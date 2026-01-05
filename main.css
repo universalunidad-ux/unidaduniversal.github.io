@@ -667,5 +667,128 @@ body.page-sistemas #carouselVideos .yt-wrap{aspect-ratio:16/9!important;min-heig
 .page-sistemas #integra .sys{cursor:pointer}
 .page-sistemas #integra .sys:focus{outline:2px solid rgba(45,212,191,.55);outline-offset:3px}
 
+/* =========================================================
+   PATCH FIX (SISTEMAS) — XML en Línea
+   - Centrar listSlider (icono + texto) en desktop
+   - Badges con colores Expiriti (ambar/teal/coral)
+   - Videos: título arriba de cada video (desktop + mobile)
+========================================================= */
+
+/* =========================
+  1) LISTSLIDER: centrar iconos + texto (desktop también)
+========================= */
+.page-sistemas .listSlider .listItem{
+  flex-direction:column;              /* antes row en desktop */
+  align-items:center;
+  text-align:center;
+  gap:10px;
+}
+.page-sistemas .listSlider .listItem > div:last-child{
+  max-width:54ch;                     /* evita que el texto “se vaya” a los lados */
+}
+.page-sistemas .listSlider .listIcon{
+  margin:0 auto;
+}
+.page-sistemas .listSlider .listIcon img{
+  display:block;
+  margin:0 auto;
+}
+
+/* =========================
+  2) BADGES: colores tipo Expiriti (img3)
+  - Aplica a los badges del bloque (como tu “Beneficios clave” y los 4 bullets)
+========================= */
+.page-sistemas .badges .badge{
+  border:1px solid rgba(148,163,184,.28);
+  background:rgba(15,23,42,.18);
+  color:rgba(232,238,246,.94);
+  font-weight:900;
+}
+html[data-theme="light"] .page-sistemas .badges .badge{
+  border:1px solid rgba(2,6,23,.14);
+  background:rgba(255,255,255,.82);
+  color:rgba(11,18,32,.92);
+}
+
+/* Colores (ambar / teal / coral / azul) por orden */
+.page-sistemas .badges .badge:nth-child(1){
+  background:rgba(232,172,54,.18);
+  border-color:rgba(232,172,54,.45);
+}
+.page-sistemas .badges .badge:nth-child(2){
+  background:rgba(45,212,191,.16);
+  border-color:rgba(45,212,191,.42);
+}
+.page-sistemas .badges .badge:nth-child(3){
+  background:rgba(240,90,102,.16);
+  border-color:rgba(240,90,102,.40);
+}
+.page-sistemas .badges .badge:nth-child(4){
+  background:rgba(96,165,250,.16);
+  border-color:rgba(96,165,250,.40);
+}
+
+/* En light, mantiene el mismo color pero con tinta oscura */
+html[data-theme="light"] .page-sistemas .badges .badge:nth-child(1),
+html[data-theme="light"] .page-sistemas .badges .badge:nth-child(2),
+html[data-theme="light"] .page-sistemas .badges .badge:nth-child(3),
+html[data-theme="light"] .page-sistemas .badges .badge:nth-child(4){
+  color:rgba(11,18,32,.92);
+}
+
+/* =========================
+  3) VIDEOS: títulos arriba de CADA video
+  - Quita la barra “combinada” (yt-titlesbar) y muestra .yt-title
+  - Agrega la línea "Video" debajo del título
+========================= */
+
+/* Si tu JS creó la barra superior, la apagamos */
+.page-sistemas #carouselVideos .yt-titlesbar{display:none!important}
+
+/* Asegura que el título dentro de cada .yt sí se vea */
+.page-sistemas #videos .yt-title,
+.page-sistemas #carouselVideos .yt-title{
+  display:block!important;
+  margin:0 0 8px!important;
+  text-align:center!important;
+  font-weight:950;
+  font-size:14px;
+  letter-spacing:.01em;
+  color:var(--text);
+}
+html[data-theme="light"] .page-sistemas #carouselVideos .yt-title{
+  color:rgba(11,18,32,.92);
+}
+
+/* Línea “Video” debajo del título (como pediste) */
+.page-sistemas #carouselVideos .yt-title::after{
+  content:"Video";
+  display:block;
+  margin-top:4px;
+  font-weight:800;
+  font-size:12px;
+  opacity:.72;
+}
+
+/* Ajuste de la card de video: aire y alineación */
+.page-sistemas #carouselVideos .yt{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+  padding:12px;
+}
+
+/* Mantén el iframe justo debajo del título */
+.page-sistemas #carouselVideos .yt-wrap{
+  margin-top:0;
+}
+
+/* Mobile: que no se “junten” los títulos ni se recorten */
+@media(max-width:768px){
+  .page-sistemas #carouselVideos .yt-title{
+    font-size:13.5px;
+  }
+}
 
 
