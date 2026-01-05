@@ -792,3 +792,37 @@ html[data-theme="light"] .page-sistemas #carouselVideos .yt-title{
 }
 
 
+/* =========================================================
+   PATCH — NARROW DESKTOP (~30% menos ancho visual)
+   - Centra y limita secciones que hoy “se estiran” full width
+========================================================= */
+@media (min-width: 1100px){
+  .page-sistemas{
+    --sys-narrow: min(1120px, 70vw); /* 70vw ≈ 30% más estrecho */
+  }
+
+  /* Si usas .container global */
+  .page-sistemas .container{
+    max-width: var(--sys-narrow);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Muchas de tus secciones usan .card.body directo sin .container */
+  .page-sistemas section > .card.body,
+  .page-sistemas section .card.body{
+    max-width: var(--sys-narrow);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Ajuste extra: evita que tracks/carruseles empujen el layout */
+  .page-sistemas .carousel,
+  .page-sistemas .carouselX,
+  .page-sistemas .calc-strip{
+    max-width: var(--sys-narrow);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
