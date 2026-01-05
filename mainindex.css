@@ -689,3 +689,101 @@
   .page-index .product-card:hover{transform:none}
   .page-index #servicios.section-full{padding:22px 0!important}
 }
+
+/* ===== PATCH v2026.01.XX — HERO full-height + contraste + gradiente ExpIRI ===== */
+
+/* 1) Contraste global del index: evita “texto blanco sobre fondo blanco” */
+.page-index{
+  color:var(--text,#e8eef6); /* fuerza color texto */
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(45,212,191,.10), transparent 60%),
+    radial-gradient(1000px 560px at 80% 10%, rgba(96,165,250,.10), transparent 60%),
+    linear-gradient(180deg, #070b12, #060913); /* fondo oscuro estable */
+}
+
+/* 2) Variables de gradiente del logo ExpIRI TI (ajusta si quieres tonos exactos) */
+.page-index{
+  --exp-yellow:#f6c445;
+  --exp-teal:#25c7b8;
+  --exp-red:#ff4d6d;
+}
+
+/* 3) Clase utilitaria para títulos con gradiente ExpIRI */
+.page-index .expiriti-gradient{
+  background:linear-gradient(90deg,var(--exp-yellow),var(--exp-teal),var(--exp-red));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* Si quieres que TODOS los títulos de sección del index lo usen automáticamente: */
+.page-index .section-title h2,
+.page-index #productos-con .prod-title,
+.page-index #servicios .section-title h2,
+.page-index #promociones .section-title h2,
+.page-index #faq .section-title h2{
+  background:linear-gradient(90deg,var(--exp-yellow),var(--exp-teal),var(--exp-red));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* 4) HERO: alto real + evitar recortes por min-height/height rígidos */
+.page-index .hero{
+  min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px));
+}
+@supports not (height:100dvh){
+  .page-index .hero{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))}
+}
+
+/* 5) Card derecha: NO fuerces height fija en móvil (evita que “desaparezcan” tabs) */
+.page-index .hero-gallery-card{
+  height:auto !important;        /* deja que crezca en móvil */
+  min-height:unset !important;   /* quita el 480/560 que causa overflow/corte */
+  overflow:visible !important;   /* evita recorte de elementos (tabs, dots) */
+}
+
+/* En desktop sí puedes mantener un alto “bonito”, pero sin romper contenido */
+@media(min-width:980px){
+  .page-index .hero-gallery-card{
+    height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 14px) !important;
+    min-height:560px !important;
+    overflow:hidden !important; /* desktop OK */
+  }
+}
+
+/* 6) Layout interno de la card: header + groups + carousel (flex) + tabs */
+.page-index .hero-gallery-card{
+  display:flex;flex-direction:column;
+}
+.page-index #heroGalleryGroups{flex:0 0 auto;}
+.page-index #heroGalleryTabs{flex:0 0 auto;}
+
+/* 7) HERO Carousel: ocupa el espacio disponible, sin “height:100%” que colapsa */
+.page-index #heroGalleryCarousel{
+  flex:1 1 auto;min-height:240px;
+  display:flex;flex-direction:column;
+}
+.page-index #heroGalleryCarousel .carousel-track{
+  flex:1 1 auto;min-height:0;    /* clave para que flex no colapse */
+  overflow-x:auto !important;    /* vuelve a permitir scroll horizontal */
+  overflow-y:hidden !important;
+  scroll-snap-type:x mandatory;
+}
+
+/* 8) Imagen hero: contain para que se vea completa */
+.page-index #heroGalleryCarousel .hero-slide img{
+  width:100%;height:100%;
+  object-fit:contain;object-position:center;
+  background:transparent;
+}
+
+/* 9) Dots: visibles siempre (sin recorte) */
+.page-index #heroGalleryCarousel .carousel-nav{
+  flex:0 0 auto;
+  margin:10px auto 12px;
+}
+
+/* 10) Ajuste extra móvil: reduce padding para que quepa TODO el hero */
+@media(max-width:520px){
+  .page-index .hero .container{padding-top:10px !important;padding-bottom:10px !important;}
+  .page-index .hero-gallery-tabs{padding:10px 10px 12px !important;gap:10px !important;}
+  .page-index .hero-tab{min-height:78px !important;padding:12px !important;}
+  .page-index .hero-tab img{height:44px !important;}
+}
