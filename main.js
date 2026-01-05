@@ -386,142 +386,201 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
 })();
 
 /* =========================================================
- 10) CALCULADORA (hooks secundarios / terciarios)
+ 10) CALCULADORA (hooks secundarios / terciarios) — BOOT SAFE
 ========================================================= */
-(()=>{D.addEventListener("DOMContentLoaded",()=>{const app=D.getElementById("app");
-const PRIMARY=(app&&app.dataset&&app.dataset.system)?String(app.dataset.system).trim():"";if(!PRIMARY)return;
+(()=>{
 
-const moneyMX=new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
-const fmt=v=>moneyMX.format(Math.round(Number(v||0)));
-const hasPrices=n=>!!(W.preciosContpaqi&&W.preciosContpaqi[n]);
+  const bootCalc = () => {
+    const app = D.getElementById("app");
+    const PRIMARY = (app && app.dataset && app.dataset.system) ? String(app.dataset.system).trim() : "";
+    if(!PRIMARY) return;
 
-W.CATALOG_SISTEMAS=W.CATALOG_SISTEMAS||[
-{name:"CONTPAQi Contabilidad",img:"../IMG/contabilidadsq.webp"},
-{name:"CONTPAQi Bancos",img:"../IMG/bancossq.webp"},
-{name:"CONTPAQi Nóminas",img:"../IMG/nominassq.webp"},
-{name:"CONTPAQi XML en Línea",img:"../IMG/xmlsq.webp",noDiscount:!0},
-{name:"CONTPAQi Comercial PRO",img:"../IMG/comercialprosq.webp"},
-{name:"CONTPAQi Comercial PREMIUM",img:"../IMG/comercialpremiumsq.webp"},
-{name:"CONTPAQi Factura Electrónica",img:"../IMG/facturasq.webp"}
-];
+    const moneyMX=new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
+    const fmt=v=>moneyMX.format(Math.round(Number(v||0)));
+    const hasPrices=n=>!!(W.preciosContpaqi&&W.preciosContpaqi[n]);
 
-const getPrecioDesde=name=>{const db=(W.preciosContpaqi&&W.preciosContpaqi[name])?W.preciosContpaqi[name]:null;if(!db)return null;
-if(db.anual&&db.anual.MultiRFC&&(db.anual.MultiRFC.precio_base||db.anual.MultiRFC.renovacion))return Number(db.anual.MultiRFC.precio_base||db.anual.MultiRFC.renovacion||0);
-if(db.anual&&db.anual.MonoRFC&&(db.anual.MonoRFC.precio_base||db.anual.MonoRFC.renovacion))return Number(db.anual.MonoRFC.precio_base||db.anual.MonoRFC.renovacion||0);
-if(db.tradicional&&db.tradicional.actualizacion&&db.tradicional.actualizacion.precio_base)return Number(db.tradicional.actualizacion.precio_base||0);
-return null};
+    W.CATALOG_SISTEMAS=W.CATALOG_SISTEMAS||[
+      {name:"CONTPAQi Contabilidad",img:"../IMG/contabilidadsq.webp"},
+      {name:"CONTPAQi Bancos",img:"../IMG/bancossq.webp"},
+      {name:"CONTPAQi Nóminas",img:"../IMG/nominassq.webp"},
+      {name:"CONTPAQi XML en Línea",img:"../IMG/xmlsq.webp",noDiscount:!0},
+      {name:"CONTPAQi Comercial PRO",img:"../IMG/comercialprosq.webp"},
+      {name:"CONTPAQi Comercial PREMIUM",img:"../IMG/comercialpremiumsq.webp"},
+      {name:"CONTPAQi Factura Electrónica",img:"../IMG/facturasq.webp"}
+    ];
 
-const renderPicker=(id,exclude,active)=>{const wrap=D.getElementById(id);if(!wrap)return;wrap.innerHTML="";if(PRIMARY)exclude.add(PRIMARY);
-W.CATALOG_SISTEMAS.forEach(item=>{if(exclude.has(item.name))return;const precio=getPrecioDesde(item.name);
-const btn=D.createElement("button");btn.className="sys-icon";btn.type="button";btn.dataset.sys=item.name;btn.title=item.name;
-btn.innerHTML=(item.noDiscount?'<small class="sin15">sin -15%</small>':"")+
-`<img src="${item.img}" alt="${item.name}"><strong>${item.name.replace("CONTPAQi ","")}</strong><small class="sys-price">${precio!=null?("desde "+fmt(precio)):"precio no disp."}</small>`;
-if(active&&active===item.name)btn.classList.add("active");
-wrap.appendChild(btn)});
-};
+    const getPrecioDesde=name=>{
+      const db=(W.preciosContpaqi&&W.preciosContpaqi[name])?W.preciosContpaqi[name]:null;
+      if(!db)return null;
+      if(db.anual&&db.anual.MultiRFC&&(db.anual.MultiRFC.precio_base||db.anual.MultiRFC.renovacion))
+        return Number(db.anual.MultiRFC.precio_base||db.anual.MultiRFC.renovacion||0);
+      if(db.anual&&db.anual.MonoRFC&&(db.anual.MonoRFC.precio_base||db.anual.MonoRFC.renovacion))
+        return Number(db.anual.MonoRFC.precio_base||db.anual.MonoRFC.renovacion||0);
+      if(db.tradicional&&db.tradicional.actualizacion&&db.tradicional.actualizacion.precio_base)
+        return Number(db.tradicional.actualizacion.precio_base||0);
+      return null;
+    };
 
-const renderCombined=rows=>{const wrap=D.getElementById("combined-wrap"),tbody=D.getElementById("combined-table-body");
-if(!wrap||!tbody)return;tbody.innerHTML="";
-rows.forEach(pair=>{const tr=D.createElement("tr"),td1=D.createElement("td"),td2=D.createElement("td");
-td1.textContent=pair[0];td2.textContent=pair[1];td2.style.textAlign="right";tr.appendChild(td1);tr.appendChild(td2);tbody.appendChild(tr)});
-wrap.hidden=!1;
-};
+    const renderPicker=(id,exclude,active)=>{
+      const wrap=D.getElementById(id); if(!wrap) return;
+      wrap.innerHTML="";
+      if(PRIMARY) exclude.add(PRIMARY);
 
-const row=D.getElementById("calc-row");if(!row)return;
+      W.CATALOG_SISTEMAS.forEach(item=>{
+        if(exclude.has(item.name)) return;
 
-/* placeholder fijo (NO se cambia) */
-const slot2=D.getElementById("calc-slot-2");
-let secondary=D.getElementById("calc-secondary");
+        const precio=getPrecioDesde(item.name);
+        const btn=D.createElement("button");
+        btn.className="sys-icon";
+        btn.type="button";
+        btn.dataset.sys=item.name;
+        btn.title=item.name;
 
-/* crea #calc-secondary dinámico justo después del placeholder */
-const ensureSecondary=()=>{
-  if(secondary) return secondary;
-  if(!slot2||!slot2.parentNode) return null;
-  secondary=D.createElement("div");
-  secondary.id="calc-secondary";
-  secondary.className="calc-container";
-  secondary.setAttribute("aria-label","Calculadora secundaria");
-  secondary.style.display="none";
-  slot2.insertAdjacentElement("afterend",secondary);
-  return secondary;
-};
-ensureSecondary();
+        // (recomendado) normaliza ruta img si existe abs()
+        const imgSrc = (W.__EXP_ABS__ ? W.__EXP_ABS__(item.img) : item.img);
 
-/* helpers mostrar/ocultar */
-const showSecondary=()=>{
-  ensureSecondary();
-  if(slot2) slot2.style.display="none";
-  if(secondary) secondary.style.display="block";
-};
-const hideSecondary=()=>{
-  if(secondary) secondary.style.display="none";
-  if(slot2) slot2.style.display="";
-};
+        btn.innerHTML=(item.noDiscount?'<small class="sin15">sin -15%</small>':"")+
+          `<img src="${imgSrc}" alt="${item.name}"><strong>${item.name.replace("CONTPAQi ","")}</strong>`+
+          `<small class="sys-price">${precio!=null?("desde "+fmt(precio)):"precio no disp."}</small>`;
 
-const slot3=D.getElementById("calc-tertiary");
-const addMore=D.getElementById("add-more-panel");
-const pick2=D.getElementById("icons-sec-sys");
-const pick3=D.getElementById("icons-third-sys");
-const selected={secondary:null,tertiary:null};
-const setSel=()=>new Set([selected.secondary,selected.tertiary].filter(Boolean));
+        if(active&&active===item.name) btn.classList.add("active");
+        wrap.appendChild(btn);
+      });
+    };
 
-const showMore=()=>{if(addMore)addMore.style.display=selected.secondary?"":"none"};
+    const renderCombined=rows=>{
+      const wrap=D.getElementById("combined-wrap"),tbody=D.getElementById("combined-table-body");
+      if(!wrap||!tbody) return;
+      tbody.innerHTML="";
+      rows.forEach(pair=>{
+        const tr=D.createElement("tr"),td1=D.createElement("td"),td2=D.createElement("td");
+        td1.textContent=pair[0]; td2.textContent=pair[1];
+        td2.style.textAlign="right";
+        tr.appendChild(td1); tr.appendChild(td2);
+        tbody.appendChild(tr);
+      });
+      wrap.hidden=!1;
+    };
 
-const refresh=()=>{
-  const ex=setSel();
-  renderPicker("icons-sec-sys",ex,selected.secondary);
-  renderPicker("icons-third-sys",ex,selected.tertiary);
-};
+    const row=D.getElementById("calc-row"); if(!row) return;
 
+    const slot2=D.getElementById("calc-slot-2");
+    let secondary=D.getElementById("calc-secondary");
 
-refresh();
-showMore();
+    const ensureSecondary=()=>{
+      if(secondary) return secondary;
+      if(!slot2||!slot2.parentNode) return null;
+      secondary=D.createElement("div");
+      secondary.id="calc-secondary";
+      secondary.className="calc-container";
+      secondary.setAttribute("aria-label","Calculadora secundaria");
+      secondary.style.display="none";
+      slot2.insertAdjacentElement("afterend",secondary);
+      return secondary;
+    };
 
+    const showSecondary=()=>{
+      ensureSecondary();
+      if(slot2) slot2.style.display="none";
+      if(secondary) secondary.style.display="block";
+    };
 
+    const slot3=D.getElementById("calc-tertiary");
+    const addMore=D.getElementById("add-more-panel");
+    const pick2=D.getElementById("icons-sec-sys");
+    const pick3=D.getElementById("icons-third-sys");
 
-/* click 2do sistema */
-if(pick2)pick2.addEventListener("click",e=>{
-  const btn=e.target.closest(".sys-icon"); if(!btn) return;
-  const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+    const selected={secondary:null,tertiary:null};
+    const setSel=()=>new Set([selected.secondary,selected.tertiary].filter(Boolean));
+    const showMore=()=>{ if(addMore) addMore.style.display=selected.secondary?"":"none"; };
 
-  selected.secondary=sys;
-  if(selected.tertiary===sys) selected.tertiary=null;
+    const refresh=()=>{
+      const ex=setSel();
+      renderPicker("icons-sec-sys",ex,selected.secondary);
+      renderPicker("icons-third-sys",ex,selected.tertiary);
+    };
 
-  ensureSecondary();
+    refresh();
+    showMore();
 
-  if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setSecondarySystem){
-    W.CalculadoraContpaqi.setSecondarySystem(sys,{
-      secondarySelector:"#calc-secondary",
-      combinedSelector:"#combined-wrap",
-      onCombined:renderCombined
-    });
+    if(pick2 && !pick2.dataset.bound){
+      pick2.dataset.bound="1";
+      pick2.addEventListener("click",e=>{
+        const btn=e.target.closest(".sys-icon"); if(!btn) return;
+        const sys=btn.dataset.sys; if(!hasPrices(sys)) return;
+
+        selected.secondary=sys;
+        if(selected.tertiary===sys) selected.tertiary=null;
+
+        ensureSecondary();
+
+        if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setSecondarySystem){
+          W.CalculadoraContpaqi.setSecondarySystem(sys,{
+            secondarySelector:"#calc-secondary",
+            combinedSelector:"#combined-wrap",
+            onCombined:renderCombined
+          });
+        }
+
+        showSecondary();
+        refresh();
+        showMore();
+      });
+    }
+
+    if(pick3 && !pick3.dataset.bound){
+      pick3.dataset.bound="1";
+      pick3.addEventListener("click",e=>{
+        const btn=e.target.closest(".sys-icon"); if(!btn) return;
+        const sys=btn.dataset.sys;
+        if(!hasPrices(sys) || sys===selected.secondary) return;
+
+        selected.tertiary=sys;
+        if(slot3) slot3.style.display="block";
+
+        if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setTertiarySystem){
+          W.CalculadoraContpaqi.setTertiarySystem(sys,{
+            tertiarySelector:"#calc-tertiary",
+            combinedSelector:"#combined-wrap",
+            onCombined:renderCombined
+          });
+        }
+
+        if(addMore) addMore.style.display="none";
+        row.classList.add("has-three");
+        refresh();
+      });
+    }
+
+    if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.onCombinedSet){
+      W.CalculadoraContpaqi.onCombinedSet(renderCombined);
+    }
+
+    if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.init){
+      D.body.setAttribute("data-calc","escritorio");
+      W.CalculadoraContpaqi.init({
+        systemName:PRIMARY,
+        primarySelector:"#calc-primary",
+        combinedSelector:"#combined-wrap"
+      });
+    } else {
+      console.warn("CalculadoraContpaqi.init no disponible");
+    }
+  };
+
+  // Ejecuta seguro (antes/después de DOMContentLoaded)
+  if (D.readyState === "loading") {
+    D.addEventListener("DOMContentLoaded", bootCalc, { once: true });
+  } else {
+    bootCalc();
   }
 
-  showSecondary();
-  refresh();
-  showMore();
-});
-      /* click 3er sistema */
-if(pick3)pick3.addEventListener("click",e=>{const btn=e.target.closest(".sys-icon");if(!btn)return;
-const sys=btn.dataset.sys;if(!hasPrices(sys)||sys===selected.secondary)return;
-selected.tertiary=sys;if(slot3)slot3.style.display="block";
-if(W.CalculadoraContpaqi&&W.CalculadoraContpaqi.setTertiarySystem)
-W.CalculadoraContpaqi.setTertiarySystem(sys,{tertiarySelector:"#calc-tertiary",combinedSelector:"#combined-wrap",onCombined:renderCombined});
-if(addMore)addMore.style.display="none";
-row.classList.add("has-three");
-refresh();
-});
+  // Re-ejecución segura en BFCache (y si vuelves atrás)
+  W.addEventListener("pageshow", () => { try{ bootCalc(); }catch(e){} });
 
-if(W.CalculadoraContpaqi&&W.CalculadoraContpaqi.onCombinedSet)W.CalculadoraContpaqi.onCombinedSet(renderCombined);
-if(W.CalculadoraContpaqi&&W.CalculadoraContpaqi.init){
-D.body.setAttribute("data-calc","escritorio");
-W.CalculadoraContpaqi.init({systemName:PRIMARY,primarySelector:"#calc-primary",combinedSelector:"#combined-wrap"});
-}else console.warn("CalculadoraContpaqi.init no disponible");
-});}); /* CIERRA sección 10 (DOMContentLoaded + IIFE) */
+})();
 
-
-                                                 
-        
+ 
 
 /* =========================================================
  11) COMPACTADOR (reacomoda UI calc si viene “suelta”)
