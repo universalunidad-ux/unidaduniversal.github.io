@@ -1,155 +1,211 @@
 <!-- =========================================================
- Expiriti - FOOTER (V9) MINIFICADO + FIX IMÁGENES + LIGHT MODE
- - FIX: tus imágenes NO cargaban por:
-   1) el script depende de location.origin (en algunos contextos puede ser "null")
-   2) estabas usando js-abs-src/js-abs-href distinto al header (js-img/js-link)
-   3) faltaba fallback 1x1 + onerror robusto
- - SOLUCIÓN:
-   - Usa el mismo motor de rutas del header: meta[name="expiriti-base"] + GH Pages + local
-   - Soporta theme claro/oscuro leyendo html[data-theme="light"] (mismo toggle del header)
+ Expiriti - GLOBAL FOOTER (V10) — BLINDADO (JAN 2026)
+ - Rutas robustas: meta[name="expiriti-base"] + URL() + fallback GH/local
+ - Usa MISMAS clases del header: .js-link[data-href] y .js-img[data-src]
+ - Fix “origin null” + onerror + fade-in + light mode premium
 ========================================================= -->
-<footer class="gf" role="contentinfo" id="gf-root"><style>
-/*======================
-  Expiriti Footer V9
-  - Fix imágenes + Light mode
-======================*/
-:root{--gf-bg:#0b0f14;--gf-card:#111723;--gf-text:#e8eef6;--gf-muted:#95a2b3;--gf-border:rgba(255,255,255,.08);--gf-soft:rgba(255,255,255,.06);--gf-brand:#2dd4bf;--gf-brand2:#60a5fa;--gf-shadow:0 10px 26px rgba(0,0,0,.35)}
-html[data-theme="light"]{--gf-bg:#f7fafc;--gf-card:#ffffff;--gf-text:#0f172a;--gf-muted:#64748b;--gf-border:rgba(2,6,23,.12);--gf-soft:rgba(2,6,23,.10);--gf-shadow:0 10px 26px rgba(2,6,23,.10)}
-.gf{margin-top:40px;background:var(--gf-bg);border-top:1px solid var(--gf-soft);color:var(--gf-text);font-family:system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.45}
-.gf *{box-sizing:border-box}
-.gf a{color:var(--gf-text);text-decoration:none;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(45,212,191,.35)}
-.gf a:hover{text-decoration:underline;text-decoration-color:rgba(45,212,191,.75)}
-.gf-container{max-width:1200px;margin:0 auto;padding:22px 16px}
-.gf-grid{display:grid;grid-template-columns:2fr 1.8fr 1.6fr 1.1fr;gap:18px}
-.gf-title{margin:0 0 8px;font-size:17px;font-weight:800;letter-spacing:.2px;text-align:center}
-@media(min-width:981px){.gf{font-size:15.5px}.gf-title{font-size:18px}}
-.gf-hint{color:var(--gf-muted);font-size:13.5px}
-
-/* CONTACTO */
-.gf-contact{display:flex;flex-direction:column;gap:8px}
-.gf-row{display:flex;gap:8px;align-items:flex-start;font-size:15px}
-
-/* CARDS */
-.gf-logo-card,.gf-ally-card,.gf-map-card{background:var(--gf-card);border:1px solid var(--gf-border);border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--gf-shadow);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease,background-color .16s ease;will-change:transform}
-.gf-logo-card:hover,.gf-ally-card:hover,.gf-map-card:hover{transform:translateY(-2px);border-color:rgba(45,212,191,.35);box-shadow:0 14px 34px rgba(0,0,0,.42)}
-html[data-theme="light"] .gf-logo-card:hover,html[data-theme="light"] .gf-ally-card:hover,html[data-theme="light"] .gf-map-card:hover{box-shadow:0 14px 34px rgba(2,6,23,.16)}
-.gf-logo-card:active,.gf-ally-card:active,.gf-map-card:active{transform:translateY(0) scale(.99);box-shadow:var(--gf-shadow)}
-.gf-logo-card:focus-within,.gf-ally-card:focus-within,.gf-map-card:focus-within{outline:2px solid rgba(45,212,191,.55);outline-offset:2px}
-
-/* MARCAS (más grandes + menos aire) */
-.gf-logos-grid{width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.gf-logo-card{padding:2px 6px;min-height:92px;border-radius:18px}
-.gf-logo-card img{width:100%;max-width:100%;height:82px;object-fit:contain;display:block;transition:transform .16s ease,filter .16s ease,opacity .3s}
-.gf-logo-card:hover img{transform:scale(1.02);filter:saturate(1.05) contrast(1.03)}
-/* Ajustes por marca */
-.gf-logo-card img[data-src*="contpaqi"],.gf-logo-card img[src*="contpaqi"]{height:90px}
-.gf-logo-card img[data-src*="microsoft"],.gf-logo-card img[src*="microsoft"]{height:84px}
-.gf-logo-card img[data-src*="hpserver"],.gf-logo-card img[src*="hpserver"]{height:92px}
-.gf-logo-card img[data-src*="eset"],.gf-logo-card img[src*="eset"]{height:96px}
-
-/* PRESENCIA */
-.gf-presence{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
-.gf-map-card{padding:8px;border-radius:18px}
-.gf-map-card img{width:100%;max-width:260px;height:auto;transition:transform .16s ease,filter .16s ease,opacity .3s}
-.gf-map-card:hover img{transform:scale(1.02);filter:saturate(1.05) contrast(1.03)}
-
-/* ALIADOS (menos margen lateral, más ancho) */
-.gf-allies{display:flex;flex-direction:column;align-items:center;gap:12px}
-.gf-ally-card{padding:6px 8px;min-height:86px;width:min(260px,100%);border-radius:18px}
-.gf-ally-card img{width:100%;max-width:100%;height:64px;object-fit:contain;display:block;transition:transform .16s ease,filter .16s ease,opacity .3s}
-.gf-ally-card:hover img{transform:scale(1.02);filter:saturate(1.05) contrast(1.03)}
-
-/* BOTTOM */
-.gf-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--gf-soft);margin-top:16px;padding-top:14px;gap:12px}
-.gf-brandmini{display:flex;gap:10px;align-items:center}
-.gf-brandmini img{width:50px;height:50px;border-radius:10px;background:rgba(30,41,59,.35)}
-html[data-theme="light"] .gf-brandmini img{background:rgba(2,6,23,.06)}
-
-/* RESPONSIVE */
-@media(max-width:980px){.gf-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.gf-grid{grid-template-columns:1fr}.gf-bottom{flex-direction:column;align-items:flex-start}}
-
-/* FADE (robusto con fallback) */
-.gf img{opacity:0;transition:opacity .25s}
-.gf img.is-loaded{opacity:1}
-@media (prefers-reduced-motion: reduce){.gf-logo-card,.gf-ally-card,.gf-map-card,.gf-logo-card img,.gf-ally-card img,.gf-map-card img,.gf img{transition:none!important}}
+<footer class="gf" id="gf-root" role="contentinfo">
+<style>
+/* ======================
+   FOOTER V10 (SCOPED)
+====================== */
+:root{--gf-bg:#0b0f14;--gf-card:#111723;--gf-text:#e8eef6;--gf-muted:#95a2b3;--gf-border:rgba(255,255,255,.08);--gf-soft:rgba(255,255,255,.06);--gf-brand:#2dd4bf;--gf-brand2:#60a5fa;--gf-shadow:0 12px 34px rgba(0,0,0,.40)}
+html[data-theme="light"]{--gf-bg:#f7fafc;--gf-card:#ffffff;--gf-text:#0f172a;--gf-muted:#64748b;--gf-border:rgba(2,6,23,.12);--gf-soft:rgba(2,6,23,.10);--gf-shadow:0 12px 34px rgba(2,6,23,.12)}
+#gf-root.gf{margin-top:40px;background:var(--gf-bg);border-top:1px solid var(--gf-soft);color:var(--gf-text);font-family:system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.45}
+#gf-root *{box-sizing:border-box}
+#gf-root a{color:var(--gf-text);text-decoration:none;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(45,212,191,.35)}
+#gf-root a:hover{text-decoration:underline;text-decoration-color:rgba(45,212,191,.75)}
+#gf-root .gf-container{max-width:1200px;margin:0 auto;padding:22px 16px}
+#gf-root .gf-grid{display:grid;grid-template-columns:2fr 1.8fr 1.6fr 1.1fr;gap:18px}
+#gf-root .gf-title{margin:0 0 10px;font-size:17px;font-weight:900;letter-spacing:.2px;text-align:center}
+#gf-root .gf-hint{color:var(--gf-muted);font-size:13.5px}
+@media(min-width:981px){#gf-root.gf{font-size:15.5px}#gf-root .gf-title{font-size:18px}}
+/* Contacto */
+#gf-root .gf-contact{display:flex;flex-direction:column;gap:8px}
+#gf-root .gf-row{display:flex;gap:8px;align-items:flex-start;font-size:15px}
+#gf-root .gf-row b{font-weight:900}
+/* Cards */
+#gf-root .gf-card{background:var(--gf-card);border:1px solid var(--gf-border);border-radius:16px;box-shadow:var(--gf-shadow);transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;will-change:transform}
+#gf-root .gf-card:hover{transform:translateY(-2px);border-color:rgba(45,212,191,.35)}
+#gf-root .gf-card:active{transform:translateY(0) scale(.99)}
+#gf-root .gf-card:focus-within{outline:2px solid rgba(45,212,191,.55);outline-offset:2px}
+/* Logos grid */
+#gf-root .gf-logos-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#gf-root .gf-logo-card{padding:2px 6px;min-height:92px;border-radius:18px;display:flex;align-items:center;justify-content:center}
+#gf-root .gf-ally-card{padding:6px 8px;min-height:86px;border-radius:18px;display:flex;align-items:center;justify-content:center}
+#gf-root .gf-map-card{padding:8px;border-radius:18px;display:flex;align-items:center;justify-content:center}
+/* Img behavior */
+#gf-root img{max-width:100%;display:block}
+#gf-root img.js-img{opacity:0;transition:opacity .25s}
+#gf-root img.js-img.is-loaded{opacity:1}
+#gf-root .gf-logo-card img{width:100%;height:82px;object-fit:contain;transition:transform .16s ease,filter .16s ease}
+#gf-root .gf-ally-card img{width:100%;height:64px;object-fit:contain;transition:transform .16s ease,filter .16s ease}
+#gf-root .gf-map-card img{width:100%;max-width:260px;height:auto;transition:transform .16s ease,filter .16s ease}
+#gf-root .gf-card:hover img{transform:scale(1.02);filter:saturate(1.05) contrast(1.03)}
+/* Ajustes por marca (si aplica) */
+#gf-root .gf-logo-card img[data-src*="contpaqi"],#gf-root .gf-logo-card img[src*="contpaqi"]{height:90px}
+#gf-root .gf-logo-card img[data-src*="microsoft"],#gf-root .gf-logo-card img[src*="microsoft"]{height:84px}
+#gf-root .gf-logo-card img[data-src*="hpserver"],#gf-root .gf-logo-card img[src*="hpserver"]{height:92px}
+#gf-root .gf-logo-card img[data-src*="eset"],#gf-root .gf-logo-card img[src*="eset"]{height:96px}
+/* Presencia / aliados */
+#gf-root .gf-presence{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+#gf-root .gf-allies{display:flex;flex-direction:column;align-items:center;gap:12px}
+#gf-root .gf-ally-card{width:min(260px,100%)}
+/* Bottom */
+#gf-root .gf-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--gf-soft);margin-top:16px;padding-top:14px;gap:12px}
+#gf-root .gf-brandmini{display:flex;gap:10px;align-items:center}
+#gf-root .gf-brandmini img{width:50px;height:50px;border-radius:10px;background:rgba(30,41,59,.35)}
+html[data-theme="light"] #gf-root .gf-brandmini img{background:rgba(2,6,23,.06)}
+/* Responsive */
+@media(max-width:980px){#gf-root .gf-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){#gf-root .gf-grid{grid-template-columns:1fr}#gf-root .gf-bottom{flex-direction:column;align-items:flex-start}}
+/* Reduce motion */
+@media(prefers-reduced-motion:reduce){#gf-root .gf-card,#gf-root img.js-img,#gf-root .gf-card img{transition:none!important}}
 </style>
 
-<div class="gf-container"><div class="gf-grid">
+<div class="gf-container">
+  <div class="gf-grid">
 
-  <!-- CONTACTO -->
-  <section><h3 class="gf-title">Contacto</h3>
-    <div class="gf-contact">
-      <div class="gf-row">📍 <div><b>Ubicación:</b> Insurgentes Sur 1188, CDMX</div></div>
-      <div class="gf-row">📞 <div><b>Tel:</b> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></div></div>
-      <div class="gf-row">✉️ <div><b>Mail:</b> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></div></div>
-      <div class="gf-row">💬 <div><a href="https://wa.me/525568437918" target="_blank" rel="noopener">WhatsApp directo</a></div></div>
+    <!-- CONTACTO -->
+    <section>
+      <h3 class="gf-title">Contacto</h3>
+      <div class="gf-contact">
+        <div class="gf-row">📍 <div><b>Ubicación:</b> Insurgentes Sur 1188, CDMX</div></div>
+        <div class="gf-row">📞 <div><b>Tel:</b> <a href="tel:+525568437917">55 6843 7917</a> · <a href="tel:+525568437918">55 6843 7918</a></div></div>
+        <div class="gf-row">✉️ <div><b>Mail:</b> <a href="mailto:andree@expiriti.com.mx">andree@expiriti.com.mx</a></div></div>
+        <div class="gf-row">💬 <div><a href="https://wa.me/525568437918" target="_blank" rel="noopener">WhatsApp directo</a></div></div>
+      </div>
+    </section>
+
+    <!-- MARCAS -->
+    <section>
+      <h3 class="gf-title">Marcas</h3>
+      <div class="gf-logos-grid">
+        <div class="gf-card gf-logo-card">
+          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contpaqi.webp" alt="CONTPAQi" loading="lazy">
+        </div>
+        <div class="gf-card gf-logo-card">
+          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/microsoft.webp" alt="Microsoft" loading="lazy">
+        </div>
+        <div class="gf-card gf-logo-card">
+          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/hpserver.webp" alt="HP ProLiant" loading="lazy">
+        </div>
+        <div class="gf-card gf-logo-card">
+          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/eset.webp" alt="ESET" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- PRESENCIA -->
+    <section>
+      <h3 class="gf-title">Presencia nacional</h3>
+      <div class="gf-presence">
+        <div class="gf-card gf-map-card">
+          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/mexico.webp" alt="México" loading="lazy">
+        </div>
+        <p class="gf-hint">Atención a empresas y usuarios en todo el país</p>
+      </div>
+    </section>
+
+    <!-- ALIADOS -->
+    <section>
+      <h3 class="gf-title">Aliados</h3>
+      <div class="gf-allies">
+        <div class="gf-card gf-ally-card">
+          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/bni.webp" alt="BNI" loading="lazy">
+        </div>
+        <div class="gf-card gf-ally-card">
+          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/ligo.webp" alt="Ligo" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="gf-bottom">
+    <div class="gf-brandmini">
+      <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
+      <div>
+        <b>Expiriti</b>
+        <div class="gf-hint">© <span id="gf-year"></span> · Todos los derechos reservados</div>
+      </div>
     </div>
-  </section>
-
-  <!-- MARCAS -->
-  <section><h3 class="gf-title">Marcas</h3>
-    <div class="gf-logos-grid">
-      <div class="gf-logo-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contpaqi.webp" alt="CONTPAQi"></div>
-      <div class="gf-logo-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/microsoft.webp" alt="Microsoft"></div>
-      <div class="gf-logo-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/hpserver.webp" alt="HP ProLiant"></div>
-      <div class="gf-logo-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/eset.webp" alt="ESET"></div>
+    <div class="gf-hint">
+      <a class="js-link" href="#" data-href="aviso-de-privacidad.html">Aviso de privacidad</a> ·
+      <a class="js-link" href="#" data-href="terminos-y-condiciones.html">Términos</a>
     </div>
-  </section>
-
-  <!-- PRESENCIA -->
-  <section><h3 class="gf-title">Presencia nacional</h3>
-    <div class="gf-presence">
-      <div class="gf-map-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/mexico.webp" alt="México"></div>
-      <p class="gf-hint">Con atención a empresas y usuarios en todo el país</p>
-    </div>
-  </section>
-
-  <!-- ALIADOS -->
-  <section><h3 class="gf-title">Aliados</h3>
-    <div class="gf-allies">
-      <div class="gf-ally-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/bni.webp" alt="BNI"></div>
-      <div class="gf-ally-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/ligo.webp" alt="Ligo"></div>
-    </div>
-  </section>
-
+  </div>
 </div>
-
-<div class="gf-bottom">
-  <div class="gf-brandmini">
-    <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/expiritilogo.webp" alt="Expiriti">
-    <div><b>Expiriti</b><div class="gf-hint">© <span id="gf-year"></span> · Todos los derechos reservados</div></div>
-  </div>
-  <div class="gf-hint">
-    <a class="js-link" href="#" data-href="aviso-de-privacidad.html">Aviso de privacidad</a> ·
-    <a class="js-link" href="#" data-href="terminos-y-condiciones.html">Términos</a>
-  </div>
-</div></div>
 
 <script>
 /* =========================================================
- Expiriti Footer JS (V9) — FIX IMG + THEME COMPAT
- - Usa misma lógica de rutas del header (meta expiriti-base + GH Pages)
- - Soporta anchors y links internos (data-href) y assets (data-src)
- - Fallback origin "null" + error handler + fade-in
+ Expiriti Footer JS (V10) — BLINDADO
+ - buildPath igual al header: meta expiriti-base + URL() + fallback
+ - Aplica rutas a .js-link[data-href] y .js-img[data-src]
+ - Maneja origin "null" + onerror + fade-in
 ========================================================= */
-(()=>{"use strict";const Q=(s,c=document)=>c.querySelector(s),QA=(s,c=document)=>Array.from(c.querySelectorAll(s));
+(()=>{"use strict";
+if(window.__EXPIRITI_GF_V10__)return;window.__EXPIRITI_GF_V10__=1;
+const D=document,W=window,ROOT_EL=D.documentElement;
+const Q=(s,c=D)=>c.querySelector(s),QA=(s,c=D)=>Array.from(c.querySelectorAll(s));
+const WRAP=Q("#gf-root")||D;
 const BLANK="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
-const ORIGIN=(location.origin&&location.origin!=="null")?location.origin:"";
-function getRoot(){const m=document.querySelector('meta[name="expiriti-base"]');if(m&&m.content){let r=m.content.trim();if(!r.startsWith("/"))r="/"+r;if(!r.endsWith("/"))r+="/";return r;}
-const host=location.hostname||"",seg=(location.pathname||"/").split("/").filter(Boolean),first=(seg[0]||"").toLowerCase();
-const RESERVED=new Set(["sistemas","servicios","migraciones","implementaciones","desarrollos","img","images","css","js","assets"]);
-if(host.includes("github.io")){if(seg.length>0&&!RESERVED.has(first))return "/"+seg[0]+"/";return "/";}
-return "/";}
-const ROOT=getRoot();const join=(a,b)=>(a.replace(/\/+$/,"")+"/"+b.replace(/^\/+/,"")).replace(/\/{2,}/g,"/");
-function buildPath(raw){if(!raw)return "#";if(/^(https?:|mailto:|tel:|whatsapp:|wa:|sms:)/i.test(raw))return raw;
-if(raw.startsWith("#")){const base=join(ROOT,"index.html")+raw;return ORIGIN?ORIGIN+base:base;}
-const out=join(ROOT,raw.replace(/^\//,""));return ORIGIN?ORIGIN+out:out;}
-const y=Q("#gf-year");if(y)y.textContent=new Date().getFullYear();
-QA(".js-link[data-href]",Q("#gf-root")||document).forEach(a=>{const r=a.getAttribute("data-href");if(r)a.href=buildPath(r)});
-QA("img.js-img[data-src]",Q("#gf-root")||document).forEach(img=>{const r=img.getAttribute("data-src");if(!r)return;
-img.onload=()=>img.classList.add("is-loaded");
-img.onerror=()=>{img.onerror=null;img.classList.add("is-loaded");img.style.opacity=".55";img.src=BLANK;};
-img.src=buildPath(r);});
+
+function getRootFromMeta(){
+  const m=Q('meta[name="expiriti-base"]'); if(!m||!m.content) return null;
+  let r=String(m.content).trim(); if(!r) return null;
+  if(!r.startsWith("/")) r="/"+r;
+  if(!r.endsWith("/")) r=r+"/";
+  return r;
+}
+function getMasterRoot(){
+  const meta=getRootFromMeta(); if(meta) return meta;
+  const host=(location.hostname||"").toLowerCase();
+  const seg=(location.pathname||"/").split("/").filter(Boolean);
+  const first=(seg[0]||"").toLowerCase();
+  const RESERVED=new Set(["sistemas","servicios","migraciones","implementaciones","desarrollos","img","images","css","js","assets","partials","dist"]);
+  if(host.includes("github.io")){
+    if(seg.length>0 && !RESERVED.has(first)) return "/"+seg[0]+"/";
+    return "/";
+  }
+  return "/";
+}
+const ROOT=getMasterRoot();
+function baseAbs(){
+  try{
+    const origin=(location.origin && location.origin!=="null") ? location.origin : location.href;
+    return new URL(ROOT, origin).toString();
+  }catch(_){ return ROOT; }
+}
+function buildPath(raw){
+  raw=String(raw||"").trim(); if(!raw) return "#";
+  if(/^(https?:|mailto:|tel:|whatsapp:|wa:|sms:)/i.test(raw)) return raw;
+  if(raw.startsWith("#")){
+    try{ return new URL("index.html"+raw, baseAbs()).toString(); }
+    catch(_){ return (ROOT.replace(/\/$/,"")+"/index.html")+raw; }
+  }
+  try{ return new URL(raw.replace(/^\//,""), baseAbs()).toString(); }
+  catch(_){ return (ROOT.replace(/\/$/,"")+"/"+raw.replace(/^\/+/,"")); }
+}
+function markLoaded(img){ img.classList.add("is-loaded"); }
+
+const year=Q("#gf-year",WRAP); if(year) year.textContent=String(new Date().getFullYear());
+
+// Links internos (data-href)
+QA(".js-link[data-href]",WRAP).forEach(a=>{
+  const r=a.getAttribute("data-href"); if(!r) return;
+  a.href=buildPath(r);
+});
+
+// Imágenes (data-src)
+QA("img.js-img[data-src]",WRAP).forEach(img=>{
+  const r=img.getAttribute("data-src"); if(!r) { markLoaded(img); return; }
+  img.onload=()=>markLoaded(img);
+  img.onerror=()=>{ img.onerror=null; img.style.opacity=".55"; img.src=BLANK; markLoaded(img); };
+  const u=buildPath(r);
+  if(img.src!==u) img.src=u;
+  if(img.complete) markLoaded(img);
+});
 })();
-</script></footer>
+</script>
+</footer>
