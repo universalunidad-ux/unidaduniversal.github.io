@@ -692,3 +692,101 @@ html[data-theme="light"] [data-muted="1"]{
   opacity:1 !important;
   color:var(--muted) !important;
 }
+
+/* =========================================================
+  Expiriti — UI/UX POLISH + PAGESPEED (2025–2026) v1
+  - Jerarquía tipográfica, lectura, microinteracciones
+  - Accesibilidad (focus, reduced motion)
+  - Rendimiento (content-visibility / contain)
+========================================================= */
+
+/* ---------- A) Escala de spacing (consistente) ---------- */
+:root{
+  --sp-1:6px; --sp-2:10px; --sp-3:14px; --sp-4:18px; --sp-5:24px; --sp-6:32px;
+  --lh-tight:1.15; --lh:1.55; --lh-loose:1.7;
+  --measure:72ch; /* ancho máximo de lectura */
+  --ease-out:cubic-bezier(.2,.8,.2,1);
+  --t-fast:120ms; --t:180ms; --t-slow:260ms;
+}
+
+/* ---------- B) Tipografía y lectura ---------- */
+h1,h2,h3{letter-spacing:-.02em}
+h1{line-height:var(--lh-tight)}
+h2,h3{line-height:1.22}
+p,.lead{max-width:var(--measure)}
+.lead{font-size:clamp(15px,1.1vw,16px);line-height:var(--lh-loose)}
+
+/* Separación vertical más “clean” */
+section{padding:clamp(18px,2.2vw,26px) 0}
+
+/* ---------- C) Interacciones consistentes ---------- */
+a,.btn,.pill,.badge,.arrowCircle,.svc-link{
+  transition:
+    transform var(--t) var(--ease-out),
+    box-shadow var(--t) var(--ease-out),
+    background var(--t) var(--ease-out),
+    border-color var(--t) var(--ease-out),
+    color var(--t) var(--ease-out),
+    filter var(--t) var(--ease-out);
+}
+
+/* Hover discreto, sin “brincos” grandes */
+.btn:hover,.pill:hover,.svc-link:hover{transform:translateY(-1px)}
+.btn:active,.pill:active,.svc-link:active{transform:translateY(0) scale(.99)}
+
+/* Tap target mínimo (ya tienes --tap, esto lo refuerza) */
+button,.btn,.pill,.arrowCircle{min-height:var(--tap)}
+
+/* ---------- D) Accesibilidad: reduce motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *{scroll-behavior:auto!important}
+  a,.btn,.pill,.badge,.arrowCircle,.svc-link{transition:none!important}
+}
+
+/* ---------- E) Contraste: texto secundario nunca “lavado” ---------- */
+p{opacity:1}
+
+/* (Opcional) refuerza headings en light sin afectar dark */
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3{color:rgba(11,18,32,.96)}
+
+/* ---------- F) Rendimiento: aislar secciones debajo del fold ---------- */
+/* Úsalo donde tengas secciones largas: promos, faq, contacto, mapa, etc. */
+.perf-cv{
+  content-visibility:auto;
+  contain-intrinsic-size: 800px; /* reserva espacio aproximado */
+}
+
+/* Si NO quieres tocar HTML, aplica por IDs típicos (ajusta a tus IDs reales) */
+#promociones,#faq,#contacto,#ubicacion{
+  content-visibility:auto;
+  contain-intrinsic-size: 900px;
+}
+
+/* Aislar layout/pintado en elementos pesados (carruseles, grids) */
+.carousel,.feature-grid,.svc-grid,.table-like{
+  contain: layout paint style;
+}
+
+/* =========================================================
+  Index: ancho 20% menos (≈960px), responsive, sin afectar otras páginas
+========================================================= */
+
+:root{--maxw-index:960px}
+
+/* index más “editorial”, menos ancho */
+.page-index .container,
+.page-index main.container{
+  max-width:var(--maxw-index);
+  padding-left:clamp(14px,2.4vw,22px);
+  padding-right:clamp(14px,2.4vw,22px);
+}
+
+/* En pantallas muy grandes, agrega aire lateral premium */
+@media(min-width:1400px){
+  .page-index .container,
+  .page-index main.container{
+    max-width:980px; /* leve ajuste para que no se sienta “apretado” */
+  }
+}
