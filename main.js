@@ -93,6 +93,21 @@ W.$$fmt=v=>money.format(Math.round(Number(v||0)));
 if(!W.Q)W.Q=(s,ctx=D)=>ctx.querySelector(s);
 if(!W.QA)W.QA=(s,ctx=D)=>Array.from(ctx.querySelectorAll(s));
 })();
+/* =========================================================
+ 1.5) CATALOGO SISTEMAS (GLOBAL SIEMPRE)
+ - Se define SIEMPRE aunque la calculadora aún no monte
+========================================================= */
+(()=>{ 
+  W.CATALOG_SISTEMAS = W.CATALOG_SISTEMAS || [
+    {name:"CONTPAQi Contabilidad",img:"../IMG/contabilidadsq.webp"},
+    {name:"CONTPAQi Bancos",img:"../IMG/bancossq.webp"},
+    {name:"CONTPAQi Nóminas",img:"../IMG/nominassq.webp"},
+    {name:"CONTPAQi XML en Línea",img:"../IMG/xmlsq.webp",noDiscount:!0},
+    {name:"CONTPAQi Comercial PRO",img:"../IMG/comercialprosq.webp"},
+    {name:"CONTPAQi Comercial PREMIUM",img:"../IMG/comercialpremiumsq.webp"},
+    {name:"CONTPAQi Factura Electrónica",img:"../IMG/facturasq.webp"}
+  ];
+})();
 
 /* =========================================================
  3) YOUTUBE MANAGER (pause real + lazy + hook iframes)
