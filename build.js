@@ -1,177 +1,181 @@
-// build.js v2.1
-// --- El Robot Armador (con optimización + debug terser) ---
+// =========================================================
+// build.js v2.2 — EXPIRITI ROBOT ARMADOR (BLINDADO)
+// - Ensambla parciales
+// - Normaliza <head> (charset + viewport + expiriti-base)
+// - Lazy load
+// - Copia estáticos
+// - Minifica JS (Terser) + CSS (cssnano)
+// - Debug contextual si Terser falla
+// =========================================================
+
 import { readFile, writeFile, mkdir, copyFile } from "fs/promises";
 import { resolve, dirname } from "path";
 import { glob } from "glob";
-
-// --- OPTIMIZACIÓN ---
 import { minify as terserMinify } from "terser";
 import postcss from "postcss";
 import cssnano from "cssnano";
 
-// --- Configuración ---
+// ---------------- CONFIG ----------------
 const PARTIALS_DIR = "PARTIALS";
 const BUILD_DIR = "dist";
-// ---------------------
+const EXPIRITI_BASE = "/unidaduniversal.github.io/";
+// ----------------------------------------
 
-console.log("🤖 Iniciando el robot armador v2.1 (con optimización + debug terser)...");
+console.log("🤖 Iniciando robot armador Expiriti v2.2...");
 
 /* =========================================================
-   Helpers: mostrar contexto cuando Terser falla
-   ========================================================= */
-function showContext(src, line, col, radius = 4) {
+   DEBUG: muestra contexto cuando Terser falla
+========================================================= */
+function showContext(src, line, col, radius = 4){
+  const L = Number(line||0), C = Number(col||0);
   const lines = src.split(/\r?\n/);
-  const L = Number(line || 0);
-  const C = Number(col || 0);
-
-  const start = Math.max(0, L - 1 - radius);
-  const end = Math.min(lines.length, L - 1 + radius + 1);
-
-  const block = lines.slice(start, end).map((txt, i) => {
-    const n = start + i + 1;
-    const mark = (n === L) ? ">>" : "  ";
-    return `${mark} ${String(n).padStart(4, " ")} | ${txt}`;
+  const start = Math.max(0, L-1-radius);
+  const end = Math.min(lines.length, L-1+radius+1);
+  const block = lines.slice(start,end).map((t,i)=>{
+    const n = start+i+1;
+    return `${n===L?" >>":"   "} ${String(n).padStart(4," ")} | ${t}`;
   }).join("\n");
-
   console.log(block);
-  // caret
-  if (L > 0) console.log(" ".repeat(9 + C) + "^");
+  if(L>0) console.log(" ".repeat(9+C)+"^");
 }
 
 /* =========================================================
-   Minificación robusta de JS (Terser)
-   - Imprime archivo + línea/columna + snippet
-   ========================================================= */
-async function minifyJsOrThrow(filePath, rawContent) {
-  try {
-    // Nota: options conservadoras para evitar sorpresas
-    const result = await terserMinify(rawContent, {
-      ecma: 2020,
-      module: false,
-      compress: true,
-      mangle: true,
-      format: { comments: false }
+   Minificación JS robusta (Terser)
+========================================================= */
+async function minifyJsOrThrow(file, src){
+  try{
+    const r = await terserMinify(src,{
+      ecma:2020,module:false,
+      compress:true,mangle:true,
+      format:{comments:false}
     });
-
-    if (!result || typeof result.code !== "string") {
-      throw new Error("Terser no devolvió 'code' (resultado inválido).");
+    if(!r || typeof r.code!=="string")
+      throw new Error("Terser no devolvió código");
+    return r.code;
+  }catch(e){
+    console.error(`\n❌ Terser error: ${file}`);
+    console.error(`${e.name||"Error"}: ${e.message||e}`);
+    if(typeof e.line==="number"){
+      console.error(`Línea ${e.line}, Col ${e.col||0}\n`);
+      showContext(src,e.line,e.col||0);
+      console.error("\n💡 Suele ser coma faltante o texto no-JS incrustado.");
     }
-    return result.code;
-
-  } catch (err) {
-    console.error(`\n❌ Error minificando JS con Terser`);
-    console.error(`   Archivo: ${filePath}`);
-    console.error(`   ${err?.name || "Error"}: ${err?.message || String(err)}`);
-
-    // Terser suele traer line/col
-    const line = err?.line;
-    const col = err?.col;
-
-    if (typeof line === "number") {
-      console.error(`   Línea ${line}, Col ${col ?? 0}\n`);
-      showContext(rawContent, line, col ?? 0);
-      console.error("\n💡 Tip: normalmente es una coma faltante en un objeto/array, o texto que no es JS colado.");
-    } else {
-      console.error("\n💡 No se recibió line/col. Aun así, el archivo arriba es el culpable.");
-    }
-
-    throw err;
+    throw e;
   }
 }
 
-async function buildSite() {
-  try {
-    // 1) Cargar Parciales
-    const headerHtml = await readFile(resolve(PARTIALS_DIR, "global-header.html"), "utf8");
-    const footerHtml = await readFile(resolve(PARTIALS_DIR, "global-footer.html"), "utf8");
-    console.log("⚙️ 1/4 Parciales cargados.");
+/* =========================================================
+   HEAD NORMALIZER — BLINDADO
+   Inserta metas SOLO si faltan
+========================================================= */
+const RX = {
+  head:/<head(\s[^>]*)?>/i,
+  charset:/<meta\b[^>]*charset=/i,
+  viewport:/<meta\b[^>]*name=["']viewport["']/i,
+  base:/<meta\b[^>]*name=["']expiriti-base["']/i
+};
 
-    // 2) Procesar HTML (ensamblado + Lazy Load)
-    const htmlFiles = await glob("**/*.html", {
-      ignore: [`${PARTIALS_DIR}/**`, `${BUILD_DIR}/**`, "node_modules/**"]
-    });
+function normalizeHead(html,file){
+  if(!RX.head.test(html)) return html;
+  const adds=[];
+  if(!RX.charset.test(html)) adds.push(`<meta charset="utf-8" />`);
+  if(!RX.base.test(html)) adds.push(`<meta name="expiriti-base" content="${EXPIRITI_BASE}" />`);
+  if(!RX.viewport.test(html)) adds.push(`<meta name="viewport" content="width=device-width, initial-scale=1" />`);
+  if(!adds.length) return html;
 
-    console.log(`⚙️ 2/4 Procesando ${htmlFiles.length} páginas HTML...`);
-    for (const file of htmlFiles) {
-      let content = await readFile(file, "utf8");
-
-      // Pegar header y footer
-      content = content.replace(/<div id="header-placeholder"><\/div>/g, headerHtml);
-      content = content.replace(/<div id="footer-placeholder"><\/div>/g, footerHtml);
-
-      // Eliminar script de carga de parciales (si existe)
-      content = content.replace(
-        /<script>[\s\S]*loadPartials[\s\S]*?<\/script>/s,
-        ""
-      );
-
-      // Lazy load / preload
-      content = content.replace(/<iframe(?!.*loading="lazy")/g, '<iframe loading="lazy"');
-      content = content.replace(/<video(?!.*preload="none")/g, '<video preload="none"');
-      content = content.replace(/<img(?!.*loading="lazy")/g, '<img loading="lazy"');
-
-      // Guardar HTML final en dist
-      const outputPath = resolve(BUILD_DIR, file);
-      await mkdir(dirname(outputPath), { recursive: true });
-      await writeFile(outputPath, content, "utf8");
-    }
-    console.log("✅ HTML procesado y optimizado con Lazy Load.");
-
-    // 3) Copiar estáticos
-    const otherFiles = await glob("**/*.{png,jpg,jpeg,webp,svg,ico,json,webmanifest,pdf}", {
-      ignore: [
-        `${PARTIALS_DIR}/**`,
-        `${BUILD_DIR}/**`,
-        "node_modules/**",
-        "build.js",
-        "package.json",
-        "package-lock.json"
-      ]
-    });
-
-    console.log(`⚙️ 3/4 Copiando ${otherFiles.length} archivos estáticos...`);
-    for (const file of otherFiles) {
-      const outputPath = resolve(BUILD_DIR, file);
-      await mkdir(dirname(outputPath), { recursive: true });
-      await copyFile(file, outputPath);
-    }
-    console.log("✅ Archivos estáticos copiados.");
-
-    // 4) Minificar CSS y JS (con debug)
-    console.log("⚙️ 4/4 Minificando CSS y JS...");
-    const codeFiles = await glob("**/*.{js,css}", {
-      ignore: [`${BUILD_DIR}/**`, "node_modules/**", "build.js"]
-    });
-
-    for (const file of codeFiles) {
-      const inputPath = resolve(file);
-      const outputPath = resolve(BUILD_DIR, file);
-      const rawContent = await readFile(inputPath, "utf8");
-
-      let minifiedContent = "";
-
-      if (file.endsWith(".js")) {
-        // ✅ JS: minificación robusta con diagnóstico
-        minifiedContent = await minifyJsOrThrow(file, rawContent);
-
-      } else if (file.endsWith(".css")) {
-        // ✅ CSS: cssnano
-        const result = await postcss([cssnano]).process(rawContent, { from: inputPath, to: outputPath });
-        minifiedContent = result.css;
-      }
-
-      await mkdir(dirname(outputPath), { recursive: true });
-      await writeFile(outputPath, minifiedContent, "utf8");
-    }
-
-    console.log("✅ CSS y JS minificados.");
-    console.log("\n¡Build v2.1 completado! 🚀");
-    console.log(`Tu sitio final está en /${BUILD_DIR}`);
-
-  } catch (err) {
-    console.error("Error durante el build:", err);
-    process.exit(1);
-  }
+  console.log(`🔧 HEAD normalized: ${file} (+${adds.length})`);
+  return html.replace(RX.head,m=>`${m}\n  ${adds.join("\n  ")}\n`);
 }
+
+/* =========================================================
+   BUILD PIPELINE
+========================================================= */
+async function buildSite(){
+try{
+  // ---------- 1) Parciales ----------
+  const header = await readFile(resolve(PARTIALS_DIR,"global-header.html"),"utf8");
+  const footer = await readFile(resolve(PARTIALS_DIR,"global-footer.html"),"utf8");
+  console.log("⚙️ 1/4 Parciales cargados.");
+
+  // ---------- 2) HTML ----------
+  const htmlFiles = await glob("**/*.html",{
+    ignore:[`${PARTIALS_DIR}/**`,`${BUILD_DIR}/**`,"node_modules/**"]
+  });
+
+  console.log(`⚙️ 2/4 Procesando ${htmlFiles.length} HTML...`);
+  for(const file of htmlFiles){
+    let html = await readFile(file,"utf8");
+
+    // Normaliza HEAD (ANTES de header/footer)
+    html = normalizeHead(html,file);
+
+    // Inserta parciales
+    html = html.replace(/<div id="header-placeholder"><\/div>/g,header);
+    html = html.replace(/<div id="footer-placeholder"><\/div>/g,footer);
+
+    // Quita loader viejo de parciales
+    html = html.replace(/<script>[\s\S]*?loadPartials[\s\S]*?<\/script>/s,"");
+
+    // Lazy / preload
+    html = html
+      .replace(/<iframe(?!.*loading="lazy")/g,'<iframe loading="lazy"')
+      .replace(/<video(?!.*preload="none")/g,'<video preload="none"')
+      .replace(/<img(?!.*loading="lazy")/g,'<img loading="lazy"');
+
+    const out = resolve(BUILD_DIR,file);
+    await mkdir(dirname(out),{recursive:true});
+    await writeFile(out,html,"utf8");
+  }
+  console.log("✅ HTML ensamblado.");
+
+  // ---------- 3) Estáticos ----------
+  const assets = await glob("**/*.{png,jpg,jpeg,webp,svg,ico,json,webmanifest,pdf}",{
+    ignore:[
+      `${PARTIALS_DIR}/**`,`${BUILD_DIR}/**`,
+      "node_modules/**","build.js","package*.json"
+    ]
+  });
+
+  console.log(`⚙️ 3/4 Copiando ${assets.length} assets...`);
+  for(const f of assets){
+    const out = resolve(BUILD_DIR,f);
+    await mkdir(dirname(out),{recursive:true});
+    await copyFile(f,out);
+  }
+  console.log("✅ Assets copiados.");
+
+  // ---------- 4) Minificación ----------
+  console.log("⚙️ 4/4 Minificando CSS + JS...");
+  const code = await glob("**/*.{js,css}",{
+    ignore:[
+      `${BUILD_DIR}/**`,`node_modules/**`,
+      "build.js","**/*.min.js","**/*.min.css"
+    ]
+  });
+
+  for(const file of code){
+    const src = await readFile(resolve(file),"utf8");
+    const out = resolve(BUILD_DIR,file);
+    let min="";
+
+    if(file.endsWith(".js")){
+      min = await minifyJsOrThrow(file,src);
+    }else{
+      const r = await postcss([cssnano]).process(src,{from:file,to:out});
+      min = r.css;
+    }
+
+    await mkdir(dirname(out),{recursive:true});
+    await writeFile(out,min,"utf8");
+  }
+
+  console.log("✅ CSS y JS minificados.");
+  console.log("\n🚀 Build Expiriti v2.2 COMPLETADO");
+  console.log(`📦 Output: /${BUILD_DIR}`);
+
+}catch(err){
+  console.error("❌ Build falló:",err);
+  process.exit(1);
+}}
 
 buildSite();
