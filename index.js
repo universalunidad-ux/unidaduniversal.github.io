@@ -761,3 +761,29 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
   }, {passive:true});
 })();
 
+/* =========================================================
+  INDEX PATCH — center active tabs (hero groups + prod tabs)
+  v2026.01.05-a
+========================================================= */
+(function(){
+  if(window.__EXP_TAB_CENTER__) return; window.__EXP_TAB_CENTER__=1;
+
+  function centerInline(el){
+    if(!el) return;
+    try{ el.scrollIntoView({behavior:"smooth", block:"nearest", inline:"center"}); }
+    catch(e){}
+  }
+
+  // 1) HERO groups (nav #heroGalleryGroups)
+  document.addEventListener("click", function(e){
+    const t = e.target.closest("#heroGalleryGroups > *");
+    if(t) centerInline(t);
+  }, {passive:true});
+
+  // 2) Tabs productos (Contables/Comerciales/Nube/Productividad)
+  document.addEventListener("click", function(e){
+    const t = e.target.closest(".prod-tabs .tab");
+    if(t) centerInline(t);
+  }, {passive:true});
+})();
+
