@@ -1677,4 +1677,147 @@ html[data-theme="light"] .page-index .prod-tabs .tab.active{
   scroll-padding-right: 12px;
 }
 
+/* =========================================================
+   PATCH — Reels tabs estilo HERO + FIX hueco Reels Servicios
+   Scope: <body class="page-index">
+   Pegar AL FINAL de mainindex.css
+========================================================= */
+
+.page-index{
+  --tile-bd: rgba(255,255,255,.14);
+  --tile-bd-hi: rgba(96,165,250,.42);
+  --tile-bg: rgba(255,255,255,.03);
+  --tile-bg-hi: rgba(96,165,250,.10);
+  --tile-ring: rgba(96,165,250,.16);
+  --tile-ring-hi: rgba(96,165,250,.30);
+  --tile-shadow: 0 10px 26px rgba(0,0,0,.16);
+  --tile-shadow-hi: 0 16px 38px rgba(0,0,0,.22);
+}
+
+/* =========================
+   A) Reels tabs (SISTEMAS) -> look tipo HERO (limpio)
+   - aplica a cualquier .reel-sys-tabs que NO sea la de servicios
+========================= */
+.page-index .reel-sys-tabs{gap:12px!important}
+
+/* Si tu tabs de servicios viene justo después de #carouselReels-servicios,
+   excluimos esa para que "Sistemas" quede con el look HERO */
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab{
+  border:1px solid var(--tile-bd)!important;
+  background:var(--tile-bg)!important;
+  border-radius:18px!important;
+  box-shadow:var(--tile-shadow)!important;
+
+  outline:2px solid var(--tile-ring)!important;
+  outline-offset:0!important;
+
+  min-height:110px!important;
+  padding:16px!important;
+
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+
+  transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease, outline-color .14s ease;
+}
+
+@media(hover:hover){
+  .page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab:hover{
+    border-color:var(--tile-bd-hi)!important;
+    background:var(--tile-bg-hi)!important;
+    outline-color:var(--tile-ring-hi)!important;
+    box-shadow:var(--tile-shadow-hi)!important;
+    transform:translateY(-1px);
+  }
+}
+
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab.active{
+  border-color:var(--tile-bd-hi)!important;
+  background:var(--tile-bg-hi)!important;
+  outline-color:var(--tile-ring-hi)!important;
+  box-shadow:var(--tile-shadow-hi)!important;
+}
+
+/* Logo grande, centrado, sin “capa blanca” */
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab img{
+  height:64px!important;
+  max-width:min(260px,92%)!important;
+  width:auto!important;
+  object-fit:contain!important;
+
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  padding:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+/* Texto: opcional. Si quieres el look EXACTO del HERO (solo logo), ocúltalo */
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab span{
+  margin-top:8px!important;
+  font-weight:950!important;
+  font-size:.90rem!important;
+  line-height:1.05!important;
+  color:rgba(232,238,246,.92)!important;
+}
+/* Si lo quieres “solo logo”, descomenta:
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab span{display:none!important}
+*/
+
+/* =========================
+   B) FIX Reels SERVICIOS (hueco blanco)
+   - Evita “igualar alturas” y que el carrusel se estire de más
+========================= */
+
+/* 1) Alinea al inicio en desktop para que NO fuerce altura */
+@media(min-width:980px){
+  .page-index #servicios .grid-2{align-items:start!important}
+  .page-index #servicios .reels-home-card{align-self:start!important;height:auto!important}
+}
+
+/* 2) Carrusel de servicios: que el track/slide no reserve alto extra */
+.page-index #servicios #carouselReels-servicios{
+  overflow:hidden!important;
+}
+.page-index #servicios #carouselReels-servicios .carousel-track{
+  min-height:0!important;
+  height:auto!important;
+  overflow:hidden!important;
+  align-items:flex-start!important; /* clave: evita centrado que “deja aire” abajo */
+}
+.page-index #servicios #carouselReels-servicios .carousel-slide{
+  padding:12px 12px 6px!important; /* reduce aire inferior */
+  align-items:flex-start!important;
+}
+
+/* 3) Video un poco más alto SOLO en servicios (sin tocar otros reels) */
+.page-index #servicios .reel-embed{
+  height:clamp(320px, 56svh, 720px)!important;
+  margin:0 auto!important;
+}
+
+/* 4) Dots pegados al video (no empujan hacia abajo) */
+.page-index #servicios #carouselReels-servicios .carousel-nav{
+  margin:8px auto 0!important;
+  padding:6px 10px!important;
+  width:max-content!important;
+  max-width:calc(100% - 24px)!important;
+  border-radius:999px!important;
+  background:rgba(7,10,18,.10)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.page-index #servicios #carouselReels-servicios .carousel-nav .dot{
+  width:10px!important;
+  height:10px!important;
+}
+
+/* 5) Padding del body de la card para que no “reserve” blanco */
+.page-index #servicios .reels-home-card .body{
+  padding-bottom:12px!important;
+}
 
