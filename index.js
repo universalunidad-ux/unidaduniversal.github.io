@@ -787,3 +787,52 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
   }, {passive:true});
 })();
 
+/* HERO BLUR: usa la imagen visible como fondo difuminado */
+(function(){
+  const root = document.getElementById("heroGalleryCarousel");
+  if(!root) return;
+
+  const track = root.querySelector(".carousel-track");
+  if(!track) return;
+
+  function pickActiveImg(){
+    const slides = Array.from(track.children || []);
+    if(!slides.length) return null;
+
+    // slide más cercano al centro del track
+    const r = track.getBoundingClientRect();
+    const cx = r.left + r.width/2;
+
+    let best = null, bestDist = Infinity;
+    for(const s of slides){
+      const b = s.getBoundingClientRect();
+      const scx = b.left + b.width/2;
+      const d = Math.abs(scx - cx);
+      if(d < bestDist){ bestDist = d; best = s; }
+    }
+    const img = best && best.querySelector("img");
+    return img && img.src ? img.src : null;
+  }
+
+  let raf = 0;
+  function update(){
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(()=>{
+      const src = pickActiveImg();
+      if(src) root.style.setProperty("--hero-blur", `url("${src}")`);
+    });
+  }
+
+  // inicial + cambios por scroll/click
+  update();
+  track.addEventListener("scroll", update, {passive:true});
+  root.addEventListener("click", (e)=>{
+    const t = e.target;
+    if(t && (t.closest(".arrowCircle") || t.closest(".dot"))) setTimeout(update, 60);
+  });
+
+  // si tu JS re-renderiza slides, esto lo detecta
+  const mo = new MutationObserver(()=>setTimeout(update, 30));
+  mo.observe(track, {childList:true, subtree:true});
+})();
+
