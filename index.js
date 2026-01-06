@@ -761,3 +761,62 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
   }, {passive:true});
 })();
 
+/* =========================================================
+   Lazy Google Maps Embed (NO JS API)
+   - Usa data-embed con URL de google.com/maps/embed?pb=...
+   - Reemplaza el placeholder por <iframe> al click
+========================================================= */
+(function(){
+  function initLazyMap(root){
+    if(!root) return;
+    if(root.dataset.mapReady === "1") return;
+    root.dataset.mapReady = "1";
+
+    const url = root.getAttribute("data-embed");
+    if(!url) return;
+
+    const cover = root.querySelector(".map-cover");
+    const load = (ev)=>{
+      if(ev) ev.preventDefault();
+      if(root.querySelector("iframe")) return;
+
+      const iframe = document.createElement("iframe");
+      iframe.src = url;
+      iframe.loading = "lazy";
+      iframe.referrerPolicy = "no-referrer-when-downgrade";
+      iframe.allowFullscreen = true;
+      iframe.setAttribute("aria-label","Mapa de ubicación");
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "0";
+      iframe.style.display = "block";
+
+      // Quita cover y monta iframe
+      if(cover) cover.remove();
+      root.appendChild(iframe);
+    };
+
+    // Click en cover
+    if(cover){
+      cover.addEventListener("click", load, {passive:false});
+      // Accesibilidad teclado
+      cover.addEventListener("keydown", (e)=>{
+        if(e.key === "Enter" || e.key === " "){ load(e); }
+      });
+    } else {
+      // Si no hay cover, carga directo
+      load();
+    }
+  }
+
+  // Init al cargar
+  document.addEventListener("DOMContentLoaded", ()=>{
+    document.querySelectorAll(".map-embed[data-embed]").forEach(initLazyMap);
+  });
+
+  // Si usas BFCache o rehidratación
+  window.addEventListener("pageshow", ()=>{
+    document.querySelectorAll(".map-embed[data-embed]").forEach(initLazyMap);
+  });
+})();
+
