@@ -1506,3 +1506,175 @@ html[data-theme="light"] .page-index .prod-tabs .tab.active{
   padding-bottom: 10px;
 }
 
+/* =========================================================
+   INDEX PATCH — FIX: dots HERO + gap Reels Servicios + padding tabs
+   Scope: <body class="page-index">
+   Pegar AL FINAL de mainindex.css
+========================================================= */
+.page-index{
+  --tile-ring: rgba(45,212,191,.22);
+  --tile-ring-hi: rgba(45,212,191,.46);
+  --tile-bd: rgba(255,255,255,.16);
+  --tile-bd-hi: rgba(45,212,191,.55);
+  --tile-bg: rgba(255,255,255,.05);
+  --tile-bg-hi: rgba(45,212,191,.12);
+  --tile-shadow: 0 10px 26px rgba(0,0,0,.16);
+  --tile-shadow-hi: 0 16px 38px rgba(0,0,0,.22);
+}
+
+/* =========================================================
+  1) “TILES” con look tipo hover SIEMPRE (hero + reels tabs)
+========================================================= */
+
+/* HERO groups (Contables/Comerciales...) */
+.page-index .hero-gallery-groups .hero-group-tab,
+/* HERO tabs (logos) */
+.page-index .hero-gallery-tabs .hero-tab,
+/* Reels tabs (sistemas + servicios) */
+.page-index .reel-sys-tabs .reel-tab{
+  border: 1px solid var(--tile-bd) !important;
+  background: var(--tile-bg) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--tile-shadow) !important;
+
+  /* look “hover” predeterminado */
+  outline: 2px solid var(--tile-ring) !important;
+  outline-offset: 0 !important;
+
+  transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease, outline-color .14s ease;
+}
+
+/* más grandes (quitar “aire” y que se sientan premium) */
+.page-index .hero-gallery-groups .hero-group-tab{
+  min-height: 46px !important;
+  padding: 10px 14px !important;
+  font-weight: 900 !important;
+}
+.page-index .hero-gallery-tabs .hero-tab{
+  min-height: 106px !important;
+  padding: 16px !important;
+}
+.page-index .reel-sys-tabs .reel-tab{
+  min-height: 96px !important;
+  padding: 14px 12px !important;
+}
+
+/* hover/focus */
+@media(hover:hover){
+  .page-index .hero-gallery-groups .hero-group-tab:hover,
+  .page-index .hero-gallery-tabs .hero-tab:hover,
+  .page-index .reel-sys-tabs .reel-tab:hover{
+    border-color: var(--tile-bd-hi) !important;
+    background: var(--tile-bg-hi) !important;
+    outline-color: var(--tile-ring-hi) !important;
+    box-shadow: var(--tile-shadow-hi) !important;
+    transform: translateY(-1px);
+  }
+}
+/* active/seleccionado */
+.page-index .hero-gallery-groups .hero-group-tab.active,
+.page-index .hero-gallery-tabs .hero-tab.active,
+.page-index .reel-sys-tabs .reel-tab.active{
+  border-color: var(--tile-bd-hi) !important;
+  background: var(--tile-bg-hi) !important;
+  outline-color: var(--tile-ring-hi) !important;
+  box-shadow: var(--tile-shadow-hi) !important;
+}
+
+/* imágenes dentro (logo grande sin “capa” blanca) */
+.page-index .hero-gallery-tabs .hero-tab img,
+.page-index .reel-sys-tabs .reel-tab img{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  object-fit: contain !important;
+}
+
+/* =========================================================
+  2) FIX: DOTS del HERO (centrados + barra auto-width)
+========================================================= */
+.page-index #heroGalleryCarousel.carousel{
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important; /* evita recortes raros */
+}
+.page-index #heroGalleryCarousel .carousel-track{
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+
+/* barra dots: centrada, tamaño según cantidad, sin “irse a la izquierda” */
+.page-index #heroGalleryCarousel .carousel-nav{
+  position: static !important;
+  width: max-content !important;
+  max-width: calc(100% - 24px) !important;
+  margin: 10px auto 12px !important;
+  padding: 6px 10px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+
+  border-radius: 999px !important;
+  background: rgba(7,10,18,.12) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.page-index #heroGalleryCarousel .carousel-nav .dot{
+  width: 11px !important;
+  height: 11px !important;
+}
+
+/* =========================================================
+  3) FIX: “aire blanco” en Reels SERVICIOS (quitar hueco)
+========================================================= */
+
+/* En servicios: NO dejes que el carrusel “se estire” de más */
+.page-index #servicios #carouselReels-servicios{
+  overflow: hidden !important;
+}
+.page-index #servicios #carouselReels-servicios .carousel-track{
+  min-height: 0 !important;
+  height: auto !important;
+  align-items: flex-start !important; /* evita centrar con hueco abajo */
+}
+.page-index #servicios #carouselReels-servicios .carousel-slide{
+  padding: 12px 12px 6px !important; /* reduce “aire” inferior del slide */
+  align-items: flex-start !important;
+}
+
+/* el embed un poco más alto SOLO en servicios (sin afectar sistemas) */
+.page-index #servicios .reel-embed{
+  height: clamp(320px, 56svh, 720px) !important;
+  margin: 0 auto !important;
+}
+
+/* dots del carrusel de servicios: pegados al video, sin empujar hacia abajo */
+.page-index #servicios #carouselReels-servicios .carousel-nav{
+  margin: 8px auto 0 !important;
+  padding: 6px 10px !important;
+  width: max-content !important;
+  max-width: calc(100% - 24px) !important;
+  border-radius: 999px !important;
+  background: rgba(7,10,18,.10) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+}
+.page-index #servicios #carouselReels-servicios .carousel-nav .dot{
+  width: 10px !important;
+  height: 10px !important;
+}
+
+/* =========================================================
+  4) FIX: tabs “Contables/Comerciales/…” (que NO se corten extremos)
+========================================================= */
+.page-index .prod-tabs-shell{overflow: visible !important;}
+.page-index .prod-tabs{
+  padding: 8px 12px !important;     /* CLAVE: espacio para que no se “muerdan” bordes */
+  margin: 0 !important;
+  scroll-padding-left: 12px;
+  scroll-padding-right: 12px;
+}
+
+
