@@ -902,29 +902,33 @@ html[data-theme="light"] .page-index .card *{opacity:1}
 
 
 /* =========================================================
-   INDEX PATCH — HERO image desktop = “como mobile” (no toca mobile)
+   INDEX PATCH — HERO pills spacing (ALL) + HERO image (DESKTOP ONLY)
    v2026.01.XX  (PEGA AL FINAL de mainindex.css)
 ========================================================= */
+
+/* 1) Subir pills y quitar “aire” entre “Conoce más…” y tabs (ALL) */
+.page-index .hero-gallery-card>h3,
+.page-index .hero-gallery-card .hero-gallery-title{margin-bottom:6px!important}
+.page-index #heroGalleryGroups,
+.page-index .hero-gallery-groups{margin-top:6px!important;padding-top:0!important;padding-bottom:8px!important}
+.page-index #heroGalleryGroups{gap:10px!important}
+.page-index .hero-gallery-card{padding-top:14px!important}
+@media(min-width:980px){.page-index .hero-gallery-card{padding-top:16px!important}}
+
+/* 2) Hero image “como mobile” pero SOLO en DESKTOP (no toca mobile) */
 @media(min-width:980px){
-  /* Desktop: el slide se centra y la imagen se ve completa */
   .page-index #heroGalleryCarousel .carousel-track{align-items:stretch!important}
   .page-index #heroGalleryCarousel .hero-slide,
   .page-index #heroGalleryCarousel .carousel-slide{
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    padding:10px!important; /* aire controlado, evita recortes */
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    padding:10px!important;
   }
   .page-index #heroGalleryCarousel .hero-slide img,
   .page-index #heroGalleryCarousel .carousel-slide img{
-    width:100%!important;
-    height:100%!important;
-    max-width:100%!important;
-    max-height:100%!important;
-    object-fit:contain!important;      /* “como mobile”: completa */
-    object-position:center!important;
+    width:100%!important;height:100%!important;
+    max-width:100%!important;max-height:100%!important;
+    object-fit:contain!important;object-position:center!important;
     background:transparent!important;
   }
-  /* Opcional: si en desktop el frame es demasiado bajo, súbelo ligeramente */
-  .page-index #heroGalleryCarousel{min-height:520px!important}
+  .page-index #heroGalleryCarousel{min-height:520px!important} /* ajustable */
 }
