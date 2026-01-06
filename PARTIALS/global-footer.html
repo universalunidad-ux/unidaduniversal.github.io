@@ -1,16 +1,17 @@
 <!-- =========================================================
- Expiriti - GLOBAL FOOTER (V10) — BLINDADO (JAN 2026)
- - Rutas robustas: meta[name="expiriti-base"] + URL() + fallback GH/local
- - Usa MISMAS clases del header: .js-link[data-href] y .js-img[data-src]
- - Fix “origin null” + onerror + fade-in + light mode premium
+ Expiriti - GLOBAL FOOTER (V10.1) — BLINDADO (JAN 2026)
+ - URL() safe: no rompe https://, soporta GH Pages + subpáginas
+ - Misma convención header: .js-link[data-href] y .js-img[data-src]
+ - Img loader: onerror retry 1x + decode() + fade-in
+ - Anti “capa blanca”: backgrounds transparent + cards controlados
 ========================================================= -->
 <footer class="gf" id="gf-root" role="contentinfo">
 <style>
-/* ======================
-   FOOTER V10 (SCOPED)
-====================== */
+/* ====== TOKENS ====== */
 :root{--gf-bg:#0b0f14;--gf-card:#111723;--gf-text:#e8eef6;--gf-muted:#95a2b3;--gf-border:rgba(255,255,255,.08);--gf-soft:rgba(255,255,255,.06);--gf-brand:#2dd4bf;--gf-brand2:#60a5fa;--gf-shadow:0 12px 34px rgba(0,0,0,.40)}
-html[data-theme="light"]{--gf-bg:#f7fafc;--gf-card:#ffffff;--gf-text:#0f172a;--gf-muted:#64748b;--gf-border:rgba(2,6,23,.12);--gf-soft:rgba(2,6,23,.10);--gf-shadow:0 12px 34px rgba(2,6,23,.12)}
+html[data-theme="light"]{--gf-bg:#f7fafc;--gf-card:#fff;--gf-text:#0f172a;--gf-muted:#64748b;--gf-border:rgba(2,6,23,.12);--gf-soft:rgba(2,6,23,.10);--gf-shadow:0 12px 34px rgba(2,6,23,.12)}
+
+/* ====== SHELL ====== */
 #gf-root.gf{margin-top:40px;background:var(--gf-bg);border-top:1px solid var(--gf-soft);color:var(--gf-text);font-family:system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.45}
 #gf-root *{box-sizing:border-box}
 #gf-root a{color:var(--gf-text);text-decoration:none;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(45,212,191,.35)}
@@ -20,53 +21,75 @@ html[data-theme="light"]{--gf-bg:#f7fafc;--gf-card:#ffffff;--gf-text:#0f172a;--g
 #gf-root .gf-title{margin:0 0 10px;font-size:17px;font-weight:900;letter-spacing:.2px;text-align:center}
 #gf-root .gf-hint{color:var(--gf-muted);font-size:13.5px}
 @media(min-width:981px){#gf-root.gf{font-size:15.5px}#gf-root .gf-title{font-size:18px}}
-/* Contacto */
+
+/* ====== CONTACTO ====== */
 #gf-root .gf-contact{display:flex;flex-direction:column;gap:8px}
 #gf-root .gf-row{display:flex;gap:8px;align-items:flex-start;font-size:15px}
 #gf-root .gf-row b{font-weight:900}
-/* Cards */
+
+/* ====== CARDS ====== */
 #gf-root .gf-card{background:var(--gf-card);border:1px solid var(--gf-border);border-radius:16px;box-shadow:var(--gf-shadow);transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;will-change:transform}
 #gf-root .gf-card:hover{transform:translateY(-2px);border-color:rgba(45,212,191,.35)}
 #gf-root .gf-card:active{transform:translateY(0) scale(.99)}
 #gf-root .gf-card:focus-within{outline:2px solid rgba(45,212,191,.55);outline-offset:2px}
-/* Logos grid */
+
+/* ====== LOGOS GRID ====== */
 #gf-root .gf-logos-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 #gf-root .gf-logo-card{padding:2px 6px;min-height:92px;border-radius:18px;display:flex;align-items:center;justify-content:center}
 #gf-root .gf-ally-card{padding:6px 8px;min-height:86px;border-radius:18px;display:flex;align-items:center;justify-content:center}
 #gf-root .gf-map-card{padding:8px;border-radius:18px;display:flex;align-items:center;justify-content:center}
-/* Img behavior */
+
+/* ====== IMG BEHAVIOR (anti capa) ====== */
 #gf-root img{max-width:100%;display:block}
-#gf-root img.js-img{opacity:0;transition:opacity .25s}
+#gf-root img.js-img{opacity:0;transition:opacity .22s ease; background:transparent!important}
 #gf-root img.js-img.is-loaded{opacity:1}
+
+/* Importante: quita “placa” (fondo CSS) en contenedores de logos */
+#gf-root .gf-logo-card,
+#gf-root .gf-ally-card,
+#gf-root .gf-map-card{background:transparent!important}
+
+/* Si quieres que la card siga existiendo pero sin “bloque blanco” visual */
+html[data-theme="light"] #gf-root .gf-card.gf-logo-card,
+html[data-theme="light"] #gf-root .gf-card.gf-ally-card,
+html[data-theme="light"] #gf-root .gf-card.gf-map-card{background:transparent!important;box-shadow:none!important}
+html[data-theme="light"] #gf-root .gf-card.gf-logo-card,
+html[data-theme="light"] #gf-root .gf-card.gf-ally-card,
+html[data-theme="light"] #gf-root .gf-card.gf-map-card{border:1px solid rgba(2,6,23,.10)!important}
+
+/* Img sizing */
 #gf-root .gf-logo-card img{width:100%;height:82px;object-fit:contain;transition:transform .16s ease,filter .16s ease}
 #gf-root .gf-ally-card img{width:100%;height:64px;object-fit:contain;transition:transform .16s ease,filter .16s ease}
 #gf-root .gf-map-card img{width:100%;max-width:260px;height:auto;transition:transform .16s ease,filter .16s ease}
 #gf-root .gf-card:hover img{transform:scale(1.02);filter:saturate(1.05) contrast(1.03)}
-/* Ajustes por marca (si aplica) */
+
+/* Ajustes por marca */
 #gf-root .gf-logo-card img[data-src*="contpaqi"],#gf-root .gf-logo-card img[src*="contpaqi"]{height:90px}
-#gf-root .gf-logo-card img[data-src*="microsoft"],#gf-root .gf-logo-card img[src*="microsoft"]{height:84px}
-#gf-root .gf-logo-card img[data-src*="hpserver"],#gf-root .gf-logo-card img[src*="hpserver"]{height:92px}
-#gf-root .gf-logo-card img[data-src*="eset"],#gf-root .gf-logo-card img[src*="eset"]{height:96px}
-/* Presencia / aliados */
+
+/* Nota honesta:
+   Si contpaqi.webp trae fondo blanco “dentro del archivo”, CSS NO lo vuelve transparente.
+   Aquí solo removemos fondos CSS y mejoramos integración visual. */
+
+/* ====== PRESENCIA/ALIADOS ====== */
 #gf-root .gf-presence{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 #gf-root .gf-allies{display:flex;flex-direction:column;align-items:center;gap:12px}
 #gf-root .gf-ally-card{width:min(260px,100%)}
-/* Bottom */
+
+/* ====== BOTTOM ====== */
 #gf-root .gf-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--gf-soft);margin-top:16px;padding-top:14px;gap:12px}
 #gf-root .gf-brandmini{display:flex;gap:10px;align-items:center}
-#gf-root .gf-brandmini img{width:50px;height:50px;border-radius:10px;background:rgba(30,41,59,.35)}
-html[data-theme="light"] #gf-root .gf-brandmini img{background:rgba(2,6,23,.06)}
-/* Responsive */
+#gf-root .gf-brandmini img{width:50px;height:50px;border-radius:10px;background:transparent!important}
+
+/* ====== RESPONSIVE ====== */
 @media(max-width:980px){#gf-root .gf-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){#gf-root .gf-grid{grid-template-columns:1fr}#gf-root .gf-bottom{flex-direction:column;align-items:flex-start}}
-/* Reduce motion */
+
+/* ====== REDUCE MOTION ====== */
 @media(prefers-reduced-motion:reduce){#gf-root .gf-card,#gf-root img.js-img,#gf-root .gf-card img{transition:none!important}}
 </style>
 
 <div class="gf-container">
   <div class="gf-grid">
-
-    <!-- CONTACTO -->
     <section>
       <h3 class="gf-title">Contacto</h3>
       <div class="gf-contact">
@@ -77,58 +100,37 @@ html[data-theme="light"] #gf-root .gf-brandmini img{background:rgba(2,6,23,.06)}
       </div>
     </section>
 
-    <!-- MARCAS -->
     <section>
       <h3 class="gf-title">Marcas</h3>
       <div class="gf-logos-grid">
-        <div class="gf-card gf-logo-card">
-          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contpaqi.webp" alt="CONTPAQi" loading="lazy">
-        </div>
-        <div class="gf-card gf-logo-card">
-          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/microsoft.webp" alt="Microsoft" loading="lazy">
-        </div>
-        <div class="gf-card gf-logo-card">
-          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/hpserver.webp" alt="HP ProLiant" loading="lazy">
-        </div>
-        <div class="gf-card gf-logo-card">
-          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/eset.webp" alt="ESET" loading="lazy">
-        </div>
+        <div class="gf-card gf-logo-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contpaqi.webp" alt="CONTPAQi" loading="lazy"></div>
+        <div class="gf-card gf-logo-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/microsoft.webp" alt="Microsoft" loading="lazy"></div>
+        <div class="gf-card gf-logo-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/hpserver.webp" alt="HP ProLiant" loading="lazy"></div>
+        <div class="gf-card gf-logo-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/eset.webp" alt="ESET" loading="lazy"></div>
       </div>
     </section>
 
-    <!-- PRESENCIA -->
     <section>
       <h3 class="gf-title">Presencia nacional</h3>
       <div class="gf-presence">
-        <div class="gf-card gf-map-card">
-          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/mexico.webp" alt="México" loading="lazy">
-        </div>
+        <div class="gf-card gf-map-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/mexico.webp" alt="México" loading="lazy"></div>
         <p class="gf-hint">Atención a empresas y usuarios en todo el país</p>
       </div>
     </section>
 
-    <!-- ALIADOS -->
     <section>
       <h3 class="gf-title">Aliados</h3>
       <div class="gf-allies">
-        <div class="gf-card gf-ally-card">
-          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/bni.webp" alt="BNI" loading="lazy">
-        </div>
-        <div class="gf-card gf-ally-card">
-          <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/ligo.webp" alt="Ligo" loading="lazy">
-        </div>
+        <div class="gf-card gf-ally-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/bni.webp" alt="BNI" loading="lazy"></div>
+        <div class="gf-card gf-ally-card"><img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/ligo.webp" alt="Ligo" loading="lazy"></div>
       </div>
     </section>
-
   </div>
 
   <div class="gf-bottom">
     <div class="gf-brandmini">
       <img class="js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/expiritilogo.webp" alt="Expiriti" loading="lazy">
-      <div>
-        <b>Expiriti</b>
-        <div class="gf-hint">© <span id="gf-year"></span> · Todos los derechos reservados</div>
-      </div>
+      <div><b>Expiriti</b><div class="gf-hint">© <span id="gf-year"></span> · Todos los derechos reservados</div></div>
     </div>
     <div class="gf-hint">
       <a class="js-link" href="#" data-href="aviso-de-privacidad.html">Aviso de privacidad</a> ·
@@ -139,72 +141,61 @@ html[data-theme="light"] #gf-root .gf-brandmini img{background:rgba(2,6,23,.06)}
 
 <script>
 /* =========================================================
- Expiriti Footer JS (V10) — BLINDADO
- - buildPath igual al header: meta expiriti-base + URL() + fallback
- - Aplica rutas a .js-link[data-href] y .js-img[data-src]
- - Maneja origin "null" + onerror + fade-in
+ Expiriti Footer JS (V10.1) — BLINDADO URL()
+ - BASE_ABS una vez: meta expiriti-base + URL()
+ - build(): normaliza "/..." al root del proyecto (no al dominio)
+ - imgs: decode()+fade + retry 1x en error
 ========================================================= */
-(()=>{"use strict";
-if(window.__EXPIRITI_GF_V10__)return;window.__EXPIRITI_GF_V10__=1;
-const D=document,W=window,ROOT_EL=D.documentElement;
-const Q=(s,c=D)=>c.querySelector(s),QA=(s,c=D)=>Array.from(c.querySelectorAll(s));
-const WRAP=Q("#gf-root")||D;
-const BLANK="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
+(()=>{"use strict";if(window.__EXPIRITI_GF_V101__)return;window.__EXPIRITI_GF_V101__=1;
+const D=document,Q=(s,c=D)=>c.querySelector(s),QA=(s,c=D)=>Array.from(c.querySelectorAll(s));
+const WRAP=Q("#gf-root")||D,BLANK="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
 
-function getRootFromMeta(){
-  const m=Q('meta[name="expiriti-base"]'); if(!m||!m.content) return null;
-  let r=String(m.content).trim(); if(!r) return null;
-  if(!r.startsWith("/")) r="/"+r;
-  if(!r.endsWith("/")) r=r+"/";
-  return r;
-}
-function getMasterRoot(){
-  const meta=getRootFromMeta(); if(meta) return meta;
-  const host=(location.hostname||"").toLowerCase();
-  const seg=(location.pathname||"/").split("/").filter(Boolean);
-  const first=(seg[0]||"").toLowerCase();
-  const RESERVED=new Set(["sistemas","servicios","migraciones","implementaciones","desarrollos","img","images","css","js","assets","partials","dist"]);
-  if(host.includes("github.io")){
-    if(seg.length>0 && !RESERVED.has(first)) return "/"+seg[0]+"/";
-    return "/";
-  }
-  return "/";
-}
-const ROOT=getMasterRoot();
-function baseAbs(){
-  try{
-    const origin=(location.origin && location.origin!=="null") ? location.origin : location.href;
-    return new URL(ROOT, origin).toString();
-  }catch(_){ return ROOT; }
-}
-function buildPath(raw){
+const meta=Q('meta[name="expiriti-base"]');
+let root=(meta&&meta.content)?meta.content.trim():"/";
+if(!root.startsWith("/"))root="/"+root;
+if(!root.endsWith("/"))root=root+"/";
+
+let baseAbs;
+try{
+  const baseForURL=(location.origin&&location.origin!=="null")?location.origin:D.baseURI;
+  baseAbs=new URL(root,baseForURL).toString();
+}catch(_){baseAbs=root;}
+
+const isExt=u=>/^(https?:|mailto:|tel:|whatsapp:|wa:|sms:)/i.test(u);
+const build=raw=>{
   raw=String(raw||"").trim(); if(!raw) return "#";
-  if(/^(https?:|mailto:|tel:|whatsapp:|wa:|sms:)/i.test(raw)) return raw;
-  if(raw.startsWith("#")){
-    try{ return new URL("index.html"+raw, baseAbs()).toString(); }
-    catch(_){ return (ROOT.replace(/\/$/,"")+"/index.html")+raw; }
-  }
-  try{ return new URL(raw.replace(/^\//,""), baseAbs()).toString(); }
-  catch(_){ return (ROOT.replace(/\/$/,"")+"/"+raw.replace(/^\/+/,"")); }
-}
-function markLoaded(img){ img.classList.add("is-loaded"); }
+  if(isExt(raw)) return raw;
+  if(raw.startsWith("#")){ try{return new URL("index.html"+raw,baseAbs).toString();}catch(_){return "index.html"+raw;} }
+  // IMPORTANT: "/IMG/x" => "IMG/x" (relativo a root del proyecto)
+  raw=raw.replace(/^\/+/,"");
+  try{return new URL(raw,baseAbs).toString();}catch(_){return (baseAbs.replace(/\/$/,"/")+raw);}
+};
 
-const year=Q("#gf-year",WRAP); if(year) year.textContent=String(new Date().getFullYear());
+const y=Q("#gf-year",WRAP); if(y) y.textContent=String(new Date().getFullYear());
 
-// Links internos (data-href)
-QA(".js-link[data-href]",WRAP).forEach(a=>{
-  const r=a.getAttribute("data-href"); if(!r) return;
-  a.href=buildPath(r);
-});
+// links internos
+QA(".js-link[data-href]",WRAP).forEach(a=>{const r=a.getAttribute("data-href");if(r)a.href=build(r);});
 
-// Imágenes (data-src)
+// imgs
+const mark=img=>img.classList.add("is-loaded");
+const loadImg=(img,url,retry)=>{
+  img.onload=()=>{try{img.decode&&img.decode().catch(()=>0);}catch(_){ } mark(img);};
+  img.onerror=()=>{img.onerror=null;
+    if(!retry){
+      // retry 1 vez (cache/CDN race)
+      setTimeout(()=>{loadImg(img,url,true); img.src=url;},250);
+      return;
+    }
+    img.style.opacity=".55"; img.src=BLANK; mark(img);
+  };
+  img.src=url;
+  if(img.complete) mark(img);
+};
+
 QA("img.js-img[data-src]",WRAP).forEach(img=>{
-  const r=img.getAttribute("data-src"); if(!r) { markLoaded(img); return; }
-  img.onload=()=>markLoaded(img);
-  img.onerror=()=>{ img.onerror=null; img.style.opacity=".55"; img.src=BLANK; markLoaded(img); };
-  const u=buildPath(r);
-  if(img.src!==u) img.src=u;
-  if(img.complete) markLoaded(img);
+  const r=img.getAttribute("data-src"); if(!r){mark(img);return;}
+  const url=build(r);
+  if(img.src!==url) loadImg(img,url,false); else mark(img);
 });
 })();
 </script>
