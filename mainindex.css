@@ -989,4 +989,160 @@ html[data-theme="light"] .page-index .carousel .carousel-nav .dot.active{
   background:rgba(45,212,191,.95)!important;
   border-color:rgba(45,212,191,.95)!important;
 }
+/* =========================================================
+   INDEX — LIGHT MODE REAL PATCH (pegar AL FINAL)
+   Objetivo: en html[data-theme="light"] el index sea realmente claro:
+   - Fondo claro (no el dark forzado por .page-index)
+   - Cards claras
+   - Textos/títulos/badges visibles (Hero + Conoce + Servicios + FAQ + Forms)
+========================================================= */
+
+html[data-theme="light"] .page-index{
+  /* 1) Mata el “fondo oscuro estable” que forzaste en .page-index */
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(45,212,191,.10), transparent 60%),
+    radial-gradient(1000px 560px at 80% 10%, rgba(96,165,250,.10), transparent 60%),
+    linear-gradient(180deg, #f6f8fc, #edf3fb) !important;
+
+  /* 2) Tokens locales “claros” (no dependas de rgba blancos hardcodeados) */
+  --border: 1px solid rgba(2,6,23,.12);
+  --shadow: 0 14px 34px rgba(2,6,23,.10);
+
+  --card: #ffffff;
+  --card-2: #ffffff;
+
+  --text: #0b1220;
+  --muted:#475569;
+
+  /* tiles (tabs / pills) */
+  --tile-bd: rgba(2,6,23,.14);
+  --tile-bd-hi: rgba(96,165,250,.45);
+  --tile-bg: rgba(255,255,255,.85);
+  --tile-bg-hi: rgba(96,165,250,.14);
+  --tile-ring: rgba(2,6,23,.08);
+  --tile-ring-hi: rgba(96,165,250,.20);
+  --tile-shadow: 0 12px 26px rgba(2,6,23,.10);
+  --tile-shadow-hi: 0 18px 38px rgba(2,6,23,.14);
+}
+
+/* 3) Tipografía base (quita “blancos” hardcodeados) */
+html[data-theme="light"] .page-index,
+html[data-theme="light"] .page-index p,
+html[data-theme="light"] .page-index li,
+html[data-theme="light"] .page-index small{
+  color: var(--text) !important;
+}
+
+html[data-theme="light"] .page-index .lead{color: rgba(2,6,23,.82) !important;}
+html[data-theme="light"] .page-index .hint{color: rgba(2,6,23,.62) !important;}
+
+/* 4) Kicker + Badges (HERO y “Conoce…”) */
+html[data-theme="light"] .page-index .kicker,
+html[data-theme="light"] .page-index .badge{
+  background: rgba(255,255,255,.75) !important;
+  border: 1px solid rgba(2,6,23,.12) !important;
+  color: rgba(2,6,23,.84) !important;
+  box-shadow: 0 10px 22px rgba(2,6,23,.08);
+}
+html[data-theme="light"] .page-index .badge a{
+  color: rgba(2,6,23,.86) !important;
+  text-decoration-color: rgba(2,6,23,.25) !important;
+}
+html[data-theme="light"] .page-index .badge a:hover{
+  text-decoration-color: rgba(45,212,191,.75) !important;
+}
+
+/* 5) Botones */
+html[data-theme="light"] .page-index .btn{
+  background: rgba(255,255,255,.78) !important;
+  border: 1px solid rgba(2,6,23,.12) !important;
+  color: rgba(2,6,23,.88) !important;
+  box-shadow: 0 12px 26px rgba(2,6,23,.10);
+}
+html[data-theme="light"] .page-index .btn-grad-green{
+  border-color: rgba(45,212,191,.35) !important;
+  background: linear-gradient(180deg, rgba(45,212,191,.18), rgba(255,255,255,.85)) !important;
+}
+html[data-theme="light"] .page-index .btn-grad-blue{
+  border-color: rgba(96,165,250,.35) !important;
+  background: linear-gradient(180deg, rgba(96,165,250,.18), rgba(255,255,255,.85)) !important;
+}
+
+/* 6) Cards (quita el gradiente oscuro de .card) */
+html[data-theme="light"] .page-index .card{
+  border: 1px solid rgba(2,6,23,.12) !important;
+  background:
+    radial-gradient(900px 420px at 0% 0%, rgba(45,212,191,.08), transparent 60%),
+    radial-gradient(700px 420px at 100% 0%, rgba(96,165,250,.08), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86)) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+/* 7) HERO Gallery header / títulos */
+html[data-theme="light"] .page-index .hero-gallery-header{
+  border-bottom: 1px solid rgba(2,6,23,.10) !important;
+}
+html[data-theme="light"] .page-index .hero-gallery-header h2{
+  color: rgba(2,6,23,.90) !important;
+}
+
+/* 8) Tabs “Conoce…” + grupos Hero + tabs reels (que se vean como el estilo limpio) */
+html[data-theme="light"] .page-index .hero-group-tab,
+html[data-theme="light"] .page-index .prod-tabs .tab,
+html[data-theme="light"] .page-index .hero-tab,
+html[data-theme="light"] .page-index .reel-tab{
+  color: rgba(2,6,23,.88) !important;
+  border-color: rgba(2,6,23,.12) !important;
+  background: rgba(255,255,255,.80) !important;
+  box-shadow: 0 12px 24px rgba(2,6,23,.10) !important;
+}
+html[data-theme="light"] .page-index .hero-group-tab.active,
+html[data-theme="light"] .page-index .prod-tabs .tab.active,
+html[data-theme="light"] .page-index .hero-tab.active,
+html[data-theme="light"] .page-index .reel-tab.active{
+  border-color: rgba(96,165,250,.45) !important;
+  background: rgba(96,165,250,.14) !important;
+  box-shadow: 0 0 0 2px rgba(96,165,250,.20), 0 16px 34px rgba(2,6,23,.12) !important;
+}
+
+/* 9) Reels title visible */
+html[data-theme="light"] .page-index .reels-home-card .reel-title{
+  color: rgba(2,6,23,.90) !important;
+}
+
+/* 10) Dots (ya tenías algo, esto lo “amarrra” para que siempre contrasten) */
+html[data-theme="light"] .page-index .carousel .carousel-nav{
+  background: rgba(255,255,255,.70) !important;
+  border: 1px solid rgba(2,6,23,.10) !important;
+}
+html[data-theme="light"] .page-index .carousel .carousel-nav .dot{
+  border: 1px solid rgba(2,6,23,.18) !important;
+  background: rgba(2,6,23,.16) !important;
+}
+html[data-theme="light"] .page-index .carousel .carousel-nav .dot.active{
+  background: rgba(45,212,191,.95) !important;
+  border-color: rgba(45,212,191,.95) !important;
+}
+
+/* 11) FAQ + Forms */
+html[data-theme="light"] .page-index .faq-item{
+  background: rgba(255,255,255,.78) !important;
+  border: 1px solid rgba(2,6,23,.12) !important;
+}
+html[data-theme="light"] .page-index .faq-item summary{color: rgba(2,6,23,.92) !important;}
+html[data-theme="light"] .page-index .faq-item p{color: rgba(2,6,23,.80) !important;}
+
+html[data-theme="light"] .page-index label{color: rgba(2,6,23,.86) !important;}
+html[data-theme="light"] .page-index input,
+html[data-theme="light"] .page-index select,
+html[data-theme="light"] .page-index textarea{
+  background: rgba(255,255,255,.86) !important;
+  color: rgba(2,6,23,.90) !important;
+  border: 1px solid rgba(2,6,23,.14) !important;
+}
+html[data-theme="light"] .page-index input::placeholder,
+html[data-theme="light"] .page-index textarea::placeholder{
+  color: rgba(2,6,23,.42) !important;
+}
+
 
