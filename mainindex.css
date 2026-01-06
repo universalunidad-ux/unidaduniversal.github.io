@@ -932,3 +932,27 @@ html[data-theme="light"] .page-index .card *{opacity:1}
   }
   .page-index #heroGalleryCarousel{min-height:520px!important} /* ajustable */
 }
+
+/* =========================================================
+   INDEX FIX — .gradient-word visible (dark + light) v2026.01.XX
+   PEGA AL FINAL de mainindex.css
+========================================================= */
+.page-index .gradient-word{
+  --gw-gold:rgba(218,153,7,1);
+  --gw-teal:rgba(13,142,144,1);
+  background:linear-gradient(90deg,var(--gw-gold),color-mix(in srgb,var(--gw-gold) 35%, var(--gw-teal)),var(--gw-teal))!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+  font-weight:900!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+/* Light: más “legible” sin perder gradiente */
+html[data-theme="light"] .page-index .gradient-word{
+  filter:saturate(1.15) contrast(1.25);
+}
+/* Por si algún padre lo está “apagando” */
+.page-index .gradient-word{mix-blend-mode:normal!important}
+
