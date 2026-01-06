@@ -813,3 +813,91 @@ html[data-theme="light"] .promo-card{background:#fff!important;border:1px solid 
 html[data-theme="light"] .promo-card img{background:#fff}
 html[data-theme="light"] .section,html[data-theme="light"] section{color:#0b1220}
 
+
+/* =========================================================
+   INDEX PATCH — FIX LIGHT VISIBILITY + WIDTH 80% + SPACING
+   v2026.01.XX (PEGA AL FINAL de mainindex.css)
+   Objetivo:
+   - En LIGHT: que se vean pills del HERO + textos (#sectores, reels title)
+   - Layout: 80% en desktop (centrado)
+   - Menos espacio entre secciones
+   - Gradiente títulos con tus tonos (gold + teal)
+========================================================= */
+
+/* 1) Ancho 80% en desktop (sin romper mobile) */
+@media(min-width:980px){
+  .page-index .container,
+  .page-index main.container{
+    max-width:80vw !important;
+    margin-left:auto;margin-right:auto;
+  }
+}
+
+/* 2) Reduce “margen/aire” entre #sectores y lo que sigue */
+.page-index #sectores{padding-top:12px!important;padding-bottom:10px!important}
+.page-index #sectores .container{gap:14px!important}
+.page-index #sectores + *{margin-top:10px!important}
+.page-index .reels-home-card{margin-top:12px!important}
+
+/* 3) Tus colores de marca para gradientes de título (gold -> teal) */
+.page-index{
+  --exp-gold:rgba(218,153,7,1);
+  --exp-teal:rgba(13,142,144,1);
+  --exp-grad:linear-gradient(90deg,var(--exp-gold),color-mix(in srgb,var(--exp-gold) 35%, var(--exp-teal)),var(--exp-teal));
+}
+.page-index .expiriti-gradient,
+.page-index .section-title h2,
+.page-index #sectores h3,
+.page-index .reels-home-card h3.title-gradient{
+  background:var(--exp-grad)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  color:transparent!important;-webkit-text-fill-color:transparent!important;
+}
+
+/* 4) FIX LIGHT: textos lavados (listas/features y headings dentro de cards) */
+html[data-theme="light"] .page-index #sectores .card{background:#fff!important}
+html[data-theme="light"] .page-index #sectores h3{color:#0b1220!important;-webkit-text-fill-color:initial!important}
+html[data-theme="light"] .page-index #sectores .features,
+html[data-theme="light"] .page-index #sectores .features li{
+  color:#0f172a!important;
+  opacity:1!important;
+}
+html[data-theme="light"] .page-index #sectores .features li{line-height:1.35}
+html[data-theme="light"] .page-index #sectores .features li::marker{color:rgba(13,142,144,.95)}
+
+/* 5) FIX LIGHT: “Reels de servicios…” se pierde */
+html[data-theme="light"] .page-index .reels-home-card h3,
+html[data-theme="light"] .page-index .reels-home-card .reel-title{
+  color:#0b1220!important;
+  opacity:1!important;
+}
+
+/* 6) FIX LIGHT: Pills/Tabs del HERO (Contables/Comerciales/En la Nube/…) */
+html[data-theme="light"] .page-index .hero-gallery-groups button,
+html[data-theme="light"] .page-index .hero-group-tab,
+html[data-theme="light"] .page-index .hero-gallery-groups .hero-group-tab{
+  color:#0b1220!important;
+  background:rgba(255,255,255,.92)!important;
+  border:1px solid rgba(2,6,23,.14)!important;
+  box-shadow:0 10px 26px rgba(2,6,23,.10)!important;
+  opacity:1!important;
+}
+html[data-theme="light"] .page-index .hero-gallery-groups button.active,
+html[data-theme="light"] .page-index .hero-group-tab.active{
+  background:rgba(13,142,144,.12)!important;
+  border-color:rgba(13,142,144,.45)!important;
+  color:#062b2c!important;
+}
+
+/* 7) FIX LIGHT: tabs de servicios (Pólizas/Implementaciones/…) texto visible */
+html[data-theme="light"] .page-index .reel-sys-tabs .reel-tab span{
+  color:#0f172a!important;
+  opacity:1!important;
+  font-weight:900!important;
+}
+
+/* 8) Si algún global te baja opacidad en “cards” o “features”, lo neutralizamos */
+html[data-theme="light"] .page-index .card,
+html[data-theme="light"] .page-index .card *{opacity:1}
+
+
