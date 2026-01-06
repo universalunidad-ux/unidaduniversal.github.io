@@ -1346,3 +1346,163 @@ html[data-theme="light"] .page-index .prod-tabs .tab{
 html[data-theme="light"] .page-index .prod-tabs .tab.active{
   background:#eff6ff;border-color:#3b82f6;color:#0b1220;
 }
+
+/* =========================================================
+   PATCH — UI tabs/cards (Hero + Reels Sistemas + Reels Servicios)
+   - Base: todos los botones con look “card” (como tu screenshot)
+   - Hover/Active: borde + ring + elevación
+   - Reduce aire debajo de dots (especialmente servicios)
+========================================================= */
+
+:root{
+  /* fallback por si no existe --brand en theme.css */
+  --ui-brand: var(--brand, #2dd4bf);
+  --ui-ring: color-mix(in srgb, var(--ui-brand) 55%, transparent);
+  --ui-border: color-mix(in srgb, var(--text, #0b1220) 12%, transparent);
+  --ui-card: var(--card, #ffffff);
+  --ui-shadow: 0 10px 26px rgba(2,6,23,.10);
+  --ui-shadow-hi: 0 16px 38px rgba(2,6,23,.16);
+}
+
+/* ---------- A) BOTONES “CARD” (aplica a hero + reels sistemas + reels servicios) ---------- */
+
+/* Hero: tabs y grupos */
+.hero-gallery-tabs button,
+.hero-gallery-groups button,
+
+/* Reels: tabs de sistemas y servicios */
+.reel-sys-tabs .reel-tab{
+  appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  background:var(--ui-card);
+  border:1px solid var(--ui-border);
+  border-radius:16px;
+
+  box-shadow: 0 6px 16px rgba(2,6,23,.08);
+  transform: translateZ(0);
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, outline-color .16s ease;
+
+  /* “más grandes” + menos aire */
+  min-height:78px;
+  padding:12px 14px;
+}
+
+/* que se vean “como hover” incluso en estado normal (pero sutil) */
+.hero-gallery-tabs button,
+.hero-gallery-groups button,
+.reel-sys-tabs .reel-tab{
+  outline: 2px solid color-mix(in srgb, var(--ui-brand) 18%, transparent);
+  outline-offset: 0;
+}
+
+/* hover/focus: efecto fuerte */
+.hero-gallery-tabs button:hover,
+.hero-gallery-groups button:hover,
+.reel-sys-tabs .reel-tab:hover,
+
+.hero-gallery-tabs button:focus-visible,
+.hero-gallery-groups button:focus-visible,
+.reel-sys-tabs .reel-tab:focus-visible{
+  border-color: color-mix(in srgb, var(--ui-brand) 55%, transparent);
+  outline-color: var(--ui-ring);
+  box-shadow: var(--ui-shadow-hi);
+  transform: translateY(-1px);
+}
+
+/* estado “seleccionado” (tu JS ya usa .active) */
+.hero-gallery-tabs button.active,
+.hero-gallery-groups button.active,
+.reel-sys-tabs .reel-tab.active{
+  border-color: color-mix(in srgb, var(--ui-brand) 70%, transparent);
+  outline-color: color-mix(in srgb, var(--ui-brand) 60%, transparent);
+  box-shadow: var(--ui-shadow-hi);
+}
+
+/* imágenes dentro de tabs (más grandes, sin deformar) */
+.reel-sys-tabs .reel-tab img{
+  width: clamp(54px, 4.2vw, 72px);
+  height: clamp(54px, 4.2vw, 72px);
+  object-fit: contain;
+}
+
+/* En servicios tú muestras icono + texto: mejora alineación */
+.reel-sys-tabs .reel-tab span{
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.05;
+  color: var(--text, #0b1220);
+  opacity: .92;
+}
+
+/* Mobile: aún más “tocable” */
+@media (max-width: 520px){
+  .hero-gallery-tabs button,
+  .hero-gallery-groups button,
+  .reel-sys-tabs .reel-tab{
+    min-height:84px;
+    border-radius:18px;
+    padding:14px 14px;
+  }
+  .reel-sys-tabs .reel-tab span{font-size:12.5px}
+}
+
+/* ---------- B) MENOS AIRE EN CARRUSELES (dots pegados, especialmente servicios) ---------- */
+
+/* reduce padding de la tarjeta de reels (evita “vacio” abajo) */
+.reels-home-card .body{
+  padding-bottom: 12px !important;
+}
+
+/* carrusel: que no reserve espacio excesivo debajo */
+.reels-home-card .carousel{
+  margin-bottom: 8px;
+  padding-bottom: 0;
+}
+
+/* nav de dots: que quede “pegado” y centrado, sin blanco extra */
+.reels-home-card .carousel-nav{
+  margin: 10px auto 0 !important;
+  padding: 6px 10px;
+
+  width: fit-content;
+  max-width: 92%;
+  border-radius: 999px;
+
+  /* barra tipo “blur” más limpia */
+  background: color-mix(in srgb, var(--ui-card) 55%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid color-mix(in srgb, var(--ui-brand) 18%, transparent);
+  box-shadow: 0 10px 26px rgba(2,6,23,.10);
+}
+
+/* dots: más compactos (ayuda a que no “empujen” hacia abajo) */
+.reels-home-card .carousel-nav .dot{
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+}
+
+/* ---------- C) HERO tabs/grupos (si son texto) ---------- */
+.hero-gallery-tabs button,
+.hero-gallery-groups button{
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--text, #0b1220);
+  padding: 12px 16px;
+  min-height: 62px; /* en hero suele ser más compacto que tabs con icono */
+}
+
+/* si en tu hero hay demasiada separación vertical */
+.hero-gallery-card{
+  padding-bottom: 10px;
+}
+
