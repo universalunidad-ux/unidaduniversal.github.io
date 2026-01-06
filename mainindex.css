@@ -961,3 +961,170 @@ html[data-theme="light"] .page-index .hero h1 .gradient-word{
 .page-index .hero h1 .gradient-word{mix-blend-mode:normal!important;text-shadow:none!important}
 
 
+/* =========================================================
+   INDEX — HERO FINAL PATCH (DESKTOP FIT + PILLS + IMAGE + BLUR)
+   v2026.01.XX  (PEGA AL FINAL de mainindex.css)
+   Scope: <body class="page-index">
+   Nota: elimina patches previos que vuelvan a tocar estas reglas.
+========================================================= */
+
+/* ---------- A) DESKTOP: que el HERO complete quepa sin scroll ---------- */
+@media (min-width:980px){
+
+  /* reduce aire general del HERO */
+  .page-index .hero .container{
+    padding-top:10px !important;
+    padding-bottom:10px !important;
+  }
+
+  /* el grid del hero usa la altura disponible */
+  .page-index .hero-grid{
+    min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px)) !important;
+    align-items:center !important;
+  }
+
+  /* card derecha: altura elástica con clamp para pantallas de poca altura */
+  .page-index .hero-gallery-card{
+    height:clamp(520px,
+                 calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 18px),
+                 760px) !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  /* ---------- B) Header + Pills: menos “aire” arriba/abajo y mejor altura ---------- */
+  .page-index .hero-gallery-header{
+    padding:10px 16px 6px !important; /* antes muy alto */
+  }
+  .page-index .hero-gallery-header h2{
+    margin:0 !important;
+    line-height:1.15 !important;
+  }
+
+  .page-index #heroGalleryGroups,
+  .page-index .hero-gallery-groups{
+    margin:6px 0 10px !important;     /* sube pills (menos margen arriba) */
+    padding:6px 12px 0 !important;    /* menos padding vertical */
+    gap:10px !important;
+  }
+
+  .page-index .hero-gallery-groups .hero-group-tab{
+    min-height:42px !important;       /* menos alto que 46 */
+    padding:9px 14px !important;      /* más natural */
+    line-height:1 !important;
+  }
+
+  /* ---------- C) Tabs/logo selectors: bajamos altura para que quepan ---------- */
+  .page-index .hero-gallery-tabs{
+    padding:10px 12px 12px !important;
+    gap:10px !important;
+  }
+
+  .page-index .hero-tab{
+    min-height:88px !important;       /* antes 106 => no cabía */
+    padding:12px !important;
+    border-radius:16px !important;
+  }
+  .page-index .hero-tab img{
+    height:46px !important;
+    max-width:170px !important;
+  }
+
+  /* ---------- D) Carrusel: imagen más grande sin recorte (contain) ---------- */
+  .page-index #heroGalleryCarousel{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    position:relative !important;
+    border-radius:18px !important;
+    overflow:hidden !important;
+  }
+
+  .page-index #heroGalleryCarousel .carousel-track{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    height:auto !important;
+    overflow:hidden !important;
+    align-items:stretch !important;
+  }
+
+  .page-index #heroGalleryCarousel .carousel-slide,
+  .page-index #heroGalleryCarousel .hero-slide{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:0 !important;             /* quita el padding que “encogía” la imagen */
+    height:100% !important;
+  }
+
+  .page-index #heroGalleryCarousel .carousel-slide img,
+  .page-index #heroGalleryCarousel .hero-slide img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center !important;
+
+    /* “se ve más grande” sin recortar */
+    max-width:96% !important;
+    max-height:96% !important;
+  }
+
+  /* ---------- E) Blur ambiental “fuera de la imagen” (sin JS) ---------- */
+  .page-index #heroGalleryCarousel::before{
+    content:"";
+    position:absolute;
+    inset:-22px;
+    z-index:0;
+    pointer-events:none;
+
+    /* blur suave con gradientes marca (no depende de la imagen) */
+    background:
+      radial-gradient(600px 320px at 20% 15%, rgba(13,142,144,.22), transparent 60%),
+      radial-gradient(700px 360px at 80% 20%, rgba(218,153,7,.18), transparent 62%),
+      radial-gradient(700px 360px at 55% 90%, rgba(96,165,250,.14), transparent 62%);
+    filter:blur(18px);
+    opacity:.9;
+  }
+
+  /* asegúrate que el contenido quede arriba del blur */
+  .page-index #heroGalleryCarousel > *{
+    position:relative;
+    z-index:1;
+  }
+}
+
+/* ---------- F) Dots del HERO: centrados + barra blur auto-width (todos) ---------- */
+.page-index #heroGalleryCarousel .carousel-nav{
+  position:static !important;
+  width:max-content !important;
+  max-width:calc(100% - 24px) !important;
+  margin:10px auto 12px !important;
+  padding:6px 10px !important;
+  gap:8px !important;
+  border-radius:999px !important;
+  background:rgba(7,10,18,.12) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  justify-content:center !important;
+}
+
+/* ---------- G) “gradient-word” SIEMPRE visible en el H1 del hero ---------- */
+.page-index .hero h1 .gradient-word{
+  --gw-gold:rgba(218,153,7,1);
+  --gw-teal:rgba(13,142,144,1);
+  background:linear-gradient(90deg,var(--gw-gold), color-mix(in srgb, var(--gw-gold) 35%, var(--gw-teal)), var(--gw-teal)) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  color:transparent !important;
+  -webkit-text-fill-color:transparent !important;
+  font-weight:900 !important;
+  opacity:1 !important;
+}
+html[data-theme="light"] .page-index .hero h1 .gradient-word{
+  filter:saturate(1.12) contrast(1.25);
+}
+
