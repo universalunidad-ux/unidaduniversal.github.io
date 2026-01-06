@@ -1089,3 +1089,147 @@ html[data-theme="light"] .page-index .hero h1 .gradient-word{
   background:linear-gradient(180deg, rgba(7,10,18,.25), rgba(7,10,18,.55));
 }
 
+
+/* =========================================================
+   INDEX FIX PACK — HERO recorte/dots + pills shift + Reels servicios gap
+   v2026.01.06-fix1  (PEGA AL FINAL de mainindex.css)
+   Scope: <body class="page-index">
+========================================================= */
+
+/* ---------- 1) HERO: carrusel en columna (imagen arriba, dots abajo) ---------- */
+.page-index #heroGalleryCarousel{
+  /* suele ser tu .carousel del hero */
+  display:flex !important;
+  flex-direction:column !important;
+  position:relative !important;
+  overflow:visible !important; /* el recorte lo hace el track, no el wrapper */
+}
+
+/* El track es el “viewport” real del slide */
+.page-index #heroGalleryCarousel .carousel-track{
+  order:1 !important;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  overflow:hidden !important;         /* recorta SOLO la imagen, no los dots */
+  overscroll-behavior-x:contain;
+}
+
+/* Dots SIEMPRE abajo y en flujo (no sobre la imagen) */
+.page-index #heroGalleryCarousel .carousel-nav{
+  order:2 !important;
+  position:static !important;
+  left:auto !important; right:auto !important; bottom:auto !important;
+  width:max-content !important;
+  max-width:calc(100% - 24px) !important;
+  margin:10px auto 12px !important;
+  padding:6px 10px !important;
+  gap:8px !important;
+  border-radius:999px !important;
+  display:flex !important;
+  justify-content:center !important;
+  pointer-events:auto !important;
+
+  /* barra blur más transparente (tu pedido) */
+  background:rgba(7,10,18,.10) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+/* dots más compactos para que no “roben” alto */
+.page-index #heroGalleryCarousel .carousel-nav .dot{
+  width:10px !important;
+  height:10px !important;
+  margin:0 !important;
+  border-radius:999px !important;
+}
+
+/* Si por alguna razón te queda un .carousel-nav duplicado dentro del slide, lo apagamos */
+.page-index #heroGalleryCarousel .carousel-slide .carousel-nav,
+.page-index #heroGalleryCarousel .hero-slide .carousel-nav{
+  display:none !important;
+}
+
+/* ---------- 2) HERO: evita “se mueve de lado” al activar pills ---------- */
+/* (a) que el activo NO cambie tamaño: mismo border width siempre */
+.page-index .hero-group-tab{
+  border-width:1px !important; /* fijo */
+}
+
+/* (b) quita animación de scroll horizontal del contenedor de pills (se siente “brinco”) */
+.page-index #heroGalleryGroups,
+.page-index .hero-gallery-groups{
+  scroll-behavior:auto !important;
+}
+
+/* (c) evita micro scroll horizontal del layout por overflow accidental */
+.page-index{ overflow-x:hidden; }
+.page-index .hero,
+.page-index .hero .container{ overflow-x:hidden; }
+
+/* ---------- 3) HERO: imagen sin “recorte raro” por padding/altura ---------- */
+@media(min-width:980px){
+  .page-index #heroGalleryCarousel .carousel-slide,
+  .page-index #heroGalleryCarousel .hero-slide{
+    padding:0 !important;
+    align-items:stretch !important;
+    justify-content:stretch !important;
+  }
+  .page-index #heroGalleryCarousel .carousel-slide img,
+  .page-index #heroGalleryCarousel .hero-slide img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;   /* si quieres 0 recorte, cambia a contain */
+    object-position:center !important;
+    display:block !important;
+  }
+}
+
+/* ---------- 4) Reels SERVICIOS: elimina “aire blanco” debajo del reel ---------- */
+/* La idea: NO estirar el carrusel a “alto de pantalla”; que mida lo que mide el reel */
+.page-index #servicios #carouselReels-servicios{
+  display:flex !important;
+  flex-direction:column !important;
+  overflow:hidden !important;
+}
+
+/* Track sin min-height global del carousel base */
+.page-index #servicios #carouselReels-servicios .carousel-track{
+  min-height:unset !important;
+  height:auto !important;
+  overflow:hidden !important;
+  align-items:flex-start !important;  /* NO centrar vertical => no deja hueco abajo */
+}
+
+/* Slide también arriba, con padding inferior mínimo */
+.page-index #servicios #carouselReels-servicios .carousel-slide{
+  align-items:flex-start !important;
+  justify-content:flex-start !important;
+  padding:12px 12px 6px !important;
+}
+
+/* El reel define la altura real; ajusta clamp si quieres más chico */
+.page-index #servicios #carouselReels-servicios .reel-embed{
+  margin:0 auto !important;
+  height:clamp(var(--reel-h-min), var(--reel-h-mid), var(--reel-h-max)) !important;
+}
+
+/* Dots del carrusel de servicios pegados al reel (sin “colchón” blanco) */
+.page-index #servicios #carouselReels-servicios .carousel-nav{
+  margin:8px auto 0 !important;
+  background:rgba(7,10,18,.08) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+}
+
+/* ---------- 5) Light mode: barra de dots visible y limpia ---------- */
+html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav,
+html[data-theme="light"] .page-index #servicios #carouselReels-servicios .carousel-nav{
+  background:rgba(255,255,255,.45) !important;
+  border:1px solid rgba(2,6,23,.10) !important;
+}
+html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav .dot,
+html[data-theme="light"] .page-index #servicios #carouselReels-servicios .carousel-nav .dot{
+  border:1px solid rgba(2,6,23,.18) !important;
+  background:rgba(2,6,23,.14) !important;
+}
+
