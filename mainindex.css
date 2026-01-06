@@ -276,6 +276,31 @@
 @media(max-width:980px){.page-index .arrowCircle{display:none}}
 @media(max-width:980px){.page-index .hero .arrowCircle{display:flex}} /* hero sí */
 
+/* =========================
+   8) HERO Carousel: dots abajo + contain (sin recorte)
+========================= */
+.page-index #heroGalleryCarousel{background:transparent!important;border-color:rgba(255,255,255,.10)!important}
+.page-index #heroGalleryCarousel.carousel{display:flex!important;flex-direction:column!important;overflow:visible!important}
+.page-index #heroGalleryCarousel .carousel-track{
+  flex:1 1 auto!important;min-height:0!important;height:100%!important;overflow:hidden!important
+}
+.page-index #heroGalleryCarousel .carousel-slide{
+  height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important
+}
+.page-index #heroGalleryCarousel .hero-slide img{
+  width:100%!important;height:100%!important;display:block!important;
+  object-fit:contain!important;object-position:center!important;background:transparent!important
+}
+/* dots abajo, blur más transparente y ancho según dots */
+.page-index #heroGalleryCarousel .carousel-nav{
+  position:static!important;width:max-content!important;max-width:calc(100% - 24px)!important;
+  margin:10px auto 12px!important;padding:6px 10px!important;gap:8px!important;border-radius:999px!important;
+  background:rgba(7,10,18,.14)!important;border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  pointer-events:auto!important;justify-content:center!important
+}
+.page-index #heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
+@media(min-width:981px){.page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}}
 
 /* =========================
    9) Productos: barra + tabs + grid + CTA abajo
@@ -665,571 +690,303 @@
   .page-index #servicios.section-full{padding:22px 0!important}
 }
 
+/* ===== PATCH v2026.01.XX — HERO full-height + contraste + gradiente ExpIRI ===== */
 
-
-/* =========================================================
-   Expiriti — INDEX PATCH PACK (MIN) v2026.01.XX
-   - HERO full-height real (sin recortes en móvil)
-   - Contraste global (evita blanco sobre blanco)
-   - Gradiente ExpIRI en títulos
-   - Dots centrados + barra blur auto-width
-   - Tiles “card” (hero + reels) con look premium
-   - Reels Servicios: elimina hueco inferior
-   - Rounded UX: “nada rectangular”
-   - Light mode: contraste + placas para logos claros
-   INSTRUCCIONES:
-   1) Pega AL FINAL de mainindex.css (todo lo .page-index)
-   2) Pega AL FINAL de theme.css (bloque LIGHT GLOBAL)
-========================================================= */
-
-/* ========== A) INDEX (mainindex.css) ========== */
-.page-index{color:var(--text,#e8eef6);--exp-yellow:#f6c445;--exp-teal:#25c7b8;--exp-red:#ff4d6d;--r-sm:12px;--r-md:16px;--r-lg:18px;--r-xl:22px;--tile-ring:rgba(45,212,191,.22);--tile-ring-hi:rgba(45,212,191,.46);--tile-bd:rgba(255,255,255,.16);--tile-bd-hi:rgba(45,212,191,.55);--tile-bg:rgba(255,255,255,.05);--tile-bg-hi:rgba(45,212,191,.12);--tile-shadow:0 10px 26px rgba(0,0,0,.16);--tile-shadow-hi:0 16px 38px rgba(0,0,0,.22);background:radial-gradient(1200px 600px at 20% 0%,rgba(45,212,191,.10),transparent 60%),radial-gradient(1000px 560px at 80% 10%,rgba(96,165,250,.10),transparent 60%),linear-gradient(180deg,#070b12,#060913)}
-/* Gradiente ExpIRI utilitario + auto en títulos de sección */
-.page-index .expiriti-gradient,.page-index .section-title h2,.page-index #productos-con .prod-title,.page-index #servicios .section-title h2,.page-index #promociones .section-title h2,.page-index #faq .section-title h2{background:linear-gradient(90deg,var(--exp-yellow),var(--exp-teal),var(--exp-red));-webkit-background-clip:text;background-clip:text;color:transparent}
-/* FIX “gradient-word” visible (dark+light) */
-.page-index .gradient-word{background:linear-gradient(90deg,var(--brand),var(--brand-2))!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;font-weight:900}
-html[data-theme="light"] .page-index .gradient-word{filter:saturate(1.15) contrast(1.18)}
-/* HERO full-height real (dvh/svh) */
-.page-index .hero{min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px))}
-@supports not (height:100dvh){.page-index .hero{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))}}
-/* Card derecha: móvil sin height fijo (evita recortes) */
-.page-index .hero-gallery-card{height:auto!important;min-height:unset!important;overflow:visible!important;display:flex;flex-direction:column;padding-bottom:10px}
-@media(min-width:980px){.page-index .hero-gallery-card{height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 14px)!important;min-height:560px!important;overflow:hidden!important}}
-/* Layout interno hero card */
-.page-index #heroGalleryGroups,.page-index #heroGalleryTabs{flex:0 0 auto}
-.page-index #heroGalleryCarousel{flex:1 1 auto;min-height:240px;display:flex;flex-direction:column;position:relative}
-.page-index #heroGalleryCarousel .carousel-track{flex:1 1 auto;min-height:0;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory}
-/* Dots HERO (neutraliza absolute/left) */
-.page-index #heroGalleryCarousel .carousel-nav{position:static!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;border-radius:999px!important;background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);left:auto!important;right:auto!important;transform:none!important;text-align:center!important}
-.page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important;margin:0!important;border-radius:999px!important}
-/* Mobile: reduce padding hero para que quepa TODO */
-@media(max-width:520px){.page-index .hero .container{padding-top:10px!important;padding-bottom:10px!important}.page-index .hero-gallery-tabs{padding:10px 10px 12px!important;gap:10px!important}.page-index .hero-tab{min-height:78px!important;padding:12px!important}.page-index .hero-tab img{height:44px!important}}
-/* Rounded UX: “nada rectangular” */
-.page-index .card,.page-index .promo-item,.page-index .faq-item,.page-index .map-embed,.page-index .carousel,.page-index .reel-embed{border-radius:var(--r-xl)!important;overflow:hidden}
-.page-index .btn,.page-index .badge,.page-index .prod-tabs .tab,.page-index .hero-group-tab,.page-index .hero-tab,.page-index .reel-tab,.page-index input,.page-index select,.page-index textarea{border-radius:999px}
-.page-index .hero-tab,.page-index .reel-tab{border-radius:var(--r-lg)!important}
-.page-index input,.page-index select,.page-index textarea{border-radius:var(--r-md)!important}
-.page-index .btn{border-radius:var(--r-md)!important}
-/* TILES premium (look hover siempre): hero groups + hero tabs + reels tabs */
-.page-index .hero-gallery-groups .hero-group-tab,.page-index .hero-gallery-tabs .hero-tab,.page-index .reel-sys-tabs .reel-tab{border:1px solid var(--tile-bd)!important;background:var(--tile-bg)!important;box-shadow:var(--tile-shadow)!important;outline:2px solid var(--tile-ring)!important;outline-offset:0!important;transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease,background .14s ease,outline-color .14s ease}
-.page-index .hero-gallery-groups .hero-group-tab{min-height:46px!important;padding:10px 14px!important;font-weight:900!important}
-.page-index .hero-gallery-tabs .hero-tab{min-height:106px!important;padding:16px!important}
-.page-index .reel-sys-tabs .reel-tab{min-height:96px!important;padding:14px 12px!important}
-@media(hover:hover){.page-index .hero-gallery-groups .hero-group-tab:hover,.page-index .hero-gallery-tabs .hero-tab:hover,.page-index .reel-sys-tabs .reel-tab:hover{border-color:var(--tile-bd-hi)!important;background:var(--tile-bg-hi)!important;outline-color:var(--tile-ring-hi)!important;box-shadow:var(--tile-shadow-hi)!important;transform:translateY(-1px)}}
-.page-index .hero-gallery-groups .hero-group-tab.active,.page-index .hero-gallery-tabs .hero-tab.active,.page-index .reel-sys-tabs .reel-tab.active{border-color:var(--tile-bd-hi)!important;background:var(--tile-bg-hi)!important;outline-color:var(--tile-ring-hi)!important;box-shadow:var(--tile-shadow-hi)!important}
-/* Logos dentro de tiles (sin “capa blanca”) */
-.page-index .hero-gallery-tabs .hero-tab img,.page-index .reel-sys-tabs .reel-tab img{background:transparent!important;border:0!important;box-shadow:none!important;filter:none!important;object-fit:contain!important}
-/* Dots: regla base para TODOS los carousels del index (centrado + auto-width) */
-.page-index .carousel .carousel-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;border-radius:999px!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;left:auto!important;right:auto!important;transform:none!important}
-.page-index .carousel .carousel-nav .dot{width:11px!important;height:11px!important;border-radius:999px!important;margin:0!important}
-/* Reels Servicios: elimina hueco (track/slide top + dots pegados) */
-.page-index #servicios #carouselReels-servicios{overflow:hidden!important}
-.page-index #servicios #carouselReels-servicios .carousel-track{min-height:0!important;height:auto!important;overflow:hidden!important;align-items:flex-start!important}
-.page-index #servicios #carouselReels-servicios .carousel-slide{padding:12px 12px 6px!important;align-items:flex-start!important}
-.page-index #servicios .reel-embed{height:clamp(320px,56svh,720px)!important;margin:0 auto!important}
-.page-index #servicios #carouselReels-servicios .carousel-nav{margin:8px auto 0!important;padding:6px 10px!important;width:max-content!important;max-width:calc(100% - 24px)!important;background:rgba(7,10,18,.10)!important;border:1px solid rgba(255,255,255,.10)!important}
-.page-index #servicios #carouselReels-servicios .carousel-nav .dot{width:10px!important;height:10px!important}
-/* Reels cards: menos aire inferior */
-.page-index .reels-home-card .body{padding-bottom:12px!important}
-.page-index .reels-home-card .carousel{margin-bottom:8px!important;padding-bottom:0!important}
-/* Tabs productos: evita “mordidas” en extremos */
-.page-index .prod-tabs-shell{overflow:visible!important}
-.page-index .prod-tabs{padding:8px 12px!important;margin:0!important;scroll-padding-left:12px;scroll-padding-right:12px}
-/* Promos: botones marca */
-.page-index #promociones .promo-filters{gap:10px}
-.page-index #promociones .promo-btn{font-weight:950;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06)}
-.page-index #promociones .promo-btn.active{border-color:rgba(45,212,191,.55)!important;background:linear-gradient(90deg,rgba(45,212,191,.22),rgba(96,165,250,.18))!important}
-/* FAQ: ancho completo + justificado */
-.page-index #faq .faq-item p{max-width:none!important;width:100%!important;text-align:justify;text-justify:inter-word;hyphens:auto}
-@media(max-width:520px){.page-index #faq .faq-item p{text-align:left;hyphens:none}}
-/* Contacto: menos alto + mapa más bajo en desktop */
-.page-index #contacto{padding-top:18px;padding-bottom:18px}
-.page-index #contacto .lead{margin-bottom:10px}
-.page-index #contacto textarea{min-height:96px}
-.page-index #contacto .map-card{padding:14px!important}
-.page-index #contacto .map-embed{border-radius:16px;overflow:hidden}
-@media(min-width:980px){.page-index #contacto .map-embed{min-height:280px}}
-
-/* Light: barra dots + tabs/promos contraste (scopeado al INDEX) */
-html[data-theme="light"] .page-index .carousel .carousel-nav{background:rgba(255,255,255,.55)!important;border:1px solid rgba(2,6,23,.10)!important}
-html[data-theme="light"] .page-index .carousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.18)!important;background:rgba(2,6,23,.16)!important}
-html[data-theme="light"] .page-index .carousel .carousel-nav .dot.active{background:rgba(45,212,191,.95)!important;border-color:rgba(45,212,191,.95)!important}
-html[data-theme="light"] .page-index #promociones .promo-btn{background:#fff!important;border-color:#cbd5e1!important;color:#334155!important}
-html[data-theme="light"] .page-index #promociones .promo-btn.active{background:rgba(45,212,191,.18)!important;border-color:#0d9488!important;color:#0b1220!important}
-html[data-theme="light"] .page-index .prod-tabs .tab{background:#f8fafc;border-color:#cbd5e1;color:#334155;box-shadow:0 2px 4px rgba(0,0,0,.05)}
-html[data-theme="light"] .page-index .prod-tabs .tab.active{background:#eff6ff;border-color:#3b82f6;color:#0b1220}
-
-/* ========== B) LIGHT GLOBAL (theme.css) ========== */
-/* Pegar AL FINAL de theme.css */
-html[data-theme="light"]{background:radial-gradient(1200px 800px at 20% 0%,rgba(45,212,191,.14),transparent 55%),radial-gradient(900px 700px at 90% 15%,rgba(96,165,250,.14),transparent 55%),linear-gradient(180deg,#f6f8fc 0%,#eef3fb 70%,#f6f8fc 100%)}
-html[data-theme="light"] body{background:transparent!important;color:var(--text)}
-html[data-theme="light"] h1,html[data-theme="light"] h2,html[data-theme="light"] h3,html[data-theme="light"] .title,html[data-theme="light"] .section-title{color:#0b1220!important}
-html[data-theme="light"] p,html[data-theme="light"] .lead,html[data-theme="light"] .muted,html[data-theme="light"] .hint{color:#334155!important}
-html[data-theme="light"] .title-gradient{-webkit-text-fill-color:initial;color:#0b1220!important;text-shadow:0 1px 0 rgba(255,255,255,.7)}
-html[data-theme="light"] .card,html[data-theme="light"] .panel,html[data-theme="light"] .box,html[data-theme="light"] .surface{background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;box-shadow:0 12px 28px rgba(2,6,23,.10)!important}
-html[data-theme="light"] .card.body{background:rgba(255,255,255,.92)!important}
-html[data-theme="light"] .badge,html[data-theme="light"] .pill,html[data-theme="light"] .tabs button,html[data-theme="light"] .chips button{background:rgba(2,6,23,.06)!important;color:#0b1220!important;border:1px solid rgba(2,6,23,.10)!important}
-html[data-theme="light"] .tabs button.active,html[data-theme="light"] .chips button.active,html[data-theme="light"] .pill.active{background:rgba(45,212,191,.18)!important;border-color:rgba(45,212,191,.45)!important;color:#0b1220!important}
-html[data-theme="light"] .btn,html[data-theme="light"] button.btn,html[data-theme="light"] a.btn{background:#0b1220!important;color:#fff!important;border:1px solid rgba(2,6,23,.18)!important}
-html[data-theme="light"] .btn.ghost,html[data-theme="light"] .btn-outline{background:transparent!important;color:#0b1220!important;border:1px solid rgba(2,6,23,.18)!important}
-html[data-theme="light"] .hero,html[data-theme="light"] .hero .hero-bg,html[data-theme="light"] .hero .overlay{background:transparent!important}
-html[data-theme="light"] .hero .kicker,html[data-theme="light"] .hero .sub,html[data-theme="light"] .hero .tagline{color:#334155!important}
-html[data-theme="light"] .carousel,html[data-theme="light"] .carouselFrame,html[data-theme="light"] .reels,html[data-theme="light"] .yt-shell{background:rgba(2,6,23,.04)!important;border:1px solid rgba(2,6,23,.10)!important;box-shadow:0 14px 34px rgba(2,6,23,.12)!important}
-html[data-theme="light"] .carousel .arrow,html[data-theme="light"] .carousel .arrowCircle{background:rgba(255,255,255,.78)!important;border:1px solid rgba(2,6,23,.12)!important;color:#0b1220!important}
-/* Logos claros: placa + drop-shadow */
-html[data-theme="light"] .sys-card,html[data-theme="light"] .svc-card{background:#fff!important}
-html[data-theme="light"] .sys-card .logo,html[data-theme="light"] .svc-card .logo,html[data-theme="light"] .sys-card img,html[data-theme="light"] .svc-card img{filter:drop-shadow(0 2px 10px rgba(2,6,23,.10))}
-html[data-theme="light"] .sys-card .logo-wrap,html[data-theme="light"] .svc-card .logo-wrap{background:rgba(96,165,250,.10);border:1px solid rgba(2,6,23,.08);border-radius:16px;padding:12px}
-html[data-theme="light"] .sys-card .media,html[data-theme="light"] .svc-card .media{background:rgba(96,165,250,.08)!important;border:1px solid rgba(2,6,23,.08)!important;border-radius:16px!important}
-/* Promos en light */
-html[data-theme="light"] #promociones,html[data-theme="light"] .promos,html[data-theme="light"] .promos-wrap{background:transparent!important}
-html[data-theme="light"] .promo-card{background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;box-shadow:0 16px 36px rgba(2,6,23,.12)!important}
-html[data-theme="light"] .promo-card img{background:#fff}
-html[data-theme="light"] .section,html[data-theme="light"] section{color:#0b1220}
-
-
-/* =========================================================
-   INDEX PATCH — FIX LIGHT VISIBILITY + WIDTH 80% + SPACING
-   v2026.01.XX (PEGA AL FINAL de mainindex.css)
-   Objetivo:
-   - En LIGHT: que se vean pills del HERO + textos (#sectores, reels title)
-   - Layout: 80% en desktop (centrado)
-   - Menos espacio entre secciones
-   - Gradiente títulos con tus tonos (gold + teal)
-========================================================= */
-
-/* 1) Ancho 80% en desktop (sin romper mobile) */
-@media(min-width:980px){
-  .page-index .container,
-  .page-index main.container{
-    max-width:80vw !important;
-    margin-left:auto;margin-right:auto;
-  }
-}
-
-/* 2) Reduce “margen/aire” entre #sectores y lo que sigue */
-.page-index #sectores{padding-top:12px!important;padding-bottom:10px!important}
-.page-index #sectores .container{gap:14px!important}
-.page-index #sectores + *{margin-top:10px!important}
-.page-index .reels-home-card{margin-top:12px!important}
-
-/* 3) Tus colores de marca para gradientes de título (gold -> teal) */
+/* 1) Contraste global del index: evita “texto blanco sobre fondo blanco” */
 .page-index{
-  --exp-gold:rgba(218,153,7,1);
-  --exp-teal:rgba(13,142,144,1);
-  --exp-grad:linear-gradient(90deg,var(--exp-gold),color-mix(in srgb,var(--exp-gold) 35%, var(--exp-teal)),var(--exp-teal));
+  color:var(--text,#e8eef6); /* fuerza color texto */
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(45,212,191,.10), transparent 60%),
+    radial-gradient(1000px 560px at 80% 10%, rgba(96,165,250,.10), transparent 60%),
+    linear-gradient(180deg, #070b12, #060913); /* fondo oscuro estable */
 }
-.page-index .expiriti-gradient,
+
+/* 2) Variables de gradiente del logo ExpIRI TI (ajusta si quieres tonos exactos) */
+.page-index{
+  --exp-yellow:#f6c445;
+  --exp-teal:#25c7b8;
+  --exp-red:#ff4d6d;
+}
+
+/* 3) Clase utilitaria para títulos con gradiente ExpIRI */
+.page-index .expiriti-gradient{
+  background:linear-gradient(90deg,var(--exp-yellow),var(--exp-teal),var(--exp-red));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* Si quieres que TODOS los títulos de sección del index lo usen automáticamente: */
 .page-index .section-title h2,
-.page-index #sectores h3,
-.page-index .reels-home-card h3.title-gradient{
-  background:var(--exp-grad)!important;
-  -webkit-background-clip:text!important;background-clip:text!important;
-  color:transparent!important;-webkit-text-fill-color:transparent!important;
+.page-index #productos-con .prod-title,
+.page-index #servicios .section-title h2,
+.page-index #promociones .section-title h2,
+.page-index #faq .section-title h2{
+  background:linear-gradient(90deg,var(--exp-yellow),var(--exp-teal),var(--exp-red));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
-/* 4) FIX LIGHT: textos lavados (listas/features y headings dentro de cards) */
-html[data-theme="light"] .page-index #sectores .card{background:#fff!important}
-html[data-theme="light"] .page-index #sectores h3{color:#0b1220!important;-webkit-text-fill-color:initial!important}
-html[data-theme="light"] .page-index #sectores .features,
-html[data-theme="light"] .page-index #sectores .features li{
-  color:#0f172a!important;
-  opacity:1!important;
+/* 4) HERO: alto real + evitar recortes por min-height/height rígidos */
+.page-index .hero{
+  min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px));
 }
-html[data-theme="light"] .page-index #sectores .features li{line-height:1.35}
-html[data-theme="light"] .page-index #sectores .features li::marker{color:rgba(13,142,144,.95)}
-
-/* 5) FIX LIGHT: “Reels de servicios…” se pierde */
-html[data-theme="light"] .page-index .reels-home-card h3,
-html[data-theme="light"] .page-index .reels-home-card .reel-title{
-  color:#0b1220!important;
-  opacity:1!important;
+@supports not (height:100dvh){
+  .page-index .hero{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))}
 }
 
-/* 6) FIX LIGHT: Pills/Tabs del HERO (Contables/Comerciales/En la Nube/…) */
-html[data-theme="light"] .page-index .hero-gallery-groups button,
-html[data-theme="light"] .page-index .hero-group-tab,
-html[data-theme="light"] .page-index .hero-gallery-groups .hero-group-tab{
-  color:#0b1220!important;
-  background:rgba(255,255,255,.92)!important;
-  border:1px solid rgba(2,6,23,.14)!important;
-  box-shadow:0 10px 26px rgba(2,6,23,.10)!important;
-  opacity:1!important;
-}
-html[data-theme="light"] .page-index .hero-gallery-groups button.active,
-html[data-theme="light"] .page-index .hero-group-tab.active{
-  background:rgba(13,142,144,.12)!important;
-  border-color:rgba(13,142,144,.45)!important;
-  color:#062b2c!important;
+/* 5) Card derecha: NO fuerces height fija en móvil (evita que “desaparezcan” tabs) */
+.page-index .hero-gallery-card{
+  height:auto !important;        /* deja que crezca en móvil */
+  min-height:unset !important;   /* quita el 480/560 que causa overflow/corte */
+  overflow:visible !important;   /* evita recorte de elementos (tabs, dots) */
 }
 
-/* 7) FIX LIGHT: tabs de servicios (Pólizas/Implementaciones/…) texto visible */
-html[data-theme="light"] .page-index .reel-sys-tabs .reel-tab span{
-  color:#0f172a!important;
-  opacity:1!important;
-  font-weight:900!important;
-}
-
-/* 8) Si algún global te baja opacidad en “cards” o “features”, lo neutralizamos */
-html[data-theme="light"] .page-index .card,
-html[data-theme="light"] .page-index .card *{opacity:1}
-
-
-/* =========================================================
-   INDEX PATCH — HERO pills spacing (ALL) + HERO image (DESKTOP ONLY)
-   v2026.01.XX  (PEGA AL FINAL de mainindex.css)
-========================================================= */
-
-/* 1) Subir pills y quitar “aire” entre “Conoce más…” y tabs (ALL) */
-.page-index .hero-gallery-card>h3,
-.page-index .hero-gallery-card .hero-gallery-title{margin-bottom:6px!important}
-.page-index #heroGalleryGroups,
-.page-index .hero-gallery-groups{margin-top:6px!important;padding-top:0!important;padding-bottom:8px!important}
-.page-index #heroGalleryGroups{gap:10px!important}
-.page-index .hero-gallery-card{padding-top:14px!important}
-@media(min-width:980px){.page-index .hero-gallery-card{padding-top:16px!important}}
-
-/* 2) Hero image “como mobile” pero SOLO en DESKTOP (no toca mobile) */
+/* En desktop sí puedes mantener un alto “bonito”, pero sin romper contenido */
 @media(min-width:980px){
-  .page-index #heroGalleryCarousel .carousel-track{align-items:stretch!important}
-  .page-index #heroGalleryCarousel .hero-slide,
-  .page-index #heroGalleryCarousel .carousel-slide{
-    display:flex!important;align-items:center!important;justify-content:center!important;
-    padding:10px!important;
-  }
-  .page-index #heroGalleryCarousel .hero-slide img,
-  .page-index #heroGalleryCarousel{min-height:520px!important} /* ajustable */
-}
-
-/* =========================================================
-   INDEX FIX — gradient-word visible en HERO H1 (dark + light)
-   v2026.01.XX (PEGA AL FINAL de mainindex.css)
-========================================================= */
-
-/* 1) Fuerza gradiente SOLO en el H1 del hero (tu caso exacto) */
-.page-index .hero h1 .gradient-word{
-  --gw-gold:rgba(218,153,7,1);
-  --gw-teal:rgba(13,142,144,1);
-  background:linear-gradient(90deg,var(--gw-gold),color-mix(in srgb,var(--gw-gold) 35%, var(--gw-teal)),var(--gw-teal))!important;
-  -webkit-background-clip:text!important;
-  background-clip:text!important;
-  color:transparent!important;
-  -webkit-text-fill-color:transparent!important;
-  font-weight:900!important;
-  opacity:1!important;
-  display:inline; /* evita rarezas de layout */
-}
-
-/* 2) Light: súbele contraste (sin cambiar colores) */
-html[data-theme="light"] .page-index .hero h1 .gradient-word{
-  filter:saturate(1.15) contrast(1.30);
-}
-
-/* 3) Si algún global te mete “text-fill” o color en spans dentro de h1, lo anulamos */
-.page-index .hero h1 .gradient-word{mix-blend-mode:normal!important;text-shadow:none!important}
-
-/* =========================================================
-   HERO FIX — arrows + image fill (no aire) + blur from active image
-   v2026.01.XX  (PEGA AL FINAL de mainindex.css)
-   Scope: <body class="page-index">
-========================================================= */
-
-/* A) Flechas SIEMPRE centradas y encima */
-.page-index #heroGalleryCarousel{position:relative!important}
-.page-index #heroGalleryCarousel .arrowCircle{
-  position:absolute!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
-  z-index:10!important;
-}
-.page-index #heroGalleryCarousel .arrowCircle.prev{left:12px!important}
-.page-index #heroGalleryCarousel .arrowCircle.next{right:12px!important}
-
-/* IMPORTANTE: si traes un patch que hace #heroGalleryCarousel > * { position:relative } lo anulamos */
-.page-index #heroGalleryCarousel > .arrowCircle{position:absolute!important}
-
-/* B) Imagen: LLENA el área (sin aire) => cover (desktop) */
-@media(min-width:980px){
-  .page-index #heroGalleryCarousel .carousel-track{
-    position:relative!important;
-    z-index:2!important;
-    overflow:hidden!important;
-  }
-  .page-index #heroGalleryCarousel .carousel-slide,
-  .page-index #heroGalleryCarousel .hero-slide{
-    height:100%!important;
-    padding:0!important;
-    display:flex!important;
-    align-items:stretch!important;
-    justify-content:stretch!important;
-  }
-  .page-index #heroGalleryCarousel .carousel-slide img,
-  .page-index #heroGalleryCarousel .hero-slide img{
-    width:100%!important;
-    height:100%!important;
-    object-fit:cover!important;          /* <- sin aire (puede recortar un poco) */
-    object-position:center!important;
-    max-width:none!important;
-    max-height:none!important;
-    display:block!important;
+  .page-index .hero-gallery-card{
+    height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 14px) !important;
+    min-height:560px !important;
+    overflow:hidden !important; /* desktop OK */
   }
 }
 
-/* C) Blur “de la imagen actual” usando variable CSS --hero-blur */
-.page-index #heroGalleryCarousel::before{
-  content:"";
-  position:absolute;
-  inset:-22px;
-  z-index:0;
-  pointer-events:none;
+/* 6) Layout interno de la card: header + groups + carousel (flex) + tabs */
+.page-index .hero-gallery-card{
+  display:flex;flex-direction:column;
+}
+.page-index #heroGalleryGroups{flex:0 0 auto;}
+.page-index #heroGalleryTabs{flex:0 0 auto;}
 
-  /* la imagen la pone JS en --hero-blur */
-  background-image:var(--hero-blur, none);
-  background-size:cover;
-  background-position:center;
-  filter:blur(22px);
-  transform:scale(1.08);
-  opacity:.55;
+/* 7) HERO Carousel: ocupa el espacio disponible, sin “height:100%” que colapsa */
+.page-index #heroGalleryCarousel{
+  flex:1 1 auto;min-height:240px;
+  display:flex;flex-direction:column;
+}
+.page-index #heroGalleryCarousel .carousel-track{
+  flex:1 1 auto;min-height:0;    /* clave para que flex no colapse */
+  overflow-x:auto !important;    /* vuelve a permitir scroll horizontal */
+  overflow-y:hidden !important;
+  scroll-snap-type:x mandatory;
 }
 
-/* capa para que el blur no “ensucie” demasiado */
-.page-index #heroGalleryCarousel::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-  background:linear-gradient(180deg, rgba(7,10,18,.25), rgba(7,10,18,.55));
+/* 8) Imagen hero: contain para que se vea completa */
+.page-index #heroGalleryCarousel .hero-slide img{
+  width:100%;height:100%;
+  object-fit:contain;object-position:center;
+  background:transparent;
 }
 
-/* el contenido arriba del blur */
-.page-index #heroGalleryCarousel .carousel-track{z-index:2!important}
-.page-index #heroGalleryCarousel .carousel-nav{z-index:3!important}
-.page-index #heroGalleryCarousel .arrowCircle{z-index:4!important}
-
-
-/* =========================================================
-   HERO FINAL — arrows OK + dots abajo + cover desktop + blur src var
-   v2026.01.06
-========================================================= */
-
-/* 0) Asegura stacking correcto del hero carousel */
-.page-index #heroGalleryCarousel{position:relative!important; overflow:visible!important}
-.page-index #heroGalleryCarousel .carousel-track{position:relative!important; z-index:2!important}
-.page-index #heroGalleryCarousel .carousel-nav{position:static!important; z-index:3!important}
-.page-index #heroGalleryCarousel .arrowCircle{z-index:4!important}
-
-/* 1) Flechas SIEMPRE absolutas y centradas */
-.page-index #heroGalleryCarousel .arrowCircle{
-  position:absolute!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
-}
-.page-index #heroGalleryCarousel .arrowCircle.prev{left:12px!important}
-.page-index #heroGalleryCarousel .arrowCircle.next{right:12px!important}
-
-/* 2) Dots abajo, centrados, ancho según cantidad */
+/* 9) Dots: visibles siempre (sin recorte) */
 .page-index #heroGalleryCarousel .carousel-nav{
+  flex:0 0 auto;
+  margin:10px auto 12px;
+}
+
+/* 10) Ajuste extra móvil: reduce padding para que quepa TODO el hero */
+@media(max-width:520px){
+  .page-index .hero .container{padding-top:10px !important;padding-bottom:10px !important;}
+  .page-index .hero-gallery-tabs{padding:10px 10px 12px !important;gap:10px !important;}
+  .page-index .hero-tab{min-height:78px !important;padding:12px !important;}
+  .page-index .hero-tab img{height:44px !important;}
+}
+
+
+
+
+
+/* =========================================================
+   INDEX FINAL PATCH — clean overrides (v2026.01.05-final)
+   Scope: <body class="page-index">
+   Objetivo:
+   - UX redondeado consistente (sin “rectángulos duros”)
+   - Dots centrados + ancho auto (según cantidad)
+   - Reels Servicios: quitar “hueco blanco”
+   - TILES (Hero + Reels tabs): look limpio tipo “hero”
+   - Light: dots del index con buena legibilidad
+========================================================= */
+
+/* ---------- 0) Radios consistentes ---------- */
+.page-index{
+  --r-sm:12px;
+  --r-md:16px;
+  --r-lg:18px;
+  --r-xl:22px;
+
+  /* tokens tiles (fallbacks seguros) */
+  --tile-bd: rgba(255,255,255,.14);
+  --tile-bd-hi: rgba(96,165,250,.42);
+  --tile-bg: rgba(255,255,255,.03);
+  --tile-bg-hi: rgba(96,165,250,.10);
+  --tile-ring: rgba(96,165,250,.16);
+  --tile-ring-hi: rgba(96,165,250,.30);
+  --tile-shadow: 0 10px 26px rgba(0,0,0,.16);
+  --tile-shadow-hi: 0 16px 38px rgba(0,0,0,.22);
+}
+
+/* ---------- 1) “Nada rectangular”: superficies redondeadas ---------- */
+.page-index .card,
+.page-index .promo-item,
+.page-index .faq-item,
+.page-index .map-embed,
+.page-index .carousel,
+.page-index .reel-embed{
+  border-radius:var(--r-xl)!important;
+  overflow:hidden;
+}
+
+/* Pills/botones/input (premium, no tan “pastilla” extrema) */
+.page-index .btn{border-radius:var(--r-md)!important}
+.page-index input,
+.page-index select,
+.page-index textarea{border-radius:var(--r-md)!important}
+
+/* Tiles (logos) como tarjeta redondeada */
+.page-index .hero-tab,
+.page-index .reel-tab{border-radius:var(--r-lg)!important}
+
+/* ---------- 2) TILES: Hero groups + Hero tabs + Reels tabs (look limpio) ---------- */
+.page-index .hero-gallery-groups .hero-group-tab,
+.page-index .hero-gallery-tabs .hero-tab,
+.page-index .reel-sys-tabs .reel-tab{
+  border:1px solid var(--tile-bd)!important;
+  background:var(--tile-bg)!important;
+  box-shadow:var(--tile-shadow)!important;
+  outline:2px solid var(--tile-ring)!important;
+  outline-offset:0!important;
+  transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease, outline-color .14s ease;
+}
+
+@media(hover:hover){
+  .page-index .hero-gallery-groups .hero-group-tab:hover,
+  .page-index .hero-gallery-tabs .hero-tab:hover,
+  .page-index .reel-sys-tabs .reel-tab:hover{
+    border-color:var(--tile-bd-hi)!important;
+    background:var(--tile-bg-hi)!important;
+    outline-color:var(--tile-ring-hi)!important;
+    box-shadow:var(--tile-shadow-hi)!important;
+    transform:translateY(-1px);
+  }
+}
+
+.page-index .hero-gallery-groups .hero-group-tab.active,
+.page-index .hero-gallery-tabs .hero-tab.active,
+.page-index .reel-sys-tabs .reel-tab.active{
+  border-color:var(--tile-bd-hi)!important;
+  background:var(--tile-bg-hi)!important;
+  outline-color:var(--tile-ring-hi)!important;
+  box-shadow:var(--tile-shadow-hi)!important;
+}
+
+/* tamaños “premium” (evita mini-tiles) */
+.page-index .hero-gallery-groups .hero-group-tab{
+  min-height:46px!important;
+  padding:10px 14px!important;
+  font-weight:900!important;
+}
+.page-index .hero-gallery-tabs .hero-tab{
+  min-height:106px!important;
+  padding:16px!important;
+}
+.page-index .reel-sys-tabs .reel-tab{
+  min-height:96px!important;
+  padding:14px 12px!important;
+}
+
+/* logos sin “placa blanca” forzada */
+.page-index .hero-gallery-tabs .hero-tab img,
+.page-index .reel-sys-tabs .reel-tab img{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  object-fit:contain!important;
+}
+
+/* ---------- 3) DOTS: centrados SIEMPRE + ancho auto (según cantidad) ---------- */
+/* Regla base para TODOS los carousels del index */
+.page-index .carousel .carousel-nav{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+
   width:max-content!important;
   max-width:calc(100% - 24px)!important;
   margin:10px auto 12px!important;
   padding:6px 10px!important;
-  gap:8px!important;
+
   border-radius:999px!important;
-  background:rgba(7,10,18,.14)!important;
-  border:1px solid rgba(255,255,255,.10)!important;
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
-  display:flex!important;
-  justify-content:center!important;
+
+  background:rgba(7,10,18,.12)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+
+  /* neutraliza viejos absolute/left */
+  position:static!important;
+  left:auto!important;right:auto!important;
+  transform:none!important;
   pointer-events:auto!important;
 }
 
-/* 3) HERO imagen: desktop sin aire => cover */
-@media(min-width:980px){
-  .page-index #heroGalleryCarousel .carousel-track{overflow:hidden!important}
-  .page-index #heroGalleryCarousel .carousel-slide,
-  .page-index #heroGalleryCarousel .hero-slide{
-    height:100%!important;
-    padding:0!important;
-    display:flex!important;
-    align-items:stretch!important;
-    justify-content:stretch!important;
-  }
-  .page-index #heroGalleryCarousel .carousel-slide img,
-  .page-index #heroGalleryCarousel .hero-slide img{
-    width:100%!important;height:100%!important;
-    object-fit:cover!important;
-    object-position:center!important;
-    max-width:none!important;max-height:none!important;
-    display:block!important;
-  }
+.page-index .carousel .carousel-nav .dot{
+  width:11px!important;
+  height:11px!important;
+  border-radius:999px!important;
+  margin:0!important;
 }
 
-/* 4) Blur desde la imagen activa usando --hero-blur (lo setea JS) */
-.page-index #heroGalleryCarousel::before{
-  content:"";
-  position:absolute;
-  inset:-22px;
-  z-index:0;
-  pointer-events:none;
-  background-image:var(--hero-blur, none);
-  background-size:cover;
-  background-position:center;
-  filter:blur(22px);
-  transform:scale(1.08);
-  opacity:.55;
-}
-.page-index #heroGalleryCarousel::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-  background:linear-gradient(180deg, rgba(7,10,18,.25), rgba(7,10,18,.55));
-}
-
-
-/* =========================================================
-   INDEX FIX PACK — HERO recorte/dots + pills shift + Reels servicios gap
-   v2026.01.06-fix1  (PEGA AL FINAL de mainindex.css)
-   Scope: <body class="page-index">
-========================================================= */
-
-/* ---------- 1) HERO: carrusel en columna (imagen arriba, dots abajo) ---------- */
-.page-index #heroGalleryCarousel{
-  /* suele ser tu .carousel del hero */
-  display:flex !important;
-  flex-direction:column !important;
-  position:relative !important;
-  overflow:visible !important; /* el recorte lo hace el track, no el wrapper */
-}
-
-/* El track es el “viewport” real del slide */
-.page-index #heroGalleryCarousel .carousel-track{
-  order:1 !important;
-  flex:1 1 auto !important;
-  min-height:0 !important;
-  overflow:hidden !important;         /* recorta SOLO la imagen, no los dots */
-  overscroll-behavior-x:contain;
-}
-
-/* Dots SIEMPRE abajo y en flujo (no sobre la imagen) */
+/* HERO: fuerza el mismo comportamiento (por si antes era distinto) */
 .page-index #heroGalleryCarousel .carousel-nav{
-  order:2 !important;
-  position:static !important;
-  left:auto !important; right:auto !important; bottom:auto !important;
-  width:max-content !important;
-  max-width:calc(100% - 24px) !important;
-  margin:10px auto 12px !important;
-  padding:6px 10px !important;
-  gap:8px !important;
-  border-radius:999px !important;
-  display:flex !important;
-  justify-content:center !important;
-  pointer-events:auto !important;
-
-  /* barra blur más transparente (tu pedido) */
-  background:rgba(7,10,18,.10) !important;
-  border:1px solid rgba(255,255,255,.10) !important;
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
+  margin:10px auto 12px!important;
 }
 
-/* dots más compactos para que no “roben” alto */
-.page-index #heroGalleryCarousel .carousel-nav .dot{
-  width:10px !important;
-  height:10px !important;
-  margin:0 !important;
-  border-radius:999px !important;
-}
-
-/* Si por alguna razón te queda un .carousel-nav duplicado dentro del slide, lo apagamos */
-.page-index #heroGalleryCarousel .carousel-slide .carousel-nav,
-.page-index #heroGalleryCarousel .hero-slide .carousel-nav{
-  display:none !important;
-}
-
-/* ---------- 2) HERO: evita “se mueve de lado” al activar pills ---------- */
-/* (a) que el activo NO cambie tamaño: mismo border width siempre */
-.page-index .hero-group-tab{
-  border-width:1px !important; /* fijo */
-}
-
-/* (b) quita animación de scroll horizontal del contenedor de pills (se siente “brinco”) */
-.page-index #heroGalleryGroups,
-.page-index .hero-gallery-groups{
-  scroll-behavior:auto !important;
-}
-
-/* (c) evita micro scroll horizontal del layout por overflow accidental */
-.page-index{ overflow-x:hidden; }
-.page-index .hero,
-.page-index .hero .container{ overflow-x:hidden; }
-
-/* ---------- 3) HERO: imagen sin “recorte raro” por padding/altura ---------- */
+/* ---------- 4) Reels Servicios: quitar “hueco blanco” ---------- */
 @media(min-width:980px){
-  .page-index #heroGalleryCarousel .carousel-slide,
-  .page-index #heroGalleryCarousel .hero-slide{
-    padding:0 !important;
-    align-items:stretch !important;
-    justify-content:stretch !important;
-  }
-  .page-index #heroGalleryCarousel .carousel-slide img,
-  .page-index #heroGalleryCarousel .hero-slide img{
-    width:100% !important;
-    height:100% !important;
-    object-fit:cover !important;   /* si quieres 0 recorte, cambia a contain */
-    object-position:center !important;
-    display:block !important;
-  }
+  .page-index #servicios .grid-2{align-items:start!important}
+  .page-index #servicios .reels-home-card{align-self:start!important;height:auto!important}
 }
 
-/* ---------- 4) Reels SERVICIOS: elimina “aire blanco” debajo del reel ---------- */
-/* La idea: NO estirar el carrusel a “alto de pantalla”; que mida lo que mide el reel */
-.page-index #servicios #carouselReels-servicios{
-  display:flex !important;
-  flex-direction:column !important;
-  overflow:hidden !important;
-}
-
-/* Track sin min-height global del carousel base */
+/* track/slide no reservan alto extra */
+.page-index #servicios #carouselReels-servicios{overflow:hidden!important}
 .page-index #servicios #carouselReels-servicios .carousel-track{
-  min-height:unset !important;
-  height:auto !important;
-  overflow:hidden !important;
-  align-items:flex-start !important;  /* NO centrar vertical => no deja hueco abajo */
+  min-height:0!important;
+  height:auto!important;
+  overflow:hidden!important;
+  align-items:flex-start!important;
 }
-
-/* Slide también arriba, con padding inferior mínimo */
 .page-index #servicios #carouselReels-servicios .carousel-slide{
-  align-items:flex-start !important;
-  justify-content:flex-start !important;
-  padding:12px 12px 6px !important;
+  padding:12px 12px 6px!important;
+  align-items:flex-start!important;
 }
 
-/* El reel define la altura real; ajusta clamp si quieres más chico */
-.page-index #servicios #carouselReels-servicios .reel-embed{
-  margin:0 auto !important;
-  height:clamp(var(--reel-h-min), var(--reel-h-mid), var(--reel-h-max)) !important;
-}
-
-/* Dots del carrusel de servicios pegados al reel (sin “colchón” blanco) */
+/* dots pegados al video */
 .page-index #servicios #carouselReels-servicios .carousel-nav{
-  margin:8px auto 0 !important;
-  background:rgba(7,10,18,.08) !important;
-  border:1px solid rgba(255,255,255,.10) !important;
+  margin:8px auto 0!important;
 }
 
-/* ---------- 5) Light mode: barra de dots visible y limpia ---------- */
-html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav,
-html[data-theme="light"] .page-index #servicios #carouselReels-servicios .carousel-nav{
-  background:rgba(255,255,255,.45) !important;
-  border:1px solid rgba(2,6,23,.10) !important;
+/* body no “reserva” aire */
+.page-index #servicios .reels-home-card .body{padding-bottom:12px!important}
+.page-index .reels-home-card .carousel{margin-bottom:8px!important;padding-bottom:0!important}
+
+/* ---------- 5) FIX: tabs productos no se “muerden” bordes ---------- */
+.page-index .prod-tabs-shell{overflow:visible!important}
+.page-index .prod-tabs{
+  padding:8px 12px!important;
+  margin:0!important;
+  scroll-padding-left:12px;
+  scroll-padding-right:12px;
 }
-html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav .dot,
-html[data-theme="light"] .page-index #servicios #carouselReels-servicios .carousel-nav .dot{
-  border:1px solid rgba(2,6,23,.18) !important;
-  background:rgba(2,6,23,.14) !important;
+
+/* ---------- 6) LIGHT (solo index): dots legibles sin “mancha” ---------- */
+html[data-theme="light"] .page-index .carousel .carousel-nav{
+  background:rgba(255,255,255,.55)!important;
+  border:1px solid rgba(2,6,23,.10)!important;
+}
+html[data-theme="light"] .page-index .carousel .carousel-nav .dot{
+  border:1px solid rgba(2,6,23,.18)!important;
+  background:rgba(2,6,23,.16)!important;
+}
+html[data-theme="light"] .page-index .carousel .carousel-nav .dot.active{
+  background:rgba(45,212,191,.95)!important;
+  border-color:rgba(45,212,191,.95)!important;
 }
 
