@@ -1821,3 +1821,130 @@ html[data-theme="light"] .page-index .prod-tabs .tab.active{
   padding-bottom:12px!important;
 }
 
+/* =========================================================
+   INDEX PATCH — Rounded UX + Dots centered (auto-width)
+   Scope: <body class="page-index">
+   Pegar AL FINAL de mainindex.css  (v2026.01.05-dots-round)
+========================================================= */
+
+/* ---------- 0) Tokens de radio consistentes (UX/UI) ---------- */
+.page-index{
+  --r-sm:12px;
+  --r-md:16px;
+  --r-lg:18px;
+  --r-xl:22px;
+}
+
+/* ---------- 1) “Nada rectangular”: redondea TODO lo blanco/placas ---------- */
+/* Cards / superficies */
+.page-index .card,
+.page-index .promo-item,
+.page-index .faq-item,
+.page-index .map-embed,
+.page-index .carousel,
+.page-index .reel-embed{
+  border-radius:var(--r-xl)!important;
+  overflow:hidden;
+}
+
+/* Botones / tabs / badges / pills / inputs */
+.page-index .btn,
+.page-index .badge,
+.page-index .prod-tabs .tab,
+.page-index .hero-group-tab,
+.page-index .hero-tab,
+.page-index .reel-tab,
+.page-index input,
+.page-index select,
+.page-index textarea{
+  border-radius:999px; /* pills por defecto */
+}
+
+/* Tabs con logo (tiles): mejor como “tarjeta” redondeada, no pill */
+.page-index .hero-tab,
+.page-index .reel-tab{
+  border-radius:var(--r-lg)!important;
+}
+
+/* Inputs no tan “pastilla” (más serio) */
+.page-index input,
+.page-index select,
+.page-index textarea{
+  border-radius:var(--r-md)!important;
+}
+
+/* Botones normales: un poco menos pastilla para verse premium */
+.page-index .btn{
+  border-radius:var(--r-md)!important;
+}
+
+/* ---------- 2) Dots: SIEMPRE centrados + ancho según cantidad ---------- */
+/* Regla base para TODOS los carousels del index */
+.page-index .carousel .carousel-nav{
+  /* shrink-to-fit + centrado real */
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+
+  width:max-content!important;        /* clave: ancho según dots */
+  max-width:calc(100% - 24px)!important;
+  margin:10px auto 12px!important;    /* clave: centrado */
+  padding:6px 10px!important;
+
+  border-radius:999px!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+
+  /* barra blur más “limpia” */
+  background:rgba(7,10,18,.12)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+
+  /* evita que reglas viejas la “muevan” */
+  left:auto!important; right:auto!important;
+  transform:none!important;
+  text-align:center!important;
+  pointer-events:auto!important;
+}
+
+/* Dots tamaño consistente */
+.page-index .carousel .carousel-nav .dot{
+  width:11px!important;
+  height:11px!important;
+  border-radius:999px!important;
+  margin:0!important; /* por si traías margin lateral */
+}
+
+/* ---------- 3) HERO: si TU hero tiene dots “static”, se respeta; si eran absolute, los neutralizamos ---------- */
+.page-index #heroGalleryCarousel .carousel-nav{
+  position:static!important;          /* evita descentrado por absolute+left */
+  margin:10px auto 12px!important;
+}
+
+/* ---------- 4) REELS (Servicios y Sistemas): pega dots al video, sin “hueco blanco” ---------- */
+.page-index .reels-home-card .body{padding-bottom:12px!important;}
+.page-index .reels-home-card .carousel{margin-bottom:8px!important;padding-bottom:0!important;}
+
+/* Ajuste fino: servicios suele “empujar” más */
+.page-index #servicios #carouselReels-servicios .carousel-slide{
+  padding:12px 12px 6px!important;   /* reduce aire inferior */
+}
+.page-index #servicios #carouselReels-servicios .carousel-nav{
+  margin:8px auto 0!important;       /* más pegado al video */
+}
+
+/* ---------- 5) LIGHT: barra dots clara y elegante (sin “mancha”) ---------- */
+html[data-theme="light"] .page-index .carousel .carousel-nav{
+  background:rgba(255,255,255,.55)!important;
+  border:1px solid rgba(2,6,23,.10)!important;
+}
+html[data-theme="light"] .page-index .carousel .carousel-nav .dot{
+  border:1px solid rgba(2,6,23,.18)!important;
+  background:rgba(2,6,23,.16)!important;
+}
+html[data-theme="light"] .page-index .carousel .carousel-nav .dot.active{
+  background:rgba(45,212,191,.95)!important;
+  border-color:rgba(45,212,191,.95)!important;
+}
+
+
