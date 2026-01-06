@@ -787,30 +787,903 @@
   .page-index .hero-tab{min-height:78px !important;padding:12px !important;}
   .page-index .hero-tab img{height:44px !important;}
 }
+/* =========================================================
+  LIGHT PATCH (INDEX + SECCIONES) — v2026.01
+  Pegar AL FINAL de theme.css
+========================================================= */
 
+html[data-theme="light"]{
+  /* Fondo claro “premium” y texto base con contraste real */
+  background: radial-gradient(1200px 800px at 20% 0%, rgba(45,212,191,.14), transparent 55%),
+              radial-gradient(900px 700px at 90% 15%, rgba(96,165,250,.14), transparent 55%),
+              linear-gradient(180deg, #f6f8fc 0%, #eef3fb 70%, #f6f8fc 100%);
+}
+html[data-theme="light"] body{
+  background: transparent !important;
+  color: var(--text);
+}
 
+/* ===== Tipografía / títulos / textos que se “pierden” ===== */
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] .title,
+html[data-theme="light"] .section-title{
+  color:#0b1220 !important;
+}
+html[data-theme="light"] p,
+html[data-theme="light"] .lead,
+html[data-theme="light"] .muted,
+html[data-theme="light"] .hint{
+  color:#334155 !important;
+}
 
+/* Si usas gradientes de título, súbeles contraste en claro */
+html[data-theme="light"] .title-gradient{
+  -webkit-text-fill-color: initial;
+  color:#0b1220 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.7);
+}
+
+/* ===== Contenedores / cards ===== */
+html[data-theme="light"] .card,
+html[data-theme="light"] .panel,
+html[data-theme="light"] .box,
+html[data-theme="light"] .surface{
+  background: #ffffff !important;
+  border: 1px solid rgba(2,6,23,.10) !important;
+  box-shadow: 0 12px 28px rgba(2,6,23,.10) !important;
+}
+html[data-theme="light"] .card.body{
+  background: rgba(255,255,255,.92) !important;
+}
+
+/* ===== Pills / tabs / badges (Sistemas / Promos) ===== */
+html[data-theme="light"] .badge,
+html[data-theme="light"] .pill,
+html[data-theme="light"] .tabs button,
+html[data-theme="light"] .chips button{
+  background: rgba(2,6,23,.06) !important;
+  color:#0b1220 !important;
+  border: 1px solid rgba(2,6,23,.10) !important;
+}
+html[data-theme="light"] .tabs button.active,
+html[data-theme="light"] .chips button.active,
+html[data-theme="light"] .pill.active{
+  background: rgba(45,212,191,.18) !important;
+  border-color: rgba(45,212,191,.45) !important;
+  color:#0b1220 !important;
+}
+
+/* ===== Botones ===== */
+html[data-theme="light"] .btn,
+html[data-theme="light"] button.btn,
+html[data-theme="light"] a.btn{
+  background: #0b1220 !important;
+  color:#ffffff !important;
+  border: 1px solid rgba(2,6,23,.18) !important;
+}
+html[data-theme="light"] .btn.ghost,
+html[data-theme="light"] .btn-outline{
+  background: transparent !important;
+  color:#0b1220 !important;
+  border: 1px solid rgba(2,6,23,.18) !important;
+}
+
+/* ===== HERO: evita “mancha oscura”/overlay ===== */
+html[data-theme="light"] .hero,
+html[data-theme="light"] .hero .hero-bg,
+html[data-theme="light"] .hero .overlay{
+  background: transparent !important;
+}
+html[data-theme="light"] .hero .kicker,
+html[data-theme="light"] .hero .sub,
+html[data-theme="light"] .hero .tagline{
+  color:#334155 !important;
+}
+
+/* ===== Reels/Carousels: marco + fondo suave en claro ===== */
+html[data-theme="light"] .carousel,
+html[data-theme="light"] .carouselFrame,
+html[data-theme="light"] .reels,
+html[data-theme="light"] .yt-shell{
+  background: rgba(2,6,23,.04) !important;
+  border: 1px solid rgba(2,6,23,.10) !important;
+  box-shadow: 0 14px 34px rgba(2,6,23,.12) !important;
+}
+html[data-theme="light"] .carousel .arrow,
+html[data-theme="light"] .carousel .arrowCircle{
+  background: rgba(255,255,255,.78) !important;
+  border: 1px solid rgba(2,6,23,.12) !important;
+  color:#0b1220 !important;
+}
+
+/* ===== Barra de dots: más transparente + longitud auto ===== */
+html[data-theme="light"] .dots,
+html[data-theme="light"] .carouselDots,
+html[data-theme="light"] .dotsBar{
+  background: rgba(2,6,23,.06) !important;     /* más transparente */
+  border: 1px solid rgba(2,6,23,.10) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 999px;
+  padding: 8px 10px;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  margin-inline: auto;
+}
+html[data-theme="light"] .dot{
+  background: rgba(2,6,23,.22) !important;
+}
+html[data-theme="light"] .dot.active{
+  background: rgba(45,212,191,.95) !important;
+}
+
+/* ===== SISTEMAS/SERVICIOS: “logos claros” que se pierden =====
+   Solución: darles un “placa” detrás + sombra sutil al arte */
+html[data-theme="light"] .sys-card,
+html[data-theme="light"] .svc-card{
+  background: #ffffff !important;
+}
+html[data-theme="light"] .sys-card .logo,
+html[data-theme="light"] .svc-card .logo,
+html[data-theme="light"] .sys-card img,
+html[data-theme="light"] .svc-card img{
+  filter: drop-shadow(0 2px 10px rgba(2,6,23,.10));
+}
+html[data-theme="light"] .sys-card .logo-wrap,
+html[data-theme="light"] .svc-card .logo-wrap{
+  background: rgba(96,165,250,.10);
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: 16px;
+  padding: 12px;
+}
+
+/* Si no tienes .logo-wrap, aplica a tu “slot” de imagen del card */
+html[data-theme="light"] .sys-card .media,
+html[data-theme="light"] .svc-card .media{
+  background: rgba(96,165,250,.08) !important;
+  border: 1px solid rgba(2,6,23,.08) !important;
+  border-radius: 16px !important;
+}
+
+/* ===== Promociones: tarjetas y fondo para que no se vea “oscuro/vinieta” ===== */
+html[data-theme="light"] #promociones,
+html[data-theme="light"] .promos,
+html[data-theme="light"] .promos-wrap{
+  background: transparent !important;
+}
+html[data-theme="light"] .promo-card{
+  background:#ffffff !important;
+  border: 1px solid rgba(2,6,23,.10) !important;
+  box-shadow: 0 16px 36px rgba(2,6,23,.12) !important;
+}
+html[data-theme="light"] .promo-card img{
+  background: #ffffff;
+}
+
+/* ===== FAQ / secciones con fondos oscuros heredados ===== */
+html[data-theme="light"] .section,
+html[data-theme="light"] section{
+  color:#0b1220;
+}
+
+.btn-primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#071018;border:1px solid rgba(2,6,23,.10)}
+.btn-secondary{background:rgba(255,255,255,.04);border:var(--border)}
+html[data-theme="light"] .btn-secondary{background:rgba(255,255,255,.92)}
+.btn-link{background:transparent;border:0;padding:0;min-height:auto;text-decoration:underline;text-underline-offset:3px}
 
 
 /* =========================================================
-   INDEX FINAL PATCH — clean overrides (v2026.01.05-final)
-   Scope: <body class="page-index">
-   Objetivo:
-   - UX redondeado consistente (sin “rectángulos duros”)
-   - Dots centrados + ancho auto (según cantidad)
-   - Reels Servicios: quitar “hueco blanco”
-   - TILES (Hero + Reels tabs): look limpio tipo “hero”
-   - Light: dots del index con buena legibilidad
+   INDEX — LIGHT VISIBILITY PATCH (sin duplicados) v2026.01
+   Pegar AL FINAL de mainindex.css
 ========================================================= */
 
-/* ---------- 0) Radios consistentes ---------- */
-.page-index{
-  --r-sm:12px;
-  --r-md:16px;
-  --r-lg:18px;
-  --r-xl:22px;
+/* A) PROMOCIONES — filtros */
+html[data-theme="light"] .page-index .promo-btn{
+  color:#334155!important;
+  background:#ffffff!important;
+  border-color:#cbd5e1!important;
+  font-weight:700!important;
+}
+html[data-theme="light"] .page-index .promo-btn.active{
+  background:rgba(45,212,191,.15)!important;
+  border-color:#0d9488!important;
+  color:#0f172a!important;
+}
 
-  /* tokens tiles (fallbacks seguros) */
+/* B) REELS TABS (Servicios: Pólizas/Implementaciones/...) */
+html[data-theme="light"] .page-index .reel-tab{
+  background:#ffffff!important;
+  border-color:#e2e8f0!important;
+  box-shadow:0 2px 5px rgba(0,0,0,.05)!important;
+}
+html[data-theme="light"] .page-index .reel-tab span{
+  color:#475569!important;
+  font-weight:800!important;
+}
+html[data-theme="light"] .page-index .reel-tab.active{
+  background:rgba(96,165,250,.10)!important;
+  border-color:#3b82f6!important;
+}
+html[data-theme="light"] .page-index .reel-tab.active span{
+  color:#1e3a8a!important;
+}
+
+/* C) TABS PRINCIPALES DE PRODUCTOS (Contables/Comerciales/Nube/...) */
+html[data-theme="light"] .page-index .prod-tabs .tab{
+  color:#334155!important;
+  background:#f8fafc!important;
+  border-color:#cbd5e1!important;
+  box-shadow:0 2px 4px rgba(0,0,0,.05)!important;
+}
+html[data-theme="light"] .page-index .prod-tabs .tab.active{
+  color:#0f172a!important;
+  background:#eff6ff!important;
+  border-color:#3b82f6!important;
+}
+
+/* D) HERO — tabs “grupos” (si hoy se ven lavados) */
+html[data-theme="light"] .page-index .hero-group-tab{
+  background:rgba(2,6,23,.06)!important;
+  border:1px solid rgba(2,6,23,.14)!important;
+  color:rgba(11,18,32,.92)!important;
+}
+html[data-theme="light"] .page-index .hero-group-tab.active{
+  background:rgba(45,212,191,.18)!important;
+  border-color:rgba(45,212,191,.45)!important;
+  color:rgba(11,18,32,.96)!important;
+}
+
+/* E) Textos en tarjetas de productos (evita “lavado”) */
+html[data-theme="light"] .page-index .product-card p,
+html[data-theme="light"] .page-index .product-card .lead,
+html[data-theme="light"] .page-index .product-card li{
+  color:#475569!important;
+}
+
+/* F) Sección “Sectores / ¿Por qué?” (en tu screenshot se pierde) */
+html[data-theme="light"] .page-index #sectores,
+html[data-theme="light"] .page-index #sectores *{
+  opacity:1!important;
+}
+html[data-theme="light"] .page-index #sectores h2,
+html[data-theme="light"] .page-index #sectores h3{
+  color:#0b1220!important;
+}
+html[data-theme="light"] .page-index #sectores p,
+html[data-theme="light"] .page-index #sectores li{
+  color:#334155!important;
+}
+
+/* G) Logos claros: “placa” detrás para contraste */
+html[data-theme="light"] .page-index .hero-tab img,
+html[data-theme="light"] .page-index .reel-tab img,
+html[data-theme="light"] .page-index .logo-sistema{
+  background:linear-gradient(180deg,rgba(11,18,32,.10),rgba(11,18,32,.03))!important;
+  border:1px solid rgba(2,6,23,.14)!important;
+  border-radius:16px!important;
+  padding:10px!important;
+  box-shadow:0 10px 26px rgba(2,6,23,.10)!important;
+}
+
+/* FIX: gradient-word visible en INDEX (dark + light) */
+.page-index .gradient-word{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2))!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+  font-weight:900;
+}
+
+/* En LIGHT: sube contraste (evita “lavado”) */
+html[data-theme="light"] .page-index .gradient-word{
+  filter:saturate(1.15) contrast(1.15);
+}
+
+/* =========================================================
+  INDEX PATCH — UI/UX + LIGHT CONTRAST + TILES + FAQ + CONTACT
+  v2026.01.05 (pegar al FINAL de mainindex.css)
+  Requiere: <body class="page-index"> y theme.css cargado
+========================================================= */
+
+/* ===== 0) INDEX no a todo lo ancho (más “editorial”) ===== */
+:root{--maxw-index:960px}
+.page-index .container,.page-index main.container{max-width:var(--maxw-index);padding-left:clamp(14px,2.4vw,22px);padding-right:clamp(14px,2.4vw,22px)}
+@media(min-width:1400px){.page-index .container,.page-index main.container{max-width:980px}}
+
+/* ===== 1) FIX: gradient-word SIEMPRE visible (dark + light) ===== */
+.page-index .gradient-word{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2))!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  color:transparent!important;-webkit-text-fill-color:transparent!important;
+  font-weight:900;
+}
+html[data-theme="light"] .page-index .gradient-word{filter:saturate(1.15) contrast(1.18)}
+
+/* ===== 2) HERO: TILES (logos GRANDES y ocupando el grid) =====
+   Objetivo: quitar sensación “pastillita” pequeña dentro del tile */
+.page-index .hero-gallery-tabs{gap:12px!important}
+.page-index .hero-tab{
+  width:100%!important;min-width:0!important;
+  min-height:110px!important; /* antes muy bajito */
+  padding:18px!important;     /* más aire para el logo grande */
+  display:flex!important;align-items:center!important;justify-content:center!important;
+}
+.page-index .hero-tab img{
+  height:64px!important;max-width:min(240px,92%)!important;width:auto!important;
+  object-fit:contain!important;border:0!important;border-radius:0!important;
+  background:transparent!important;padding:0!important;box-shadow:none!important;
+}
+/* Si tu HTML trae un wrapper tipo “pill” dentro del tile, lo neutralizamos */
+.page-index .hero-tab .pill,
+.page-index .hero-tab .chip,
+.page-index .hero-tab .badge,
+.page-index .hero-tab .logo-pill{
+  background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important;
+}
+
+/* ===== 3) Reels tabs (Sistemas/Servicios): TILES full + logo grande ===== */
+.page-index .reel-sys-tabs{gap:12px!important}
+.page-index .reel-tab{
+  width:100%!important;min-width:0!important;
+  min-height:110px!important;padding:16px!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+}
+.page-index .reel-tab img{
+  height:60px!important;max-width:min(240px,92%)!important;width:auto!important;
+  object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;padding:0!important;box-shadow:none!important;
+}
+.page-index .reel-tab span{font-size:.92rem!important;font-weight:950!important}
+
+/* ===== 4) Reels Servicios: más alto (quita “vacío” en tu screenshot) =====
+   Nota: esto NO afecta otros reels; solo la sección #servicios */
+.page-index #servicios{--reel-scale-serv:.96}
+.page-index #servicios .reel-embed{
+  height:clamp(calc(270px * var(--reel-scale-serv)),calc(54svh * var(--reel-scale-serv)),calc(640px * var(--reel-scale-serv)));
+}
+
+/* ===== 5) Promociones: botones con marca Expiriti ===== */
+.page-index .promo-btn{font-weight:900}
+.page-index .promo-btn.active{
+  border-color:rgba(45,212,191,.55)!important;
+  background:linear-gradient(90deg,rgba(45,212,191,.22),rgba(96,165,250,.18))!important;
+}
+
+/* ===== 6) FAQ: ancho completo + justificado (Index / Servicios / Sistemas) =====
+   Quita “recorte” típico por max-width de p global */
+.page-index .faq-item p{max-width:none!important;width:100%!important;text-align:justify;text-justify:inter-word;hyphens:auto}
+@media(max-width:520px){.page-index .faq-item p{text-align:left;hyphens:none}}
+
+/* Global “seguro” para otras páginas (si comparten .faq-item) */
+.faq-item p{max-width:none}
+
+/* ===== 7) Contacto (“Hablemos…”): menos alto ===== */
+.page-index #contacto.section-full{padding-top:18px!important;padding-bottom:18px!important}
+.page-index #contacto .card.body{padding:14px!important}
+.page-index #contacto textarea{min-height:96px!important}
+
+/* ===== 8) LIGHT: contraste específico (scopeado al INDEX) ===== */
+html[data-theme="light"] .page-index .promo-btn{
+  color:#334155!important;background:#fff!important;border-color:#cbd5e1!important;
+}
+html[data-theme="light"] .page-index .promo-btn.active{
+  background:rgba(45,212,191,.18)!important;border-color:#0d9488!important;color:#0b1220!important;
+}
+html[data-theme="light"] .page-index .reel-tab{
+  background:#fff!important;border-color:#e2e8f0!important;box-shadow:0 2px 5px rgba(0,0,0,.05)!important;
+}
+html[data-theme="light"] .page-index .reel-tab span{color:#334155!important}
+html[data-theme="light"] .page-index .reel-tab.active{
+  background:rgba(96,165,250,.10)!important;border-color:#3b82f6!important;
+}
+html[data-theme="light"] .page-index .prod-tabs .tab{
+  color:#334155!important;background:#f8fafc!important;border-color:#cbd5e1!important;box-shadow:0 2px 4px rgba(0,0,0,.05)!important;
+}
+html[data-theme="light"] .page-index .prod-tabs .tab.active{
+  color:#0f172a!important;background:#eff6ff!important;border-color:#3b82f6!important;
+}
+
+/* ===== 9) Dots del HERO: barra blur más transparente + ancho auto ===== */
+.page-index #heroGalleryCarousel .carousel-nav{
+  background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;
+  width:max-content!important;max-width:calc(100% - 24px)!important;
+}
+html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav{
+  background:rgba(255,255,255,.52)!important;border:1px solid rgba(2,6,23,.10)!important;
+}
+
+
+/* =========================================================
+  INDEX PATCH — precise for your HTML (page-index)
+  Pegar al FINAL de mainindex.css  (v2026.01.05-a)
+========================================================= */
+
+/* ===== A) Ancho editorial (index no tan ancho) ===== */
+:root{--maxw-index:980px}
+.page-index .container{max-width:var(--maxw-index)}
+@media(min-width:1400px){:root{--maxw-index:1040px}}
+
+/* ===== B) FIX gradient-word (no se “apaga” en light) ===== */
+.page-index .gradient-word{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2)) !important;
+  -webkit-background-clip:text !important;background-clip:text !important;
+  color:transparent !important;-webkit-text-fill-color:transparent !important;
+  font-weight:900;
+}
+html[data-theme="light"] .page-index .gradient-word{filter:saturate(1.15) contrast(1.15)}
+
+/* ===== C) HERO: grupos (#heroGalleryGroups) “scrollables” + centrado ===== */
+.page-index #heroGalleryGroups{
+  display:flex;gap:10px;overflow:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;padding:8px 4px 10px;mask-image:linear-gradient(90deg,transparent, #000 8%, #000 92%, transparent);
+}
+.page-index #heroGalleryGroups>*{scroll-snap-align:center}
+
+/* ===== D) HERO: tiles de sistemas (#heroGalleryTabs) FULL, logos grandes ===== */
+.page-index #heroGalleryTabs{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+@media(min-width:980px){
+  .page-index #heroGalleryTabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+.page-index #heroGalleryTabs .hero-tab,
+.page-index #heroGalleryTabs > button{
+  width:100%!important;min-width:0!important;
+  min-height:112px!important;
+  padding:16px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  border-radius:18px!important;
+}
+.page-index #heroGalleryTabs .hero-tab img,
+.page-index #heroGalleryTabs > button img{
+  height:64px!important;max-width:min(260px,92%)!important;width:auto!important;
+  object-fit:contain!important;
+  background:transparent!important;border:0!important;border-radius:0!important;
+  padding:0!important;box-shadow:none!important;filter:none!important;
+}
+
+/* ===== E) HERO: dots abajo y barra blur más transparente (auto-width) ===== */
+.page-index #heroGalleryCarousel{position:relative}
+.page-index #heroGalleryCarousel .carousel-nav{
+  position:absolute;left:50%;bottom:10px;transform:translateX(-50%);
+  width:max-content;max-width:calc(100% - 22px);
+  padding:8px 10px;border-radius:999px;
+  backdrop-filter:blur(10px);
+  background:rgba(7,10,18,.14); /* más transparente */
+  border:1px solid rgba(255,255,255,.10);
+  display:flex;gap:8px;align-items:center;justify-content:center;
+}
+html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav{
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(2,6,23,.10);
+}
+
+/* ===== F) Reels tabs (tus .reel-sys-tabs): tiles FULL + logo grande ===== */
+.page-index .reel-sys-tabs{
+  display:grid;gap:10px;margin-top:12px;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+@media(max-width:520px){
+  .page-index .reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+.page-index .reel-sys-tabs .reel-tab{
+  width:100%!important;min-width:0!important;
+  min-height:106px!important;
+  padding:12px 10px!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+  border-radius:16px!important;
+}
+.page-index .reel-sys-tabs .reel-tab img{
+  height:58px!important;width:auto!important;max-width:92%!important;
+  object-fit:contain!important;
+  background:transparent!important;border:0!important;border-radius:0!important;padding:0!important;box-shadow:none!important;
+}
+.page-index .reel-sys-tabs .reel-tab span{
+  margin-top:8px!important;
+  font-size:.92rem!important;
+  font-weight:950!important;
+  line-height:1.05!important;
+}
+
+/* ===== G) Reels de SERVICIOS: quitar vacío (hacer el embed más alto) =====
+   Solo aplica al bloque de la derecha en #servicios */
+.page-index #servicios #carouselReels-servicios .carousel-track,
+.page-index #servicios #carouselReels-servicios iframe,
+.page-index #servicios #carouselReels-servicios .yt{
+  height:clamp(320px,56svh,720px)!important;
+}
+.page-index #servicios .reels-home-card .carousel{margin-bottom:12px}
+
+/* ===== H) Promos: filtros marca Expiriti (dark + light) ===== */
+.page-index #promociones .promo-filters{gap:10px}
+.page-index #promociones .promo-btn{
+  font-weight:950;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+}
+.page-index #promociones .promo-btn.active{
+  border-color:rgba(45,212,191,.55);
+  background:linear-gradient(90deg,rgba(45,212,191,.22),rgba(96,165,250,.18));
+}
+html[data-theme="light"] .page-index #promociones .promo-btn{
+  background:#fff;border-color:#cbd5e1;color:#334155;
+}
+html[data-theme="light"] .page-index #promociones .promo-btn.active{
+  background:rgba(45,212,191,.18);
+  border-color:#0d9488;color:#0b1220;
+}
+
+/* ===== I) FAQ: ancho completo + justificado (evita “recorte”) ===== */
+.page-index #faq .faq-item p{
+  max-width:none!important;width:100%!important;
+  text-align:justify;text-justify:inter-word;hyphens:auto;
+}
+@media(max-width:520px){
+  .page-index #faq .faq-item p{text-align:left;hyphens:none}
+}
+
+/* ===== J) Contacto: menos alto + mapa más bajo en desktop ===== */
+.page-index #contacto{padding-top:18px;padding-bottom:18px}
+.page-index #contacto .lead{margin-bottom:10px}
+.page-index #contacto textarea{min-height:96px}
+.page-index #contacto .map-card{padding:14px!important}
+.page-index #contacto .map-embed{border-radius:16px;overflow:hidden}
+@media(min-width:980px){
+  .page-index #contacto .map-embed{min-height:280px} /* reduce altura vs antes */
+}
+
+/* ===== K) Light mode: asegurar contraste de tabs de productos (Contables/…) ===== */
+html[data-theme="light"] .page-index .prod-tabs .tab{
+  background:#f8fafc;border-color:#cbd5e1;color:#334155;
+  box-shadow:0 2px 4px rgba(0,0,0,.05);
+}
+html[data-theme="light"] .page-index .prod-tabs .tab.active{
+  background:#eff6ff;border-color:#3b82f6;color:#0b1220;
+}
+
+/* =========================================================
+   PATCH — UI tabs/cards (Hero + Reels Sistemas + Reels Servicios)
+   - Base: todos los botones con look “card” (como tu screenshot)
+   - Hover/Active: borde + ring + elevación
+   - Reduce aire debajo de dots (especialmente servicios)
+========================================================= */
+
+:root{
+  /* fallback por si no existe --brand en theme.css */
+  --ui-brand: var(--brand, #2dd4bf);
+  --ui-ring: color-mix(in srgb, var(--ui-brand) 55%, transparent);
+  --ui-border: color-mix(in srgb, var(--text, #0b1220) 12%, transparent);
+  --ui-card: var(--card, #ffffff);
+  --ui-shadow: 0 10px 26px rgba(2,6,23,.10);
+  --ui-shadow-hi: 0 16px 38px rgba(2,6,23,.16);
+}
+
+/* ---------- A) BOTONES “CARD” (aplica a hero + reels sistemas + reels servicios) ---------- */
+
+/* Hero: tabs y grupos */
+.hero-gallery-tabs button,
+.hero-gallery-groups button,
+
+/* Reels: tabs de sistemas y servicios */
+.reel-sys-tabs .reel-tab{
+  appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  background:var(--ui-card);
+  border:1px solid var(--ui-border);
+  border-radius:16px;
+
+  box-shadow: 0 6px 16px rgba(2,6,23,.08);
+  transform: translateZ(0);
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, outline-color .16s ease;
+
+  /* “más grandes” + menos aire */
+  min-height:78px;
+  padding:12px 14px;
+}
+
+/* que se vean “como hover” incluso en estado normal (pero sutil) */
+.hero-gallery-tabs button,
+.hero-gallery-groups button,
+.reel-sys-tabs .reel-tab{
+  outline: 2px solid color-mix(in srgb, var(--ui-brand) 18%, transparent);
+  outline-offset: 0;
+}
+
+/* hover/focus: efecto fuerte */
+.hero-gallery-tabs button:hover,
+.hero-gallery-groups button:hover,
+.reel-sys-tabs .reel-tab:hover,
+
+.hero-gallery-tabs button:focus-visible,
+.hero-gallery-groups button:focus-visible,
+.reel-sys-tabs .reel-tab:focus-visible{
+  border-color: color-mix(in srgb, var(--ui-brand) 55%, transparent);
+  outline-color: var(--ui-ring);
+  box-shadow: var(--ui-shadow-hi);
+  transform: translateY(-1px);
+}
+
+/* estado “seleccionado” (tu JS ya usa .active) */
+.hero-gallery-tabs button.active,
+.hero-gallery-groups button.active,
+.reel-sys-tabs .reel-tab.active{
+  border-color: color-mix(in srgb, var(--ui-brand) 70%, transparent);
+  outline-color: color-mix(in srgb, var(--ui-brand) 60%, transparent);
+  box-shadow: var(--ui-shadow-hi);
+}
+
+/* imágenes dentro de tabs (más grandes, sin deformar) */
+.reel-sys-tabs .reel-tab img{
+  width: clamp(54px, 4.2vw, 72px);
+  height: clamp(54px, 4.2vw, 72px);
+  object-fit: contain;
+}
+
+/* En servicios tú muestras icono + texto: mejora alineación */
+.reel-sys-tabs .reel-tab span{
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.05;
+  color: var(--text, #0b1220);
+  opacity: .92;
+}
+
+/* Mobile: aún más “tocable” */
+@media (max-width: 520px){
+  .hero-gallery-tabs button,
+  .hero-gallery-groups button,
+  .reel-sys-tabs .reel-tab{
+    min-height:84px;
+    border-radius:18px;
+    padding:14px 14px;
+  }
+  .reel-sys-tabs .reel-tab span{font-size:12.5px}
+}
+
+/* ---------- B) MENOS AIRE EN CARRUSELES (dots pegados, especialmente servicios) ---------- */
+
+/* reduce padding de la tarjeta de reels (evita “vacio” abajo) */
+.reels-home-card .body{
+  padding-bottom: 12px !important;
+}
+
+/* carrusel: que no reserve espacio excesivo debajo */
+.reels-home-card .carousel{
+  margin-bottom: 8px;
+  padding-bottom: 0;
+}
+
+/* nav de dots: que quede “pegado” y centrado, sin blanco extra */
+.reels-home-card .carousel-nav{
+  margin: 10px auto 0 !important;
+  padding: 6px 10px;
+
+  width: fit-content;
+  max-width: 92%;
+  border-radius: 999px;
+
+  /* barra tipo “blur” más limpia */
+  background: color-mix(in srgb, var(--ui-card) 55%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid color-mix(in srgb, var(--ui-brand) 18%, transparent);
+  box-shadow: 0 10px 26px rgba(2,6,23,.10);
+}
+
+/* dots: más compactos (ayuda a que no “empujen” hacia abajo) */
+.reels-home-card .carousel-nav .dot{
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+}
+
+/* ---------- C) HERO tabs/grupos (si son texto) ---------- */
+.hero-gallery-tabs button,
+.hero-gallery-groups button{
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--text, #0b1220);
+  padding: 12px 16px;
+  min-height: 62px; /* en hero suele ser más compacto que tabs con icono */
+}
+
+/* si en tu hero hay demasiada separación vertical */
+.hero-gallery-card{
+  padding-bottom: 10px;
+}
+
+/* =========================================================
+   INDEX PATCH — FIX: dots HERO + gap Reels Servicios + padding tabs
+   Scope: <body class="page-index">
+   Pegar AL FINAL de mainindex.css
+========================================================= */
+.page-index{
+  --tile-ring: rgba(45,212,191,.22);
+  --tile-ring-hi: rgba(45,212,191,.46);
+  --tile-bd: rgba(255,255,255,.16);
+  --tile-bd-hi: rgba(45,212,191,.55);
+  --tile-bg: rgba(255,255,255,.05);
+  --tile-bg-hi: rgba(45,212,191,.12);
+  --tile-shadow: 0 10px 26px rgba(0,0,0,.16);
+  --tile-shadow-hi: 0 16px 38px rgba(0,0,0,.22);
+}
+
+/* =========================================================
+  1) “TILES” con look tipo hover SIEMPRE (hero + reels tabs)
+========================================================= */
+
+/* HERO groups (Contables/Comerciales...) */
+.page-index .hero-gallery-groups .hero-group-tab,
+/* HERO tabs (logos) */
+.page-index .hero-gallery-tabs .hero-tab,
+/* Reels tabs (sistemas + servicios) */
+.page-index .reel-sys-tabs .reel-tab{
+  border: 1px solid var(--tile-bd) !important;
+  background: var(--tile-bg) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--tile-shadow) !important;
+
+  /* look “hover” predeterminado */
+  outline: 2px solid var(--tile-ring) !important;
+  outline-offset: 0 !important;
+
+  transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease, outline-color .14s ease;
+}
+
+/* más grandes (quitar “aire” y que se sientan premium) */
+.page-index .hero-gallery-groups .hero-group-tab{
+  min-height: 46px !important;
+  padding: 10px 14px !important;
+  font-weight: 900 !important;
+}
+.page-index .hero-gallery-tabs .hero-tab{
+  min-height: 106px !important;
+  padding: 16px !important;
+}
+.page-index .reel-sys-tabs .reel-tab{
+  min-height: 96px !important;
+  padding: 14px 12px !important;
+}
+
+/* hover/focus */
+@media(hover:hover){
+  .page-index .hero-gallery-groups .hero-group-tab:hover,
+  .page-index .hero-gallery-tabs .hero-tab:hover,
+  .page-index .reel-sys-tabs .reel-tab:hover{
+    border-color: var(--tile-bd-hi) !important;
+    background: var(--tile-bg-hi) !important;
+    outline-color: var(--tile-ring-hi) !important;
+    box-shadow: var(--tile-shadow-hi) !important;
+    transform: translateY(-1px);
+  }
+}
+/* active/seleccionado */
+.page-index .hero-gallery-groups .hero-group-tab.active,
+.page-index .hero-gallery-tabs .hero-tab.active,
+.page-index .reel-sys-tabs .reel-tab.active{
+  border-color: var(--tile-bd-hi) !important;
+  background: var(--tile-bg-hi) !important;
+  outline-color: var(--tile-ring-hi) !important;
+  box-shadow: var(--tile-shadow-hi) !important;
+}
+
+/* imágenes dentro (logo grande sin “capa” blanca) */
+.page-index .hero-gallery-tabs .hero-tab img,
+.page-index .reel-sys-tabs .reel-tab img{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  object-fit: contain !important;
+}
+
+/* =========================================================
+  2) FIX: DOTS del HERO (centrados + barra auto-width)
+========================================================= */
+.page-index #heroGalleryCarousel.carousel{
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important; /* evita recortes raros */
+}
+.page-index #heroGalleryCarousel .carousel-track{
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+
+/* barra dots: centrada, tamaño según cantidad, sin “irse a la izquierda” */
+.page-index #heroGalleryCarousel .carousel-nav{
+  position: static !important;
+  width: max-content !important;
+  max-width: calc(100% - 24px) !important;
+  margin: 10px auto 12px !important;
+  padding: 6px 10px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+
+  border-radius: 999px !important;
+  background: rgba(7,10,18,.12) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.page-index #heroGalleryCarousel .carousel-nav .dot{
+  width: 11px !important;
+  height: 11px !important;
+}
+
+/* =========================================================
+  3) FIX: “aire blanco” en Reels SERVICIOS (quitar hueco)
+========================================================= */
+
+/* En servicios: NO dejes que el carrusel “se estire” de más */
+.page-index #servicios #carouselReels-servicios{
+  overflow: hidden !important;
+}
+.page-index #servicios #carouselReels-servicios .carousel-track{
+  min-height: 0 !important;
+  height: auto !important;
+  align-items: flex-start !important; /* evita centrar con hueco abajo */
+}
+.page-index #servicios #carouselReels-servicios .carousel-slide{
+  padding: 12px 12px 6px !important; /* reduce “aire” inferior del slide */
+  align-items: flex-start !important;
+}
+
+/* el embed un poco más alto SOLO en servicios (sin afectar sistemas) */
+.page-index #servicios .reel-embed{
+  height: clamp(320px, 56svh, 720px) !important;
+  margin: 0 auto !important;
+}
+
+/* dots del carrusel de servicios: pegados al video, sin empujar hacia abajo */
+.page-index #servicios #carouselReels-servicios .carousel-nav{
+  margin: 8px auto 0 !important;
+  padding: 6px 10px !important;
+  width: max-content !important;
+  max-width: calc(100% - 24px) !important;
+  border-radius: 999px !important;
+  background: rgba(7,10,18,.10) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+}
+.page-index #servicios #carouselReels-servicios .carousel-nav .dot{
+  width: 10px !important;
+  height: 10px !important;
+}
+
+/* =========================================================
+  4) FIX: tabs “Contables/Comerciales/…” (que NO se corten extremos)
+========================================================= */
+.page-index .prod-tabs-shell{overflow: visible !important;}
+.page-index .prod-tabs{
+  padding: 8px 12px !important;     /* CLAVE: espacio para que no se “muerdan” bordes */
+  margin: 0 !important;
+  scroll-padding-left: 12px;
+  scroll-padding-right: 12px;
+}
+
+/* =========================================================
+   PATCH — Reels tabs estilo HERO + FIX hueco Reels Servicios
+   Scope: <body class="page-index">
+   Pegar AL FINAL de mainindex.css
+========================================================= */
+
+.page-index{
   --tile-bd: rgba(255,255,255,.14);
   --tile-bd-hi: rgba(96,165,250,.42);
   --tile-bg: rgba(255,255,255,.03);
@@ -821,7 +1694,149 @@
   --tile-shadow-hi: 0 16px 38px rgba(0,0,0,.22);
 }
 
-/* ---------- 1) “Nada rectangular”: superficies redondeadas ---------- */
+/* =========================
+   A) Reels tabs (SISTEMAS) -> look tipo HERO (limpio)
+   - aplica a cualquier .reel-sys-tabs que NO sea la de servicios
+========================= */
+.page-index .reel-sys-tabs{gap:12px!important}
+
+/* Si tu tabs de servicios viene justo después de #carouselReels-servicios,
+   excluimos esa para que "Sistemas" quede con el look HERO */
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab{
+  border:1px solid var(--tile-bd)!important;
+  background:var(--tile-bg)!important;
+  border-radius:18px!important;
+  box-shadow:var(--tile-shadow)!important;
+
+  outline:2px solid var(--tile-ring)!important;
+  outline-offset:0!important;
+
+  min-height:110px!important;
+  padding:16px!important;
+
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+
+  transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease, outline-color .14s ease;
+}
+
+@media(hover:hover){
+  .page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab:hover{
+    border-color:var(--tile-bd-hi)!important;
+    background:var(--tile-bg-hi)!important;
+    outline-color:var(--tile-ring-hi)!important;
+    box-shadow:var(--tile-shadow-hi)!important;
+    transform:translateY(-1px);
+  }
+}
+
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab.active{
+  border-color:var(--tile-bd-hi)!important;
+  background:var(--tile-bg-hi)!important;
+  outline-color:var(--tile-ring-hi)!important;
+  box-shadow:var(--tile-shadow-hi)!important;
+}
+
+/* Logo grande, centrado, sin “capa blanca” */
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab img{
+  height:64px!important;
+  max-width:min(260px,92%)!important;
+  width:auto!important;
+  object-fit:contain!important;
+
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  padding:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+/* Texto: opcional. Si quieres el look EXACTO del HERO (solo logo), ocúltalo */
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab span{
+  margin-top:8px!important;
+  font-weight:950!important;
+  font-size:.90rem!important;
+  line-height:1.05!important;
+  color:rgba(232,238,246,.92)!important;
+}
+/* Si lo quieres “solo logo”, descomenta:
+.page-index .reel-sys-tabs:not(#carouselReels-servicios + .reel-sys-tabs) .reel-tab span{display:none!important}
+*/
+
+/* =========================
+   B) FIX Reels SERVICIOS (hueco blanco)
+   - Evita “igualar alturas” y que el carrusel se estire de más
+========================= */
+
+/* 1) Alinea al inicio en desktop para que NO fuerce altura */
+@media(min-width:980px){
+  .page-index #servicios .grid-2{align-items:start!important}
+  .page-index #servicios .reels-home-card{align-self:start!important;height:auto!important}
+}
+
+/* 2) Carrusel de servicios: que el track/slide no reserve alto extra */
+.page-index #servicios #carouselReels-servicios{
+  overflow:hidden!important;
+}
+.page-index #servicios #carouselReels-servicios .carousel-track{
+  min-height:0!important;
+  height:auto!important;
+  overflow:hidden!important;
+  align-items:flex-start!important; /* clave: evita centrado que “deja aire” abajo */
+}
+.page-index #servicios #carouselReels-servicios .carousel-slide{
+  padding:12px 12px 6px!important; /* reduce aire inferior */
+  align-items:flex-start!important;
+}
+
+/* 3) Video un poco más alto SOLO en servicios (sin tocar otros reels) */
+.page-index #servicios .reel-embed{
+  height:clamp(320px, 56svh, 720px)!important;
+  margin:0 auto!important;
+}
+
+/* 4) Dots pegados al video (no empujan hacia abajo) */
+.page-index #servicios #carouselReels-servicios .carousel-nav{
+  margin:8px auto 0!important;
+  padding:6px 10px!important;
+  width:max-content!important;
+  max-width:calc(100% - 24px)!important;
+  border-radius:999px!important;
+  background:rgba(7,10,18,.10)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.page-index #servicios #carouselReels-servicios .carousel-nav .dot{
+  width:10px!important;
+  height:10px!important;
+}
+
+/* 5) Padding del body de la card para que no “reserve” blanco */
+.page-index #servicios .reels-home-card .body{
+  padding-bottom:12px!important;
+}
+
+/* =========================================================
+   INDEX PATCH — Rounded UX + Dots centered (auto-width)
+   Scope: <body class="page-index">
+   Pegar AL FINAL de mainindex.css  (v2026.01.05-dots-round)
+========================================================= */
+
+/* ---------- 0) Tokens de radio consistentes (UX/UI) ---------- */
+.page-index{
+  --r-sm:12px;
+  --r-md:16px;
+  --r-lg:18px;
+  --r-xl:22px;
+}
+
+/* ---------- 1) “Nada rectangular”: redondea TODO lo blanco/placas ---------- */
+/* Cards / superficies */
 .page-index .card,
 .page-index .promo-item,
 .page-index .faq-item,
@@ -832,151 +1847,93 @@
   overflow:hidden;
 }
 
-/* Pills/botones/input (premium, no tan “pastilla” extrema) */
-.page-index .btn{border-radius:var(--r-md)!important}
+/* Botones / tabs / badges / pills / inputs */
+.page-index .btn,
+.page-index .badge,
+.page-index .prod-tabs .tab,
+.page-index .hero-group-tab,
+.page-index .hero-tab,
+.page-index .reel-tab,
 .page-index input,
 .page-index select,
-.page-index textarea{border-radius:var(--r-md)!important}
+.page-index textarea{
+  border-radius:999px; /* pills por defecto */
+}
 
-/* Tiles (logos) como tarjeta redondeada */
+/* Tabs con logo (tiles): mejor como “tarjeta” redondeada, no pill */
 .page-index .hero-tab,
-.page-index .reel-tab{border-radius:var(--r-lg)!important}
-
-/* ---------- 2) TILES: Hero groups + Hero tabs + Reels tabs (look limpio) ---------- */
-.page-index .hero-gallery-groups .hero-group-tab,
-.page-index .hero-gallery-tabs .hero-tab,
-.page-index .reel-sys-tabs .reel-tab{
-  border:1px solid var(--tile-bd)!important;
-  background:var(--tile-bg)!important;
-  box-shadow:var(--tile-shadow)!important;
-  outline:2px solid var(--tile-ring)!important;
-  outline-offset:0!important;
-  transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease, background .14s ease, outline-color .14s ease;
+.page-index .reel-tab{
+  border-radius:var(--r-lg)!important;
 }
 
-@media(hover:hover){
-  .page-index .hero-gallery-groups .hero-group-tab:hover,
-  .page-index .hero-gallery-tabs .hero-tab:hover,
-  .page-index .reel-sys-tabs .reel-tab:hover{
-    border-color:var(--tile-bd-hi)!important;
-    background:var(--tile-bg-hi)!important;
-    outline-color:var(--tile-ring-hi)!important;
-    box-shadow:var(--tile-shadow-hi)!important;
-    transform:translateY(-1px);
-  }
+/* Inputs no tan “pastilla” (más serio) */
+.page-index input,
+.page-index select,
+.page-index textarea{
+  border-radius:var(--r-md)!important;
 }
 
-.page-index .hero-gallery-groups .hero-group-tab.active,
-.page-index .hero-gallery-tabs .hero-tab.active,
-.page-index .reel-sys-tabs .reel-tab.active{
-  border-color:var(--tile-bd-hi)!important;
-  background:var(--tile-bg-hi)!important;
-  outline-color:var(--tile-ring-hi)!important;
-  box-shadow:var(--tile-shadow-hi)!important;
+/* Botones normales: un poco menos pastilla para verse premium */
+.page-index .btn{
+  border-radius:var(--r-md)!important;
 }
 
-/* tamaños “premium” (evita mini-tiles) */
-.page-index .hero-gallery-groups .hero-group-tab{
-  min-height:46px!important;
-  padding:10px 14px!important;
-  font-weight:900!important;
-}
-.page-index .hero-gallery-tabs .hero-tab{
-  min-height:106px!important;
-  padding:16px!important;
-}
-.page-index .reel-sys-tabs .reel-tab{
-  min-height:96px!important;
-  padding:14px 12px!important;
-}
-
-/* logos sin “placa blanca” forzada */
-.page-index .hero-gallery-tabs .hero-tab img,
-.page-index .reel-sys-tabs .reel-tab img{
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
-  filter:none!important;
-  object-fit:contain!important;
-}
-
-/* ---------- 3) DOTS: centrados SIEMPRE + ancho auto (según cantidad) ---------- */
+/* ---------- 2) Dots: SIEMPRE centrados + ancho según cantidad ---------- */
 /* Regla base para TODOS los carousels del index */
 .page-index .carousel .carousel-nav{
+  /* shrink-to-fit + centrado real */
   display:inline-flex!important;
   align-items:center!important;
   justify-content:center!important;
   gap:8px!important;
 
-  width:max-content!important;
+  width:max-content!important;        /* clave: ancho según dots */
   max-width:calc(100% - 24px)!important;
-  margin:10px auto 12px!important;
+  margin:10px auto 12px!important;    /* clave: centrado */
   padding:6px 10px!important;
 
   border-radius:999px!important;
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
 
+  /* barra blur más “limpia” */
   background:rgba(7,10,18,.12)!important;
   border:1px solid rgba(255,255,255,.10)!important;
 
-  /* neutraliza viejos absolute/left */
-  position:static!important;
-  left:auto!important;right:auto!important;
+  /* evita que reglas viejas la “muevan” */
+  left:auto!important; right:auto!important;
   transform:none!important;
+  text-align:center!important;
   pointer-events:auto!important;
 }
 
+/* Dots tamaño consistente */
 .page-index .carousel .carousel-nav .dot{
   width:11px!important;
   height:11px!important;
   border-radius:999px!important;
-  margin:0!important;
+  margin:0!important; /* por si traías margin lateral */
 }
 
-/* HERO: fuerza el mismo comportamiento (por si antes era distinto) */
+/* ---------- 3) HERO: si TU hero tiene dots “static”, se respeta; si eran absolute, los neutralizamos ---------- */
 .page-index #heroGalleryCarousel .carousel-nav{
+  position:static!important;          /* evita descentrado por absolute+left */
   margin:10px auto 12px!important;
 }
 
-/* ---------- 4) Reels Servicios: quitar “hueco blanco” ---------- */
-@media(min-width:980px){
-  .page-index #servicios .grid-2{align-items:start!important}
-  .page-index #servicios .reels-home-card{align-self:start!important;height:auto!important}
-}
+/* ---------- 4) REELS (Servicios y Sistemas): pega dots al video, sin “hueco blanco” ---------- */
+.page-index .reels-home-card .body{padding-bottom:12px!important;}
+.page-index .reels-home-card .carousel{margin-bottom:8px!important;padding-bottom:0!important;}
 
-/* track/slide no reservan alto extra */
-.page-index #servicios #carouselReels-servicios{overflow:hidden!important}
-.page-index #servicios #carouselReels-servicios .carousel-track{
-  min-height:0!important;
-  height:auto!important;
-  overflow:hidden!important;
-  align-items:flex-start!important;
-}
+/* Ajuste fino: servicios suele “empujar” más */
 .page-index #servicios #carouselReels-servicios .carousel-slide{
-  padding:12px 12px 6px!important;
-  align-items:flex-start!important;
+  padding:12px 12px 6px!important;   /* reduce aire inferior */
 }
-
-/* dots pegados al video */
 .page-index #servicios #carouselReels-servicios .carousel-nav{
-  margin:8px auto 0!important;
+  margin:8px auto 0!important;       /* más pegado al video */
 }
 
-/* body no “reserva” aire */
-.page-index #servicios .reels-home-card .body{padding-bottom:12px!important}
-.page-index .reels-home-card .carousel{margin-bottom:8px!important;padding-bottom:0!important}
-
-/* ---------- 5) FIX: tabs productos no se “muerden” bordes ---------- */
-.page-index .prod-tabs-shell{overflow:visible!important}
-.page-index .prod-tabs{
-  padding:8px 12px!important;
-  margin:0!important;
-  scroll-padding-left:12px;
-  scroll-padding-right:12px;
-}
-
-/* ---------- 6) LIGHT (solo index): dots legibles sin “mancha” ---------- */
+/* ---------- 5) LIGHT: barra dots clara y elegante (sin “mancha”) ---------- */
 html[data-theme="light"] .page-index .carousel .carousel-nav{
   background:rgba(255,255,255,.55)!important;
   border:1px solid rgba(2,6,23,.10)!important;
@@ -989,5 +1946,4 @@ html[data-theme="light"] .page-index .carousel .carousel-nav .dot.active{
   background:rgba(45,212,191,.95)!important;
   border-color:rgba(45,212,191,.95)!important;
 }
-
 
