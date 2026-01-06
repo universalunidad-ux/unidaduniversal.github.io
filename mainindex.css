@@ -1082,3 +1082,115 @@ html[data-theme="light"] .page-index .gradient-word{
   filter:saturate(1.15) contrast(1.15);
 }
 
+/* =========================================================
+  INDEX PATCH — UI/UX + LIGHT CONTRAST + TILES + FAQ + CONTACT
+  v2026.01.05 (pegar al FINAL de mainindex.css)
+  Requiere: <body class="page-index"> y theme.css cargado
+========================================================= */
+
+/* ===== 0) INDEX no a todo lo ancho (más “editorial”) ===== */
+:root{--maxw-index:960px}
+.page-index .container,.page-index main.container{max-width:var(--maxw-index);padding-left:clamp(14px,2.4vw,22px);padding-right:clamp(14px,2.4vw,22px)}
+@media(min-width:1400px){.page-index .container,.page-index main.container{max-width:980px}}
+
+/* ===== 1) FIX: gradient-word SIEMPRE visible (dark + light) ===== */
+.page-index .gradient-word{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2))!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  color:transparent!important;-webkit-text-fill-color:transparent!important;
+  font-weight:900;
+}
+html[data-theme="light"] .page-index .gradient-word{filter:saturate(1.15) contrast(1.18)}
+
+/* ===== 2) HERO: TILES (logos GRANDES y ocupando el grid) =====
+   Objetivo: quitar sensación “pastillita” pequeña dentro del tile */
+.page-index .hero-gallery-tabs{gap:12px!important}
+.page-index .hero-tab{
+  width:100%!important;min-width:0!important;
+  min-height:110px!important; /* antes muy bajito */
+  padding:18px!important;     /* más aire para el logo grande */
+  display:flex!important;align-items:center!important;justify-content:center!important;
+}
+.page-index .hero-tab img{
+  height:64px!important;max-width:min(240px,92%)!important;width:auto!important;
+  object-fit:contain!important;border:0!important;border-radius:0!important;
+  background:transparent!important;padding:0!important;box-shadow:none!important;
+}
+/* Si tu HTML trae un wrapper tipo “pill” dentro del tile, lo neutralizamos */
+.page-index .hero-tab .pill,
+.page-index .hero-tab .chip,
+.page-index .hero-tab .badge,
+.page-index .hero-tab .logo-pill{
+  background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important;
+}
+
+/* ===== 3) Reels tabs (Sistemas/Servicios): TILES full + logo grande ===== */
+.page-index .reel-sys-tabs{gap:12px!important}
+.page-index .reel-tab{
+  width:100%!important;min-width:0!important;
+  min-height:110px!important;padding:16px!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+}
+.page-index .reel-tab img{
+  height:60px!important;max-width:min(240px,92%)!important;width:auto!important;
+  object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;padding:0!important;box-shadow:none!important;
+}
+.page-index .reel-tab span{font-size:.92rem!important;font-weight:950!important}
+
+/* ===== 4) Reels Servicios: más alto (quita “vacío” en tu screenshot) =====
+   Nota: esto NO afecta otros reels; solo la sección #servicios */
+.page-index #servicios{--reel-scale-serv:.96}
+.page-index #servicios .reel-embed{
+  height:clamp(calc(270px * var(--reel-scale-serv)),calc(54svh * var(--reel-scale-serv)),calc(640px * var(--reel-scale-serv)));
+}
+
+/* ===== 5) Promociones: botones con marca Expiriti ===== */
+.page-index .promo-btn{font-weight:900}
+.page-index .promo-btn.active{
+  border-color:rgba(45,212,191,.55)!important;
+  background:linear-gradient(90deg,rgba(45,212,191,.22),rgba(96,165,250,.18))!important;
+}
+
+/* ===== 6) FAQ: ancho completo + justificado (Index / Servicios / Sistemas) =====
+   Quita “recorte” típico por max-width de p global */
+.page-index .faq-item p{max-width:none!important;width:100%!important;text-align:justify;text-justify:inter-word;hyphens:auto}
+@media(max-width:520px){.page-index .faq-item p{text-align:left;hyphens:none}}
+
+/* Global “seguro” para otras páginas (si comparten .faq-item) */
+.faq-item p{max-width:none}
+
+/* ===== 7) Contacto (“Hablemos…”): menos alto ===== */
+.page-index #contacto.section-full{padding-top:18px!important;padding-bottom:18px!important}
+.page-index #contacto .card.body{padding:14px!important}
+.page-index #contacto textarea{min-height:96px!important}
+
+/* ===== 8) LIGHT: contraste específico (scopeado al INDEX) ===== */
+html[data-theme="light"] .page-index .promo-btn{
+  color:#334155!important;background:#fff!important;border-color:#cbd5e1!important;
+}
+html[data-theme="light"] .page-index .promo-btn.active{
+  background:rgba(45,212,191,.18)!important;border-color:#0d9488!important;color:#0b1220!important;
+}
+html[data-theme="light"] .page-index .reel-tab{
+  background:#fff!important;border-color:#e2e8f0!important;box-shadow:0 2px 5px rgba(0,0,0,.05)!important;
+}
+html[data-theme="light"] .page-index .reel-tab span{color:#334155!important}
+html[data-theme="light"] .page-index .reel-tab.active{
+  background:rgba(96,165,250,.10)!important;border-color:#3b82f6!important;
+}
+html[data-theme="light"] .page-index .prod-tabs .tab{
+  color:#334155!important;background:#f8fafc!important;border-color:#cbd5e1!important;box-shadow:0 2px 4px rgba(0,0,0,.05)!important;
+}
+html[data-theme="light"] .page-index .prod-tabs .tab.active{
+  color:#0f172a!important;background:#eff6ff!important;border-color:#3b82f6!important;
+}
+
+/* ===== 9) Dots del HERO: barra blur más transparente + ancho auto ===== */
+.page-index #heroGalleryCarousel .carousel-nav{
+  background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;
+  width:max-content!important;max-width:calc(100% - 24px)!important;
+}
+html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav{
+  background:rgba(255,255,255,.52)!important;border:1px solid rgba(2,6,23,.10)!important;
+}
