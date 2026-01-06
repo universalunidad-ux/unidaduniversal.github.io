@@ -1263,3 +1263,27 @@ html[data-theme="light"] .page-index #promociones .promo-btn.active{
 html[data-theme="light"] .page-index a{color: inherit !important;}
 
 
+/* =========================================================
+   INDEX — Layout: 80% width en desktop (sin romper mobile)
+========================================================= */
+
+/* El contenedor manda el ancho real de todo el contenido */
+.page-index .container{
+  width: min(80vw, var(--maxw, 1200px));
+  max-width: none; /* porque ya controlamos con width */
+}
+
+/* En pantallas medianas: un poco más ancho */
+@media(max-width: 1100px){
+  .page-index .container{
+    width: min(92vw, var(--maxw, 1200px));
+  }
+}
+
+/* En móvil: full usable */
+@media(max-width: 720px){
+  .page-index .container{
+    width: 100%;
+    max-width: var(--maxw, 1200px);
+  }
+}
