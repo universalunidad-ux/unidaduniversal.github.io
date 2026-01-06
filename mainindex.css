@@ -934,10 +934,12 @@ html[data-theme="light"] .page-index .card *{opacity:1}
 }
 
 /* =========================================================
-   INDEX FIX — .gradient-word visible (dark + light) v2026.01.XX
-   PEGA AL FINAL de mainindex.css
+   INDEX FIX — gradient-word visible en HERO H1 (dark + light)
+   v2026.01.XX (PEGA AL FINAL de mainindex.css)
 ========================================================= */
-.page-index .gradient-word{
+
+/* 1) Fuerza gradiente SOLO en el H1 del hero (tu caso exacto) */
+.page-index .hero h1 .gradient-word{
   --gw-gold:rgba(218,153,7,1);
   --gw-teal:rgba(13,142,144,1);
   background:linear-gradient(90deg,var(--gw-gold),color-mix(in srgb,var(--gw-gold) 35%, var(--gw-teal)),var(--gw-teal))!important;
@@ -947,12 +949,15 @@ html[data-theme="light"] .page-index .card *{opacity:1}
   -webkit-text-fill-color:transparent!important;
   font-weight:900!important;
   opacity:1!important;
-  text-shadow:none!important;
+  display:inline; /* evita rarezas de layout */
 }
-/* Light: más “legible” sin perder gradiente */
-html[data-theme="light"] .page-index .gradient-word{
-  filter:saturate(1.15) contrast(1.25);
+
+/* 2) Light: súbele contraste (sin cambiar colores) */
+html[data-theme="light"] .page-index .hero h1 .gradient-word{
+  filter:saturate(1.15) contrast(1.30);
 }
-/* Por si algún padre lo está “apagando” */
-.page-index .gradient-word{mix-blend-mode:normal!important}
+
+/* 3) Si algún global te mete “text-fill” o color en spans dentro de h1, lo anulamos */
+.page-index .hero h1 .gradient-word{mix-blend-mode:normal!important;text-shadow:none!important}
+
 
