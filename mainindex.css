@@ -1194,3 +1194,155 @@ html[data-theme="light"] .page-index .prod-tabs .tab.active{
 html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav{
   background:rgba(255,255,255,.52)!important;border:1px solid rgba(2,6,23,.10)!important;
 }
+
+
+/* =========================================================
+  INDEX PATCH — precise for your HTML (page-index)
+  Pegar al FINAL de mainindex.css  (v2026.01.05-a)
+========================================================= */
+
+/* ===== A) Ancho editorial (index no tan ancho) ===== */
+:root{--maxw-index:980px}
+.page-index .container{max-width:var(--maxw-index)}
+@media(min-width:1400px){:root{--maxw-index:1040px}}
+
+/* ===== B) FIX gradient-word (no se “apaga” en light) ===== */
+.page-index .gradient-word{
+  background:linear-gradient(90deg,var(--brand),var(--brand-2)) !important;
+  -webkit-background-clip:text !important;background-clip:text !important;
+  color:transparent !important;-webkit-text-fill-color:transparent !important;
+  font-weight:900;
+}
+html[data-theme="light"] .page-index .gradient-word{filter:saturate(1.15) contrast(1.15)}
+
+/* ===== C) HERO: grupos (#heroGalleryGroups) “scrollables” + centrado ===== */
+.page-index #heroGalleryGroups{
+  display:flex;gap:10px;overflow:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;padding:8px 4px 10px;mask-image:linear-gradient(90deg,transparent, #000 8%, #000 92%, transparent);
+}
+.page-index #heroGalleryGroups>*{scroll-snap-align:center}
+
+/* ===== D) HERO: tiles de sistemas (#heroGalleryTabs) FULL, logos grandes ===== */
+.page-index #heroGalleryTabs{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+@media(min-width:980px){
+  .page-index #heroGalleryTabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+.page-index #heroGalleryTabs .hero-tab,
+.page-index #heroGalleryTabs > button{
+  width:100%!important;min-width:0!important;
+  min-height:112px!important;
+  padding:16px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  border-radius:18px!important;
+}
+.page-index #heroGalleryTabs .hero-tab img,
+.page-index #heroGalleryTabs > button img{
+  height:64px!important;max-width:min(260px,92%)!important;width:auto!important;
+  object-fit:contain!important;
+  background:transparent!important;border:0!important;border-radius:0!important;
+  padding:0!important;box-shadow:none!important;filter:none!important;
+}
+
+/* ===== E) HERO: dots abajo y barra blur más transparente (auto-width) ===== */
+.page-index #heroGalleryCarousel{position:relative}
+.page-index #heroGalleryCarousel .carousel-nav{
+  position:absolute;left:50%;bottom:10px;transform:translateX(-50%);
+  width:max-content;max-width:calc(100% - 22px);
+  padding:8px 10px;border-radius:999px;
+  backdrop-filter:blur(10px);
+  background:rgba(7,10,18,.14); /* más transparente */
+  border:1px solid rgba(255,255,255,.10);
+  display:flex;gap:8px;align-items:center;justify-content:center;
+}
+html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav{
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(2,6,23,.10);
+}
+
+/* ===== F) Reels tabs (tus .reel-sys-tabs): tiles FULL + logo grande ===== */
+.page-index .reel-sys-tabs{
+  display:grid;gap:10px;margin-top:12px;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+@media(max-width:520px){
+  .page-index .reel-sys-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+.page-index .reel-sys-tabs .reel-tab{
+  width:100%!important;min-width:0!important;
+  min-height:106px!important;
+  padding:12px 10px!important;
+  display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;
+  border-radius:16px!important;
+}
+.page-index .reel-sys-tabs .reel-tab img{
+  height:58px!important;width:auto!important;max-width:92%!important;
+  object-fit:contain!important;
+  background:transparent!important;border:0!important;border-radius:0!important;padding:0!important;box-shadow:none!important;
+}
+.page-index .reel-sys-tabs .reel-tab span{
+  margin-top:8px!important;
+  font-size:.92rem!important;
+  font-weight:950!important;
+  line-height:1.05!important;
+}
+
+/* ===== G) Reels de SERVICIOS: quitar vacío (hacer el embed más alto) =====
+   Solo aplica al bloque de la derecha en #servicios */
+.page-index #servicios #carouselReels-servicios .carousel-track,
+.page-index #servicios #carouselReels-servicios iframe,
+.page-index #servicios #carouselReels-servicios .yt{
+  height:clamp(320px,56svh,720px)!important;
+}
+.page-index #servicios .reels-home-card .carousel{margin-bottom:12px}
+
+/* ===== H) Promos: filtros marca Expiriti (dark + light) ===== */
+.page-index #promociones .promo-filters{gap:10px}
+.page-index #promociones .promo-btn{
+  font-weight:950;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+}
+.page-index #promociones .promo-btn.active{
+  border-color:rgba(45,212,191,.55);
+  background:linear-gradient(90deg,rgba(45,212,191,.22),rgba(96,165,250,.18));
+}
+html[data-theme="light"] .page-index #promociones .promo-btn{
+  background:#fff;border-color:#cbd5e1;color:#334155;
+}
+html[data-theme="light"] .page-index #promociones .promo-btn.active{
+  background:rgba(45,212,191,.18);
+  border-color:#0d9488;color:#0b1220;
+}
+
+/* ===== I) FAQ: ancho completo + justificado (evita “recorte”) ===== */
+.page-index #faq .faq-item p{
+  max-width:none!important;width:100%!important;
+  text-align:justify;text-justify:inter-word;hyphens:auto;
+}
+@media(max-width:520px){
+  .page-index #faq .faq-item p{text-align:left;hyphens:none}
+}
+
+/* ===== J) Contacto: menos alto + mapa más bajo en desktop ===== */
+.page-index #contacto{padding-top:18px;padding-bottom:18px}
+.page-index #contacto .lead{margin-bottom:10px}
+.page-index #contacto textarea{min-height:96px}
+.page-index #contacto .map-card{padding:14px!important}
+.page-index #contacto .map-embed{border-radius:16px;overflow:hidden}
+@media(min-width:980px){
+  .page-index #contacto .map-embed{min-height:280px} /* reduce altura vs antes */
+}
+
+/* ===== K) Light mode: asegurar contraste de tabs de productos (Contables/…) ===== */
+html[data-theme="light"] .page-index .prod-tabs .tab{
+  background:#f8fafc;border-color:#cbd5e1;color:#334155;
+  box-shadow:0 2px 4px rgba(0,0,0,.05);
+}
+html[data-theme="light"] .page-index .prod-tabs .tab.active{
+  background:#eff6ff;border-color:#3b82f6;color:#0b1220;
+}
