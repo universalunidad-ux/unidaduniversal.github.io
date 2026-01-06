@@ -276,31 +276,6 @@
 @media(max-width:980px){.page-index .arrowCircle{display:none}}
 @media(max-width:980px){.page-index .hero .arrowCircle{display:flex}} /* hero sí */
 
-/* =========================
-   8) HERO Carousel: dots abajo + contain (sin recorte)
-========================= */
-.page-index #heroGalleryCarousel{background:transparent!important;border-color:rgba(255,255,255,.10)!important}
-.page-index #heroGalleryCarousel.carousel{display:flex!important;flex-direction:column!important;overflow:visible!important}
-.page-index #heroGalleryCarousel .carousel-track{
-  flex:1 1 auto!important;min-height:0!important;height:100%!important;overflow:hidden!important
-}
-.page-index #heroGalleryCarousel .carousel-slide{
-  height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important
-}
-.page-index #heroGalleryCarousel .hero-slide img{
-  width:100%!important;height:100%!important;display:block!important;
-  object-fit:contain!important;object-position:center!important;background:transparent!important
-}
-/* dots abajo, blur más transparente y ancho según dots */
-.page-index #heroGalleryCarousel .carousel-nav{
-  position:static!important;width:max-content!important;max-width:calc(100% - 24px)!important;
-  margin:10px auto 12px!important;padding:6px 10px!important;gap:8px!important;border-radius:999px!important;
-  background:rgba(7,10,18,.14)!important;border:1px solid rgba(255,255,255,.10)!important;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  pointer-events:auto!important;justify-content:center!important
-}
-.page-index #heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
-@media(min-width:981px){.page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}}
 
 /* =========================
    9) Productos: barra + tabs + grid + CTA abajo
@@ -724,7 +699,6 @@ html[data-theme="light"] .page-index .gradient-word{filter:saturate(1.15) contra
 .page-index #heroGalleryGroups,.page-index #heroGalleryTabs{flex:0 0 auto}
 .page-index #heroGalleryCarousel{flex:1 1 auto;min-height:240px;display:flex;flex-direction:column;position:relative}
 .page-index #heroGalleryCarousel .carousel-track{flex:1 1 auto;min-height:0;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory}
-.page-index #heroGalleryCarousel .hero-slide img{width:100%;height:100%;object-fit:contain;object-position:center;background:transparent}
 /* Dots HERO (neutraliza absolute/left) */
 .page-index #heroGalleryCarousel .carousel-nav{position:static!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;border-radius:999px!important;background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);left:auto!important;right:auto!important;transform:none!important;text-align:center!important}
 .page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important;margin:0!important;border-radius:999px!important}
@@ -924,12 +898,6 @@ html[data-theme="light"] .page-index .card *{opacity:1}
     padding:10px!important;
   }
   .page-index #heroGalleryCarousel .hero-slide img,
-  .page-index #heroGalleryCarousel .carousel-slide img{
-    width:100%!important;height:100%!important;
-    max-width:100%!important;max-height:100%!important;
-    object-fit:contain!important;object-position:center!important;
-    background:transparent!important;
-  }
   .page-index #heroGalleryCarousel{min-height:520px!important} /* ajustable */
 }
 
@@ -1038,3 +1006,86 @@ html[data-theme="light"] .page-index .hero h1 .gradient-word{
 .page-index #heroGalleryCarousel .carousel-track{z-index:2!important}
 .page-index #heroGalleryCarousel .carousel-nav{z-index:3!important}
 .page-index #heroGalleryCarousel .arrowCircle{z-index:4!important}
+
+
+/* =========================================================
+   HERO FINAL — arrows OK + dots abajo + cover desktop + blur src var
+   v2026.01.06
+========================================================= */
+
+/* 0) Asegura stacking correcto del hero carousel */
+.page-index #heroGalleryCarousel{position:relative!important; overflow:visible!important}
+.page-index #heroGalleryCarousel .carousel-track{position:relative!important; z-index:2!important}
+.page-index #heroGalleryCarousel .carousel-nav{position:static!important; z-index:3!important}
+.page-index #heroGalleryCarousel .arrowCircle{z-index:4!important}
+
+/* 1) Flechas SIEMPRE absolutas y centradas */
+.page-index #heroGalleryCarousel .arrowCircle{
+  position:absolute!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+}
+.page-index #heroGalleryCarousel .arrowCircle.prev{left:12px!important}
+.page-index #heroGalleryCarousel .arrowCircle.next{right:12px!important}
+
+/* 2) Dots abajo, centrados, ancho según cantidad */
+.page-index #heroGalleryCarousel .carousel-nav{
+  width:max-content!important;
+  max-width:calc(100% - 24px)!important;
+  margin:10px auto 12px!important;
+  padding:6px 10px!important;
+  gap:8px!important;
+  border-radius:999px!important;
+  background:rgba(7,10,18,.14)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  display:flex!important;
+  justify-content:center!important;
+  pointer-events:auto!important;
+}
+
+/* 3) HERO imagen: desktop sin aire => cover */
+@media(min-width:980px){
+  .page-index #heroGalleryCarousel .carousel-track{overflow:hidden!important}
+  .page-index #heroGalleryCarousel .carousel-slide,
+  .page-index #heroGalleryCarousel .hero-slide{
+    height:100%!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:stretch!important;
+    justify-content:stretch!important;
+  }
+  .page-index #heroGalleryCarousel .carousel-slide img,
+  .page-index #heroGalleryCarousel .hero-slide img{
+    width:100%!important;height:100%!important;
+    object-fit:cover!important;
+    object-position:center!important;
+    max-width:none!important;max-height:none!important;
+    display:block!important;
+  }
+}
+
+/* 4) Blur desde la imagen activa usando --hero-blur (lo setea JS) */
+.page-index #heroGalleryCarousel::before{
+  content:"";
+  position:absolute;
+  inset:-22px;
+  z-index:0;
+  pointer-events:none;
+  background-image:var(--hero-blur, none);
+  background-size:cover;
+  background-position:center;
+  filter:blur(22px);
+  transform:scale(1.08);
+  opacity:.55;
+}
+.page-index #heroGalleryCarousel::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(180deg, rgba(7,10,18,.25), rgba(7,10,18,.55));
+}
+
