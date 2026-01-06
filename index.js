@@ -736,3 +736,28 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
 
   window.addEventListener("splitbg:update", rafSet);
 })();
+
+/* =========================================================
+  INDEX JS PATCH — centrar tab activo (HERO + productos)
+  Pegar 1 vez dentro de tu init (evita duplicar listeners)
+========================================================= */
+(function(){
+  if(window.__IX_TAB_CENTER__) return; window.__IX_TAB_CENTER__=1;
+
+  function centerIntoView(el){
+    try{ el.scrollIntoView({behavior:"smooth", inline:"center", block:"nearest"}); }catch(e){}
+  }
+
+  // HERO grupos (si son scrolleables)
+  document.addEventListener("click", function(e){
+    var t=e.target.closest(".hero-gallery-groups .hero-group-tab");
+    if(t) centerIntoView(t);
+  }, {passive:true});
+
+  // Tabs productos (Contables/Comerciales/Nube/...)
+  document.addEventListener("click", function(e){
+    var t=e.target.closest(".prod-tabs .tab");
+    if(t) centerIntoView(t);
+  }, {passive:true});
+})();
+
