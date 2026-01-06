@@ -278,6 +278,34 @@ html[data-theme="light"] #gh-header .gh-svcdots{
   border-color: rgba(2,6,23,.10) !important;
 }
 
+ /* =========================================================
+  FINAL — WhatsApp Header: número SIEMPRE blanco (blindado)
+========================================================= */
+#gh-header .gh-btn-wa,
+#gh-header .gh-btn-wa *{
+  color:#fff !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Fuerza el número explícitamente */
+#gh-header .gh-wa-num{
+  color:#fff !important;
+  font-weight:900;
+}
+
+/* Estados */
+#gh-header .gh-btn-wa:hover,
+#gh-header .gh-btn-wa:active,
+#gh-header .gh-btn-wa:focus{
+  color:#fff !important;
+}
+
+/* Evita que light theme o filtros globales lo toquen */
+html[data-theme="light"] #gh-header .gh-btn-wa,
+html[data-theme="light"] #gh-header .gh-wa-num{
+  color:#fff !important;
+}
+
 </style>
 
 <!-- ===================== TOP BAR ===================== -->
