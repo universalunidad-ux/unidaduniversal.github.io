@@ -901,3 +901,30 @@ html[data-theme="light"] .page-index .card,
 html[data-theme="light"] .page-index .card *{opacity:1}
 
 
+/* =========================================================
+   INDEX PATCH — HERO image desktop = “como mobile” (no toca mobile)
+   v2026.01.XX  (PEGA AL FINAL de mainindex.css)
+========================================================= */
+@media(min-width:980px){
+  /* Desktop: el slide se centra y la imagen se ve completa */
+  .page-index #heroGalleryCarousel .carousel-track{align-items:stretch!important}
+  .page-index #heroGalleryCarousel .hero-slide,
+  .page-index #heroGalleryCarousel .carousel-slide{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:10px!important; /* aire controlado, evita recortes */
+  }
+  .page-index #heroGalleryCarousel .hero-slide img,
+  .page-index #heroGalleryCarousel .carousel-slide img{
+    width:100%!important;
+    height:100%!important;
+    max-width:100%!important;
+    max-height:100%!important;
+    object-fit:contain!important;      /* “como mobile”: completa */
+    object-position:center!important;
+    background:transparent!important;
+  }
+  /* Opcional: si en desktop el frame es demasiado bajo, súbelo ligeramente */
+  .page-index #heroGalleryCarousel{min-height:520px!important}
+}
