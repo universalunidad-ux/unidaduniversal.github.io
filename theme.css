@@ -466,3 +466,76 @@ html[data-theme="light"] .badge[style*="background:rgba(34,197,94"]{
   border-color:rgba(34,197,94,.55)!important;
 }
 
+/* === Expiriti CTAs + Pill ACTIVE (LIGHT ONLY) v2026.01.07 === */
+html[data-theme="light"]{
+  --ex-amber:rgb(233,170,25);
+  --ex-teal:rgb(20,153,151);
+  --ex-coral:rgb(250,82,98);
+}
+
+/* =========================================================
+   1) HERO — 3 CTAs por POSICIÓN (sin tocar HTML)
+   Orden esperado:
+   1) Compra ahora        → ÁMBAR
+   2) Tramitar prueba     → TEAL
+   3) Sesión guiada       → CORAL
+   Los btn-ghost quedan igual
+========================================================= */
+html[data-theme="light"]
+section[aria-label="Resumen"] + div > a:nth-child(1){
+  background:var(--ex-amber)!important;
+  border-color:var(--ex-amber)!important;
+  color:#fff!important;
+}
+html[data-theme="light"]
+section[aria-label="Resumen"] + div > a:nth-child(2){
+  background:var(--ex-teal)!important;
+  border-color:var(--ex-teal)!important;
+  color:#fff!important;
+}
+html[data-theme="light"]
+section[aria-label="Resumen"] + div > a:nth-child(3){
+  background:var(--ex-coral)!important;
+  border-color:var(--ex-coral)!important;
+  color:#fff!important;
+}
+
+/* Hover ligero (solo light) */
+html[data-theme="light"]
+section[aria-label="Resumen"] + div > a:hover{
+  filter:brightness(1.05) saturate(1.05);
+}
+
+/* =========================================================
+   2) CTA FINAL (#sesion-guiada)
+   - Agendar sesión → CORAL
+   - Comprar ahora  → TEAL
+========================================================= */
+html[data-theme="light"] #sesion-guiada .btn:nth-child(1){
+  background:var(--ex-coral)!important;
+  border-color:var(--ex-coral)!important;
+  color:#fff!important;
+}
+html[data-theme="light"] #sesion-guiada .btn:nth-child(2){
+  background:var(--ex-teal)!important;
+  border-color:var(--ex-teal)!important;
+  color:#fff!important;
+}
+
+/* =========================================================
+   3) PILL ACTIVO — Funciones destacadas (Expiriti)
+   Antes: azul
+   Ahora: gradiente TEAL → CORAL + texto blanco
+========================================================= */
+html[data-theme="light"] .pill.active{
+  background:linear-gradient(135deg,
+    var(--ex-teal),
+    var(--ex-coral)
+  )!important;
+  color:#fff!important;
+  border-color:transparent!important;
+  box-shadow:
+    0 0 0 1px rgba(20,153,151,.35),
+    0 12px 28px rgba(0,0,0,.25)!important;
+}
+
