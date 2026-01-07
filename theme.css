@@ -447,3 +447,22 @@ html[data-theme="light"] .listSlider .listIcon img{
   border:var(--logo-frame-border)!important;
   box-shadow:var(--logo-frame-ring),var(--logo-frame-shadow)!important;
 }
+
+/* === Expiriti: FIX badges coloreados en LIGHT v2026.01.07 === */
+html[data-theme="light"] .badge[style*="background:"],
+html[data-theme="light"] .badge[style*="border-color:"],
+html[data-theme="light"] .badge[style*="color:"]{
+  /* En light, la tinta tipo #86efac se pierde; forzamos legibilidad */
+  color:rgba(11,18,32,.92)!important;
+  font-weight:900!important;
+  /* Mantén su color de fondo/borde pero hazlo un poco más visible */
+  filter:saturate(1.05) contrast(1.05)!important;
+}
+
+/* Opcional: si el badge verde queda demasiado “tímido” en light, dale un punch leve */
+html[data-theme="light"] .badge[style*="background:rgba(34, 197, 94"],
+html[data-theme="light"] .badge[style*="background:rgba(34,197,94"]{
+  background:rgba(34,197,94,.22)!important;
+  border-color:rgba(34,197,94,.55)!important;
+}
+
