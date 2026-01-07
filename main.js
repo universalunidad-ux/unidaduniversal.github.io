@@ -758,4 +758,65 @@ W.visualViewport&&W.visualViewport.addEventListener("resize",apply,{passive:true
   window.addEventListener('resize', ()=>setTimeout(refresh,150));
 })();
 
+/* =========================================================
+ Expiriti — REEL TITLE MARQUEE (A11Y SAFE) v2026.01.07
+ - Target: .reel-title.active (Sistemas/Servicios)
+ - Si reduce-motion: NO anima, solo overflow-x:auto
+ - Si hay overflow: duplica texto y anima loop
+ - Reacciona a cambios de .active y a cambios de texto
+========================================================= */
+(()=>{if(window.__EX_REEL_MARQ__)return;window.__EX_REEL_MARQ__=1;
+const D=document,W=window,RED=()=>W.matchMedia&&W.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SEL=".reel-title",SCOPE=".page-sistemas,.page-servicios";
+
+const mk=(t)=>{if(!t||t.__mq)return;t.__mq=1;
+t.classList.add("__mqHost");t.style.position=t.style.position||"relative";
+};
+const teardown=(t)=>{if(!t)return;t.classList.remove("__mqRun");t.style.removeProperty("--mq-dur");
+const tr=t.querySelector(".__mqTrack");if(tr){t.textContent=tr.getAttribute("data-text")||t.textContent||""}
+};
+const apply=(t)=>{if(!t)return;mk(t);
+const txt=(t.textContent||"").trim();if(!txt){teardown(t);return}
+if(RED()){t.classList.add("__mqA11y");/* scroll manual */return}
+t.classList.remove("__mqA11y");
+
+/* Rebuild solo si cambió el texto o no hay track */
+const cur=t.querySelector(".__mqTrack");const curTxt=cur?cur.getAttribute("data-text"):"";
+if(!cur||curTxt!==txt){
+t.textContent="";
+const track=D.createElement("span");track.className="__mqTrack";track.setAttribute("data-text",txt);
+const a=D.createElement("span");a.className="__mqTxt";a.textContent=txt;
+const gap=D.createElement("span");gap.className="__mqGap";gap.textContent=" \u00A0 \u00A0 \u00A0 ";
+const b=D.createElement("span");b.className="__mqTxt";b.textContent=txt;
+track.append(a,gap,b);t.append(track);
+}
+
+/* Medición */
+requestAnimationFrame(()=>{const tr=t.querySelector(".__mqTrack");if(!tr){return}
+const a=tr.querySelector(".__mqTxt");if(!a){return}
+const cw=t.clientWidth||1,sw=a.scrollWidth||1;const of=Math.max(0,sw-cw);
+if(of<=2){t.classList.remove("__mqRun");t.style.removeProperty("--mq-dur");return}
+t.classList.add("__mqRun");
+/* 8..16s según overflow (similar a tu fórmula) */
+const sec=Math.min(16,Math.max(8,8+(of/40)));
+t.style.setProperty("--mq-dur",sec.toFixed(2)+"s");
+});
+};
+
+const refresh=()=>{D.querySelectorAll(SCOPE+" "+SEL).forEach(t=>{
+if(t.classList.contains("active"))apply(t); else teardown(t);
+})};
+
+/* Observa SOLO títulos (class/text) */
+const boot=()=>{refresh();
+const nodes=[...D.querySelectorAll(SCOPE+" "+SEL)];
+if(!nodes.length)return;
+const mo=new MutationObserver(()=>refresh());
+nodes.forEach(n=>mo.observe(n,{attributes:!0,attributeFilter:["class"],characterData:!0,childList:!0,subtree:!0}));
+W.addEventListener("resize",()=>setTimeout(refresh,150),{passive:!0});
+};
+
+D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
+})();
+
 
