@@ -99,43 +99,94 @@ Solo overrides de la página Servicios.
   opacity:.95;
 }
 
-/* === Expiriti SERVICIOS: CTAs + reel-title (LIGHT ONLY) v2026.01.07 === */
-html[data-theme="light"]{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
-
 /* =========================================================
-  1) BOTONES PRINCIPALES (Servicios)
-  - Primeros 3: Expiriti (ambar/teal/coral) + texto blanco
-  - 4+ : blancos + texto negro
-  - No toca dark
+   Expiriti — PATCH SERVICIOS UI (LIGHT ONLY) v2026.01.07
+   Incluye:
+   - Botones principales (3 colores Expiriti + hover premium)
+   - Botones extra (blanco + letra negra)
+   - reel-title con estilo title-gradient
+   Scope: <body class="page-servicios">
+   Dark mode NO se toca
 ========================================================= */
-html[data-theme="light"] .page-servicios .hero-btn{color:#fff!important}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(1){background:var(--ex-amber)!important;border-color:var(--ex-amber)!important;color:#fff!important}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(2){background:var(--ex-teal)!important;border-color:var(--ex-teal)!important;color:#fff!important}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(3){background:var(--ex-coral)!important;border-color:var(--ex-coral)!important;color:#fff!important}
+html[data-theme="light"]{
+  --ex-amber:rgb(233,170,25);
+  --ex-teal:rgb(20,153,151);
+  --ex-coral:rgb(250,82,98);
+}
 
-/* 4° en adelante: blanco + letra negra (modo claro) */
+/* =========================
+   1) BOTONES PRINCIPALES
+========================= */
+html[data-theme="light"] .page-servicios .hero-btn{
+  color:#fff!important;
+  transition:transform .14s ease,box-shadow .14s ease,filter .14s ease;
+}
+
+/* --- 1° ÁMBAR --- */
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(1){
+  background:var(--ex-amber)!important;
+  border-color:var(--ex-amber)!important;
+}
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(1):hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(233,170,25,.35);
+}
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(1):active{
+  transform:translateY(0);
+  box-shadow:0 6px 14px rgba(233,170,25,.28);
+}
+
+/* --- 2° TEAL --- */
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(2){
+  background:var(--ex-teal)!important;
+  border-color:var(--ex-teal)!important;
+}
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(2):hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(20,153,151,.35);
+}
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(2):active{
+  transform:translateY(0);
+  box-shadow:0 6px 14px rgba(20,153,151,.28);
+}
+
+/* --- 3° CORAL --- */
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(3){
+  background:var(--ex-coral)!important;
+  border-color:var(--ex-coral)!important;
+}
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(3):hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(250,82,98,.35);
+}
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(3):active{
+  transform:translateY(0);
+  box-shadow:0 6px 14px rgba(250,82,98,.28);
+}
+
+/* --- 4° en adelante: BLANCOS --- */
 html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(n+4){
   background:rgba(255,255,255,.92)!important;
   border-color:rgba(2,6,23,.14)!important;
   color:rgba(11,18,32,.92)!important;
 }
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(n+4):hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(2,6,23,.12);
+}
 
-/* Hover suave (solo light) */
-html[data-theme="light"] .page-servicios .hero-btn:hover{filter:brightness(1.05) saturate(1.05)}
-
-/* =========================================================
-  2) REEL TITLES (Servicios)
-  - .reel-title se ve como .title-gradient
-  - Solo light (dark intacto)
-========================================================= */
+/* =========================
+   2) REEL TITLE (SERVICIOS)
+   Igual a .title-gradient
+========================= */
 html[data-theme="light"] .page-servicios .reel-title{
   margin:0 0 8px;
   font-weight:950;
   letter-spacing:.01em;
   line-height:1.15;
   background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));
-  -webkit-background-clip:text;background-clip:text;
+  -webkit-background-clip:text;
+  background-clip:text;
   -webkit-text-fill-color:transparent;
   color:transparent;
 }
-
