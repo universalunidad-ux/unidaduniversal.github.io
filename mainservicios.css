@@ -190,3 +190,31 @@ html[data-theme="light"] .page-servicios .reel-title{
   -webkit-text-fill-color:transparent;
   color:transparent;
 }
+
+/* === Expiriti SERVICIOS: HERO CTAs + REEL TITLE (LIGHT ONLY) v2026.01.07 === */
+html[data-theme="light"]{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
+
+/* =========================================================
+  1) HERO: 3 BOTONES PRINCIPALES (solo Servicios)
+  - Fuerza override incluso contra .btn-grad-* con !important
+  - 1=Ámbar 2=Teal 3=Coral (texto blanco)
+  - 4+ (si existieran): blanco + texto negro
+========================================================= */
+html[data-theme="light"] .page-servicios .hero a.btn.hero-btn{color:#fff!important;transition:transform .14s ease,box-shadow .14s ease,filter .14s ease}
+html[data-theme="light"] .page-servicios .hero div[style*="display:flex"]>a.btn.hero-btn:nth-child(1){background:var(--ex-amber)!important;border-color:var(--ex-amber)!important;color:#fff!important}
+html[data-theme="light"] .page-servicios .hero div[style*="display:flex"]>a.btn.hero-btn:nth-child(2){background:var(--ex-teal)!important;border-color:var(--ex-teal)!important;color:#fff!important}
+html[data-theme="light"] .page-servicios .hero div[style*="display:flex"]>a.btn.hero-btn:nth-child(3){background:var(--ex-coral)!important;border-color:var(--ex-coral)!important;color:#fff!important}
+
+/* 4+ blancos (solo si un día agregas más CTAs en ese mismo grupo) */
+html[data-theme="light"] .page-servicios .hero div[style*="display:flex"]>a.btn.hero-btn:nth-child(n+4){background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;color:rgba(11,18,32,.92)!important}
+
+/* Hover/active (light only) */
+html[data-theme="light"] .page-servicios .hero div[style*="display:flex"]>a.btn.hero-btn:hover{transform:translateY(-2px);filter:brightness(1.06) saturate(1.06)}
+html[data-theme="light"] .page-servicios .hero div[style*="display:flex"]>a.btn.hero-btn:active{transform:translateY(0);filter:brightness(1.02)}
+
+/* =========================================================
+  2) REEL TITLE (Servicios)
+  - Que se vea como tu .title-gradient
+========================================================= */
+html[data-theme="light"] .page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
