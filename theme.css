@@ -572,6 +572,15 @@ html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.he
 }
 .reel-title.__mqHost.__mqA11y{overflow-x:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
 .reel-title.__mqHost.__mqA11y .__mqTrack{animation:none!important;transform:none!important}
+/* Reel title overflow visible sin animación (A11Y) */
+.reel-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reel-title.__mqA11y{overflow-x:auto;text-overflow:clip;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+
+/* Indicador visual de overflow (fade) */
+.reel-title.__mqA11y{
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 10%,#000 90%,transparent 100%);
+}
 
 
 
