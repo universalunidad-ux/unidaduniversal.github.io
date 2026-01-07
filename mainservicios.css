@@ -98,3 +98,44 @@ Solo overrides de la página Servicios.
   border-bottom:10px solid transparent;
   opacity:.95;
 }
+
+/* === Expiriti SERVICIOS: CTAs + reel-title (LIGHT ONLY) v2026.01.07 === */
+html[data-theme="light"]{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
+
+/* =========================================================
+  1) BOTONES PRINCIPALES (Servicios)
+  - Primeros 3: Expiriti (ambar/teal/coral) + texto blanco
+  - 4+ : blancos + texto negro
+  - No toca dark
+========================================================= */
+html[data-theme="light"] .page-servicios .hero-btn{color:#fff!important}
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(1){background:var(--ex-amber)!important;border-color:var(--ex-amber)!important;color:#fff!important}
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(2){background:var(--ex-teal)!important;border-color:var(--ex-teal)!important;color:#fff!important}
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(3){background:var(--ex-coral)!important;border-color:var(--ex-coral)!important;color:#fff!important}
+
+/* 4° en adelante: blanco + letra negra (modo claro) */
+html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(n+4){
+  background:rgba(255,255,255,.92)!important;
+  border-color:rgba(2,6,23,.14)!important;
+  color:rgba(11,18,32,.92)!important;
+}
+
+/* Hover suave (solo light) */
+html[data-theme="light"] .page-servicios .hero-btn:hover{filter:brightness(1.05) saturate(1.05)}
+
+/* =========================================================
+  2) REEL TITLES (Servicios)
+  - .reel-title se ve como .title-gradient
+  - Solo light (dark intacto)
+========================================================= */
+html[data-theme="light"] .page-servicios .reel-title{
+  margin:0 0 8px;
+  font-weight:950;
+  letter-spacing:.01em;
+  line-height:1.15;
+  background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+}
+
