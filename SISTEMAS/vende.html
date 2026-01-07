@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="../main.css?v=2026.01.03">
 </head>
 
-<body id="top" class="page-sistemas" data-calc="escritorio">
+<body id="top" class="page-sistemas" data-calc="nube">
   <!-- Header dinámico -->
   <div id="header-placeholder"></div>
 
@@ -329,64 +329,76 @@
     </div>
   </section>
 
-  <!-- ===== PRECIOS / TABLA NUBE ===== -->
-  <section id="calculadora-section" aria-labelledby="calc">
-    <h3 id="calc" class="title-gradient">Planes y Precios (Anuales)</h3>
-    <p class="hint center">CONTPAQi Vende se maneja por suscripción anual basada en el plan y número de usuarios.</p>
-    <div class="card body">
-      <table class="pricing-table-nube" aria-describedby="calc">
-        <thead>
-          <tr>
-            <th>Plan</th>
-            <th>Usuarios Incluidos</th>
-            <th>Timbres / XMLs Históricos</th>
-            <th>Precio Base Anual</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="plan-name">LIGHT<div class="plan-desc">No incluye Addendas/Complementos</div></td>
-            <td>1 Usuario</td>
-            <td>50 Timbres / 250 XMLs</td>
-            <td class="price">$504</td>
-          </tr>
-          <tr>
-            <td class="plan-name">Inicial<div class="plan-desc">No incluye Addendas/Complementos</div></td>
-            <td>1 Usuario</td>
-            <td>Ilimitado / 500 XMLs</td>
-            <td class="price">$1,490</td>
-          </tr>
-          <tr>
-            <td class="plan-name">Equipos<div class="plan-desc">Incluye Addendas y Complementos</div></td>
-            <td>2 Usuarios</td>
-            <td>Ilimitado / 1,000 XMLs</td>
-            <td class="price">$2,490</td>
-          </tr>
-          <tr>
-            <td class="plan-name">Empresarial<div class="plan-desc">Incluye Addendas y Complementos</div></td>
-            <td>4 Usuarios</td>
-            <td>Ilimitado / 2,500 XMLs</td>
-            <td class="price">$4,990</td>
-          </tr>
-          <tr>
-            <td class="plan-name">Corporativo<div class="plan-desc">Incluye Addendas y Complementos</div></td>
-            <td>8 Usuarios</td>
-            <td>Ilimitado / 5,000 XMLs</td>
-            <td class="price">$10,290</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td class="note" colspan="4">
-              <strong>Usuario Adicional:</strong> $1,490 anual (para planes Equipos, Empresarial y Corporativo).
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-      <p class="hint center" style="margin-top:15px;">Precios tomados de tu archivo <code>precios-contpaqi.js</code>. Precios más IVA.</p>
-    </div>
+   <!-- ===== PRECIOS / TABLA NUBE (JSON 2026) ===== -->
+<section id="calculadora-section" aria-labelledby="calc">
+  <h3 id="calc" class="title-gradient">Planes y Precios (Anuales)</h3>
+  <p class="hint center">CONTPAQi Vende se maneja por suscripción anual basada en el plan y número de usuarios.</p>
 
-  <!-- ===== COMPARATIVAS ===== -->
+  <div class="card body">
+    <table class="pricing-table-nube" aria-describedby="calc">
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th>Usuarios Incluidos</th>
+          <th>Notas</th>
+          <th style="text-align:right">Precio Base Anual</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td class="plan-name">LIGHT<div class="plan-desc">Entrada / operaciones básicas</div></td>
+          <td>1 Usuario</td>
+          <td>Funciones esenciales del sistema</td>
+          <td class="price">$690</td>
+        </tr>
+
+        <tr>
+          <td class="plan-name">Inicial<div class="plan-desc">Para facturar y cobrar sin complicarte</div></td>
+          <td>1 Usuario</td>
+          <td>Para la mayoría de PyMEs</td>
+          <td class="price">$1,690</td>
+        </tr>
+
+        <tr>
+          <td class="plan-name">Equipos<div class="plan-desc">Para operar con 2 usuarios</div></td>
+          <td>2 Usuarios</td>
+          <td>Mejor para equipos</td>
+          <td class="price">$2,790</td>
+        </tr>
+
+        <tr>
+          <td class="plan-name">Empresarial<div class="plan-desc">Operación multiusuario</div></td>
+          <td>4 Usuarios</td>
+          <td>Para equipos con más volumen</td>
+          <td class="price">$5,290</td>
+        </tr>
+
+        <tr>
+          <td class="plan-name">Corporativo<div class="plan-desc">Máxima capacidad</div></td>
+          <td>8 Usuarios</td>
+          <td>Operación avanzada</td>
+          <td class="price">$10,590</td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td class="note" colspan="4">
+            <strong>Usuario adicional:</strong> $1,560 anual.<br>
+            <span class="muted">Precios en MXN + IVA. Licenciamiento anual (365 días). Incluye soporte técnico Expiriti.</span>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <p class="hint center" style="margin-top:15px;">
+      Precios tomados de tu archivo <code>precios-contpaqi.js</code>. Precios más IVA.
+    </p>
+  </div>
+</section>
+
+   <!-- ===== COMPARATIVAS ===== -->
   <section id="comparativa" aria-labelledby="comparativa-title">
     
     <h3 id="comparativa-title" class="title-gradient">Comparativas</h3>
