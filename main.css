@@ -842,3 +842,27 @@ html[data-theme="light"] .page-sistemas #carouselVideos .yt-title{
 #icons-sec-sys .sys-icon, #icons-third-sys .sys-icon{flex:0 0 auto;min-width:190px}
 #icons-sec-sys .sys-icon img, #icons-third-sys .sys-icon img{width:54px;height:54px;object-fit:cover;border-radius:14px;display:block}
 
+
+/* =========================================================
+   Expiriti — SISTEMAS: reel-title = title-gradient (LIGHT)
+   - Aplica a títulos dinámicos de reels
+   - Igual visual que h2.title-gradient
+   - Dark intacto
+========================================================= */
+html[data-theme="light"] .page-sistemas .reel-title{
+  margin:0 0 8px;
+  font-weight:950;
+  letter-spacing:.01em;
+  line-height:1.15;
+  font-size:clamp(18px,2vw,22px); /* escala tipo h2 */
+  background:linear-gradient(135deg,var(--text),var(--brand-2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+}
+
+/* Asegura visibilidad solo del activo (JS controla .active) */
+html[data-theme="light"] .page-sistemas .reel-title{display:none}
+html[data-theme="light"] .page-sistemas .reel-title.active{display:block}
+
