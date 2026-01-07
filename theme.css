@@ -538,4 +538,18 @@ html[data-theme="light"] .pill.active{
     0 0 0 1px rgba(20,153,151,.35),
     0 12px 28px rgba(0,0,0,.25)!important;
 }
+/* === Expiriti: CTAs estándar (3 primeros) — LIGHT ONLY v2026.01.07 ===
+   Aplica a bloques repetidos (Sistemas/Servicios) sin tocar HTML.
+   Requiere: <a class="btn ... hero-btn"> dentro de un div inline-style con display:flex + flex-wrap
+   No toca DARK. */
+html[data-theme="light"]{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
+html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn{transition:transform .14s ease,box-shadow .14s ease,filter .14s ease}
+html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(1){background:var(--ex-amber)!important;border-color:var(--ex-amber)!important;color:#fff!important}
+html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(2){background:var(--ex-teal)!important;border-color:var(--ex-teal)!important;color:#fff!important}
+html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(3){background:var(--ex-coral)!important;border-color:var(--ex-coral)!important;color:#fff!important}
+html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(-n+3):hover{transform:translateY(-2px);filter:brightness(1.06) saturate(1.06)}
+html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(-n+3):active{transform:translateY(0);filter:brightness(1.02)}
+
+/* Opcional: si algún día metes 6+ CTAs en ese mismo bloque, del 6 en adelante blancos (no toca tus 4/5 ghost) */
+html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(n+6){background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;color:rgba(11,18,32,.92)!important}
 
