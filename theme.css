@@ -553,3 +553,13 @@ html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.he
 /* Opcional: si algún día metes 6+ CTAs en ese mismo bloque, del 6 en adelante blancos (no toca tus 4/5 ghost) */
 html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(n+6){background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;color:rgba(11,18,32,.92)!important}
 
+/* ==== Expiriti — REEL TITLE MARQUEE (GLOBAL) v2026.01.07 ====
+- Uso: JS agrega .__marquee2 al .reel-title.active cuando overflow (scrollWidth>clientWidth)
+- Efecto: scroll horizontal continuo (texto duplicado) + pausa en hover
+============================================================== */
+.reel-title.__marquee2{position:relative;overflow:hidden;white-space:nowrap}
+.reel-title.__marquee2 .__marqTrack{display:inline-flex;align-items:center;gap:42px;will-change:transform;animation:__marqMove2 12s linear infinite}
+.reel-title.__marquee2 .__marqTrack>span{display:inline-block;white-space:nowrap}
+.reel-title.__marquee2:hover .__marqTrack{animation-play-state:paused}
+@keyframes __marqMove2{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.reel-title.__marquee2 .__marqTrack{animation:none!important;transform:none!important}}
