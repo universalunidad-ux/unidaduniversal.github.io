@@ -690,3 +690,72 @@ W.addEventListener("resize",apply,{passive:true});
 W.visualViewport&&W.visualViewport.addEventListener("resize",apply,{passive:true});
 })();
 
+
+/* =========================================================
+   Expiriti — SISTEMAS: reel-title marquee (JS)
+   - Activa scroll solo si el texto no cabe
+   - Duplica contenido para loop limpio
+   - Observa cambios de .active
+========================================================= */
+(function(){
+  const SEL = '.page-sistemas .reel-title';
+  const SPEED = 80; // px por segundo (ajusta si quieres)
+
+  function setup(title){
+    if(title.__marqueeInit) return;
+    title.__marqueeInit = true;
+
+    const text = title.textContent.trim();
+    title.textContent = '';
+
+    const wrap = document.createElement('span');
+    wrap.className = 'marquee';
+
+    const a = document.createElement('span');
+    a.textContent = text;
+
+    const b = document.createElement('span');
+    b.textContent = text;
+
+    wrap.append(a,b);
+    title.appendChild(wrap);
+
+    requestAnimationFrame(()=>measure(title, wrap, a));
+  }
+
+  function measure(title, wrap, a){
+    const wText = a.scrollWidth;
+    const wBox  = title.clientWidth;
+
+    if(wText > wBox){
+      title.classList.add('is-marquee');
+      const dur = Math.max(6, Math.round((wText / SPEED)));
+      title.style.setProperty('--mq-dur', dur + 's');
+    }else{
+      title.classList.remove('is-marquee');
+      title.style.removeProperty('--mq-dur');
+    }
+  }
+
+  function refresh(){
+    document.querySelectorAll(SEL).forEach(t=>{
+      if(t.classList.contains('active')){
+        setup(t);
+      }else{
+        t.classList.remove('is-marquee');
+      }
+    });
+  }
+
+  // primera pasada
+  refresh();
+
+  // observa cambios de .active (cuando el JS del carrusel cambia el título)
+  const obs = new MutationObserver(refresh);
+  obs.observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});
+
+  // re-medir en resize
+  window.addEventListener('resize', ()=>setTimeout(refresh,150));
+})();
+
+
