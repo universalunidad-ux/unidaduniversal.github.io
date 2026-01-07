@@ -563,3 +563,11 @@ html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.he
 .reel-title.__marquee2:hover .__marqTrack{animation-play-state:paused}
 @keyframes __marqMove2{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.reel-title.__marquee2 .__marqTrack{animation:none!important;transform:none!important}}
+
+/* === Reel title overflow (A11Y-safe) === */
+.reel-title.__marquee2{position:relative;white-space:nowrap;overflow:hidden}
+@media (prefers-reduced-motion: reduce){
+  .reel-title.__marquee2{overflow-x:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .reel-title.__marquee2::-webkit-scrollbar{height:6px}
+}
+
