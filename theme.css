@@ -131,8 +131,8 @@ html[data-theme="light"] .badge-warn{background:rgba(245,158,11,.16)!important;b
 .btn:focus-visible{outline:2px solid rgba(96,165,250,.80);outline-offset:2px}
 
 /* mapeo de tus clases a paleta pro */
-.btn-grad-green{border-color:rgba(27,139,128,.40)!important;background:linear-gradient(135deg,#1B8B80,#2dd4bf)!important;color:#03110f!important}
-.btn-grad-blue{border-color:rgba(240,90,102,.40)!important;background:linear-gradient(135deg,#F05A66,#ff7a84)!important;color:#1a0a0c!important}
+color:#fff!important;{border-color:rgba(27,139,128,.40)!important;background:linear-gradient(135deg,#1B8B80,#2dd4bf)!important;color:#03110f!important}
+color:#fff!important;{border-color:rgba(240,90,102,.40)!important;background:linear-gradient(135deg,#F05A66,#ff7a84)!important;color:#1a0a0c!important}
 .btn-grad-amber{border-color:rgba(232,172,54,.45)!important;background:linear-gradient(135deg,#E8AC36,#ffd07a)!important;color:#1a1205!important}
 .btn-grad-purple{border-color:rgba(96,165,250,.45)!important;background:linear-gradient(135deg,#60a5fa,#a78bfa)!important;color:#071018!important}
 .btn-ghost{background:rgba(15,23,42,.85);color:var(--text);border:1px solid rgba(148,163,184,.6)}
@@ -602,3 +602,53 @@ html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.he
 html[data-theme="light"] .pricing-table-nube tr.pricing-extra{
   background: rgba(2,6,23,.04);
 }
+
+
+/* =========================================================
+   Expiriti — CTA (#sesion-guiada) CANÓNICO v2026.01.08
+   - Sin hacks por posición / sin depender del inline style
+   - Usa tus clases existentes: color:#fff!important; / color:#fff!important;
+========================================================= */
+
+/* Contenedor: consistente y responsivo */
+#sesion-guiada > div[style*="display:flex"]{
+  display:flex;gap:10px;flex-wrap:wrap;justify-content:center
+}
+
+/* Botones: asegura tap-size + micro-interacciones consistentes */
+#sesion-guiada .btn{
+  min-height:var(--tap,44px);
+  transform:translateZ(0);
+}
+@media(hover:hover){
+  #sesion-guiada .btn:hover{transform:translateY(-2px)}
+}
+#sesion-guiada .btn:active{transform:translateY(0) scale(.99)}
+
+/* ===== Asignación de colores por CLASE (robusto) =====
+   Tu HTML ya trae:
+   - Agendar sesión guiada -> color:#fff!important;
+   - Comprar ahora         -> color:#fff!important;
+*/
+#sesion-guiada .btncolor:#fff!important;{
+  border-color:rgba(240,90,102,.40)!important;
+  background:linear-gradient(135deg,#F05A66,#ff7a84)!important;
+  color:#1a0a0c!important;
+}
+#sesion-guiada .btncolor:#fff!important;{
+  border-color:rgba(27,139,128,.40)!important;
+  background:linear-gradient(135deg,#1B8B80,#2dd4bf)!important;
+  color:#03110f!important;
+}
+
+/* En LIGHT: los gradientes ya se ven bien; solo asegura legibilidad + punch */
+html[data-theme="light"] #sesion-guiada .btncolor:#fff!important;,
+html[data-theme="light"] #sesion-guiada .btncolor:#fff!important;{
+  filter:saturate(1.03) contrast(1.03);
+}
+
+/* Mobile: full width, apilados si hace falta */
+@media(max-width:520px){
+  #sesion-guiada .btn{width:100%}
+}
+
