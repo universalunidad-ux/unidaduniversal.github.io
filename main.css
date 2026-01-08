@@ -924,4 +924,55 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{
 .pricing-table-nube tfoot td{padding:14px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.02);border-top:1px solid var(--border)}
 .pricing-table-nube .note{text-align:center;line-height:1.5}
 
+/* ===== Videos: ocultar SOLO los títulos/labels blancos debajo del player ===== */
+.yt-title--hidden{display:none!important}
+#carouselVideos .yt-title{display:none!important} /* backup por si no se aplica la clase */
+
+/* ===== Videos: layout 2 por slide + single centrado ===== */
+#carouselVideos .carousel-slide.vid-slide{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  align-items:start;
+}
+#carouselVideos .carousel-slide.vid-slide.is-single{
+  grid-template-columns:minmax(280px,760px);
+  justify-content:center;
+}
+@media(max-width:900px){
+  #carouselVideos .carousel-slide.vid-slide{grid-template-columns:1fr}
+}
+
+/* ===== Calculadora: icons carousel NO colapsa ===== */
+#icons-sec-sys,#icons-third-sys{
+  display:flex;
+  gap:12px;
+  align-items:stretch;
+  overflow-x:auto;
+  padding:6px 2px;
+  min-height:108px; /* evita colapso */
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+#icons-sec-sys::-webkit-scrollbar,#icons-third-sys::-webkit-scrollbar{height:8px}
+.icons-carousel{position:relative}
+
+/* centrar automáticamente cuando no hay scroll (menos de 3 típicamente) */
+#icons-sec-sys.is-centered,#icons-third-sys.is-centered{justify-content:center;overflow-x:hidden}
+
+/* ===== Tabla Nube: alineación legible ===== */
+.table-nube table{width:100%;border-collapse:separate;border-spacing:0}
+.table-nube th{text-align:center}
+.table-nube td{vertical-align:middle}
+.table-nube td:nth-child(1){text-align:left}
+.table-nube td:nth-child(2),.table-nube td:nth-child(3),.table-nube td:nth-child(4){text-align:right;white-space:nowrap}
+.table-nube td .muted,.table-nube td small{display:block;text-align:left;opacity:.9}
+@media(max-width:700px){
+  .table-nube td:nth-child(2),.table-nube td:nth-child(3),.table-nube td:nth-child(4){text-align:left;white-space:normal}
+}
+
+#toc{position:fixed;inset:auto 16px 16px auto;z-index:9999}
+#toc.collapsed .toc-panel{display:none}
+#toc.open .toc-panel{display:block}
+
 
