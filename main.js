@@ -819,3 +819,180 @@ W.addEventListener("resize",()=>setTimeout(refresh,150),{passive:!0});
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
 })();
 
+
+/* =========================================================
+  PATCH v2026.01.07 — VIDEOS: agrupar en slides de 2
+  - 1 video => slide single centrado
+  - 5 videos => 2-2-1 (último centrado)
+  - NO borra videos; solo reestructura DOM del carrusel
+========================================================= */
+(()=>{"use strict";const D=document,W=window;
+const q=(s,c=D)=>c.querySelector(s),qa=(s,c=D)=>Array.from(c.querySelectorAll(s));
+
+function groupVideos2(){
+  const car=D.getElementById("carouselVideos");
+  if(!car||car.dataset.grp2==="1")return;
+  const track=q(".carousel-track",car);
+  if(!track)return;
+
+  // Si ya están en .carousel-slide, no rearmar
+  const hasSlides=qa(":scope > .carousel-slide",track).length>0;
+  if(hasSlides){car.dataset.grp2="1";return}
+
+  const kids=qa(":scope > *",track).filter(n=>n.nodeType===1);
+  if(!kids.length){car.dataset.grp2="1";return}
+
+  // Detecta items "reales" (cards/embeds). Excluye barras u otros nodos si existieran
+  const items=kids.filter(n=>!n.classList.contains("carousel-nav")&&!n.classList.contains("yt-titlesbar"));
+
+  // Limpia track y reconstruye en slides
+  track.innerHTML="";
+  for(let i=0;i<items.length;i+=2){
+    const slide=D.createElement("div");
+    slide.className="carousel-slide vid-slide";
+    const a=items[i]; const b=items[i+1];
+
+    slide.appendChild(a);
+    if(b) slide.appendChild(b);
+    if(!b) slide.classList.add("is-single");
+
+    track.appendChild(slide);
+  }
+  car.dataset.grp2="1";
+}
+
+// corre temprano + reintentos por si el DOM llega tarde
+const boot=()=>{groupVideos2()};
+D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:true}):boot();
+W.addEventListener("load",boot);
+W.addEventListener("pageshow",boot);
+new MutationObserver(()=>groupVideos2()).observe(D.documentElement,{childList:true,subtree:true});
+})();
+
+/* =========================================================
+  PATCH v2026.01.07 — CAROUSELX (#integra): páginas por items/perView
+  - Flechas funcionales
+  - Click card => data-href (ya lo tienes; aquí no se rompe)
+  - Si hay 1 o 2 sistemas: centrar y ocultar flechas/dots (menos de 3)
+========================================================= */
+(()=>{"use strict";const D=document,W=window;
+const qa=(s,c=D)=>Array.from(c.querySelectorAll(s));
+
+function patchCarouselX(root){
+  if(!root||root.dataset.cxPatch==="1")return;
+  const track=root.querySelector(".track");
+  if(!track)return;
+
+  const items=qa(".sys",root);
+  const prev=root.querySelector(".arrowCircle.prev");
+  const next=root.querySelector(".arrowCircle.next");
+  const dotsWrap=root.querySelector(".group-dots");
+  if(!prev||!next||!dotsWrap||!items.length){root.dataset.cxPatch="1";return}
+
+  const perView=()=>W.innerWidth<=980?1:3;
+  const totalPages=()=>Math.max(1,Math.ceil(items.length/perView()));
+  const viewportW=()=>track.clientWidth||root.clientWidth||1;
+
+  // centrar si <3 items y ocultar UI
+  const applyFew=()=>{
+    const few=items.length<3;
+    if(few){
+      prev.style.display="none"; next.style.display="none"; dotsWrap.style.display="none";
+      track.style.justifyContent="center";
+      track.style.scrollSnapType="none";
+      track.style.overflowX="hidden"; // evita “scroll fantasma” si 1-2
+    }else{
+      track.style.justifyContent="flex-start";
+      track.style.overflowX="auto";
+    }
+  };
+
+  // reconstruir dots por páginas reales (items/perView)
+  let dots=[],idx=0;
+  const buildDots=()=>{
+    dotsWrap.innerHTML="";
+    const total=totalPages();
+    dots=Array.from({length:total}).map((_,j)=>{
+      const b=D.createElement("button");
+      b.type="button";
+      b.className="dot"+(j===0?" active":"");
+      b.setAttribute("aria-label","Ir a página "+(j+1));
+      b.addEventListener("click",()=>go(j));
+      dotsWrap.appendChild(b);
+      return b;
+    });
+  };
+  const paint=j=>dots.forEach((d,i)=>d.classList.toggle("active",i===j));
+
+  const toggleUI=()=>{
+    applyFew();
+    const multi=items.length>=3 && totalPages()>1;
+    prev.style.display=multi?"":"none";
+    next.style.display=multi?"":"none";
+    dotsWrap.style.display=multi?"":"none";
+  };
+
+  const go=j=>{
+    const total=totalPages();
+    idx=((j%total)+total)%total;
+    const start=idx*perView();
+    const el=items[Math.min(start,items.length-1)];
+    const base=(el?el.offsetLeft:idx*viewportW());
+    const max=Math.max(0,track.scrollWidth-viewportW());
+    track.scrollTo({left:Math.min(Math.max(0,base),max),behavior:"smooth"});
+    paint(idx);toggleUI();
+  };
+
+  // Reemplaza handlers de flechas (sin duplicar: asigna onclick)
+  prev.onclick=()=>go(idx-1);
+  next.onclick=()=>go(idx+1);
+
+  buildDots();
+  toggleUI();
+  go(0);
+
+  W.addEventListener("resize",()=>{
+    const before=dots.length;
+    const now=totalPages();
+    if(before!==now) buildDots();
+    toggleUI();
+    setTimeout(()=>go(idx),0);
+  },{passive:true});
+
+  root.dataset.cxPatch="1";
+}
+
+function boot(){
+  // Enfoca especialmente #integra, pero aplica a cualquier carouselX si quieres
+  const integra=D.querySelector("#integra .carouselX")||D.querySelector("#integra.carouselX");
+  if(integra) patchCarouselX(integra);
+}
+D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:true}):boot();
+window.addEventListener("load",boot);
+window.addEventListener("pageshow",boot);
+})();
+
+/* =========================================================
+  PATCH v2026.01.07 — ICONS: centrar si <3 y no hay scroll
+========================================================= */
+(()=>{"use strict";const D=document,W=window;
+function patchIcons(id){
+  const wrap=D.getElementById(id);
+  if(!wrap||wrap.dataset.icPatch==="1")return;
+
+  const paint=()=>{
+    const n=wrap.children.length||0;
+    const canScroll=wrap.scrollWidth>wrap.clientWidth+4;
+    wrap.classList.toggle("is-centered",!canScroll && n>0 && n<3);
+  };
+
+  paint();
+  W.addEventListener("resize",paint,{passive:true});
+  new MutationObserver(paint).observe(wrap,{childList:true});
+  wrap.dataset.icPatch="1";
+}
+const boot=()=>{patchIcons("icons-sec-sys");patchIcons("icons-third-sys")};
+D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:true}):boot();
+W.addEventListener("load",boot);
+W.addEventListener("pageshow",boot);
+})();
