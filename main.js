@@ -598,8 +598,7 @@ pick2.addEventListener("click", async (e) => {
   refresh();
   showMore();
 });
-
-
+})(); // <-- CIERRA IIFE de CALCULADORA (10)
  
 
 /* =========================================================
@@ -1045,4 +1044,7 @@ function boot(){
 }
 D.readyState==="loading"?addEventListener("DOMContentLoaded",boot,{once:true}):boot();
 addEventListener("pageshow",boot);
+})();
+
+/* === cierre del wrapper principal (el que abre al inicio) === */
 })();
