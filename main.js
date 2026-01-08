@@ -31,6 +31,7 @@ if(isGhUserSite)return ("/"+p).replace(/\/+/g,"/");
 return (rel+p).replace(/\/+/g,"/");            /* local/subcarpetas */
 };
 
+
 const normalize=(root=D)=>{
 /* imágenes absolutas desde data-src */
 root.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{
