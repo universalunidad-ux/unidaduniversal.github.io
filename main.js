@@ -996,3 +996,58 @@ D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:true})
 W.addEventListener("load",boot);
 W.addEventListener("pageshow",boot);
 })();
+
+/*=== PATCH: ICONS CAROUSEL SCROLL (NO TOCA VIDEOS) ===*/
+(()=>{"use strict";const D=document;
+function wireIconsCarousel(root){
+  const wrap=root.querySelector("#icons-sec-sys, #icons-third-sys"); if(!wrap) return;
+  const car=wrap.closest(".icons-carousel")||root.querySelector(".icons-carousel");
+  const prev=car&&car.querySelector(".prev"), next=car&&car.querySelector(".next");
+  const step=()=>Math.max(220, Math.floor(wrap.clientWidth*0.85)||260);
+
+  const upd=()=>{if(!prev||!next) return;
+    const max=wrap.scrollWidth-wrap.clientWidth-2;
+    prev.disabled=wrap.scrollLeft<=2;
+    next.disabled=wrap.scrollLeft>=max;
+  };
+
+  if(prev && !prev.__wired){
+    prev.__wired=1;
+    prev.addEventListener("click",()=>wrap.scrollBy({left:-step(),behavior:"smooth"}));
+  }
+  if(next && !next.__wired){
+    next.__wired=1;
+    next.addEventListener("click",()=>wrap.scrollBy({left: step(),behavior:"smooth"}));
+  }
+
+  wrap.addEventListener("scroll",()=>requestAnimationFrame(upd),{passive:true});
+  addEventListener("resize",()=>requestAnimationFrame(upd),{passive:true});
+
+  // fallback: si por orden de carga quedó vacío, repinta con catálogo si existe
+  const repaint=()=>{
+    if(wrap.children.length) return;
+    const cat=(window.CATALOG_SISTEMAS||[]).slice(0,8);
+    if(!cat.length) return;
+    wrap.innerHTML="";
+    cat.forEach(it=>{
+      const b=D.createElement("button");
+      b.type="button"; b.className="sys-icon";
+      b.dataset.sys=it.name||"";
+      b.innerHTML=`<img src="${it.img||""}" alt=""><strong>${(it.name||"").replace("CONTPAQi ","")}</strong>`;
+      wrap.appendChild(b);
+    });
+    requestAnimationFrame(upd);
+  };
+
+  repaint();
+  setTimeout(repaint,600);
+  requestAnimationFrame(upd);
+}
+
+function boot(){
+  const sec=D.getElementById("calc-slot-2"); if(sec) wireIconsCarousel(sec);
+  const third=D.getElementById("add-more-panel"); if(third) wireIconsCarousel(third);
+}
+D.readyState==="loading"?addEventListener("DOMContentLoaded",boot,{once:true}):boot();
+addEventListener("pageshow",boot);
+})();
