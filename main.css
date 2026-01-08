@@ -981,3 +981,13 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{
 
 
 
+/*=== PATCH: CALC SLOT 2 VISIBLE + ICONS CAROUSEL (NO TOCA VIDEOS) ===*/
+#calc-row{align-items:stretch}
+#calc-slot-2{display:block!important;min-height:220px!important}
+#calc-slot-2 .note{height:100%}
+#calc-slot-2 .icons-carousel{display:grid!important;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+#icons-sec-sys,#icons-third-sys{display:flex!important;gap:12px;overflow-x:auto!important;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px;min-height:96px}
+#icons-sec-sys>* ,#icons-third-sys>*{scroll-snap-align:start}
+#calc-slot-2 .arrowCircle{display:inline-flex!important;align-items:center;justify-content:center}
+#calc-slot-2 .arrowCircle[disabled]{opacity:.35;pointer-events:none}
+
