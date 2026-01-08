@@ -599,9 +599,9 @@ html[data-theme="light"] .pricing-table-nube tr.pricing-extra{
 
 
 /* =========================================================
-   Expiriti — CTA (#sesion-guiada) CANÓNICO v2026.01.08
-   - Sin hacks por posición / sin depender del inline style
-   - Usa tus clases existentes: color:#fff!important; / color:#fff!important;
+   Expiriti — CTA (#sesion-guiada) CANÓNICO v2026.01.08 (FIX)
+   - Sin hacks por posición / sin depender de inline style
+   - Usa clases reales: .btn-cta-agendar / .btn-cta-comprar
 ========================================================= */
 
 /* Contenedor: consistente y responsivo */
@@ -619,25 +619,21 @@ html[data-theme="light"] .pricing-table-nube tr.pricing-extra{
 }
 #sesion-guiada .btn:active{transform:translateY(0) scale(.99)}
 
-/* ===== Asignación de colores por CLASE (robusto) =====
-   Tu HTML ya trae:
-   - Agendar sesión guiada -> color:#fff!important;
-   - Comprar ahora         -> color:#fff!important;
-*/
-#sesion-guiada .btncolor:#fff!important;{
+/* ===== Asignación de colores por CLASE (robusto) ===== */
+#sesion-guiada .btn-cta-agendar{
   border-color:rgba(240,90,102,.40)!important;
   background:linear-gradient(135deg,#F05A66,#ff7a84)!important;
   color:#1a0a0c!important;
 }
-#sesion-guiada .btncolor:#fff!important;{
+#sesion-guiada .btn-cta-comprar{
   border-color:rgba(27,139,128,.40)!important;
   background:linear-gradient(135deg,#1B8B80,#2dd4bf)!important;
   color:#03110f!important;
 }
 
-/* En LIGHT: los gradientes ya se ven bien; solo asegura legibilidad + punch */
-html[data-theme="light"] #sesion-guiada .btncolor:#fff!important;,
-html[data-theme="light"] #sesion-guiada .btncolor:#fff!important;{
+/* En LIGHT: punch */
+html[data-theme="light"] #sesion-guiada .btn-cta-agendar,
+html[data-theme="light"] #sesion-guiada .btn-cta-comprar{
   filter:saturate(1.03) contrast(1.03);
 }
 
