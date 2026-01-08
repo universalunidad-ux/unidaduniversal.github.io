@@ -508,7 +508,7 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
       secondary.id="calc-secondary";
       secondary.className="calc-container";
       secondary.setAttribute("aria-label","Calculadora secundaria");
-      secondary.style.display="none";
+      secondary.style.display = "block";
       slot2.insertAdjacentElement("afterend",secondary);
       return secondary;
     };
@@ -536,74 +536,68 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
     refresh();
     showMore();
 
-    // listeners
-    pick2.addEventListener("click",e=>{
-      const btn=e.target.closest(".sys-icon"); if(!btn) return;
-      const sys=btn.dataset.sys;
+pick2.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".sys-icon");
+  if (!btn) return;
 
-      // OJO: aquí NO exijas precios para pintar; solo para calcular
-      selected.secondary=sys;
-      if(selected.tertiary===sys) selected.tertiary=null;
+  const sys = btn.dataset.sys;
+  selected.secondary = sys;
+  if (selected.tertiary === sys) selected.tertiary = null;
 
-      ensureSecondary();
+  const sec = ensureSecondary();
+  if (!sec) return;
 
-      if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setSecondarySystem){
-        W.CalculadoraContpaqi.setSecondarySystem(sys,{
-          secondarySelector:"#calc-secondary",
-          combinedSelector:"#combined-wrap",
-          onCombined:renderCombined
-        });
-      }
+  // limpia siempre antes de pintar
+  sec.innerHTML = "";
+  sec.style.display = "block";
+  if (slot2) slot2.style.display = "none";
 
-      showSecondary();
-      refresh();
-      showMore();
-    });
+  // activa layout 2 calcs
+  D.documentElement.classList.add("has-calc-2");
+  D.body.classList.add("has-calc-2");
+  D.documentElement.classList.remove("has-calc-3");
+  D.body.classList.remove("has-calc-3");
+  if (row) row.classList.remove("has-three");
+  if (addMore) addMore.style.display = "";
 
-    if(pick3) pick3.addEventListener("click",e=>{
-      const btn=e.target.closest(".sys-icon"); if(!btn) return;
-      const sys=btn.dataset.sys;
-      if(sys===selected.secondary) return;
+  // intenta API “multi”
+  let painted = false;
 
-      selected.tertiary=sys;
-      if(slot3) slot3.style.display="block";
-
-      if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.setTertiarySystem){
-        W.CalculadoraContpaqi.setTertiarySystem(sys,{
-          tertiarySelector:"#calc-tertiary",
-          combinedSelector:"#combined-wrap",
-          onCombined:renderCombined
-        });
-      }
-
-      if(addMore) addMore.style.display="none";
-      row.classList.add("has-three");
-      refresh();
-    });
-
-    if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.onCombinedSet)
-      W.CalculadoraContpaqi.onCombinedSet(renderCombined);
-
-    if(W.CalculadoraContpaqi && W.CalculadoraContpaqi.init){
-      D.body.setAttribute("data-calc","escritorio");
-      W.CalculadoraContpaqi.init({systemName:PRIMARY,primarySelector:"#calc-primary",combinedSelector:"#combined-wrap"});
-    } else {
-      console.warn("CalculadoraContpaqi.init no disponible");
+  try {
+    if (W.CalculadoraContpaqi?.setSecondarySystem) {
+      W.CalculadoraContpaqi.setSecondarySystem(sys, {
+        secondarySelector: "#calc-secondary",
+        combinedSelector: "#combined-wrap",
+        onCombined: renderCombined
+      });
+      await new Promise(r => setTimeout(r, 60));
+      painted = sec.childElementCount > 0;
     }
-  };
+  } catch (err) {}
 
-  // 1) intenta ya
-  bootCalc();
+  // fallback: si no pintó, re-inicializa por selector
+  if (!painted && W.CalculadoraContpaqi?.init) {
+    try {
+      W.CalculadoraContpaqi.init({
+        systemName: sys,
+        primarySelector: "#calc-secondary",
+        combinedSelector: "#combined-wrap"
+      });
+      await new Promise(r => setTimeout(r, 60));
+      painted = sec.childElementCount > 0;
+    } catch (e2) {}
+  }
 
-  // 2) intenta en load/pageshow
-  W.addEventListener("load", bootCalc);
-  W.addEventListener("pageshow", bootCalc);
+  // si aun así no pintó, deja nota visible
+  if (!painted) {
+    sec.innerHTML =
+      `<div class="note"><strong>No se pudo montar la 2ª calculadora.</strong><br>
+       <small>Revisa si existe setSecondarySystem() o si init() soporta múltiples mounts.</small></div>`;
+  }
 
-  // 3) observa DOM por si la sección llega tarde (parciales)
-  const mo = new MutationObserver(() => bootCalc());
-  mo.observe(D.documentElement, { childList:true, subtree:true });
-
-})();
+  refresh();
+  showMore();
+});
 
 
  
