@@ -27,7 +27,27 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
     function safeHasTable(id) { var el = document.getElementById(id); return !!(el && el.querySelector && el.querySelector("table")); }
     function recomputeAll() { window.dispatchEvent(new Event("calc-recompute")); }
 
+function $id(id){ return document.getElementById(id); }
+function setText(id, val){
+  var el = $id(id);
+  if(!el) return false;
+  el.textContent = val;
+  return true;
+}
+function setHTML(id, val){
+  var el = $id(id);
+  if(!el) return false;
+  el.innerHTML = val;
+  return true;
+}
+function setDisplay(id, val){
+  var el = $id(id);
+  if(!el) return false;
+  el.style.display = val;
+  return true;
+}
 
+    
 function setCalcCountClass() {
   var hasSecondary = !!document.querySelector("#calc-secondary table");
   var hasTertiary  = !!document.querySelector("#calc-tertiary table");
@@ -52,6 +72,26 @@ function markEmpty(sel){
   var el = document.querySelector(sel);
   if(!el) return;
   el.classList.toggle("calc-empty", !el.querySelector("table"));
+}
+
+    function $id(id){ return document.getElementById(id); }
+function setText(id, val){
+  var el = $id(id);
+  if(!el) return false;
+  el.textContent = val;
+  return true;
+}
+function setHTML(id, val){
+  var el = $id(id);
+  if(!el) return false;
+  el.innerHTML = val;
+  return true;
+}
+function setDisplay(id, val){
+  var el = $id(id);
+  if(!el) return false;
+  el.style.display = val;
+  return true;
 }
 
     /* =========================================================
@@ -303,44 +343,41 @@ if (strong) {
         var iva = round2(baseImponible * 0.16);
         var total = round2(baseImponible + iva);
 
-        // Render
-        document.getElementById("base" + idSuffix).textContent = fmt(base);
-document.getElementById("uadd" + idSuffix).textContent =
+// Render (blindado)
+setText("base"+idSuffix, fmt(base));
+setText(
+  "uadd"+idSuffix,
   fmt(usuariosAddImporte) +
-  (usuariosExtras > 0 ? (" (" + usuariosExtras + " " + (usuariosExtras === 1 ? "extra" : "extras") + ")") : "");
-        document.getElementById("disc" + idSuffix).textContent = pct(discountPct) + " / " + fmt(discountAmt);
-        document.getElementById("inst" + idSuffix).textContent = fmt(instGross);
-        document.getElementById("instdisc" + idSuffix).textContent = (instGross > 0 ? ("− " + fmt(instDiscount)) : fmt(0));
-        document.getElementById("sub" + idSuffix).textContent = fmt(baseImponible);
-        document.getElementById("iva" + idSuffix).textContent = fmt(iva);
-        document.getElementById("tot" + idSuffix).innerHTML = "<strong>" + fmt(total) + "</strong>"; /* mantiene bold */
+  (usuariosExtras > 0 ? (" (" + usuariosExtras + " " + (usuariosExtras === 1 ? "extra" : "extras") + ")") : "")
+);
+setText("disc"+idSuffix, pct(discountPct) + " / " + fmt(discountAmt));
+setText("inst"+idSuffix, fmt(instGross));
+setText("instdisc"+idSuffix, (instGross > 0 ? ("− " + fmt(instDiscount)) : fmt(0)));
+setText("sub"+idSuffix, fmt(baseImponible));
+setText("iva"+idSuffix, fmt(iva));
+setHTML("tot"+idSuffix, "<strong>"+fmt(total)+"</strong>");
 
-        // Mostrar/ocultar filas
-        document.getElementById("tr-uadd" + idSuffix).style.display = (usuariosExtras > 0) ? "" : "none";
-        document.getElementById("tr-disc" + idSuffix).style.display = (discountPct > 0) ? "" : "none";
-var showInst = !!(instOn && instOn.checked);
-document.getElementById("tr-inst" + idSuffix).style.display = showInst ? "" : "none";
-document.getElementById("tr-instdisc" + idSuffix).style.display = showInst ? "" : "none";
-        document.getElementById("tr-inst" + idSuffix).style.display = showInst ? "" : "none";
-        document.getElementById("tr-instdisc" + idSuffix).style.display = showInst ? "" : "none";
-
-        updateCombinedSummary(combinedSelector);
-      }
+// Mostrar/ocultar filas (blindado)
+setDisplay("tr-uadd"+idSuffix, (usuariosExtras > 0) ? "" : "none");
+setDisplay("tr-disc"+idSuffix, (discountPct > 0) ? "" : "none");
+setDisplay("tr-inst"+idSuffix, showInst ? "" : "none");
+setDisplay("tr-instdisc"+idSuffix, showInst ? "" : "none");
 
       function writeZeros() {
-        document.getElementById("base" + idSuffix).textContent = fmt(0);
-        document.getElementById("uadd" + idSuffix).textContent = fmt(0);
-        document.getElementById("disc" + idSuffix).textContent = "0% / " + fmt(0);
-        document.getElementById("inst" + idSuffix).textContent = fmt(0);
-        document.getElementById("instdisc" + idSuffix).textContent = fmt(0);
-        document.getElementById("sub" + idSuffix).textContent = fmt(0);
-        document.getElementById("iva" + idSuffix).textContent = fmt(0);
-        document.getElementById("tot" + idSuffix).innerHTML = "<strong>" + fmt(0) + "</strong>";
-        document.getElementById("tr-uadd" + idSuffix).style.display = "none";
-        document.getElementById("tr-disc" + idSuffix).style.display = "none";
-        document.getElementById("tr-inst" + idSuffix).style.display = "none";
-        document.getElementById("tr-instdisc" + idSuffix).style.display = "none";
-        updateCombinedSummary(combinedSelector);
+setText("base"+idSuffix, fmt(0));
+setText("uadd"+idSuffix, fmt(0));
+setText("disc"+idSuffix, "0% / " + fmt(0));
+setText("inst"+idSuffix, fmt(0));
+setText("instdisc"+idSuffix, fmt(0));
+setText("sub"+idSuffix, fmt(0));
+setText("iva"+idSuffix, fmt(0));
+setHTML("tot"+idSuffix, "<strong>"+fmt(0)+"</strong>");
+
+setDisplay("tr-uadd"+idSuffix, "none");
+setDisplay("tr-disc"+idSuffix, "none");
+setDisplay("tr-inst"+idSuffix, "none");
+setDisplay("tr-instdisc"+idSuffix, "none");
+
       }
 
       // Eventos
