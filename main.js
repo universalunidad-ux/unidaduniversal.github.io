@@ -407,7 +407,6 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
  - Se monta UNA sola vez por página (dataset flag)
 ========================================================= */
 (()=>{
-
   const bootCalc = () => {
     // evita re-montajes
     if (D.documentElement.dataset.calcHooksInit === "1") return;
@@ -428,9 +427,8 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
 
     const moneyMX=new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
     const fmt=v=>moneyMX.format(Math.round(Number(v||0)));
-    const hasPrices=n=>!!(W.preciosContpaqi&&W.preciosContpaqi[n]);
 
-    // Define catálogo SIEMPRE aquí (ahora sí quedará en window)
+    // Catálogo global
     W.CATALOG_SISTEMAS = W.CATALOG_SISTEMAS || [
       {name:"CONTPAQi Contabilidad",img:"../IMG/contabilidadsq.webp"},
       {name:"CONTPAQi Bancos",img:"../IMG/bancossq.webp"},
@@ -508,18 +506,12 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
       secondary.id="calc-secondary";
       secondary.className="calc-container";
       secondary.setAttribute("aria-label","Calculadora secundaria");
-      secondary.style.display = "block";
+      secondary.style.display="block";
       slot2.insertAdjacentElement("afterend",secondary);
       return secondary;
     };
 
-    const showSecondary=()=>{
-      ensureSecondary();
-      if(slot2) slot2.style.display="none";
-      if(secondary) secondary.style.display="block";
-    };
-
-    const slot3=D.getElementById("calc-tertiary");
+    const rowEl=row;
     const addMore=D.getElementById("add-more-panel");
 
     const selected={secondary:null,tertiary:null};
@@ -536,70 +528,77 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
     refresh();
     showMore();
 
-pick2.addEventListener("click", async (e) => {
-  const btn = e.target.closest(".sys-icon");
-  if (!btn) return;
+    pick2.addEventListener("click", async (e) => {
+      const btn = e.target.closest(".sys-icon");
+      if (!btn) return;
 
-  const sys = btn.dataset.sys;
-  selected.secondary = sys;
-  if (selected.tertiary === sys) selected.tertiary = null;
+      const sys = btn.dataset.sys;
+      selected.secondary = sys;
+      if (selected.tertiary === sys) selected.tertiary = null;
 
-  const sec = ensureSecondary();
-  if (!sec) return;
+      const sec = ensureSecondary();
+      if (!sec) return;
 
-  // limpia siempre antes de pintar
-  sec.innerHTML = "";
-  sec.style.display = "block";
-  if (slot2) slot2.style.display = "none";
+      sec.innerHTML = "";
+      sec.style.display = "block";
+      if (slot2) slot2.style.display = "none";
 
-  // activa layout 2 calcs
-  D.documentElement.classList.add("has-calc-2");
-  D.body.classList.add("has-calc-2");
-  D.documentElement.classList.remove("has-calc-3");
-  D.body.classList.remove("has-calc-3");
-  if (row) row.classList.remove("has-three");
-  if (addMore) addMore.style.display = "";
+      D.documentElement.classList.add("has-calc-2");
+      D.body.classList.add("has-calc-2");
+      D.documentElement.classList.remove("has-calc-3");
+      D.body.classList.remove("has-calc-3");
+      if (rowEl) rowEl.classList.remove("has-three");
+      if (addMore) addMore.style.display = "";
 
-  // intenta API “multi”
-  let painted = false;
+      let painted = false;
 
-  try {
-    if (W.CalculadoraContpaqi?.setSecondarySystem) {
-      W.CalculadoraContpaqi.setSecondarySystem(sys, {
-        secondarySelector: "#calc-secondary",
-        combinedSelector: "#combined-wrap",
-        onCombined: renderCombined
-      });
-      await new Promise(r => setTimeout(r, 60));
-      painted = sec.childElementCount > 0;
-    }
-  } catch (err) {}
+      try {
+        if (W.CalculadoraContpaqi?.setSecondarySystem) {
+          W.CalculadoraContpaqi.setSecondarySystem(sys, {
+            secondarySelector: "#calc-secondary",
+            combinedSelector: "#combined-wrap",
+            onCombined: renderCombined
+          });
+          await new Promise(r => setTimeout(r, 60));
+          painted = sec.childElementCount > 0;
+        }
+      } catch {}
 
-  // fallback: si no pintó, re-inicializa por selector
-  if (!painted && W.CalculadoraContpaqi?.init) {
-    try {
-      W.CalculadoraContpaqi.init({
-        systemName: sys,
-        primarySelector: "#calc-secondary",
-        combinedSelector: "#combined-wrap"
-      });
-      await new Promise(r => setTimeout(r, 60));
-      painted = sec.childElementCount > 0;
-    } catch (e2) {}
-  }
+      if (!painted && W.CalculadoraContpaqi?.init) {
+        try {
+          W.CalculadoraContpaqi.init({
+            systemName: sys,
+            primarySelector: "#calc-secondary",
+            combinedSelector: "#combined-wrap"
+          });
+          await new Promise(r => setTimeout(r, 60));
+          painted = sec.childElementCount > 0;
+        } catch {}
+      }
 
-  // si aun así no pintó, deja nota visible
-  if (!painted) {
-    sec.innerHTML =
-      `<div class="note"><strong>No se pudo montar la 2ª calculadora.</strong><br>
-       <small>Revisa si existe setSecondarySystem() o si init() soporta múltiples mounts.</small></div>`;
-  }
+      if (!painted) {
+        sec.innerHTML =
+          `<div class="note"><strong>No se pudo montar la 2ª calculadora.</strong><br>
+           <small>Revisa si existe setSecondarySystem() o si init() soporta múltiples mounts.</small></div>`;
+      }
 
-  refresh();
-  showMore();
-});
-})(); // <-- CIERRA IIFE de CALCULADORA (10)
- 
+      refresh();
+      showMore();
+    }, { passive:true });
+  };
+
+  // BOOT + reintentos (parciales / DOM tardío)
+  const kick=()=>{ try{ bootCalc(); }catch(e){ console.warn("[calc] boot error",e); } };
+
+  if (D.readyState==="loading") D.addEventListener("DOMContentLoaded",kick,{once:true});
+  else kick();
+
+  // reintenta si la sección aparece después
+  const mo=new MutationObserver(()=>{ if(D.documentElement.dataset.calcHooksInit!=="1") kick(); });
+  mo.observe(D.documentElement,{childList:true,subtree:true});
+  W.addEventListener("pageshow",kick);
+})();
+
 
 /* =========================================================
  11) COMPACTADOR (reacomoda UI calc si viene “suelta”)
@@ -1046,5 +1045,3 @@ D.readyState==="loading"?addEventListener("DOMContentLoaded",boot,{once:true}):b
 addEventListener("pageshow",boot);
 })();
 
-/* === cierre del wrapper principal (el que abre al inicio) === */
-})();
