@@ -27,53 +27,6 @@ if (document?.body?.getAttribute("data-calc") === "nube" || window.__EXPIRITI_FO
     function safeHasTable(id) { var el = document.getElementById(id); return !!(el && el.querySelector && el.querySelector("table")); }
     function recomputeAll() { window.dispatchEvent(new Event("calc-recompute")); }
 
-function $id(id){ return document.getElementById(id); }
-function setText(id, val){
-  var el = $id(id);
-  if(!el) return false;
-  el.textContent = val;
-  return true;
-}
-function setHTML(id, val){
-  var el = $id(id);
-  if(!el) return false;
-  el.innerHTML = val;
-  return true;
-}
-function setDisplay(id, val){
-  var el = $id(id);
-  if(!el) return false;
-  el.style.display = val;
-  return true;
-}
-
-    
-function setCalcCountClass() {
-  var hasSecondary = !!document.querySelector("#calc-secondary table");
-  var hasTertiary  = !!document.querySelector("#calc-tertiary table");
-
-  var is3 = hasSecondary && hasTertiary;
-  var is2 = (hasSecondary || hasTertiary) && !is3;
-
-  [document.documentElement, document.body].forEach(function(el){
-    if(!el) return;
-
-    el.classList.toggle("has-calc-2", is2);
-    el.classList.toggle("has-calc-3", is3);
-    if (is3) el.classList.remove("has-calc-2");
-  });
-
-  // Marca vacíos (para que CSS los oculte)
-  markEmpty("#calc-secondary");
-  markEmpty("#calc-tertiary");
-}
-
-function markEmpty(sel){
-  var el = document.querySelector(sel);
-  if(!el) return;
-  el.classList.toggle("calc-empty", !el.querySelector("table"));
-}
-
     function $id(id){ return document.getElementById(id); }
 function setText(id, val){
   var el = $id(id);
@@ -337,6 +290,7 @@ if (strong) {
 }
 
 
+var showInst = !!(instOn && instOn.checked);
 
         // IVA: base imponible = sistemas(desc) + instalación(neta)
         var baseImponible = round2(afterDiscount + instNet);
@@ -402,7 +356,9 @@ setDisplay("tr-instdisc"+idSuffix, "none");
           }
           rfcLabel.style.display = "inline-block";
         }
-        calculateAndRender();
+calculateAndRender();
+updateCombinedSummary(combinedSelector);
+
       });
       rfcSel.addEventListener("change", calculateAndRender);
       userInput.addEventListener("change", calculateAndRender);
@@ -416,7 +372,7 @@ setDisplay("tr-instdisc"+idSuffix, "none");
     function updateCombinedSummary(combinedSelector) {
       if (!combinedSelector) combinedSelector = "#combined-wrap";
       var combined = document.querySelector(combinedSelector); if (!combined) return;
-
+} 
       // parse robusto: soporta comas/centavos/signo “−”
       function getNum(id) {
         var el = document.getElementById(id); if (!el) return 0;
