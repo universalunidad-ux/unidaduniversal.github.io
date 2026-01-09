@@ -85,16 +85,22 @@ function cleanupSuffixDupes(suf,keepContainer){
 /* ===== Layout state ===== */
 function markEmpty(sel){var el=qs(sel); if(!el) return; el.classList.toggle("calc-empty", !el.querySelector("table"));}
 function setCalcCountClass(){
-  var has2=!!document.querySelector("#calc-secondary table");
-  var has3=!!document.querySelector("#calc-tertiary table");
-  var is3=has2&&has3, is2=has2&&!has3;
+  var row=document.getElementById("calc-row");
+  var sec=document.getElementById("calc-secondary");
+  var ter=document.getElementById("calc-tertiary");
+
+  var has2=!!(sec && sec.querySelector("table"));
+  var has3=!!(ter && ter.querySelector("table"));
+
+  var cols = has3 ? "3" : (has2 ? "2" : "1");
+  if(row) row.setAttribute("data-cols", cols);
+
   [document.documentElement,document.body].forEach(function(el){
     if(!el) return;
-    el.classList.toggle("has-calc-2",is2);
-    el.classList.toggle("has-calc-3",is3);
-    if(is3) el.classList.remove("has-calc-2");
+    el.classList.toggle("has-calc-2", cols==="2");
+    el.classList.toggle("has-calc-3", cols==="3");
+    if(cols==="3") el.classList.remove("has-calc-2");
   });
-  markEmpty("#calc-secondary"); markEmpty("#calc-tertiary");
 }
 
 /* ===== Ensure secondary container exists (insert sibling) ===== */
