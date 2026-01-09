@@ -686,3 +686,139 @@ html.has-calc-2 .page-sistemas .calc-empty,body.has-calc-2 .page-sistemas .calc-
 html.has-calc-3 .page-sistemas .calc-empty,body.has-calc-3 .page-sistemas .calc-empty{
   min-height:0!important;padding:0!important;margin:0!important
 }
+
+/* =========================================================
+ Expiriti — main.css (SISTEMAS ONLY) v2026.01.09-calc-grid
+ - Calculadoras: 1/2/3 columnas sin cortes
+ - 2-up: 50/50 exacto | 3-up: 3 cols
+ - Alturas consistentes + overflow seguro
+========================================================= */
+
+/* ===== A) CONTENEDOR STRIP + GRID ===== */
+.page-sistemas .calc-strip{max-width:var(--maxw,1200px);margin:0 auto;padding:0 12px}
+.page-sistemas .calc-row{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  align-items:stretch;
+}
+
+/* 2 calculadoras (50/50) */
+.page-sistemas .calc-row.is-2,
+.page-sistemas .calc-row[data-cols="2"]{
+  grid-template-columns:1fr 1fr;
+}
+
+/* 3 calculadoras */
+.page-sistemas .calc-row.is-3,
+.page-sistemas .calc-row[data-cols="3"]{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+/* Responsivo: 3 → 2 + 1 */
+@media(max-width:1100px){
+  .page-sistemas .calc-row.is-3,
+  .page-sistemas .calc-row[data-cols="3"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .page-sistemas .calc-row.is-3 > :nth-child(3),
+  .page-sistemas .calc-row[data-cols="3"] > :nth-child(3){grid-column:1/-1}
+}
+/* Mobile: todo 1 columna */
+@media(max-width:768px){
+  .page-sistemas .calc-row,
+  .page-sistemas .calc-row.is-2,
+  .page-sistemas .calc-row.is-3,
+  .page-sistemas .calc-row[data-cols="2"],
+  .page-sistemas .calc-row[data-cols="3"]{grid-template-columns:1fr}
+}
+
+/* ===== B) TARJETA / CONTENEDOR DE CADA CALC ===== */
+.page-sistemas .calc-container{
+  width:100%;
+  min-width:0;                 /* clave: evita desbordes en grid */
+  display:flex;
+  flex-direction:column;
+  border-radius:16px;
+  overflow:hidden;             /* evita que “se salga” */
+}
+
+/* “Tarjeta” si tu calculadora usa .card o similar */
+.page-sistemas .calc-container .card,
+.page-sistemas .calc-container.card{
+  height:100%;
+  min-height:var(--calc-card-h,560px);
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+/* Ajuste altura en pantallas medianas */
+@media(max-width:1100px){
+  .page-sistemas .calc-container .card,
+  .page-sistemas .calc-container.card{min-height:var(--calc-card-h-md,540px)}
+}
+
+/* ===== C) INTERIOR: que el contenido no “corte” ===== */
+.page-sistemas .calc-container .card .body,
+.page-sistemas .calc-container .card-body{
+  flex:1 1 auto;
+  min-height:0;
+  min-width:0;
+  overflow:auto;               /* si algo crece, scroll interno (no rompe layout) */
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+}
+
+/* Si tienes “resumen” o footer dentro de la calculadora */
+.page-sistemas .calc-container .calc-summary,
+.page-sistemas .calc-container .summary,
+.page-sistemas .calc-container .totals{
+  flex:0 0 auto;
+  min-width:0;
+}
+
+/* ===== D) TEXTO LARGO (importe en letras) =====
+   Evita que se “corte” o desborde */
+.page-sistemas .calc-container .amount-words,
+.page-sistemas .calc-container .importe-letras,
+.page-sistemas .calc-container .words,
+.page-sistemas .calc-container .money-words{
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  line-height:1.25;
+  min-width:0;
+}
+
+/* Si quieres limitar a 2 líneas (opcional): agrega class .clamp-2 al nodo */
+.page-sistemas .calc-container .clamp-2{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+/* ===== E) ICONS CAROUSEL (si aplica) ===== */
+.page-sistemas .icons-carousel{position:relative}
+.page-sistemas #icons-sec-sys,
+.page-sistemas #icons-third-sys{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:6px 2px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.page-sistemas #icons-sec-sys .sys-icon,
+.page-sistemas #icons-third-sys .sys-icon{scroll-snap-align:start;flex:0 0 auto}
+
+/* flechas (si tu JS las inyecta con .arrowCircle prev/next) */
+.page-sistemas .icons-carousel .arrowCircle{
+  position:absolute;top:50%;transform:translateY(-50%);
+  z-index:5;
+}
+.page-sistemas .icons-carousel .arrowCircle.prev{left:-6px}
+.page-sistemas .icons-carousel .arrowCircle.next{right:-6px}
+
+/* ===== F) SEGURIDAD ANTI-DESBORDES EN GRID ===== */
+.page-sistemas .calc-row > *{min-width:0}
+.page-sistemas .calc-row *{max-width:100%}
