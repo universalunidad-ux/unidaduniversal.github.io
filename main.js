@@ -103,26 +103,48 @@ TRY("catalog_sistemas",()=>{
 ========================================================= */
 TRY("videos_group2",()=>{
   const q=(s,c=D)=>c.querySelector(s),qa=(s,c=D)=>Array.from(c.querySelectorAll(s));
+
   const groupVideos2=()=>{
-    const car=D.getElementById("carouselVideos");if(!car||car.dataset.grp2==="1")return;
-    const track=q(".carousel-track",car);if(!track){car.dataset.grp2="1";return;}
+    const car=D.getElementById("carouselVideos");
+    if(!car||car.dataset.grp2==="1")return;
+
+    const track=q(".carousel-track",car);
+    if(!track){car.dataset.grp2="1";return;}
+
     if(qa(":scope > .carousel-slide",track).length){car.dataset.grp2="1";return;}
-    const kids=qa(":scope > *",track).filter(n=>n&&n.nodeType===1);if(!kids.length){car.dataset.grp2="1";return;}
+
+    const kids=qa(":scope > *",track).filter(n=>n&&n.nodeType===1);
     const items=kids.filter(n=>!n.classList.contains("carousel-nav")&&!n.classList.contains("yt-titlesbar"));
+    if(!items.length){car.dataset.grp2="1";return;}
+
     track.innerHTML="";
     for(let i=0;i<items.length;i+=2){
-      const slide=D.createElement("div");slide.className="carousel-slide vid-slide";
-      const a=items[i],b=items[i+1];slide.appendChild(a);if(b)slide.appendChild(b);else slide.classList.add("is-single");
+      const slide=D.createElement("div");
+      slide.className="carousel-slide vid-slide";
+      slide.appendChild(items[i]);
+      if(items[i+1]) slide.appendChild(items[i+1]);
+      else slide.classList.add("is-single");
       track.appendChild(slide);
     }
+
     car.dataset.grp2="1";
+    if(car._grpObs){ try{car._grpObs.disconnect()}catch{} car._grpObs=null; }
   };
+
   const boot=()=>groupVideos2();
-  D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
+
+  D.readyState==="loading"
+    ? D.addEventListener("DOMContentLoaded",boot,{once:!0})
+    : boot();
+
   W.addEventListener("load",boot,{passive:!0});
   W.addEventListener("pageshow",boot,{passive:!0});
-  const host=D.getElementById("carouselVideos");
-  if(host) new MutationObserver(()=>groupVideos2()).observe(host,{childList:!0,subtree:!0});
+
+  const car=D.getElementById("carouselVideos");
+  if(car && !car._grpObs){
+    car._grpObs=new MutationObserver(()=>groupVideos2());
+    car._grpObs.observe(car,{childList:!0,subtree:!0});
+  }
 });
 
 /* =========================================================
@@ -218,76 +240,93 @@ TRY("yt_manager",()=>{
 ========================================================= */
 TRY("carousel_universal",()=>{
   const pause=()=>{W.pauseAllYTIframes&&W.pauseAllYTIframes()};
+
   const syncDots=(root,len)=>{
-    const nav=root.querySelector(".carousel-nav");if(!nav)return[];
+    const nav=root.querySelector(".carousel-nav"); if(!nav) return [];
     let dots=[...nav.querySelectorAll(".dot")];
     for(;dots.length<len;){
-      const b=D.createElement("button");b.type="button";b.className="dot";
+      const b=D.createElement("button");
+      b.type="button"; b.className="dot";
       b.setAttribute("aria-label",`Ir al slide ${dots.length+1}`);
-      nav.appendChild(b);dots.push(b);
+      nav.appendChild(b); dots.push(b);
     }
-    for(;dots.length>len;){const x=dots.pop();x&&x.remove()}
+    for(;dots.length>len;){ const x=dots.pop(); x&&x.remove(); }
     return dots;
   };
+
   const hideUI=(root,len)=>{
-    const prev=root.querySelector(".arrowCircle.prev"),next=root.querySelector(".arrowCircle.next"),nav=root.querySelector(".carousel-nav");
+    const prev=root.querySelector(".arrowCircle.prev"),
+          next=root.querySelector(".arrowCircle.next"),
+          nav =root.querySelector(".carousel-nav");
     const single=len<=1;
-    if(prev){prev.disabled=single;prev.style.display=single?"none":""}
-    if(next){next.disabled=single;next.style.display=single?"none":""}
-    if(nav)nav.style.display=single?"none":"";
+    if(prev){prev.disabled=single; prev.style.display=single?"none":"";}
+    if(next){next.disabled=single; next.style.display=single?"none":"";}
+    if(nav) nav.style.display=single?"none":"";
     root.toggleAttribute("data-single",single);
   };
+
   const titlesFor=car=>{
     const sel=car.getAttribute("data-titles");
-    if(sel){const n=[...D.querySelectorAll(sel)];if(n.length)return n}
+    if(sel){ const n=[...D.querySelectorAll(sel)]; if(n.length) return n; }
     const aside=car.closest("aside");
-    if(aside){const t=[...aside.querySelectorAll(":scope > .reel-title")];return t.length?t:null}
+    if(aside){ const t=[...aside.querySelectorAll(":scope > .reel-title")]; return t.length?t:null; }
     const parent=car.parentElement||D;
     const t=[...parent.querySelectorAll(".reel-title")];
     return t.length?t:null;
   };
+
   const slideReelTitle=slide=>{
-    if(!slide)return"";
+    if(!slide) return "";
     const w=slide.querySelector(".reel-embed[data-title],.yt-wrap[data-title]");
-    if(w){const s=(w.getAttribute("data-title")||"").trim();if(s)return s}
+    if(w){ const s=(w.getAttribute("data-title")||"").trim(); if(s) return s; }
     const ifr=slide.querySelector("iframe[title]");
-    if(ifr){const s=(ifr.getAttribute("title")||"").trim();if(s)return s}
+    if(ifr){ const s=(ifr.getAttribute("title")||"").trim(); if(s) return s; }
     const h=slide.querySelector("h4,h3");
     return h?(h.textContent||"").trim():"";
   };
 
   const ensureVideosBar=car=>{
-    if(!car||car.dataset.vbarInit==="1")return;car.dataset.vbarInit="1";
-    const track=car.querySelector(".carousel-track");if(!track)return;
-    const bar=D.createElement("div");bar.className="yt-titlesbar";bar.setAttribute("role","presentation");
-    const left=D.createElement("div"),right=D.createElement("div");left.className="yt-tab";right.className="yt-tab";
-    bar.append(left,right);track.parentElement.insertBefore(bar,track);car._vbar={bar,left,right};
+    if(!car||car.dataset.vbarInit==="1") return;
+    car.dataset.vbarInit="1";
+    const track=car.querySelector(".carousel-track"); if(!track) return;
+    const bar=D.createElement("div"); bar.className="yt-titlesbar"; bar.setAttribute("role","presentation");
+    const left=D.createElement("div"), right=D.createElement("div");
+    left.className="yt-tab"; right.className="yt-tab";
+    bar.append(left,right);
+    track.parentElement.insertBefore(bar,track);
+    car._vbar={bar,left,right};
   };
+
   const slideVideoTitles=slide=>{
-    if(!slide)return[];
-    const h=[...slide.querySelectorAll(".yt-title")].map(x=>(x.textContent||"").trim()).filter(Boolean);if(h.length)return h;
-    const d=[...slide.querySelectorAll(".yt-wrap[data-title],.reel-embed[data-title]")].map(x=>(x.getAttribute("data-title")||"").trim()).filter(Boolean);if(d.length)return d;
-    const f=[...slide.querySelectorAll("iframe[title]")].map(x=>(x.getAttribute("title")||"").trim()).filter(Boolean);if(f.length)return f;
-    return[];
+    if(!slide) return [];
+    const h=[...slide.querySelectorAll(".yt-title")].map(x=>(x.textContent||"").trim()).filter(Boolean);
+    if(h.length) return h;
+    const d=[...slide.querySelectorAll(".yt-wrap[data-title],.reel-embed[data-title]")].map(x=>(x.getAttribute("data-title")||"").trim()).filter(Boolean);
+    if(d.length) return d;
+    const f=[...slide.querySelectorAll("iframe[title]")].map(x=>(x.getAttribute("title")||"").trim()).filter(Boolean);
+    return f;
   };
+
   const updateVideosBar=(car,idx)=>{
-    if(!car||car.id!=="carouselVideos")return;
+    if(!car||car.id!=="carouselVideos") return;
     ensureVideosBar(car);
     car.querySelectorAll(".yt-title").forEach(h=>h.classList.add("yt-title--hidden"));
     const track=car.querySelector(".carousel-track");
     const slides=track?[...track.querySelectorAll(":scope > .carousel-slide")]:[];
-    if(!slides.length)return;
+    if(!slides.length) return;
     const slide=slides[idx]||slides[0];
     const titles=slideVideoTitles(slide);
-    const a=titles[0]||"",b=titles[1]||"",v=car._vbar;if(!v)return;
-    v.left.textContent=a;v.right.textContent=b;
+    const a=titles[0]||"", b=titles[1]||"", v=car._vbar;
+    if(!v) return;
+    v.left.textContent=a;
+    v.right.textContent=b;
     v.right.style.display=b?"":"none";
     v.bar.style.gridTemplateColumns=b?"1fr 1fr":"1fr";
   };
 
   const initCar=(root,onChange)=>{
     const track=root.querySelector(".carousel-track");
-    if(!track||root.dataset.cInit==="1")return;
+    if(!track||root.dataset.cInit==="1") return;
     root.dataset.cInit="1";
 
     const prev=root.querySelector(".arrowCircle.prev"),
@@ -301,24 +340,33 @@ TRY("carousel_universal",()=>{
 
     let i=0, lock=0;
     const paint=n=>dots.forEach((d,di)=>d.classList.toggle("active",di===n));
+    const leftFor=n=>(slides[n]?.offsetLeft)||0;
+
     const set=(n,beh)=>{
       if(len<=0) return;
-      i=(n+len)%len;paint(i);
+      i=(n+len)%len; paint(i);
       lock=1;
-      track.scrollTo({left:track.clientWidth*i,behavior:beh||"smooth"});
+      track.scrollTo({left:leftFor(i),behavior:beh||"smooth"});
       setTimeout(()=>{lock=0},120);
       onChange&&onChange(i);
     };
 
     if(len<=1){ paint(0); onChange&&onChange(0); return; }
-    dots.forEach((d,idx)=>d.addEventListener("click",()=>{pause();set(idx)}));
-    prev&&prev.addEventListener("click",()=>{pause();set(i-1)});
-    next&&next.addEventListener("click",()=>{pause();set(i+1)});
 
+    dots.forEach((d,idx)=>d.addEventListener("click",()=>{pause(); set(idx);}));
+    prev&&prev.addEventListener("click",()=>{pause(); set(i-1);});
+    next&&next.addEventListener("click",()=>{pause(); set(i+1);});
+
+    // SOLO UN listener (no anidar)
     track.addEventListener("scroll",()=>{
-      if(lock||!track.clientWidth) return;
-      const n=Math.round(track.scrollLeft/track.clientWidth);
-      if(n!==i){ i=Math.max(0,Math.min(len-1,n)); paint(i); onChange&&onChange(i); }
+      if(lock) return;
+      const pos=track.scrollLeft;
+      let best=0, dist=1e18;
+      for(let k=0;k<len;k++){
+        const dd=Math.abs(leftFor(k)-pos);
+        if(dd<dist){dist=dd; best=k;}
+      }
+      if(best!==i){ i=best; paint(i); onChange&&onChange(i); }
     },{passive:!0});
 
     set(0,"auto");
@@ -329,28 +377,37 @@ TRY("carousel_universal",()=>{
       const titles=titlesFor(car);
 
       initCar(car,idx=>{
-        if(titles&&car.id!=="carouselVideos"){
+        if(titles && car.id!=="carouselVideos"){
           const track=car.querySelector(".carousel-track");
           const slides=track?[...track.querySelectorAll(":scope > .carousel-slide")]:[];
           const slide=slides[idx]||slides[0];
+
           if(titles.length===1){
-            const txt=slideReelTitle(slide);if(txt)titles[0].textContent=txt;
+            const txt=slideReelTitle(slide);
+            if(txt) titles[0].textContent=txt;
             titles[0].classList.add("active");
-          }else titles.forEach((t,k)=>t.classList.toggle("active",k===idx));
+          }else{
+            titles.forEach((t,k)=>t.classList.toggle("active",k===idx));
+          }
         }
-        if(car.id==="carouselVideos")updateVideosBar(car,idx);
+        if(car.id==="carouselVideos") updateVideosBar(car,idx);
       });
 
-      if(titles&&car.id!=="carouselVideos"&&titles.length===1){
+      if(titles && car.id!=="carouselVideos" && titles.length===1){
         const track=car.querySelector(".carousel-track");
         const slides=track?[...track.querySelectorAll(":scope > .carousel-slide")]:[];
-        const txt=slideReelTitle(slides[0]);if(txt)titles[0].textContent=txt;
+        const txt=slideReelTitle(slides[0]);
+        if(txt) titles[0].textContent=txt;
         titles[0].classList.add("active");
       }
-      if(car.id==="carouselVideos")updateVideosBar(car,0);
+
+      if(car.id==="carouselVideos") updateVideosBar(car,0);
     });
   };
-  D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
+
+  D.readyState==="loading"
+    ? D.addEventListener("DOMContentLoaded",boot,{once:!0})
+    : boot();
 });
 
 /* =========================================================
@@ -455,34 +512,29 @@ TRY("carouselX",()=>{
 
 /* =========================================================
  10) CALCULADORA — COMPAT (NO DUPLICA)
-  - Deja a calculadora.js como SINGLE OWNER
-  - main.js solo “recompute” y “repaint icons-carousel” si aplica
+  - calculadora.js es SINGLE OWNER
+  - main.js solo dispara eventos (recompute/render)
 ========================================================= */
 TRY("calc_hooks",()=>{
   const hasCalcDom=()=>{
     const app=D.getElementById("app");
     if(!app) return false;
-    return !!(D.getElementById("calc-row") && D.getElementById("icons-sec-sys") && (app.dataset.system||"").trim());
+    return !!((app.dataset.system||"").trim() && D.getElementById("calc-row"));
   };
 
   const kick=()=>{
     if(!hasCalcDom()) return;
-
-    // Si calculadora.js ya existe, NO hacemos init aquí (evita duplicados)
-    if(W.CalculadoraContpaqi && typeof W.CalculadoraContpaqi.updateCombinedSummary==="function"){
-      // fuerza recompute (por si cambió layout, carruseles, etc.)
-      try{ W.dispatchEvent(new Event("calc-recompute")); }catch{}
-      try{ W.dispatchEvent(new Event("calc-render")); }catch{}
-      return;
-    }
-
-    // Si NO está calculadora.js aún (orden de scripts), no rompas nada.
-    // Cuando cargue, su autoInitOnce se encargará.
+    try{ W.dispatchEvent(new Event("calc-recompute")); }catch{}
+    try{ W.dispatchEvent(new Event("calc-render")); }catch{}
   };
 
-  D.readyState==="loading"?D.addEventListener("DOMContentLoaded",kick,{once:!0}):kick();
+  D.readyState==="loading"
+    ? D.addEventListener("DOMContentLoaded",kick,{once:!0})
+    : kick();
+
   W.addEventListener("pageshow",kick,{passive:!0});
 });
+
 
 /* =========================================================
  10.5) ICONS CAROUSEL (-15%) — SOLO si existen pickers
@@ -588,239 +640,4 @@ TRY("toc",()=>{
 });
 
 })(); /* FIN IIFE PRINCIPAL */
-
-/* =========================
- PATCH v2026.01.09-r3 — MIN + COMENTARIOS
- - abs(): normaliza sin romper esquemas, respeta ./ ../
- - videos_group2: observer se desconecta tras agrupar
- - carousel: usa offsetLeft (más estable que clientWidth*i)
- - calc_hooks/icons: 0 duplicación (solo re-dispatch / solo 1 UI)
-========================= */
-
-TRY("base+partials",()=>{
-  const isGh=/\.github\.io$/i.test(location.hostname);
-  const metaBase=D.querySelector('meta[name="expiriti-base"]')?.getAttribute("content")||"";
-  const cleanBase=b=>{b=(b||"").trim();if(!b)return"";if(!b.startsWith("/"))b="/"+b;return b.endsWith("/")?b:(b+"/")};
-  let BASE=cleanBase(metaBase);
-  if(isGh&&!BASE){const seg=(location.pathname||"/").split("/").filter(Boolean)[0]||"";BASE=seg?("/"+seg+"/"):"/";}
-  if(!BASE)BASE="/";
-
-  const inSub=/\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
-  const rel=inSub?"../":"";
-
-  // normaliza slashes sin tocar "http(s)://"
-  const norm=p=>{
-    if(!p) return p;
-    if(/^https?:\/\//i.test(p)) return p;
-    return p.replace(/\/{2,}/g,"/"); // solo colapsa multiples slashes
-  };
-
-  const abs=p=>{
-    if(!p) return p;
-    if(/^https?:\/\//i.test(p))return p;
-    if(/^(mailto:|tel:|data:|blob:|javascript:)/i.test(p))return p;
-
-    // relativo explícito: NO doblar
-    if(p.startsWith("../")||p.startsWith("./")) return norm(p);
-
-    // raíz: GH project-site => BASE + path sin "/"
-    if(p.startsWith("/")) return norm(isGh?(BASE+p.slice(1)):p);
-
-    // relativo simple: GH => BASE+p | subfolder => ../p
-    return norm(isGh?(BASE+p):(rel+p));
-  };
-
-  const headerURL=abs("PARTIALS/global-header.html");
-  const footerURL=abs("PARTIALS/global-footer.html");
-
-  const normalize=(root=D)=>{
-    root.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{const ds=img.getAttribute("data-src");if(ds)img.src=abs(ds),img.style.opacity="1"});
-    root.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{const dh=a.getAttribute("data-href");if(!dh)return;const [path,hash]=dh.split("#");a.href=abs(path||"")+(hash?("#"+hash):"")});
-    root.querySelectorAll(".js-img[data-src]").forEach(img=>{const ds=img.getAttribute("data-src");if(ds)img.src=abs(ds)});
-    root.querySelectorAll(".js-link[data-href]").forEach(a=>{const dh=a.getAttribute("data-href");if(!dh)return;const [path,hash]=dh.split("#");a.href=abs(path||"")+(hash?("#"+hash):"")});
-    const y=(root.getElementById&&root.getElementById("gf-year"))||D.getElementById("gf-year")||(root.getElementById&&root.getElementById("year"))||D.getElementById("year");
-    if(y)y.textContent=(new Date).getFullYear();
-  };
-
-  const loadPartials=async()=>{
-    const hp=D.getElementById("header-placeholder"),fp=D.getElementById("footer-placeholder");
-    if(!hp&&!fp){normalize(D);return;}
-    const noCache=/(?:\?|&)nocache=1\b/.test(location.search);
-    const fetchOpts=noCache?{cache:"no-store"}:{cache:"force-cache"};
-    try{
-      if(hp){const r=await fetch(headerURL,fetchOpts);r.ok?hp.outerHTML=await r.text():console.warn("[partials] header no cargó:",headerURL,r.status);}
-      if(fp){const r=await fetch(footerURL,fetchOpts);r.ok?fp.outerHTML=await r.text():console.warn("[partials] footer no cargó:",footerURL,r.status);}
-    }catch(e){console.warn("[partials] error",e);}
-    normalize(D);
-    if(typeof W.initGlobalHeader==="function"){try{W.initGlobalHeader()}catch(e){console.warn("initGlobalHeader error",e)}}
-  };
-
-  const boot=()=>loadPartials();
-  D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
-  W.addEventListener("pageshow",()=>{try{normalize(D)}catch{}},{passive:!0});
-
-  W.__EXP_ABS__=abs;W.__EXP_BASE__=BASE;
-});
-
-TRY("videos_group2",()=>{
-  const q=(s,c=D)=>c.querySelector(s),qa=(s,c=D)=>Array.from(c.querySelectorAll(s));
-  const boot=()=>{
-    const car=D.getElementById("carouselVideos");if(!car||car.dataset.grp2==="1")return;
-    const track=q(".carousel-track",car);if(!track){car.dataset.grp2="1";return;}
-    if(qa(":scope > .carousel-slide",track).length){car.dataset.grp2="1";return;}
-    const kids=qa(":scope > *",track).filter(n=>n&&n.nodeType===1);
-    const items=kids.filter(n=>!n.classList.contains("carousel-nav")&&!n.classList.contains("yt-titlesbar"));
-    if(!items.length){car.dataset.grp2="1";return;}
-
-    track.innerHTML="";
-    for(let i=0;i<items.length;i+=2){
-      const slide=D.createElement("div");slide.className="carousel-slide vid-slide";
-      slide.appendChild(items[i]); if(items[i+1])slide.appendChild(items[i+1]); else slide.classList.add("is-single");
-      track.appendChild(slide);
-    }
-    car.dataset.grp2="1";
-    if(car._grpObs){try{car._grpObs.disconnect()}catch{} car._grpObs=null;}
-  };
-
-  const init=()=>{
-    const car=D.getElementById("carouselVideos"); if(!car) return;
-    if(!car._grpObs){
-      car._grpObs=new MutationObserver(()=>boot());
-      car._grpObs.observe(car,{childList:!0,subtree:!0});
-    }
-    boot();
-  };
-
-  D.readyState==="loading"?D.addEventListener("DOMContentLoaded",init,{once:!0}):init();
-  W.addEventListener("pageshow",init,{passive:!0});
-});
-
-TRY("carousel_universal",()=>{
-  const pause=()=>{W.pauseAllYTIframes&&W.pauseAllYTIframes()};
-  const syncDots=(root,len)=>{
-    const nav=root.querySelector(".carousel-nav");if(!nav)return[];
-    let dots=[...nav.querySelectorAll(".dot")];
-    for(;dots.length<len;){const b=D.createElement("button");b.type="button";b.className="dot";b.setAttribute("aria-label",`Ir al slide ${dots.length+1}`);nav.appendChild(b);dots.push(b);}
-    for(;dots.length>len;){const x=dots.pop();x&&x.remove()}
-    return dots;
-  };
-  const hideUI=(root,len)=>{
-    const prev=root.querySelector(".arrowCircle.prev"),next=root.querySelector(".arrowCircle.next"),nav=root.querySelector(".carousel-nav");
-    const single=len<=1;
-    if(prev){prev.disabled=single;prev.style.display=single?"none":""}
-    if(next){next.disabled=single;next.style.display=single?"none":""}
-    if(nav)nav.style.display=single?"none":"";
-    root.toggleAttribute("data-single",single);
-  };
-
-  const initCar=(root,onChange)=>{
-    const track=root.querySelector(".carousel-track");
-    if(!track||root.dataset.cInit==="1")return;
-    root.dataset.cInit="1";
-
-    const prev=root.querySelector(".arrowCircle.prev"),
-          next=root.querySelector(".arrowCircle.next");
-
-    const slides=[...track.querySelectorAll(":scope > .carousel-slide")];
-    const len=slides.length;
-
-    let dots=syncDots(root,len);
-    hideUI(root,len);
-
-    let i=0, lock=0;
-    const paint=n=>dots.forEach((d,di)=>d.classList.toggle("active",di===n));
-
-    const leftFor=n=>{
-      const s=slides[n]; if(!s) return 0;
-      return s.offsetLeft; // más robusto que clientWidth*n
-    };
-
-    const set=(n,beh)=>{
-      if(len<=0)return;
-      i=(n+len)%len; paint(i);
-      lock=1;
-      track.scrollTo({left:leftFor(i),behavior:beh||"smooth"});
-      setTimeout(()=>{lock=0},120);
-      onChange&&onChange(i);
-    };
-
-    if(len<=1){paint(0);onChange&&onChange(0);return;}
-    dots.forEach((d,idx)=>d.addEventListener("click",()=>{pause();set(idx)}));
-    prev&&prev.addEventListener("click",()=>{pause();set(i-1)});
-    next&&next.addEventListener("click",()=>{pause();set(i+1)});
-
-    track.addEventListener("scroll",()=>{
-      if(lock) return;
-      const pos=track.scrollLeft;
-      let best=0,dist=1e18;
-      for(let k=0;k<len;k++){
-        const d=Math.abs(leftFor(k)-pos);
-        if(d<dist){dist=d;best=k}
-      }
-      if(best!==i){i=best;paint(i);onChange&&onChange(i);}
-    },{passive:!0});
-
-    set(0,"auto");
-  };
-
-  const boot=()=>D.querySelectorAll(".carousel").forEach(car=>initCar(car,(idx)=>{ if(car.id==="carouselVideos"&&typeof W.updateVideosBar==="function")W.updateVideosBar(car,idx); }));
-  D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
-});
-
-TRY("calc_hooks",()=>{
-  const hasCalcDom=()=>{
-    const app=D.getElementById("app");
-    if(!app) return false;
-    return !!(D.getElementById("calc-row") && (app.dataset.system||"").trim());
-  };
-  const kick=()=>{
-    if(!hasCalcDom()) return;
-    // SOLO dispara eventos: calculadora.js es owner
-    try{W.dispatchEvent(new Event("calc-recompute"))}catch{}
-    try{W.dispatchEvent(new Event("calc-render"))}catch{}
-  };
-  D.readyState==="loading"?D.addEventListener("DOMContentLoaded",kick,{once:!0}):kick();
-  W.addEventListener("pageshow",kick,{passive:!0});
-});
-
-TRY("icons_carousel",()=>{
-  const enhance=wrap=>{
-    if(!wrap) return;
-    const host=wrap.closest(".icons-carousel")||wrap.parentElement;
-    if(!host||host.dataset.icInit==="1") return;
-
-    const hasIcons=()=>!!wrap.querySelector(".sys-icon");
-    if(!hasIcons()){
-      if(!wrap.dataset.icObs){
-        wrap.dataset.icObs="1";
-        new MutationObserver(()=>enhance(wrap)).observe(wrap,{childList:!0});
-      }
-      return;
-    }
-
-    host.dataset.icInit="1";
-    host.classList.add("icons-carousel");
-
-    const mk=(cls,label,chev)=>{const b=D.createElement("button");b.type="button";b.className=`arrowCircle ${cls}`;b.setAttribute("aria-label",label);b.innerHTML=`<span class="chev">${chev}</span>`;return b};
-    let prev=host.querySelector(".arrowCircle.prev"),next=host.querySelector(".arrowCircle.next");
-    if(!prev){prev=mk("prev","Anterior","‹");host.appendChild(prev)}
-    if(!next){next=mk("next","Siguiente","›");host.appendChild(next)}
-
-    const step=()=>Math.max(220,Math.round(((wrap.querySelector(".sys-icon")?.offsetWidth)||200)+18));
-    const scrollByX=dir=>wrap.scrollBy({left:step()*dir,behavior:"smooth"});
-    prev.addEventListener("click",()=>scrollByX(-1));
-    next.addEventListener("click",()=>scrollByX(1));
-
-    const paint=()=>{
-      const can=wrap.scrollWidth>wrap.clientWidth+4;
-      prev.style.display=can?"":"none"; next.style.display=can?"":"none";
-    };
-    paint(); W.addEventListener("resize",paint,{passive:!0});
-  };
-
-  const boot=()=>{enhance(D.getElementById("icons-sec-sys"));enhance(D.getElementById("icons-third-sys"));};
-  D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
-  W.addEventListener("calc-render",boot,{passive:!0});
-  W.addEventListener("calc-recompute",boot,{passive:!0});
-});
 
