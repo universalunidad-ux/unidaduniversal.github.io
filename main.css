@@ -1016,3 +1016,33 @@ body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2{
 #carouselVideos .arrowCircle{display:none}
 #carouselVideos .carousel-nav{display:none}
 
+/*==EXP CALC PATCH v2026.01.09 | FIX: 3 calc sin corte + alturas iguales + resumen sin truncar==*/
+#calculadora-section{overflow:visible}#calculadora-section .calc-strip{max-width:var(--maxw,1200px);margin:0 auto;padding:0 12px;overflow:visible}
+/* Layout: grid auto-wrap (3->2+1) sin overflow horizontal */
+#calculadora-section .calc-row{display:grid;gap:16px;align-items:stretch;overflow:visible}
+/* Desktop: intenta 3 columnas pero permite wrap real */
+@media(min-width:1100px){#calculadora-section .calc-row{grid-template-columns:repeat(3,minmax(320px,1fr))}}
+/* Mid: 2 columnas */
+@media(min-width:760px) and (max-width:1099.98px){#calculadora-section .calc-row{grid-template-columns:repeat(2,minmax(320px,1fr))}}
+/* Mobile: 1 columna */
+@media(max-width:759.98px){#calculadora-section .calc-row{grid-template-columns:1fr}}
+/* Anti-corte clásico en grid/flex: permite encoger y envolver */
+#calculadora-section .calc-row>*{min-width:0}
+/* Igualar “tarjetas” (calculadoras/placeholder/panel) */
+#calculadora-section .calc-container,#calculadora-section .placeholder{height:100%;display:flex;flex-direction:column;min-width:0}
+/* Asegura que el cuerpo interno no cause overflow lateral */
+#calculadora-section .calc-container *,#calculadora-section .placeholder *{min-width:0;max-width:100%}
+/* Tablas internas: no empujar columnas fuera del card */
+#calculadora-section table{width:100%;border-collapse:collapse;table-layout:fixed}
+#calculadora-section td,#calculadora-section th{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+/* Inputs/selects: evitar que se salgan */
+#calculadora-section input,#calculadora-section select{max-width:100%}
+/* Resumen combinado: sin truncado, y el “Total en letras” debe envolver */
+#combined-wrap{max-width:var(--maxw,1200px);margin:14px auto 0;padding:0 12px;overflow:visible}
+#combined-wrap .combined-table{width:100%;table-layout:auto}
+#combined-wrap .combined-table td,#combined-wrap .combined-table th{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;word-break:break-word}
+/* Si tu JS mete el texto en un <small> o clase específica, fuerza wrap */
+#combined-wrap small,#combined-wrap .amount-words,#combined-wrap .total-words{display:block;white-space:normal;overflow-wrap:anywhere;word-break:break-word;line-height:1.25}
+/* Si por alguna razón hay “ellipsis” heredado */
+#combined-wrap *{text-overflow:clip}
+
