@@ -502,3 +502,71 @@ html[data-theme="light"] .pill:not(.active):hover{filter:saturate(1.06) brightne
 #calculadora-section :is(.resumen-combinado,.combo-summary,.calc-summary,.summary){margin-top:14px!important;padding-top:10px!important;border-top:1px solid rgba(148,163,184,.18)}
 html[data-theme="light"] #calculadora-section :is(.resumen-combinado,.combo-summary,.calc-summary,.summary){border-top:1px solid rgba(2,6,23,.10)}
 #calculadora-section :is(.resumen-combinado,.combo-summary,.calc-summary,.summary) :is(p,div){margin-top:6px}
+
+
+/* =========================================================
+ Expiriti — rFIX visible (SISTEMAS) v2026.01.09-r2
+ - GANA a tu DEDUPE de pills (más específico + !important)
+ - 2/3 calcs: elimina min-width 420px que rompe layout
+ - Resumen combinado: separa bloques
+========================================================= */
+.page-sistemas{--ex-amber:rgb(233,170,25);--ex-amber2:rgba(233,170,25,.22);--ex-amber3:rgba(233,170,25,.12)}
+
+/* =========================
+ 1) PILLS apagados (LIGHT) → AMARILLO GLASS
+ (esto sobre-escribe tu negro forzado)
+========================= */
+html[data-theme="light"] body.page-sistemas .pillbar .pill:not(.active){
+  background:linear-gradient(135deg,var(--ex-amber2),var(--ex-amber3))!important;
+  border-color:rgba(233,170,25,.60)!important;
+  color:rgba(11,18,32,.92)!important;
+  box-shadow:0 12px 26px rgba(2,6,23,.10)!important;
+  backdrop-filter:blur(10px)!important;-webkit-backdrop-filter:blur(10px)!important
+}
+@media(hover:hover){
+  html[data-theme="light"] body.page-sistemas .pillbar .pill:not(.active):hover{
+    filter:saturate(1.06) brightness(1.02)!important;
+    transform:translateY(-1px)!important
+  }
+}
+/* Active no se toca: sigue como lo tienes */
+
+/* =========================
+ 2) GRID calcs 2/3 sin cortes (DESKTOP)
+ - Mata tu minmax(420px,1fr) (culpable del recorte)
+ - Usa minmax(0,1fr) para permitir encoger
+========================= */
+@media(min-width:981px){
+  /* 2 calcs = 50/50 real */
+  html.has-calc-2 body.page-sistemas .calc-row,
+  body.has-calc-2 body.page-sistemas .calc-row{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    justify-content:center!important;
+    padding:0 8px!important
+  }
+
+  /* 3 calcs = 3 columnas reales sin min width fijo */
+  html.has-calc-3 body.page-sistemas .calc-row,
+  body.has-calc-3 body.page-sistemas .calc-row{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    justify-content:center!important;
+    padding:0 8px!important
+  }
+
+  /* Evita que tablas/forms empujen el grid fuera */
+  body.page-sistemas .calc-row>*{min-width:0!important}
+  body.page-sistemas .calc-container{min-width:0!important;max-width:100%!important}
+  body.page-sistemas .calc-container table{max-width:100%!important}
+}
+
+/* =========================
+ 3) Resumen combinado “muy pegado”
+ - Separación clara sin cambiar HTML
+========================= */
+body.page-sistemas #combined-wrap .combined-summary{
+  margin-top:18px!important;
+  padding-top:16px!important
+}
+body.page-sistemas #combined-wrap .cs-head{margin-bottom:14px!important}
+body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
+
