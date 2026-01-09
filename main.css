@@ -94,28 +94,7 @@ body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:flex}
 /* CALC EMPTY (debug/UX) */
 .page-sistemas #calc-secondary.calc-empty{display:block!important;min-height:220px!important;padding:14px!important}
 
-/* LAYOUT DEFINITIVO 1/2/3 */
-@media(min-width:981px){
-.page-sistemas .calc-row{display:grid!important;gap:14px!important;grid-template-columns:minmax(var(--sys-calc-min),var(--sys-calc-max)) minmax(var(--sys-panel-min),var(--sys-panel-max))!important;justify-content:center!important;align-items:stretch!important}
-.page-sistemas #calc-primary{width:100%!important;max-width:var(--sys-calc-max)!important;margin:0!important;justify-self:stretch!important}
-.page-sistemas #calc-slot-2{width:100%!important;max-width:var(--sys-panel-max)!important;margin:0!important;justify-self:center!important;align-self:center!important}
-.page-sistemas #calc-slot-2.placeholder{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;min-height:unset!important;height:auto!important;display:flex!important;align-items:center!important;justify-content:center!important}
-html.has-calc-2 .page-sistemas .calc-row,body.has-calc-2 .page-sistemas .calc-row{grid-template-columns:minmax(var(--sys-calc-min),var(--sys-calc-max)) minmax(var(--sys-calc-min),var(--sys-calc-max))!important}
-html.has-calc-2 .page-sistemas #calc-secondary,body.has-calc-2 .page-sistemas #calc-secondary{display:block!important;width:100%!important;max-width:var(--sys-calc-max)!important;margin:0!important}
-html.has-calc-2 .page-sistemas #calc-slot-2,body.has-calc-2 .page-sistemas #calc-slot-2{display:none!important}
-html.has-calc-2 .page-sistemas #add-more-panel,body.has-calc-2 .page-sistemas #add-more-panel{display:flex!important;grid-column:1/-1!important;justify-content:center!important;margin-top:14px!important}
-html.has-calc-2 .page-sistemas #add-more-panel .note,body.has-calc-2 .page-sistemas #add-more-panel .note{width:min(760px,100%)!important;margin:0 auto!important;text-align:center!important}
-html.has-calc-3 .page-sistemas .calc-row,body.has-calc-3 .page-sistemas .calc-row{grid-template-columns:minmax(420px,1fr) minmax(420px,1fr) minmax(420px,1fr)!important}
-html.has-calc-3 .page-sistemas #calc-secondary,body.has-calc-3 .page-sistemas #calc-secondary,html.has-calc-3 .page-sistemas #calc-tertiary,body.has-calc-3 .page-sistemas #calc-tertiary{display:block!important;width:100%!important;max-width:var(--sys-calc-max)!important;margin:0!important}
-html.has-calc-3 .page-sistemas #calc-slot-2,body.has-calc-3 .page-sistemas #calc-slot-2,html.has-calc-3 .page-sistemas #add-more-panel,body.has-calc-3 .page-sistemas #add-more-panel{display:none!important}
-}
-@media(max-width:980px){
-.page-sistemas .calc-row{display:grid!important;grid-template-columns:1fr!important;gap:14px!important;justify-content:stretch!important;align-items:stretch!important}
-.page-sistemas #calc-primary,.page-sistemas #calc-secondary,.page-sistemas #calc-tertiary,.page-sistemas #calc-slot-2,.page-sistemas #add-more-panel{width:100%!important;max-width:none!important}
-.page-sistemas .calc-container form{grid-template-columns:1fr!important}
-.page-sistemas .calc-container .field.lic,.page-sistemas .calc-container .field.rfc,.page-sistemas .calc-container .field.usr,.page-sistemas .calc-container .op-label,.page-sistemas .calc-container .inst-wrap{grid-column:1!important}
-.page-sistemas .calc-container .instalacion-box{flex-wrap:wrap}
-}
+
 
 /* ICONS CAROUSEL (panel derecho) */
 .page-sistemas .icons-carousel{position:relative;max-width:100%;margin-top:10px;padding:0 50px}
@@ -293,48 +272,6 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 #toc.collapsed .toc-panel{display:none}
 #toc.open .toc-panel{display:block}
 
-/* =========================
-   DEDUPE FIX: CALCULADORA (único)
-   - 2/3: mismas alturas (sin cortar: tabla scrollea)
-   - Integra panel: centrado y compacto
-   - 1 calc: integra carrusel no se corta (item 1 accesible)
-========================= */
-
-/* 2/3 calcs: altura uniforme + scroll tabla */
-@media(min-width:981px){
-html.has-calc-2 .page-sistemas .calc-container,body.has-calc-2 .page-sistemas .calc-container,html.has-calc-3 .page-sistemas .calc-container,body.has-calc-3 .page-sistemas .calc-container{height:var(--calc-card-h)!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
-@media(max-width:1180px){
-html.has-calc-2 .page-sistemas .calc-container,body.has-calc-2 .page-sistemas .calc-container,html.has-calc-3 .page-sistemas .calc-container,body.has-calc-3 .page-sistemas .calc-container{height:var(--calc-card-h-md)!important}
-}
-html.has-calc-2 .page-sistemas .calc-container form,body.has-calc-2 .page-sistemas .calc-container form,html.has-calc-3 .page-sistemas .calc-container form,body.has-calc-3 .page-sistemas .calc-container form{flex:0 0 auto}
-html.has-calc-2 .page-sistemas .calc-container table,body.has-calc-2 .page-sistemas .calc-container table,html.has-calc-3 .page-sistemas .calc-container table,body.has-calc-3 .page-sistemas .calc-container table{flex:1 1 auto!important;width:100%!important;max-width:100%!important;margin-top:10px!important;display:block!important;overflow:auto!important;-webkit-overflow-scrolling:touch}
-html.has-calc-2 .page-sistemas .calc-container thead,body.has-calc-2 .page-sistemas .calc-container thead,html.has-calc-3 .page-sistemas .calc-container thead,body.has-calc-3 .page-sistemas .calc-container thead{position:sticky;top:0;z-index:2}
-}
-@media(max-width:980px){.page-sistemas .calc-container{height:auto!important}.page-sistemas .calc-container table{display:table!important;overflow:visible!important}}
-
-/* Integra panel (calc-slot-2) centrado + compacto */
-@media(min-width:981px){.page-sistemas #calculadora-section .calc-row{align-items:center!important}}
-.page-sistemas #calc-slot-2.placeholder{padding:0!important;min-height:unset!important;height:100%}
-.page-sistemas #calc-slot-2.placeholder .note{height:100%;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:stretch!important;gap:10px!important;padding:14px!important;border-radius:16px!important}
-.page-sistemas #calc-slot-2 .icons-carousel{margin:8px 0 0!important;padding:0!important;min-height:unset!important}
-.page-sistemas #calc-slot-2 .icons-wrap{padding:8px 4px!important;gap:12px!important;justify-content:center!important}
-.page-sistemas #calc-slot-2 .sys-icon{min-height:170px!important}
-.page-sistemas #calc-slot-2 .arrowCircle{top:50%!important;transform:translateY(-50%)!important}
-
-/* Mobile: si hay 2+ calcs, no mostrar Integra */
-@media(max-width:980px){
-html.has-calc-2 .page-sistemas #calc-slot-2,body.has-calc-2 .page-sistemas #calc-slot-2,html.has-calc-3 .page-sistemas #calc-slot-2,body.has-calc-3 .page-sistemas #calc-slot-2{display:none!important}
-html.has-calc-2 .page-sistemas #add-more-panel,body.has-calc-2 .page-sistemas #add-more-panel{display:block!important}
-html.has-calc-3 .page-sistemas #add-more-panel,body.has-calc-3 .page-sistemas #add-more-panel{display:none!important}
-}
-
-/* 1 calc: integra carrusel no se corta (item 1 accesible) */
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2,body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2{overflow:visible!important}
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2.placeholder,html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .note,body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2.placeholder,body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .note{overflow:visible!important}
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-carousel,body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-carousel{position:relative;padding:0 52px!important}
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap,body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap{display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;overflow-x:auto!important;overflow-y:hidden!important;padding:12px 10px!important;gap:12px!important;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-left:44px;scroll-padding-right:44px}
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::before,html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::after,body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::before,body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::after{content:"";flex:0 0 44px}
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap>*,body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap>*{scroll-snap-align:start}
 
 /* DEDUPE FIX: PILLS inactivos neutros (sin tocar .pill.active) */
 .page-sistemas .pillbar .pill:not(.active){color:rgba(232,238,246,.96)!important;background:rgba(15,23,42,.22)!important;border:1px solid rgba(148,163,184,.28)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 26px rgba(0,0,0,.18)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
@@ -344,164 +281,6 @@ html[data-theme="light"] .page-sistemas .pillbar .pill:not(.active){color:rgba(2
 /* FIX: ocultar “labels blancos” debajo del player si aparecen */
 .yt-title--hidden{display:none!important}
 #carouselVideos .yt-title{display:none!important}
-
-/* ================= Expiriti PATCH v2026.01.09-rFIX (SISTEMAS) =================
-FIX: (1) Integra icons start/first item accesible (2) 2/3 calcs sin cortes desktop
-(3) Acentos AMARILLO/VERDE/ROJO en calc + panel/carrusel (armonioso)
-Pegar AL FINAL del main.css de SISTEMAS
-============================================================================= */
-.page-sistemas{--exp-amber:#e8ac36;--exp-green:#2dd4bf;--exp-rose:#f05a66;--exp-ink:#0b1220;--exp-ring:rgba(255,255,255,.16);--exp-soft:rgba(15,23,42,.22)}
-.page-sistemas .calc-row,.page-sistemas .calc-strip,.page-sistemas #combined-wrap{max-width:100%}
-.page-sistemas .calc-container{min-width:0;box-sizing:border-box;position:relative;overflow:hidden}
-.page-sistemas #calc-primary.calc-container{border:1px solid rgba(232,172,54,.28)}
-.page-sistemas #calc-secondary.calc-container{border:1px solid rgba(45,212,191,.26)}
-.page-sistemas #calc-tertiary.calc-container{border:1px solid rgba(240,90,102,.26)}
-.page-sistemas #calc-primary.calc-container::before,.page-sistemas #calc-secondary.calc-container::before,.page-sistemas #calc-tertiary.calc-container::before{content:"";position:absolute;inset:0 0 auto 0;height:5px}
-.page-sistemas #calc-primary.calc-container::before{background:linear-gradient(90deg,rgba(232,172,54,.95),rgba(232,172,54,.55))}
-.page-sistemas #calc-secondary.calc-container::before{background:linear-gradient(90deg,rgba(45,212,191,.95),rgba(45,212,191,.55))}
-.page-sistemas #calc-tertiary.calc-container::before{background:linear-gradient(90deg,rgba(240,90,102,.95),rgba(240,90,102,.55))}
-.page-sistemas #calc-primary .calc-container h4,.page-sistemas #calc-secondary .calc-container h4,.page-sistemas #calc-tertiary .calc-container h4{color:inherit}
-.page-sistemas #calc-primary .calc-container thead th,.page-sistemas #calc-secondary .calc-container thead th,.page-sistemas #calc-tertiary .calc-container thead th{background:rgba(255,255,255,.06)}
-html[data-theme="light"] .page-sistemas #calc-primary.calc-container,html[data-theme="light"] .page-sistemas #calc-secondary.calc-container,html[data-theme="light"] .page-sistemas #calc-tertiary.calc-container{background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(245,247,255,.92))}
-@media(min-width:981px){
-  html.has-calc-2 .page-sistemas .calc-row,body.has-calc-2 .page-sistemas .calc-row{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;padding:0 8px!important;justify-content:center!important}
-  html.has-calc-3 .page-sistemas .calc-row,body.has-calc-3 .page-sistemas .calc-row{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;padding:0 8px!important;justify-content:center!important}
-  html.has-calc-2 .page-sistemas #calc-primary,html.has-calc-2 .page-sistemas #calc-secondary,body.has-calc-2 .page-sistemas #calc-primary,body.has-calc-2 .page-sistemas #calc-secondary{max-width:none!important;width:100%!important}
-  html.has-calc-3 .page-sistemas #calc-primary,html.has-calc-3 .page-sistemas #calc-secondary,html.has-calc-3 .page-sistemas #calc-tertiary,body.has-calc-3 .page-sistemas #calc-primary,body.has-calc-3 .page-sistemas #calc-secondary,body.has-calc-3 .page-sistemas #calc-tertiary{max-width:none!important;width:100%!important}
-  .page-sistemas .calc-container table{max-width:100%!important}
-}
-@media(max-width:980px){
-  .page-sistemas .calc-row{padding:0!important}
-}
-
-/* === IMG1: Integra carrusel (1 calc) sin “aire” y sin perder el 1er item === */
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-carousel,
-body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-carousel{padding:0 46px!important}
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap,
-body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap{justify-content:flex-start!important;scroll-padding-left:24px;scroll-padding-right:24px}
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::before,
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::after,
-body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::before,
-body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::after{flex-basis:24px!important}
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap>*,
-body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap>*{scroll-snap-align:start}
-
-/* === Acento del panel “Integra” (armonioso) === */
-.page-sistemas #calc-slot-2.placeholder .note{border:1px solid rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(15,23,42,.18))}
-.page-sistemas #calc-slot-2 .sys-icon{border:1px solid rgba(148,163,184,.18)}
-.page-sistemas #calc-slot-2 .sys-icon.active{outline:2px solid rgba(45,212,191,.28);border-color:rgba(45,212,191,.45)}
-.page-sistemas #calc-slot-2 .arrowCircle{background:rgba(15,23,42,.60);border:1px solid rgba(45,212,191,.22);box-shadow:0 10px 22px rgba(0,0,0,.22)}
-html[data-theme="light"] .page-sistemas #calc-slot-2 .arrowCircle{background:rgba(255,255,255,.86);border:1px solid rgba(2,6,23,.14)}
-
-/* === (Opcional) texto blanco cuando uses fondos de acento “fuertes” === */
-.page-sistemas .accent-amber{background:linear-gradient(180deg,rgba(232,172,54,.95),rgba(232,172,54,.75));color:#fff;border-color:rgba(232,172,54,.65)}
-.page-sistemas .accent-green{background:linear-gradient(180deg,rgba(45,212,191,.95),rgba(45,212,191,.72));color:#fff;border-color:rgba(45,212,191,.62)}
-.page-sistemas .accent-rose{background:linear-gradient(180deg,rgba(240,90,102,.95),rgba(240,90,102,.72));color:#fff;border-color:rgba(240,90,102,.60)}
-
-
-/* =========================================================
- Expiriti — PATCH UI (Calc + Carrusel + Pills) v2026.01.09
- - FIX carrusel: arranque sin “aire” y accesible al 1er icono
- - FIX calc 2/3 en desktop: no corta izq/der, no huecos raros
- - Paleta Expiriti: AMARILLO / VERDE / ROJO (armónico)
- - Pills apagados (light): amarillo glass (no negro)
- - Resumen combinado: separaciones
-========================================================= */
-:root{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98);--ex-ink:#071018;--ex-glass:rgba(255,255,255,.14);--ex-glass2:rgba(2,6,23,.06)}
-html[data-theme="light"]{--ex-glass:rgba(255,255,255,.72);--ex-glass2:rgba(255,255,255,.52)}
-
-/* =========================
- 1) CARRUSEL (iconos) — arranque sin “aire”
- - Reduce padding de slide dentro de calculadoras/combos
- - Asegura scroll-padding para que el 1er item quede “alineado”
-========================= */
-#calculadora-section .carousel-slide,.calc-strip .carousel-slide,.calc-row .carousel-slide{padding:0 18px!important}
-@media(max-width:768px){#calculadora-section .carousel-slide,.calc-strip .carousel-slide,.calc-row .carousel-slide{padding:0 12px!important}}
-#calculadora-section .carousel-track,.calc-strip .carousel-track,.calc-row .carousel-track{scroll-padding-left:18px;scroll-padding-right:18px}
-@media(max-width:768px){#calculadora-section .carousel-track,.calc-strip .carousel-track,.calc-row .carousel-track{scroll-padding-left:12px;scroll-padding-right:12px}}
-/* flechas: más pegadas pero sin tapar contenido */
-#calculadora-section .carousel>.arrowCircle,.calc-strip .carousel>.arrowCircle{width:44px;height:44px}
-#calculadora-section .carousel>.arrowCircle.prev,.calc-strip .carousel>.arrowCircle.prev{left:6px}
-#calculadora-section .carousel>.arrowCircle.next,.calc-strip .carousel>.arrowCircle.next{right:6px}
-
-/* =========================
- 2) LAYOUT CALCULADORAS (2 y 3) — no cortar izq/der
- - Grid auto-fit: 2 se reparten, 3 se reparten, sin overflow
- - El “culpable” típico: overflow-x hidden + min-width rígido
-========================= */
-#calculadora-section{overflow:visible!important}
-#calculadora-section .calc-row,.calc-row{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr))!important;gap:18px!important;align-items:start}
-#calculadora-section .calc-row>*,
-.calc-row>*{min-width:0!important}
-/* evita que un card empuje el grid fuera (muy común con tablas) */
-#calculadora-section :is(.calc-card,.calc-box,.calc-panel,.card){min-width:0;max-width:100%}
-#calculadora-section :is(table,.table-like){max-width:100%}
-
-/* =========================
- 3) ESTILO “EXPIRITI” PARA CALC (quita gris plano)
- - Se aplica a “cards” dentro del section de calculadora
- - Colorea por POSICIÓN: 1=AMARILLO, 2=VERDE, 3=ROJO
-========================= */
-/* base calc “glass” */
-#calculadora-section :is(.calc-card,.calc-box,.calc-panel,.card.body){
-  background:
-    radial-gradient(900px 520px at 0% 0%,rgba(233,170,25,.10),transparent 55%),
-    radial-gradient(900px 520px at 100% 0%,rgba(20,153,151,.10),transparent 55%),
-    linear-gradient(180deg,rgba(17,23,35,.92),rgba(17,23,35,.72))!important;
-  border:1px solid rgba(148,163,184,.22)!important;
-  border-radius:16px!important;
-  overflow:hidden
-}
-html[data-theme="light"] #calculadora-section :is(.calc-card,.calc-box,.calc-panel,.card.body){
-  background:
-    radial-gradient(900px 520px at 0% 0%,rgba(233,170,25,.12),transparent 55%),
-    radial-gradient(900px 520px at 100% 0%,rgba(20,153,151,.10),transparent 55%),
-    linear-gradient(180deg,rgba(255,255,255,.96),rgba(245,247,255,.92))!important;
-  border:1px solid rgba(2,6,23,.14)!important
-}
-/* acento por card (top bar/borde superior) */
-#calculadora-section .calc-row>div:nth-child(1),
-#calculadora-section .calc-row>article:nth-child(1){box-shadow:0 -4px 0 0 var(--ex-amber) inset}
-#calculadora-section .calc-row>div:nth-child(2),
-#calculadora-section .calc-row>article:nth-child(2){box-shadow:0 -4px 0 0 var(--ex-teal) inset}
-#calculadora-section .calc-row>div:nth-child(3),
-#calculadora-section .calc-row>article:nth-child(3){box-shadow:0 -4px 0 0 var(--ex-coral) inset}
-/* headers de tablas dentro de calc (armónico) */
-#calculadora-section :is(.table-like thead,thead){background:rgba(148,163,184,.14)!important}
-html[data-theme="light"] #calculadora-section :is(.table-like thead,thead){background:rgba(2,6,23,.05)!important}
-/* total destacado */
-#calculadora-section :is(.total,.grand-total,td.total,strong.total){font-weight:950}
-
-/* =========================
- 4) CARRUSEL (panel) con paleta Expiriti
-========================= */
-#calculadora-section .carousel{border:1px solid rgba(148,163,184,.22)!important;background:rgba(15,23,42,.35)!important}
-html[data-theme="light"] #calculadora-section .carousel{background:rgba(255,255,255,.70)!important;border-color:rgba(2,6,23,.12)!important}
-#calculadora-section .carousel-nav{background:rgba(15,23,42,.28)!important}
-html[data-theme="light"] #calculadora-section .carousel-nav{background:rgba(255,255,255,.60)!important}
-#calculadora-section .dot.active{background:linear-gradient(135deg,var(--ex-amber),var(--ex-teal))!important}
-
-/* =========================
- 5) PILLS APAGADOS (LIGHT) → AMARILLO GLASS (no negro)
- - Mantiene el ACTIVE como lo tienes (teal→coral)
- - Solo cambia los NO activos en light
-========================= */
-html[data-theme="light"] .pill:not(.active){
-  background:linear-gradient(135deg,rgba(233,170,25,.26),rgba(233,170,25,.14))!important;
-  border-color:rgba(233,170,25,.55)!important;
-  color:rgba(11,18,32,.92)!important;
-  box-shadow:0 10px 22px rgba(2,6,23,.10);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)
-}
-html[data-theme="light"] .pill:not(.active):hover{filter:saturate(1.06) brightness(1.02);transform:translateY(-1px)}
-
-/* =========================
- 6) “RESUMEN COMBINADO” — más aire
- - Si ya tienes una clase/ID específico, mejor cámbialo aquí
-========================= */
-#calculadora-section :is(.resumen-combinado,.combo-summary,.calc-summary,.summary){margin-top:14px!important;padding-top:10px!important;border-top:1px solid rgba(148,163,184,.18)}
-html[data-theme="light"] #calculadora-section :is(.resumen-combinado,.combo-summary,.calc-summary,.summary){border-top:1px solid rgba(2,6,23,.10)}
-#calculadora-section :is(.resumen-combinado,.combo-summary,.calc-summary,.summary) :is(p,div){margin-top:6px}
 
 
 /* =========================================================
@@ -685,3 +464,225 @@ html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap{s
 /* --- 4) Si algún “calc-empty” te deja bloque blanco, no debe reservar espacio --- */
 html.has-calc-2 .page-sistemas .calc-empty,body.has-calc-2 .page-sistemas .calc-empty,
 html.has-calc-3 .page-sistemas .calc-empty,body.has-calc-3 .page-sistemas .calc-empty{min-height:0!important;padding:0!important;margin:0!important}
+
+/* =========================================================
+ Expiriti — CALCULADORAS (DEDUPED) v2026.01.09-FINAL
+ Reglas únicas y completas:
+ - Variables
+ - Grid 1/2/3 (desktop) + 1 col (mobile)
+ - 2/3: mismo alto + tabla scrollea (sin cortar)
+ - Integra (#calc-slot-2) SOLO cuando hay 1 calc
+ - UI: adiós gris plano → glass + colores (verde/morado/azul)
+ - Sin barras/stripes arriba
+========================================================= */
+
+/* ---------- 0) TOKENS (solo calculadoras) ---------- */
+.page-sistemas{
+  --calc-maxw-2:min(1260px,100%);
+  --calc-maxw-3:min(1440px,100%);
+  --calc-gap:14px;
+
+  --calc-h:560px;
+  --calc-h-md:540px;
+
+  /* paleta alineada a tus CTAs */
+  --calc-green-1:#22c55e; --calc-green-2:#14b8a6;
+  --calc-purple-1:#a855f7; --calc-purple-2:#6366f1;
+  --calc-blue-1:#38bdf8; --calc-blue-2:#3b82f6;
+
+  --calc-border:rgba(148,163,184,.18);
+  --calc-soft:rgba(15,23,42,.22);
+  --calc-head:rgba(255,255,255,.06);
+  --calc-card-a:rgba(17,23,35,.78);
+  --calc-card-b:rgba(11,18,32,.58);
+}
+html[data-theme="light"] .page-sistemas{
+  --calc-border:rgba(2,6,23,.12);
+  --calc-soft:rgba(2,6,23,.05);
+  --calc-head:rgba(2,6,23,.04);
+  --calc-card-a:rgba(255,255,255,.94);
+  --calc-card-b:rgba(245,247,255,.92);
+}
+
+/* ---------- 1) BASE (no overflow raro / no cortes) ---------- */
+.page-sistemas #calculadora-section{overflow:visible!important}
+.page-sistemas .calc-strip,.page-sistemas .calc-row{max-width:100%}
+.page-sistemas .calc-row>*{min-width:0!important}
+
+/* ---------- 2) GRID RESPONSIVE (1 / 2 / 3) ---------- */
+@media(min-width:981px){
+  .page-sistemas .calc-row{
+    display:grid!important;
+    gap:var(--calc-gap)!important;
+    align-items:stretch!important;
+    justify-content:center!important;
+  }
+
+  /* 1 calc: calc + integra */
+  html:not(.has-calc-2):not(.has-calc-3) .page-sistemas .calc-row,
+  body:not(.has-calc-2):not(.has-calc-3) .page-sistemas .calc-row{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    max-width:var(--calc-maxw-2)!important;
+    margin:0 auto!important;
+  }
+
+  /* 2 calc: solo 2 calculadoras, integra OFF */
+  html.has-calc-2 .page-sistemas .calc-row,body.has-calc-2 .page-sistemas .calc-row{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    max-width:var(--calc-maxw-2)!important;
+    margin:0 auto!important;
+  }
+  html.has-calc-2 .page-sistemas #calc-slot-2,body.has-calc-2 .page-sistemas #calc-slot-2{
+    display:none!important;height:0!important;padding:0!important;margin:0!important;overflow:hidden!important;
+  }
+  html.has-calc-2 .page-sistemas #add-more-panel,body.has-calc-2 .page-sistemas #add-more-panel{
+    grid-column:1/-1!important;margin-top:12px!important;
+  }
+
+  /* 3 calc: 3 en la misma fila, integra OFF */
+  html.has-calc-3 .page-sistemas .calc-row,body.has-calc-3 .page-sistemas .calc-row{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    max-width:var(--calc-maxw-3)!important;
+    margin:0 auto!important;
+  }
+  html.has-calc-3 .page-sistemas #calc-slot-2,body.has-calc-3 .page-sistemas #calc-slot-2{
+    display:none!important;height:0!important;padding:0!important;margin:0!important;overflow:hidden!important;
+  }
+  html.has-calc-3 .page-sistemas #add-more-panel,body.has-calc-3 .page-sistemas #add-more-panel{display:none!important}
+}
+
+@media(max-width:980px){
+  .page-sistemas .calc-row{display:grid!important;grid-template-columns:1fr!important;gap:14px!important}
+  html.has-calc-2 .page-sistemas #calc-slot-2,body.has-calc-2 .page-sistemas #calc-slot-2,
+  html.has-calc-3 .page-sistemas #calc-slot-2,body.has-calc-3 .page-sistemas #calc-slot-2{display:none!important}
+}
+
+/* ---------- 3) MISMA ALTURA 2/3 + SCROLL TABLA (sin cortar) ---------- */
+@media(min-width:981px){
+  html.has-calc-2 .page-sistemas .calc-container,body.has-calc-2 .page-sistemas .calc-container,
+  html.has-calc-3 .page-sistemas .calc-container,body.has-calc-3 .page-sistemas .calc-container{
+    height:var(--calc-h)!important;
+    display:flex!important;
+    flex-direction:column!important;
+    overflow:hidden!important;
+  }
+  @media(max-width:1180px){
+    html.has-calc-2 .page-sistemas .calc-container,body.has-calc-2 .page-sistemas .calc-container,
+    html.has-calc-3 .page-sistemas .calc-container,body.has-calc-3 .page-sistemas .calc-container{
+      height:var(--calc-h-md)!important;
+    }
+  }
+  html.has-calc-2 .page-sistemas .calc-container form,body.has-calc-2 .page-sistemas .calc-container form,
+  html.has-calc-3 .page-sistemas .calc-container form,body.has-calc-3 .page-sistemas .calc-container form{
+    flex:0 0 auto!important;
+  }
+  html.has-calc-2 .page-sistemas .calc-container table,body.has-calc-2 .page-sistemas .calc-container table,
+  html.has-calc-3 .page-sistemas .calc-container table,body.has-calc-3 .page-sistemas .calc-container table{
+    flex:1 1 auto!important;
+    max-width:100%!important;
+    margin-top:10px!important;
+    display:block!important;
+    overflow:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+  html.has-calc-2 .page-sistemas .calc-container thead,body.has-calc-2 .page-sistemas .calc-container thead,
+  html.has-calc-3 .page-sistemas .calc-container thead,body.has-calc-3 .page-sistemas .calc-container thead{
+    position:sticky;top:0;z-index:2;
+  }
+  html.has-calc-2 .page-sistemas .calc-container thead,html.has-calc-2 .page-sistemas .calc-container tbody,
+  html.has-calc-3 .page-sistemas .calc-container thead,html.has-calc-3 .page-sistemas .calc-container tbody{
+    display:table;width:100%;table-layout:fixed;
+  }
+}
+@media(max-width:980px){
+  .page-sistemas .calc-container{height:auto!important}
+  .page-sistemas .calc-container table{display:table!important;overflow:visible!important}
+}
+
+/* ---------- 4) SKIN “NO GRIS” (glass + halos internos) ---------- */
+.page-sistemas .calc-container{
+  position:relative;
+  box-sizing:border-box;
+  border-radius:16px!important;
+  border:1px solid var(--calc-border)!important;
+  overflow:hidden;
+  background:linear-gradient(180deg,var(--calc-card-a),var(--calc-card-b))!important;
+}
+html[data-theme="light"] .page-sistemas .calc-container{
+  background:linear-gradient(180deg,var(--calc-card-a),var(--calc-card-b))!important;
+}
+
+/* HALOS internos por calculadora (sin barras arriba) */
+.page-sistemas #calc-primary.calc-container{
+  background:
+    radial-gradient(820px 360px at 10% 0%,rgba(34,197,94,.16),transparent 55%),
+    radial-gradient(820px 360px at 90% 0%,rgba(20,184,166,.10),transparent 55%),
+    linear-gradient(180deg,var(--calc-card-a),var(--calc-card-b))!important;
+}
+.page-sistemas #calc-secondary.calc-container{
+  background:
+    radial-gradient(820px 360px at 10% 0%,rgba(168,85,247,.16),transparent 55%),
+    radial-gradient(820px 360px at 90% 0%,rgba(99,102,241,.10),transparent 55%),
+    linear-gradient(180deg,var(--calc-card-a),var(--calc-card-b))!important;
+}
+.page-sistemas #calc-tertiary.calc-container{
+  background:
+    radial-gradient(820px 360px at 10% 0%,rgba(56,189,248,.16),transparent 55%),
+    radial-gradient(820px 360px at 90% 0%,rgba(59,130,246,.10),transparent 55%),
+    linear-gradient(180deg,var(--calc-card-a),var(--calc-card-b))!important;
+}
+
+/* inputs “premium” */
+.page-sistemas .calc-container select,
+.page-sistemas .calc-container input[type="number"],
+.page-sistemas .calc-container input[type="text"]{
+  border-radius:12px!important;
+  border:1px solid var(--calc-border)!important;
+  background:rgba(7,10,16,.22)!important;
+}
+html[data-theme="light"] .page-sistemas .calc-container select,
+html[data-theme="light"] .page-sistemas .calc-container input[type="number"],
+html[data-theme="light"] .page-sistemas .calc-container input[type="text"]{
+  background:rgba(255,255,255,.92)!important;
+}
+
+/* tabla limpia */
+.page-sistemas .calc-container table{
+  width:100%;
+  border:1px solid var(--calc-border)!important;
+  border-radius:14px!important;
+  background:rgba(15,23,42,.18)!important;
+}
+html[data-theme="light"] .page-sistemas .calc-container table{background:rgba(255,255,255,.78)!important}
+.page-sistemas .calc-container thead th{background:var(--calc-head)!important;font-weight:900}
+.page-sistemas .calc-container td,
+.page-sistemas .calc-container th{border-bottom:1px solid rgba(148,163,184,.12)!important}
+html[data-theme="light"] .page-sistemas .calc-container td,
+html[data-theme="light"] .page-sistemas .calc-container th{border-bottom:1px solid rgba(2,6,23,.10)!important}
+
+/* totales */
+.page-sistemas .calc-container .total,
+.page-sistemas .calc-container .monto,
+.page-sistemas .calc-container .price{font-weight:950}
+
+/* ---------- 5) INTEGRA (solo 1 calc): compacto y sin “aire” ---------- */
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2.placeholder,
+body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2.placeholder{
+  border:1px solid rgba(148,163,184,.16)!important;
+  background:linear-gradient(180deg,rgba(15,23,42,.18),rgba(11,18,32,.12))!important;
+  border-radius:16px!important;
+}
+html[data-theme="light"] html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2.placeholder,
+html[data-theme="light"] body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2.placeholder{
+  background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(245,247,255,.80))!important;
+}
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-carousel,
+body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-carousel{padding:0 46px!important}
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap,
+body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap{scroll-padding-left:24px;scroll-padding-right:24px}
+
+/* ---------- 6) DEFENSIVO: si “calc-empty” deja bloque blanco, no reserves espacio ---------- */
+html.has-calc-2 .page-sistemas .calc-empty,body.has-calc-2 .page-sistemas .calc-empty,
+html.has-calc-3 .page-sistemas .calc-empty,body.has-calc-3 .page-sistemas .calc-empty{
+  min-height:0!important;padding:0!important;margin:0!important
+}
