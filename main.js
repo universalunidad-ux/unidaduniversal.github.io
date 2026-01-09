@@ -352,54 +352,76 @@ Array.from(wrap.querySelectorAll(".faq-item")).forEach(o=>{if(o!==it)o.removeAtt
 })();
 
 /* =========================================================
- 9) CAROUSEL SISTEMAS (.carouselX)
+ 9) CAROUSEL SISTEMAS (.carouselX) — SINGLE OWNER v2026.01.08
+ - SIN patches externos / SIN hard reset global
+ - Dots por páginas (scrollWidth/viewport)
+ - Flechas OK + click en .sys[data-href] OK
+ - Centrar si <3 items (sin scroll fantasma)
+ - Reset único: init + BFCache persisted
 ========================================================= */
-(()=>{const ensureUI=root=>{let prev=root.querySelector(".arrowCircle.prev"),next=root.querySelector(".arrowCircle.next");
-if(!prev){prev=D.createElement("button");prev.className="arrowCircle prev";prev.setAttribute("aria-label","Anterior");prev.innerHTML='<span class="chev">‹</span>';root.appendChild(prev)}
-if(!next){next=D.createElement("button");next.className="arrowCircle next";next.setAttribute("aria-label","Siguiente");next.innerHTML='<span class="chev">›</span>';root.appendChild(next)}
-let dotsWrap=root.querySelector(".group-dots");if(!dotsWrap){dotsWrap=D.createElement("div");dotsWrap.className="group-dots";root.appendChild(dotsWrap)}
-return{prev,next,dotsWrap}};
-D.querySelectorAll(".carouselX").forEach(root=>{if(root.dataset.cxInit==="1")return;root.dataset.cxInit="1";
-const track=root.querySelector(".track");if(!track)return;
-const items=Array.from(root.querySelectorAll(".sys"));
-items.forEach(it=>{it.setAttribute("role","link");it.setAttribute("tabindex","0");let touched=!1;
-const isMob=()=>W.matchMedia("(max-width: 768px)").matches;
-const go=()=>{
-  const href=it.getAttribute("data-href");
-  if(!href) return;
+(()=>{"use strict";const D=document,W=window,QA=(s,c=D)=>Array.from(c.querySelectorAll(s));
+const abs=(p)=>W.__EXP_ABS__?W.__EXP_ABS__(p):p;
 
-  const abs = (W.__EXP_ABS__ ? W.__EXP_ABS__(href) : href);
-  /* Misma pestaña = 0 bloqueos y UX más natural */
-  location.href = abs;
-};
-it.addEventListener("click",e=>{e.preventDefault();if(isMob()&&!touched){touched=!0;it.classList.add("show-hover");setTimeout(()=>{touched=!1},2e3);return}go()});
-it.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}})
+const ensureUI=r=>{let p=r.querySelector(".arrowCircle.prev"),n=r.querySelector(".arrowCircle.next"),d=r.querySelector(".group-dots");
+if(!p){p=D.createElement("button");p.type="button";p.className="arrowCircle prev";p.setAttribute("aria-label","Anterior");p.innerHTML='<span class="chev">‹</span>';r.appendChild(p)}
+if(!n){n=D.createElement("button");n.type="button";n.className="arrowCircle next";n.setAttribute("aria-label","Siguiente");n.innerHTML='<span class="chev">›</span>';r.appendChild(n)}
+if(!d){d=D.createElement("div");d.className="group-dots";d.setAttribute("aria-label","Paginación carrusel");r.appendChild(d)}
+return{p,n,d}};
+
+QA(".carouselX").forEach(root=>{if(root.dataset.cxInit==="1")return;root.dataset.cxInit="1";
+const track=root.querySelector(".track");if(!track)return;
+const items=QA(".sys",root);if(!items.length)return;
+const ui=ensureUI(root),prev=ui.p,next=ui.n,dotsWrap=ui.d;
+
+const isMob=()=>W.matchMedia&&W.matchMedia("(max-width: 768px)").matches;
+items.forEach(it=>{it.setAttribute("role","link");it.setAttribute("tabindex","0");let touched=0;
+const nav=()=>{const href=it.getAttribute("data-href");if(!href)return;location.href=abs(href)};
+it.addEventListener("click",e=>{e.preventDefault();if(isMob()&&!touched){touched=1;it.classList.add("show-hover");setTimeout(()=>{touched=0;it.classList.remove("show-hover")},2000);return}nav()},{passive:false});
+it.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();nav()}});
 });
-const ui=ensureUI(root),prev=ui.prev,next=ui.next,dotsWrap=ui.dotsWrap;
+
 const perView=()=>W.innerWidth<=980?1:3;
-const viewportW=()=>track.clientWidth||root.clientWidth||1;
-const pageCount=()=>Math.max(1,Math.ceil((track.scrollWidth-1)/viewportW()));
+const vw=()=>track.clientWidth||root.clientWidth||1;
+const pages=()=>Math.max(1,Math.ceil((track.scrollWidth-1)/vw()));
 let idx=0,dots=[];
-const build=()=>{dotsWrap.innerHTML="";const total=pageCount();
-dots=Array.from({length:total}).map((_,j)=>{const b=D.createElement("button");b.className="dot"+(j===0?" active":"");b.setAttribute("aria-label","Ir a página "+(j+1));
-b.addEventListener("click",()=>{W.pauseAllYTIframes&&W.pauseAllYTIframes();go(j)});dotsWrap.appendChild(b);return b})};
-const paint=j=>dots.forEach((d,i)=>d.classList.toggle("active",i===j));
-const toggle=()=>{const multi=pageCount()>1;prev.style.display=multi?"":"none";next.style.display=multi?"":"none";dotsWrap.style.display=multi?"":"none"};
-const go=j=>{const total=pageCount();idx=((j%total)+total)%total;
-const startIdx=Math.min(idx*perView(),items.length-1),first=items[startIdx];
-const baseLeft=idx===0?0:(first?(first.offsetLeft-(track.firstElementChild?track.firstElementChild.offsetLeft:0)):idx*viewportW());
-const maxLeft=Math.max(0,track.scrollWidth-viewportW());
-track.scrollTo({left:Math.min(Math.max(0,baseLeft),maxLeft),behavior:"smooth"});paint(idx);toggle()};
-build();
-prev.addEventListener("click",()=>{W.pauseAllYTIframes&&W.pauseAllYTIframes();go(idx-1)});
-next.addEventListener("click",()=>{W.pauseAllYTIframes&&W.pauseAllYTIframes();go(idx+1)});
-track.addEventListener("scroll",()=>{const i=Math.round(track.scrollLeft/viewportW());if(i!==idx){idx=i;paint(idx)}});
-W.addEventListener("resize",()=>{const now=pageCount();if(dots.length!==now)build();setTimeout(()=>go(idx),0)});
-const reset=()=>{track.scrollLeft=0;idx=0;paint(0);toggle()};
-requestAnimationFrame(reset);W.addEventListener("load",()=>setTimeout(reset,0));W.addEventListener("pageshow",reset);setTimeout(reset,350);
-track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);setTimeout(()=>track.scrollTo({left:0,behavior:"auto"}),50);
-})});
-})();
+
+const build=()=>{dotsWrap.innerHTML="";const total=pages();
+dots=Array.from({length:total}).map((_,j)=>{const b=D.createElement("button");b.type="button";b.className="dot"+(j===0?" active":"");b.setAttribute("aria-label","Ir a página "+(j+1));
+b.addEventListener("click",()=>{W.pauseAllYTIframes&&W.pauseAllYTIframes();go(j)},{passive:true});
+dotsWrap.appendChild(b);return b})};
+
+const paint=j=>{dots.forEach((d,i)=>d.classList.toggle("active",i===j))};
+
+const toggle=()=>{const few=items.length<3;
+if(few){prev.style.display="none";next.style.display="none";dotsWrap.style.display="none";
+track.style.justifyContent="center";track.style.scrollSnapType="none";track.style.overflowX="hidden";return}
+track.style.justifyContent="flex-start";track.style.overflowX="auto";
+const multi=pages()>1;prev.style.display=multi?"":"none";next.style.display=multi?"":"none";dotsWrap.style.display=multi?"":"none"};
+
+const go=j=>{const total=pages();idx=((j%total)+total)%total;
+const start=Math.min(idx*perView(),items.length-1),el=items[start];
+const base=idx===0?0:(el?el.offsetLeft-(track.firstElementChild?track.firstElementChild.offsetLeft:0):idx*vw());
+const max=Math.max(0,track.scrollWidth-vw());
+track.scrollTo({left:Math.min(Math.max(0,base),max),behavior:"smooth"});
+paint(idx);toggle()};
+
+build();toggle();go(0);
+
+/* Flechas */
+prev.addEventListener("click",()=>{W.pauseAllYTIframes&&W.pauseAllYTIframes();go(idx-1)},{passive:true});
+next.addEventListener("click",()=>{W.pauseAllYTIframes&&W.pauseAllYTIframes();go(idx+1)},{passive:true});
+
+/* Sync por scroll (mide “página” por viewport) */
+track.addEventListener("scroll",()=>{const w=vw();if(!w)return;const i=Math.round(track.scrollLeft/w);
+if(i!==idx){idx=Math.max(0,Math.min(pages()-1,i));paint(idx)}},{passive:true});
+
+/* Resize: re-dots si cambió count + re-go al idx actual */
+W.addEventListener("resize",()=>{const now=pages();if(dots.length!==now)build();toggle();requestAnimationFrame(()=>go(idx))},{passive:true});
+
+/* Reset único (init + BFCache persisted) */
+requestAnimationFrame(()=>{track.scrollTo({left:0,behavior:"auto"});idx=0;paint(0);toggle()});
+W.addEventListener("pageshow",e=>{if(e&&e.persisted){track.scrollTo({left:0,behavior:"auto"});idx=0;paint(0);toggle()}});
+});})();
 
 /* =========================================================
  10) CALCULADORA (hooks secundarios / terciarios) — ROBUSTO
