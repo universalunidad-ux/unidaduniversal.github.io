@@ -74,8 +74,13 @@ body[data-calc="nube"] .page-sistemas #calc-slot-2,body[data-calc="nube"] .page-
 body[data-calc="escritorio"] .page-sistemas .nube-only{display:none!important}
 body[data-calc="escritorio"] .page-sistemas .desk-only{display:initial}
 body[data-calc="escritorio"] .page-sistemas .pricing-table-nube{display:none!important}
-body[data-calc="escritorio"] .page-sistemas #calc-slot-2,body[data-calc="escritorio"] .page-sistemas #calc-secondary,body[data-calc="escritorio"] .page-sistemas #calc-tertiary,body[data-calc="escritorio"] .page-sistemas #add-more-panel,body[data-calc="escritorio"] .page-sistemas #combined-wrap,body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:initial}
-
+body[data-calc="escritorio"] .page-sistemas #calc-slot-2, body[data-calc="escritorio"] .page-sistemas #calc-slot-2,
+body[data-calc="escritorio"] .page-sistemas #calc-secondary,
+body[data-calc="escritorio"] .page-sistemas #calc-tertiary,
+body[data-calc="escritorio"] .page-sistemas #add-more-panel,
+body[data-calc="escritorio"] .page-sistemas #combined-wrap,
+body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:block}
+  
 /* ===== 4.2) RESUMEN COMBINADO (si existe) ===== */
 .page-sistemas #combined-wrap{display:flex;justify-content:center}
 .page-sistemas #combined-wrap .combined-summary{width:min(720px,100%);margin:14px auto 0;padding:14px 16px;border-radius:14px;border:1px solid rgba(148,163,184,.18);background:rgba(15,23,42,.22)}
@@ -86,6 +91,14 @@ body[data-calc="escritorio"] .page-sistemas #calc-slot-2,body[data-calc="escrito
 @media(max-width:520px){.page-sistemas #combined-wrap .combined-summary{padding:12px}.page-sistemas #combined-wrap .total-amount{font-size:15px}.page-sistemas #combined-wrap .amount-letter{padding:10px;font-size:13px}}
 
 /* ===== 4.3) OCULTAR CALCS VACÍAS (sin :has) ===== */
+/* NO ocultar la secundaria aunque esté empty (para debug/UX) */
+.page-sistemas #calc-secondary.calc-empty{
+  display:block!important;
+  min-height:220px!important;
+  padding:14px!important;
+}
+
+
 
 /* ===== 4.4) LAYOUT DEFINITIVO 1 / 2 / 3 (ÚNICO) ===== */
 @media(min-width:981px){
@@ -982,7 +995,13 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{
 
 /*=== PATCH: CALC SLOT 2 VISIBLE + ICONS CAROUSEL (NO TOCA VIDEOS) ===*/
 #calc-row{align-items:stretch}
-#calc-slot-2{display:block!important;min-height:220px!important}
+/* Slot 2 visible SOLO cuando todavía no hay calc secundaria */
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2,
+body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2{
+  display:block!important;
+  min-height:220px!important;
+}
+
 #calc-slot-2 .note{height:100%}
 #calc-slot-2 .icons-carousel{display:grid!important;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
 #icons-sec-sys,#icons-third-sys{display:flex!important;gap:12px;overflow-x:auto!important;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px;min-height:96px}
