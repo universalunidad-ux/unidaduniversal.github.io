@@ -428,17 +428,7 @@ track.style.overflowX="auto";track.style.scrollBehavior="smooth";toggle();go(0);
     const moneyMX=new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
     const fmt=v=>moneyMX.format(Math.round(Number(v||0)));
 
-    // Catálogo global
-    W.CATALOG_SISTEMAS = W.CATALOG_SISTEMAS || [
-      {name:"CONTPAQi Contabilidad",img:"../IMG/contabilidadsq.webp"},
-      {name:"CONTPAQi Bancos",img:"../IMG/bancossq.webp"},
-      {name:"CONTPAQi Nóminas",img:"../IMG/nominassq.webp"},
-      {name:"CONTPAQi XML en Línea",img:"../IMG/xmlsq.webp",noDiscount:!0},
-      {name:"CONTPAQi Comercial PRO",img:"../IMG/comercialprosq.webp"},
-      {name:"CONTPAQi Comercial PREMIUM",img:"../IMG/comercialpremiumsq.webp"},
-      {name:"CONTPAQi Factura Electrónica",img:"../IMG/facturasq.webp"}
-    ];
-
+ 
     const getPrecioDesde=name=>{
       const db=(W.preciosContpaqi&&W.preciosContpaqi[name])?W.preciosContpaqi[name]:null;
       if(!db) return null;
