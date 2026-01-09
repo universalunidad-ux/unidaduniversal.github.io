@@ -182,32 +182,54 @@ if(!slides.length)return;
 const slide=slides[idx]||slides[0],titles=slideVideoTitles(slide),a=titles[0]||"",b=titles[1]||"",v=car._vbar;if(!v)return;
 v.left.textContent=a;v.right.textContent=b;v.right.style.display=b?"":"none";v.bar.style.gridTemplateColumns=b?"1fr 1fr":"1fr"};
 
-const initCar=(root,onChange)=>{const track=root.querySelector(".carousel-track");if(!track||root.dataset.cInit==="1")return;root.dataset.cInit="1";
-const prev=root.querySelector(".arrowCircle.prev"),next=root.querySelector(".arrowCircle.next");
-const slides=[...track.querySelectorAll(":scope > .carousel-slide")],len=slides.length;
-let dots=syncDots(root,len);hideUI(root,len);
-let i=0,paint=n=>dots.forEach((d,di)=>d.classList.toggle("active",di===n));
-const set=(n,beh)=>{i=(n+len)%len;paint(i);track.scrollTo({left:track.clientWidth*i,behavior:beh||"smooth"});onChange&&onChange(i)};
-if(len<=1){paint(0);onChange&&onChange(0);return}
-dots.forEach((d,idx)=>d.addEventListener("click",()=>{pause();set(idx)}));
-prev&&prev.addEventListener("click",()=>{pause();set(i-1)});
-next&&next.addEventListener("click",()=>{pause();set(i+1)});
-let lock=0;
-const set=(n,beh)=>{
-  i=(n+len)%len; paint(i);
-  lock=1; track.scrollTo({left:track.clientWidth*i,behavior:beh||"smooth"});
-  setTimeout(()=>{lock=0},120);
-  onChange&&onChange(i);
+const initCar=(root,onChange)=>{
+  const track=root.querySelector(".carousel-track");
+  if(!track||root.dataset.cInit==="1")return;
+  root.dataset.cInit="1";
+
+  const prev=root.querySelector(".arrowCircle.prev"),
+        next=root.querySelector(".arrowCircle.next");
+
+  const slides=[...track.querySelectorAll(":scope > .carousel-slide")],
+        len=slides.length;
+
+  let dots=syncDots(root,len);
+  hideUI(root,len);
+
+  let i=0, lock=0;
+
+  const paint=n=>dots.forEach((d,di)=>d.classList.toggle("active",di===n));
+
+  const set=(n,beh)=>{
+    if(len<=0) return;
+    i=(n+len)%len;
+    paint(i);
+    lock=1;
+    track.scrollTo({left:track.clientWidth*i,behavior:beh||"smooth"});
+    setTimeout(()=>{lock=0},120);
+    onChange&&onChange(i);
+  };
+
+  if(len<=1){ paint(0); onChange&&onChange(0); return; }
+
+  dots.forEach((d,idx)=>d.addEventListener("click",()=>{pause();set(idx)}));
+  prev&&prev.addEventListener("click",()=>{pause();set(i-1)});
+  next&&next.addEventListener("click",()=>{pause();set(i+1)});
+
+  track.addEventListener("scroll",()=>{
+    if(lock) return;
+    if(!track.clientWidth) return;
+    const n=Math.round(track.scrollLeft/track.clientWidth);
+    if(n!==i){
+      i=Math.max(0,Math.min(len-1,n));
+      paint(i);
+      onChange&&onChange(i);
+    }
+  },{passive:!0});
+
+  set(0,"auto");
 };
 
-track.addEventListener("scroll",()=>{
-  if(lock) return;
-  if(!track.clientWidth) return;
-  const n=Math.round(track.scrollLeft/track.clientWidth);
-  if(n!==i){ i=Math.max(0,Math.min(len-1,n)); paint(i); onChange&&onChange(i); }
-},{passive:!0});
-
-set(0,"auto")};
 
 const boot=()=>{D.querySelectorAll(".carousel").forEach(car=>{
 const titles=titlesFor(car);
