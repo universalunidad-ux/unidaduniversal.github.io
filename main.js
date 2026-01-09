@@ -454,219 +454,87 @@ TRY("carouselX",()=>{
 });
 
 /* =========================================================
- 10) CALCULADORA (HOOKS) — GATE ESTRICTO (NO ROMPE ANALIZA)
-  - Solo corre si detecta estructura real de calc (IDs clave)
+ 10) CALCULADORA — COMPAT (NO DUPLICA)
+  - Deja a calculadora.js como SINGLE OWNER
+  - main.js solo “recompute” y “repaint icons-carousel” si aplica
 ========================================================= */
 TRY("calc_hooks",()=>{
   const hasCalcDom=()=>{
     const app=D.getElementById("app");
     if(!app) return false;
-    // Estructura esperada de tu calculadora multi-mount:
     return !!(D.getElementById("calc-row") && D.getElementById("icons-sec-sys") && (app.dataset.system||"").trim());
   };
 
-  const bootCalc=async()=>{
-    if(D.documentElement.dataset.calcHooksInit==="1")return;
-    if(!hasCalcDom())return; // <- esto evita que “Analiza” se vea afectada
-    D.documentElement.dataset.calcHooksInit="1";
+  const kick=()=>{
+    if(!hasCalcDom()) return;
 
-    const app=D.getElementById("app");
-    const row=D.getElementById("calc-row");
-    const pick2=D.getElementById("icons-sec-sys");
-    const slot2=D.getElementById("calc-slot-2");
-    const addMore=D.getElementById("add-more-panel");
+    // Si calculadora.js ya existe, NO hacemos init aquí (evita duplicados)
+    if(W.CalculadoraContpaqi && typeof W.CalculadoraContpaqi.updateCombinedSummary==="function"){
+      // fuerza recompute (por si cambió layout, carruseles, etc.)
+      try{ W.dispatchEvent(new Event("calc-recompute")); }catch{}
+      try{ W.dispatchEvent(new Event("calc-render")); }catch{}
+      return;
+    }
 
-    const PRIMARY=(app.dataset.system||"").trim();
-    const moneyMX=new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
-    const fmt=v=>moneyMX.format(Math.round(Number(v||0)));
-
-    const getPrecioDesde=name=>{
-      const db=(W.preciosContpaqi&&W.preciosContpaqi[name])?W.preciosContpaqi[name]:null;
-      if(!db)return null;
-      if(db.anual?.MultiRFC&&(db.anual.MultiRFC.precio_base||db.anual.MultiRFC.renovacion))return Number(db.anual.MultiRFC.precio_base||db.anual.MultiRFC.renovacion||0);
-      if(db.anual?.MonoRFC&&(db.anual.MonoRFC.precio_base||db.anual.MonoRFC.renovacion))return Number(db.anual.MonoRFC.precio_base||db.anual.MonoRFC.renovacion||0);
-      if(db.tradicional?.actualizacion?.precio_base)return Number(db.tradicional.actualizacion.precio_base||0);
-      return null;
-    };
-
-    let secondary=D.getElementById("calc-secondary");
-    const ensureSecondary=()=>{
-      if(secondary)return secondary;
-      if(!slot2||!slot2.parentNode)return null;
-      secondary=D.createElement("div");
-      secondary.id="calc-secondary";
-      secondary.className="calc-container";
-      secondary.setAttribute("aria-label","Calculadora secundaria");
-      secondary.style.display="block";
-slot2.insertAdjacentElement("beforebegin", secondary);
-      return secondary;
-    };
-
-    const selected={secondary:null,tertiary:null};
-    const setSel=()=>new Set([selected.secondary,selected.tertiary].filter(Boolean));
-
-    const renderPicker=(id,exclude,active)=>{
-      const wrap=D.getElementById(id);if(!wrap)return;
-      wrap.innerHTML="";
-      exclude.add(PRIMARY);
-      (W.CATALOG_SISTEMAS||[]).forEach(item=>{
-        if(exclude.has(item.name))return;
-        const precio=getPrecioDesde(item.name);
-        const btn=D.createElement("button");
-        btn.className="sys-icon";
-        btn.type="button";
-        btn.dataset.sys=item.name;
-        btn.title=item.name;
-        btn.innerHTML=(item.noDiscount?'<small class="sin15">sin -15%</small>':"")+
-          `<img src="${item.img}" alt="${item.name}"><strong>${item.name.replace("CONTPAQi ","")}</strong>`+
-          `<small class="sys-price">${precio!=null?("desde "+fmt(precio)):"precio no disp."}</small>`;
-        if(active&&active===item.name)btn.classList.add("active");
-        wrap.appendChild(btn);
-      });
-    };
-
-    const renderCombined=rows=>{
-      const wrap=D.getElementById("combined-wrap"),tbody=D.getElementById("combined-table-body");
-      if(!wrap||!tbody)return;
-      tbody.innerHTML="";
-      rows.forEach(pair=>{
-        const tr=D.createElement("tr"),td1=D.createElement("td"),td2=D.createElement("td");
-        td1.textContent=pair[0];td2.textContent=pair[1];td2.style.textAlign="right";
-        tr.append(td1,td2);tbody.appendChild(tr);
-      });
-      wrap.hidden=!1;
-    };
-
-    const refresh=()=>{
-      const ex=setSel();
-      renderPicker("icons-sec-sys",ex,selected.secondary);
-      renderPicker("icons-third-sys",ex,selected.tertiary);
-    };
-
-    const showMore=()=>{ if(addMore) addMore.style.display=selected.secondary?"":"none"; };
-
-    refresh(); showMore();
-
-    pick2.addEventListener("click",async e=>{
-      const btn=e.target.closest(".sys-icon"); if(!btn) return;
-      const sys=btn.dataset.sys;
-      selected.secondary=sys;
-      if(selected.tertiary===sys) selected.tertiary=null;
-
-      const sec=ensureSecondary(); if(!sec) return;
-      sec.innerHTML=""; sec.style.display="block";
-      if(slot2) slot2.style.display="none";
-
-      D.documentElement.classList.add("has-calc-2");
-      D.body.classList.add("has-calc-2");
-      D.documentElement.classList.remove("has-calc-3");
-      D.body.classList.remove("has-calc-3");
-      row&&row.classList.remove("has-three");
-      if(addMore) addMore.style.display="";
-
-const prevSys = app?.dataset.system;
-if(app) app.dataset.system = sys;
-
-try{
-  if(W.CalculadoraContpaqi?.setSecondarySystem){
-    W.CalculadoraContpaqi.setSecondarySystem(sys,{
-      secondarySelector:"#calc-secondary",
-      combinedSelector:"#combined-wrap",
-      onCombined:renderCombined
-    });
-  } else if(W.CalculadoraContpaqi?.init){
-    W.CalculadoraContpaqi.init({
-      systemName: sys,
-      primarySelector:"#calc-secondary",
-      combinedSelector:"#combined-wrap"
-    });
-  }
-} finally {
-  if(app && prevSys!=null) app.dataset.system = prevSys;
-}
-
-     
-      let painted=false;
-      try{
-        if(W.CalculadoraContpaqi?.setSecondarySystem){
-          W.CalculadoraContpaqi.setSecondarySystem(sys,{
-            secondarySelector:"#calc-secondary",
-            combinedSelector:"#combined-wrap",
-            onCombined:renderCombined
-          });
-          await new Promise(r=>setTimeout(r,60));
-          painted=sec.childElementCount>0;
-        }
-      }catch(e){console.warn("[calc] setSecondarySystem error",e);}
-
-      if(!painted && W.CalculadoraContpaqi?.init){
-        try{
-          W.CalculadoraContpaqi.init({
-            systemName:sys,
-            primarySelector:"#calc-secondary",
-            combinedSelector:"#combined-wrap"
-          });
-          await new Promise(r=>setTimeout(r,60));
-          painted=sec.childElementCount>0;
-        }catch(e){console.warn("[calc] init secondary error",e);}
-      }
-
-      if(!painted){
-        sec.innerHTML=`<div class="note"><strong>No se pudo montar la 2ª calculadora.</strong><br><small>Revisa setSecondarySystem() o si init() soporta múltiples mounts.</small></div>`;
-      }
-
-      refresh(); showMore();
-    },{passive:!0});
+    // Si NO está calculadora.js aún (orden de scripts), no rompas nada.
+    // Cuando cargue, su autoInitOnce se encargará.
   };
 
-  const kick=()=>{bootCalc().catch(e=>console.warn("[calc] boot error",e))};
   D.readyState==="loading"?D.addEventListener("DOMContentLoaded",kick,{once:!0}):kick();
-
-  // Observer solo si realmente hay calc
-  const app=D.getElementById("app");
-  if(app){
-    let t=null;
-    new MutationObserver(()=>{
-      if(t) return;
-      t=setTimeout(()=>{t=null; if(D.documentElement.dataset.calcHooksInit!=="1") kick();},120);
-    }).observe(app,{childList:!0,subtree:!0});
-  }
-
   W.addEventListener("pageshow",kick,{passive:!0});
 });
 
 /* =========================================================
  10.5) ICONS CAROUSEL (-15%) — SOLO si existen pickers
+  - Robusto: si los .sys-icon aparecen después, se auto-activa
 ========================================================= */
 TRY("icons_carousel",()=>{
   const enhanceOne=wrap=>{
-    if(!wrap||wrap.dataset.icInit==="1")return;
-    if(!wrap.querySelector(".sys-icon"))return;
-    wrap.dataset.icInit="1";
-    const slot=wrap.closest("#calc-slot-2,.calc-container,.placeholder")||wrap.parentElement;
-    const note=(slot&&slot.querySelector)?slot.querySelector(".note"):null; if(note)note.classList.add("note-center");
-    let host=wrap.closest(".icons-carousel");
-    if(!host){host=D.createElement("div");host.className="icons-carousel";wrap.parentElement.insertBefore(host,wrap);host.appendChild(wrap)}
-    const mkBtn=(cls,label,chev)=>{const b=D.createElement("button");b.type="button";b.className=`arrowCircle ${cls}`;b.setAttribute("aria-label",label);b.innerHTML=`<span class="chev">${chev}</span>`;return b};
-    let prev=host.querySelector(".arrowCircle.prev"),next=host.querySelector(".arrowCircle.next");
-    if(!prev){prev=mkBtn("prev","Anterior","‹");host.appendChild(prev)}
-    if(!next){next=mkBtn("next","Siguiente","›");host.appendChild(next)}
-    const step=()=>Math.max(220,Math.round(((wrap.querySelector(".sys-icon")?.offsetWidth)||200)+18));
-    const scrollByX=dir=>wrap.scrollBy({left:step()*dir,behavior:"smooth"});
-    prev.addEventListener("click",()=>scrollByX(-1));
-    next.addEventListener("click",()=>scrollByX(1));
-    const paint=()=>{
-      const canScroll=wrap.scrollWidth>wrap.clientWidth+4;
-      prev.style.display=canScroll?"":"none"; next.style.display=canScroll?"":"none";
-      const c=wrap.closest(".calc-container")||slot; if(c) c.classList.toggle("has-icons",wrap.children.length>0);
+    if(!wrap) return;
+
+    const ensure=()=>{
+      if(wrap.dataset.icInit==="1") return;
+      if(!wrap.querySelector(".sys-icon")) return; // aún no hay iconos → espera
+      wrap.dataset.icInit="1";
+
+      const slot=wrap.closest("#calc-slot-2,.calc-container,.placeholder")||wrap.parentElement;
+      const note=slot&&slot.querySelector?slot.querySelector(".note"):null; if(note)note.classList.add("note-center");
+
+      let host=wrap.closest(".icons-carousel");
+      if(!host){host=D.createElement("div");host.className="icons-carousel";wrap.parentElement.insertBefore(host,wrap);host.appendChild(wrap)}
+
+      const mkBtn=(cls,label,chev)=>{const b=D.createElement("button");b.type="button";b.className=`arrowCircle ${cls}`;b.setAttribute("aria-label",label);b.innerHTML=`<span class="chev">${chev}</span>`;return b};
+      let prev=host.querySelector(".arrowCircle.prev"),next=host.querySelector(".arrowCircle.next");
+      if(!prev){prev=mkBtn("prev","Anterior","‹");host.appendChild(prev)}
+      if(!next){next=mkBtn("next","Siguiente","›");host.appendChild(next)}
+
+      const step=()=>Math.max(220,Math.round(((wrap.querySelector(".sys-icon")?.offsetWidth)||200)+18));
+      const scrollByX=dir=>wrap.scrollBy({left:step()*dir,behavior:"smooth"});
+      prev.addEventListener("click",()=>scrollByX(-1));
+      next.addEventListener("click",()=>scrollByX(1));
+
+      const paint=()=>{
+        const canScroll=wrap.scrollWidth>wrap.clientWidth+4;
+        prev.style.display=canScroll?"":"none"; next.style.display=canScroll?"":"none";
+        const c=wrap.closest(".calc-container")||slot; if(c) c.classList.toggle("has-icons",wrap.children.length>0);
+      };
+      paint(); W.addEventListener("resize",paint,{passive:!0});
+      new MutationObserver(paint).observe(wrap,{childList:!0,subtree:!1});
     };
-    paint(); W.addEventListener("resize",paint,{passive:!0});
-    new MutationObserver(paint).observe(wrap,{childList:!0,subtree:!1});
+
+    // Observa el wrap siempre: cuando aparezcan botones, se activa
+    if(!wrap.dataset.icObs){
+      wrap.dataset.icObs="1";
+      new MutationObserver(()=>ensure()).observe(wrap,{childList:!0,subtree:!1});
+    }
+    ensure();
   };
+
   const boot=()=>{
     enhanceOne(D.getElementById("icons-sec-sys"));
     enhanceOne(D.getElementById("icons-third-sys"));
   };
+
   D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
   W.addEventListener("calc-render",boot,{passive:!0});
   W.addEventListener("calc-recompute",boot,{passive:!0});
