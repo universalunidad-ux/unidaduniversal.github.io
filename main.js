@@ -407,30 +407,7 @@ resetScroll:()=>{el.scrollTo({left:0,behavior:"auto"});console.log("✅ scrollLe
 /* =========================================================
  13) TOC (FIX “no abre”)
 ========================================================= */
-(()=>{const toc=D.getElementById("toc");if(!toc)return;
-const openBtn=D.getElementById("tocToggle")||toc.querySelector(".toc-toggle");
-const closeBtn=toc.querySelector(".toc-close");
-const links=[...toc.querySelectorAll("a[href^='#']")];
-const OPEN="open",CLOSED="collapsed";
-const setState=open=>{
-toc.classList.toggle(OPEN,!!open);toc.classList.toggle(CLOSED,!open);
-toc.setAttribute("aria-hidden",open?"false":"true");
-if(openBtn)openBtn.setAttribute("aria-expanded",open?"true":"false");
-if(!open)toc.blur?.();
-};
-const isOpen=()=>toc.classList.contains(OPEN)&&!toc.classList.contains(CLOSED);
-const open=()=>setState(!0);
-const close=()=>setState(!1);
-const toggle=()=>isOpen()?close():open;
-/* Estado inicial coherente */
-setState(!toc.classList.contains(CLOSED));
-openBtn&&openBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();toggle()},{passive:!1});
-closeBtn&&closeBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();close()},{passive:!1});
-links.forEach(a=>a.addEventListener("click",()=>close(),{passive:!0}));
-D.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
-/* Click fuera (solo si está abierto) */
-D.addEventListener("click",e=>{if(!isOpen())return;if(toc.contains(e.target)||e.target===openBtn)return;close()});
-})();
+(()=>{const e=document.getElementById("toc");if(!e)return;const t=document.getElementById("tocToggle")||e.querySelector(".toc-toggle"),n=e.querySelector(".toc-close"),c=Array.from(e.querySelectorAll("a[href^='#']")),o="open",r="collapsed",i=()=>e.classList.contains(o)&&!e.classList.contains(r),s=a=>{e.classList.toggle(o,!!a),e.classList.toggle(r,!a),e.setAttribute("aria-hidden",a?"false":"true"),t&&t.setAttribute("aria-expanded",a?"true":"false")},l=()=>s(!0),d=()=>s(!1),u=()=>i()?d():l();s(!e.classList.contains(r)),t&&t.addEventListener("click",a=>{a.preventDefault(),a.stopPropagation(),u()},{passive:!1}),n&&n.addEventListener("click",a=>{a.preventDefault(),a.stopPropagation(),d()},{passive:!1}),c.forEach(a=>a.addEventListener("click",d,{passive:!0})),document.addEventListener("keydown",a=>{"Escape"===a.key&&d()}),document.addEventListener("click",a=>{i()&&(e.contains(a.target)||(t&&t.contains(a.target)||d()))})})();
 
 /* =========================================================
  14) reel-fit (OPCIONAL) — gateado
