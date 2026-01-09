@@ -11,10 +11,11 @@
  - Icons carousel (-15%): gateado y post-calc (evita conflictos)
  - TOC robusto (fix “no abre” + aria + ESC)
 ========================================================= */
-if (/(?:\?|&)safe=1\b/.test(location.search)) { console.warn("[SAFE MODE] main.js detenido"); return; }
+window.__EXP_SAFE__=/(?:\?|&)safe=1\b/.test(location.search);
 
-
-(()=>{"use strict";if(window.__EXP_MAIN_FINAL__)return;window.__EXP_MAIN_FINAL__=1;
+(()=>{"use strict";
+if(window.__EXP_SAFE__){console.warn("[SAFE MODE] main.js detenido");return;}
+if(window.__EXP_MAIN_FINAL__)return;window.__EXP_MAIN_FINAL__=1;
 const D=document,W=window;
 
 /* =========================================================
@@ -24,19 +25,14 @@ const D=document,W=window;
 const metaBase=D.querySelector('meta[name="expiriti-base"]')?.getAttribute("content")||"";
 const cleanBase=b=>{b=(b||"").trim();if(!b)return"";if(!b.startsWith("/"))b="/"+b;return b.endsWith("/")?b:(b+"/")};
 let BASE=cleanBase(metaBase);
-if(isGh&&!BASE){/* infer simple: /REPO/... => BASE=/REPO/ */
-  const seg=(location.pathname||"/").split("/").filter(Boolean)[0]||"";
-  BASE=seg?("/"+seg+"/"):"/";
-}
+if(isGh&&!BASE){const seg=(location.pathname||"/").split("/").filter(Boolean)[0]||"";BASE=seg?("/"+seg+"/"):"/";}
 if(!BASE)BASE="/";
 const inSub=/\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
 const rel=inSub?"../":"";
 const abs=p=>{if(!p)return p;
   if(/^https?:\/\//i.test(p))return p;
   if(/^(mailto:|tel:|data:|blob:|javascript:)/i.test(p))return p;
-  /* si empieza con "/" en GH project-site, debe mapearse a BASE */
   if(p.startsWith("/")) return (isGh?(BASE+p.slice(1)):p).replace(/\/+/g,"/");
-  /* relativo normal */
   return (isGh?(BASE+p):(rel+p)).replace(/\/+/g,"/");
 };
 const headerURL=abs("PARTIALS/global-header.html");
@@ -68,15 +64,6 @@ const boot=()=>loadPartials();
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
 W.addEventListener("pageshow",()=>{try{normalize(D)}catch{}});
 W.__EXP_ABS__=abs;W.__EXP_BASE__=BASE;
-})();
-
-/* =========================================================
- 1) UTILIDADES (SIN $/$$)
-========================================================= */
-(()=>{const money=new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
-W.$$fmt=v=>money.format(Math.round(Number(v||0)));
-W.Q||(W.Q=(s,ctx=D)=>ctx.querySelector(s));
-W.QA||(W.QA=(s,ctx=D)=>Array.from(ctx.querySelectorAll(s)));
 })();
 
 /* =========================================================
@@ -205,9 +192,21 @@ if(len<=1){paint(0);onChange&&onChange(0);return}
 dots.forEach((d,idx)=>d.addEventListener("click",()=>{pause();set(idx)}));
 prev&&prev.addEventListener("click",()=>{pause();set(i-1)});
 next&&next.addEventListener("click",()=>{pause();set(i+1)});
-track.addEventListener("scroll",()=>{if(!track.clientWidth)return;const n=Math.round(track.scrollLeft/track.clientWidth);
-if(n!==i){i=Math.max(0,Math.min(len-1,n));paint(i);onChange&&onChange(i)}});
-W.addEventListener("resize",()=>set(i,"auto"),{passive:!0});
+let lock=0;
+const set=(n,beh)=>{
+  i=(n+len)%len; paint(i);
+  lock=1; track.scrollTo({left:track.clientWidth*i,behavior:beh||"smooth"});
+  setTimeout(()=>{lock=0},120);
+  onChange&&onChange(i);
+};
+
+track.addEventListener("scroll",()=>{
+  if(lock) return;
+  if(!track.clientWidth) return;
+  const n=Math.round(track.scrollLeft/track.clientWidth);
+  if(n!==i){ i=Math.max(0,Math.min(len-1,n)); paint(i); onChange&&onChange(i); }
+},{passive:!0});
+
 set(0,"auto")};
 
 const boot=()=>{D.querySelectorAll(".carousel").forEach(car=>{
@@ -335,8 +334,12 @@ refresh();showMore();
 };
 const kick=()=>{try{bootCalc()}catch(e){console.warn("[calc] boot error",e)}};
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",kick,{once:!0}):kick();
-new MutationObserver(()=>{if(D.documentElement.dataset.calcHooksInit!=="1")kick()}).observe(D.documentElement,{childList:!0,subtree:!0});
-W.addEventListener("pageshow",kick,{passive:!0});
+const calcHost=D.getElementById("app")||D.getElementById("calc-primary")||D.body;
+let t=null;
+const mo=new MutationObserver(()=>{ if(t) return; t=setTimeout(()=>{t=null; if(D.documentElement.dataset.calcHooksInit!=="1")kick();},120); });
+mo.observe(calcHost,{childList:!0,subtree:!0});
+
+      W.addEventListener("pageshow",kick,{passive:!0});
 })();
 
 /* =========================================================
@@ -408,7 +411,10 @@ if(!bLic||!bTipo||!bUsu||!bInst)return;
 const g=D.createElement("div");g.className="controls-grid";g.append(bLic,bTipo,bUsu,bInst);c.insertBefore(g,c.firstElementChild);unir(c)};
 const target=D.getElementById("calc-primary");if(!target)return;
 const run=()=>{const c=D.querySelector(".calc-container")||target;if(!c||c.querySelector("form.calc-form"))return;compact(c)};
-run();requestAnimationFrame(run);new MutationObserver(run).observe(target,{childList:!0,subtree:!0});
+run();requestAnimationFrame(run);let rt=null;
+new MutationObserver(()=>{ if(rt) return; rt=setTimeout(()=>{rt=null; run();},120); })
+  .observe(target,{childList:!0,subtree:!1});
+
 W.addEventListener("calc-recompute",run,{passive:!0});W.addEventListener("calc-render",run,{passive:!0});setTimeout(run,500);setTimeout(run,1200);
 })();
 
