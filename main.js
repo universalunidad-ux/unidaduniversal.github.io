@@ -11,6 +11,9 @@
  - Icons carousel (-15%): gateado y post-calc (evita conflictos)
  - TOC robusto (fix “no abre” + aria + ESC)
 ========================================================= */
+if (/(?:\?|&)safe=1\b/.test(location.search)) { console.warn("[SAFE MODE] main.js detenido"); return; }
+
+
 (()=>{"use strict";if(window.__EXP_MAIN_FINAL__)return;window.__EXP_MAIN_FINAL__=1;
 const D=document,W=window;
 
