@@ -73,23 +73,35 @@ if(document?.body?.getAttribute("data-calc")==="nube"||window.__EXPIRITI_FORCE_N
   }
   window.mxnLetra=mxnLetra;
 
-  // ===== Montaje de contenedor secundario en TU HTML =====
-  function ensureSecondaryContainer(){
-    var slot=$id("calc-slot-2");
-    if(!slot){console.warn("No existe #calc-slot-2"); return null;}
-    var existing=$id("calc-secondary");
-    if(existing) return existing;
+function ensureSecondaryContainer(){
+  var row=$id("calc-row");
+  if(!row){console.warn("No existe #calc-row"); return null;}
 
-    // conserva nota/beneficios arriba y agrega contenedor debajo (SIN perder tu UX)
-    // Si quieres que desaparezca la nota cuando ya hay segunda calculadora, se oculta luego con CSS/JS.
-    var sec=document.createElement("div");
-    sec.id="calc-secondary";
-    sec.className="calc-container";
-    sec.setAttribute("aria-label","Segunda calculadora");
-    sec.style.marginTop="12px";
-    slot.appendChild(sec);
-    return sec;
+  var existing=$id("calc-secondary");
+  if(existing) return existing;
+
+  var sec=document.createElement("div");
+  sec.id="calc-secondary";
+  sec.className="calc-container";
+  sec.setAttribute("aria-label","Segunda calculadora");
+
+  // Insertar como sibling (para que el GRID lo trate como columna)
+  var primary=$id("calc-primary");
+  var slot=$id("calc-slot-2");
+
+  if(primary && primary.parentNode===row){
+    // Queda: [primary][secondary][slot-2][tertiary][add-more-panel]
+    row.insertBefore(sec, primary.nextSibling);
+  }else if(slot && slot.parentNode===row){
+    // fallback: antes del slot
+    row.insertBefore(sec, slot);
+  }else{
+    row.appendChild(sec);
   }
+
+  return sec;
+}
+
 
   function showThirdPanel(show){
     var t=$id("calc-tertiary");
