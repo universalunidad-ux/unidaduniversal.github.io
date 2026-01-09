@@ -1046,3 +1046,110 @@ body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2{
 /* Si por alguna razón hay “ellipsis” heredado */
 #combined-wrap *{text-overflow:clip}
 
+
+
+
+
+
+
+/* =========================================================
+   EXP CALC LAYOUT PATCH v2026.01.09-r2
+   Objetivo: 3 calculadoras SIN corte (3→2→1), sin overflow horizontal,
+   cards con misma altura, y resumen sin truncar.
+   Scope: SOLO #calculadora-section (no rompe otras secciones)
+========================================================= */
+
+/* 0) Anti-overflow por defecto */
+#calculadora-section,
+#calculadora-section .calc-strip,
+#calculadora-section .calc-row{
+  max-width:100%;
+  overflow:visible;
+}
+#calculadora-section .calc-row > *{min-width:0;} /* clave en grid/flex */
+
+/* 1) Grid RESPONSIVE “real”: auto-fit hace 3→2→1 sin clases has-calc-* */
+#calculadora-section .calc-row{
+  display:grid !important;
+  gap:16px !important;
+  align-items:stretch !important;
+
+  /* La magia: crea tantas columnas como quepan */
+  grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)) !important;
+}
+
+/* 2) Que cada tarjeta sea “stretch” y no se corte su contenido */
+#calculadora-section .calc-container,
+#calculadora-section .placeholder{
+  height:100%;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+}
+
+/* 3) Tablas: evitar que empujen el card fuera (causa típica de “corte”) */
+#calculadora-section .calc-container table{
+  width:100%;
+  max-width:100%;
+  table-layout:fixed;                 /* evita expansión por celdas largas */
+}
+#calculadora-section .calc-container th,
+#calculadora-section .calc-container td{
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* Mantén importes legibles (sin romper números) */
+#calculadora-section .calc-container .price,
+#calculadora-section .calc-container .total,
+#calculadora-section .calc-container .monto{
+  white-space:nowrap;
+}
+
+/* 4) Forms: 2 columnas en desktop, 1 en mobile (sin overflow) */
+#calculadora-section .calc-container form{
+  display:grid !important;
+  grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+  gap:12px !important;
+}
+@media(max-width:760px){
+  #calculadora-section .calc-container form{
+    grid-template-columns:1fr !important;
+  }
+  #calculadora-section .calc-container .instalacion-box{flex-wrap:wrap;}
+}
+
+/* 5) Resumen combinado: nunca truncar, envolver “total en letras” */
+#combined-wrap{
+  max-width:100%;
+  overflow:visible;
+}
+#combined-wrap .combined-table{
+  width:100%;
+  table-layout:auto;
+}
+#combined-wrap .combined-table td,
+#combined-wrap .combined-table th{
+  white-space:normal !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+#combined-wrap .amount-letter,
+#combined-wrap small,
+#combined-wrap .amount-words,
+#combined-wrap .total-words{
+  display:block;
+  white-space:normal !important;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  line-height:1.25;
+}
+
+/* 6) PageSpeed: si la calculadora está abajo del fold, permite render diferido */
+@supports(content-visibility:auto){
+  #calculadora-section{content-visibility:auto; contain-intrinsic-size:900px;}
+}
+
+
