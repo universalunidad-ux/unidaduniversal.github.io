@@ -344,3 +344,56 @@ html[data-theme="light"] .page-sistemas .pillbar .pill:not(.active){color:rgba(2
 /* FIX: ocultar “labels blancos” debajo del player si aparecen */
 .yt-title--hidden{display:none!important}
 #carouselVideos .yt-title{display:none!important}
+
+/* ================= Expiriti PATCH v2026.01.09-rFIX (SISTEMAS) =================
+FIX: (1) Integra icons start/first item accesible (2) 2/3 calcs sin cortes desktop
+(3) Acentos AMARILLO/VERDE/ROJO en calc + panel/carrusel (armonioso)
+Pegar AL FINAL del main.css de SISTEMAS
+============================================================================= */
+.page-sistemas{--exp-amber:#e8ac36;--exp-green:#2dd4bf;--exp-rose:#f05a66;--exp-ink:#0b1220;--exp-ring:rgba(255,255,255,.16);--exp-soft:rgba(15,23,42,.22)}
+.page-sistemas .calc-row,.page-sistemas .calc-strip,.page-sistemas #combined-wrap{max-width:100%}
+.page-sistemas .calc-container{min-width:0;box-sizing:border-box;position:relative;overflow:hidden}
+.page-sistemas #calc-primary.calc-container{border:1px solid rgba(232,172,54,.28)}
+.page-sistemas #calc-secondary.calc-container{border:1px solid rgba(45,212,191,.26)}
+.page-sistemas #calc-tertiary.calc-container{border:1px solid rgba(240,90,102,.26)}
+.page-sistemas #calc-primary.calc-container::before,.page-sistemas #calc-secondary.calc-container::before,.page-sistemas #calc-tertiary.calc-container::before{content:"";position:absolute;inset:0 0 auto 0;height:5px}
+.page-sistemas #calc-primary.calc-container::before{background:linear-gradient(90deg,rgba(232,172,54,.95),rgba(232,172,54,.55))}
+.page-sistemas #calc-secondary.calc-container::before{background:linear-gradient(90deg,rgba(45,212,191,.95),rgba(45,212,191,.55))}
+.page-sistemas #calc-tertiary.calc-container::before{background:linear-gradient(90deg,rgba(240,90,102,.95),rgba(240,90,102,.55))}
+.page-sistemas #calc-primary .calc-container h4,.page-sistemas #calc-secondary .calc-container h4,.page-sistemas #calc-tertiary .calc-container h4{color:inherit}
+.page-sistemas #calc-primary .calc-container thead th,.page-sistemas #calc-secondary .calc-container thead th,.page-sistemas #calc-tertiary .calc-container thead th{background:rgba(255,255,255,.06)}
+html[data-theme="light"] .page-sistemas #calc-primary.calc-container,html[data-theme="light"] .page-sistemas #calc-secondary.calc-container,html[data-theme="light"] .page-sistemas #calc-tertiary.calc-container{background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(245,247,255,.92))}
+@media(min-width:981px){
+  html.has-calc-2 .page-sistemas .calc-row,body.has-calc-2 .page-sistemas .calc-row{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;padding:0 8px!important;justify-content:center!important}
+  html.has-calc-3 .page-sistemas .calc-row,body.has-calc-3 .page-sistemas .calc-row{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;padding:0 8px!important;justify-content:center!important}
+  html.has-calc-2 .page-sistemas #calc-primary,html.has-calc-2 .page-sistemas #calc-secondary,body.has-calc-2 .page-sistemas #calc-primary,body.has-calc-2 .page-sistemas #calc-secondary{max-width:none!important;width:100%!important}
+  html.has-calc-3 .page-sistemas #calc-primary,html.has-calc-3 .page-sistemas #calc-secondary,html.has-calc-3 .page-sistemas #calc-tertiary,body.has-calc-3 .page-sistemas #calc-primary,body.has-calc-3 .page-sistemas #calc-secondary,body.has-calc-3 .page-sistemas #calc-tertiary{max-width:none!important;width:100%!important}
+  .page-sistemas .calc-container table{max-width:100%!important}
+}
+@media(max-width:980px){
+  .page-sistemas .calc-row{padding:0!important}
+}
+
+/* === IMG1: Integra carrusel (1 calc) sin “aire” y sin perder el 1er item === */
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-carousel,
+body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-carousel{padding:0 46px!important}
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap,
+body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap{justify-content:flex-start!important;scroll-padding-left:24px;scroll-padding-right:24px}
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::before,
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::after,
+body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::before,
+body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap::after{flex-basis:24px!important}
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap>*,
+body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap>*{scroll-snap-align:start}
+
+/* === Acento del panel “Integra” (armonioso) === */
+.page-sistemas #calc-slot-2.placeholder .note{border:1px solid rgba(45,212,191,.22);background:linear-gradient(180deg,rgba(45,212,191,.08),rgba(15,23,42,.18))}
+.page-sistemas #calc-slot-2 .sys-icon{border:1px solid rgba(148,163,184,.18)}
+.page-sistemas #calc-slot-2 .sys-icon.active{outline:2px solid rgba(45,212,191,.28);border-color:rgba(45,212,191,.45)}
+.page-sistemas #calc-slot-2 .arrowCircle{background:rgba(15,23,42,.60);border:1px solid rgba(45,212,191,.22);box-shadow:0 10px 22px rgba(0,0,0,.22)}
+html[data-theme="light"] .page-sistemas #calc-slot-2 .arrowCircle{background:rgba(255,255,255,.86);border:1px solid rgba(2,6,23,.14)}
+
+/* === (Opcional) texto blanco cuando uses fondos de acento “fuertes” === */
+.page-sistemas .accent-amber{background:linear-gradient(180deg,rgba(232,172,54,.95),rgba(232,172,54,.75));color:#fff;border-color:rgba(232,172,54,.65)}
+.page-sistemas .accent-green{background:linear-gradient(180deg,rgba(45,212,191,.95),rgba(45,212,191,.72));color:#fff;border-color:rgba(45,212,191,.62)}
+.page-sistemas .accent-rose{background:linear-gradient(180deg,rgba(240,90,102,.95),rgba(240,90,102,.72));color:#fff;border-color:rgba(240,90,102,.60)}
