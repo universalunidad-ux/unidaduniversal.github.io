@@ -67,19 +67,22 @@ html[data-theme="light"] .page-sistemas .calc-container select,html[data-theme="
 
 /* ===== 4.1) SWITCH nube/escritorio (data-calc en BODY) ===== */
 .page-sistemas #calc-primary{display:block!important}.page-sistemas .nube-only,.page-sistemas .desk-only{display:none}
-body[data-calc="nube"] .page-sistemas .nube-only{display:initial}
+body[data-calc="nube"] .page-sistemas .nube-only{display:inline}
 body[data-calc="nube"] .page-sistemas .desk-only{display:none!important}
 body[data-calc="nube"] .page-sistemas .pricing-table-nube{display:table}
 body[data-calc="nube"] .page-sistemas #calc-slot-2,body[data-calc="nube"] .page-sistemas #calc-secondary,body[data-calc="nube"] .page-sistemas #calc-tertiary,body[data-calc="nube"] .page-sistemas #add-more-panel,body[data-calc="nube"] .page-sistemas #combined-wrap,body[data-calc="nube"] .page-sistemas .icons-wrap{display:none!important}
 body[data-calc="escritorio"] .page-sistemas .nube-only{display:none!important}
-body[data-calc="escritorio"] .page-sistemas .desk-only{display:initial}
+body[data-calc="escritorio"] .page-sistemas .desk-only{display:inline}
 body[data-calc="escritorio"] .page-sistemas .pricing-table-nube{display:none!important}
-body[data-calc="escritorio"] .page-sistemas #calc-slot-2, body[data-calc="escritorio"] .page-sistemas #calc-slot-2,
+body[data-calc="escritorio"] .page-sistemas #calc-slot-2,
 body[data-calc="escritorio"] .page-sistemas #calc-secondary,
 body[data-calc="escritorio"] .page-sistemas #calc-tertiary,
 body[data-calc="escritorio"] .page-sistemas #add-more-panel,
-body[data-calc="escritorio"] .page-sistemas #combined-wrap,
-body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:block}
+body[data-calc="escritorio"] .page-sistemas #combined-wrap{display:block}
+
+body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:flex}
+
+
   
 /* ===== 4.2) RESUMEN COMBINADO (si existe) ===== */
 .page-sistemas #combined-wrap{display:flex;justify-content:center}
