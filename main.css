@@ -1093,3 +1093,122 @@ html[data-theme="light"] .page-sistemas .badge{
   background:rgba(232,172,54,.10)!important;
   color:rgba(11,18,32,.92)!important;
 }
+
+
+/* =========================================================
+   EXP PATCH (SISTEMAS) v2026.01.09-badges+pills+integra+calc
+   - Badges .badges multicolor SIN tocar badges sueltos (Actualizado/Beneficios)
+   - Pillbar estilo CTA (tipo "Compra ahora") + glass
+   - Integra: primer item siempre visible (spacers + snap + scroll-padding)
+   - Calculadoras: márgenes/anchos consistentes 1/2/3, responsive
+========================================================= */
+
+/* ========== 0) TOKENS (usa tus --brand/--brand-2 del theme) ========== */
+.page-sistemas{--exp-glass:rgba(15,23,42,.22);--exp-glass2:rgba(15,23,42,.34);--exp-bd:rgba(148,163,184,.22);--exp-ink:#07111c}
+
+/* =========================================================
+   1) BADGES: SOLO los de .badges (4 chips) van con color distinto
+   - Quita el “todo amarillo” si existe por overrides previos
+========================================================= */
+
+/* Badge default (sueltos: "Actualizado 2025", "Beneficios clave") => neutro */
+.page-sistemas .badge,.page-sistemas .badges .badge{border:1px solid var(--exp-bd);background:var(--exp-glass);color:rgba(232,238,246,.92);font-weight:800}
+html[data-theme="light"] .page-sistemas .badge,html[data-theme="light"] .page-sistemas .badges .badge{border-color:rgba(2,6,23,.14);background:rgba(255,255,255,.82);color:rgba(11,18,32,.92)}
+
+/* SOLO dentro del grupo .badges => multicolor por orden (1..4) */
+.page-sistemas .badges .badge:nth-child(1){background:rgba(96,165,250,.14);border-color:rgba(96,165,250,.38)}
+.page-sistemas .badges .badge:nth-child(2){background:rgba(45,212,191,.14);border-color:rgba(45,212,191,.36)}
+.page-sistemas .badges .badge:nth-child(3){background:rgba(240,90,102,.14);border-color:rgba(240,90,102,.34)}
+.page-sistemas .badges .badge:nth-child(4){background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.42)}
+
+/* Light: misma tinta oscura, conserva el color suave */
+html[data-theme="light"] .page-sistemas .badges .badge:nth-child(1),
+html[data-theme="light"] .page-sistemas .badges .badge:nth-child(2),
+html[data-theme="light"] .page-sistemas .badges .badge:nth-child(3),
+html[data-theme="light"] .page-sistemas .badges .badge:nth-child(4){color:rgba(11,18,32,.92)}
+
+/* =========================================================
+   2) PILLBAR: estilo CTA tipo "Compra ahora" + glass (no amarillo pálido)
+   - Solo afecta botones .pill dentro de .pillbar
+========================================================= */
+.page-sistemas .pillbar{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 10px}
+@media(max-width:768px){.page-sistemas .pillbar{display:grid;grid-template-columns:1fr 1fr;gap:10px}.page-sistemas .pillbar .pill:last-child{grid-column:1/-1}}
+
+.page-sistemas .pillbar .pill{
+  min-height:44px;padding:10px 14px;border-radius:14px;cursor:pointer;
+  border:1px solid rgba(45,212,191,.26);
+  background:linear-gradient(135deg,rgba(45,212,191,.22),rgba(96,165,250,.18));
+  color:rgba(232,238,246,.96);font-weight:900;line-height:1.15;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 26px rgba(0,0,0,.18);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease,filter .12s ease
+}
+html[data-theme="light"] .page-sistemas .pillbar .pill{
+  border-color:rgba(2,6,23,.14);
+  background:linear-gradient(135deg,rgba(45,212,191,.20),rgba(96,165,250,.16));
+  color:rgba(11,18,32,.92);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 12px 26px rgba(2,6,23,.10)
+}
+@media(hover:hover){.page-sistemas .pillbar .pill:hover{transform:translateY(-1px);border-color:rgba(96,165,250,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 16px 34px rgba(0,0,0,.22);filter:saturate(1.05)}}
+.page-sistemas .pillbar .pill:active{transform:translateY(1px) scale(.99);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+
+/* Activo = CTA sólido (tipo botón) */
+.page-sistemas .pillbar .pill.active{
+  border-color:transparent;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:var(--exp-ink);
+  box-shadow:0 0 0 1px rgba(45,212,191,.35),0 16px 36px rgba(0,0,0,.30)
+}
+
+/* =========================================================
+   3) INTEGRA: primer item visible SIEMPRE (panel derecho)
+   - Soluciona “arranca en item 2/3” y “no puedo ver el 1”
+========================================================= */
+.page-sistemas #calc-slot-2 .icons-carousel{padding:0 46px!important;position:relative}
+.page-sistemas #calc-slot-2 .icons-wrap{
+  display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;
+  padding:10px 6px!important;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;scroll-padding-left:14px;scroll-padding-right:14px;
+  overscroll-behavior-x:contain
+}
+/* “spacers” para que el item 1 nunca quede cortado/inalcanzable */
+.page-sistemas #calc-slot-2 .icons-wrap::before,
+.page-sistemas #calc-slot-2 .icons-wrap::after{content:"";flex:0 0 10px}
+.page-sistemas #calc-slot-2 .icons-wrap>*{scroll-snap-align:start}
+
+/* Evita que algo “clippee” el inicio */
+.page-sistemas #calc-slot-2.placeholder,.page-sistemas #calc-slot-2 .note{overflow:visible!important}
+
+/* =========================================================
+   4) CALCULADORAS: márgenes definidos + no se cortan (1/2/3)
+========================================================= */
+.page-sistemas #calculadora-section{padding-left:12px;padding-right:12px}
+@media(min-width:981px){.page-sistemas #calculadora-section{padding-left:18px;padding-right:18px}}
+
+/* Limita ancho visual y centra (sin romper tu grid existente) */
+.page-sistemas #calculadora-section .calc-strip,
+.page-sistemas #calculadora-section .calc-row,
+.page-sistemas #combined-wrap{max-width:min(1200px,100%);margin-left:auto;margin-right:auto}
+
+/* Contenedores: nunca overflow horizontal */
+.page-sistemas .calc-strip,.page-sistemas .calc-row,.page-sistemas .calc-container{max-width:100%;min-width:0}
+.page-sistemas .calc-container{overflow:hidden}
+.page-sistemas .calc-container table{max-width:100%}
+
+/* Desktop: asegura aire lateral real en 1/2/3 */
+@media(min-width:981px){
+  .page-sistemas .calc-row{padding-left:6px;padding-right:6px}
+}
+
+/* Mobile: evita “corte” por grids/iframes/tablas */
+@media(max-width:520px){
+  .page-sistemas #calculadora-section{padding-left:10px;padding-right:10px}
+  .page-sistemas .calc-container table{border-radius:12px}
+  .page-sistemas .calc-container td,.page-sistemas .calc-container th{padding:9px 10px}
+}
+
+/* =========================================================
+   5) GUARDRAILS: si algún patch anterior dejó pills/badges “amber global”
+   - Esto fuerza la prioridad correcta SOLO para pillbar y .badges
+========================================================= */
+.page-sistemas .pillbar .pill{background-clip:padding-box}
+.page-sistemas .badges .badge{background-clip:padding-box}
