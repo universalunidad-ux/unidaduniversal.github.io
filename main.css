@@ -1169,3 +1169,22 @@ body.has-calc-2 #calculadora-section .calc-row{grid-template-columns:repeat(2,mi
 #calculadora-section .calc-container th,#calculadora-section .calc-container td{overflow-wrap:anywhere;word-break:break-word}
 #calculadora-section .calc-container .price,#calculadora-section .calc-container .total,#calculadora-section .calc-container .monto{white-space:nowrap}
 
+/*=== EXP PATCH v2026.01.09-r3 | CALC: centra panel, oculta/activa correcto en mobile, y unifica amarillo CTA+pills ===*/
+
+/* 1) CALC SLOT (panel -15%): centrado vertical + menos aire (desktop y general) */
+@media(min-width:981px){
+  #calculadora-section .calc-row{align-items:center!important} /* centra verticalmente las columnas */
+}
+/* El panel gris (placeholder) más “apretado” y centrado */
+#calc-slot-2.placeholder{padding:0!important;min-height:unset!important}
+#calc-slot-2.placeholder .note{
+  height:100%;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;   /* centra el contenido dentro del rectángulo */
+  gap:10px!important;
+  padding:14px!important;             /* menos aire */
+  border-radius:16px!important;
+}
+/* Carrusel de iconos dentro del panel: centrado y sin empujar */
+#calc-slot-2 .icons-carousel{margin:6px
