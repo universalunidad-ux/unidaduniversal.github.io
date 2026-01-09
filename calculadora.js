@@ -24,20 +24,21 @@ if(document?.body?.getAttribute("data-calc")==="nube"||window.__EXPIRITI_FORCE_N
     var el=qs(sel); if(!el) return;
     el.classList.toggle("calc-empty", !el.querySelector("table"));
   }
-  function setCalcCountClass(){
-    var has2=!!qs("#calc-secondary table");
-    var has3=!!qs("#calc-tertiary table");
-    var is3=has2 && has3;
-    var is2=(has2||has3) && !is3;
-    [document.documentElement,document.body].forEach(function(el){
-      if(!el) return;
-      el.classList.toggle("has-calc-2",is2);
-      el.classList.toggle("has-calc-3",is3);
-      if(is3) el.classList.remove("has-calc-2");
-    });
-    markEmpty("#calc-secondary");
-    markEmpty("#calc-tertiary");
-  }
+function setCalcCountClass(){
+  var has2=!!document.querySelector("#calc-secondary table");
+  var has3=!!document.querySelector("#calc-tertiary table");
+  var is3=has2&&has3;
+  var is2=has2&&!has3;
+  [document.documentElement,document.body].forEach(function(el){
+    if(!el) return;
+    el.classList.toggle("has-calc-2",is2);
+    el.classList.toggle("has-calc-3",is3);
+    if(is3) el.classList.remove("has-calc-2");
+  });
+  markEmpty("#calc-secondary");
+  markEmpty("#calc-tertiary");
+}
+
 
   // ===== mxnLetra (tu versión) =====
   function mxnLetra(n){
@@ -130,11 +131,12 @@ function ensureSecondaryContainer(){
       if(excludeNames.indexOf(item.name)!==-1) return;
       var b=document.createElement("button");
       b.type="button";
-      b.className="sys-icon";
-      b.setAttribute("data-system",item.name);
-      b.innerHTML=(item.img?('<img src="'+item.img+'" alt="">'):"")+'<strong>'+item.name+'</strong>';
-      b.addEventListener("click",function(){onPick(item.name)});
-      wrap.appendChild(b);
+/* compat: algunos hooks leen data-system y otros data-sys */
+b.className="sys-icon";
+b.setAttribute("data-system",item.name);
+b.setAttribute("data-sys",item.name);
+b.dataset.system=item.name;
+b.dataset.sys=item.name;
     });
   }
 
@@ -510,3 +512,77 @@ function ensureSecondaryContainer(){
   else autoInit();
 
 })();} // GUARD GLOBAL
+
+/* =========================================================
+   PATCH v13.3b — Pickers robustos + orden 2→3
+   - Lee sistema desde data-system / data-sys / texto
+   - Evita undefined
+   - No permite calc3 si calc2 no existe con tabla
+========================================================= */
+(function(){
+  if(window.__EXP_CALC_PICKERS_BOUND__) return;
+  window.__EXP_CALC_PICKERS_BOUND__=1;
+
+  function pickName(btn){
+    if(!btn) return "";
+    var ds=btn.dataset||{};
+    var n=ds.system||ds.sys||btn.getAttribute("data-system")||btn.getAttribute("data-sys")||"";
+    if(!n){
+      var s=(btn.textContent||"").trim();
+      n=s.replace(/\s+/g," ");
+    }
+    return (n||"").trim();
+  }
+
+  function onWrapClick(wrapId,fn){
+    var wrap=document.getElementById(wrapId);
+    if(!wrap) return;
+    wrap.addEventListener("click",function(ev){
+      var btn=ev.target && ev.target.closest ? ev.target.closest(".sys-icon") : null;
+      if(!btn || !wrap.contains(btn)) return;
+
+      var name=pickName(btn);
+      if(!name){
+        console.warn("Picker:",wrapId,"sin nombre (dataset vacío).");
+        return;
+      }
+      fn(name);
+    });
+  }
+
+  // Selector 2º sistema
+  onWrapClick("icons-sec-sys",function(name){
+    // Evita volver a montar el mismo sistema que el 1
+    var p=document.getElementById("calc-primary");
+    var current=p && p.dataset ? p.dataset.systemName : "";
+    if(current && current===name) return;
+
+    window.CalculadoraContpaqi && window.CalculadoraContpaqi.setSecondarySystem &&
+      window.CalculadoraContpaqi.setSecondarySystem(name,{combinedSelector:"#combined-wrap"});
+  });
+
+  // Selector 3º sistema (solo si existe calc2 “real”)
+  onWrapClick("icons-third-sys",function(name){
+    if(!document.querySelector("#calc-secondary table")){
+      console.warn("Bloqueado: intenta 3 sin 2.");
+      var ap=document.getElementById("add-more-panel");
+      if(ap){
+        ap.innerHTML='<div class="note"><strong>Primero integra el 2º sistema</strong><small>Selecciona un sistema en el carrusel de arriba para abrir la calculadora 2.</small><div class="icons-wrap" id="icons-third-sys"></div></div>';
+        // Nota: el wrap se recreó; re-bindeamos una vez más
+        window.__EXP_CALC_PICKERS_BOUND__=0;
+        setTimeout(function(){try{arguments.callee.caller&&arguments.callee.caller()}catch(e){}},0);
+      }
+      return;
+    }
+
+    // Evita duplicados con 1 y 2
+    var p=document.getElementById("calc-primary"), s=document.getElementById("calc-secondary");
+    var n1=p&&p.dataset?p.dataset.systemName:"";
+    var n2=s&&s.dataset?s.dataset.systemName:"";
+    if(name===n1||name===n2) return;
+
+    window.CalculadoraContpaqi && window.CalculadoraContpaqi.setTertiarySystem &&
+      window.CalculadoraContpaqi.setTertiarySystem(name,{combinedSelector:"#combined-wrap"});
+  });
+})();
+
