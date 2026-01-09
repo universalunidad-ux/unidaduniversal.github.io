@@ -397,3 +397,108 @@ html[data-theme="light"] .page-sistemas #calc-slot-2 .arrowCircle{background:rgb
 .page-sistemas .accent-amber{background:linear-gradient(180deg,rgba(232,172,54,.95),rgba(232,172,54,.75));color:#fff;border-color:rgba(232,172,54,.65)}
 .page-sistemas .accent-green{background:linear-gradient(180deg,rgba(45,212,191,.95),rgba(45,212,191,.72));color:#fff;border-color:rgba(45,212,191,.62)}
 .page-sistemas .accent-rose{background:linear-gradient(180deg,rgba(240,90,102,.95),rgba(240,90,102,.72));color:#fff;border-color:rgba(240,90,102,.60)}
+
+
+/* =========================================================
+ Expiriti — PATCH UI (Calc + Carrusel + Pills) v2026.01.09
+ - FIX carrusel: arranque sin “aire” y accesible al 1er icono
+ - FIX calc 2/3 en desktop: no corta izq/der, no huecos raros
+ - Paleta Expiriti: AMARILLO / VERDE / ROJO (armónico)
+ - Pills apagados (light): amarillo glass (no negro)
+ - Resumen combinado: separaciones
+========================================================= */
+:root{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98);--ex-ink:#071018;--ex-glass:rgba(255,255,255,.14);--ex-glass2:rgba(2,6,23,.06)}
+html[data-theme="light"]{--ex-glass:rgba(255,255,255,.72);--ex-glass2:rgba(255,255,255,.52)}
+
+/* =========================
+ 1) CARRUSEL (iconos) — arranque sin “aire”
+ - Reduce padding de slide dentro de calculadoras/combos
+ - Asegura scroll-padding para que el 1er item quede “alineado”
+========================= */
+#calculadora-section .carousel-slide,.calc-strip .carousel-slide,.calc-row .carousel-slide{padding:0 18px!important}
+@media(max-width:768px){#calculadora-section .carousel-slide,.calc-strip .carousel-slide,.calc-row .carousel-slide{padding:0 12px!important}}
+#calculadora-section .carousel-track,.calc-strip .carousel-track,.calc-row .carousel-track{scroll-padding-left:18px;scroll-padding-right:18px}
+@media(max-width:768px){#calculadora-section .carousel-track,.calc-strip .carousel-track,.calc-row .carousel-track{scroll-padding-left:12px;scroll-padding-right:12px}}
+/* flechas: más pegadas pero sin tapar contenido */
+#calculadora-section .carousel>.arrowCircle,.calc-strip .carousel>.arrowCircle{width:44px;height:44px}
+#calculadora-section .carousel>.arrowCircle.prev,.calc-strip .carousel>.arrowCircle.prev{left:6px}
+#calculadora-section .carousel>.arrowCircle.next,.calc-strip .carousel>.arrowCircle.next{right:6px}
+
+/* =========================
+ 2) LAYOUT CALCULADORAS (2 y 3) — no cortar izq/der
+ - Grid auto-fit: 2 se reparten, 3 se reparten, sin overflow
+ - El “culpable” típico: overflow-x hidden + min-width rígido
+========================= */
+#calculadora-section{overflow:visible!important}
+#calculadora-section .calc-row,.calc-row{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr))!important;gap:18px!important;align-items:start}
+#calculadora-section .calc-row>*,
+.calc-row>*{min-width:0!important}
+/* evita que un card empuje el grid fuera (muy común con tablas) */
+#calculadora-section :is(.calc-card,.calc-box,.calc-panel,.card){min-width:0;max-width:100%}
+#calculadora-section :is(table,.table-like){max-width:100%}
+
+/* =========================
+ 3) ESTILO “EXPIRITI” PARA CALC (quita gris plano)
+ - Se aplica a “cards” dentro del section de calculadora
+ - Colorea por POSICIÓN: 1=AMARILLO, 2=VERDE, 3=ROJO
+========================= */
+/* base calc “glass” */
+#calculadora-section :is(.calc-card,.calc-box,.calc-panel,.card.body){
+  background:
+    radial-gradient(900px 520px at 0% 0%,rgba(233,170,25,.10),transparent 55%),
+    radial-gradient(900px 520px at 100% 0%,rgba(20,153,151,.10),transparent 55%),
+    linear-gradient(180deg,rgba(17,23,35,.92),rgba(17,23,35,.72))!important;
+  border:1px solid rgba(148,163,184,.22)!important;
+  border-radius:16px!important;
+  overflow:hidden
+}
+html[data-theme="light"] #calculadora-section :is(.calc-card,.calc-box,.calc-panel,.card.body){
+  background:
+    radial-gradient(900px 520px at 0% 0%,rgba(233,170,25,.12),transparent 55%),
+    radial-gradient(900px 520px at 100% 0%,rgba(20,153,151,.10),transparent 55%),
+    linear-gradient(180deg,rgba(255,255,255,.96),rgba(245,247,255,.92))!important;
+  border:1px solid rgba(2,6,23,.14)!important
+}
+/* acento por card (top bar/borde superior) */
+#calculadora-section .calc-row>div:nth-child(1),
+#calculadora-section .calc-row>article:nth-child(1){box-shadow:0 -4px 0 0 var(--ex-amber) inset}
+#calculadora-section .calc-row>div:nth-child(2),
+#calculadora-section .calc-row>article:nth-child(2){box-shadow:0 -4px 0 0 var(--ex-teal) inset}
+#calculadora-section .calc-row>div:nth-child(3),
+#calculadora-section .calc-row>article:nth-child(3){box-shadow:0 -4px 0 0 var(--ex-coral) inset}
+/* headers de tablas dentro de calc (armónico) */
+#calculadora-section :is(.table-like thead,thead){background:rgba(148,163,184,.14)!important}
+html[data-theme="light"] #calculadora-section :is(.table-like thead,thead){background:rgba(2,6,23,.05)!important}
+/* total destacado */
+#calculadora-section :is(.total,.grand-total,td.total,strong.total){font-weight:950}
+
+/* =========================
+ 4) CARRUSEL (panel) con paleta Expiriti
+========================= */
+#calculadora-section .carousel{border:1px solid rgba(148,163,184,.22)!important;background:rgba(15,23,42,.35)!important}
+html[data-theme="light"] #calculadora-section .carousel{background:rgba(255,255,255,.70)!important;border-color:rgba(2,6,23,.12)!important}
+#calculadora-section .carousel-nav{background:rgba(15,23,42,.28)!important}
+html[data-theme="light"] #calculadora-section .carousel-nav{background:rgba(255,255,255,.60)!important}
+#calculadora-section .dot.active{background:linear-gradient(135deg,var(--ex-amber),var(--ex-teal))!important}
+
+/* =========================
+ 5) PILLS APAGADOS (LIGHT) → AMARILLO GLASS (no negro)
+ - Mantiene el ACTIVE como lo tienes (teal→coral)
+ - Solo cambia los NO activos en light
+========================= */
+html[data-theme="light"] .pill:not(.active){
+  background:linear-gradient(135deg,rgba(233,170,25,.26),rgba(233,170,25,.14))!important;
+  border-color:rgba(233,170,25,.55)!important;
+  color:rgba(11,18,32,.92)!important;
+  box-shadow:0 10px 22px rgba(2,6,23,.10);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)
+}
+html[data-theme="light"] .pill:not(.active):hover{filter:saturate(1.06) brightness(1.02);transform:translateY(-1px)}
+
+/* =========================
+ 6) “RESUMEN COMBINADO” — más aire
+ - Si ya tienes una clase/ID específico, mejor cámbialo aquí
+========================= */
+#calculadora-section :is(.resumen-combinado,.combo-summary,.calc-summary,.summary){margin-top:14px!important;padding-top:10px!important;border-top:1px solid rgba(148,163,184,.18)}
+html[data-theme="light"] #calculadora-section :is(.resumen-combinado,.combo-summary,.calc-summary,.summary){border-top:1px solid rgba(2,6,23,.10)}
+#calculadora-section :is(.resumen-combinado,.combo-summary,.calc-summary,.summary) :is(p,div){margin-top:6px}
