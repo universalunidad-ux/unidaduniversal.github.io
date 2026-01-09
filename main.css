@@ -242,10 +242,7 @@ html[data-theme="light"] .page-sistemas .badge,html[data-theme="light"] .page-si
 .page-sistemas .carousel,.page-sistemas .carouselX,.page-sistemas .icons-carousel,.page-sistemas .listSlider{position:relative}
 body>.arrowCircle{display:none!important}
 
-/* =========================================================
-   PATCH UI (SISTEMAS) — Funciones destacadas + Videos + Integra + Calc
-   Scope: .page-sistemas (no afecta index/servicios)
-========================================================= */
+
 
 /* =========================
    A) FUNCIONES DESTACADAS: 4x2 desktop + hover lift
@@ -995,196 +992,104 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{
 
 
 
-/*=== PATCH: CALC SLOT 2 VISIBLE + ICONS CAROUSEL (NO TOCA VIDEOS) ===*/
-#calc-row{align-items:stretch}
-/* Slot 2 visible SOLO cuando todavía no hay calc secundaria */
-html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2,
-body:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2{
-  display:block!important;
-  min-height:220px!important;
-}
-
-#calc-slot-2 .note{height:100%}
-#calc-slot-2 .icons-carousel{display:grid!important;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
-#icons-sec-sys,#icons-third-sys{display:flex!important;gap:12px;overflow-x:auto!important;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px;min-height:96px}
-#icons-sec-sys>* ,#icons-third-sys>*{scroll-snap-align:start}
-#calc-slot-2 .arrowCircle{display:inline-flex!important;align-items:center;justify-content:center}
-#calc-slot-2 .arrowCircle[disabled]{opacity:.35;pointer-events:none}
-
-
-/* CPRO: si solo hay 1 slide, oculta controles */
-#carouselVideos .arrowCircle{display:none}
-#carouselVideos .carousel-nav{display:none}
-
-/*==EXP CALC PATCH v2026.01.09 | FIX: 3 calc sin corte + alturas iguales + resumen sin truncar==*/
-#calculadora-section{overflow:visible}#calculadora-section .calc-strip{max-width:var(--maxw,1200px);margin:0 auto;padding:0 12px;overflow:visible}
-/* Layout: grid auto-wrap (3->2+1) sin overflow horizontal */
-#calculadora-section .calc-row{display:grid;gap:16px;align-items:stretch;overflow:visible}
-/* Desktop: intenta 3 columnas pero permite wrap real */
-@media(min-width:1100px){#calculadora-section .calc-row{grid-template-columns:repeat(3,minmax(320px,1fr))}}
-/* Mid: 2 columnas */
-@media(min-width:760px) and (max-width:1099.98px){#calculadora-section .calc-row{grid-template-columns:repeat(2,minmax(320px,1fr))}}
-/* Mobile: 1 columna */
-@media(max-width:759.98px){#calculadora-section .calc-row{grid-template-columns:1fr}}
-/* Anti-corte clásico en grid/flex: permite encoger y envolver */
-#calculadora-section .calc-row>*{min-width:0}
-/* Igualar “tarjetas” (calculadoras/placeholder/panel) */
-#calculadora-section .calc-container,#calculadora-section .placeholder{height:100%;display:flex;flex-direction:column;min-width:0}
-/* Asegura que el cuerpo interno no cause overflow lateral */
-#calculadora-section .calc-container *,#calculadora-section .placeholder *{min-width:0;max-width:100%}
-/* Tablas internas: no empujar columnas fuera del card */
-#calculadora-section table{width:100%;border-collapse:collapse;table-layout:fixed}
-#calculadora-section td,#calculadora-section th{white-space:normal;overflow-wrap:anywhere;word-break:break-word}
-/* Inputs/selects: evitar que se salgan */
-#calculadora-section input,#calculadora-section select{max-width:100%}
-/* Resumen combinado: sin truncado, y el “Total en letras” debe envolver */
-#combined-wrap{max-width:var(--maxw,1200px);margin:14px auto 0;padding:0 12px;overflow:visible}
-#combined-wrap .combined-table{width:100%;table-layout:auto}
-#combined-wrap .combined-table td,#combined-wrap .combined-table th{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;word-break:break-word}
-/* Si tu JS mete el texto en un <small> o clase específica, fuerza wrap */
-#combined-wrap small,#combined-wrap .amount-words,#combined-wrap .total-words{display:block;white-space:normal;overflow-wrap:anywhere;word-break:break-word;line-height:1.25}
-/* Si por alguna razón hay “ellipsis” heredado */
-#combined-wrap *{text-overflow:clip}
-
-
-
-
-
-
-
 /* =========================================================
-   EXP CALC LAYOUT PATCH v2026.01.09-r2
-   Objetivo: 3 calculadoras SIN corte (3→2→1), sin overflow horizontal,
-   cards con misma altura, y resumen sin truncar.
-   Scope: SOLO #calculadora-section (no rompe otras secciones)
+   EXP PATCH (SISTEMAS) v2026.01.09-rX
+   FIX: Panel Integra centrado + mobile correcto + amarillo unificado
+   Scope: SOLO calculadora + pills (no toca videos)
 ========================================================= */
 
-/* 0) Anti-overflow por defecto */
-#calculadora-section,
-#calculadora-section .calc-strip,
-#calculadora-section .calc-row{
-  max-width:100%;
-  overflow:visible;
-}
-#calculadora-section .calc-row > *{min-width:0;} /* clave en grid/flex */
-
-/* 1) Grid RESPONSIVE “real”: auto-fit hace 3→2→1 sin clases has-calc-* */
-#calculadora-section .calc-row{
-  display:grid !important;
-  gap:16px !important;
-  align-items:stretch !important;
-
-  /* La magia: crea tantas columnas como quepan */
-  grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)) !important;
+/* ---------------------------
+  1) LAYOUT CALC: NO romper tu grid existente
+--------------------------- */
+@media(min-width:981px){
+  .page-sistemas #calculadora-section .calc-row{align-items:center!important}
 }
 
-/* 2) Que cada tarjeta sea “stretch” y no se corte su contenido */
-#calculadora-section .calc-container,
-#calculadora-section .placeholder{
+/* Panel “Integra…”: menos aire + contenido centrado */
+.page-sistemas #calc-slot-2.placeholder{
+  padding:0!important;
+  min-height:unset!important;
   height:100%;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
 }
-
-/* 3) Tablas: evitar que empujen el card fuera (causa típica de “corte”) */
-#calculadora-section .calc-container table{
-  width:100%;
-  max-width:100%;
-  table-layout:fixed;                 /* evita expansión por celdas largas */
-}
-#calculadora-section .calc-container th,
-#calculadora-section .calc-container td{
-  overflow-wrap:anywhere;
-  word-break:break-word;
-}
-
-/* Mantén importes legibles (sin romper números) */
-#calculadora-section .calc-container .price,
-#calculadora-section .calc-container .total,
-#calculadora-section .calc-container .monto{
-  white-space:nowrap;
-}
-
-/* 4) Forms: 2 columnas en desktop, 1 en mobile (sin overflow) */
-#calculadora-section .calc-container form{
-  display:grid !important;
-  grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
-  gap:12px !important;
-}
-@media(max-width:760px){
-  #calculadora-section .calc-container form{
-    grid-template-columns:1fr !important;
-  }
-  #calculadora-section .calc-container .instalacion-box{flex-wrap:wrap;}
-}
-
-/* 5) Resumen combinado: nunca truncar, envolver “total en letras” */
-#combined-wrap{
-  max-width:100%;
-  overflow:visible;
-}
-#combined-wrap .combined-table{
-  width:100%;
-  table-layout:auto;
-}
-#combined-wrap .combined-table td,
-#combined-wrap .combined-table th{
-  white-space:normal !important;
-  overflow:visible !important;
-  text-overflow:clip !important;
-  overflow-wrap:anywhere;
-  word-break:break-word;
-}
-#combined-wrap .amount-letter,
-#combined-wrap small,
-#combined-wrap .amount-words,
-#combined-wrap .total-words{
-  display:block;
-  white-space:normal !important;
-  overflow-wrap:anywhere;
-  word-break:break-word;
-  line-height:1.25;
-}
-
-/* 6) PageSpeed: si la calculadora está abajo del fold, permite render diferido */
-@supports(content-visibility:auto){
-  #calculadora-section{content-visibility:auto; contain-intrinsic-size:900px;}
-}
-
-/*=== PATCH: 2 CALCULADORAS = 2 COLUMNAS 50/50 (FULL WIDTH) | v2026.01.09 ===*/
-#calculadora-section .calc-strip{max-width:var(--maxw,1200px);margin:0 auto;padding:0 12px}
-/* Default: auto-fit (3→2→1) */
-#calculadora-section .calc-row{display:grid!important;gap:16px!important;align-items:stretch!important;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))!important}
-#calculadora-section .calc-row>*{min-width:0}
-/* FORZAR: si hay EXACTAMENTE 2 (tu JS pone has-calc-2) => 2 columnas iguales, ocupan todo */
-@media(min-width:981px){
-html.has-calc-2 #calculadora-section .calc-row,
-body.has-calc-2 #calculadora-section .calc-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-/* Cards: mismas alturas y sin “corte” */
-#calculadora-section .calc-container,#calculadora-section .placeholder{height:100%;min-width:0;display:flex;flex-direction:column}
-/* Tablas no empujan el grid */
-#calculadora-section .calc-container table{width:100%;max-width:100%;table-layout:fixed}
-#calculadora-section .calc-container th,#calculadora-section .calc-container td{overflow-wrap:anywhere;word-break:break-word}
-#calculadora-section .calc-container .price,#calculadora-section .calc-container .total,#calculadora-section .calc-container .monto{white-space:nowrap}
-
-/*=== EXP PATCH v2026.01.09-r3 | CALC: centra panel, oculta/activa correcto en mobile, y unifica amarillo CTA+pills ===*/
-
-/* 1) CALC SLOT (panel -15%): centrado vertical + menos aire (desktop y general) */
-@media(min-width:981px){
-  #calculadora-section .calc-row{align-items:center!important} /* centra verticalmente las columnas */
-}
-/* El panel gris (placeholder) más “apretado” y centrado */
-#calc-slot-2.placeholder{padding:0!important;min-height:unset!important}
-#calc-slot-2.placeholder .note{
+.page-sistemas #calc-slot-2.placeholder .note{
   height:100%;
   display:flex!important;
   flex-direction:column!important;
-  justify-content:center!important;   /* centra el contenido dentro del rectángulo */
+  justify-content:center!important;
+  align-items:stretch!important;
   gap:10px!important;
-  padding:14px!important;             /* menos aire */
+  padding:14px!important;
   border-radius:16px!important;
 }
-/* Carrusel de iconos dentro del panel: centrado y sin empujar */
-#calc-slot-2 .icons-carousel{margin:6px
+
+/* Carrusel dentro del panel: compacto y centrado */
+.page-sistemas #calc-slot-2 .icons-carousel{
+  margin:8px 0 0!important;
+  padding:0!important;
+  min-height:unset!important;
+}
+.page-sistemas #calc-slot-2 .icons-wrap{
+  padding:8px 4px!important;
+  gap:12px!important;
+  justify-content:center!important;
+}
+.page-sistemas #calc-slot-2 .sys-icon{min-height:170px!important}
+.page-sistemas #calc-slot-2 .arrowCircle{
+  top:50%!important;
+  transform:translateY(-50%)!important;
+}
+
+/* ---------------------------
+  2) MOBILE: cuando hay 2+ calcs, NO mostrar “Integra…”
+  Requiere: tu JS agregue .has-calc-2 / .has-calc-3 en html o body
+--------------------------- */
+@media(max-width:980px){
+  html.has-calc-2 .page-sistemas #calc-slot-2,
+  body.has-calc-2 .page-sistemas #calc-slot-2,
+  html.has-calc-3 .page-sistemas #calc-slot-2,
+  body.has-calc-3 .page-sistemas #calc-slot-2{display:none!important}
+
+  html.has-calc-2 .page-sistemas #add-more-panel,
+  body.has-calc-2 .page-sistemas #add-more-panel{display:block!important}
+
+  html.has-calc-3 .page-sistemas #add-more-panel,
+  body.has-calc-3 .page-sistemas #add-more-panel{display:none!important}
+}
+
+/* ---------------------------
+  3) AMARILLO UNIFICADO: Pills/BADGES usan el mismo “Compra ahora”
+  (sin tocar tus gradientes de botones)
+--------------------------- */
+.page-sistemas{
+  --exp-amber:#E8AC36; /* Amarillo Expiriti */
+  --exp-amber-ink:#0b1220;
+}
+
+/* Pills: el que hoy sale marino -> amarillo */
+.page-sistemas .pill{
+  background:rgba(232,172,54,.14)!important;
+  border:1px solid rgba(232,172,54,.42)!important;
+  color:rgba(232,238,246,.96)!important;
+}
+html[data-theme="light"] .page-sistemas .pill{
+  color:rgba(11,18,32,.92)!important;
+}
+
+/* Activo: amarillo sólido tipo CTA */
+.page-sistemas .pill.active{
+  background:linear-gradient(180deg,rgba(232,172,54,.96),rgba(232,172,54,.78))!important;
+  border-color:rgba(232,172,54,.75)!important;
+  color:var(--exp-amber-ink)!important;
+  box-shadow:0 0 0 1px rgba(232,172,54,.35),0 12px 28px rgba(0,0,0,.35)!important;
+}
+
+/* Opcional: badges (si quieres igualarlos al amber) */
+.page-sistemas .badge{
+  border-color:rgba(232,172,54,.35)!important;
+  background:rgba(232,172,54,.14)!important;
+}
+html[data-theme="light"] .page-sistemas .badge{
+  border-color:rgba(232,172,54,.35)!important;
+  background:rgba(232,172,54,.10)!important;
+  color:rgba(11,18,32,.92)!important;
+}
