@@ -570,3 +570,118 @@ body.page-sistemas #combined-wrap .combined-summary{
 body.page-sistemas #combined-wrap .cs-head{margin-bottom:14px!important}
 body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
 
+
+
+/* =========================================================
+ Expiriti — PATCH CALC UI/GRID v2026.01.09-rUX
+ - 2 calc: 2 columnas + NO panel Integra + NO hueco blanco
+ - 3 calc: 3 columnas same-row + same-height + tabla scroll
+ - UI: adiós gris plano, glass + colores (verde/morado/azul)
+ - NO barras/stripes arriba (se desactivan)
+ Pegar AL FINAL del main.css (SISTEMAS)
+========================================================= */
+.page-sistemas{--c-green-1:#22c55e;--c-green-2:#14b8a6;--c-purple-1:#a855f7;--c-purple-2:#6366f1;--c-blue-1:#38bdf8;--c-blue-2:#3b82f6;--c-border:rgba(148,163,184,.18);--c-soft:rgba(15,23,42,.22);--c-head:rgba(255,255,255,.06);--c-card:rgba(15,23,42,.28)}
+html[data-theme="light"] .page-sistemas{--c-border:rgba(2,6,23,.12);--c-soft:rgba(2,6,23,.05);--c-head:rgba(2,6,23,.04);--c-card:rgba(255,255,255,.86)}
+
+/* --- 0) Mata barras/stripes viejas (NO líneas arriba) --- */
+.page-sistemas #calc-primary.calc-container::before,.page-sistemas #calc-secondary.calc-container::before,.page-sistemas #calc-tertiary.calc-container::before{display:none!important;content:none!important}
+
+/* --- 1) GRID robusto (evita cortes y “bloques blancos”) --- */
+.page-sistemas #calculadora-section{overflow:visible!important}
+.page-sistemas .calc-strip,.page-sistemas .calc-row{max-width:100%}
+.page-sistemas .calc-row>*{min-width:0!important}
+
+/* Desktop: 1/2/3 en la misma línea cuando aplica */
+@media(min-width:981px){
+  /* base: estira tarjetas */
+  .page-sistemas .calc-row{display:grid!important;gap:14px!important;align-items:stretch!important;justify-content:center!important}
+
+  /* 1 calc: calc + integra (panel) */
+  html:not(.has-calc-2):not(.has-calc-3) .page-sistemas .calc-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;max-width:min(1260px,100%)!important;margin:0 auto!important}
+
+  /* 2 calc: SOLO 2 calculadoras (sin integra) */
+  html.has-calc-2 .page-sistemas .calc-row,body.has-calc-2 .page-sistemas .calc-row{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:min(1260px,100%)!important;margin:0 auto!important}
+  html.has-calc-2 .page-sistemas #calc-slot-2,body.has-calc-2 .page-sistemas #calc-slot-2{display:none!important;height:0!important;padding:0!important;margin:0!important;overflow:hidden!important}
+  /* si tu “add-more-panel” existe, que NO genere hueco */
+  html.has-calc-2 .page-sistemas #add-more-panel,body.has-calc-2 .page-sistemas #add-more-panel{grid-column:1/-1!important;margin-top:12px!important}
+
+  /* 3 calc: 3 calculadoras en una fila (sin integra) */
+  html.has-calc-3 .page-sistemas .calc-row,body.has-calc-3 .page-sistemas .calc-row{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-width:min(1440px,100%)!important;margin:0 auto!important}
+  html.has-calc-3 .page-sistemas #calc-slot-2,body.has-calc-3 .page-sistemas #calc-slot-2{display:none!important;height:0!important;padding:0!important;margin:0!important;overflow:hidden!important}
+  html.has-calc-3 .page-sistemas #add-more-panel,body.has-calc-3 .page-sistemas #add-more-panel{display:none!important}
+
+  /* misma altura real (sin “cortar”): form fijo + tabla scrollea */
+  html.has-calc-2 .page-sistemas .calc-container,body.has-calc-2 .page-sistemas .calc-container,
+  html.has-calc-3 .page-sistemas .calc-container,body.has-calc-3 .page-sistemas .calc-container{height:var(--calc-card-h,560px)!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+  @media(max-width:1180px){
+    html.has-calc-2 .page-sistemas .calc-container,body.has-calc-2 .page-sistemas .calc-container,
+    html.has-calc-3 .page-sistemas .calc-container,body.has-calc-3 .page-sistemas .calc-container{height:var(--calc-card-h-md,540px)!important}
+  }
+  html.has-calc-2 .page-sistemas .calc-container form,body.has-calc-2 .page-sistemas .calc-container form,
+  html.has-calc-3 .page-sistemas .calc-container form,body.has-calc-3 .page-sistemas .calc-container form{flex:0 0 auto!important}
+  html.has-calc-2 .page-sistemas .calc-container table,body.has-calc-2 .page-sistemas .calc-container table,
+  html.has-calc-3 .page-sistemas .calc-container table,body.has-calc-3 .page-sistemas .calc-container table{flex:1 1 auto!important;max-width:100%!important;margin-top:10px!important;display:block!important;overflow:auto!important;-webkit-overflow-scrolling:touch}
+  html.has-calc-2 .page-sistemas .calc-container thead,body.has-calc-2 .page-sistemas .calc-container thead,
+  html.has-calc-3 .page-sistemas .calc-container thead,body.has-calc-3 .page-sistemas .calc-container thead{position:sticky;top:0;z-index:2}
+  /* tablas en block sin desalinearse */
+  html.has-calc-2 .page-sistemas .calc-container thead,html.has-calc-2 .page-sistemas .calc-container tbody,
+  html.has-calc-3 .page-sistemas .calc-container thead,html.has-calc-3 .page-sistemas .calc-container tbody{display:table;width:100%;table-layout:fixed}
+}
+
+/* Mobile: 1 columna siempre, sin Integra cuando hay 2+ */
+@media(max-width:980px){
+  .page-sistemas .calc-row{display:grid!important;grid-template-columns:1fr!important;gap:14px!important}
+  html.has-calc-2 .page-sistemas #calc-slot-2,body.has-calc-2 .page-sistemas #calc-slot-2,
+  html.has-calc-3 .page-sistemas #calc-slot-2,body.has-calc-3 .page-sistemas #calc-slot-2{display:none!important}
+}
+
+/* --- 2) UI de calculadora (glass + colores internos, NO gris plano) --- */
+.page-sistemas .calc-container{position:relative;box-sizing:border-box;border-radius:16px!important;border:1px solid var(--c-border)!important;background:linear-gradient(180deg,rgba(17,23,35,.78),rgba(11,18,32,.58))!important}
+html[data-theme="light"] .page-sistemas .calc-container{background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(245,247,255,.92))!important}
+
+/* acento suave dentro (sin barras): un “halo” arriba-izq */
+.page-sistemas #calc-primary.calc-container{background:
+  radial-gradient(820px 360px at 10% 0%,rgba(34,197,94,.16),transparent 55%),
+  radial-gradient(820px 360px at 90% 0%,rgba(20,184,166,.10),transparent 55%),
+  linear-gradient(180deg,rgba(17,23,35,.78),rgba(11,18,32,.58))!important}
+.page-sistemas #calc-secondary.calc-container{background:
+  radial-gradient(820px 360px at 10% 0%,rgba(168,85,247,.16),transparent 55%),
+  radial-gradient(820px 360px at 90% 0%,rgba(99,102,241,.10),transparent 55%),
+  linear-gradient(180deg,rgba(17,23,35,.78),rgba(11,18,32,.58))!important}
+.page-sistemas #calc-tertiary.calc-container{background:
+  radial-gradient(820px 360px at 10% 0%,rgba(56,189,248,.16),transparent 55%),
+  radial-gradient(820px 360px at 90% 0%,rgba(59,130,246,.10),transparent 55%),
+  linear-gradient(180deg,rgba(17,23,35,.78),rgba(11,18,32,.58))!important}
+html[data-theme="light"] .page-sistemas #calc-primary.calc-container,
+html[data-theme="light"] .page-sistemas #calc-secondary.calc-container,
+html[data-theme="light"] .page-sistemas #calc-tertiary.calc-container{background:
+  radial-gradient(820px 360px at 10% 0%,rgba(34,197,94,.14),transparent 55%),
+  radial-gradient(820px 360px at 90% 0%,rgba(59,130,246,.10),transparent 55%),
+  linear-gradient(180deg,rgba(255,255,255,.94),rgba(245,247,255,.92))!important}
+
+/* inputs más “premium” */
+.page-sistemas .calc-container select,.page-sistemas .calc-container input[type="number"],.page-sistemas .calc-container input[type="text"]{border-radius:12px!important;border:1px solid var(--c-border)!important;background:rgba(7,10,16,.22)!important}
+html[data-theme="light"] .page-sistemas .calc-container select,
+html[data-theme="light"] .page-sistemas .calc-container input[type="number"],
+html[data-theme="light"] .page-sistemas .calc-container input[type="text"]{background:rgba(255,255,255,.92)!important}
+
+/* tabla: quita gris plano, usa head suave */
+.page-sistemas .calc-container table{border:1px solid var(--c-border)!important;border-radius:14px!important;background:rgba(15,23,42,.18)!important}
+html[data-theme="light"] .page-sistemas .calc-container table{background:rgba(255,255,255,.78)!important}
+.page-sistemas .calc-container thead th{background:var(--c-head)!important;font-weight:900}
+.page-sistemas .calc-container td,.page-sistemas .calc-container th{border-bottom:1px solid rgba(148,163,184,.12)!important}
+html[data-theme="light"] .page-sistemas .calc-container td,
+html[data-theme="light"] .page-sistemas .calc-container th{border-bottom:1px solid rgba(2,6,23,.10)!important}
+
+/* total: firme, limpio */
+.page-sistemas .calc-container .total,.page-sistemas .calc-container .monto,.page-sistemas .calc-container .price{font-weight:950}
+
+/* --- 3) Panel Integra (solo cuando hay 1 calc): centrado y sin “aire” --- */
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2.placeholder{border:1px solid rgba(148,163,184,.16)!important;background:linear-gradient(180deg,rgba(15,23,42,.18),rgba(11,18,32,.12))!important}
+html[data-theme="light"] html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2.placeholder{background:linear-gradient(180deg,rgba(255,255,255,.82),rgba(245,247,255,.80))!important}
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-carousel{padding:0 46px!important}
+html:not(.has-calc-2):not(.has-calc-3) .page-sistemas #calc-slot-2 .icons-wrap{scroll-padding-left:24px;scroll-padding-right:24px}
+
+/* --- 4) Si algún “calc-empty” te deja bloque blanco, no debe reservar espacio --- */
+html.has-calc-2 .page-sistemas .calc-empty,body.has-calc-2 .page-sistemas .calc-empty,
+html.has-calc-3 .page-sistemas .calc-empty,body.has-calc-3 .page-sistemas .calc-empty{min-height:0!important;padding:0!important;margin:0!important}
