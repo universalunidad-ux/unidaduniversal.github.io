@@ -1,5 +1,7 @@
 /* =========================================================
- Expiriti - main.js (FINAL) v2026.01.08
+ Expiriti - main.js (FINAL) v2026.01.08-r1
+ - FIX CRÍTICO: GH Pages project-site BASE real (meta expiriti-base)
+ - abs(): reescribe paths con "/" hacia BASE (evita /PARTIALS roto)
  - Partials robustos + normalize rutas (GH user-site + subcarpetas)
  - YouTube manager: lazy + pause real + sin overlays duplicados
  - VIDEOS: agrupar en slides de 2 ANTES de inicializar .carousel
@@ -13,38 +15,56 @@
 const D=document,W=window;
 
 /* =========================================================
- 0) PARTIALS + NORMALIZACIÓN
+ 0) BASE + PARTIALS + NORMALIZACIÓN
 ========================================================= */
-(()=>{const inSub=/\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname),rel=inSub?"../":"";
-const isGhUserSite=location.hostname==="unidaduniversal.github.io"||location.hostname==="universalunidad-ux.github.io";
-const headerURL=isGhUserSite?"/PARTIALS/global-header.html":(rel+"PARTIALS/global-header.html");
-const footerURL=isGhUserSite?"/PARTIALS/global-footer.html":(rel+"PARTIALS/global-footer.html");
-const abs=p=>{if(!p)return p;if(/^https?:\/\//i.test(p))return p;if(/^(mailto:|tel:|data:)/i.test(p))return p;
-if(p.startsWith("/"))return p;return (isGhUserSite?("/"+p):(rel+p)).replace(/\/+/g,"/")};
+(()=>{const isGh=/\.github\.io$/i.test(location.hostname);
+const metaBase=D.querySelector('meta[name="expiriti-base"]')?.getAttribute("content")||"";
+const cleanBase=b=>{b=(b||"").trim();if(!b)return"";if(!b.startsWith("/"))b="/"+b;return b.endsWith("/")?b:(b+"/")};
+let BASE=cleanBase(metaBase);
+if(isGh&&!BASE){/* infer simple: /REPO/... => BASE=/REPO/ */
+  const seg=(location.pathname||"/").split("/").filter(Boolean)[0]||"";
+  BASE=seg?("/"+seg+"/"):"/";
+}
+if(!BASE)BASE="/";
+const inSub=/\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
+const rel=inSub?"../":"";
+const abs=p=>{if(!p)return p;
+  if(/^https?:\/\//i.test(p))return p;
+  if(/^(mailto:|tel:|data:|blob:|javascript:)/i.test(p))return p;
+  /* si empieza con "/" en GH project-site, debe mapearse a BASE */
+  if(p.startsWith("/")) return (isGh?(BASE+p.slice(1)):p).replace(/\/+/g,"/");
+  /* relativo normal */
+  return (isGh?(BASE+p):(rel+p)).replace(/\/+/g,"/");
+};
+const headerURL=abs("PARTIALS/global-header.html");
+const footerURL=abs("PARTIALS/global-footer.html");
+
 const normalize=(root=D)=>{
-root.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{const ds=img.getAttribute("data-src");if(!ds)return;img.src=abs(ds);img.style.opacity="1"});
-root.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{const dh=a.getAttribute("data-href");if(!dh)return;const [path,hash]=dh.split("#");a.href=abs(path||"")+(hash?("#"+hash):"")});
-root.querySelectorAll(".js-img[data-src]").forEach(img=>{const ds=img.getAttribute("data-src");if(!ds)return;img.src=abs(ds)});
-root.querySelectorAll(".js-link[data-href]").forEach(a=>{const dh=a.getAttribute("data-href");if(!dh)return;const [path,hash]=dh.split("#");a.href=abs(path||"")+(hash?("#"+hash):"")});
-const y=(root.getElementById&&root.getElementById("gf-year"))||D.getElementById("gf-year")||(root.getElementById&&root.getElementById("year"))||D.getElementById("year");
-if(y)y.textContent=(new Date).getFullYear();
+  root.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{const ds=img.getAttribute("data-src");if(!ds)return;img.src=abs(ds);img.style.opacity="1"});
+  root.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{const dh=a.getAttribute("data-href");if(!dh)return;const [path,hash]=dh.split("#");a.href=abs(path||"")+(hash?("#"+hash):"")});
+  root.querySelectorAll(".js-img[data-src]").forEach(img=>{const ds=img.getAttribute("data-src");if(!ds)return;img.src=abs(ds)});
+  root.querySelectorAll(".js-link[data-href]").forEach(a=>{const dh=a.getAttribute("data-href");if(!dh)return;const [path,hash]=dh.split("#");a.href=abs(path||"")+(hash?("#"+hash):"")});
+  const y=(root.getElementById&&root.getElementById("gf-year"))||D.getElementById("gf-year")||(root.getElementById&&root.getElementById("year"))||D.getElementById("year");
+  if(y)y.textContent=(new Date).getFullYear();
 };
+
 const loadPartials=async()=>{
-const hp=D.getElementById("header-placeholder"),fp=D.getElementById("footer-placeholder");
-if(!hp&&!fp){normalize(D);return}
-const noCache=/(?:\?|&)nocache=1\b/.test(location.search);
-const fetchOpts=noCache?{cache:"no-store"}:{cache:"force-cache"};
-try{
-if(hp){const hr=await fetch(headerURL,fetchOpts);hr.ok?hp.outerHTML=await hr.text():console.warn("[partials] header no cargó:",headerURL,hr.status)}
-if(fp){const fr=await fetch(footerURL,fetchOpts);fr.ok?fp.outerHTML=await fr.text():console.warn("[partials] footer no cargó:",footerURL,fr.status)}
-}catch(e){console.warn("[partials] error cargando parciales",e)}
-normalize(D);
-if(typeof W.initGlobalHeader==="function"){try{W.initGlobalHeader()}catch(e){console.warn("initGlobalHeader error",e)}}
+  const hp=D.getElementById("header-placeholder"),fp=D.getElementById("footer-placeholder");
+  if(!hp&&!fp){normalize(D);return}
+  const noCache=/(?:\?|&)nocache=1\b/.test(location.search);
+  const fetchOpts=noCache?{cache:"no-store"}:{cache:"force-cache"};
+  try{
+    if(hp){const hr=await fetch(headerURL,fetchOpts);hr.ok?hp.outerHTML=await hr.text():console.warn("[partials] header no cargó:",headerURL,hr.status)}
+    if(fp){const fr=await fetch(footerURL,fetchOpts);fr.ok?fp.outerHTML=await fr.text():console.warn("[partials] footer no cargó:",footerURL,fr.status)}
+  }catch(e){console.warn("[partials] error cargando parciales",e)}
+  normalize(D);
+  if(typeof W.initGlobalHeader==="function"){try{W.initGlobalHeader()}catch(e){console.warn("initGlobalHeader error",e)}}
 };
+
 const boot=()=>loadPartials();
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
 W.addEventListener("pageshow",()=>{try{normalize(D)}catch{}});
-W.__EXP_ABS__=abs;
+W.__EXP_ABS__=abs;W.__EXP_BASE__=BASE;
 })();
 
 /* =========================================================
@@ -60,23 +80,23 @@ W.QA||(W.QA=(s,ctx=D)=>Array.from(ctx.querySelectorAll(s)));
  1.5) CATALOGO SISTEMAS (GLOBAL SIEMPRE)
 ========================================================= */
 (()=>{W.CATALOG_SISTEMAS=W.CATALOG_SISTEMAS||[
-{name:"CONTPAQi Contabilidad",img:"../IMG/contabilidadsq.webp"},
-{name:"CONTPAQi Bancos",img:"../IMG/bancossq.webp"},
-{name:"CONTPAQi Nóminas",img:"../IMG/nominassq.webp"},
-{name:"CONTPAQi XML en Línea",img:"../IMG/xmlsq.webp",noDiscount:!0},
-{name:"CONTPAQi Comercial PRO",img:"../IMG/comercialprosq.webp"},
-{name:"CONTPAQi Comercial PREMIUM",img:"../IMG/comercialpremiumsq.webp"},
-{name:"CONTPAQi Factura Electrónica",img:"../IMG/facturasq.webp"}
-]})();
+{name:"CONTPAQi Contabilidad",img:"IMG/contabilidadsq.webp"},
+{name:"CONTPAQi Bancos",img:"IMG/bancossq.webp"},
+{name:"CONTPAQi Nóminas",img:"IMG/nominassq.webp"},
+{name:"CONTPAQi XML en Línea",img:"IMG/xmlsq.webp",noDiscount:!0},
+{name:"CONTPAQi Comercial PRO",img:"IMG/comercialprosq.webp"},
+{name:"CONTPAQi Comercial PREMIUM",img:"IMG/comercialpremiumsq.webp"},
+{name:"CONTPAQi Factura Electrónica",img:"IMG/facturasq.webp"}
+].map(x=>({ ...x, img:(W.__EXP_ABS__?W.__EXP_ABS__(x.img):x.img) }))})();
 
 /* =========================================================
  2) VIDEOS: AGRUPAR EN SLIDES DE 2 (ANTES DEL CARRUSEL)
 ========================================================= */
 (()=>{"use strict";const q=(s,c=D)=>c.querySelector(s),qa=(s,c=D)=>Array.from(c.querySelectorAll(s));
 const groupVideos2=()=>{const car=D.getElementById("carouselVideos");if(!car||car.dataset.grp2==="1")return;
-const track=q(".carousel-track",car);if(!track)return;
+const track=q(".carousel-track",car);if(!track){car.dataset.grp2="1";return}
 if(qa(":scope > .carousel-slide",track).length){car.dataset.grp2="1";return}
-const kids=qa(":scope > *",track).filter(n=>n.nodeType===1);if(!kids.length){car.dataset.grp2="1";return}
+const kids=qa(":scope > *",track).filter(n=>n&&n.nodeType===1);if(!kids.length){car.dataset.grp2="1";return}
 const items=kids.filter(n=>!n.classList.contains("carousel-nav")&&!n.classList.contains("yt-titlesbar"));
 track.innerHTML="";
 for(let i=0;i<items.length;i+=2){const slide=D.createElement("div");slide.className="carousel-slide vid-slide";
@@ -85,16 +105,16 @@ car.dataset.grp2="1";
 };
 const boot=()=>groupVideos2();
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
-W.addEventListener("load",boot);W.addEventListener("pageshow",boot);
-new MutationObserver(()=>groupVideos2()).observe(D.documentElement,{childList:!0,subtree:!0});
+W.addEventListener("load",boot,{passive:!0});W.addEventListener("pageshow",boot,{passive:!0});
+/* FIX perf: no observes todo el doc si no hay carouselVideos */
+if(D.getElementById("carouselVideos")) new MutationObserver(()=>groupVideos2()).observe(D.getElementById("carouselVideos"),{childList:!0,subtree:!0});
 })();
 
 /* =========================================================
  3) YOUTUBE MANAGER (pause real + lazy + hook iframes)
 ========================================================= */
 (()=>{if(W.__EXP_YT_MGR__)return;W.__EXP_YT_MGR__=1;W.exPlayers=W.exPlayers||[];
-W.pauseAllYTIframes=function(except){(W.exPlayers||[]).forEach(p=>{if(!p||p===except||typeof p.pauseVideo!=="function")return;
-try{const s=p.getPlayerState();if(s===1||s===3)p.pauseVideo()}catch{}})};
+W.pauseAllYTIframes=function(except){(W.exPlayers||[]).forEach(p=>{if(!p||p===except||typeof p.pauseVideo!=="function")return;try{const s=p.getPlayerState();if(s===1||s===3)p.pauseVideo()}catch{}})};
 const onState=e=>{if(e&&e.data===1)W.pauseAllYTIframes(e.target)};
 const ensureAPI=()=>{if(W.__EXP_YT_API_REQ__)return;W.__EXP_YT_API_REQ__=1;const s=D.createElement("script");s.src="https://www.youtube.com/iframe_api";D.head.appendChild(s)};
 const whenYT=cb=>{if(W.YT&&W.YT.Player){cb();return}ensureAPI();let t=0;const it=setInterval(()=>{t++;if(W.YT&&W.YT.Player){clearInterval(it);cb();return}if(t>80)clearInterval(it)},100)};
@@ -171,9 +191,11 @@ const slides=track?[...track.querySelectorAll(":scope > .carousel-slide")]:[];
 if(!slides.length)return;
 const slide=slides[idx]||slides[0],titles=slideVideoTitles(slide),a=titles[0]||"",b=titles[1]||"",v=car._vbar;if(!v)return;
 v.left.textContent=a;v.right.textContent=b;v.right.style.display=b?"":"none";v.bar.style.gridTemplateColumns=b?"1fr 1fr":"1fr"};
+
 const initCar=(root,onChange)=>{const track=root.querySelector(".carousel-track");if(!track||root.dataset.cInit==="1")return;root.dataset.cInit="1";
 const prev=root.querySelector(".arrowCircle.prev"),next=root.querySelector(".arrowCircle.next");
-const slides=[...track.querySelectorAll(":scope > .carousel-slide")],len=slides.length;let dots=syncDots(root,len);hideUI(root,len);
+const slides=[...track.querySelectorAll(":scope > .carousel-slide")],len=slides.length;
+let dots=syncDots(root,len);hideUI(root,len);
 let i=0,paint=n=>dots.forEach((d,di)=>d.classList.toggle("active",di===n));
 const set=(n,beh)=>{i=(n+len)%len;paint(i);track.scrollTo({left:track.clientWidth*i,behavior:beh||"smooth"});onChange&&onChange(i)};
 if(len<=1){paint(0);onChange&&onChange(0);return}
@@ -182,8 +204,9 @@ prev&&prev.addEventListener("click",()=>{pause();set(i-1)});
 next&&next.addEventListener("click",()=>{pause();set(i+1)});
 track.addEventListener("scroll",()=>{if(!track.clientWidth)return;const n=Math.round(track.scrollLeft/track.clientWidth);
 if(n!==i){i=Math.max(0,Math.min(len-1,n));paint(i);onChange&&onChange(i)}});
-W.addEventListener("resize",()=>set(i,"auto"));
+W.addEventListener("resize",()=>set(i,"auto"),{passive:!0});
 set(0,"auto")};
+
 const boot=()=>{D.querySelectorAll(".carousel").forEach(car=>{
 const titles=titlesFor(car);
 if(titles&&titles.length&&car.id!=="carouselVideos"){const aside=car.closest("aside");if(aside){const h=aside.querySelector(":scope > h4.title-gradient");if(h)h.style.display="none"}}
@@ -210,7 +233,7 @@ D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):b
 (()=>{D.querySelectorAll(".listSlider").forEach(w=>{const t=w.querySelector(".listTrack"),p=w.querySelector(".arrowCircle.prev"),n=w.querySelector(".arrowCircle.next");
 if(!t||!p||!n)return;let i=0,len=t.children.length||1;
 const go=x=>{W.pauseAllYTIframes&&W.pauseAllYTIframes();i=(x+len)%len;t.scrollTo({left:w.clientWidth*i,behavior:"smooth"})};
-p.addEventListener("click",()=>go(i-1));n.addEventListener("click",()=>go(i+1));W.addEventListener("resize",()=>go(i));
+p.addEventListener("click",()=>go(i-1));n.addEventListener("click",()=>go(i+1));W.addEventListener("resize",()=>go(i),{passive:!0});
 })})();
 
 /* =========================================================
@@ -310,14 +333,14 @@ refresh();showMore();
 const kick=()=>{try{bootCalc()}catch(e){console.warn("[calc] boot error",e)}};
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",kick,{once:!0}):kick();
 new MutationObserver(()=>{if(D.documentElement.dataset.calcHooksInit!=="1")kick()}).observe(D.documentElement,{childList:!0,subtree:!0});
-W.addEventListener("pageshow",kick);
+W.addEventListener("pageshow",kick,{passive:!0});
 })();
 
 /* =========================================================
  10.5) ICONS CAROUSEL (-15%) — POST-CALC + GATEADO
 ========================================================= */
 (()=>{const enhanceOne=wrap=>{if(!wrap||wrap.dataset.icInit==="1")return;
-if(!wrap.querySelector(".sys-icon"))return; /* gate: no inicializar vacío */
+if(!wrap.querySelector(".sys-icon"))return;
 wrap.dataset.icInit="1";
 const slot=wrap.closest("#calc-slot-2,.calc-container,.placeholder")||wrap.parentElement;
 const note=(slot&&slot.querySelector)?slot.querySelector(".note"):null;if(note)note.classList.add("note-center");
@@ -336,8 +359,7 @@ paint();W.addEventListener("resize",paint,{passive:!0});new MutationObserver(pai
 };
 const boot=()=>{enhanceOne(D.getElementById("icons-sec-sys"));enhanceOne(D.getElementById("icons-third-sys"))};
 D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
-/* reintento cuando calc repinta botones */
-W.addEventListener("calc-render",boot);W.addEventListener("calc-recompute",boot);
+W.addEventListener("calc-render",boot,{passive:!0});W.addEventListener("calc-recompute",boot,{passive:!0});
 })();
 
 /* =========================================================
@@ -384,7 +406,7 @@ const g=D.createElement("div");g.className="controls-grid";g.append(bLic,bTipo,b
 const target=D.getElementById("calc-primary");if(!target)return;
 const run=()=>{const c=D.querySelector(".calc-container")||target;if(!c||c.querySelector("form.calc-form"))return;compact(c)};
 run();requestAnimationFrame(run);new MutationObserver(run).observe(target,{childList:!0,subtree:!0});
-W.addEventListener("calc-recompute",run);W.addEventListener("calc-render",run);setTimeout(run,500);setTimeout(run,1200);
+W.addEventListener("calc-recompute",run,{passive:!0});W.addEventListener("calc-render",run,{passive:!0});setTimeout(run,500);setTimeout(run,1200);
 })();
 
 /* =========================================================
@@ -407,7 +429,22 @@ resetScroll:()=>{el.scrollTo({left:0,behavior:"auto"});console.log("✅ scrollLe
 /* =========================================================
  13) TOC (FIX “no abre”)
 ========================================================= */
-(()=>{const e=document.getElementById("toc");if(!e)return;const t=document.getElementById("tocToggle")||e.querySelector(".toc-toggle"),n=e.querySelector(".toc-close"),c=Array.from(e.querySelectorAll("a[href^='#']")),o="open",r="collapsed",i=()=>e.classList.contains(o)&&!e.classList.contains(r),s=a=>{e.classList.toggle(o,!!a),e.classList.toggle(r,!a),e.setAttribute("aria-hidden",a?"false":"true"),t&&t.setAttribute("aria-expanded",a?"true":"false")},l=()=>s(!0),d=()=>s(!1),u=()=>i()?d():l();s(!e.classList.contains(r)),t&&t.addEventListener("click",a=>{a.preventDefault(),a.stopPropagation(),u()},{passive:!1}),n&&n.addEventListener("click",a=>{a.preventDefault(),a.stopPropagation(),d()},{passive:!1}),c.forEach(a=>a.addEventListener("click",d,{passive:!0})),document.addEventListener("keydown",a=>{"Escape"===a.key&&d()}),document.addEventListener("click",a=>{i()&&(e.contains(a.target)||(t&&t.contains(a.target)||d()))})})();
+(()=>{const e=D.getElementById("toc");if(!e)return;
+const t=D.getElementById("tocToggle")||e.querySelector(".toc-toggle"),n=e.querySelector(".toc-close"),c=Array.from(e.querySelectorAll("a[href^='#']"));
+const O="open",R="collapsed",isOpen=()=>e.classList.contains(O)&&!e.classList.contains(R);
+const set=a=>{e.classList.toggle(O,!!a);e.classList.toggle(R,!a);e.setAttribute("aria-hidden",a?"false":"true");t&&t.setAttribute("aria-expanded",a?"true":"false")};
+const open=()=>set(!0),close=()=>set(!1),toggle=()=>isOpen()?close():open();
+set(!e.classList.contains(R));
+t&&t.addEventListener("click",ev=>{ev.preventDefault();ev.stopPropagation();toggle()},{passive:!1});
+n&&n.addEventListener("click",ev=>{ev.preventDefault();ev.stopPropagation();close()},{passive:!1});
+c.forEach(a=>a.addEventListener("click",close,{passive:!0}));
+D.addEventListener("keydown",ev=>{if(ev.key==="Escape")close()});
+D.addEventListener("click",ev=>{if(!isOpen())return;const trg=ev.target;
+if(e.contains(trg))return;
+if(t&&t.contains(trg))return;
+close();
+});
+})();
 
 /* =========================================================
  14) reel-fit (OPCIONAL) — gateado
