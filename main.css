@@ -878,7 +878,7 @@ html[data-theme="light"] .page-sistemas .reel-title.active{display:block}
 }
 
 /* wrapper que JS inyecta */
-.page-sistemas .reel-title .marquee{
+.page-sistemas .reel-title .__mqTrack{
   display:inline-flex;
   gap:32px;
   will-change:transform;
@@ -891,14 +891,14 @@ html[data-theme="light"] .page-sistemas .reel-title.active{display:block}
 }
 
 /* solo cuando NO cabe */
-.page-sistemas .reel-title.is-marquee .marquee{
+.page-sistemas .reel-title.is-marquee .__mqTrack{
   animation:reel-marquee linear infinite;
   animation-duration:var(--mq-dur,12s);
 }
 
 /* pausa en hover (desktop UX) */
 @media (hover:hover){
-  .page-sistemas .reel-title.is-marquee:hover .marquee{
+  .page-sistemas .reel-title.is-marquee:hover .__mqTrack{
     animation-play-state:paused;
   }
 }
