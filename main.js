@@ -27,16 +27,22 @@ TRY("base+partials",()=>{
   }
   if(!BASE)BASE="/";
 
-  const inSub=/\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
+   const inSub=/\/(SISTEMAS|SERVICIOS)\//i.test(location.pathname);
   const rel=inSub?"../":"";
 
   const abs=p=>{
-    if(!p)return p;
+    if(!p) return p;
     if(/^https?:\/\//i.test(p))return p;
     if(/^(mailto:|tel:|data:|blob:|javascript:)/i.test(p))return p;
+
+    // ✅ NUEVO: si ya es relativo explícito, no lo “dobles”
+    if(p.startsWith("../") || p.startsWith("./")) return p.replace(/\/+/g,"/");
+
     if(p.startsWith("/")) return (isGh?(BASE+p.slice(1)):p).replace(/\/+/g,"/");
     return (isGh?(BASE+p):(rel+p)).replace(/\/+/g,"/");
   };
+
+
 
   const headerURL=abs("PARTIALS/global-header.html");
   const footerURL=abs("PARTIALS/global-footer.html");
@@ -492,7 +498,7 @@ TRY("calc_hooks",()=>{
       secondary.className="calc-container";
       secondary.setAttribute("aria-label","Calculadora secundaria");
       secondary.style.display="block";
-      slot2.insertAdjacentElement("afterend",secondary);
+slot2.insertAdjacentElement("beforebegin", secondary);
       return secondary;
     };
 
@@ -558,6 +564,28 @@ TRY("calc_hooks",()=>{
       row&&row.classList.remove("has-three");
       if(addMore) addMore.style.display="";
 
+const prevSys = app?.dataset.system;
+if(app) app.dataset.system = sys;
+
+try{
+  if(W.CalculadoraContpaqi?.setSecondarySystem){
+    W.CalculadoraContpaqi.setSecondarySystem(sys,{
+      secondarySelector:"#calc-secondary",
+      combinedSelector:"#combined-wrap",
+      onCombined:renderCombined
+    });
+  } else if(W.CalculadoraContpaqi?.init){
+    W.CalculadoraContpaqi.init({
+      systemName: sys,
+      primarySelector:"#calc-secondary",
+      combinedSelector:"#combined-wrap"
+    });
+  }
+} finally {
+  if(app && prevSys!=null) app.dataset.system = prevSys;
+}
+
+     
       let painted=false;
       try{
         if(W.CalculadoraContpaqi?.setSecondarySystem){
