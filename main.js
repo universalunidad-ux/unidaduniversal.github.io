@@ -991,4 +991,6 @@ function boot(){
 D.readyState==="loading"?addEventListener("DOMContentLoaded",boot,{once:true}):boot();
 addEventListener("pageshow",boot);
 })();
+      })(); /* ← CIERRE DEL IIFE PRINCIPAL */
+
 
