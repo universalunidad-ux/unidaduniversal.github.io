@@ -600,3 +600,169 @@ html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle{
 html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle:hover{
   background:var(--ex-red)!important;border-color:var(--ex-red)!important;color:#fff!important
 }
+
+
+
+/* =========================================================
+ Expiriti — CALC FINAL PATCH v2026.01.09-final
+ - FIX CRÍTICO: tablas NO se cortan (scroll interno + thead sticky)
+ - 3 columnas: altura pareja SIN perder filas (IVA/Subtotal/Total)
+ - Colores:
+   * Header Concepto/Importe: VERDE + glass suave
+   * Total: VERDE + glass suave
+   * Importes (tbody): sólido (sin glass/gradiente)
+   * Instalación: AMARILLO Expiriti sólido
+   * Carrusel “Integra…”: ROJO sólido (sin degradados)
+ - Fix: padding/márgenes (labels/inputs no pegados)
+========================================================= */
+:root{--ex-green:#149997;--ex-green2:#1bb3ad;--ex-yellow:#e9aa19;--ex-red:#fa5262;--ex-ink:rgba(11,18,32,.92);--ex-line:rgba(2,6,23,.10)}
+
+/* ===== 0) Tarjeta calculadora: padding real y sin recortes raros ===== */
+html[data-theme="light"] .page-sistemas .calc-container{
+  background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;border-radius:18px!important;
+  box-shadow:0 14px 34px rgba(2,6,23,.08)!important;
+  padding:14px!important; /* <- esto arregla lo “pegado” */
+  overflow:hidden!important; /* <- se necesita cuando hay scroll interno */
+  display:flex!important;flex-direction:column!important;min-width:0!important
+}
+
+/* Título (h4) sin tocar tu HTML */
+html[data-theme="light"] .page-sistemas .calc-container>h4{
+  margin:0 0 10px!important;padding:0 2px!important;font-weight:950!important;letter-spacing:.01em!important;color:var(--ex-ink)!important
+}
+
+/* ===== 1) Form: que no se “pegue” a bordes, y que permita el scroll de la tabla ===== */
+.page-sistemas .calc-container form{margin:0!important;padding:0 2px!important;flex:0 0 auto!important;min-width:0!important}
+.page-sistemas .calc-container label{margin-top:8px!important}
+.page-sistemas .calc-container .inst-wrap{min-width:0!important}
+
+/* ===== 2) Instalación: AMARILLO Expiriti sólido ===== */
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box{
+  border:1px solid rgba(233,170,25,.40)!important;
+  background:rgba(233,170,25,.18)!important;
+  border-radius:14px!important
+}
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[type="checkbox"]{accent-color:var(--ex-yellow)}
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box strong{color:rgba(11,18,32,.92)!important}
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box .inst-hint{color:rgba(11,18,32,.78)!important}
+
+/* ===== 3) Tabla base ===== */
+html[data-theme="light"] .page-sistemas .calc-container table{
+  width:100%!important;max-width:100%!important;margin:10px 0 0!important;
+  border-collapse:separate!important;border-spacing:0!important;
+  border:1px solid rgba(2,6,23,.10)!important;border-radius:16px!important;
+  background:#fff!important;overflow:hidden!important;
+  flex:1 1 auto!important;min-height:0!important; /* clave para que el scroll funcione en flex */
+}
+
+/* Header: VERDE con glass suave (solo header, no los importes) */
+html[data-theme="light"] .page-sistemas .calc-container thead th{
+  padding:12px 14px!important;font-weight:950!important;color:#fff!important;text-align:left!important;
+  background:rgba(20,153,151,.92)!important;
+  border-bottom:1px solid rgba(255,255,255,.22)!important;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)
+}
+html[data-theme="light"] .page-sistemas .calc-container thead th:last-child{text-align:right!important}
+
+/* Body: limpio (sin gradientes/glass) */
+html[data-theme="light"] .page-sistemas .calc-container tbody td{
+  padding:10px 12px!important;color:var(--ex-ink)!important;
+  background:#fff!important;border-bottom:1px solid rgba(2,6,23,.08)!important
+}
+html[data-theme="light"] .page-sistemas .calc-container tbody tr:last-child td{border-bottom:none!important}
+
+/* Importes (tbody): sólido SIN glass/gradiente */
+html[data-theme="light"] .page-sistemas .calc-container tbody td:last-child{
+  text-align:right!important;white-space:nowrap!important;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1,"lnum" 1;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  background:#fff!important /* <- explícito: nada de color/velo */
+}
+
+/* Ancho estable de la columna Importe (evita brincos por “−” o “% / $”) */
+.page-sistemas .calc-container thead th:last-child,
+.page-sistemas .calc-container tbody td:last-child{min-width:170px}
+@media(max-width:420px){
+  .page-sistemas .calc-container thead th:last-child,
+  .page-sistemas .calc-container tbody td:last-child{min-width:150px}
+}
+
+/* Total: VERDE con glass suave (fila completa) */
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td{
+  background:rgba(20,153,151,.92)!important;color:#fff!important;font-weight:950!important;
+  border-bottom:none!important;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)
+}
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td:last-child,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td:last-child,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td:last-child{color:#fff!important}
+
+/* ===== 4) FIX CRÍTICO: cuando hay 2 o 3 calculadoras en desktop, altura pareja + tabla con scroll interno ===== */
+@media(min-width:981px){
+  /* Mantén tu altura pareja, pero asegúrate que la tabla “quepa” con scroll */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container{
+    height:var(--calc-card-h,560px)!important;
+    display:flex!important;flex-direction:column!important;min-height:0!important
+  }
+  @media(max-width:1180px){
+    .page-sistemas #calc-row[data-cols="2"] .calc-container,
+    .page-sistemas #calc-row[data-cols="3"] .calc-container{height:var(--calc-card-h-md,540px)!important}
+  }
+
+  /* La tabla ocupa el “resto” y scrollea */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container table,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container table{
+    flex:1 1 auto!important;
+    display:block!important; /* habilita overflow */
+    overflow:auto!important;
+    -webkit-overflow-scrolling:touch;
+    min-height:0!important
+  }
+
+  /* Sticky header dentro del scroll del table (funciona bien con display:block) */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container thead th,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container thead th{
+    position:sticky!important;top:0!important;z-index:3!important
+  }
+
+  /* Mantén layout de tabla usable al convertirla a block */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container thead,
+  .page-sistemas #calc-row[data-cols="2"] .calc-container tbody,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container thead,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container tbody{
+    display:table!important;width:100%!important;table-layout:fixed!important
+  }
+}
+
+/* ===== 5) Carrusel/upsell “Integra…”: ROJO sólido, SIN degradados/glass ===== */
+.page-sistemas .placeholder{background:transparent!important;border:0!important;padding:0!important;min-height:unset!important}
+html[data-theme="light"] .page-sistemas .placeholder .note{
+  background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;border-radius:18px!important;
+  box-shadow:0 14px 34px rgba(2,6,23,.08)!important;padding:14px!important
+}
+html[data-theme="light"] .page-sistemas #calc-slot-2 .note strong,
+html[data-theme="light"] .page-sistemas #add-more-panel .note strong{
+  display:block!important;margin:0 0 8px!important;padding:12px 14px!important;border-radius:16px!important;
+  background:var(--ex-red)!important;color:#fff!important;text-align:center!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important
+}
+
+/* Tiles de sistemas (panel derecho): blancos limpios, SIN gradiente */
+html[data-theme="light"] .page-sistemas .sys-icon{
+  background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;border-radius:16px!important;
+  box-shadow:0 12px 26px rgba(2,6,23,.08)!important
+}
+/* Si el nombre del sistema está dentro de <strong> (como en tu CSS) lo dejamos limpio */
+html[data-theme="light"] .page-sistemas .sys-icon strong{color:rgba(11,18,32,.92)!important}
+
+/* Flechas limpias + hover rojo sólido */
+html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle{
+  background:#fff!important;border-color:rgba(2,6,23,.14)!important;color:rgba(11,18,32,.92)!important;
+  box-shadow:0 12px 26px rgba(2,6,23,.10)!important
+}
+html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle:hover{
+  background:var(--ex-red)!important;border-color:var(--ex-red)!important;color:#fff!important
+}
