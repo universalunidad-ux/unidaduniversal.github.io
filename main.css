@@ -840,3 +840,88 @@ html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle:hover{
 ========================= */
 .page-sistemas .calc-strip,
 .page-sistemas #calc-row{overflow:visible!important}
+
+
+/* =========================================================
+ Expiriti — PATCH UX (SISTEMAS) v2026.01.09-r3
+ - (A) Resumen combinado: separaciones + layout estable (2/3 calcs)
+ - (B) “¿Agregar un tercer sistema?”: rojo NO full width (pill centrada)
+ - (C) Instalación (amarillo): texto BLANCO
+========================================================= */
+
+/* === (A) RESUMEN COMBINADO: que NO quede pegado "Resumen combinado" con "Subtotal..." === */
+.page-sistemas #combined-wrap .combined-summary{margin-top:22px!important}
+.page-sistemas #combined-wrap .cs-head{display:flex!important;align-items:baseline!important;justify-content:flex-start!important;gap:12px 16px!important;flex-wrap:wrap!important;margin-bottom:12px!important}
+.page-sistemas #combined-wrap .cs-title{display:inline-flex!important;align-items:baseline!important;gap:10px!important;margin-right:10px!important;padding-right:10px!important;border-right:1px solid rgba(2,6,23,.10)!important}
+html:not([data-theme="light"]) .page-sistemas #combined-wrap .cs-title{border-right:1px solid rgba(148,163,184,.22)!important}
+@media(max-width:680px){.page-sistemas #combined-wrap .cs-title{border-right:0!important;padding-right:0!important;margin-right:0!important}}
+
+/* (Opcional pero recomendado) el bloque de montos en 2 columnas se mantiene “respirable” */
+.page-sistemas #combined-wrap .amount-letter{margin-top:12px!important}
+
+/* === (B) BARRA ROJA "¿Agregar un tercer sistema?": pill centrada, NO full width === */
+/* Tu título rojo viene del strong que ya estilaste aquí: #add-more-panel .note strong (y/o #calc-slot-2 .note strong) */
+html[data-theme="light"] .page-sistemas #add-more-panel .note strong,
+html[data-theme="light"] .page-sistemas #calc-slot-2 .note strong{
+  display:inline-block!important;width:auto!important;max-width:min(720px,92%)!important;
+  margin:0 auto 10px!important;padding:12px 18px!important;border-radius:999px!important;
+  text-align:center!important;white-space:normal!important;line-height:1.15!important
+}
+/* Asegura que el contenedor permita centrar el “pill” */
+.page-sistemas #add-more-panel .note,
+.page-sistemas #calc-slot-2 .note{display:block!important;text-align:center!important}
+
+/* === (C) INSTALACIÓN (amarillo) con letras blancas === */
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box{
+  background:rgba(245,158,11,.22)!important;border:1px solid rgba(245,158,11,.55)!important
+}
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box,
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box *{
+  color:#fff!important
+}
+/* checkbox legible en amarillo */
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[type="checkbox"]{accent-color:#111!important}
+
+
+
+
+/* =========================================================
+ Expiriti — PATCH UX (SISTEMAS) v2026.01.09-r3
+ - (A) Resumen combinado: separaciones + layout estable (2/3 calcs)
+ - (B) “¿Agregar un tercer sistema?”: rojo NO full width (pill centrada)
+ - (C) Instalación (amarillo): texto BLANCO
+========================================================= */
+
+/* === (A) RESUMEN COMBINADO: que NO quede pegado "Resumen combinado" con "Subtotal..." === */
+.page-sistemas #combined-wrap .combined-summary{margin-top:22px!important}
+.page-sistemas #combined-wrap .cs-head{display:flex!important;align-items:baseline!important;justify-content:flex-start!important;gap:12px 16px!important;flex-wrap:wrap!important;margin-bottom:12px!important}
+.page-sistemas #combined-wrap .cs-title{display:inline-flex!important;align-items:baseline!important;gap:10px!important;margin-right:10px!important;padding-right:10px!important;border-right:1px solid rgba(2,6,23,.10)!important}
+html:not([data-theme="light"]) .page-sistemas #combined-wrap .cs-title{border-right:1px solid rgba(148,163,184,.22)!important}
+@media(max-width:680px){.page-sistemas #combined-wrap .cs-title{border-right:0!important;padding-right:0!important;margin-right:0!important}}
+
+/* (Opcional pero recomendado) el bloque de montos en 2 columnas se mantiene “respirable” */
+.page-sistemas #combined-wrap .amount-letter{margin-top:12px!important}
+
+/* === (B) BARRA ROJA "¿Agregar un tercer sistema?": pill centrada, NO full width === */
+/* Tu título rojo viene del strong que ya estilaste aquí: #add-more-panel .note strong (y/o #calc-slot-2 .note strong) */
+html[data-theme="light"] .page-sistemas #add-more-panel .note strong,
+html[data-theme="light"] .page-sistemas #calc-slot-2 .note strong{
+  display:inline-block!important;width:auto!important;max-width:min(720px,92%)!important;
+  margin:0 auto 10px!important;padding:12px 18px!important;border-radius:999px!important;
+  text-align:center!important;white-space:normal!important;line-height:1.15!important
+}
+/* Asegura que el contenedor permita centrar el “pill” */
+.page-sistemas #add-more-panel .note,
+.page-sistemas #calc-slot-2 .note{display:block!important;text-align:center!important}
+
+/* === (C) INSTALACIÓN (amarillo) con letras blancas === */
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box{
+  background:rgba(245,158,11,.22)!important;border:1px solid rgba(245,158,11,.55)!important
+}
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box,
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box *{
+  color:#fff!important
+}
+/* checkbox legible en amarillo */
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[type="checkbox"]{accent-color:#111!important}
+
