@@ -357,167 +357,129 @@ body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
 }
 
 
+
+
 /* =========================================================
- Expiriti — CALC UI PATCH (LIGHT + 3-cols cut fix) v2026.01.09-p1
- - FIX: 3 calcs no se recortan abajo (scroll real + padding bottom)
- - LIGHT: calculadoras y tablas con acentos CTA (amber/teal/coral)
- - FIX: placeholder/carrusel sin “rectángulo gris” y centrado vertical
+ Expiriti — CALC FIX SAFE v2026.01.09-p2
+ - NO rompe .btn/.pill (solo calculadoras + placeholders)
+ - FIX: no se corta tabla/totales (sin height fijo que recorta)
+ - LIGHT: colores CTA por calculadora (1=ÁMBAR 2=TEAL 3=CORAL)
+ - Placeholder/carrusel: compacto, centrado, sin “bloque alto”
 ========================================================= */
 
-/* === 0) Tokens CTA (si ya existen en theme.css, esto solo asegura fallback) === */
-html[data-theme="light"]{--ex-amber:var(--ex-amber, rgb(233,170,25));--ex-teal:var(--ex-teal, rgb(20,153,151));--ex-coral:var(--ex-coral, rgb(250,82,98));}
+/* === 0) CTA tokens (fallback) === */
+:root{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98);}
 
-/* === 1) Mapear acento por calculadora (orden: 1=Ámbar, 2=Teal, 3=Coral) === */
-.page-sistemas #calc-primary{--calc-acc:var(--ex-amber);}
-.page-sistemas #calc-secondary{--calc-acc:var(--ex-teal);}
-.page-sistemas #calc-tertiary{--calc-acc:var(--ex-coral);}
+/* === 1) Acento por calculadora === */
+.page-sistemas #calc-primary{--calc-acc:var(--ex-amber)}
+.page-sistemas #calc-secondary{--calc-acc:var(--ex-teal)}
+.page-sistemas #calc-tertiary{--calc-acc:var(--ex-coral)}
 
-/* === 2) LIGHT: tarjeta calculadora sin gris + borde/acento pro === */
+/* === 2) FIX CORTE: NO uses height fijo que recorta === */
+@media(min-width:981px){
+  .page-sistemas #calc-row[data-cols="2"] .calc-container,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container{
+    height:auto!important;min-height:var(--calc-card-h,560px)!important;
+    overflow:visible!important;display:flex!important;flex-direction:column!important
+  }
+  /* tabla sin “block + overflow” que suele cortar rows en algunos DOM */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container table,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container table{
+    display:table!important;width:100%!important;max-width:100%!important;
+    margin:10px auto 0!important
+  }
+  /* espacio extra abajo para que el último renglón (Total) se vea sí o sí */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container{padding-bottom:12px!important}
+  .page-sistemas #calc-row[data-cols="3"] .calc-container{padding-bottom:12px!important}
+}
+
+/* === 3) LIGHT: tarjeta calc “pro” (sin gris) + barra acento arriba === */
 html[data-theme="light"] .page-sistemas .calc-container{
   border-radius:16px;border:1px solid rgba(2,6,23,.12);
-  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(245,247,255,.92));
+  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(245,247,255,.94));
   box-shadow:0 12px 26px rgba(2,6,23,.08);
-  position:relative;overflow:hidden;
+  position:relative
 }
 html[data-theme="light"] .page-sistemas .calc-container:before{
-  content:"";position:absolute;left:0;right:0;top:0;height:6px;
-  background:linear-gradient(90deg, color-mix(in oklab,var(--calc-acc) 85%, #fff 15%), var(--calc-acc));
-  opacity:.95;
+  content:"";position:absolute;left:0;right:0;top:0;height:6px;border-radius:16px 16px 0 0;
+  background:linear-gradient(90deg,var(--calc-acc),rgba(255,255,255,.0));
 }
 
-/* === 3) LIGHT: inputs más limpios (sin “panel gris”) === */
+/* inputs (light) */
 html[data-theme="light"] .page-sistemas .calc-container select,
 html[data-theme="light"] .page-sistemas .calc-container input[type="number"],
 html[data-theme="light"] .page-sistemas .calc-container input[type="text"]{
-  background:rgba(255,255,255,.98);
-  border:1px solid rgba(2,6,23,.14);
-  box-shadow:0 6px 14px rgba(2,6,23,.06);
+  background:rgba(255,255,255,.98)!important;
+  border:1px solid rgba(2,6,23,.14)!important;
+  box-shadow:0 6px 14px rgba(2,6,23,.06)!important
 }
-html[data-theme="light"] .page-sistemas .calc-container label{color:rgba(11,18,32,.92);}
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box{
+  background:rgba(2,6,23,.03)!important;border:1px dashed rgba(2,6,23,.18)!important
+}
 
-/* === 4) LIGHT: tabla con encabezado CTA + texto blanco; total destacado === */
+/* === 4) LIGHT: tabla sin gris + header acento (texto blanco) === */
 html[data-theme="light"] .page-sistemas .calc-container table{
-  border:1px solid rgba(2,6,23,.12);
-  background:rgba(255,255,255,.94);
-  border-radius:14px;
+  border:1px solid rgba(2,6,23,.12)!important;
+  background:rgba(255,255,255,.96)!important
 }
 html[data-theme="light"] .page-sistemas .calc-container thead th{
-  background:linear-gradient(135deg,var(--calc-acc), color-mix(in oklab,var(--calc-acc) 78%, #000 22%));
-  color:#fff;
-  border-bottom:1px solid rgba(255,255,255,.25);
+  background:linear-gradient(135deg,var(--calc-acc),rgba(0,0,0,.18))!important;
+  color:#fff!important;border-bottom:1px solid rgba(255,255,255,.25)!important
 }
 html[data-theme="light"] .page-sistemas .calc-container td,
 html[data-theme="light"] .page-sistemas .calc-container th{
-  border-bottom:1px solid rgba(2,6,23,.10);
-  color:rgba(11,18,32,.92);
+  border-bottom:1px solid rgba(2,6,23,.10)!important;color:rgba(11,18,32,.92)!important
 }
-html[data-theme="light"] .page-sistemas .calc-container .price,
-html[data-theme="light"] .page-sistemas .calc-container .total,
-html[data-theme="light"] .page-sistemas .calc-container .monto{color:rgba(11,18,32,.92);}
 
-/* Total row “badge” dentro de la tabla (si tus IDs existen: tr-tot1/2/3) */
+/* Totales: por si tus IDs existen (si no existen, no afecta) */
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td{
-  background:linear-gradient(135deg,var(--calc-acc), color-mix(in oklab,var(--calc-acc) 75%, #000 25%));
-  color:#fff!important;
-  border-bottom:none;
+  background:linear-gradient(135deg,var(--calc-acc),rgba(0,0,0,.18))!important;
+  color:#fff!important;border-bottom:none!important
 }
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 .price,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 .price,
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 .price{color:#fff!important;}
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 .price{color:#fff!important}
 
-/* === 5) FIX: 3 calculadoras NO se recortan abajo (scroll real + “espacio final”) === */
-@media(min-width:981px){
-  .page-sistemas #calc-row[data-cols="3"] .calc-container,
-  .page-sistemas #calc-row[data-cols="2"] .calc-container{
-    height:var(--calc-card-h,560px)!important;
-    display:flex!important;flex-direction:column!important;
-    overflow:hidden!important; /* contenedor fijo */
-  }
-  /* la tabla es el área scrolleable, con espacio al final para que “Total” no quede cortado */
-  .page-sistemas #calc-row[data-cols="3"] .calc-container table,
-  .page-sistemas #calc-row[data-cols="2"] .calc-container table{
-    flex:1 1 auto!important;
-    max-width:100%!important;
-    display:block!important;
-    overflow:auto!important;
-    -webkit-overflow-scrolling:touch;
-    padding-bottom:14px; /* clave anti “corte” visual */
-    scroll-padding-bottom:14px;
-  }
-  /* sticky header sólido sobre el scroll */
-  .page-sistemas #calc-row[data-cols="3"] .calc-container thead th,
-  .page-sistemas #calc-row[data-cols="2"] .calc-container thead th{
-    position:sticky;top:0;z-index:3;
-  }
-  /* evita que el último renglón quede “pegado” al borde del scroll */
-  .page-sistemas #calc-row[data-cols="3"] .calc-container tr:last-child td,
-  .page-sistemas #calc-row[data-cols="2"] .calc-container tr:last-child td{padding-bottom:16px;}
-}
-
-/* === 6) Placeholder “Integra…”: quitar rectángulo gris gigante y centrar vertical === */
-.page-sistemas #calc-slot-2.placeholder{
-  border:none!important;
-  background:transparent!important;
-  padding:0!important;
-  min-height:unset!important;
-  height:auto!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-.page-sistemas #calc-slot-2 .note{
-  width:min(520px,100%);
-  margin:0 auto;
-  border-radius:16px;
+/* === 5) Placeholder/carrusel: compacto, centrado, sin bloque alto === */
+.page-sistemas .placeholder{background:transparent!important;border:0!important;padding:0!important;min-height:unset!important}
+.page-sistemas .placeholder .note{
+  width:min(760px,100%);margin:0 auto;border-radius:16px;
   border:1px solid rgba(148,163,184,.18);
-  background:linear-gradient(180deg,rgba(15,23,42,.22),rgba(15,23,42,.14));
-  box-shadow:0 12px 26px rgba(0,0,0,.16);
+  background:rgba(15,23,42,.18);
+  padding:14px
 }
-html[data-theme="light"] .page-sistemas #calc-slot-2 .note{
+html[data-theme="light"] .page-sistemas .placeholder .note{
   border:1px solid rgba(2,6,23,.12);
-  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(245,247,255,.92));
-  box-shadow:0 12px 26px rgba(2,6,23,.08);
+  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(245,247,255,.94));
+  box-shadow:0 12px 26px rgba(2,6,23,.08)
 }
 
-/* Headline del placeholder con acento CTA (usa teal por consistencia “integra”) */
-.page-sistemas #calc-slot-2 .note strong{
-  display:block;
-  padding:12px 14px;
-  border-radius:14px;
-  background:linear-gradient(135deg,var(--ex-teal), color-mix(in oklab,var(--ex-teal) 72%, #000 28%));
-  color:#fff;
-  margin:0 0 10px;
-}
-.page-sistemas #calc-slot-2 .note small{display:block;margin:0 0 10px;padding:0 2px;opacity:.9}
+/* Texto compacto + centrado (tu “¿Agregar… / Mismo -15%…”) */
+.page-sistemas #add-more-panel .note,
+.page-sistemas #calc-slot-2 .note{text-align:center}
+.page-sistemas #add-more-panel .note strong,
+.page-sistemas #calc-slot-2 .note strong{display:block;margin:0 0 6px;line-height:1.2}
+.page-sistemas #add-more-panel .note small,
+.page-sistemas #calc-slot-2 .note small{display:block;margin:0 0 10px;opacity:.9;line-height:1.25}
 
-/* Carrusel compacto y centrado (sin cubrir toda la altura) */
-.page-sistemas #calc-slot-2 .icons-carousel{
-  margin-top:8px;
-  padding:0 46px;
-  max-width:100%;
-}
-.page-sistemas #calc-slot-2 .icons-wrap{
-  padding:10px 6px;
-  align-items:stretch;
-  background:transparent!important;
-}
+/* Carrusel centrado verticalmente dentro del note (sin “aire” extra) */
+.page-sistemas .icons-carousel{margin:8px auto 0;max-width:100%;padding:0 46px}
+.page-sistemas .icons-wrap{padding:10px 6px;align-items:stretch;background:transparent!important}
 
-/* Flechas con look CTA (light) */
-html[data-theme="light"] .page-sistemas #calc-slot-2 .icons-carousel .arrowCircle{
-  background:rgba(255,255,255,.92);
-  border-color:rgba(2,6,23,.14);
-  box-shadow:0 10px 22px rgba(2,6,23,.10);
+/* Tiles del carrusel (quitar gris feo) */
+html[data-theme="light"] .page-sistemas .sys-icon{
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(245,247,255,.92))!important;
+  border:1px solid rgba(2,6,23,.12)!important;box-shadow:0 10px 22px rgba(2,6,23,.08)!important
 }
-html[data-theme="light"] .page-sistemas #calc-slot-2 .icons-carousel .arrowCircle:hover{
-  background:var(--ex-teal);
-  border-color:var(--ex-teal);
-  color:#fff;
-}
+html[data-theme="light"] .page-sistemas .sys-icon:hover{border-color:rgba(20,153,151,.45)!important}
 
-/* === 7) Opcional: en 3 cols, el placeholder no debe estirarse como “columna gigante” === */
-@media(min-width:981px){
-  .page-sistemas #calc-row[data-cols="1"] #calc-slot-2{align-self:center;}
-  .page-sistemas #calc-row[data-cols="2"] #add-more-panel{align-self:stretch;}
+/* Flechas del carrusel (light) */
+html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle{
+  background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;
+  box-shadow:0 10px 22px rgba(2,6,23,.10)!important;color:rgba(11,18,32,.92)!important
+}
+html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle:hover{
+  background:var(--ex-teal)!important;border-color:var(--ex-teal)!important;color:#fff!important
 }
