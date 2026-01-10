@@ -359,233 +359,122 @@ body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
 
 
 
+
 /* =========================================================
- Expiriti — CALC FIX SAFE v2026.01.09-p2
- - NO rompe .btn/.pill (solo calculadoras + placeholders)
- - FIX: no se corta tabla/totales (sin height fijo que recorta)
- - LIGHT: colores CTA por calculadora (1=ÁMBAR 2=TEAL 3=CORAL)
- - Placeholder/carrusel: compacto, centrado, sin “bloque alto”
+ Expiriti — CALC CLEAN + RED RING (AGENCY 2026) v2026.01.09-r2
+ - Quita glass/velo y barra superior
+ - Tabla con borde rojo glow (tipo mg4)
+ - Header + Total rojo sólido, texto blanco
+ - Instalación: callout teal consistente
+ - Importes: alineación pro (tabular nums + width fijo + nowrap)
 ========================================================= */
+:root{--ex-red:#ff3b4d;--ex-red2:#ff6a78;--ex-teal:#149997;--ex-ink:rgba(11,18,32,.92);--ex-line:rgba(2,6,23,.10)}
 
-/* === 0) CTA tokens (fallback) === */
-:root{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98);}
-
-/* === 1) Acento por calculadora === */
-.page-sistemas #calc-primary{--calc-acc:var(--ex-amber)}
-.page-sistemas #calc-secondary{--calc-acc:var(--ex-teal)}
-.page-sistemas #calc-tertiary{--calc-acc:var(--ex-coral)}
-
-/* === 2) FIX CORTE: NO uses height fijo que recorta === */
-@media(min-width:981px){
-  .page-sistemas #calc-row[data-cols="2"] .calc-container,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container{
-    height:auto!important;min-height:var(--calc-card-h,560px)!important;
-    overflow:visible!important;display:flex!important;flex-direction:column!important
-  }
-  /* tabla sin “block + overflow” que suele cortar rows en algunos DOM */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container table,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container table{
-    display:table!important;width:100%!important;max-width:100%!important;
-    margin:10px auto 0!important
-  }
-  /* espacio extra abajo para que el último renglón (Total) se vea sí o sí */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container{padding-bottom:12px!important}
-  .page-sistemas #calc-row[data-cols="3"] .calc-container{padding-bottom:12px!important}
-}
-
-/* === 3) LIGHT: tarjeta calc “pro” (sin gris) + barra acento arriba === */
+/* === 1) CALC CARD: fondo blanco limpio (no glass) === */
 html[data-theme="light"] .page-sistemas .calc-container{
-  border-radius:16px;border:1px solid rgba(2,6,23,.12);
-  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(245,247,255,.94));
-  box-shadow:0 12px 26px rgba(2,6,23,.08);
-  position:relative
+  background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;border-radius:18px!important;
+  box-shadow:0 14px 34px rgba(2,6,23,.08)!important;overflow:hidden
 }
-html[data-theme="light"] .page-sistemas .calc-container:before{
-  content:"";position:absolute;left:0;right:0;top:0;height:6px;border-radius:16px 16px 0 0;
-  background:linear-gradient(90deg,var(--calc-acc),rgba(255,255,255,.0));
+/* quita la “barrita”/accent arriba (si existe por otros patches) */
+html[data-theme="light"] .page-sistemas .calc-container:before{content:none!important;display:none!important}
+
+/* título de cada calculadora (h4) más limpio */
+html[data-theme="light"] .page-sistemas .calc-container>h4{
+  margin:12px 14px 6px!important;font-weight:950!important;letter-spacing:.01em!important;color:var(--ex-ink)!important
 }
 
-/* inputs (light) */
+/* inputs sin sombras pesadas ni fondos raros */
 html[data-theme="light"] .page-sistemas .calc-container select,
 html[data-theme="light"] .page-sistemas .calc-container input[type="number"],
 html[data-theme="light"] .page-sistemas .calc-container input[type="text"]{
-  background:rgba(255,255,255,.98)!important;
-  border:1px solid rgba(2,6,23,.14)!important;
-  box-shadow:0 6px 14px rgba(2,6,23,.06)!important
+  background:#fff!important;border:1px solid rgba(2,6,23,.14)!important;box-shadow:none!important;border-radius:12px!important
 }
+
+/* === 2) INSTALACIÓN: callout teal consistente === */
 html[data-theme="light"] .page-sistemas .calc-container .instalacion-box{
-  background:rgba(2,6,23,.03)!important;border:1px dashed rgba(2,6,23,.18)!important
+  border:1px solid rgba(20,153,151,.35)!important;background:rgba(20,153,151,.07)!important;border-radius:14px!important
 }
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box strong{color:rgba(8,18,18,.92)!important}
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box span{color:rgba(11,18,32,.86)!important}
+html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[type="checkbox"]{accent-color:var(--ex-teal)}
 
-/* === 4) LIGHT: tabla sin gris + header acento (texto blanco) === */
+/* === 3) TABLA: RED RING + header/total sólidos === */
 html[data-theme="light"] .page-sistemas .calc-container table{
-  border:1px solid rgba(2,6,23,.12)!important;
-  background:rgba(255,255,255,.96)!important
+  width:100%!important;max-width:100%!important;margin:10px auto 14px!important;border-collapse:separate!important;border-spacing:0!important;
+  border-radius:16px!important;overflow:hidden!important;background:#fff!important;
+  border:2px solid rgba(255,59,77,.85)!important;
+  box-shadow:0 0 0 2px rgba(255,59,77,.10),0 12px 26px rgba(255,59,77,.14)!important
 }
+
+/* header rojo sólido, texto blanco */
 html[data-theme="light"] .page-sistemas .calc-container thead th{
-  background:linear-gradient(135deg,var(--calc-acc),rgba(0,0,0,.18))!important;
-  color:#fff!important;border-bottom:1px solid rgba(255,255,255,.25)!important
-}
-html[data-theme="light"] .page-sistemas .calc-container td,
-html[data-theme="light"] .page-sistemas .calc-container th{
-  border-bottom:1px solid rgba(2,6,23,.10)!important;color:rgba(11,18,32,.92)!important
+  background:linear-gradient(135deg,var(--ex-red),rgba(0,0,0,.18))!important;
+  color:#fff!important;border-bottom:1px solid rgba(255,255,255,.22)!important;
+  padding:12px 14px!important;font-weight:950!important
 }
 
-/* Totales: por si tus IDs existen (si no existen, no afecta) */
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td,
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td,
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td{
-  background:linear-gradient(135deg,var(--calc-acc),rgba(0,0,0,.18))!important;
-  color:#fff!important;border-bottom:none!important
-}
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 .price,
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 .price,
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 .price{color:#fff!important}
-
-/* === 5) Placeholder/carrusel: compacto, centrado, sin bloque alto === */
-.page-sistemas .placeholder{background:transparent!important;border:0!important;padding:0!important;min-height:unset!important}
-.page-sistemas .placeholder .note{
-  width:min(760px,100%);margin:0 auto;border-radius:16px;
-  border:1px solid rgba(148,163,184,.18);
-  background:rgba(15,23,42,.18);
-  padding:14px
-}
-html[data-theme="light"] .page-sistemas .placeholder .note{
-  border:1px solid rgba(2,6,23,.12);
-  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(245,247,255,.94));
-  box-shadow:0 12px 26px rgba(2,6,23,.08)
-}
-
-/* Texto compacto + centrado (tu “¿Agregar… / Mismo -15%…”) */
-.page-sistemas #add-more-panel .note,
-.page-sistemas #calc-slot-2 .note{text-align:center}
-.page-sistemas #add-more-panel .note strong,
-.page-sistemas #calc-slot-2 .note strong{display:block;margin:0 0 6px;line-height:1.2}
-.page-sistemas #add-more-panel .note small,
-.page-sistemas #calc-slot-2 .note small{display:block;margin:0 0 10px;opacity:.9;line-height:1.25}
-
-/* Carrusel centrado verticalmente dentro del note (sin “aire” extra) */
-.page-sistemas .icons-carousel{margin:8px auto 0;max-width:100%;padding:0 46px}
-.page-sistemas .icons-wrap{padding:10px 6px;align-items:stretch;background:transparent!important}
-
-/* Tiles del carrusel (quitar gris feo) */
-html[data-theme="light"] .page-sistemas .sys-icon{
-  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(245,247,255,.92))!important;
-  border:1px solid rgba(2,6,23,.12)!important;box-shadow:0 10px 22px rgba(2,6,23,.08)!important
-}
-html[data-theme="light"] .page-sistemas .sys-icon:hover{border-color:rgba(20,153,151,.45)!important}
-
-/* Flechas del carrusel (light) */
-html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle{
-  background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;
-  box-shadow:0 10px 22px rgba(2,6,23,.10)!important;color:rgba(11,18,32,.92)!important
-}
-html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle:hover{
-  background:var(--ex-teal)!important;border-color:var(--ex-teal)!important;color:#fff!important
-}
-
-
-/* =========================================================
- Expiriti — CALC UNIFIED UI (Teal head + Amber amounts + Coral carousel) v2026.01.09-u1
- - Todas las calculadoras con el MISMO esquema
- - Tabla: header TEAL, columna IMPORTE ÁMBAR (texto blanco), TOTAL más fuerte
- - Alineación pro de importes (tabular nums + right align + no-wrap)
- - Carrusel/panel: CORAL (upsell) compacto y centrado
-========================================================= */
-
-/* === 0) Tokens (usa tus CTAs 2026) === */
-:root{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98);--calc-head:var(--ex-teal);--calc-amt:var(--ex-amber);--calc-upsell:var(--ex-coral);}
-
-/* === 1) Tabla calculadora: base pro (bordes/spacing) === */
-.page-sistemas .calc-container table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:14px}
-.page-sistemas .calc-container td,.page-sistemas .calc-container th{padding:10px 12px}
-.page-sistemas .calc-container td{vertical-align:middle}
-
-/* === 2) Encabezado TEAL (Concepto / Importe) === */
-html[data-theme="light"] .page-sistemas .calc-container thead th{
-  background:linear-gradient(135deg,var(--calc-head),rgba(0,0,0,.18))!important;
-  color:#fff!important;border-bottom:1px solid rgba(255,255,255,.25)!important
-}
-
-/* === 3) Columna IMPORTE ÁMBAR (de arriba a abajo) + texto blanco === */
-/* Nota: asumo 2 columnas (Concepto = 1, Importe = última). */
-html[data-theme="light"] .page-sistemas .calc-container tbody td:last-child{
-  background:linear-gradient(135deg,var(--calc-amt),rgba(0,0,0,.18))!important;
-  color:#fff!important;
-  text-align:right!important;
-  white-space:nowrap;
-  font-variant-numeric:tabular-nums;
-  font-feature-settings:"tnum" 1,"lnum" 1;
-}
-
-/* Deja la columna Concepto limpia (blanca) para contraste */
-html[data-theme="light"] .page-sistemas .calc-container tbody td:first-child{
-  background:rgba(255,255,255,.96)!important;
-  color:rgba(11,18,32,.92)!important
-}
-
-/* Líneas divisorias suaves */
+/* celdas limpias (sin columna amarilla/verde/etc) */
 html[data-theme="light"] .page-sistemas .calc-container tbody td{
-  border-bottom:1px solid rgba(2,6,23,.08)!important
+  background:#fff!important;color:var(--ex-ink)!important;border-bottom:1px solid var(--ex-line)!important
 }
 html[data-theme="light"] .page-sistemas .calc-container tbody tr:last-child td{border-bottom:none!important}
 
-/* === 4) TOTAL: ambos lados resaltados (mismo ámbar pero más “pesado”) === */
-/* Si tu total row usa IDs tr-tot1/2/3, perfecto. Si no, igual cae al last-child por columna. */
+/* === 4) Importes: alineación pro (aunque haya % / y −) === */
+.page-sistemas .calc-container thead th:last-child,
+.page-sistemas .calc-container tbody td:last-child{
+  text-align:right!important;white-space:nowrap!important;
+  font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1,"lnum" 1;
+  min-width:170px
+}
+@media(max-width:420px){
+  .page-sistemas .calc-container thead th:last-child,
+  .page-sistemas .calc-container tbody td:last-child{min-width:150px}
+}
+
+/* === 5) TOTAL: fila completa roja sólida + texto blanco === */
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td{
-  background:linear-gradient(135deg,var(--calc-amt),rgba(0,0,0,.26))!important;
+  background:linear-gradient(135deg,var(--ex-red),rgba(0,0,0,.20))!important;
   color:#fff!important;font-weight:950!important;border-bottom:none!important
 }
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td:last-child,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td:last-child,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td:last-child{color:#fff!important}
 
-/* === 5) Alineación extra para “%” y “-” (sin tocar HTML) === */
-/* Mantén el ancho de la columna Importe consistente */
-.page-sistemas .calc-container thead th:last-child,
-.page-sistemas .calc-container tbody td:last-child{min-width:160px}
-@media(max-width:420px){.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child{min-width:140px}}
-
-/* === 6) Carrusel / Integra: CORAL (upsell) + texto blanco + compacto === */
+/* === 6) Placeholder / carrusel: sin fondos grises ni “bloques altos” === */
 .page-sistemas .placeholder{background:transparent!important;border:0!important;padding:0!important;min-height:unset!important}
-.page-sistemas .placeholder .note{width:min(820px,100%);margin:0 auto;border-radius:16px;padding:14px}
 html[data-theme="light"] .page-sistemas .placeholder .note{
-  border:1px solid rgba(2,6,23,.12)!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(245,247,255,.94))!important;
-  box-shadow:0 12px 26px rgba(2,6,23,.08)!important
+  background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;border-radius:18px!important;
+  box-shadow:0 14px 34px rgba(2,6,23,.08)!important;padding:14px!important
 }
 
-/* Título del upsell en CORAL */
+/* título upsell en “pill” roja (como mg4 vibe) */
 html[data-theme="light"] .page-sistemas #calc-slot-2 .note strong,
 html[data-theme="light"] .page-sistemas #add-more-panel .note strong{
-  display:block;margin:0 0 8px;padding:12px 14px;border-radius:14px;
-  background:linear-gradient(135deg,var(--calc-upsell),rgba(0,0,0,.18))!important;
-  color:#fff!important;text-align:center!important;line-height:1.2
+  display:block!important;margin:0 0 8px!important;padding:12px 14px!important;border-radius:16px!important;
+  background:linear-gradient(135deg,var(--ex-red),rgba(0,0,0,.18))!important;color:#fff!important;text-align:center!important;
+  box-shadow:0 0 0 2px rgba(255,59,77,.10),0 14px 26px rgba(255,59,77,.14)!important
 }
 .page-sistemas #calc-slot-2 .note small,
-.page-sistemas #add-more-panel .note small{display:block;margin:0 0 10px;text-align:center;opacity:.9;line-height:1.25}
+.page-sistemas #add-more-panel .note small{display:block;text-align:center;margin:0 0 10px;opacity:.9}
 
-/* Carrusel centrado y sin aire */
-.page-sistemas .icons-carousel{margin:8px auto 0;max-width:100%;padding:0 46px}
-.page-sistemas .icons-wrap{padding:10px 6px;align-items:stretch;background:transparent!important}
-@media(max-width:768px){.page-sistemas .icons-carousel{padding:0 44px}}
+/* carrusel más compacto */
+.page-sistemas .icons-carousel{margin:8px auto 0!important;padding:0 46px!important}
+.page-sistemas .icons-wrap{padding:10px 6px!important;background:transparent!important}
 
-/* Tiles del carrusel limpios + borde teal sutil */
+/* tiles del carrusel: blancas pro, borde suave */
 html[data-theme="light"] .page-sistemas .sys-icon{
-  background:rgba(255,255,255,.96)!important;
-  border:1px solid rgba(2,6,23,.12)!important;
-  box-shadow:0 10px 22px rgba(2,6,23,.08)!important
+  background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;border-radius:16px!important;
+  box-shadow:0 12px 26px rgba(2,6,23,.08)!important
 }
-html[data-theme="light"] .page-sistemas .sys-icon:hover{border-color:rgba(20,153,151,.45)!important}
+html[data-theme="light"] .page-sistemas .sys-icon:hover{border-color:rgba(255,59,77,.35)!important}
 
-/* Flechas: hover coral para coherencia con upsell */
+/* flechas: limpias + hover rojo */
 html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle{
-  background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;
-  box-shadow:0 10px 22px rgba(2,6,23,.10)!important;color:rgba(11,18,32,.92)!important
+  background:#fff!important;border-color:rgba(2,6,23,.14)!important;color:rgba(11,18,32,.92)!important;
+  box-shadow:0 12px 26px rgba(2,6,23,.10)!important
 }
 html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle:hover{
-  background:var(--calc-upsell)!important;border-color:var(--calc-upsell)!important;color:#fff!important
+  background:var(--ex-red)!important;border-color:var(--ex-red)!important;color:#fff!important
 }
-
