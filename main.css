@@ -478,3 +478,125 @@ html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle{
 html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle:hover{
   background:var(--ex-red)!important;border-color:var(--ex-red)!important;color:#fff!important
 }
+
+
+
+
+
+
+
+/* === Expiriti CALC UI PATCH v2026.01.09-solid-r1
+   Objetivo:
+   - Header/Total de tabla: VERDE con glass suave
+   - Columna Importe (tbody): SOLIDA (sin glass/gradiente)
+   - Instalación: AMARILLO sólido
+   - Upsell/carrusel: ROJO sólido (sin gradientes)
+   - Fix padding: labels/inputs ya no “tocan” borde
+===================================================== */
+:root{--ex-green:#149997;--ex-yellow:#e9aa19;--ex-red:#fa5262;--ex-text:#0b1220}
+.page-sistemas .calc-container{padding:14px!important;border-radius:16px}
+@media(max-width:520px){.page-sistemas .calc-container{padding:12px!important}}
+/* Fix: evita que “Licencia/Usuarios” se vean pegados */
+.page-sistemas .calc-container h4{margin:0 0 10px!important;padding:0 2px}
+.page-sistemas .calc-container form{padding:0 2px!important}
+.page-sistemas .calc-container label{margin-top:8px!important}
+
+/* ===== Instalación (AMARILLO sólido) ===== */
+.page-sistemas .calc-container .instalacion-box{border:1px solid rgba(0,0,0,.08)!important;background:rgba(233,170,25,.18)!important}
+.page-sistemas .calc-container .instalacion-box strong{color:rgba(11,18,32,.92)!important}
+.page-sistemas .calc-container .instalacion-box input[type="checkbox"]{accent-color:var(--ex-yellow)}
+
+/* ===== TABLA: estructura ===== */
+.page-sistemas .calc-container table{border-radius:14px!important;overflow:hidden;border:1px solid rgba(0,0,0,.10)!important;background:#fff!important}
+.page-sistemas .calc-container td,.page-sistemas .calc-container th{padding:10px 12px!important}
+.page-sistemas .calc-container tbody td{border-bottom:1px solid rgba(0,0,0,.06)!important}
+.page-sistemas .calc-container tbody tr:last-child td{border-bottom:none!important}
+
+/* ===== Header (glass VERDE) ===== */
+html[data-theme="light"] .page-sistemas .calc-container thead th{
+  background:rgba(20,153,151,.92)!important;
+  color:#fff!important;
+  border-bottom:1px solid rgba(255,255,255,.22)!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px)
+}
+
+/* ===== Columna Importe: SOLIDA (sin glass/gradiente) ===== */
+html[data-theme="light"] .page-sistemas .calc-container tbody td:last-child{
+  background:rgba(233,170,25,.95)!important; /* sólido */
+  color:#fff!important;
+  text-align:right!important;
+  white-space:nowrap!important;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1,"lnum" 1;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important
+}
+/* Columna Concepto: limpia blanca */
+html[data-theme="light"] .page-sistemas .calc-container tbody td:first-child{
+  background:#fff!important;
+  color:rgba(11,18,32,.92)!important
+}
+
+/* ===== Total (glass VERDE, ambos lados) ===== */
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td{
+  background:rgba(20,153,151,.92)!important;
+  color:#fff!important;
+  font-weight:950!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px)
+}
+/* el importe del Total sigue verde (no ámbar) */
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td:last-child,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td:last-child,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td:last-child{
+  background:rgba(20,153,151,.92)!important
+}
+
+/* Asegura ancho consistente de la col. importe (evita “brinco” por % o −) */
+.page-sistemas .calc-container thead th:last-child,
+.page-sistemas .calc-container tbody td:last-child{min-width:170px}
+@media(max-width:420px){.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child{min-width:150px}}
+
+/* ===== Upsell/carrusel: ROJO sólido (sin degradados) ===== */
+.page-sistemas .placeholder{background:transparent!important;border:0!important;padding:0!important;min-height:unset!important}
+.page-sistemas .placeholder .note{border-radius:16px!important;padding:14px!important}
+html[data-theme="light"] .page-sistemas .placeholder .note{background:#fff!important;border:1px solid rgba(0,0,0,.10)!important;box-shadow:0 12px 26px rgba(2,6,23,.08)!important}
+
+/* Título “Integra…” rojo sólido */
+html[data-theme="light"] .page-sistemas #calc-slot-2 .note strong,
+html[data-theme="light"] .page-sistemas #add-more-panel .note strong{
+  display:block!important;
+  margin:0 0 8px!important;
+  padding:12px 14px!important;
+  border-radius:14px!important;
+  background:var(--ex-red)!important; /* sólido */
+  color:#fff!important;
+  text-align:center!important;
+  line-height:1.2!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important
+}
+
+/* Pastillas/etiquetas rojas dentro de cada sys-icon (si existen como badge/pill) */
+html[data-theme="light"] .page-sistemas .sys-icon strong{
+  background:transparent!important;color:rgba(11,18,32,.92)!important
+}
+/* Si tu HTML tiene un “badge” rojo dentro del sys-icon, fuerza sólido (típico: .sys-pill, .sys-tag, etc.) */
+html[data-theme="light"] .page-sistemas .sys-icon .pill,
+html[data-theme="light"] .page-sistemas .sys-icon .tag,
+html[data-theme="light"] .page-sistemas .sys-icon .badge{
+  background:var(--ex-red)!important;color:#fff!important;border:0!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important
+}
+
+/* Flechas: sólido y hover rojo sólido */
+html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle{
+  background:#fff!important;border-color:rgba(0,0,0,.12)!important;
+  box-shadow:0 10px 22px rgba(2,6,23,.10)!important;color:rgba(11,18,32,.92)!important
+}
+html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle:hover{
+  background:var(--ex-red)!important;border-color:var(--ex-red)!important;color:#fff!important
+}
