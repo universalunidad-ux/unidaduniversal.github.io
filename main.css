@@ -924,3 +924,15 @@ html[data-theme="light"] .page-sistemas .calc-container .instalacion-box *{
 }
 /* checkbox legible en amarillo */
 html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[type="checkbox"]{accent-color:#111!important}
+
+/* === FIX CRÍTICO: IMPORTES INVISIBLES (texto blanco heredado + fondo blanco) === */
+html[data-theme="light"] .page-sistemas .calc-container tbody tr:not(#tr-tot1):not(#tr-tot2):not(#tr-tot3) td:last-child{background:#fff!important;color:rgba(11,18,32,.92)!important}
+html[data-theme="light"] .page-sistemas .calc-container tbody tr:not(#tr-tot1):not(#tr-tot2):not(#tr-tot3) td:last-child .price,
+html[data-theme="light"] .page-sistemas .calc-container tbody tr:not(#tr-tot1):not(#tr-tot2):not(#tr-tot3) td:last-child .monto,
+html[data-theme="light"] .page-sistemas .calc-container tbody tr:not(#tr-tot1):not(#tr-tot2):not(#tr-tot3) td:last-child .total{color:rgba(11,18,32,.92)!important}
+
+/* === Dark theme: asegura contraste en importes (sin tocar Total) === */
+html:not([data-theme="light"]) .page-sistemas .calc-container tbody tr:not(#tr-tot1):not(#tr-tot2):not(#tr-tot3) td:last-child{color:rgba(232,238,246,.96)!important}
+html:not([data-theme="light"]) .page-sistemas .calc-container tbody tr:not(#tr-tot1):not(#tr-tot2):not(#tr-tot3) td:last-child .price,
+html:not([data-theme="light"]) .page-sistemas .calc-container tbody tr:not(#tr-tot1):not(#tr-tot2):not(#tr-tot3) td:last-child .monto,
+html:not([data-theme="light"]) .page-sistemas .calc-container tbody tr:not(#tr-tot1):not(#tr-tot2):not(#tr-tot3) td:last-child .total{color:rgba(232,238,246,.96)!important}
