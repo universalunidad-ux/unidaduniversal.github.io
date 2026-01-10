@@ -103,6 +103,10 @@ function setCalcCountClass(){
   });
 }
 
+/* ✅ Alias global (lo que yo llamaba expSetCalcCols) */
+function expSetCalcCols(){ setCalcCountClass(); }
+window.expSetCalcCols = expSetCalcCols;
+
 /* ===== Ensure secondary container exists (insert sibling) ===== */
 function ensureSecondaryContainer(){
   var row=$id("calc-row"); if(!row){console.warn("No existe #calc-row"); return null;}
@@ -213,8 +217,16 @@ function createCalculator(container,sistemaName,idSuffix,combinedSelector){
     '<tr id="tr-iva'+idSuffix+'"><td id="lbl-iva'+idSuffix+'">IVA (16%)</td><td id="iva'+idSuffix+'">$0.00</td></tr>'+
     '<tr id="tr-tot'+idSuffix+'"><td id="lbl-tot'+idSuffix+'"><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0.00</strong></td></tr>'+
     "</tbody>";
-  results.appendChild(table); container.appendChild(results);
 
+ results.appendChild(table);
+container.appendChild(results);
+
+// ✅ ya existe <table> → actualiza data-cols / clases
+try{ window.expSetCalcCols && window.expSetCalcCols(); }catch(e){}
+
+
+
+ 
   function instCheckbox(){return $id("instOn"+idSuffix)}
   function calcInstallationGross(){
     var on=instCheckbox(); if(!on||!on.checked) return 0;
@@ -226,7 +238,8 @@ function createCalculator(container,sistemaName,idSuffix,combinedSelector){
     setText("inst"+idSuffix,fmt(0)); setText("instdisc"+idSuffix,fmt(0)); setText("sub"+idSuffix,fmt(0));
     setText("iva"+idSuffix,fmt(0)); setHTML("tot"+idSuffix,"<strong>"+fmt(0)+"</strong>");
     setDisplay("tr-uadd"+idSuffix,"none"); setDisplay("tr-disc"+idSuffix,"none"); setDisplay("tr-inst"+idSuffix,"none"); setDisplay("tr-instdisc"+idSuffix,"none");
-    updateCombinedSummary(combinedSelector);
+updateCombinedSummary(combinedSelector);
+try{ setCalcCountClass(); }catch(e){}
   }
 
   function refreshOptions(){
@@ -344,7 +357,9 @@ function createCalculator(container,sistemaName,idSuffix,combinedSelector){
     setDisplay("tr-inst"+idSuffix,showInst?"":"none");
     setDisplay("tr-instdisc"+idSuffix,showInst?"":"none");
 
-    updateCombinedSummary(combinedSelector);
+   updateCombinedSummary(combinedSelector);
+try{ setCalcCountClass(); }catch(e){}
+
   }
 
   licenciaSel.addEventListener("change",refreshOptions);
@@ -378,9 +393,16 @@ function createCalculator(container,sistemaName,idSuffix,combinedSelector){
 
 /* ===== Resumen combinado ===== */
 function updateCombinedSummary(combinedSelector){
-  var wrap=qs(combinedSelector||"#combined-wrap"); if(!wrap) return;
-  var tbody=$id("combined-table-body"); if(!tbody){console.warn("Falta #combined-table-body"); return;}
+  var wrap=qs(combinedSelector||"#combined-wrap");
+  if(!wrap) { setCalcCountClass(); return; }   // ✅ aun sin wrap, ajusta cols
 
+  var tbody=$id("combined-table-body");
+  if(!tbody){
+    console.warn("Falta #combined-table-body");
+    wrap.hidden=true;                           // ✅ evita UI rota
+    setCalcCountClass();                        // ✅ ajusta cols
+    return;
+  }
   function getNum(id){
     var el=$id(id); if(!el) return 0;
     var s=(el.textContent||"").trim();
@@ -417,6 +439,7 @@ function updateCombinedSummary(combinedSelector){
     tbody.appendChild(tr);
   });
 
+                                                   
   var trI=document.createElement("tr");
   trI.innerHTML="<td>IVA total</td><td>"+fmt(ivaTotal)+"</td>";
   tbody.appendChild(trI);
