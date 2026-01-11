@@ -1021,3 +1021,71 @@ body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!imp
 body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{margin:0 auto 6px!important;padding:10px 16px!important;line-height:1.15!important}
 body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{margin:2px 0 0!important;line-height:1.25!important}
 
+
+/* === EXPIRITI FIX: Resumen combinado SIEMPRE como img2 (1/2/3) v2026.01.10-r7 === */
+body.page-sistemas #combined-wrap{display:flex;justify-content:center;margin-top:28px!important}
+body.page-sistemas #combined-wrap .combined-summary{
+  width:min(980px,100%)!important;
+  display:grid!important;
+  grid-template-columns:260px 1fr!important; /* col izq título, col der contenido */
+  column-gap:18px!important;
+  row-gap:10px!important;
+  padding:16px!important;
+  align-items:start!important
+}
+@media(max-width:680px){
+  body.page-sistemas #combined-wrap .combined-summary{grid-template-columns:1fr!important}
+}
+
+/* Título SIEMPRE en columna izquierda (arriba) */
+body.page-sistemas #combined-wrap .cs-title{
+  grid-column:1!important;
+  grid-row:1!important;
+  margin:0!important;
+  font-weight:900!important;
+  line-height:1.15!important;
+  white-space:normal!important
+}
+@media(max-width:680px){
+  body.page-sistemas #combined-wrap .cs-title{grid-column:1!important}
+}
+
+/* Todo lo demás a la columna derecha */
+body.page-sistemas #combined-wrap .cs-head,
+body.page-sistemas #combined-wrap .amount-letter{
+  grid-column:2!important
+}
+@media(max-width:680px){
+  body.page-sistemas #combined-wrap .cs-head,
+  body.page-sistemas #combined-wrap .amount-letter{grid-column:1!important}
+}
+
+/* Acomodo interno “texto izq / monto der” */
+body.page-sistemas #combined-wrap .cs-head{
+  display:flex!important;
+  flex-direction:column!important; /* evita que se meta junto al título */
+  gap:10px!important;
+  margin:0!important
+}
+body.page-sistemas #combined-wrap .cs-head > *{
+  display:flex!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  align-items:baseline!important
+}
+body.page-sistemas #combined-wrap .cs-head > * > *:last-child{
+  text-align:right!important;
+  white-space:nowrap!important;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1
+}
+
+/* Total (monto grande) consistente */
+body.page-sistemas #combined-wrap .total-amount{font-weight:950!important}
+
+/* Menos aire entre pill rojo y XML (slot2 + add-more) */
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{margin:0 auto 6px!important;padding:10px 16px!important;line-height:1.15!important}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{margin:2px 0 0!important;line-height:1.25!important}
+
+
