@@ -928,3 +928,65 @@ body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{
   line-height:1.25!important
 }
 
+/* === EXPIRITI: RESUMEN SIEMPRE COMO IMG2 + menos aire XML (SISTEMAS) v2026.01.10-r6 === */
+
+/* 1) RESUMEN COMBINADO: siempre “columna izquierda” para el título */
+body.page-sistemas #combined-wrap{display:flex;justify-content:center;margin-top:28px!important}
+body.page-sistemas #combined-wrap .combined-summary{
+  width:min(980px,100%)!important;
+  position:relative!important;
+  margin:20px auto 0!important;
+  padding:16px 16px 16px 280px!important; /* reserva columna del título */
+  border-radius:14px;
+}
+
+/* título fijo en su columna (evita “Resumen combinadoSubtotal…”) */
+body.page-sistemas #combined-wrap .cs-title{
+  position:absolute!important;
+  left:16px!important;
+  top:16px!important;
+  width:240px!important;
+  margin:0!important;
+  display:block!important;
+  font-weight:900!important;
+  line-height:1.15!important;
+  white-space:normal!important;
+}
+
+/* header/total: que arranquen en la columna derecha */
+body.page-sistemas #combined-wrap .cs-head{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  margin:0 0 10px!important;
+  flex-wrap:wrap!important;
+}
+body.page-sistemas #combined-wrap .total-amount{font-weight:900!important}
+
+/* texto en letras con aire consistente */
+body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
+
+/* mobile: una sola columna (título arriba) */
+@media(max-width:680px){
+  body.page-sistemas #combined-wrap .combined-summary{padding:14px!important}
+  body.page-sistemas #combined-wrap .cs-title{
+    position:static!important;width:auto!important;margin:0 0 10px!important
+  }
+}
+
+/* 2) INTEGRA: menos “aire” entre pill rojo y “XML en Línea…” (slot2 + add-more) */
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{
+  margin:0 auto 6px!important;
+  padding:10px 16px!important;
+  line-height:1.15!important
+}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{
+  margin:2px 0 0!important;
+  line-height:1.25!important;
+  display:block!important;
+  text-align:center!important
+}
+
+
