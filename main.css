@@ -352,6 +352,13 @@ html[data-theme="light"] .page-sistemas .pillbar .pill:not(.active){color:rgba(2
 .page-sistemas .calc-container #tr-tot1 td,
 .page-sistemas .calc-container #tr-tot2 td,
 .page-sistemas .calc-container #tr-tot3 td{position:sticky!important;bottom:0!important;z-index:6!important}
+/* fondo para sticky bottom (Total) */
+.page-sistemas .calc-container #tr-tot1 td,
+.page-sistemas .calc-container #tr-tot2 td,
+.page-sistemas .calc-container #tr-tot3 td{background:rgba(15,23,42,.30)}
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td,
+html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td{background:rgba(255,255,255,.92)}
 
 /* colchón visual para que no “tope” con el border-radius */
 .page-sistemas #calc-row[data-cols="2"] .calc-container table,
@@ -383,3 +390,7 @@ html[data-theme="light"] .page-sistemas .pillbar .pill:not(.active){color:rgba(2
 .page-sistemas #combined-wrap .cs-head{margin-bottom:14px!important}
 .page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
 
+/* total: alinear baseline/centro para que “Total” y el monto queden parejos */
+.page-sistemas .calc-container #tr-tot1 td,
+.page-sistemas .calc-container #tr-tot2 td,
+.page-sistemas .calc-container #tr-tot3 td{vertical-align:middle!important;line-height:1.15!important}
