@@ -1089,3 +1089,54 @@ body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{margin:0 auto 
 body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{margin:2px 0 0!important;line-height:1.25!important}
 
 
+
+
+
+
+
+/* === EXPIRITI FIX MOBILE: Resumen combinado FUERA del scroll de calculadoras v2026.01.10-m1 === */
+@media(max-width:980px){
+
+  /* 1) Si .calc-strip o #calc-row son carril horizontal, #combined-wrap NO debe ser “slide” */
+  body.page-sistemas #combined-wrap{
+    flex:0 0 100%!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:100%!important;
+    order:9999!important;            /* lo manda abajo del carril */
+    scroll-snap-align:none!important; /* evita que “snap” lo trate como tarjeta */
+    margin:16px 0 0!important;
+    overflow:visible!important;
+  }
+
+  /* 2) La caja interna SIEMPRE full-width en mobile */
+  body.page-sistemas #combined-wrap .combined-summary{
+    width:100%!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
+    display:block!important;          /* evita grid/columnas raras en pantallas medianas */
+    padding:14px!important;
+  }
+
+  /* 3) Layout interno simple (título arriba, líneas abajo alineadas) */
+  body.page-sistemas #combined-wrap .cs-title{
+    margin:0 0 10px!important;
+    display:block!important;
+  }
+  body.page-sistemas #combined-wrap .cs-head{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:10px!important;
+    margin:0!important;
+  }
+  body.page-sistemas #combined-wrap .cs-head>*{
+    display:flex!important;
+    justify-content:space-between!important;
+    gap:14px!important;
+    align-items:baseline!important;
+  }
+  body.page-sistemas #combined-wrap .cs-head>*:last-child{font-weight:950!important} /* Total */
+  body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
+}
+
+
