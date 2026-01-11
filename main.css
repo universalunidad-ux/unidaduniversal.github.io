@@ -633,3 +633,83 @@ html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[t
   .page-sistemas .calc-container tbody td:first-child{word-break:break-word!important}
 }
 
+
+/* =========================================================
+ Expiriti — PATCH UI CALC (IMG1/IMG2/IMG3) v2026.01.10-p1
+ Objetivo:
+ - IMG1: resumen combinado con aire + panel derecho centrado vertical + nota XML centrada
+ - IMG2/IMG3 desktop: tablas NO se “cortan”; siempre puedes llegar a Subtotal/IVA/Total (scroll interno real)
+ - IMG2: “¿Agregar un tercer sistema?” rojo tipo pill (no full width)
+ Pegar AL FINAL (y evita tener otros patches que reescriban lo mismo).
+========================================================= */
+
+/* (A) IMG1: Panel derecho centrado verticalmente cuando data-cols="1" */
+@media(min-width:981px){
+  .page-sistemas #calc-row[data-cols="1"]{align-items:stretch}
+  .page-sistemas #calc-row[data-cols="1"] #calc-slot-2{
+    height:100%!important;min-height:0!important;
+    display:flex!important;flex-direction:column!important;
+    justify-content:center!important;align-items:stretch!important
+  }
+  .page-sistemas #calc-row[data-cols="1"] #calc-slot-2 .placeholder{
+    height:100%!important;min-height:0!important;
+    display:flex!important;flex-direction:column!important;
+    justify-content:center!important
+  }
+}
+
+/* (B) IMG1: Nota “XML en Línea…” centrada (normalmente es un <small>) */
+.page-sistemas #calc-slot-2 .note small,
+.page-sistemas #add-more-panel .note small{
+  display:block!important;text-align:center!important;
+  margin:8px 0 0!important;opacity:.9!important
+}
+
+/* (C) IMG1: Resumen combinado NO pegado (solo aire, sin cambiar estilo) */
+.page-sistemas #combined-wrap{margin-top:24px!important}
+.page-sistemas #combined-wrap .combined-summary{margin-top:18px!important;padding-top:16px!important}
+.page-sistemas #combined-wrap .cs-head{margin-bottom:14px!important}
+.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
+
+/* (D) IMG2/IMG3 desktop: FIX definitivo “tabla cortada”
+   Clave: el alto fijo vive en .calc-container; la tabla debe ser el área scrolleable real.
+*/
+@media(min-width:981px){
+  /* 1) Contenedor: flex correcto y permite que el hijo scrollee */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container{
+    display:flex!important;flex-direction:column!important;
+    min-height:0!important;overflow:hidden!important
+  }
+
+  /* 2) La tabla: área scrolleable (y NO se pierde el final) */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container table,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container table{
+    flex:1 1 auto!important;min-height:0!important;max-height:100%!important;
+    display:block!important;overflow:auto!important;-webkit-overflow-scrolling:touch;
+    /* evita “última fila pegada” visualmente */
+    padding-bottom:2px!important
+  }
+
+  /* 3) Mantén estructura de tabla al convertir a block */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container thead,
+  .page-sistemas #calc-row[data-cols="2"] .calc-container tbody,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container thead,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container tbody{
+    display:table!important;width:100%!important;table-layout:fixed!important
+  }
+
+  /* 4) Header sticky dentro del scroll */
+  .page-sistemas #calc-row[data-cols="2"] .calc-container thead th,
+  .page-sistemas #calc-row[data-cols="3"] .calc-container thead th{
+    position:sticky!important;top:0!important;z-index:5!important
+  }
+}
+
+/* (E) IMG2: “¿Agregar un tercer sistema?” rojo corto (pill centrada, no full width) */
+html[data-theme="light"] .page-sistemas #add-more-panel .note strong{
+  width:fit-content!important;max-width:min(520px,92%)!important;
+  margin:0 auto 10px!important;
+  padding:12px 18px!important;border-radius:999px!important;
+  text-align:center!important
+}
