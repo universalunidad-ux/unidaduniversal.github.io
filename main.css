@@ -764,3 +764,94 @@ html[data-theme="light"] .page-sistemas #add-more-panel .note strong{
 .page-sistemas :is(.integrate-strip,.bundle-strip,.add-system-strip,.integrate-card,#integrate-strip,#bundle-strip) .integrate-note{margin-top:4px}
 
 /* === FIN PATCH === */
+
+/*==========================
+EXPIRITI — PATCH ÚNICO (IMG1/2/3) v2026.01.10-r3
+- Resumen combinado: aire tipo IMG3 (1/2/3)
+- Carrusel: menos aire entre pill rojo y nota XML
+- Tablas: NO se cortan (scroll interno real en desktop 2/3)
+- Mobile: scroll lateral SOLO calculadoras; add-more-panel visible (sticky)
+Pegar AL FINAL. (Ideal: elimina patches viejos que toquen #combined-wrap / table display:block / calc-row mobile)
+==========================*/
+
+/* (1) RESUMEN COMBINADO: mismo “aire” siempre (como IMG3) */
+body.page-sistemas #combined-wrap{margin-top:28px!important}
+body.page-sistemas #combined-wrap .combined-summary{margin:20px auto 0!important;padding:16px 16px!important}
+body.page-sistemas #combined-wrap .cs-head{margin-bottom:14px!important;gap:12px 16px!important}
+body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
+
+/* (2) CARRUSEL/PANEL: reduce aire entre pill rojo y “XML en Línea…” (slot2 + add-more) */
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{margin:0 auto 6px!important}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{margin:4px 0 0!important;line-height:1.25!important}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:12px 14px!important}
+@media(max-width:520px){body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}}
+
+/* (3) DESKTOP (2/3): FIX definitivo “tabla cortada”
+   - calc-container mantiene altura fija
+   - tabla es el área scrolleable real
+*/
+@media(min-width:981px){
+  body.page-sistemas #calc-row[data-cols="2"] .calc-container,
+  body.page-sistemas #calc-row[data-cols="3"] .calc-container{
+    display:flex!important;flex-direction:column!important;
+    height:var(--calc-card-h,560px)!important;min-height:0!important;overflow:hidden!important
+  }
+  @media(max-width:1180px){
+    body.page-sistemas #calc-row[data-cols="2"] .calc-container,
+    body.page-sistemas #calc-row[data-cols="3"] .calc-container{height:var(--calc-card-h-md,540px)!important}
+  }
+  body.page-sistemas #calc-row[data-cols="2"] .calc-container form,
+  body.page-sistemas #calc-row[data-cols="3"] .calc-container form{flex:0 0 auto!important}
+  body.page-sistemas #calc-row[data-cols="2"] .calc-container table,
+  body.page-sistemas #calc-row[data-cols="3"] .calc-container table{
+    flex:1 1 auto!important;min-height:0!important;max-height:100%!important;
+    display:block!important;overflow:auto!important;-webkit-overflow-scrolling:touch;
+    margin:10px 0 0!important;padding-bottom:2px!important
+  }
+  body.page-sistemas #calc-row[data-cols="2"] .calc-container thead,
+  body.page-sistemas #calc-row[data-cols="2"] .calc-container tbody,
+  body.page-sistemas #calc-row[data-cols="3"] .calc-container thead,
+  body.page-sistemas #calc-row[data-cols="3"] .calc-container tbody{display:table!important;width:100%!important;table-layout:fixed!important}
+  body.page-sistemas #calc-row[data-cols="2"] .calc-container thead th,
+  body.page-sistemas #calc-row[data-cols="3"] .calc-container thead th{position:sticky!important;top:0!important;z-index:6!important}
+}
+
+/* (4) MOBILE/TABLET: evita “no se ve nada” + scroll lateral SOLO calculadoras (2/3) */
+@media(max-width:980px){
+  /* Asegura que no haya contenedores “cortando” */
+  body.page-sistemas .calc-strip,body.page-sistemas #calc-row{overflow:visible!important}
+
+  /* 2 o 3 calculadoras => carril horizontal */
+  body.page-sistemas #calc-row[data-cols="2"],
+  body.page-sistemas #calc-row[data-cols="3"]{
+    display:flex!important;gap:14px!important;
+    overflow-x:auto!important;overflow-y:visible!important;
+    -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
+    padding:0 8px 10px!important;margin:0 auto!important;max-width:100%!important
+  }
+  /* tarjetas calculadora (las que sí deben scrollear lateral) */
+  body.page-sistemas #calc-row[data-cols="2"]>.calc-container,
+  body.page-sistemas #calc-row[data-cols="2"]>#calc-secondary,
+  body.page-sistemas #calc-row[data-cols="3"]>.calc-container,
+  body.page-sistemas #calc-row[data-cols="3"]>#calc-secondary,
+  body.page-sistemas #calc-row[data-cols="3"]>#calc-tertiary{
+    flex:0 0 min(92vw,520px)!important;max-width:min(92vw,520px)!important;
+    scroll-snap-align:start!important;min-width:0!important
+  }
+  /* add-more-panel “fuera del scroll” en la práctica: sticky al borde izquierdo del carril */
+  body.page-sistemas #calc-row[data-cols="2"] #add-more-panel{
+    flex:0 0 100%!important;max-width:100%!important;order:99!important;
+    position:sticky!important;left:0!important;scroll-snap-align:none!important
+  }
+
+  /* Mobile: cards sin alturas forzadas (evita recortes) */
+  body.page-sistemas .calc-container{height:auto!important;max-height:none!important}
+
+  /* Tabla: si se aprieta, permite scroll-x sin romper importes */
+  body.page-sistemas .calc-container table{display:block!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}
+  body.page-sistemas .calc-container thead,body.page-sistemas .calc-container tbody{display:table!important;width:100%!important;table-layout:auto!important}
+  body.page-sistemas .calc-container thead th:last-child,body.page-sistemas .calc-container tbody td:last-child{white-space:nowrap!important;text-align:right!important;min-width:150px!important}
+}
+
+/* (5) MICRO-FIX: alineación visual del renglón Total (si algún CSS viejo lo desfasó) */
+body.page-sistemas .calc-container :is(#tr-tot1,#tr-tot2,#tr-tot3) td{vertical-align:middle!important;line-height:1.2!important}
