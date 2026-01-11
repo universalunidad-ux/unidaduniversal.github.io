@@ -198,7 +198,7 @@ function createCalculator(container,sistemaName,idSuffix,combinedSelector){
   var instWrap=document.createElement("div"); instWrap.className="inst-wrap";
   instWrap.innerHTML='<div class="instalacion-box"><label>'+
     '<input type="checkbox" id="instOn'+idSuffix+'" checked>'+
-    '<span><strong id="instLblSTRONG'+idSuffix+'">Instalación (opcional)</strong> — Servicio ofrecido por <strong>Expiriti</strong> para instalar en tu equipo tu sistema.</span>'+
+'<span><strong id="instLblSTRONG'+idSuffix+'">Instalación (opcional)</strong> — Instalamos el sistema en tu equipo.</span>'
     "</label></div>";
   form.appendChild(instWrap);
 
