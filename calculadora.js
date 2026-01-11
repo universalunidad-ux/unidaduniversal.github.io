@@ -158,6 +158,15 @@ function paintSystemButtons(wrapId,onPick,excludeNames){
                 "@media(max-width:768px){.calc-container form{grid-template-columns:1fr!important}}";
   document.head.appendChild(st);
 })();
+           /* ===== CSS patch: instalación “apagada” cuando checkbox OFF ===== */
+(function(){
+  var id="calc-inst-dim-patch"; if($id(id)) return;
+  var st=document.createElement("style"); st.id=id;
+  st.textContent=
+    ".inst-wrap input[type=checkbox]:not(:checked) ~ span{opacity:.65}";
+  document.head.appendChild(st);
+})();
+
 
 /* =========================================================
   Render calculadora (IDs: lic1/usr1/tot1 ... lic3/usr3/tot3)
@@ -195,14 +204,22 @@ function createCalculator(container,sistemaName,idSuffix,combinedSelector){
   var userInput=document.createElement("input"); userInput.type="number"; userInput.id="usr"+idSuffix; userInput.min="1"; userInput.value="1";
   userLabel.appendChild(userInput); form.appendChild(userLabel);
 
+
+
 var instWrap=document.createElement("div");
 instWrap.className="inst-wrap";
 instWrap.innerHTML=
   '<div class="instalacion-box"><label>'+
     '<input type="checkbox" id="instOn'+idSuffix+'" checked>'+
-    '<span><strong id="instLblSTRONG'+idSuffix+'">Instalación (opcional)</strong> | Instalamos el sistema en tu equipo.</span>'+
+    '<span>'+
+      '<strong id="instLblSTRONG'+idSuffix+'">Instalación (1)</strong>'+
+      '<span id="instLblTail'+idSuffix+'">: Instalamos el sistema en tu equipo.</span>'+
+    '</span>'+
   '</label></div>';
 form.appendChild(instWrap);
+
+
+
 
 container.appendChild(form);
 
@@ -334,11 +351,17 @@ try{ setCalcCountClass(); }catch(e){}
     var elLblInstDisc=$id("lbl-instdisc"+idSuffix); if(elLblInstDisc) elLblInstDisc.textContent=inst50Label;
     var elLblSub=$id("lbl-sub"+idSuffix); if(elLblSub) elLblSub.textContent=subLabel;
 
-    var strong=$id("instLblSTRONG"+idSuffix);
-    if(strong){
-      if(!instOn||!instOn.checked) strong.textContent="Instalación (opcional)";
-      else strong.textContent=(instCount===1?"Instalación":"Instalaciones")+" ("+instCount+")";
-    }
+// Copy instalación (SIEMPRE igual; no usa "opcional")
+var nInst=Math.max(1,usuarios); // "n" = usuarios
+var strong=$id("instLblSTRONG"+idSuffix);
+var tailEl=$id("instLblTail"+idSuffix);
+
+if(strong) strong.textContent="Instalación ("+nInst+")";
+if(tailEl) tailEl.textContent=(nInst===1)
+  ? ": Instalamos el sistema en tu equipo."
+  : ": Instalamos el sistema en tus equipos.";
+
+
 
     var showInst=!!(instOn&&instOn.checked);
 
