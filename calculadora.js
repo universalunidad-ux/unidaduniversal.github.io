@@ -195,14 +195,17 @@ function createCalculator(container,sistemaName,idSuffix,combinedSelector){
   var userInput=document.createElement("input"); userInput.type="number"; userInput.id="usr"+idSuffix; userInput.min="1"; userInput.value="1";
   userLabel.appendChild(userInput); form.appendChild(userLabel);
 
-  var instWrap=document.createElement("div"); instWrap.className="inst-wrap";
-  instWrap.innerHTML='<div class="instalacion-box"><label>'+
+var instWrap=document.createElement("div");
+instWrap.className="inst-wrap";
+instWrap.innerHTML=
+  '<div class="instalacion-box"><label>'+
     '<input type="checkbox" id="instOn'+idSuffix+'" checked>'+
-'<span><strong id="instLblSTRONG'+idSuffix+'">Instalación (opcional)</strong> — Instalamos el sistema en tu equipo.</span>'
-    "</label></div>";
-  form.appendChild(instWrap);
+    '<span><strong id="instLblSTRONG'+idSuffix+'">Instalación (opcional)</strong> | Instalamos el sistema en tu equipo.</span>'+
+  '</label></div>';
+form.appendChild(instWrap);
 
-  container.appendChild(form);
+container.appendChild(form);
+
 
   var results=document.createElement("div"); results.className="calc-results";
   var table=document.createElement("table"); table.className="calc-table";
