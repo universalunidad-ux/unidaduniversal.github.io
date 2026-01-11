@@ -989,4 +989,35 @@ body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{
   text-align:center!important
 }
 
+/* === EXPIRITI FIX: Resumen combinado igual en 1/2/3 + menos aire XML v2026.01.10-r5 === */
+
+/* 1) RESUMEN COMBINADO: SIEMPRE como img2 (aunque rows caigan dentro de .cs-head) */
+body.page-sistemas #combined-wrap .combined-summary{max-width:min(980px,100%)!important}
+body.page-sistemas #combined-wrap .cs-head{display:flex!important;flex-wrap:wrap!important;align-items:flex-start!important;gap:10px 16px!important;margin-bottom:14px!important}
+body.page-sistemas #combined-wrap .cs-title{flex:0 0 260px!important;min-width:260px!important;font-weight:900!important;line-height:1.15!important}
+@media(max-width:980px){body.page-sistemas #combined-wrap .cs-title{flex:0 0 220px!important;min-width:220px!important}}
+@media(max-width:680px){body.page-sistemas #combined-wrap .cs-title{flex:0 0 100%!important;min-width:0!important}}
+body.page-sistemas #combined-wrap .total-amount{margin-left:auto!important;font-weight:950!important}
+
+/* Si Subtotal/IVA/Total quedaron dentro del header, los bajamos a “fila nueva” full width */
+body.page-sistemas #combined-wrap .cs-head>*:not(.cs-title):not(.total-amount){
+  flex:0 0 100%!important;max-width:100%!important
+}
+/* Y formateamos cada línea como “texto izq / monto der” */
+body.page-sistemas #combined-wrap .cs-head>*:not(.cs-title):not(.total-amount){
+  display:flex!important;justify-content:space-between!important;gap:14px!important;align-items:baseline!important
+}
+body.page-sistemas #combined-wrap .cs-head>*:not(.cs-title):not(.total-amount)>*:last-child{
+  text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1
+}
+
+/* Aire consistente (evita “pegado” en 1 y 3) */
+body.page-sistemas #combined-wrap{margin-top:28px!important}
+body.page-sistemas #combined-wrap .combined-summary{margin:20px auto 0!important;padding:16px 16px!important}
+body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
+
+/* 2) INTEGRA: menos aire entre pill rojo y “XML en Línea…” (slot2 + add-more) */
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{margin:0 auto 6px!important;padding:10px 16px!important;line-height:1.15!important}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{margin:2px 0 0!important;line-height:1.25!important}
 
