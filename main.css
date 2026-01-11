@@ -855,3 +855,50 @@ body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:12px 14px!imp
 
 /* (5) MICRO-FIX: alineación visual del renglón Total (si algún CSS viejo lo desfasó) */
 body.page-sistemas .calc-container :is(#tr-tot1,#tr-tot2,#tr-tot3) td{vertical-align:middle!important;line-height:1.2!important}
+
+
+/* =========================
+EXPIRITI — NO INTERNAL SCROLL v2026.01.10-ns1
+Objetivo:
+- Quitar height fijo y scroll interno
+- Tablas siempre completas (Subtotal/IVA/Total visibles)
+- 1/2/3 calculadoras: cards auto-height
+Pegar AL FINAL.
+========================= */
+
+/* (1) Nunca forzar altura fija en calculadoras (mata recortes) */
+@media(min-width:981px){
+  body.page-sistemas #calc-row[data-cols="2"] .calc-container,
+  body.page-sistemas #calc-row[data-cols="3"] .calc-container,
+  body.page-sistemas #calc-row[data-cols="1"] .calc-container{
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important; /* clave */
+    display:block!important;    /* cancela flex “alto fijo” viejo */
+  }
+}
+
+/* (2) Tabla: vuelve a tabla normal (sin display:block, sin overflow interno) */
+body.page-sistemas .calc-container table{
+  display:table!important;
+  overflow:visible!important;
+  max-height:none!important;
+}
+body.page-sistemas .calc-container thead,
+body.page-sistemas .calc-container tbody{
+  display:table-row-group!important;
+  width:auto!important;
+  table-layout:auto!important;
+}
+
+/* (3) Quita sticky header (solo tiene sentido con scroll interno) */
+body.page-sistemas .calc-container thead th{
+  position:static!important;
+  top:auto!important;
+}
+
+/* (4) Si algún bloque viejo dejó “overflow hidden” en wrappers, lo anulamos */
+body.page-sistemas .calc-strip,
+body.page-sistemas #calc-row{
+  overflow:visible!important;
+}
