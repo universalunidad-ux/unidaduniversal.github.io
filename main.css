@@ -902,3 +902,29 @@ body.page-sistemas .calc-strip,
 body.page-sistemas #calc-row{
   overflow:visible!important;
 }
+
+/* =========================
+EXPIRITI — PATCH FINAL (solo 2 cosas) v2026.01.10-r4
+1) Resumen combinado: mismo “aire” cuando hay 1 calc (data-cols="1")
+2) Integra: menos altura/aire entre pill rojo y “XML en Línea…”
+Pegar AL FINAL.
+========================= */
+
+/* (1) RESUMEN COMBINADO: cuando hay 1 calculadora, dale aire extra SIEMPRE */
+body.page-sistemas #calc-row[data-cols="1"] ~ #combined-wrap{margin-top:28px!important}
+body.page-sistemas #calc-row[data-cols="1"] ~ #combined-wrap .combined-summary{margin-top:20px!important;padding:16px 16px!important}
+body.page-sistemas #calc-row[data-cols="1"] ~ #combined-wrap .cs-head{margin-bottom:14px!important;gap:12px 16px!important}
+body.page-sistemas #calc-row[data-cols="1"] ~ #combined-wrap .amount-letter{margin-top:10px!important}
+
+/* (2) INTEGRA (slot-2 y add-more): reduce aire entre pill y texto XML + baja altura del pill */
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{
+  margin:0 auto 6px!important;          /* antes estaba muy separado */
+  padding:10px 16px!important;         /* baja altura del pill */
+  line-height:1.15!important
+}
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{
+  margin:2px 0 0!important;            /* pega un poco el texto al pill */
+  line-height:1.25!important
+}
+
