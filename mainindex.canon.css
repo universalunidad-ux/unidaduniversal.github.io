@@ -394,10 +394,6 @@
 .page-index.debug-freeze #productos-con .carousel[id^="carouselReels"] .carousel-track,
 .page-index.debug-freeze #servicios .carousel[id^="carouselReels"] .carousel-track{overflow:hidden!important;align-items:center!important}
 
-/* flechas reels ocultas en mobile (hero conserva flechas) */
-@media(max-width:980px){
-  .page-index.debug-freeze .carousel[id^="carouselReels"] .arrowCircle{display:none!important}
-}
 
 /* Tabs reels */
 .page-index.debug-freeze .reel-sys-tabs{
@@ -728,3 +724,137 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
 @supports not (-webkit-background-clip:text){.page-index .gradient-word{color:var(--brand-2,#0ea5e9)}}
 
 
+/* === Expiriti INDEX PATCH (p3) v2026.01.11 ===
+   - Flechas reels en mobile (revierte display:none)
+   - Hero centrado vertical + pills sin encimar + reserva alturas (menos CLS)
+   - “Reels servicios” visible en desktop (no colapsa)
+   - Títulos de secciones con color consistente (no amarillo verdoso)
+   - Separación vertical entre secciones (no “chocan” bordes)
+   - Cards/tabs de Sistemas ~30% más compactos en mobile
+================================================ */
+
+.page-index,
+.page-index.debug-freeze{
+  --ix-maxw:var(--maxw,1200px);
+  --ix-pad:clamp(14px,3.2vw,22px);
+  --ix-h2:clamp(22px,2vw,32px);
+  --ix-h3:clamp(18px,1.5vw,22px);
+  --ix-title-color:var(--brand-2,#0ea5e9);
+}
+
+/* (0) ANCHO/MÁRGENES: evita secciones “pegadas a los lados” */
+.page-index main .container,
+.page-index.debug-freeze main .container{
+  width:min(var(--ix-maxw),calc(100% - (var(--ix-pad)*2)))!important;
+  margin-inline:auto!important;
+  padding-inline:var(--ix-pad)!important;
+}
+
+/* (1) TITULOS: mismo color/estilo (no amarillo verdoso) */
+.page-index .section-title h2,
+.page-index #productos-con .prod-title,
+.page-index #servicios .section-title h2,
+.page-index #promociones .section-title h2,
+.page-index #faq .section-title h2,
+.page-index #contacto h2,
+.page-index .hero-gallery-header h2{
+  color:var(--ix-title-color)!important;
+  font-size:var(--ix-h2)!important;
+  letter-spacing:.2px!important;
+}
+.page-index .section-title h3{color:var(--ix-title-color)!important;font-size:var(--ix-h3)!important}
+
+/* (2) HERO: centrado vertical + pills sin encimar + reserva alturas (menos CLS) */
+.page-index .hero{
+  min-height:calc(100svh - var(--ghh,68px))!important;
+  display:flex!important;
+  align-items:center!important;
+}
+@supports (height:100dvh){
+  .page-index .hero{min-height:calc(100dvh - var(--ghh,68px))!important}
+}
+.page-index .hero .hero-grid{align-items:center!important;gap:clamp(14px,2.2vw,26px)!important}
+.page-index .hero .kicker{min-height:34px!important;line-height:1.15!important}
+.page-index .hero .badges{min-height:34px!important;margin-top:12px!important}
+.page-index .hero .hero-btn{margin-top:14px!important}
+
+/* separa pills (tabs) del carrusel/imagen para que NO se encime */
+.page-index .hero-gallery-groups{margin:10px 0 12px!important}
+.page-index .hero-carousel,
+.page-index #heroGalleryCarousel{margin-top:10px!important}
+
+/* reserva altura del track (reduce “saltos” al cargar fuentes/imagenes) */
+.page-index .hero-carousel .carousel-track,
+.page-index #heroGalleryCarousel .carousel-track{min-height:320px!important}
+@media(min-width:980px){
+  .page-index .hero-carousel .carousel-track,
+  .page-index #heroGalleryCarousel .carousel-track{min-height:420px!important}
+}
+
+/* (3) GRADIENTE HERO: consistente (tu “modo oscuro”) */
+.page-index .gradient-word{
+  background:linear-gradient(90deg,var(--brand-2,#0ea5e9),var(--brand,#2dd4bf))!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;color:transparent!important;
+}
+@supports not (-webkit-background-clip:text){
+  .page-index .gradient-word{color:var(--brand-2,#0ea5e9)!important;background:none!important}
+}
+
+/* (4) FLECHAS EN MOBILE: REELS + HERO (revierte tu display:none) */
+.page-index .carousel{position:relative!important}
+.page-index .carousel .arrowCircle{
+  display:flex!important; /* <-- clave: pisa display:none */
+  align-items:center!important;justify-content:center!important;
+  width:44px!important;height:44px!important;border-radius:999px!important;
+  position:absolute!important;top:50%!important;transform:translateY(-50%)!important;
+  z-index:50!important;opacity:1!important;pointer-events:auto!important;
+  background:rgba(255,255,255,.92)!important;
+  border:1px solid rgba(15,23,42,.12)!important;
+  box-shadow:0 10px 30px rgba(2,8,23,.18)!important;
+}
+.page-index .carousel .arrowCircle.prev{left:10px!important}
+.page-index .carousel .arrowCircle.next{right:10px!important}
+.page-index .carousel .arrowCircle .chev{font-size:26px!important;line-height:1!important;color:#0f172a!important}
+
+/* si algún parent las “corta” */
+.page-index .reels-home-card,
+.page-index .hero-gallery-card,
+.page-index .grid-2{overflow:visible!important}
+
+/* (5) REELS “SERVICIOS” visible en desktop (no colapsa/oculta) */
+.page-index #servicios .reels-home-card{display:block!important;min-height:520px!important}
+.page-index #servicios [id*="carouselReels"][id*="serv"]{display:block!important;min-height:380px!important}
+.page-index #servicios [id*="carouselReels"][id*="serv"] .carousel-track{min-height:360px!important}
+@media(max-width:900px){
+  .page-index #servicios .reels-home-card{min-height:460px!important}
+  .page-index #servicios [id*="carouselReels"][id*="serv"]{min-height:320px!important}
+  .page-index #servicios [id*="carouselReels"][id*="serv"] .carousel-track{min-height:300px!important}
+}
+
+/* (6) MOBILE: Sistemas ~30% más compacto (cards + tabs + reel-tabs) */
+@media(max-width:768px){
+  .page-index #productos-con .cards-products{gap:12px!important}
+  .page-index #productos-con .product-card .body{padding:12px!important}
+  .page-index #productos-con .product-card p{font-size:.92rem!important;line-height:1.35!important}
+  .page-index #productos-con .btn-vermas{padding:8px 12px!important;font-size:.92rem!important}
+  .page-index #productos-con .logo-sistema{max-width:92%!important;height:auto!important}
+  .page-index #productos-con .prod-tabs{gap:8px!important}
+  .page-index #productos-con .prod-tabs .tab{padding:10px 12px!important;font-size:.92rem!important}
+  .page-index .reel-sys-tabs{gap:10px!important}
+  .page-index .reel-sys-tabs .reel-tab{padding:10px 10px!important}
+  .page-index .reel-sys-tabs .reel-tab img{width:44px!important;height:44px!important}
+  .page-index .reel-sys-tabs .reel-tab span{font-size:.86rem!important}
+}
+
+/* (7) SEPARACIÓN VERTICAL: evita “choque” de bordes entre secciones */
+.page-index main>section{padding-block:30px!important}
+@media(max-width:768px){.page-index main>section{padding-block:24px!important}}
+.page-index #productos-con{padding-bottom:34px!important}
+.page-index #sectores{padding-top:18px!important;padding-bottom:34px!important}
+.page-index #servicios{padding-top:34px!important}
+@media(max-width:768px){
+  .page-index #productos-con{padding-bottom:26px!important}
+  .page-index #sectores{padding-top:14px!important;padding-bottom:26px!important}
+  .page-index #servicios{padding-top:26px!important}
+}
