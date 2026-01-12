@@ -503,3 +503,126 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
   background:rgba(45,212,191,.95)!important;
   border-color:rgba(45,212,191,.95)!important;
 }
+
+
+/* ===========================
+   Expiriti — mainindex.canon.css PATCH v2026.01.11-idxfix
+   Scope: body.page-index.debug-freeze
+   - Flechas carruseles visibles en mobile
+   - Grid sistemas ~30% más compacto en mobile
+   - Reels de servicios visible en desktop (no colapsa/oculta)
+   - Gradiente hero consistente (mismo look que dark)
+   - Títulos de secciones con color correcto + homologa tamaños
+   - Márgenes: TODAS las secciones con “container” como el HERO
+=========================== */
+
+.page-index.debug-freeze{
+  --ix-maxw:1200px; /* ajusta si tu hero usa otro */
+  --ix-pad:clamp(14px,3.2vw,22px);
+  --ix-title:clamp(28px,2.6vw,40px);
+  --ix-h2:clamp(22px,2vw,32px);
+  --ix-h3:clamp(18px,1.5vw,22px);
+}
+
+/* 1) MARGEN GLOBAL: asegura que “container” NO se vaya a 100% en secciones fuera del hero */
+.page-index.debug-freeze .container{
+  width:min(var(--ix-maxw),calc(100% - (var(--ix-pad)*2)));
+  margin-inline:auto;
+}
+
+/* 2) HERO: separa botón/columna vs hero-gallery (tu “muy pegado”) */
+.page-index.debug-freeze .hero .hero-grid{
+  gap:clamp(14px,2.2vw,26px);
+  align-items:start;
+}
+.page-index.debug-freeze .hero .hero-btn{margin-top:clamp(12px,2vw,18px)}
+
+/* 3) GRADIENT WORD: mismo look que “modo oscuro” (sin depender del scheme) */
+.page-index.debug-freeze .gradient-word{
+  background-image:linear-gradient(90deg,var(--brand,#2dd4bf),var(--brand-2,#60a5fa));
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+}
+
+/* 4) TITULOS DE SECCIONES: color (quita “amarillo verdoso”) + homologa tamaños */
+.page-index.debug-freeze .section-title h2,
+.page-index.debug-freeze #contacto h2,
+.page-index.debug-freeze #faq .section-title h2,
+.page-index.debug-freeze #promociones .section-title h2{
+  font-size:var(--ix-h2);
+  color:var(--brand,#2dd4bf);
+  letter-spacing:.2px;
+}
+.page-index.debug-freeze .section-title h3,
+.page-index.debug-freeze #contacto .map-card .section-title h3{
+  font-size:var(--ix-h3);
+  color:var(--brand,#2dd4bf);
+}
+
+/* 5) “SistemasCONTPAQi” (prod-title) demasiado chico en desktop: homologa */
+.page-index.debug-freeze .prod-title{
+  font-size:var(--ix-h2);
+  line-height:1.1;
+}
+.page-index.debug-freeze .prod-title span{opacity:.95}
+
+/* 6) MOBILE: flechas de carrusel NO visibles (sube z-index, tamaño, contraste, hit-area) */
+.page-index.debug-freeze .carousel{position:relative}
+.page-index.debug-freeze .carousel .arrowCircle{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:30;
+  width:44px;height:44px; /* hit-area */
+  display:flex;align-items:center;justify-content:center;
+  opacity:1;
+  pointer-events:auto;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(15,23,42,.12);
+  box-shadow:0 10px 30px rgba(2,8,23,.18);
+}
+.page-index.debug-freeze .carousel .arrowCircle .chev{font-size:26px;line-height:1;color:#0f172a}
+.page-index.debug-freeze .carousel .arrowCircle.prev{left:10px}
+.page-index.debug-freeze .carousel .arrowCircle.next{right:10px}
+/* si algún contenedor las está “cortando” */
+.page-index.debug-freeze .reels-home-card,
+.page-index.debug-freeze .hero-gallery-card{overflow:visible}
+
+/* 7) MOBILE: “Sistemas CONTPAQi” grids ~30% más chicos (cards + logos + paddings) */
+@media(max-width:768px){
+  .page-index.debug-freeze #productos-con .cards-products{
+    gap:10px;
+  }
+  .page-index.debug-freeze #productos-con .product-card .body{
+    padding:12px; /* antes suele ser 16 */
+  }
+  .page-index.debug-freeze #productos-con .logo-sistema{
+    max-width:92%; /* reduce visual */
+    height:auto;
+  }
+  .page-index.debug-freeze #productos-con .product-card p{
+    font-size:.92rem;
+  }
+  .page-index.debug-freeze #productos-con .btn-vermas{
+    padding:8px 10px;
+    font-size:.9rem;
+  }
+  /* tabs (Contables/Comerciales/Nube/Productividad) más compactos */
+  .page-index.debug-freeze .prod-tabs .tab{
+    padding:10px 12px;
+    font-size:.95rem;
+  }
+}
+
+/* 8) DESKTOP: “Reels de servicios ExpIRI TI” no se ve (evita colapso del carrusel/track) */
+@media(min-width:992px){
+  .page-index.debug-freeze #servicios .reels-home-card{display:block}
+  .page-index.debug-freeze #servicios #carouselReels-servicios{min-height:420px}
+  .page-index.debug-freeze #servicios #carouselReels-servicios .carousel-track{min-height:420px}
+}
+
+/* 9) Asegura que secciones “section-full” NO se estiren sin padding visual */
+.page-index.debug-freeze .section-full{
+  padding-inline:0; /* el padding lo controla .container */
+}
+
