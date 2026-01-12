@@ -515,7 +515,8 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
   .page-index.debug-freeze .container{
     width:100%!important;
     margin-inline:auto!important;
-    padding-inline:max(12px,env(safe-area-inset-left,0px))!important;
+    padding-left:max(12px,env(safe-area-inset-left,0px))!important;
+    padding-right:max(12px,env(safe-area-inset-right,0px))!important;
   }
 }
 
@@ -568,6 +569,19 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
 /* (D) HERO GALLERY: evita encimado (imagen NO tapa flechas/tabs/dots) + reduce CLS */
 .page-index .hero-gallery-card,
 .page-index.debug-freeze .hero-gallery-card{position:relative!important;isolation:isolate!important}
+/* capa base del carrusel */
+.page-index #heroGalleryCarousel,
+.page-index.debug-freeze #heroGalleryCarousel{position:relative!important}
+
+/* asegura que tabs y header queden por encima del carrusel */
+.page-index .hero-gallery-header,
+.page-index .hero-gallery-groups,
+.page-index.debug-freeze .hero-gallery-header,
+.page-index.debug-freeze .hero-gallery-groups{position:relative!important;z-index:60!important}
+
+/* asegura que nav (dots) quede arriba */
+.page-index #heroGalleryCarousel .carousel-nav,
+.page-index.debug-freeze #heroGalleryCarousel .carousel-nav{position:relative!important;z-index:60!important}
 
 /* separa pills/tabs del carrusel (lo estabas viendo “pegado”) */
 .page-index .hero-gallery-groups,
@@ -636,14 +650,18 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
   max-width:clamp(140px,34vw,180px)!important;
 }
 
-/* (F) BOTONES SERVICIOS: permite wrap (Implementaciones/Migraciones/Desarrollos) sin cortar letras */
-.page-index #servicios :is(button,a,.service-card,.icon-card,.servicio-card) span{
+/* (F) SERVICIOS: wrap seguro solo en labels de los tiles */
+.page-index #servicios .icon-grid span,
+.page-index #servicios .service-grid span,
+.page-index #servicios .service-tile span{
   white-space:normal!important;
-  word-break:break-word!important;
   overflow-wrap:anywhere!important;
+  word-break:break-word!important;
   line-height:1.05!important;
   hyphens:auto;
 }
+
+
 /* si tu layout usa grid de iconos, evita overflow horizontal */
 .page-index #servicios .grid-2,
 .page-index #servicios .grid-3,
