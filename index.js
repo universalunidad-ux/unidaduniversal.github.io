@@ -61,62 +61,91 @@ function bindWheelOnTabs(){
     },{passive:false})
   })
 }
-            /* =========================
-   3.1) TOUCH FIX (Mobile): bloquear scroll vertical al swippear horizontal
-   - Solo actúa en contenedores con overflow-x real
-   - Evita “desesperación” en tabs/pills/badges/carousels
+ /* =========================
+   3.1) TOUCH ASSIST (Mobile) — VERTICAL-FIRST + LOCK SOLO CON INTENCIÓN
+   - Permite SIEMPRE scroll down fluido
+   - Solo bloquea vertical cuando el gesto es claramente horizontal
+   - Libera el lock en bordes (no te “atoras”)
 ========================= */
 function bindTouchHorizontalLock(){
   const sels=[
     ".hero-gallery-groups",
     ".hero-gallery-tabs",
     ".prod-tabs",
-     ".carousel",
     ".promo-filters",
     ".reel-sys-tabs",
     ".badges",
-    "#servicesCarousel",
-    ".cards-services.is-carousel",
-    ".carousel .carousel-track"
+    ".carousel .carousel-track",
+    ".cards-services.is-carousel" /* si aquí te molesta, quítalo */
   ].join(",");
 
   document.querySelectorAll(sels).forEach(el=>{
     if(el.dataset.touchLockBound==="1") return;
     el.dataset.touchLockBound="1";
 
-    let sx=0, sy=0, sl=0, locked=false;
+    const hasOverflow=()=> (el.scrollWidth - el.clientWidth) > 2;
 
-    const hasOverflow=()=>el.scrollWidth>el.clientWidth+2;
+    let sx=0, sy=0, startLeft=0;
+    let locked=null; // null = aún no decide, true = horizontal lock, false = vertical
 
-    on(el,"touchstart",(e)=>{
-      if(!hasOverflow()) return;
+    // Ajustes finos
+    const DEADZONE = 10;      // px antes de decidir
+    const RATIO    = 1.35;    // X debe dominar Y por este factor para lock horizontal
+
+    el.addEventListener("touchstart",(e)=>{
+      if(!hasOverflow()) { locked=null; return; }
       const t=e.touches && e.touches[0]; if(!t) return;
       sx=t.clientX; sy=t.clientY;
-      sl=el.scrollLeft;
-      locked=false;
+      startLeft=el.scrollLeft;
+      locked=null;
     },{passive:true});
 
-    on(el,"touchmove",(e)=>{
+    el.addEventListener("touchmove",(e)=>{
       if(!hasOverflow()) return;
       const t=e.touches && e.touches[0]; if(!t) return;
 
-      const dx=t.clientX-sx, dy=t.clientY-sy;
+      const dx=t.clientX - sx;
+      const dy=t.clientY - sy;
 
-      // Si aún no decidimos, decide cuando haya intención clara
-      if(!locked){
-        if(Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-        // lock horizontal si domina X (con umbral)
-        locked = Math.abs(dx) > Math.abs(dy)*1.1;
+      const ax=Math.abs(dx), ay=Math.abs(dy);
+
+      // 1) Si aún no decidimos, decide solo cuando el gesto sea claro
+      if(locked===null){
+        if(ax < DEADZONE && ay < DEADZONE) return;
+
+        // Si el usuario claramente va vertical: NO bloquees (deja scroll down)
+        if(ay > ax) { locked=false; return; }
+
+        // Solo bloquea vertical si horizontal domina claramente
+        locked = ax > (ay * RATIO);
+        if(!locked){ locked=false; return; }
       }
 
-      if(locked){
-        // Evita que la página scrollee vertical
-        e.preventDefault();
-        el.scrollLeft = sl - dx;
+      // 2) Si no está bloqueado (vertical), nunca hagas preventDefault
+      if(locked===false) return;
+
+      // 3) Si está bloqueado horizontal:
+      //    - Mueve horizontal
+      //    - Evita scroll vertical de la página
+      //    - PERO libera si estás en borde y el usuario intenta seguir (para que pueda bajar)
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      const atLeft  = el.scrollLeft <= 0;
+      const atRight = el.scrollLeft >= (maxScroll - 1);
+
+      // Si estás en borde y el usuario “empuja” más hacia fuera, NO bloquees (deja bajar/subir)
+      const pushingLeft  = atLeft  && dx > 0;
+      const pushingRight = atRight && dx < 0;
+      if(pushingLeft || pushingRight){
+        locked=false; // libera y permite scroll de página
+        return;
       }
+
+      e.preventDefault();
+      el.scrollLeft = startLeft - dx;
     },{passive:false});
   });
 }
+
 
 
 /* =========================
