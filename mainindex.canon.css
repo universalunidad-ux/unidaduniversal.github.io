@@ -9,50 +9,39 @@
    - Wrapper 80% sin romper padding
 ========================================================= */
 
-
-/* =========================================================
-   INDEX — Horizontal UX lock (MOBILE)
-   - Evita que un swipe horizontal “jale” el scroll vertical de la página
-   - Aplica a tabs/pills/badges/carousels
-========================================================= */
-
-/* Contenedores típicos que scrolleas en horizontal */
-.page-index .hero-gallery-groups,
-.page-index .hero-gallery-tabs,
-.page-index .prod-tabs,
-.page-index .promo-filters,
-.page-index .reel-sys-tabs,
-.page-index .badges,
-.page-index #servicesCarousel,
-.page-index .cards-services.is-carousel,
-.page-index .carousel .carousel-track{
-  touch-action: pan-x;               /* clave */
-  -webkit-overflow-scrolling: touch; /* iOS suave */
+/* Permite scroll vertical siempre (por defecto), pero ayuda al gesto horizontal */
+.hscroll-tabs,
+.hero .tabs,
+.hero .chips,
+.hero .segmented,
+#heroTabs,
+#heroCategories,
+#sistemasTabs,
+.sistemas-tabs,
+#promoTabs,
+.promo-tabs,
+.prod-tabs,
+.hero-gallery-groups,
+#heroGalleryGroups,
+.hero-gallery-tabs,
+#heroGalleryTabs,
+.promo-filters,
+#servicesCarousel,
+.cards-services.is-carousel,
+.carousel .carousel-track{
+  touch-action: pan-y;              /* ✅ vertical siempre permitido */
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Opcional: menos “rebote” vertical dentro del área */
-.page-index .hero-gallery-groups,
-.page-index .hero-gallery-tabs,
-.page-index .prod-tabs,
-.page-index .promo-filters,
-.page-index .reel-sys-tabs,
-.page-index .badges{
-  overscroll-behavior: contain;
-}
-/* UX móvil: evita “rebotes” raros horizontales sin matar scroll vertical */
+/* Si un elemento es realmente horizontal, esto ayuda a que el swipe se sienta natural */
 .hero-gallery-groups,
 .hero-gallery-tabs,
 .prod-tabs,
 .promo-filters,
-.reel-sys-tabs,
-.badges,
-.carousel .carousel-track,
-.cards-services.is-carousel{
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
+#servicesCarousel,
+.carousel .carousel-track{
+  touch-action: pan-y pinch-zoom;   /* ✅ vertical siempre + zoom */
 }
-
-
 
 /* =========================
    0) CANON SWITCH
