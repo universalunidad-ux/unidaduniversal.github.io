@@ -626,3 +626,105 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
   padding-inline:0; /* el padding lo controla .container */
 }
 
+/* ===== mainindex.canon.css PATCH v2026.01.11-p2 (hero pills spacing + arrows mobile + scale grids + titles + spacing) ===== */
+
+/* (A) CONTENEDORES: mismo margen lateral que el HERO */
+.page-index main .container{max-width:var(--maxw,1200px);margin-inline:auto;padding-inline:18px}
+.page-index main>section{padding-block:28px}
+.page-index .section-full{padding-block:34px}
+@media(max-width:768px){.page-index main .container{padding-inline:14px}.page-index main>section{padding-block:22px}.page-index .section-full{padding-block:26px}}
+
+/* (B) TITULOS: mismo color/estilo (no amarillo verdoso) */
+.page-index .section-title h2,
+.page-index #contacto h2,
+.page-index #faq .section-title h2,
+.page-index #promociones .section-title h2,
+.page-index #servicios .section-title h2,
+.page-index #productos-con .prod-title,
+.page-index .hero-gallery-header h2{color:var(--brand-2,#0ea5e9)!important}
+.page-index #productos-con .prod-title span{color:inherit;opacity:.92}
+
+/* (C) HERO (texto): centrado vertical + menos CLS (reserva alturas) */
+.page-index .hero{min-height:calc(100svh - var(--ghh,68px));display:flex;align-items:center}
+.page-index .hero .hero-grid{align-items:center;row-gap:18px}
+.page-index .hero .kicker{min-height:34px;line-height:1.15}
+.page-index .hero h1{line-height:1.08;letter-spacing:-.02em;margin:8px 0 10px}
+.page-index .hero .lead{line-height:1.55;margin:0 0 12px}
+.page-index .hero .badges{margin-top:12px;min-height:34px}
+.page-index .hero .hero-btn{margin-top:14px}
+@media(max-width:900px){.page-index .hero{padding-top:14px;padding-bottom:18px}.page-index .hero .hero-grid{grid-template-columns:1fr}}
+
+/* (D) HERO GALLERY: evita encimado pills vs carrusel/imagen (desktop+mobile) */
+.page-index .hero-gallery-card{overflow:hidden}
+.page-index .hero-gallery-header{padding:14px 16px 10px}
+.page-index .hero-gallery-groups{display:flex;gap:10px;flex-wrap:nowrap;overflow:auto;padding:10px 14px 12px;-webkit-overflow-scrolling:touch}
+.page-index .hero-gallery-groups::-webkit-scrollbar{height:0}
+.page-index .hero-carousel{margin-top:10px} /* separa pills del carrusel */
+.page-index .hero-carousel .carousel-track{min-height:420px} /* reserva altura para que no “suba/baje” */
+@media(max-width:900px){
+  .page-index .hero-gallery-header{padding:12px 14px 8px}
+  .page-index .hero-gallery-groups{padding:10px 12px 12px}
+  .page-index .hero-carousel{margin-top:10px}
+  .page-index .hero-carousel .carousel-track{min-height:320px}
+}
+/* si tu carrusel usa slides con imagen: fuerza cover sin reflow raro */
+.page-index .hero-carousel .carousel-track img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* (E) FLECHAS EN MOBILE: hero + reels sistemas + reels servicios (se estaban ocultando) */
+.page-index .carousel .arrowCircle{display:grid;place-items:center;opacity:.95;pointer-events:auto;z-index:6}
+.page-index .carousel .arrowCircle .chev{font-size:22px;line-height:1}
+@media(max-width:768px){
+  .page-index .carousel .arrowCircle{width:40px;height:40px;border-radius:999px}
+  .page-index .carousel .arrowCircle.prev{left:10px}
+  .page-index .carousel .arrowCircle.next{right:10px}
+  /* por si algún CSS anterior las apagó */
+  .page-index .carousel .arrowCircle[hidden]{display:grid!important}
+  .page-index .carousel:hover .arrowCircle{opacity:1}
+}
+
+/* (F) REELS “SERVICIOS” NO SE VE EN DESKTOP: asegura que la card exista y no colapse */
+.page-index #servicios .reels-home-card{display:block!important;min-height:520px}
+.page-index #servicios #carouselReels-servicios{display:block;min-height:380px}
+.page-index #servicios #carouselReels-servicios .carousel-track{min-height:360px}
+@media(max-width:900px){
+  .page-index #servicios .reels-home-card{min-height:460px}
+  .page-index #servicios #carouselReels-servicios{min-height:320px}
+  .page-index #servicios #carouselReels-servicios .carousel-track{min-height:300px}
+}
+/* si el problema es overflow/clip del grid padre */
+.page-index #servicios .grid-2{overflow:visible}
+
+/* (G) MOBILE: reducir ~30% “peso” de grids/tarjetas de Sistemas (cards + tabs/reel-tabs) */
+@media(max-width:768px){
+  /* cards sistemas */
+  .page-index #productos-con .cards-products{gap:12px}
+  .page-index #productos-con .product-card .body{padding:12px}
+  .page-index #productos-con .product-card p{font-size:.92rem;line-height:1.35}
+  .page-index #productos-con .btn-vermas{padding:8px 12px;font-size:.92rem}
+  /* logos más compactos */
+  .page-index #productos-con .logo-sistema{max-width:92%;height:auto}
+  /* tabs de productos más compactas */
+  .page-index #productos-con .prod-tabs{gap:8px}
+  .page-index #productos-con .prod-tabs .tab{padding:10px 12px;font-size:.92rem}
+  /* reel tabs (miniaturas) */
+  .page-index .reel-sys-tabs{gap:10px}
+  .page-index .reel-sys-tabs .reel-tab{padding:10px 10px}
+  .page-index .reel-sys-tabs .reel-tab img{width:44px!important;height:44px!important}
+  .page-index .reel-sys-tabs .reel-tab span{font-size:.86rem}
+}
+
+/* (H) SEPARACIÓN VERTICAL: evita que “choquen” bordes/líneas entre secciones */
+.page-index #productos-con{padding-bottom:34px}
+.page-index #sectores{padding-top:18px;padding-bottom:34px}
+.page-index #servicios{padding-top:34px}
+@media(max-width:768px){
+  .page-index #productos-con{padding-bottom:26px}
+  .page-index #sectores{padding-top:14px;padding-bottom:26px}
+  .page-index #servicios{padding-top:26px}
+}
+
+/* (I) GRADIENTE HERO (igual a modo oscuro): usa variables; fallback a color sólido si hay conflictos */
+.page-index .gradient-word{background:linear-gradient(90deg,var(--brand-2,#0ea5e9),var(--brand,#2dd4bf));-webkit-background-clip:text;background-clip:text;color:transparent}
+@supports not (-webkit-background-clip:text){.page-index .gradient-word{color:var(--brand-2,#0ea5e9)}}
+
+
