@@ -67,18 +67,7 @@ function bindWheelOnTabs(){
    - Solo bloquea vertical cuando el gesto es claramente horizontal
    - Libera el lock en bordes (no te “atoras”)
 ========================= */
-function bindTouchHorizontalLock(){
-  const sels=[
-    ".hero-gallery-groups",
-    ".hero-gallery-tabs",
-    ".prod-tabs",
-    ".promo-filters",
-    ".reel-sys-tabs",
-    ".badges",
-    ".carousel .carousel-track",
-    ".cards-services.is-carousel" /* si aquí te molesta, quítalo */
-  ].join(",");
-
+            
   document.querySelectorAll(sels).forEach(el=>{
     if(el.dataset.touchLockBound==="1") return;
     el.dataset.touchLockBound="1";
@@ -707,7 +696,6 @@ on(window,"DOMContentLoaded",async()=>{
   normalizeRoutes(document);
   bindWheelOnTabs();
   initForms();
-  bindTouchHorizontalLock();
   initTabsProductos();
   initPromosFilter();
   initClickableCards();
@@ -760,7 +748,6 @@ on(window,"resize",()=>safe(initServicesPager));
 on(window,"pageshow",()=>{
   safe(()=>normalizeRoutes(document));
   safe(bindWheelOnTabs);
-  safe(bindTouchHorizontalLock); // ✅ aquí dentro
   safe(initServicesPager);
 });
 
