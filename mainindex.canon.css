@@ -868,3 +868,45 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
 /* 7) anti overflow */
 .page-index{overflow-x:hidden!important}
 .page-index img{max-width:100%;height:auto}
+
+
+
+/*=== Expiriti — INDEX PATCH (heroGallery desktop stable + no brinco + headings + gradient-word) v2026.01.11-x3 ===*/
+
+/*1) TITULOS (Secciones + HeroGallery header + Ubicación) = gradiente SOLO texto (sin barra) */
+.page-index :is(.section-title,.hero-gallery-header){background:transparent!important}
+.page-index :is(.section-title h2,#productos-con .prod-title,#servicios .section-title h2,#promociones .section-title h2,#faq .section-title h2,#contacto h2,#ubicacion h2,#ubicacion .section-title h2,.hero-gallery-header h2){display:inline-block!important;width:auto!important;max-width:100%!important;padding:0!important;line-height:1.12!important;letter-spacing:-.01em!important;font-size:clamp(22px,2.1vw,32px)!important;background-image:linear-gradient(90deg,var(--exp-yellow,#f6c445),var(--exp-teal,#25c7b8),var(--exp-red,#ff4d6d))!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important}
+@supports not (-webkit-background-clip:text){.page-index :is(.section-title h2,#productos-con .prod-title,#servicios .section-title h2,#promociones .section-title h2,#faq .section-title h2,#contacto h2,#ubicacion h2,#ubicacion .section-title h2,.hero-gallery-header h2){color:var(--exp-teal,#25c7b8)!important;background:none!important}}
+
+/*2) HERO H1 “gradient-word” = MISMO LOOK que dark incluso en light (mata el verdoso) */
+.page-index .gradient-word{background-image:linear-gradient(90deg,var(--exp-yellow,#f6c445),var(--exp-teal,#25c7b8),var(--exp-red,#ff4d6d))!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important}
+@supports not (-webkit-background-clip:text){.page-index .gradient-word{color:var(--exp-teal,#25c7b8)!important;background:none!important}}
+
+/*3) Pills (Contables/Comerciales/En la Nube/Productividad): fija el “segundo estilo” desde el arranque */
+.page-index .hero-gallery-groups{margin:10px 0 14px!important;padding:10px 12px 12px!important;position:relative!important;z-index:20!important}
+.page-index .hero-group-tab{min-height:46px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14)!important;background:rgba(255,255,255,.03)!important;color:rgba(232,238,246,.92)!important;font-weight:900;cursor:pointer}
+html[data-theme="light"] .page-index .hero-group-tab{border:1px solid rgba(2,6,23,.14)!important;background:rgba(255,255,255,.70)!important;color:rgba(11,18,32,.88)!important}
+.page-index .hero-group-tab.active,.page-index .hero-group-tab[aria-selected="true"]{border-color:rgba(96,165,250,.42)!important;background:rgba(96,165,250,.10)!important}
+
+/*4) HERO GALLERY DESKTOP: elimina encimado (dots/imagen/flechas) y que “se salga” del card */
+.page-index .hero-gallery-card{position:relative!important;isolation:isolate!important;overflow:hidden!important}
+.page-index #heroGalleryCarousel{position:relative!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+
+/* reserva espacio para dots dentro del carrusel (evita que invadan la imagen) */
+.page-index #heroGalleryCarousel .carousel-track{position:relative!important;overflow:hidden!important;min-height:360px!important;padding-bottom:52px!important}
+@media(min-width:980px){.page-index #heroGalleryCarousel .carousel-track{min-height:460px!important;padding-bottom:56px!important}}
+
+/* imagen no roba clicks ni tapa controles */
+.page-index #heroGalleryCarousel .carousel-slide{position:relative!important;z-index:1!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.page-index #heroGalleryCarousel .hero-slide img{width:100%!important;height:100%!important;display:block!important;object-fit:contain!important;object-position:center!important;pointer-events:none!important}
+
+/* flechas siempre arriba */
+.page-index #heroGalleryCarousel .arrowCircle{position:absolute!important;top:50%!important;transform:translateY(-50%)!important;z-index:50!important;opacity:1!important;pointer-events:auto!important}
+.page-index #heroGalleryCarousel .arrowCircle.prev{left:10px!important}
+.page-index #heroGalleryCarousel .arrowCircle.next{right:10px!important}
+
+/* dots absolute dentro del carrusel (no empuja layout ni invade imagen) */
+.page-index #heroGalleryCarousel .carousel-nav{position:absolute!important;left:0!important;right:0!important;bottom:10px!important;display:flex!important;justify-content:center!important;align-items:center!important;gap:8px!important;width:100%!important;margin:0!important;z-index:40!important;transform:none!important;pointer-events:auto!important}
+.page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important;border-radius:999px!important;margin:0!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.10)!important;cursor:pointer}
+.page-index #heroGalleryCarousel .carousel-nav .dot.active{background:rgba(45,212,191,.85)!important;border-color:rgba(45,212,191,.95)!important}
+html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.18)!important;background:rgba(2,6,23,.16)!important}
