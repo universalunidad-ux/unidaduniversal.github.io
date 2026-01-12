@@ -8,6 +8,8 @@
    - Desktop: height:calc(...) + overflow:hidden
    - Wrapper 80% sin romper padding
 ========================================================= */
+
+
 /* =========================================================
    INDEX — Horizontal UX lock (MOBILE)
    - Evita que un swipe horizontal “jale” el scroll vertical de la página
@@ -36,6 +38,18 @@
 .page-index .reel-sys-tabs,
 .page-index .badges{
   overscroll-behavior: contain;
+}
+/* UX móvil: evita “rebotes” raros horizontales sin matar scroll vertical */
+.hero-gallery-groups,
+.hero-gallery-tabs,
+.prod-tabs,
+.promo-filters,
+.reel-sys-tabs,
+.badges,
+.carousel .carousel-track,
+.cards-services.is-carousel{
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 
