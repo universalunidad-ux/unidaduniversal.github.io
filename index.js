@@ -61,6 +61,63 @@ function bindWheelOnTabs(){
     },{passive:false})
   })
 }
+            /* =========================
+   3.1) TOUCH FIX (Mobile): bloquear scroll vertical al swippear horizontal
+   - Solo actúa en contenedores con overflow-x real
+   - Evita “desesperación” en tabs/pills/badges/carousels
+========================= */
+function bindTouchHorizontalLock(){
+  const sels=[
+    ".hero-gallery-groups",
+    ".hero-gallery-tabs",
+    ".prod-tabs",
+     ".carousel",
+    ".promo-filters",
+    ".reel-sys-tabs",
+    ".badges",
+    "#servicesCarousel",
+    ".cards-services.is-carousel",
+    ".carousel .carousel-track"
+  ].join(",");
+
+  document.querySelectorAll(sels).forEach(el=>{
+    if(el.dataset.touchLockBound==="1") return;
+    el.dataset.touchLockBound="1";
+
+    let sx=0, sy=0, sl=0, locked=false;
+
+    const hasOverflow=()=>el.scrollWidth>el.clientWidth+2;
+
+    on(el,"touchstart",(e)=>{
+      if(!hasOverflow()) return;
+      const t=e.touches && e.touches[0]; if(!t) return;
+      sx=t.clientX; sy=t.clientY;
+      sl=el.scrollLeft;
+      locked=false;
+    },{passive:true});
+
+    on(el,"touchmove",(e)=>{
+      if(!hasOverflow()) return;
+      const t=e.touches && e.touches[0]; if(!t) return;
+
+      const dx=t.clientX-sx, dy=t.clientY-sy;
+
+      // Si aún no decidimos, decide cuando haya intención clara
+      if(!locked){
+        if(Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+        // lock horizontal si domina X (con umbral)
+        locked = Math.abs(dx) > Math.abs(dy)*1.1;
+      }
+
+      if(locked){
+        // Evita que la página scrollee vertical
+        e.preventDefault();
+        el.scrollLeft = sl - dx;
+      }
+    },{passive:false});
+  });
+}
+
 
 /* =========================
    4) Formularios -> WhatsApp (sin duplicar listeners)
@@ -621,6 +678,7 @@ on(window,"DOMContentLoaded",async()=>{
   normalizeRoutes(document);
   bindWheelOnTabs();
   initForms();
+  bindTouchHorizontalLock();
   initTabsProductos();
   initPromosFilter();
   initClickableCards();
@@ -670,7 +728,13 @@ document.readyState==="loading"?document.addEventListener("DOMContentLoaded",ini
    13) Eventos globales
 ========================= */
 on(window,"resize",()=>safe(initServicesPager));
-on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTabs);safe(initServicesPager)});
+on(window,"pageshow",()=>{
+  safe(()=>normalizeRoutes(document));
+  safe(bindWheelOnTabs);
+  safe(bindTouchHorizontalLock); // ✅ aquí dentro
+  safe(initServicesPager);
+});
+
 
 })();
 
@@ -761,62 +825,4 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
   }, {passive:true});
 })();
 
-/* =========================================================
-   Lazy Google Maps Embed (NO JS API)
-   - Usa data-embed con URL de google.com/maps/embed?pb=...
-   - Reemplaza el placeholder por <iframe> al click
-========================================================= */
-(function(){
-  function initLazyMap(root){
-    if(!root) return;
-    if(root.dataset.mapReady === "1") return;
-    root.dataset.mapReady = "1";
-
-    const url = root.getAttribute("data-embed");
-    if(!url) return;
-
-    const cover = root.querySelector(".map-cover");
-    const load = (ev)=>{
-      if(ev) ev.preventDefault();
-      if(root.querySelector("iframe")) return;
-
-      const iframe = document.createElement("iframe");
-      iframe.src = url;
-      iframe.loading = "lazy";
-      iframe.referrerPolicy = "no-referrer-when-downgrade";
-      iframe.allowFullscreen = true;
-      iframe.setAttribute("aria-label","Mapa de ubicación");
-      iframe.style.width = "100%";
-      iframe.style.height = "100%";
-      iframe.style.border = "0";
-      iframe.style.display = "block";
-
-      // Quita cover y monta iframe
-      if(cover) cover.remove();
-      root.appendChild(iframe);
-    };
-
-    // Click en cover
-    if(cover){
-      cover.addEventListener("click", load, {passive:false});
-      // Accesibilidad teclado
-      cover.addEventListener("keydown", (e)=>{
-        if(e.key === "Enter" || e.key === " "){ load(e); }
-      });
-    } else {
-      // Si no hay cover, carga directo
-      load();
-    }
-  }
-
-  // Init al cargar
-  document.addEventListener("DOMContentLoaded", ()=>{
-    document.querySelectorAll(".map-embed[data-embed]").forEach(initLazyMap);
-  });
-
-  // Si usas BFCache o rehidratación
-  window.addEventListener("pageshow", ()=>{
-    document.querySelectorAll(".map-embed[data-embed]").forEach(initLazyMap);
-  });
-})();
 
