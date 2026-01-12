@@ -8,6 +8,37 @@
    - Desktop: height:calc(...) + overflow:hidden
    - Wrapper 80% sin romper padding
 ========================================================= */
+/* =========================================================
+   INDEX — Horizontal UX lock (MOBILE)
+   - Evita que un swipe horizontal “jale” el scroll vertical de la página
+   - Aplica a tabs/pills/badges/carousels
+========================================================= */
+
+/* Contenedores típicos que scrolleas en horizontal */
+.page-index .hero-gallery-groups,
+.page-index .hero-gallery-tabs,
+.page-index .prod-tabs,
+.page-index .promo-filters,
+.page-index .reel-sys-tabs,
+.page-index .badges,
+.page-index #servicesCarousel,
+.page-index .cards-services.is-carousel,
+.page-index .carousel .carousel-track{
+  touch-action: pan-x;               /* clave */
+  -webkit-overflow-scrolling: touch; /* iOS suave */
+}
+
+/* Opcional: menos “rebote” vertical dentro del área */
+.page-index .hero-gallery-groups,
+.page-index .hero-gallery-tabs,
+.page-index .prod-tabs,
+.page-index .promo-filters,
+.page-index .reel-sys-tabs,
+.page-index .badges{
+  overscroll-behavior: contain;
+}
+
+
 
 /* =========================
    0) CANON SWITCH
