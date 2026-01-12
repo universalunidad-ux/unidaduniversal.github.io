@@ -1,3 +1,8 @@
+// main.js (al inicio)
+if (/[?&]freeze=1\b/.test(location.search)) {
+  document.body.classList.add('debug-freeze');
+}
+
 /* =========================================================
  Expiriti - main.js (FINAL) v2026.01.08-r2 (COMPACTO + COMENTARIOS)
  - FIX: evita que 1 error rompa TODO (módulos con try/catch)
