@@ -858,3 +858,81 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
   .page-index #sectores{padding-top:14px!important;padding-bottom:26px!important}
   .page-index #servicios{padding-top:26px!important}
 }
+
+
+/* ===== Expiriti INDEX PATCH v2026.01.11-fix3 (hero dots+titles+light gradient+reels servicios) ===== */
+
+/* (0) Scope seguro */
+.page-index{--ix-titlegrad:linear-gradient(90deg,var(--exp-teal,#25c7b8),var(--exp-red,#ff4d6d));--ix-h1:#0b1220;--ix-card:#fff}
+
+/* (1) HERO: centra vertical + evita encimados + reserva altura para reducir CLS */
+.page-index .hero{display:flex;align-items:center;min-height:calc(100svh - var(--ghh,68px))}
+.page-index .hero .hero-grid{align-items:center;gap:clamp(14px,2vw,22px)}
+.page-index .hero .kicker,.page-index .hero .badges{min-height:34px}
+.page-index .hero h1{margin:8px 0 10px;line-height:1.08;letter-spacing:-.02em}
+.page-index .hero .lead{margin:0 0 12px;line-height:1.55}
+.page-index .hero .hero-btn{margin-top:14px}
+@media(max-width:900px){.page-index .hero{padding:14px 0 18px}.page-index .hero .hero-grid{grid-template-columns:1fr}}
+
+/* (2) LIGHT: H1 en negro + SOLO “gradient-word” con gradiente (como tu img2) */
+html[data-theme="light"] .page-index .hero h1{color:var(--ix-h1)!important}
+html[data-theme="light"] .page-index .hero h1 .gradient-word{background-image:linear-gradient(90deg,#2b7cff,#25c7b8);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+@supports not (-webkit-background-clip:text){html[data-theme="light"] .page-index .hero h1 .gradient-word{color:#2b7cff!important}}
+
+/* (3) TITULOS DE SECCIONES: mismo estilo/gradiente que tu pill (img4) */
+.page-index .section-title h2,
+.page-index #productos-con .prod-title,
+.page-index #servicios .section-title h2,
+.page-index #promociones .section-title h2,
+.page-index #faq .section-title h2,
+.page-index #contacto h2{
+  background:var(--ix-titlegrad)!important;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important;
+}
+@supports not (-webkit-background-clip:text){
+  .page-index .section-title h2,
+  .page-index #productos-con .prod-title,
+  .page-index #servicios .section-title h2,
+  .page-index #promociones .section-title h2,
+  .page-index #faq .section-title h2,
+  .page-index #contacto h2{color:var(--exp-teal,#25c7b8)!important;background:none!important}
+}
+
+/* (4) HERO GALLERY: no “agrandes” el card por ancho; corrige dots centrados y SIN desajustar */
+.page-index .hero-gallery-card{position:relative}
+.page-index .hero-carousel,.page-index #heroGalleryCarousel{margin-top:10px} /* separa pills del carrusel */
+.page-index .hero-carousel .carousel-track,.page-index #heroGalleryCarousel .carousel-track{min-height:320px}
+@media(min-width:980px){.page-index .hero-carousel .carousel-track,.page-index #heroGalleryCarousel .carousel-track{min-height:420px}}
+/* dots: fuerza centrado real dentro del card (sin max-content que se “mueva”) */
+.page-index .hero-gallery-card .carousel-nav,
+.page-index #heroGalleryCarousel .carousel-nav{
+  width:100%!important;max-width:100%!important;
+  display:flex!important;justify-content:center!important;align-items:center!important;
+  margin:10px 0 12px!important;position:static!important;transform:none!important;
+}
+
+/* (5) Flechas carruseles: visibles en mobile (hero + reels sistemas + reels servicios) */
+.page-index .carousel{position:relative}
+.page-index .carousel .arrowCircle{display:grid!important;place-items:center;z-index:20;opacity:.96;pointer-events:auto}
+.page-index .carousel .arrowCircle .chev{font-size:22px;line-height:1}
+@media(max-width:768px){
+  .page-index .carousel .arrowCircle{width:40px;height:40px;border-radius:999px}
+  .page-index .carousel .arrowCircle.prev{left:10px}
+  .page-index .carousel .arrowCircle.next{right:10px}
+}
+
+/* (6) REELS SERVICIOS: fuerza visible en desktop + evita colapso por overflow/height */
+.page-index #servicios .reels-home-card{display:block!important;min-height:520px!important;overflow:visible!important}
+.page-index #servicios #carouselReels-servicios{display:block!important;min-height:380px!important;overflow:visible!important}
+.page-index #servicios #carouselReels-servicios .carousel-track{min-height:360px!important}
+.page-index #servicios .grid-2,.page-index #servicios .card{overflow:visible!important}
+@media(max-width:900px){
+  .page-index #servicios .reels-home-card{min-height:460px!important}
+  .page-index #servicios #carouselReels-servicios{min-height:320px!important}
+  .page-index #servicios #carouselReels-servicios .carousel-track{min-height:300px!important}
+}
+
+/* (7) Opcional: título “Reels de servicios ExpIRI TI” con el MISMO gradiente que “Reels por sistema contable” */
+.page-index #servicios .reels-home-card .section-title h3,
+.page-index #servicios .reels-home-card h3{
+  background:var(--ix-titlegrad)!important;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important;
+}
