@@ -590,5 +590,118 @@ html[data-theme="light"] .page-index.debug-freeze #heroGalleryCarousel .carousel
 
 
 
+/* === EXPIRITI INDEX PATCH v2026.01.11-r3 (PEGAR AL FINAL de mainindex.canon.css) === */
+
+/* 0) Paletas SIN amarillo */
+.page-index{
+  --grad-gp:linear-gradient(90deg,#22c55e 0%,#fb7185 100%); /* verde -> rosado */
+  --grad-blue:linear-gradient(90deg,#0ea5ff 0%,#22d3ee 55%,#60a5fa 100%); /* azuloso */
+}
+
+/* 1) Helper: gradiente SOLO TEXTO (evita rectángulo) */
+.page-index .text-grad-gp,
+.page-index .text-grad-blue{
+  display:inline-block;
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent; /* CLAVE Safari/Chrome */
+  color:transparent;
+}
+
+/* 2) “licencias, cursos, desarrollos y soporte” (tu span .gradient-word) azuloso */
+.page-index .gradient-word{
+  display:inline-block;
+  background:var(--grad-blue)!important;
+  background-repeat:no-repeat;background-size:100% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent!important;
+}
+
+/* 3) Títulos (solo los que tú pediste) verde+rosado, SIN amarillo */
+.page-index #contacto h2,
+.page-index .map-card .section-title h3{
+  display:inline-block;
+  background:var(--grad-gp)!important;
+  background-repeat:no-repeat;background-size:100% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent!important;
+}
+
+/* 4) Si .title-gradient existe en el index, fuerza a ser SOLO texto (y sin rectángulo) */
+.page-index .title-gradient{
+  display:inline-block;
+  background:var(--grad-gp)!important;
+  background-repeat:no-repeat;background-size:100% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent!important;
+}
+
+/* 5) HERO GALLERY: arregla dots (abajo) + evita que queden detrás (fix real) */
+.page-index .hero-carousel{
+  display:flex!important;
+  flex-direction:column!important;
+  position:relative;
+}
+.page-index .hero-carousel .carousel-track{
+  order:1;
+  position:relative;
+  overflow:hidden;
+  border-radius:14px; /* opcional, consistente */
+}
+.page-index .hero-carousel .carousel-nav{
+  order:2;
+  position:relative!important; /* mata absolute heredado */
+  inset:auto!important;
+  display:flex!important;
+  justify-content:center!important;
+  gap:8px;
+  padding:10px 12px 12px;
+  margin:0;
+  z-index:3;
+}
+
+/* Flechas centradas sin tapar dots */
+.page-index .hero-carousel .arrowCircle{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:5;
+}
+.page-index .hero-carousel .arrowCircle.prev{left:10px}
+.page-index .hero-carousel .arrowCircle.next{right:10px}
+
+/* 6) Tabs/pills de grupos: que no se corten ni se peguen (scroll suave) */
+.page-index .hero-gallery-card{overflow:hidden}
+.page-index .hero-gallery-groups{
+  padding:12px 14px 10px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.page-index .hero-gallery-groups::-webkit-scrollbar{display:none}
+.page-index .hero-gallery-groups button,
+.page-index .hero-gallery-groups .tab{
+  margin:0 10px 0 0;
+  padding:12px 18px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+
+/* 7) Desktop a ~80% (si lo quieres) */
+@media(min-width:1100px){
+  .page-index .container{max-width:min(var(--maxw,1200px),80vw)!important}
+}
+
+/* 8) Mobile: evita encimes */
+@media(max-width:820px){
+  .page-index .hero-gallery-groups{padding:10px 12px}
+  .page-index .hero-gallery-groups button,
+  .page-index .hero-gallery-groups .tab{padding:11px 14px}
+}
+/* === /PATCH === */
 
 
