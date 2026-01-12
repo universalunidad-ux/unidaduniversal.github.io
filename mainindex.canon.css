@@ -499,122 +499,45 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
   background:rgba(45,212,191,.95)!important;
   border-color:rgba(45,212,191,.95)!important;
 }
-/* === Expiriti INDEX CANON FINAL PATCH (single-owner) v2026.01.11-u1 ===
-   PEGAR AL FINAL y BORRAR: idxfix + p2 + p3 + fix3
-   - 1 owner de container (solo debug-freeze)
-   - títulos con gradiente (como tu pill img4)
-   - hero en light: H1 negro + SOLO gradient-word con gradiente (img2)
-   - dots: pill centrado (no full width)
-   - flechas: visibles en mobile (revierte any display:none)
-   - reels servicios: no colapsa por overflow/height (si no está hidden por JS)
-====================================================================== */
 
-.page-index.debug-freeze{--ix-pad:clamp(14px,3.2vw,22px);--ix-maxw:var(--maxw,1200px);--ix-titlegrad:linear-gradient(90deg,var(--exp-teal,#25c7b8),var(--exp-red,#ff4d6d));--ix-h1:#0b1220}
 
-/* (1) CONTAINER: un solo owner (NO uses .page-index main .container fuera de debug-freeze) */
-.page-index.debug-freeze .container{width:min(var(--ix-maxw),calc(100% - (var(--ix-pad)*2)))!important;margin-inline:auto!important;padding-inline:var(--ix-pad)!important}
+/* === Expiriti — INDEX HOTFIX (hero gallery + titles + mobile width) v2026.01.11-hg1
+   PEGAR AL FINAL (último bloque). Luego BORRAR: idxfix/p2/p3/fix3/f4/u1 y cualquier duplicado.
+   Scope: .page-index (y .debug-freeze si lo usas)
+============================================================================= */
 
-/* (2) HERO: centrado vertical + reserva de altura del track (menos CLS visual) */
-.page-index.debug-freeze .hero{display:flex!important;align-items:center!important;min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px))!important}
-@supports(height:100dvh){.page-index.debug-freeze .hero{min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px))!important}}
-.page-index.debug-freeze .hero-grid{align-items:center!important;gap:clamp(14px,2.2vw,26px)!important}
-.page-index.debug-freeze .hero-gallery-groups{margin:10px 0 12px!important}
-.page-index.debug-freeze #heroGalleryCarousel{margin-top:10px!important}
-.page-index.debug-freeze #heroGalleryCarousel .carousel-track{min-height:320px!important}
-@media(min-width:980px){.page-index.debug-freeze #heroGalleryCarousel .carousel-track{min-height:420px!important}}
+.page-index{overflow-x:hidden}
+.page-index img{max-width:100%;height:auto}
 
-/* (3) LIGHT: H1 negro + SOLO gradient-word con gradiente (tu img2) */
-html[data-theme="light"] .page-index.debug-freeze .hero h1{color:var(--ix-h1)!important}
-html[data-theme="light"] .page-index.debug-freeze .hero h1 .gradient-word{background-image:linear-gradient(90deg,#2b7cff,#25c7b8)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important}
-@supports not (-webkit-background-clip:text){html[data-theme="light"] .page-index.debug-freeze .hero h1 .gradient-word{color:#2b7cff!important;background:none!important}}
-
-/* (4) TITULOS SECCIONES: gradiente como pill (img4) */
-.page-index.debug-freeze .section-title h2,
-.page-index.debug-freeze #productos-con .prod-title,
-.page-index.debug-freeze #servicios .section-title h2,
-.page-index.debug-freeze #promociones .section-title h2,
-.page-index.debug-freeze #faq .section-title h2,
-.page-index.debug-freeze #contacto h2{background:var(--ix-titlegrad)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important}
-@supports not (-webkit-background-clip:text){
-  .page-index.debug-freeze .section-title h2,
-  .page-index.debug-freeze #productos-con .prod-title,
-  .page-index.debug-freeze #servicios .section-title h2,
-  .page-index.debug-freeze #promociones .section-title h2,
-  .page-index.debug-freeze #faq .section-title h2,
-  .page-index.debug-freeze #contacto h2{color:var(--exp-teal,#25c7b8)!important;background:none!important}
+/* (A) MOBILE: ancho real 100% (evita “página angosta” por owners duplicados) */
+@media(max-width:768px){
+  .page-index .container,
+  .page-index.debug-freeze .container{
+    width:100%!important;
+    margin-inline:auto!important;
+    padding-inline:max(12px,env(safe-area-inset-left,0px))!important;
+  }
 }
 
-/* (5) DOTS: vuelve a “pill” centrado (no full-width) */
-.page-index.debug-freeze #heroGalleryCarousel .carousel-nav{display:inline-flex!important;justify-content:center!important;align-items:center!important;gap:8px!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;position:static!important;transform:none!important}
-
-/* (6) FLECHAS: visibles en mobile (revierte cualquier display:none anterior) */
-.page-index.debug-freeze .carousel{position:relative!important}
-.page-index.debug-freeze .carousel .arrowCircle{display:flex!important;align-items:center!important;justify-content:center!important;position:absolute!important;top:50%!important;transform:translateY(-50%)!important;z-index:50!important;opacity:1!important;pointer-events:auto!important;width:44px!important;height:44px!important;border-radius:999px!important;background:rgba(255,255,255,.92)!important;border:1px solid rgba(15,23,42,.12)!important;box-shadow:0 10px 30px rgba(2,8,23,.18)!important}
-.page-index.debug-freeze .carousel .arrowCircle.prev{left:10px!important}
-.page-index.debug-freeze .carousel .arrowCircle.next{right:10px!important}
-.page-index.debug-freeze .carousel .arrowCircle .chev{font-size:26px!important;line-height:1!important;color:#0f172a!important}
-
-/* (7) REELS SERVICIOS: evita colapsos por overflow/height (si no está hidden por JS) */
-.page-index.debug-freeze #servicios .reels-home-card{min-height:520px!important;overflow:visible!important}
-.page-index.debug-freeze #servicios #carouselReels-servicios{min-height:380px!important;overflow:visible!important;display:block!important}
-.page-index.debug-freeze #servicios #carouselReels-servicios .carousel-track{min-height:360px!important}
-.page-index.debug-freeze #servicios .grid-2,.page-index.debug-freeze #servicios .card{overflow:visible!important}
-@media(max-width:900px){
-  .page-index.debug-freeze #servicios .reels-home-card{min-height:460px!important}
-  .page-index.debug-freeze #servicios #carouselReels-servicios{min-height:320px!important}
-  .page-index.debug-freeze #servicios #carouselReels-servicios .carousel-track{min-height:300px!important}
-}
-
-/* === Expiriti INDEX FINAL PATCH v2026.01.11-f4 (PEGA AL FINAL) =================
-FIX: gradient-word igual que DARK en LIGHT | títulos gradiente SOLO texto (sin barra)
-FIX: reduce “Conoce más...” | separa pills vs carrusel | dots centrados
-FIX: flechas visibles en mobile | reels servicios visible (aunque venga hidden)
-=============================================================================== */
-
-/* (1) HERO TITLE: gradiente igual que modo oscuro (brand-2 -> brand), también en LIGHT */
-.page-index .gradient-word,
-.page-index.debug-freeze .gradient-word{
-  background:linear-gradient(90deg,var(--brand-2,#60a5fa),var(--brand,#2dd4bf))!important;
+/* (B) TITULO HERO GALLERY: reduce tamaño + gradiente Expiriti SOLO texto (sin barra) */
+.page-index .hero-gallery-header h2,
+.page-index.debug-freeze .hero-gallery-header h2{
+  display:inline-block!important;width:auto!important;max-width:100%!important;
+  font-size:clamp(18px,2.0vw,28px)!important;
+  line-height:1.12!important;letter-spacing:-.01em!important;
+  padding:0!important;background:transparent!important;
+  background-image:linear-gradient(90deg,var(--exp-yellow,#f6c445),var(--exp-teal,#25c7b8),var(--exp-red,#ff4d6d))!important;
   -webkit-background-clip:text!important;background-clip:text!important;
   -webkit-text-fill-color:transparent!important;color:transparent!important;
 }
 @supports not (-webkit-background-clip:text){
-  .page-index .gradient-word,.page-index.debug-freeze .gradient-word{color:var(--brand-2,#60a5fa)!important;background:none!important}
-}
-/* H1 en claro: texto normal negro + solo las palabras con .gradient-word en gradiente */
-html[data-theme="light"] .page-index .hero h1,
-html[data-theme="light"] .page-index.debug-freeze .hero h1{color:#0b1220!important}
-
-/* (2) HERO GALLERY HEADER: reduce tamaño “Conoce más...” (sin agrandar el card) */
-.page-index .hero-gallery-header h2,
-.page-index.debug-freeze .hero-gallery-header h2{
-  font-size:clamp(20px,2.1vw,30px)!important;
-  line-height:1.12!important;
-  letter-spacing:-.01em!important;
+  .page-index .hero-gallery-header h2,
+  .page-index.debug-freeze .hero-gallery-header h2{color:var(--exp-teal,#25c7b8)!important;background:none!important}
 }
 
-/* (3) PILLS/TABS: separa pills vs carrusel (evita encimado) */
-.page-index .hero-gallery-groups,
-.page-index.debug-freeze .hero-gallery-groups{margin:10px 0 14px!important;padding:10px 12px 12px!important}
-.page-index .hero-carousel,
-.page-index #heroGalleryCarousel,
-.page-index.debug-freeze .hero-carousel,
-.page-index.debug-freeze #heroGalleryCarousel{margin-top:12px!important}
-
-/* (4) DOTS: centrados estables (sin max-content que “mueve” todo) */
-.page-index .hero-gallery-card .carousel-nav,
-.page-index #heroGalleryCarousel .carousel-nav,
-.page-index.debug-freeze .hero-gallery-card .carousel-nav,
-.page-index.debug-freeze #heroGalleryCarousel .carousel-nav{
-  width:100%!important;max-width:100%!important;
-  display:flex!important;justify-content:center!important;align-items:center!important;
-  margin:10px 0 12px!important;
-  position:static!important;left:auto!important;right:auto!important;bottom:auto!important;top:auto!important;
-  transform:none!important;
-}
-
-/* (5) TITULOS SECCIONES: gradiente SOLO texto (NO barra). 
-   Importante: forzamos inline-block para que el “background” NO se vea como franja completa. */
+/* (C) TITULOS DE SECCIONES: gradiente SOLO en texto (mata “barra” completa) */
+.page-index .section-title,
+.page-index.debug-freeze .section-title{background:transparent!important}
 .page-index .section-title h2,
 .page-index #productos-con .prod-title,
 .page-index #servicios .section-title h2,
@@ -628,10 +551,12 @@ html[data-theme="light"] .page-index.debug-freeze .hero h1{color:#0b1220!importa
 .page-index.debug-freeze #faq .section-title h2,
 .page-index.debug-freeze #contacto h2{
   display:inline-block!important;width:auto!important;max-width:100%!important;
-  padding:0!important; /* <- mata “barra” por padding heredado */
-  background:linear-gradient(90deg,var(--exp-teal,#25c7b8),var(--exp-red,#ff4d6d))!important;
+  padding:0!important; /* <- evita franja por padding heredado */
+  background-image:linear-gradient(90deg,var(--exp-teal,#25c7b8),var(--exp-red,#ff4d6d))!important;
   -webkit-background-clip:text!important;background-clip:text!important;
   -webkit-text-fill-color:transparent!important;color:transparent!important;
+  font-size:clamp(22px,2.1vw,32px)!important; /* <- HOMOLOGA */
+  line-height:1.12!important;
 }
 @supports not (-webkit-background-clip:text){
   .page-index .section-title h2,.page-index #productos-con .prod-title,.page-index #servicios .section-title h2,.page-index #promociones .section-title h2,.page-index #faq .section-title h2,.page-index #contacto h2,
@@ -639,52 +564,87 @@ html[data-theme="light"] .page-index.debug-freeze .hero h1{color:#0b1220!importa
     color:var(--exp-teal,#25c7b8)!important;background:none!important
   }
 }
-/* Si un wrapper mete background “de barra”, lo anulamos */
-.page-index .section-title,.page-index.debug-freeze .section-title{background:transparent!important}
 
-/* (6) FLECHAS: visibles en mobile (revierte cualquier display:none previo) */
-.page-index .carousel,.page-index.debug-freeze .carousel{position:relative!important}
-.page-index .carousel .arrowCircle,
-.page-index.debug-freeze .carousel .arrowCircle{
+/* (D) HERO GALLERY: evita encimado (imagen NO tapa flechas/tabs/dots) + reduce CLS */
+.page-index .hero-gallery-card,
+.page-index.debug-freeze .hero-gallery-card{position:relative!important;isolation:isolate!important}
+
+/* separa pills/tabs del carrusel (lo estabas viendo “pegado”) */
+.page-index .hero-gallery-groups,
+.page-index.debug-freeze .hero-gallery-groups{margin:10px 0 14px!important;padding:10px 12px 12px!important}
+.page-index #heroGalleryCarousel,
+.page-index.debug-freeze #heroGalleryCarousel{margin-top:12px!important}
+
+/* track: relativo + reserva altura (menos CLS) */
+.page-index #heroGalleryCarousel .carousel-track,
+.page-index.debug-freeze #heroGalleryCarousel .carousel-track{
+  position:relative!important;
+  overflow:hidden!important;
+  min-height:320px!important;
+}
+@media(min-width:980px){
+  .page-index #heroGalleryCarousel .carousel-track,
+  .page-index.debug-freeze #heroGalleryCarousel .carousel-track{min-height:420px!important}
+}
+
+/* slides: capa inferior (así flechas quedan arriba) */
+.page-index #heroGalleryCarousel .carousel-slide,
+.page-index.debug-freeze #heroGalleryCarousel .carousel-slide{position:relative!important;z-index:1!important}
+.page-index #heroGalleryCarousel .hero-slide img,
+.page-index.debug-freeze #heroGalleryCarousel .hero-slide img{
+  display:block!important;width:100%!important;height:100%!important;
+  object-fit:contain!important;object-position:center!important;
+  pointer-events:none!important; /* <- CLAVE: no “roba” taps/clicks a flechas */
+}
+
+/* flechas: arriba de todo + clicables siempre */
+.page-index #heroGalleryCarousel .arrowCircle,
+.page-index.debug-freeze #heroGalleryCarousel .arrowCircle{
   display:flex!important;align-items:center!important;justify-content:center!important;
-  opacity:1!important;pointer-events:auto!important;z-index:60!important;
+  position:absolute!important;top:50%!important;transform:translateY(-50%)!important;
+  z-index:50!important;opacity:1!important;pointer-events:auto!important;
 }
-@media(max-width:980px){
-  .page-index .carousel[id^="carouselReels"] .arrowCircle,
-  .page-index.debug-freeze .carousel[id^="carouselReels"] .arrowCircle{display:flex!important}
+.page-index #heroGalleryCarousel .arrowCircle.prev,
+.page-index.debug-freeze #heroGalleryCarousel .arrowCircle.prev{left:10px!important}
+.page-index #heroGalleryCarousel .arrowCircle.next,
+.page-index.debug-freeze #heroGalleryCarousel .arrowCircle.next{right:10px!important}
+
+/* dots: centrados estables (sin “mover” el layout) */
+.page-index #heroGalleryCarousel .carousel-nav,
+.page-index.debug-freeze #heroGalleryCarousel .carousel-nav{
+  display:flex!important;justify-content:center!important;align-items:center!important;
+  width:100%!important;max-width:100%!important;
+  margin:10px 0 12px!important;
+  position:static!important;transform:none!important;
+  z-index:40!important;
 }
 
-/* (7) REELS SERVICIOS: fuerza visible (aunque venga hidden o un padre lo colapse) */
-.page-index #servicios .reels-home-card,
-.page-index.debug-freeze #servicios .reels-home-card{display:block!important;min-height:520px!important;overflow:visible!important}
-.page-index #carouselReels-servicios,
-.page-index.debug-freeze #carouselReels-servicios{display:block!important;min-height:380px!important;overflow:visible!important}
-.page-index #carouselReels-servicios[hidden],
-.page-index.debug-freeze #carouselReels-servicios[hidden]{display:block!important;visibility:visible!important}
-.page-index #carouselReels-servicios .carousel-track,
-.page-index.debug-freeze #carouselReels-servicios .carousel-track{min-height:360px!important}
+/* (E) TABS SISTEMAS (2x2) responsive real en mobile: tamaño con clamp() */
+.page-index .hero-gallery-tabs,
+.page-index.debug-freeze .hero-gallery-tabs{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;padding:12px!important;
+}
+.page-index .hero-tab,
+.page-index.debug-freeze .hero-tab{
+  min-height:clamp(84px,14vw,106px)!important;
+  padding:clamp(10px,2.6vw,16px)!important;
+}
+.page-index .hero-tab img,
+.page-index.debug-freeze .hero-tab img{
+  height:clamp(40px,7.2vw,52px)!important;
+  max-width:clamp(140px,34vw,180px)!important;
+}
+
+/* (F) BOTONES SERVICIOS: permite wrap (Implementaciones/Migraciones/Desarrollos) sin cortar letras */
+.page-index #servicios :is(button,a,.service-card,.icon-card,.servicio-card) span{
+  white-space:normal!important;
+  word-break:break-word!important;
+  overflow-wrap:anywhere!important;
+  line-height:1.05!important;
+  hyphens:auto;
+}
+/* si tu layout usa grid de iconos, evita overflow horizontal */
 .page-index #servicios .grid-2,
-.page-index.debug-freeze #servicios .grid-2{overflow:visible!important}
-
-/* (8) MOBILE: compacta ~30% cards/tabs de “Sistemas” (sin tocar desktop) */
-@media(max-width:768px){
-  .page-index #productos-con .cards-products,
-  .page-index.debug-freeze #productos-con .cards-products{gap:12px!important}
-  .page-index #productos-con .product-card .body,
-  .page-index.debug-freeze #productos-con .product-card .body{padding:12px!important}
-  .page-index #productos-con .product-card p,
-  .page-index.debug-freeze #productos-con .product-card p{font-size:.92rem!important;line-height:1.35!important}
-  .page-index #productos-con .btn-vermas,
-  .page-index.debug-freeze #productos-con .btn-vermas{padding:8px 12px!important;font-size:.92rem!important}
-  .page-index #productos-con .prod-tabs .tab,
-  .page-index.debug-freeze #productos-con .prod-tabs .tab{padding:10px 12px!important;font-size:.92rem!important}
-}
-
-/* (9) “No choque” visual entre secciones: aire consistente */
-.page-index main>section,
-.page-index.debug-freeze main>section{padding-block:30px!important}
-@media(max-width:768px){
-  .page-index main>section,
-  .page-index.debug-freeze main>section{padding-block:24px!important}
-}
-
+.page-index #servicios .grid-3,
+.page-index #servicios .grid-icons{overflow:visible!important}
