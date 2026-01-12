@@ -627,7 +627,7 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
   width:100%!important;max-width:100%!important;
   margin:10px 0 12px!important;
   position:static!important;transform:none!important;
-  z-index:40!important;
+  z-index:70!important;
 }
 
 /* (E) TABS SISTEMAS (2x2) responsive real en mobile: tamaño con clamp() */
@@ -663,3 +663,13 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.a
 .page-index #servicios .grid-2,
 .page-index #servicios .grid-3,
 .page-index #servicios .grid-icons{overflow:visible!important}
+
+/* (F2) SERVICIOS fallback (si tus tiles NO usan icon-grid/service-grid/service-tile) */
+.page-index #servicios .grid-icons span,
+.page-index #servicios .grid-3 span{
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  word-break:break-word!important;
+  line-height:1.05!important;
+  hyphens:auto;
+}
