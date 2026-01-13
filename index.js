@@ -48,45 +48,41 @@ async function loadPartial(placeholderId,fileName){
   ph.outerHTML=html
 }
 
-/* =========================
-   3) PATCH UX (WHEEL tabs) — SOLO si overflow
-========================= */
-function bindWheelOnTabs(){
+
+            function bindWheelOnTabs(){
   const sels=".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs,.prod-tabs,.hero-gallery-groups,#heroGalleryGroups,.hero-gallery-tabs,#heroGalleryTabs,.promo-filters";
+
   document.querySelectorAll(sels).forEach(el=>{
-    if(el.dataset.wheelBound==="1")return;el.dataset.wheelBound="1";
-    on(el,"wheel",e=>{
-      const hasOverflow=el.scrollWidth>el.clientWidth+2;if(!hasOverflow)return;
-      if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){el.scrollLeft+=e.deltaY;e.preventDefault()}
-    },{passive:false})
-  })
-}
- /* =========================
-   3.1) TOUCH ASSIST (Mobile) — VERTICAL-FIRST + LOCK SOLO CON INTENCIÓN
-   - Permite SIEMPRE scroll down fluido
-   - Solo bloquea vertical cuando el gesto es claramente horizontal
-   - Libera el lock en bordes (no te “atoras”)
-========================= */
-            
-  document.querySelectorAll(sels).forEach(el=>{
+    // ===== WHEEL (desktop) =====
+    if(el.dataset.wheelBound!=="1"){
+      el.dataset.wheelBound="1";
+      on(el,"wheel",e=>{
+        const hasOverflow=el.scrollWidth>el.clientWidth+2;if(!hasOverflow)return;
+        if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){ el.scrollLeft+=e.deltaY; e.preventDefault(); }
+      },{passive:false});
+    }
+
+    // ===== TOUCH (mobile) — VERTICAL SIEMPRE PERMITIDO =====
     if(el.dataset.touchLockBound==="1") return;
     el.dataset.touchLockBound="1";
 
     const hasOverflow=()=> (el.scrollWidth - el.clientWidth) > 2;
 
     let sx=0, sy=0, startLeft=0;
-    let locked=null; // null = aún no decide, true = horizontal lock, false = vertical
+    let decided=false;
+    let horizontal=false;
 
-    // Ajustes finos
-    const DEADZONE = 10;      // px antes de decidir
-    const RATIO    = 1.35;    // X debe dominar Y por este factor para lock horizontal
+    // Ajustes (más estrictos para NO interferir con scroll vertical)
+    const DEADZONE=12;   // px antes de decidir
+    const RATIO=1.8;     // horizontal debe dominar MUCHO para activar drag
 
     el.addEventListener("touchstart",(e)=>{
-      if(!hasOverflow()) { locked=null; return; }
+      if(!hasOverflow()) { decided=false; horizontal=false; return; }
       const t=e.touches && e.touches[0]; if(!t) return;
       sx=t.clientX; sy=t.clientY;
       startLeft=el.scrollLeft;
-      locked=null;
+      decided=false;
+      horizontal=false;
     },{passive:true});
 
     el.addEventListener("touchmove",(e)=>{
@@ -95,39 +91,31 @@ function bindWheelOnTabs(){
 
       const dx=t.clientX - sx;
       const dy=t.clientY - sy;
-
       const ax=Math.abs(dx), ay=Math.abs(dy);
 
-      // 1) Si aún no decidimos, decide solo cuando el gesto sea claro
-      if(locked===null){
-        if(ax < DEADZONE && ay < DEADZONE) return;
-
-        // Si el usuario claramente va vertical: NO bloquees (deja scroll down)
-        if(ay > ax) { locked=false; return; }
-
-        // Solo bloquea vertical si horizontal domina claramente
-        locked = ax > (ay * RATIO);
-        if(!locked){ locked=false; return; }
+      // Decide intención SOLO cuando sea claro
+      if(!decided){
+        if(ax<DEADZONE && ay<DEADZONE) return;
+        // Si hay intención vertical (aunque sea leve), NO tocamos nada
+        if(ay>=ax) { decided=true; horizontal=false; return; }
+        // Solo si horizontal domina MUCHO, permitimos drag horizontal
+        horizontal = ax > (ay*RATIO);
+        decided=true;
+        if(!horizontal) return;
       }
 
-      // 2) Si no está bloqueado (vertical), nunca hagas preventDefault
-      if(locked===false) return;
+      // Si no es horizontal, JAMÁS prevenimos (scroll vertical libre)
+      if(!horizontal) return;
 
-      // 3) Si está bloqueado horizontal:
-      //    - Mueve horizontal
-      //    - Evita scroll vertical de la página
-      //    - PERO libera si estás en borde y el usuario intenta seguir (para que pueda bajar)
-      const maxScroll = el.scrollWidth - el.clientWidth;
-      const atLeft  = el.scrollLeft <= 0;
-      const atRight = el.scrollLeft >= (maxScroll - 1);
+      // Drag horizontal (único caso con preventDefault)
+      // Aun aquí, si el usuario cambia a vertical fuerte, liberamos
+      if(ay>ax){ horizontal=false; return; }
 
-      // Si estás en borde y el usuario “empuja” más hacia fuera, NO bloquees (deja bajar/subir)
-      const pushingLeft  = atLeft  && dx > 0;
-      const pushingRight = atRight && dx < 0;
-      if(pushingLeft || pushingRight){
-        locked=false; // libera y permite scroll de página
-        return;
-      }
+      // Además, si estás en bordes y empuja más, no bloquees (para que el scroll siga libre)
+      const maxScroll=el.scrollWidth-el.clientWidth;
+      const atLeft=el.scrollLeft<=0;
+      const atRight=el.scrollLeft>=(maxScroll-1);
+      if((atLeft && dx>0) || (atRight && dx<0)) { horizontal=false; return; }
 
       e.preventDefault();
       el.scrollLeft = startLeft - dx;
@@ -136,10 +124,6 @@ function bindWheelOnTabs(){
 }
 
 
-
-/* =========================
-   4) Formularios -> WhatsApp (sin duplicar listeners)
-========================= */
 /* =========================
    4) Formularios (Quick WhatsApp + Contacto a Apps Script)
 ========================= */
