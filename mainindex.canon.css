@@ -127,3 +127,27 @@ html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav{backgr
 html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.18)!important;background:rgba(2,6,23,.16)!important}
 html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.active{background:rgba(45,212,191,.95)!important;border-color:rgba(45,212,191,.95)!important}
 html[data-theme="light"] .page-index.debug-freeze #heroGalleryCarousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.20)!important;background:rgba(2,6,23,.14)!important}
+
+
+
+
+/* === EXPIRITI INDEX CANON — GRADIENTS + WIDTH + DOTS (NO DUPES) v2026.01.12-canon === */
+.page-index{--ix-maxw:1200px;--grad-exp:linear-gradient(90deg,rgba(30,156,152,1) 0%,rgba(250,85,102,1) 100%);--grad-blue:linear-gradient(90deg,#25c7b8 0%,#3b82f6 55%,#60a5fa 100%)}
+/* 1) WIDTH CANON (desktop 80vw cap 1200, tablet 92vw, mobile 100%) */
+.page-index.debug-freeze .container,.page-index.debug-freeze .ix-wrap{width:min(80vw,var(--ix-maxw));margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media(max-width:1100px){.page-index.debug-freeze .container,.page-index.debug-freeze .ix-wrap{width:min(92vw,var(--ix-maxw))}}
+@media(max-width:720px){.page-index.debug-freeze .container,.page-index.debug-freeze .ix-wrap{width:100%}}
+/* 2) Helper “solo texto” (evita rectángulos) */
+.page-index .text-grad{display:inline-block;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+/* 3) GRADIENTE AZUL (UNA sola intención) */
+.page-index .gradient-word{display:inline-block;background:var(--grad-blue)!important;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important}
+/* 4) GRADIENTE EXPIRITI (teal→rosado) para títulos/sections (UNA sola intención) */
+.page-index .expiriti-gradient,.page-index .section-title h2,.page-index #productos-con .prod-title,.page-index #servicios .section-title h2,.page-index #promociones .section-title h2,.page-index #faq .section-title h2,.page-index #contacto h2,.page-index .map-card .section-title h3{display:inline-block;background:var(--grad-exp)!important;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important}
+/* 5) “title-gradient” NO debe pintar bloques: lo vuelvo SOLO TEXTO y lo mando a Expiriti (si quieres azul en un título, usa .gradient-word o .text-grad + override) */
+.page-index .title-gradient{display:inline-block;background:var(--grad-exp)!important;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important}
+/* 6) DOTS: un solo owner (SIN absolute especial en heroGallery) */
+.page-index.debug-freeze .carousel .carousel-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;border-radius:999px!important;background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;position:static!important;inset:auto!important;transform:none!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:3;pointer-events:auto!important}
+.page-index.debug-freeze .carousel .carousel-nav .dot{width:11px!important;height:11px!important;border-radius:999px!important;margin:0!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.10)!important;cursor:pointer}
+.page-index.debug-freeze .carousel .carousel-nav .dot.active{background:rgba(45,212,191,.85)!important;border-color:rgba(45,212,191,.95)!important}
+/* 7) Kill-switch: si quedó algún patch viejo que puso heroGallery nav absolute, lo neutralizo */
+.page-index.debug-freeze #heroGalleryCarousel .carousel-nav{position:static!important;inset:auto!important;background:rgba(7,10,18,.12
