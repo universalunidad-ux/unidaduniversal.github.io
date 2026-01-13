@@ -55,15 +55,6 @@
 .page-index .card{border:var(--border);background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.07),transparent 60%),radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.06),transparent 60%),linear-gradient(180deg,rgba(17,23,35,.92),rgba(17,23,35,.70));border-radius:var(--radius);box-shadow:var(--shadow)}
 .page-index .card .body,.page-index .card.body{padding:16px}
 
-/* ========== 5) HERO fold real (index) ========== */
-.page-index .hero.section-full{padding:0!important}
-.page-index .hero{min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px));display:flex;align-items:center;padding:0!important;border-top:0!important}
-.page-index .hero .container{width:100%;padding-top:14px!important;padding-bottom:14px!important}
-.page-index .hero-grid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
-.page-index .hero-grid>*{min-width:0}
-.page-index .hero h1{margin:0;line-height:1.15;font-size:1.65rem}
-@media(min-width:980px){.page-index .hero-grid{grid-template-columns:1.05fr .95fr;gap:18px;min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px))}.page-index .hero h1{font-size:2.25rem}}
-
 /* ========== 6-8) HERO Gallery CONSOLIDADO (tabs + card + swipe + dots) ========== */
 
 /* HERO full-height (desktop) */
@@ -189,8 +180,9 @@
 
 
 /* ========== 7) carousel base (index) ========== */
-.page-index .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,.10);background:var(--card-2)}
-.page-index .carousel-track{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;min-height:240px}
+.page-index .carousel{position:relative;border-radius:var(--radius);overflow:visible;border:1px solid rgba(255,255,255,.10);background:var(--card-2)}
+
+.page-index .carousel-track{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;min-height:0}
 .page-index .carousel-slide{flex:0 0 100%;scroll-snap-align:start;position:relative}
 .page-index .carousel-nav{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:10px;padding:8px 10px;z-index:3;pointer-events:none}
 .page-index .carousel-nav .dot{pointer-events:auto;width:18px;height:18px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer}
@@ -201,18 +193,8 @@
 .page-index .arrowCircle.next{right:10px}
 .page-index .arrowCircle.is-disabled{opacity:.35}
 @media(min-width:980px){.page-index .carousel-track{min-height:320px}.page-index .carousel-nav .dot{width:14px;height:14px}}
-@media(max-width:980px){.page-index .arrowCircle{display:none}}
-@media(max-width:980px){.page-index .hero .arrowCircle{display:flex}}/* hero sí */
+@media(max-width:980px){.page-index .arrowCircle{display:flex}}
 
-/* ========== 8) HERO carousel: dots abajo + contain ========== */
-.page-index #heroGalleryCarousel{background:transparent!important;border-color:rgba(255,255,255,.10)!important}
-.page-index #heroGalleryCarousel.carousel{display:flex!important;flex-direction:column!important;overflow:visible!important}
-.page-index #heroGalleryCarousel .carousel-track{flex:1 1 auto!important;min-height:0!important;height:100%!important;overflow:hidden!important}
-.page-index #heroGalleryCarousel .carousel-slide{height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
-.page-index #heroGalleryCarousel .hero-slide img{width:100%!important;height:100%!important;display:block!important;object-fit:contain!important;object-position:center!important;background:transparent!important}
-.page-index #heroGalleryCarousel .carousel-nav{position:static!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;gap:8px!important;border-radius:999px!important;background:rgba(7,10,18,.14)!important;border:1px solid rgba(255,255,255,.10)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:auto!important;justify-content:center!important}
-.page-index #heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
-@media(min-width:981px){.page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}}
 
 /* ========== 9) productos: bar + tabs + grid + cta ========== */
 .page-index .panel-productos.hidden{display:none!important}
@@ -487,3 +469,26 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 @media(max-width:980px){
   .page-index .arrowCircle{display:flex}
 }
+
+/* ========== CANON: carruseles mobile (swipe + scroll vertical fluido) ========== */
+.page-index .carousel-track{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  touch-action:pan-x;              /* swipe horizontal */
+  overscroll-behavior-x:contain;   /* no “rebota” la página horizontal */
+}
+.page-index .carousel-track::-webkit-scrollbar{height:0}
+.page-index .carousel-slide{scroll-snap-align:start}
+
+/* Permite que el usuario haga scroll DOWN sin pelearse con el carrusel */
+@media(max-width:980px){
+  .page-index .carousel{touch-action:pan-y} /* el contenedor permite vertical */
+  .page-index .arrowCircle{display:flex}
+}
+
+/* Dots siempre clicables (sin tap-ghost) */
+.page-index .carousel .carousel-nav{pointer-events:auto}
+.page-index .carousel .carousel-nav .dot{-webkit-tap-highlight-color:transparent}
