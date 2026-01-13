@@ -25,7 +25,21 @@
 .page-index .kicker{display:inline-flex;gap:8px;align-items:center;color:rgba(232,238,246,.92);font-weight:800;letter-spacing:.2px;background:rgba(255,255,255,.04);border:var(--border);border-radius:999px;padding:8px 12px;margin-bottom:10px}
 .page-index .lead{color:rgba(232,238,246,.86);margin:10px 0 0}
 .page-index .hint{color:rgba(149,162,179,.95);font-size:.94rem}
-.page-index .title-gradient,.page-index .gradient-word{background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* === GRADIENT TEXT (sin redundancia de color) === */
+.page-index .title-gradient,
+.page-index .gradient-word,
+.page-index .expiriti-gradient{
+  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.page-index .title-gradient,
+.page-index .gradient-word{
+  background-image:linear-gradient(90deg,var(--brand),var(--brand-2));
+}
+
+
 .page-index .badge{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 12px;border:var(--border);background:rgba(255,255,255,.04);color:rgba(232,238,246,.92);font-size:.92rem}
 .page-index .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .page-index .badge a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(232,238,246,.35)}
@@ -50,25 +64,129 @@
 .page-index .hero h1{margin:0;line-height:1.15;font-size:1.65rem}
 @media(min-width:980px){.page-index .hero-grid{grid-template-columns:1.05fr .95fr;gap:18px;min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px))}.page-index .hero h1{font-size:2.25rem}}
 
-/* ========== 6) HERO Gallery (tabs + card + dots abajo) ========== */
-.page-index .hero-gallery-card{height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px) - 14px)!important;min-height:480px!important;display:flex;flex-direction:column;overflow:hidden}
-@media(min-width:980px){.page-index .hero-gallery-card{min-height:560px!important}}
+/* ========== 6-8) HERO Gallery CONSOLIDADO (tabs + card + swipe + dots) ========== */
+
+/* HERO full-height (desktop) */
+.page-index .hero.section-full{padding:0!important}
+.page-index .hero{
+  min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px));
+  display:flex;align-items:center;padding:0!important;border-top:0!important
+}
+@supports not (height:100dvh){
+  .page-index .hero{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))}
+}
+.page-index .hero .container{width:100%;padding-top:14px!important;padding-bottom:14px!important}
+.page-index .hero-grid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
+.page-index .hero-grid>*{min-width:0}
+.page-index .hero h1{margin:0;line-height:1.15;font-size:1.65rem}
+@media(min-width:980px){
+  .page-index .hero-grid{
+    grid-template-columns:1.05fr .95fr;gap:18px;
+    min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px))
+  }
+  .page-index .hero h1{font-size:2.25rem}
+}
+
+/* Card: mobile flexible | desktop fijo a viewport */
+.page-index .hero-gallery-card{
+  display:flex;flex-direction:column;
+  border-radius:var(--radius); /* tu base, luego final patch lo redondea más */
+}
+@media(max-width:979.98px){
+  .page-index .hero-gallery-card{
+    height:auto!important;
+    min-height:unset!important;
+    overflow:visible!important;
+  }
+}
+@media(min-width:980px){
+  .page-index .hero-gallery-card{
+    height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 14px)!important;
+    min-height:560px!important;
+    overflow:hidden!important;
+  }
+}
+
+/* Header */
 .page-index .hero-gallery-header{padding:10px 16px 8px;border-bottom:var(--border)}
 .page-index .hero-gallery-header h2{margin:0;font-size:1.05rem;line-height:1.15}
-@media(max-width:520px){.page-index .hero-gallery-header{padding:10px 14px 7px}.page-index .hero-gallery-header h2{font-size:1rem}}
-/* groups */
-.page-index .hero-gallery-groups{display:flex;gap:12px;padding:8px 12px 0;margin:8px 0 14px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain}
+@media(max-width:520px){
+  .page-index .hero-gallery-header{padding:10px 14px 7px}
+  .page-index .hero-gallery-header h2{font-size:1rem}
+}
+
+/* Groups */
+.page-index .hero-gallery-groups{
+  display:flex;gap:12px;padding:8px 12px 0;margin:8px 0 14px;
+  overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain
+}
 .page-index .hero-gallery-groups::-webkit-scrollbar{height:0}
 .page-index .hero-gallery-groups>*{flex:0 0 auto;white-space:nowrap}
-.page-index .hero-group-tab{min-height:44px;padding:10px 12px;border-radius:999px;border:var(--border);background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);font-weight:900;cursor:pointer}
+.page-index .hero-group-tab{
+  min-height:44px;padding:10px 12px;border-radius:999px;border:var(--border);
+  background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);font-weight:900;cursor:pointer
+}
 .page-index .hero-group-tab.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}
-/* tabs logos */
-.page-index .hero-gallery-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;padding:12px 12px 14px!important}
-.page-index .hero-tab{display:flex!important;align-items:center!important;justify-content:center!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;border:var(--border)!important;background:rgba(255,255,255,.03)!important;cursor:pointer}
+
+/* Tabs logos */
+.page-index .hero-gallery-tabs{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;padding:12px 12px 14px!important
+}
+.page-index .hero-tab{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  min-height:86px!important;padding:14px!important;border-radius:14px!important;
+  border:var(--border)!important;background:rgba(255,255,255,.03)!important;cursor:pointer
+}
 .page-index .hero-tab.active{border-color:rgba(96,165,250,.40)!important;background:rgba(96,165,250,.10)!important}
 .page-index .hero-tab span{display:none!important}
-.page-index .hero-tab img{width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;margin:0 auto!important;display:block!important}
-@media(max-width:420px){.page-index .hero-tab{min-height:82px!important;padding:12px!important}.page-index .hero-tab img{height:46px!important;max-width:165px!important}}
+.page-index .hero-tab img{
+  width:auto!important;height:52px!important;max-width:180px!important;
+  object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;
+  margin:0 auto!important;display:block!important
+}
+@media(max-width:420px){
+  .page-index .hero-tab{min-height:82px!important;padding:12px!important}
+  .page-index .hero-tab img{height:46px!important;max-width:165px!important}
+}
+
+/* HERO Carousel: SWIPE + dots abajo + contain */
+.page-index #heroGalleryCarousel{background:transparent!important;border-color:rgba(255,255,255,.10)!important}
+.page-index #heroGalleryCarousel.carousel{display:flex!important;flex-direction:column!important;overflow:visible!important}
+.page-index #heroGalleryCarousel .carousel-track{
+  flex:1 1 auto!important;min-height:0!important;height:100%!important;
+  display:flex!important;gap:0;
+  overflow-x:auto!important;overflow-y:hidden!important;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none
+}
+.page-index #heroGalleryCarousel .carousel-track::-webkit-scrollbar{height:0}
+.page-index #heroGalleryCarousel .carousel-slide{
+  flex:0 0 100%;scroll-snap-align:start;
+  height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:0!important
+}
+.page-index #heroGalleryCarousel .hero-slide img{
+  width:100%!important;height:100%!important;display:block!important;
+  object-fit:contain!important;object-position:center!important;background:transparent!important
+}
+/* dots abajo */
+.page-index #heroGalleryCarousel .carousel-nav{
+  flex:0 0 auto;
+  position:static!important;width:max-content!important;max-width:calc(100% - 24px)!important;
+  margin:10px auto 12px!important;padding:6px 10px!important;gap:8px!important;border-radius:999px!important;
+  background:rgba(7,10,18,.14)!important;border:1px solid rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  pointer-events:auto!important;justify-content:center!important
+}
+.page-index #heroGalleryCarousel .carousel-nav .dot{width:12px!important;height:12px!important;border-radius:999px!important}
+@media(min-width:981px){
+  .page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}
+}
+
+
 
 /* ========== 7) carousel base (index) ========== */
 .page-index .carousel{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,.10);background:var(--card-2)}
@@ -232,9 +350,25 @@
 
 /* ========== PATCH: contraste + hero full-height + gradiente ExpIRI ========== */
 .page-index{color:var(--text,#e8eef6);background:radial-gradient(1200px 600px at 20% 0%,rgba(45,212,191,.10),transparent 60%),radial-gradient(1000px 560px at 80% 10%,rgba(96,165,250,.10),transparent 60%),linear-gradient(180deg,#070b12,#060913)}
-.page-index{--exp-yellow:#f6c445;--exp-teal:#25c7b8;--exp-red:#ff4d6d}
-.page-index .expiriti-gradient{background:linear-gradient(90deg,var(--exp-yellow),var(--exp-teal),var(--exp-red));-webkit-background-clip:text;background-clip:text;color:transparent}
-.page-index .section-title h2,.page-index #productos-con .prod-title,.page-index #servicios .section-title h2,.page-index #promociones .section-title h2,.page-index #faq .section-title h2{background:linear-gradient(90deg,var(--exp-yellow),var(--exp-teal),var(--exp-red));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* === EXPIRITI GRADIENT (azules/teal, sin amarillo) === */
+.page-index{--exp-teal:#25c7b8;--exp-blue:#60a5fa;--exp-ink:#0ea5e9}
+.page-index .expiriti-gradient{
+  background-image:linear-gradient(90deg,var(--exp-teal),var(--exp-blue),var(--exp-ink));
+}
+/* Titulares que quieres con gradiente Expiriti */
+.page-index .section-title h2,
+.page-index #productos-con .prod-title,
+.page-index #servicios .section-title h2,
+.page-index #promociones .section-title h2,
+.page-index #faq .section-title h2{
+  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  background-image:linear-gradient(90deg,var(--exp-teal),var(--exp-blue),var(--exp-ink));
+}
+
 .page-index .hero{min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px))}
 @supports not (height:100dvh){.page-index .hero{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))}}
 .page-index .hero-gallery-card{height:auto!important;min-height:unset!important;overflow:visible!important}
@@ -336,3 +470,20 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 @media(max-width:1100px){.page-index .hero>.container{width:min(92vw,var(--maxw,1200px))!important}}
 @media(max-width:720px){.page-index .hero>.container{width:100%!important;max-width:var(--maxw,1200px)!important}}
 .page-index .hero-gallery-card{max-width:100%}
+
+
+/* ========== GLOBAL CAROUSEL MOBILE: swipe + dots + flechas ========== */
+.page-index .carousel-track{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+}
+.page-index .carousel-track::-webkit-scrollbar{height:0}
+.page-index .carousel-slide{scroll-snap-align:start}
+
+/* Flechas visibles también en mobile (si tu JS las usa) */
+@media(max-width:980px){
+  .page-index .arrowCircle{display:flex}
+}
