@@ -1,95 +1,63 @@
- /* Expiriti — mainindex.css (CONSOLIDADO) v2026.01.12-canon
-   INDEX ONLY | Requiere: theme.css | Scope: <body class="page-index"> (opcional: .debug-freeze)
-   Owner único: width (min(80vw,1200)), hero heights, hero gallery card, dots, gradientes (solo texto), light-index
-====================================================================== */
+/* =========================================================
+   Expiriti — mainindex.canon.css (MIN+CANON) v2026.01.12-canon-NODUPE
+   - 2 gradientes CANON: Expiriti (teal→rosado) + Azul (turquesa→azul)
+   - gradient-word aparece 1 sola vez (AZUL)
+   - Gradientes SOLO TEXTO (nunca rectángulos)
+   - Dots/nav: UN SOLO OWNER pill estático para TODOS los carousels (incluye HERO)
+   - Elimina “absolute transparente” del heroGallery (ya NO hay excepción)
+========================================================= */
 
-/* ========== 0) Gestos/scroll: vertical siempre permitido ========== */
-.hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs,.prod-tabs,.hero-gallery-groups,#heroGalleryGroups,.hero-gallery-tabs,#heroGalleryTabs,.promo-filters,#servicesCarousel,.cards-services.is-carousel,.carousel .carousel-track{touch-action:pan-y;-webkit-overflow-scrolling:touch}
-.hero-gallery-groups,.hero-gallery-tabs,.prod-tabs,.promo-filters,#servicesCarousel,.carousel .carousel-track{touch-action:pan-y pinch-zoom}
+/* 0) Gestos/scroll */
+.hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs,.prod-tabs,.hero-gallery-groups,#heroGalleryGroups,.hero-gallery-tabs,#heroGalleryTabs,.promo-filters,#servicesCarousel,.cards-services.is-carousel,.carousel .carousel-track{touch-action:pan-y;-webkit-overflow-scrolling:touch}.hero-gallery-groups,.hero-gallery-tabs,.prod-tabs,.promo-filters,#servicesCarousel,.carousel .carousel-track{touch-action:pan-y pinch-zoom}
 
-/* ========== 1) ROOT (tokens/alturas/fondo index) ========== */
-.page-index.debug-freeze{scroll-padding-top:84px;--ix-vh:1svh;--ix-hero:100svh;--ix-sec:92svh;--ghh:var(--gh-height,68px);--tap:var(--tap,44px);--maxw:var(--maxw,1200px);--gap:var(--gap,14px);--r-sm:12px;--r-md:16px;--r-lg:18px;--r-xl:22px;--shadow:0 10px 30px rgba(0,0,0,.25);--border:1px solid rgba(255,255,255,.085);--card:#111723;--card-2:#0f1622;--text:#e8eef6;--muted:#95a2b3;--brand:#2dd4bf;--brand-2:#60a5fa;--exp-yellow:#f6c445;--exp-teal:#25c7b8;--exp-red:#ff4d6d;--grad-exp:linear-gradient(90deg,var(--exp-yellow),var(--exp-teal),var(--exp-red));--grad-gp:linear-gradient(90deg,#22c55e 0%,#fb7185 100%);--grad-blue:linear-gradient(90deg,#0ea5ff 0%,#22d3ee 55%,#60a5fa 100%);color:var(--text);background:radial-gradient(1200px 600px at 20% 0%,rgba(45,212,191,.10),transparent 60%),radial-gradient(1000px 560px at 80% 10%,rgba(96,165,250,.10),transparent 60%),linear-gradient(180deg,#070b12,#060913);--reel-scale:.85;--reel-h-min:calc(240px * var(--reel-scale));--reel-h-mid:calc(42svh * var(--reel-scale));--reel-h-max:calc(520px * var(--reel-scale))}
-@supports(height:100dvh){.page-index.debug-freeze{--ix-vh:1dvh;--ix-hero:100dvh;--ix-sec:92dvh}}
-@media(max-width:768px){.page-index.debug-freeze{scroll-padding-top:68px}}
-@media(max-width:380px){.page-index.debug-freeze{--reel-h-mid:calc(36svh * var(--reel-scale));--reel-h-max:calc(420px * var(--reel-scale))}}
-@media(min-width:980px){.page-index.debug-freeze{--reel-h-mid:calc(52vh * var(--reel-scale));--reel-h-max:calc(640px * var(--reel-scale))}}
+/* 1) ROOT + tokens (gradientes canon aquí) */
+.page-index.debug-freeze{scroll-padding-top:84px;--ix-vh:1svh;--ix-hero:100svh;--ix-sec:92svh;--ghh:var(--gh-height,68px);--tap:var(--tap,44px);--maxw:var(--maxw,1200px);--gap:var(--gap,14px);--r-sm:12px;--r-md:16px;--r-lg:18px;--r-xl:22px;--shadow:0 10px 30px rgba(0,0,0,.25);--border:1px solid rgba(255,255,255,.085);--card:#111723;--card-2:#0f1622;--text:#e8eef6;--muted:#95a2b3;--brand:#2dd4bf;--brand-2:#60a5fa;--grad-exp:linear-gradient(90deg,rgba(30,156,152,1) 0%,rgba(250,85,102,1) 100%);--grad-blue:linear-gradient(90deg,#25c7b8 0%,#3b82f6 55%,#60a5fa 100%);color:var(--text);background:radial-gradient(1200px 600px at 20% 0%,rgba(45,212,191,.10),transparent 60%),radial-gradient(1000px 560px at 80% 10%,rgba(96,165,250,.10),transparent 60%),linear-gradient(180deg,#070b12,#060913);--reel-scale:.85;--reel-h-min:calc(240px * var(--reel-scale));--reel-h-mid:calc(42svh * var(--reel-scale));--reel-h-max:calc(520px * var(--reel-scale))}@supports(height:100dvh){.page-index.debug-freeze{--ix-vh:1dvh;--ix-hero:100dvh;--ix-sec:92dvh}}@media(max-width:768px){.page-index.debug-freeze{scroll-padding-top:68px}}@media(max-width:380px){.page-index.debug-freeze{--reel-h-mid:calc(36svh * var(--reel-scale));--reel-h-max:calc(420px * var(--reel-scale))}}@media(min-width:980px){.page-index.debug-freeze{--reel-h-mid:calc(52vh * var(--reel-scale));--reel-h-max:calc(640px * var(--reel-scale))}}
 
-/* ========== 2) WRAPPER (80vw sin romper padding) ========== */
-.page-index.debug-freeze .ix-wrap,.page-index.debug-freeze .container{width:min(80vw,var(--maxw));margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-@media(max-width:1100px){.page-index.debug-freeze .ix-wrap,.page-index.debug-freeze .container{width:min(92vw,var(--maxw))}}
-@media(max-width:720px){.page-index.debug-freeze .ix-wrap,.page-index.debug-freeze .container{width:100%}}
-@media(max-width:720px){.page-index.debug-freeze .hero .container,.page-index.debug-freeze #productos-con>.container{padding-left:max(12px,env(safe-area-inset-left,0px))!important;padding-right:max(12px,env(safe-area-inset-right,0px))!important}}
+/* 2) Wrapper width canon */
+.page-index.debug-freeze .ix-wrap,.page-index.debug-freeze .container{width:min(80vw,var(--maxw));margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}@media(max-width:1100px){.page-index.debug-freeze .ix-wrap,.page-index.debug-freeze .container{width:min(92vw,var(--maxw))}}@media(max-width:720px){.page-index.debug-freeze .ix-wrap,.page-index.debug-freeze .container{width:100%}}@media(max-width:720px){.page-index.debug-freeze .hero .container,.page-index.debug-freeze #productos-con>.container{padding-left:max(12px,env(safe-area-inset-left,0px))!important;padding-right:max(12px,env(safe-area-inset-right,0px))!important}}
 
-/* ========== 3) Superficies/radios consistentes ========== */
-.page-index.debug-freeze .card,.page-index.debug-freeze .promo-item,.page-index.debug-freeze .faq-item,.page-index.debug-freeze .map-embed,.page-index.debug-freeze .carousel,.page-index.debug-freeze .reel-embed{border-radius:var(--r-xl)!important;overflow:hidden}
-.page-index.debug-freeze .btn{border-radius:var(--r-md)!important}
-.page-index.debug-freeze input,.page-index.debug-freeze select,.page-index.debug-freeze textarea{border-radius:var(--r-md)!important}
-.page-index.debug-freeze .hero-tab,.page-index.debug-freeze .reel-tab{border-radius:var(--r-lg)!important}
+/* 3) Radios consistentes */
+.page-index.debug-freeze .card,.page-index.debug-freeze .promo-item,.page-index.debug-freeze .faq-item,.page-index.debug-freeze .map-embed,.page-index.debug-freeze .carousel,.page-index.debug-freeze .reel-embed{border-radius:var(--r-xl)!important;overflow:hidden}.page-index.debug-freeze .btn{border-radius:var(--r-md)!important}.page-index.debug-freeze input,.page-index.debug-freeze select,.page-index.debug-freeze textarea{border-radius:var(--r-md)!important}.page-index.debug-freeze .hero-tab,.page-index.debug-freeze .reel-tab{border-radius:var(--r-lg)!important}
 
-/* ========== 4) Gradientes SOLO TEXTO (no rectángulos) ========== */
-.page-index .text-grad-gp,.page-index .text-grad-blue,.page-index .title-gradient,.page-index.debug-freeze .expiriti-gradient,.page-index.debug-freeze .section-title h2,.page-index.debug-freeze #productos-con .prod-title,.page-index.debug-freeze #servicios .section-title h2,.page-index.debug-freeze #promociones .section-title h2,.page-index.debug-freeze #faq .section-title h2{display:inline-block;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-.page-index.debug-freeze .expiriti-gradient,.page-index.debug-freeze .section-title h2,.page-index.debug-freeze #productos-con .prod-title,.page-index.debug-freeze #servicios .section-title h2,.page-index.debug-freeze #promociones .section-title h2,.page-index.debug-freeze #faq .section-title h2{background-image:var(--grad-exp)}
+/* 4) Gradientes SOLO TEXTO (CANON) */
+.page-index .text-grad{display:inline-block;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+/* 4A) AZUL: gradient-word (ÚNICA definición) — licencias/cursos/desarrollos/soporte + títulos reels */
 .page-index .gradient-word{display:inline-block;background:var(--grad-blue)!important;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important}
-.page-index #contacto h2,.page-index .map-card .section-title h3,.page-index .title-gradient{background-image:var(--grad-gp)!important}
-@supports not (-webkit-background-clip:text){.page-index .text-grad-gp,.page-index .text-grad-blue,.page-index .title-gradient,.page-index .gradient-word,.page-index.debug-freeze .expiriti-gradient,.page-index.debug-freeze .section-title h2,.page-index.debug-freeze #productos-con .prod-title,.page-index.debug-freeze #servicios .section-title h2,.page-index.debug-freeze #promociones .section-title h2,.page-index.debug-freeze #faq .section-title h2{color:var(--text)!important;background:none!important}}
+/* 4B) EXPIRITI: títulos/sections listadas (incluye title-gradient) */
+.page-index.debug-freeze .expiriti-gradient,.page-index.debug-freeze .section-title h2,.page-index.debug-freeze #productos-con .prod-title,.page-index.debug-freeze #servicios .section-title h2,.page-index.debug-freeze #promociones .section-title h2,.page-index.debug-freeze #faq .section-title h2,.page-index #contacto h2,.page-index .map-card .section-title h3,.page-index .title-gradient{display:inline-block;background-image:var(--grad-exp)!important;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important}
+/* 4C) Fallback */
+@supports not (-webkit-background-clip:text){.page-index .text-grad,.page-index .gradient-word,.page-index .title-gradient,.page-index.debug-freeze .expiriti-gradient,.page-index.debug-freeze .section-title h2,.page-index.debug-freeze #productos-con .prod-title,.page-index.debug-freeze #servicios .section-title h2,.page-index.debug-freeze #promociones .section-title h2,.page-index.debug-freeze #faq .section-title h2,.page-index #contacto h2,.page-index .map-card .section-title h3{color:var(--text)!important;background:none!important;-webkit-text-fill-color:currentColor!important}}
 
-/* ========== 5) HERO (mobile auto / desktop calc) ========== */
-.page-index.debug-freeze .hero.section-full{padding:0!important}
-.page-index.debug-freeze .hero{width:100%;min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px));display:flex;align-items:center;padding:0!important;border-top:0!important}
-.page-index.debug-freeze .hero .container{width:100%;padding-top:14px!important;padding-bottom:14px!important}
-.page-index.debug-freeze .hero-grid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}
-@media(min-width:980px){.page-index.debug-freeze .hero-grid{grid-template-columns:1.05fr .95fr;gap:18px;min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px))}}
-.page-index.debug-freeze .hero h1{margin:0;line-height:1.15;font-size:1.65rem}
-@media(min-width:980px){.page-index.debug-freeze .hero h1{font-size:2.25rem}}
+/* 5) HERO layout */
+.page-index.debug-freeze .hero.section-full{padding:0!important}.page-index.debug-freeze .hero{width:100%;min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px));display:flex;align-items:center;padding:0!important;border-top:0!important}.page-index.debug-freeze .hero .container{width:100%;padding-top:14px!important;padding-bottom:14px!important}.page-index.debug-freeze .hero-grid{display:grid;grid-template-columns:1fr;gap:16px;align-items:center}@media(min-width:980px){.page-index.debug-freeze .hero-grid{grid-template-columns:1.05fr .95fr;gap:18px;min-height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px))}}.page-index.debug-freeze .hero h1{margin:0;line-height:1.15;font-size:1.65rem}@media(min-width:980px){.page-index.debug-freeze .hero h1{font-size:2.25rem}}
 
-/* ========== 6) HERO GALLERY CARD (una sola estrategia) ========== */
-.page-index.debug-freeze .hero-gallery-card{display:flex;flex-direction:column;height:auto!important;min-height:unset!important;overflow:visible!important;position:relative!important;isolation:isolate!important}
-@media(min-width:980px){.page-index.debug-freeze .hero-gallery-card{height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px) - 14px)!important;min-height:560px!important;overflow:hidden!important}}
-.page-index.debug-freeze .hero-gallery-header{padding:10px 16px 8px;border-bottom:var(--border);background:transparent!important}
-.page-index.debug-freeze .hero-gallery-header h2{margin:0!important;padding:0!important;display:inline-block!important;width:auto!important;max-width:100%!important;font-size:clamp(20px,2.2vw,32px)!important;line-height:1.12!important;letter-spacing:-.01em!important;background-image:var(--grad-exp)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important}
-@supports not (-webkit-background-clip:text){.page-index.debug-freeze .hero-gallery-header h2{color:var(--exp-teal,#25c7b8)!important;background:none!important}}
+/* 6) HERO GALLERY card */
+.page-index.debug-freeze .hero-gallery-card{display:flex;flex-direction:column;height:auto!important;min-height:unset!important;overflow:visible!important;position:relative!important;isolation:isolate!important}@media(min-width:980px){.page-index.debug-freeze .hero-gallery-card{height:calc(var(--ix-hero) - var(--ghh) - env(safe-area-inset-top,0px) - 14px)!important;min-height:560px!important;overflow:hidden!important}}.page-index.debug-freeze .hero-gallery-header{padding:10px 16px 8px;border-bottom:var(--border);background:transparent!important}.page-index.debug-freeze .hero-gallery-header h2{margin:0!important;padding:0!important;display:inline-block!important;width:auto!important;max-width:100%!important;font-size:clamp(20px,2.2vw,32px)!important;line-height:1.12!important;letter-spacing:-.01em!important;background-image:var(--grad-exp)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important}@supports not (-webkit-background-clip:text){.page-index.debug-freeze .hero-gallery-header h2{color:rgba(30,156,152,1)!important;background:none!important}}
 
-/* groups (pills) */
-.page-index.debug-freeze .hero-gallery-groups{display:flex;gap:12px;padding:8px 12px 0;margin:8px 0 14px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain}
-.page-index.debug-freeze .hero-gallery-groups::-webkit-scrollbar{height:0}
-.page-index.debug-freeze .hero-gallery-groups>*{flex:0 0 auto;white-space:nowrap}
-.page-index.debug-freeze .hero-group-tab{min-height:46px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);font-weight:900;cursor:pointer}
+/* 6A) Groups pills + tabs */
+.page-index.debug-freeze .hero-gallery-groups{display:flex;gap:12px;padding:8px 12px 0;margin:8px 0 14px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain}.page-index.debug-freeze .hero-gallery-groups::-webkit-scrollbar{height:0}.page-index.debug-freeze .hero-gallery-groups>*{flex:0 0 auto;white-space:nowrap}.page-index.debug-freeze .hero-group-tab{min-height:46px;padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.03);color:rgba(232,238,246,.92);font-weight:900;cursor:pointer}
+.page-index.debug-freeze .hero-gallery-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;padding:12px 12px 14px!important}.page-index.debug-freeze .hero-tab{display:flex!important;align-items:center!important;justify-content:center!important;min-height:106px!important;padding:16px!important;border-radius:var(--r-lg)!important;border:1px solid rgba(255,255,255,.14)!important;background:rgba(255,255,255,.03)!important;cursor:pointer}.page-index.debug-freeze .hero-tab span{display:none!important}.page-index.debug-freeze .hero-tab img{width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;margin:0 auto!important;display:block!important}@media(max-width:420px){.page-index.debug-freeze .hero-tab{min-height:82px!important;padding:12px!important}.page-index.debug-freeze .hero-tab img{height:46px!important;max-width:165px!important}}.page-index.debug-freeze .hero-tab.active{border-color:rgba(96,165,250,.42)!important;background:rgba(96,165,250,.10)!important}
 
-/* tabs (logos) */
-.page-index.debug-freeze .hero-gallery-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;padding:12px 12px 14px!important}
-.page-index.debug-freeze .hero-tab{display:flex!important;align-items:center!important;justify-content:center!important;min-height:106px!important;padding:16px!important;border-radius:var(--r-lg)!important;border:1px solid rgba(255,255,255,.14)!important;background:rgba(255,255,255,.03)!important;cursor:pointer}
-.page-index.debug-freeze .hero-tab span{display:none!important}
-.page-index.debug-freeze .hero-tab img{width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;margin:0 auto!important;display:block!important}
-@media(max-width:420px){.page-index.debug-freeze .hero-tab{min-height:82px!important;padding:12px!important}.page-index.debug-freeze .hero-tab img{height:46px!important;max-width:165px!important}}
-.page-index.debug-freeze .hero-tab.active{border-color:rgba(96,165,250,.42)!important;background:rgba(96,165,250,.10)!important}
+/* 7) DOTS / NAV — OWNER ÚNICO (pill estático) + HERO usa MISMO estilo */
+.page-index.debug-freeze .carousel .carousel-nav,.page-index.debug-freeze #heroGalleryCarousel .carousel-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;border-radius:999px!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;position:static!important;inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;transform:none!important;pointer-events:auto!important;z-index:3}
+.page-index.debug-freeze .carousel .carousel-nav .dot,.page-index.debug-freeze #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important;border-radius:999px!important;margin:0!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.10)!important;cursor:pointer}
+.page-index.debug-freeze .carousel .carousel-nav .dot.active,.page-index.debug-freeze #heroGalleryCarousel .carousel-nav .dot.active{background:rgba(45,212,191,.85)!important;border-color:rgba(45,212,191,.95)!important}
 
-/* ========== 7) Dots: owner único
-   - Global carousels: nav tipo “pill” estático
-   - HERO (solo #heroGalleryCarousel): dots absolutos transparentes + reserva padding-bottom
-========= */
-.page-index.debug-freeze .carousel .carousel-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;border-radius:999px!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;position:static!important;left:auto!important;right:auto!important;bottom:auto!important;top:auto!important;transform:none!important;pointer-events:auto!important;z-index:3}
-.page-index.debug-freeze .carousel .carousel-nav .dot{width:11px!important;height:11px!important;border-radius:999px!important;margin:0!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.10)!important;cursor:pointer}
-.page-index.debug-freeze .carousel .carousel-nav .dot.active{background:rgba(45,212,191,.85)!important;border-color:rgba(45,212,191,.95)!important}
-
-/* HERO carousel track + dots abajo (sin “barra gris”) */
+/* 7A) Hero carousel track (sin reservar padding para dots absolutos; ya no son absolutos) */
 .page-index.debug-freeze #heroGalleryCarousel{background:transparent!important;border-color:rgba(255,255,255,.10)!important;position:relative!important;display:flex!important;flex-direction:column!important}
-.page-index.debug-freeze #heroGalleryCarousel .carousel-track{position:relative!important;flex:1 1 auto!important;overflow:hidden!important;min-height:340px!important;padding-bottom:64px!important}
-@media(min-width:980px){.page-index.debug-freeze #heroGalleryCarousel .carousel-track{min-height:460px!important;padding-bottom:72px!important}}
+.page-index.debug-freeze #heroGalleryCarousel .carousel-track{position:relative!important;flex:1 1 auto!important;overflow:hidden!important;min-height:340px!important;padding-bottom:0!important}
+@media(min-width:980px){.page-index.debug-freeze #heroGalleryCarousel .carousel-track{min-height:460px!important;padding-bottom:0!important}}
 .page-index.debug-freeze #heroGalleryCarousel .carousel-slide{position:relative!important;z-index:1!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
 .page-index.debug-freeze #heroGalleryCarousel .hero-slide img{width:100%!important;height:100%!important;display:block!important;object-fit:contain!important;object-position:center!important;background:transparent!important;pointer-events:none!important}
 .page-index.debug-freeze #heroGalleryCarousel .arrowCircle{position:absolute!important;top:50%!important;transform:translateY(-50%)!important;z-index:90!important;opacity:1!important;pointer-events:auto!important}
-.page-index.debug-freeze #heroGalleryCarousel .arrowCircle.prev{left:10px!important}
-.page-index.debug-freeze #heroGalleryCarousel .arrowCircle.next{right:10px!important}
-.page-index.debug-freeze #heroGalleryCarousel .carousel-nav{position:absolute!important;left:12px!important;right:12px!important;bottom:14px!important;display:flex!important;justify-content:center!important;align-items:center!important;gap:8px!important;margin:0!important;padding:0!important;height:auto!important;min-height:0!important;background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;transform:none!important;z-index:80!important;pointer-events:auto!important}
-.page-index.debug-freeze #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important;border-radius:999px!important;margin:0!important;padding:0!important;flex:0 0 auto!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.10)!important}
-.page-index.debug-freeze #heroGalleryCarousel .carousel-nav .dot.active{background:rgba(45,212,191,.88)!important;border-color:rgba(45,212,191,.95)!important}
+.page-index.debug-freeze #heroGalleryCarousel .arrowCircle.prev{left:10px!important}.page-index.debug-freeze #heroGalleryCarousel .arrowCircle.next{right:10px!important}
 
-/* ========== 8) Productos + reels: grid desktop como tu patrón ========== */
+/* 8) Productos + reels layout */
 .page-index.debug-freeze .panel-productos.hidden{display:none!important}
 @media(min-width:980px){.page-index.debug-freeze #productos-con>.container{display:grid!important;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr;gap:var(--gap);align-items:start}.page-index.debug-freeze #productos-con .productos-inline-bar{grid-column:1/2;grid-row:1;margin:0 0 10px!important;align-self:start}.page-index.debug-freeze #productos-con .panel-productos:not(.hidden){display:contents!important}.page-index.debug-freeze #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{display:contents!important}.page-index.debug-freeze #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>div:first-child{grid-column:1/2;grid-row:2;min-width:0;display:flex;flex-direction:column;gap:12px}.page-index.debug-freeze #productos-con .panel-productos:not(.hidden) .grid-2.section-cq>.reels-home-card{grid-column:2/3;grid-row:1/3;min-width:0;height:100%;align-self:stretch;margin-top:0!important}}
 @media(max-width:980px){.page-index.debug-freeze #productos-con>.container{display:block!important}.page-index.debug-freeze #productos-con .panel-productos:not(.hidden){display:block!important}.page-index.debug-freeze #productos-con .panel-productos.hidden{display:none!important}.page-index.debug-freeze #productos-con .panel-productos:not(.hidden) .grid-2.section-cq{display:block!important}.page-index.debug-freeze #productos-con .prod-cta-bottom{margin-bottom:16px!important}.page-index.debug-freeze #productos-con .reels-home-card{margin-top:16px!important}}
 
-/* reels: sin scroll interno */
+/* 8A) Reels sin scroll interno */
 .page-index.debug-freeze .carousel[id^="carouselReels"] .carousel-track{min-height:0!important;height:auto!important;max-height:none!important}
 .page-index.debug-freeze .carousel[id^="carouselReels"] .carousel-slide{display:flex;align-items:center;justify-content:center;padding:12px 12px 10px;overflow:hidden!important}
 .page-index.debug-freeze .reel-embed{position:relative;aspect-ratio:9/16;height:clamp(var(--reel-h-min),var(--reel-h-mid),var(--reel-h-max));width:auto;max-width:100%;border-radius:var(--r-lg);overflow:hidden;background:#050812;border:1px solid rgba(255,255,255,.10);margin:0 auto}
@@ -98,7 +66,7 @@
 .page-index.debug-freeze #productos-con .carousel[id^="carouselReels"],.page-index.debug-freeze #servicios .carousel[id^="carouselReels"]{overflow:hidden!important}
 .page-index.debug-freeze #productos-con .carousel[id^="carouselReels"] .carousel-track,.page-index.debug-freeze #servicios .carousel[id^="carouselReels"] .carousel-track{overflow:hidden!important;align-items:center!important}
 
-/* tabs reels */
+/* 8B) Tabs reels */
 .page-index.debug-freeze .reel-sys-tabs{display:grid!important;gap:12px!important;padding:12px 12px 14px!important;margin-top:12px;overflow:visible!important;max-width:100%;grid-template-columns:repeat(2,minmax(0,1fr))!important}
 .page-index.debug-freeze .reel-tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;min-height:96px!important;padding:14px 12px!important;border-radius:var(--r-lg)!important;border:1px solid rgba(255,255,255,.14)!important;background:rgba(255,255,255,.03)!important;cursor:pointer;color:rgba(232,238,246,.92)}
 .page-index.debug-freeze .reel-tab img{width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;margin:0 auto!important}
@@ -108,7 +76,7 @@
 .page-index.debug-freeze #carouselReels-servicios + .reel-sys-tabs .reel-tab{min-height:78px!important;padding:12px 10px!important}
 @media(max-width:380px){.page-index.debug-freeze #carouselReels-servicios + .reel-sys-tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 
-/* ========== 9) FAQ/Forms/Promos legibles en dark ========== */
+/* 9) FAQ/Forms/Promos */
 .page-index.debug-freeze .faq-item{background:rgba(255,255,255,.03);border:var(--border);padding:10px 12px}
 .page-index.debug-freeze .faq-item summary{cursor:pointer;font-weight:900;list-style:none}
 .page-index.debug-freeze .faq-item summary::-webkit-details-marker{display:none}
@@ -119,39 +87,10 @@
 .page-index.debug-freeze .promo-btn{min-height:var(--tap);border-radius:999px;border:var(--border);background:rgba(255,255,255,.03);color:rgba(232,238,246,.90);padding:10px 12px;cursor:pointer;flex:0 0 auto;white-space:nowrap}
 .page-index.debug-freeze .promo-btn.active{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.12)}
 
-/* ========== 10) LIGHT MODE del INDEX (aislado) ========== */
+/* 10) LIGHT MODE (aislado) */
 html[data-theme="light"] .page-index.debug-freeze{background:radial-gradient(1200px 600px at 20% 0%,rgba(45,212,191,.10),transparent 60%),radial-gradient(1000px 560px at 80% 10%,rgba(96,165,250,.10),transparent 60%),linear-gradient(180deg,#f6f8fc,#edf3fb)!important;--border:1px solid rgba(2,6,23,.12);--shadow:0 14px 34px rgba(2,6,23,.10);--card:#fff;--card-2:#fff;--text:#0b1220;--muted:#475569}
 html[data-theme="light"] .page-index.debug-freeze,html[data-theme="light"] .page-index.debug-freeze p,html[data-theme="light"] .page-index.debug-freeze li,html[data-theme="light"] .page-index.debug-freeze small{color:var(--text)!important}
 html[data-theme="light"] .page-index.debug-freeze .card{border:1px solid rgba(2,6,23,.12)!important;background:radial-gradient(900px 420px at 0% 0%,rgba(45,212,191,.08),transparent 60%),radial-gradient(700px 420px at 100% 0%,rgba(96,165,250,.08),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.86))!important;box-shadow:var(--shadow)!important}
-html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav{background:rgba(255,255,255,.70)!important;border:1px solid rgba(2,6,23,.10)!important}
-html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.18)!important;background:rgba(2,6,23,.16)!important}
-html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.active{background:rgba(45,212,191,.95)!important;border-color:rgba(45,212,191,.95)!important}
-html[data-theme="light"] .page-index.debug-freeze #heroGalleryCarousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.20)!important;background:rgba(2,6,23,.14)!important}
-
-
-
-
-/* === EXPIRITI INDEX CANON — GRADIENTS + WIDTH + DOTS (NO DUPES) v2026.01.12-canon === */
-.page-index{--ix-maxw:1200px;--grad-exp:linear-gradient(90deg,rgba(30,156,152,1) 0%,rgba(250,85,102,1) 100%);--grad-blue:linear-gradient(90deg,#25c7b8 0%,#3b82f6 55%,#60a5fa 100%)}
-/* 1) WIDTH CANON (desktop 80vw cap 1200, tablet 92vw, mobile 100%) */
-.page-index.debug-freeze .container,.page-index.debug-freeze .ix-wrap{width:min(80vw,var(--ix-maxw));margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-@media(max-width:1100px){.page-index.debug-freeze .container,.page-index.debug-freeze .ix-wrap{width:min(92vw,var(--ix-maxw))}}
-@media(max-width:720px){.page-index.debug-freeze .container,.page-index.debug-freeze .ix-wrap{width:100%}}
-/* 2) Helper “solo texto” (evita rectángulos) */
-.page-index .text-grad{display:inline-block;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-/* 3) GRADIENTE AZUL (UNA sola intención) */
-.page-index .gradient-word{display:inline-block;background:var(--grad-blue)!important;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important}
-/* 4) GRADIENTE EXPIRITI (teal→rosado) para títulos/sections (UNA sola intención) */
-.page-index .expiriti-gradient,.page-index .section-title h2,.page-index #productos-con .prod-title,.page-index #servicios .section-title h2,.page-index #promociones .section-title h2,.page-index #faq .section-title h2,.page-index #contacto h2,.page-index .map-card .section-title h3{display:inline-block;background:var(--grad-exp)!important;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important}
-/* 5) “title-gradient” NO debe pintar bloques: lo vuelvo SOLO TEXTO y lo mando a Expiriti (si quieres azul en un título, usa .gradient-word o .text-grad + override) */
-.page-index .title-gradient{display:inline-block;background:var(--grad-exp)!important;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent!important}
-/* ========== 7) DOTS: OWNER ÚNICO (SIN EXCEPCIÓN ABSOLUTE) ========== */
-.page-index.debug-freeze .carousel .carousel-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;border-radius:999px!important;background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;position:static!important;inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;transform:none!important;pointer-events:auto!important;z-index:3}
-.page-index.debug-freeze .carousel .carousel-nav .dot{width:11px!important;height:11px!important;border-radius:999px!important;margin:0!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.10)!important;cursor:pointer}
-.page-index.debug-freeze .carousel .carousel-nav .dot.active{background:rgba(45,212,191,.85)!important;border-color:rgba(45,212,191,.95)!important}
-html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav{background:rgba(255,255,255,.70)!important;border:1px solid rgba(2,6,23,.10)!important}
-html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.18)!important;background:rgba(2,6,23,.16)!important}
-html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.active{background:rgba(45,212,191,.95)!important;border-color:rgba(45,212,191,.95)!important}
-
-/* Kill-switch anti-parches viejos: prohíbe ABSOLUTE en heroGallery */
-.page-index.debug-freeze #heroGalleryCarousel .carousel-nav{position:static!important;inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important}
+html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav,html[data-theme="light"] .page-index.debug-freeze #heroGalleryCarousel .carousel-nav{background:rgba(255,255,255,.70)!important;border:1px solid rgba(2,6,23,.10)!important}
+html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot,html[data-theme="light"] .page-index.debug-freeze #heroGalleryCarousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.18)!important;background:rgba(2,6,23,.16)!important}
+html[data-theme="light"] .page-index.debug-freeze .carousel .carousel-nav .dot.active,html[data-theme="light"] .page-index.debug-freeze #heroGalleryCarousel .carousel-nav .dot.active{background:rgba(45,212,191,.95)!important;border-color:rgba(45,212,191,.95)!important}
