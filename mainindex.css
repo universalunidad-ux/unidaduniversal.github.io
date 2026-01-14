@@ -492,3 +492,61 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 /* Dots siempre clicables (sin tap-ghost) */
 .page-index .carousel .carousel-nav{pointer-events:auto}
 .page-index .carousel .carousel-nav .dot{-webkit-tap-highlight-color:transparent}
+
+/* === PATCH v2026.01.13 — HERO gallery height (desktop) + TITLES canon + MOBILE scroll + 2x2 grids === */
+.page-index{--ttl-fs:clamp(1.25rem,1.05rem + .9vw,1.85rem);--ttl-lh:1.14;--ttl-fw:950}
+
+/* 1) TITLES: unificar (usar “look” de Promociones para todos) */
+.page-index .section-title h2,
+.page-index .prod-title,
+.page-index h2.title-gradient,
+.page-index h3.title-gradient{
+  margin:0 0 10px;font-size:var(--ttl-fs);line-height:var(--ttl-lh);font-weight:var(--ttl-fw);letter-spacing:.1px
+}
+
+/* 2) HERO GALLERY: evitar invasión en desktop (altura elástica, no “overgrow”) */
+@media(min-width:980px){
+  .page-index .hero{min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px))}
+  .page-index .hero-grid{min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px));align-items:stretch}
+  .page-index .hero-gallery-card{
+    height:clamp(560px,calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 28px),780px)!important;
+    min-height:560px!important;max-height:780px!important;overflow:hidden!important
+  }
+  .page-index #heroGalleryCarousel{min-height:260px}
+  .page-index #heroGalleryCarousel .carousel-track{height:100%!important;min-height:0!important}
+}
+
+/* 3) MOBILE: permitir SIEMPRE scroll vertical + también swipe horizontal en carruseles */
+@media(max-width:980px){
+  /* Nada “inmovil” dentro del contenido (sin afectar header global si es externo) */
+  .page-index main .sticky,
+  .page-index main [style*="position:sticky"],
+  .page-index main [style*="position: fixed"]{position:static!important}
+
+  /* Clave: NO bloquear pan-y en tracks; permitir scroll down siempre */
+  .page-index .carousel-track,
+  .page-index #heroGalleryCarousel .carousel-track,
+  .page-index .prod-tabs,
+  .page-index .promo-filters,
+  .page-index .hero-gallery-groups{
+    touch-action:pan-y pinch-zoom!important; /* deja scroll vertical; horizontal sigue por overflow-x */
+    overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch
+  }
+  /* Evitar “captura” vertical accidental por contenedores */
+  .page-index .carousel,
+  .page-index #heroGalleryCarousel.carousel{touch-action:pan-y pinch-zoom!important}
+}
+
+/* 4) “Sistemas CONTPAQi” 2x2 también en mobile (no colapsar a 1 col) */
+@media(max-width:520px){
+  .page-index .cards-products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px}
+}
+@media(max-width:360px){
+  .page-index .cards-products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px}
+  .page-index .product-card .body,.page-index .card.body{padding:14px} /* compacta para que quepa 2x2 real */
+}
+
+/* (Opcional defensivo) Si algún override viejo forzó pan-x y bloqueó vertical, lo neutralizamos aquí */
+.page-index .carousel-track{overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory;scrollbar-width:none}
+.page-index .carousel-track::-webkit-scrollbar{height:0}
+
