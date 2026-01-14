@@ -493,7 +493,7 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 .page-index .carousel .carousel-nav{pointer-events:auto}
 .page-index .carousel .carousel-nav .dot{-webkit-tap-highlight-color:transparent}
 
-/* === PATCH v2026.01.13 — HERO gallery height (desktop) + TITLES canon + MOBILE scroll + 2x2 grids === */
+/* === PATCH v2026.01.13 —  TITLES canon + MOBILE scroll + 2x2 grids === */
 .page-index{--ttl-fs:clamp(1.25rem,1.05rem + .9vw,1.85rem);--ttl-lh:1.14;--ttl-fw:950}
 
 /* 1) TITLES: unificar (usar “look” de Promociones para todos) */
@@ -502,18 +502,6 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 .page-index h2.title-gradient,
 .page-index h3.title-gradient{
   margin:0 0 10px;font-size:var(--ttl-fs);line-height:var(--ttl-lh);font-weight:var(--ttl-fw);letter-spacing:.1px
-}
-
-/* 2) HERO GALLERY: evitar invasión en desktop (altura elástica, no “overgrow”) */
-@media(min-width:980px){
-  .page-index .hero{min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px))}
-  .page-index .hero-grid{min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px));align-items:stretch}
-  .page-index .hero-gallery-card{
-    height:clamp(560px,calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 28px),780px)!important;
-    min-height:560px!important;max-height:780px!important;overflow:hidden!important
-  }
-  .page-index #heroGalleryCarousel{min-height:260px}
-  .page-index #heroGalleryCarousel .carousel-track{height:100%!important;min-height:0!important}
 }
 
 /* 3) MOBILE: permitir SIEMPRE scroll vertical + también swipe horizontal en carruseles */
