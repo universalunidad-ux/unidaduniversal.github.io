@@ -527,33 +527,3 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 
 
 
-/* === OWNER: HERO swipe (no depende del global) === */
-.page-index #heroGalleryCarousel.carousel{display:flex;flex-direction:column}
-.page-index #heroGalleryCarousel .carousel-track{
-  overflow-x:auto !important;
-  overflow-y:hidden !important;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  touch-action:pan-x;              /* gesto horizontal claro */
-  overscroll-behavior-x:contain;
-}
-.page-index #heroGalleryCarousel .carousel-track::-webkit-scrollbar{height:0}
-.page-index #heroGalleryCarousel .carousel-slide{scroll-snap-align:start}
-
-
-/* === FIX: Reels swipe en mobile (iframe no roba el gesto) === */
-@media (max-width:980px){
-  .page-index .carousel[id^="carouselReels"] .carousel-track{
-    overflow-x:auto;
-    overflow-y:hidden;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    touch-action:pan-x;
-    overscroll-behavior-x:contain;
-  }
-
-  /* IMPORTANTÍSIMO: el iframe roba el swipe si está activo */
-  .page-index .reel-embed iframe{pointer-events:none}
-  .page-index .reel-embed.is-playing iframe{pointer-events:auto}
-}
