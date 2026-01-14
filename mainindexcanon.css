@@ -1,0 +1,50 @@
+/*=== EXPIRITI INDEX CANON — WIDTH(80%) + GRADIENTS(2) + HERO GALLERY FIX + DOTS OWNER v2026.01.13 ===*/
+
+/*1) WIDTH GLOBAL (desktop 80vw cap 1200 | tablet 92vw | mobile 100%)*/
+.page-index{--ix-maxw:1200px;--grad-exp:linear-gradient(90deg,rgba(30,156,152,1) 0%,rgba(250,85,102,1) 100%);--grad-blue:linear-gradient(90deg,#25c7b8 0%,#3b82f6 55%,#60a5fa 100%)}
+.page-index .container,.page-index .ix-wrap{width:min(80vw,var(--ix-maxw));margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media(max-width:1100px){.page-index .container,.page-index .ix-wrap{width:min(92vw,var(--ix-maxw))}}
+@media(max-width:720px){.page-index .container,.page-index .ix-wrap{width:100%;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}}
+
+/*2) GRADIENTE SOLO TEXTO (base helper; evita “rectángulos”)*/
+.page-index .text-grad,.page-index .expiriti-gradient,.page-index .title-gradient,.page-index .gradient-word,.page-index .section-title h2,.page-index #productos-con .prod-title,.page-index #servicios .section-title h2,.page-index #promociones .section-title h2,.page-index #faq .section-title h2,.page-index #contacto h2,.page-index .map-card .section-title h3,.page-index .hero-gallery-header h2{display:inline-block;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+/*3) AZUL (ÚNICO OWNER): .gradient-word = licencias/cursos/desarrollos/soporte + reels si lo usas ahí*/
+.page-index .gradient-word{background-image:var(--grad-blue)!important}
+
+/*4) EXPIRITI: títulos/sections (incluye “Conoce más…”, y title-gradient)*/
+.page-index .expiriti-gradient,.page-index .title-gradient,.page-index .section-title h2,.page-index #productos-con .prod-title,.page-index #servicios .section-title h2,.page-index #promociones .section-title h2,.page-index #faq .section-title h2,.page-index #contacto h2,.page-index .map-card .section-title h3,.page-index .hero-gallery-header h2{background-image:var(--grad-exp)!important}
+
+/*5) FALLBACK sin clip-text*/
+@supports not (-webkit-background-clip:text){
+  .page-index .text-grad,.page-index .expiriti-gradient,.page-index .title-gradient,.page-index .gradient-word,.page-index .section-title h2,.page-index #productos-con .prod-title,.page-index #servicios .section-title h2,.page-index #promociones .section-title h2,.page-index #faq .section-title h2,.page-index #contacto h2,.page-index .map-card .section-title h3,.page-index .hero-gallery-header h2{background:none!important;-webkit-text-fill-color:initial;color:inherit}
+}
+
+/*6) HOMOLOGA títulos (Sistemas CONTPAQi vs otros) + baja “Conoce más…”*/
+.page-index .section-title h2{font-size:clamp(22px,4.6vw,34px);line-height:1.12;letter-spacing:-.01em}
+.page-index .hero-gallery-header h2{font-size:clamp(18px,1.6vw,26px)!important;line-height:1.12!important;letter-spacing:-.01em!important;margin:0!important}
+
+/*7) HERO GALLERY: separa header/pills (evita “pegadas” y cortes visuales)*/
+.page-index .hero-gallery-header{padding:10px 16px 10px}
+.page-index .hero-gallery-groups{margin:10px 0 14px!important;padding:10px 12px 6px!important;gap:12px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-y pinch-zoom;overscroll-behavior-x:contain}
+.page-index .hero-gallery-groups::-webkit-scrollbar{height:0}
+.page-index .hero-group-tab{min-height:44px;padding:10px 14px;border-radius:999px}
+
+/*8) MOBILE: tabs del Hero Gallery en 2x2 (por si algún CSS previo los dejó en columna)*/
+.page-index .hero-gallery-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;padding:12px 12px 14px!important}
+@media(max-width:420px){.page-index .hero-tab{min-height:82px!important;padding:12px!important}.page-index .hero-tab img{height:46px!important;max-width:165px!important}}
+
+/*9) DOTS/NAV: UN SOLO OWNER “pill” PARA TODOS (incluye HERO) — NO absolute, NO invade*/
+.page-index .carousel .carousel-nav,.page-index #heroGalleryCarousel .carousel-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;border-radius:999px!important;background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;position:static!important;inset:auto!important;transform:none!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:3;pointer-events:auto!important}
+.page-index .carousel .carousel-nav .dot,.page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important;border-radius:999px!important;margin:0!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.10)!important;cursor:pointer}
+.page-index .carousel .carousel-nav .dot.active,.page-index #heroGalleryCarousel .carousel-nav .dot.active{background:rgba(45,212,191,.85)!important;border-color:rgba(45,212,191,.95)!important}
+
+/*10) HERO CAROUSEL: fuerza flujo en columna para que nav quede abajo del track (sin overlap)*/
+.page-index #heroGalleryCarousel{display:flex!important;flex-direction:column!important;position:relative!important}
+.page-index #heroGalleryCarousel .carousel-track{position:relative!important;overflow:hidden!important;min-height:340px!important;padding-bottom:0!important}
+@media(min-width:980px){.page-index #heroGalleryCarousel .carousel-track{min-height:460px!important}}
+
+/*11) LIGHT: dots legibles*/
+html[data-theme="light"] .page-index .carousel .carousel-nav,html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav{background:rgba(255,255,255,.70)!important;border:1px solid rgba(2,6,23,.10)!important}
+html[data-theme="light"] .page-index .carousel .carousel-nav .dot,html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.18)!important;background:rgba(2,6,23,.16)!important}
+html[data-theme="light"] .page-index .carousel .carousel-nav .dot.active,html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav .dot.active{background:rgba(45,212,191,.95)!important;border-color:rgba(45,212,191,.95)!important}
