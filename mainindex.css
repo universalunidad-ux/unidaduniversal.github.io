@@ -549,3 +549,8 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 .page-index .carousel-track{overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory;scrollbar-width:none}
 .page-index .carousel-track::-webkit-scrollbar{height:0}
 
+
+
+/* PATCH v2026.01.13 — FIX: prod-tabs swipe + servicios scroll down (MIN) */
+@media(max-width:980px){.page-index .prod-tabs,.page-index .promo-filters,.page-index .hero-gallery-groups,.page-index .carousel-track,.page-index #heroGalleryCarousel .carousel-track,.page-index .cards-services.is-carousel{touch-action:auto!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}.page-index #servicios .cards-services.is-carousel{touch-action:auto!important}}
+
