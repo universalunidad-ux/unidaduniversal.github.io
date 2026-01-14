@@ -775,16 +775,3 @@ on(window,"pageshow",()=>{
 
 /* PATCH v2026.01.13 — SMART SWIPE + ARROWS MOBILE (INDEX) */
 (()=>{"use strict";if(window.__EXPIRITI_SWIPE_PATCH__)return;window.__EXPIRITI_SWIPE_PATCH__=!0;const $$=(s,c=document)=>Array.from(c.querySelectorAll(s)),clamp=(v,min,max)=>Math.max(min,Math.min(max,v));function scrollByPage(t,d){const w=t.clientWidth||320;t.scrollBy({left:d*w,behavior:"smooth"})}function ensureArrows(c){const t=c.querySelector(".carousel-track"),p=c.querySelector(".arrowCircle.prev"),n=c.querySelector(".arrowCircle.next");if(!t||!p||!n)return;p.style.display="",n.style.display="",p.hidden=!1,n.hidden=!1,p.__boundArrow||(p.addEventListener("click",()=>scrollByPage(t,-1),{passive:!0}),p.__boundArrow=!0),n.__boundArrow||(n.addEventListener("click",()=>scrollByPage(t,1),{passive:!0}),n.__boundArrow=!0);const s=()=>{const m=Math.max(0,t.scrollWidth-t.clientWidth),x=t.scrollLeft;p.disabled=x<=2,n.disabled=x>=m-2;const h=m>4;p.style.opacity=h?"":"0",n.style.opacity=h?"":"0",p.style.pointerEvents=h?"":"none",n.style.pointerEvents=h?"":"none"};t.__boundArrowSync||(t.addEventListener("scroll",s,{passive:!0}),window.addEventListener("resize",s,{passive:!0}),t.__boundArrowSync=!0,setTimeout(s,0))}function bindSmartSwipe(t){if(!t||t.__smartSwipeBound)return;t.__smartSwipeBound=!0,t.style.touchAction="pan-y";let d=!1,x0=0,y0=0,l0=0,i=0;const TH=10,R=1.15;function down(e){d=!0,i=0,x0=e.clientX,y0=e.clientY,l0=t.scrollLeft;try{t.setPointerCapture(e.pointerId)}catch(_){}}function move(e){if(!d)return;const dx=e.clientX-x0,dy=e.clientY-y0;if(i===0){if(Math.abs(dx)<TH&&Math.abs(dy)<TH)return;if(Math.abs(dx)>Math.abs(dy)*R)i=1;else{i=-1;return}}if(i===1){e.preventDefault();const m=Math.max(0,t.scrollWidth-t.clientWidth);t.scrollLeft=clamp(l0-dx,0,m)}}function up(e){d=!1,i=0;try{t.releasePointerCapture(e.pointerId)}catch(_){}}t.addEventListener("pointerdown",down,{passive:!0}),t.addEventListener("pointermove",move,{passive:!1}),t.addEventListener("pointerup",up,{passive:!0}),t.addEventListener("pointercancel",up,{passive:!0})}const hero=document.getElementById("heroGalleryCarousel");if(hero){const ht=hero.querySelector(".carousel-track");bindSmartSwipe(ht)}$$(".carousel[id^='carouselReels-']").forEach(c=>{bindSmartSwipe(c.querySelector(".carousel-track")),ensureArrows(c)})})();
-
-
-document.addEventListener("click", (e) => {
-  const thumb = e.target.closest(".yt-thumb");
-  if(!thumb) return;
-  const wrap = thumb.closest(".reel-embed");
-  if(!wrap) return;
-
-  wrap.classList.add("is-playing");
-  // Si tu lógica ya reemplaza thumb por iframe, esto basta.
-  // Si no, al menos ya permite interacción cuando el iframe exista.
-});
-
