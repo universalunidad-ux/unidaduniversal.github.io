@@ -48,81 +48,28 @@ async function loadPartial(placeholderId,fileName){
   ph.outerHTML=html
 }
 
-
-            function bindWheelOnTabs(){
-  const sels=".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs,.prod-tabs,.hero-gallery-groups,#heroGalleryGroups,.hero-gallery-tabs,#heroGalleryTabs,.promo-filters";
+function bindWheelOnTabs(){
+  const sels=".hscroll-tabs,.hero .tabs,.hero .chips,.hero .segmented,#heroTabs,#heroCategories,#sistemasTabs,.sistemas-tabs,#promoTabs,.promo-tabs,.prod-tabs,.hero-gallery-groups,#heroGalleryGroups,.promo-filters";
+  const isTouch = matchMedia("(pointer: coarse)").matches;
 
   document.querySelectorAll(sels).forEach(el=>{
-    // ===== WHEEL (desktop) =====
+    // En mobile/touch: NO metemos handlers de touchmove (evita bloquear scroll vertical)
+    if(isTouch) return;
+
+    // Wheel -> scroll horizontal solo si hay overflow (desktop)
     if(el.dataset.wheelBound!=="1"){
       el.dataset.wheelBound="1";
-      on(el,"wheel",e=>{
-        const hasOverflow=el.scrollWidth>el.clientWidth+2;if(!hasOverflow)return;
-        if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){ el.scrollLeft+=e.deltaY; e.preventDefault(); }
+      el.addEventListener("wheel",e=>{
+        const hasOverflow=el.scrollWidth>el.clientWidth+2;
+        if(!hasOverflow) return;
+        if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+          el.scrollLeft += e.deltaY;
+          e.preventDefault();
+        }
       },{passive:false});
     }
-
-    // ===== TOUCH (mobile) — VERTICAL SIEMPRE PERMITIDO =====
-    if(el.dataset.touchLockBound==="1") return;
-    el.dataset.touchLockBound="1";
-
-    const hasOverflow=()=> (el.scrollWidth - el.clientWidth) > 2;
-
-    let sx=0, sy=0, startLeft=0;
-    let decided=false;
-    let horizontal=false;
-
-    // Ajustes (más estrictos para NO interferir con scroll vertical)
-    const DEADZONE=12;   // px antes de decidir
-    const RATIO=1.8;     // horizontal debe dominar MUCHO para activar drag
-
-    el.addEventListener("touchstart",(e)=>{
-      if(!hasOverflow()) { decided=false; horizontal=false; return; }
-      const t=e.touches && e.touches[0]; if(!t) return;
-      sx=t.clientX; sy=t.clientY;
-      startLeft=el.scrollLeft;
-      decided=false;
-      horizontal=false;
-    },{passive:true});
-
-    el.addEventListener("touchmove",(e)=>{
-      if(!hasOverflow()) return;
-      const t=e.touches && e.touches[0]; if(!t) return;
-
-      const dx=t.clientX - sx;
-      const dy=t.clientY - sy;
-      const ax=Math.abs(dx), ay=Math.abs(dy);
-
-      // Decide intención SOLO cuando sea claro
-      if(!decided){
-        if(ax<DEADZONE && ay<DEADZONE) return;
-        // Si hay intención vertical (aunque sea leve), NO tocamos nada
-        if(ay>=ax) { decided=true; horizontal=false; return; }
-        // Solo si horizontal domina MUCHO, permitimos drag horizontal
-        horizontal = ax > (ay*RATIO);
-        decided=true;
-        if(!horizontal) return;
-      }
-
-      // Si no es horizontal, JAMÁS prevenimos (scroll vertical libre)
-      if(!horizontal) return;
-
-      // Drag horizontal (único caso con preventDefault)
-      // Aun aquí, si el usuario cambia a vertical fuerte, liberamos
-      if(ay>ax){ horizontal=false; return; }
-
-      // Además, si estás en bordes y empuja más, no bloquees (para que el scroll siga libre)
-      const maxScroll=el.scrollWidth-el.clientWidth;
-      const atLeft=el.scrollLeft<=0;
-      const atRight=el.scrollLeft>=(maxScroll-1);
-      if((atLeft && dx>0) || (atRight && dx<0)) { horizontal=false; return; }
-
-      e.preventDefault();
-      el.scrollLeft = startLeft - dx;
-    },{passive:false});
   });
 }
-
 
 /* =========================
    4) Formularios (Quick WhatsApp + Contacto a Apps Script)
