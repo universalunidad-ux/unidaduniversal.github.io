@@ -108,11 +108,10 @@
 
 /* Groups */
 .page-index .hero-gallery-groups{
-  touch-action:pan-x;
-  overscroll-behavior-x:contain;
-  -webkit-overflow-scrolling:touch;
+  display:flex;gap:12px;padding:8px 12px 0;margin:8px 0 14px;
+  overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;touch-action:pan-x;overscroll-behavior-x:contain
 }
-
 .page-index .hero-gallery-groups::-webkit-scrollbar{height:0}
 .page-index .hero-gallery-groups>*{flex:0 0 auto;white-space:nowrap}
 .page-index .hero-group-tab{
@@ -456,12 +455,33 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 
 
 /* ========== GLOBAL CAROUSEL MOBILE: swipe + dots + flechas ========== */
+.page-index .carousel-track{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+}
+.page-index .carousel-track::-webkit-scrollbar{height:0}
+.page-index .carousel-slide{scroll-snap-align:start}
 
 /* Flechas visibles también en mobile (si tu JS las usa) */
 @media(max-width:980px){
   .page-index .arrowCircle{display:flex}
 }
 
+/* ========== CANON: carruseles mobile (swipe + scroll vertical fluido) ========== */
+.page-index .carousel-track{
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  touch-action:pan-x;              /* swipe horizontal */
+  overscroll-behavior-x:contain;   /* no “rebota” la página horizontal */
+}
+.page-index .carousel-track::-webkit-scrollbar{height:0}
+.page-index .carousel-slide{scroll-snap-align:start}
 
 /* Permite que el usuario haga scroll DOWN sin pelearse con el carrusel */
 @media(max-width:980px){
@@ -524,6 +544,3 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 
 /*NO BORRAR PATCH v2026.01.13 — ARROWS MOBILE (REELS) */
 @media (max-width:768px){.page-index .carousel .arrowCircle{display:grid!important;opacity:1;visibility:visible;pointer-events:auto}}
-
-
-
