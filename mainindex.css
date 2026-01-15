@@ -544,3 +544,14 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 
 /*NO BORRAR PATCH v2026.01.13 — ARROWS MOBILE (REELS) */
 @media (max-width:768px){.page-index .carousel .arrowCircle{display:grid!important;opacity:1;visibility:visible;pointer-events:auto}}
+
+
+/* Expiriti — PATCH v2026.01.15 | FIX: dots NO invaden + imagen responsive (Productos/Conoce más) */
+.page-index #productos-con .carousel{overflow:hidden!important;margin-bottom:10px}
+.page-index #productos-con .carousel-nav{position:static!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;pointer-events:auto!important;z-index:2;margin:10px auto 14px!important;width:max-content!important;max-width:calc(100% - 24px)!important}
+.page-index #productos-con .carousel-slide{padding:0!important}
+.page-index #productos-con .carousel-slide img{width:100%!important;height:auto!important;display:block!important;object-fit:cover!important;object-position:center!important}
+@media(max-width:720px){
+  .page-index #productos-con .carousel-slide img{max-height:min(52svh,420px)!important}
+  .page-index #productos-con .cards-products{margin-top:4px}
+}
