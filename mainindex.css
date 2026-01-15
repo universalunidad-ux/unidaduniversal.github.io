@@ -311,8 +311,6 @@
 /* ========== 16) ajustes mobile generales ========== */
 @media(max-width:980px){.page-index .section-full{padding:26px 0}.page-index .product-card:hover{transform:none}.page-index #servicios.section-full{padding:22px 0!important}}
 
-/* ========== PATCH: contraste + hero full-height + gradiente ExpIRI ========== */
-.page-index{color:var(--text,#e8eef6);background:radial-gradient(1200px 600px at 20% 0%,rgba(45,212,191,.10),transparent 60%),radial-gradient(1000px 560px at 80% 10%,rgba(96,165,250,.10),transparent 60%),linear-gradient(180deg,#070b12,#060913)}
 
 /* === EXPIRITI GRADIENT (azules/teal, sin amarillo) === */
 .page-index{--exp-teal:#25c7b8;--exp-blue:#60a5fa;--exp-ink:#0ea5e9}
@@ -332,17 +330,12 @@
   background-image:linear-gradient(90deg,var(--exp-teal),var(--exp-blue),var(--exp-ink));
 }
 
-.page-index .hero{min-height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px))}
 @supports not (height:100dvh){.page-index .hero{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))}}
-.page-index .hero-gallery-card{height:auto!important;min-height:unset!important;overflow:visible!important}
 @media(min-width:980px){.page-index .hero-gallery-card{height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 14px)!important;min-height:560px!important;overflow:hidden!important}}
 .page-index .hero-gallery-card{display:flex;flex-direction:column}
 .page-index #heroGalleryGroups{flex:0 0 auto}
 .page-index #heroGalleryTabs{flex:0 0 auto}
-.page-index #heroGalleryCarousel{flex:1 1 auto;min-height:240px;display:flex;flex-direction:column}
-.page-index #heroGalleryCarousel .carousel-track{flex:1 1 auto;min-height:0;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory}
 .page-index #heroGalleryCarousel .hero-slide img{width:100%;height:100%;object-fit:contain;object-position:center;background:transparent}
-.page-index #heroGalleryCarousel .carousel-nav{flex:0 0 auto;margin:10px auto 12px}
 @media(max-width:520px){.page-index .hero .container{padding-top:10px!important;padding-bottom:10px!important}.page-index .hero-gallery-tabs{padding:10px 10px 12px!important;gap:10px!important}.page-index .hero-tab{min-height:78px!important;padding:12px!important}.page-index .hero-tab img{height:44px!important}}
 
 /* ========== FINAL PATCH: radios + tiles + dots centrados + light dots ========== */
@@ -408,7 +401,6 @@ html[data-theme="light"] .page-index input::placeholder,html[data-theme="light"]
 /* ========== LIGHT FIX: gradient text + tabs servicios + promo buttons ========== */
 .page-index .gradient-word,.page-index .title-gradient,.page-index .expiriti-gradient{color:var(--text,#e8eef6)}
 .page-index .gradient-word,.page-index .title-gradient,.page-index .expiriti-gradient{-webkit-text-fill-color:transparent;-webkit-background-clip:text;background-clip:text;color:transparent}
-html[data-theme="light"] .page-index .gradient-word,html[data-theme="light"] .page-index .title-gradient,html[data-theme="light"] .page-index .expiriti-gradient{background-image:linear-gradient(90deg,#0ea5e9,#14b8a6,#f97316)!important;-webkit-text-fill-color:transparent;color:transparent!important}
 @supports not (-webkit-background-clip:text){html[data-theme="light"] .page-index .gradient-word,html[data-theme="light"] .page-index .title-gradient,html[data-theme="light"] .page-index .expiriti-gradient{color:#0b1220!important;background:none!important}}
 html[data-theme="light"] .page-index .reels-home-card h3.title-gradient{-webkit-text-fill-color:transparent}
 html[data-theme="light"] .page-index .reels-home-card .reel-title{color:rgba(2,6,23,.88)!important}
@@ -447,23 +439,23 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 }
 
 /* 3) MOBILE: permitir SIEMPRE scroll vertical + también swipe horizontal en carruseles */
+
 @media(max-width:980px){
-  /* Nada “inmovil” dentro del contenido (sin afectar header global si es externo) */
   .page-index main .sticky,
   .page-index main [style*="position:sticky"],
   .page-index main [style*="position: fixed"]{position:static!important}
 
-  /* Clave: NO bloquear pan-y en tracks; permitir scroll down siempre */
+  .page-index .carousel,
+  .page-index #heroGalleryCarousel.carousel{touch-action:pan-y pinch-zoom!important}
+
   .page-index .carousel-track,
   .page-index #heroGalleryCarousel .carousel-track,
   .page-index .prod-tabs,
   .page-index .promo-filters,
   .page-index .hero-gallery-groups{
-    overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch
   }
-  /* Evitar “captura” vertical accidental por contenedores */
-  .page-index .carousel,
-  .page-index #heroGalleryCarousel.carousel{touch-action:pan-y pinch-zoom!important}
 }
 
 /* 4) “Sistemas CONTPAQi” 2x2 también en mobile (no colapsar a 1 col) */
@@ -476,7 +468,19 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 }
 
 /* NO BORRAR PATCH v2026.01.13 — FIX: prod-tabs swipe + servicios scroll down (MIN) */
-@media(max-width:980px){.page-index .prod-tabs,.page-index .promo-filters,.page-index .hero-gallery-groups,.page-index .carousel-track,.page-index #heroGalleryCarousel .carousel-track,.page-index .cards-services.is-carousel{touch-action:auto!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}.page-index #servicios .cards-services.is-carousel{touch-action:auto!important}}
+@media(max-width:980px){
+  .page-index .prod-tabs,
+  .page-index .promo-filters,
+  .page-index .hero-gallery-groups,
+  .page-index .carousel-track,
+  .page-index #heroGalleryCarousel .carousel-track,
+  .page-index .cards-services.is-carousel{
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain
+  }
+}
 
 /*NO BORRAR PATCH v2026.01.13 — ARROWS MOBILE (REELS) */
 @media (max-width:768px){.page-index .carousel .arrowCircle{display:grid!important;opacity:1;visibility:visible;pointer-events:auto}}
@@ -484,6 +488,10 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 
 /* Expiriti — PATCH v2026.01.15 | FIX: dots NO invaden + imagen responsive (Productos/Conoce más) */
 .page-index #productos-con .carousel{overflow:hidden!important;margin-bottom:10px}
+.page-index #productos-con .carousel{display:flex;flex-direction:column}
+.page-index #productos-con .carousel-track{order:1}
+.page-index #productos-con .carousel-nav{order:2}
+
 .page-index #productos-con .carousel-nav{position:static!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;pointer-events:auto!important;z-index:2;margin:10px auto 14px!important;width:max-content!important;max-width:calc(100% - 24px)!important}
 .page-index #productos-con .carousel-slide{padding:0!important}
 .page-index #productos-con .carousel-slide img{width:100%!important;height:auto!important;display:block!important;object-fit:cover!important;object-position:center!important}
