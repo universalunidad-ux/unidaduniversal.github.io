@@ -177,25 +177,6 @@
   .page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important}
 }
 
-
-
-/* ========== 7) carousel base (index) ========== */
-.page-index .carousel{position:relative;border-radius:var(--radius);overflow:visible;border:1px solid rgba(255,255,255,.10);background:var(--card-2)}
-
-.page-index .carousel-track{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;min-height:0}
-.page-index .carousel-slide{flex:0 0 100%;scroll-snap-align:start;position:relative}
-.page-index .carousel-nav{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:10px;padding:8px 10px;z-index:3;pointer-events:none}
-.page-index .carousel-nav .dot{pointer-events:auto;width:18px;height:18px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);cursor:pointer}
-.page-index .carousel-nav .dot.active{background:rgba(45,212,191,.85);border-color:rgba(45,212,191,.95)}
-.page-index .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(7,10,16,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:rgba(232,238,246,.95);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3}
-.page-index .arrowCircle .chev{font-size:22px;line-height:1}
-.page-index .arrowCircle.prev{left:10px}
-.page-index .arrowCircle.next{right:10px}
-.page-index .arrowCircle.is-disabled{opacity:.35}
-@media(min-width:980px){.page-index .carousel-track{min-height:320px}.page-index .carousel-nav .dot{width:14px;height:14px}}
-@media(max-width:980px){.page-index .arrowCircle{display:flex}}
-
-
 /* ========== 9) productos: bar + tabs + grid + cta ========== */
 .page-index .panel-productos.hidden{display:none!important}
 .page-index .productos-inline-bar{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:6px 0 14px}
@@ -454,45 +435,6 @@ html[data-theme="light"] .page-index a{color:inherit!important}
 .page-index .hero-gallery-card{max-width:100%}
 
 
-/* ========== GLOBAL CAROUSEL MOBILE: swipe + dots + flechas ========== */
-.page-index .carousel-track{
-  overflow-x:auto;
-  overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory;
-  scrollbar-width:none;
-}
-.page-index .carousel-track::-webkit-scrollbar{height:0}
-.page-index .carousel-slide{scroll-snap-align:start}
-
-/* Flechas visibles también en mobile (si tu JS las usa) */
-@media(max-width:980px){
-  .page-index .arrowCircle{display:flex}
-}
-
-/* ========== CANON: carruseles mobile (swipe + scroll vertical fluido) ========== */
-.page-index .carousel-track{
-  overflow-x:auto;
-  overflow-y:hidden;
-  -webkit-overflow-scrolling:touch;
-  scroll-snap-type:x mandatory;
-  scrollbar-width:none;
-  touch-action:pan-x;              /* swipe horizontal */
-  overscroll-behavior-x:contain;   /* no “rebota” la página horizontal */
-}
-.page-index .carousel-track::-webkit-scrollbar{height:0}
-.page-index .carousel-slide{scroll-snap-align:start}
-
-/* Permite que el usuario haga scroll DOWN sin pelearse con el carrusel */
-@media(max-width:980px){
-  .page-index .carousel{touch-action:pan-y} /* el contenedor permite vertical */
-  .page-index .arrowCircle{display:flex}
-}
-
-/* Dots siempre clicables (sin tap-ghost) */
-.page-index .carousel .carousel-nav{pointer-events:auto}
-.page-index .carousel .carousel-nav .dot{-webkit-tap-highlight-color:transparent}
-
 /* === PATCH v2026.01.13 —  TITLES canon + MOBILE scroll + 2x2 grids === */
 .page-index{--ttl-fs:clamp(1.25rem,1.05rem + .9vw,1.85rem);--ttl-lh:1.14;--ttl-fw:950}
 
@@ -532,12 +474,6 @@ html[data-theme="light"] .page-index a{color:inherit!important}
   .page-index .cards-products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px}
   .page-index .product-card .body,.page-index .card.body{padding:14px} /* compacta para que quepa 2x2 real */
 }
-
-/* (Opcional defensivo) Si algún override viejo forzó pan-x y bloqueó vertical, lo neutralizamos aquí */
-.page-index .carousel-track{overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory;scrollbar-width:none}
-.page-index .carousel-track::-webkit-scrollbar{height:0}
-
-
 
 /* NO BORRAR PATCH v2026.01.13 — FIX: prod-tabs swipe + servicios scroll down (MIN) */
 @media(max-width:980px){.page-index .prod-tabs,.page-index .promo-filters,.page-index .hero-gallery-groups,.page-index .carousel-track,.page-index #heroGalleryCarousel .carousel-track,.page-index .cards-services.is-carousel{touch-action:auto!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}.page-index #servicios .cards-services.is-carousel{touch-action:auto!important}}
