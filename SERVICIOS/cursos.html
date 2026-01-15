@@ -2,25 +2,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- =========================================================
+    Expiriti — HEAD (SERVICIOS) v2026.01.15 CANON
+    - Requiere: meta[name="expiriti-base"] (para resolver rutas con JS global si lo usas)
+    - Fonts: Inter 400–900 non-blocking (mejora PSI)
+    - CSS: theme.css + mainservicios.css con cache-bust
+    - SEO/UX: robots + theme-color + canonical + OG/Twitter básicos
+    - Preconnect YouTube: SOLO si hay embeds/miniaturas en esta página (deja o quita según aplique)
+  ========================================================= -->
+
   <meta charset="utf-8" />
   <meta name="expiriti-base" content="/unidaduniversal.github.io/" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  <title>Cursos CONTPAQi | Expiriti</title>
-  <meta name="description" content="Cursos CONTPAQi por Expiriti. Capacitación por sistema y por rol, basada en temarios oficiales y programas personalizados. Niveles Básico, Intermedio y Avanzado.">
 
-  <!-- Preconnects -->
+  <title>Cursos CONTPAQi | Expiriti</title>
+  <meta name="description" content="Cursos CONTPAQi por Expiriti. Capacitación por sistema y por rol, basada en temarios oficiales y programas personalizados. Niveles Básico, Intermedio y Avanzado." />
+
+  <!-- SEO / Indexing -->
+  <meta name="robots" content="index,follow" />
+
+  <!-- Theme color -->
+  <meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)">
+
+  <!-- Canonical (ajusta el path EXACTO de esta página) -->
+  <link rel="canonical" href="https://unidaduniversal.github.io/unidaduniversal.github.io/SERVICIOS/cursos.html" />
+
+  <!-- Open Graph / Twitter (mínimo recomendado) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ExpIRI TI | Distribuidor CONTPAQi" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:title" content="Cursos CONTPAQi | Expiriti" />
+  <meta property="og:description" content="Capacitación por sistema y por rol, basada en temarios oficiales y programas personalizados." />
+  <!-- Usa una imagen OG absoluta (ideal 1200x630). Ajusta si tu archivo real es otro -->
+  <meta property="og:image" content="https://unidaduniversal.github.io/unidaduniversal.github.io/IMG/expiriti_og.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Preconnects (Fonts) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Preconnects (YouTube) — deja SOLO si esta página realmente usa embeds/miniaturas -->
   <link rel="preconnect" href="https://www.youtube-nocookie.com">
   <link rel="preconnect" href="https://i.ytimg.com">
 
-  <!-- Fuente + CSS global -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../theme.css?v=2026.01.03">
-<link rel="stylesheet" href="../mainservicios.css?v=2026.01.03">
+  <!-- Fonts (non-blocking) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+  </noscript>
 
-  <!-- Favicon set -->
+  <!-- CSS -->
+  <link rel="stylesheet" href="../theme.css?v=2026.01.15">
+  <link rel="stylesheet" href="../mainservicios.css?v=2026.01.15">
+
+  <!-- Preload LCP (SOLO si aplica en ESTA página: imagen hero arriba del fold) -->
+  <!-- Ejemplo:
+  <link rel="preload" as="image" href="../IMG/servicios-hero.webp" fetchpriority="high">
+  -->
+
+  <!-- Favicons (ruta relativa estable para /SERVICIOS/*) -->
   <link rel="apple-touch-icon" sizes="180x180" href="../IMG/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="../IMG/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../IMG/favicon-16x16.png">
@@ -34,17 +76,15 @@
        (sin romper filtro por clase tag-nube)
        ================================ -->
   <style>
-    /* Si tu CSS genera el badge "Nube" con ::before/::after, esto lo apaga. */
     .fcard.tag-nube::before,
     .fcard.tag-nube::after{
       content:none !important;
       display:none !important;
     }
-    /* Si existe algún span .tag-nube dentro del card, también lo oculta */
     .fcard .tag-nube{ display:none !important; }
   </style>
-</head>
 
+</head>
 <body id="top" class="page-servicios">  <!-- Header dinámico -->
   <div id="header-placeholder"></div>
 
