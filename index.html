@@ -1,31 +1,61 @@
   <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- =========================================================
+    Expiriti — HEAD (INDEX) v2026.01.15 CANON
+    - Index: LCP preload (hero) + SEO base + OG/Twitter + canonical
+    - Fonts Inter non-blocking (PSI)
+    - CSS: SOLO theme.css + mainindex.css (y opcional canon build)
+  ========================================================= -->
+
   <meta charset="utf-8" />
   <meta name="expiriti-base" content="/unidaduniversal.github.io/" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
+
   <title>ExpIRI TI | Distribuidor CONTPAQi · Soporte, Cursos y Actualizaciones</title>
   <meta name="description" content="ExpIRI TI: distribuidor de CONTPAQi en México. Venta, implementación, cursos y soporte de Nóminas, Comercial, Contabilidad, Bancos y más." />
 
-<!-- Preconnect (3rd party) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- SEO -->
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://unidaduniversal.github.io/unidaduniversal.github.io/index.html" />
 
-<!-- Google Fonts: preload no bloqueante -->
-<link rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'">
-<noscript>
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-</noscript>
+  <!-- Theme color -->
+  <meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)">
 
-<link rel="stylesheet" href="theme.css">
-<link rel="stylesheet" href="mainindex.css">         <!-- tu actual -->
-<link rel="stylesheet" href="mainindex.canon.css">   <!-- nuevo, no rompe sin freeze -->
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ExpIRI TI | Distribuidor CONTPAQi" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:title" content="ExpIRI TI | Distribuidor CONTPAQi" />
+  <meta property="og:description" content="Venta, implementación, cursos y soporte de CONTPAQi: Nóminas, Comercial, Contabilidad, Bancos y más." />
+  <meta property="og:url" content="https://unidaduniversal.github.io/unidaduniversal.github.io/index.html" />
+  <meta property="og:image" content="https://unidaduniversal.github.io/unidaduniversal.github.io/IMG/expiriti_og.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
 
+  <!-- Preconnect (Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fonts: Inter (non-blocking) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+  </noscript>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="theme.css?v=2026.01.15">
+  <link rel="stylesheet" href="mainindex.css?v=2026.01.15">
+    <link rel="stylesheet" href="mainindex.canon.css?v=2026.01.15">
+
+
+  <!-- OPCIONAL: canon build (NO lo cargues junto con mainindex.css si repite reglas).
+       Úsalo solo si mainindex.canon.css es el “build final” y sustituye al otro. -->
+  <!-- <link rel="stylesheet" href="mainindex.canon.css?v=2026.01.15"> -->
+
+  <!-- Preload LCP (INDEX: hero arriba del fold) -->
+  <link rel="preload" as="image" href="IMG/primera.webp" fetchpriority="high">
 
   <!-- Icons -->
   <link rel="apple-touch-icon" sizes="180x180" href="IMG/apple-touch-icon.png">
@@ -36,6 +66,8 @@
   <link rel="icon" type="image/png" sizes="192x192" href="IMG/android-chrome-192x192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="IMG/android-chrome-512x512.png">
 </head>
+
+  
 
 <body class="page-index debug-freeze">
 
