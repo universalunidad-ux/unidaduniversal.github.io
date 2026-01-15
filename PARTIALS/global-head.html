@@ -9,7 +9,7 @@
   <!-- Base GH Pages (carpeta del sitio) -->
   <meta name="expiriti-base" content="/unidaduniversal.github.io/" />
 
-  <!-- Theme early -->
+  <!-- Theme early (evita flash) -->
   <script>
   (function(){try{
     var KEY="expiriti_theme";
@@ -29,19 +29,28 @@
   <meta property="og:site_name" content="ExpIRI TI | Distribuidor CONTPAQi" />
   <meta property="og:locale" content="es_MX" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta property="og:image" class="js-abs-meta" data-path="IMG/expiriti_og.webp" />
+  <meta property="og:image" class="js-abs-meta" data-path="IMG/expiriti_og.webp" content="" />
 
-  <!-- Fonts -->
+  <!-- Fonts (solo UNA carga) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
 
-  <!-- CSS global -->
-  <link rel="stylesheet" href="/unidaduniversal.github.io/mainindex.css" />
+  <!-- CSS global base -->
+  <link rel="stylesheet" class="js-abs" data-href="theme.css" />
 
-  <!-- Preload hero -->
-  <link rel="preload" as="image" href="/unidaduniversal.github.io/IMG/primera.webp" fetchpriority="high" />
+  <!-- CSS por página (elige UNO según page) -->
+  <!-- INDEX -->
+  <!-- <link rel="stylesheet" class="js-abs" data-href="mainindex.css" /> -->
+
+  <!-- SISTEMAS -->
+  <!-- <link rel="stylesheet" class="js-abs" data-href="main.css" /> -->
+
+  <!-- SERVICIOS -->
+  <!-- <link rel="stylesheet" class="js-abs" data-href="mainservicios.css" /> -->
+
+  <!-- Preload LCP (solo si aplica en ESTA página) -->
+  <!-- <link rel="preload" as="image" class="js-abs" data-href="IMG/primera.webp" fetchpriority="high" /> -->
 
   <!-- Favicons -->
   <link rel="apple-touch-icon" sizes="180x180" class="js-abs" data-href="IMG/apple-touch-icon.png" />
@@ -50,7 +59,7 @@
   <link rel="manifest" class="js-abs" data-href="IMG/site.webmanifest" />
   <link rel="icon" class="js-abs" data-href="IMG/favicon.ico" />
 
-  <!-- Absolutiza OG + favicons (URL() safe) -->
+  <!-- Absolutiza OG + assets (URL() safe) -->
   <script>
   (function () {
     try{
@@ -59,7 +68,6 @@
       if (!root.startsWith("/")) root = "/" + root;
       if (!root.endsWith("/")) root = root + "/";
 
-      // Base absoluta del sitio (ej: https://dominio.com/unidaduniversal.github.io/)
       var baseAbs = new URL(root, (location.origin && location.origin !== "null") ? location.origin : location.href).toString();
 
       function abs(p){
