@@ -73,3 +73,10 @@ html[data-theme="light"] #gh-header .gh-theme{background:rgba(255,255,255,.85);b
 @media(prefers-reduced-motion:reduce){#gh-header .gh-brand,#gh-header .gh-dd-menu,#gh-header .gh-bar,#gh-header .gh-nav a{transition:none!important}}
 
 
+/* === GH: evita que el header tape el contenido === */
+html{scroll-padding-top:var(--gh-offset,68px)}
+body{padding-top:var(--gh-offset,68px)}
+/* Si alguna page ya maneja su propio offset, puedes preferir main:
+main{padding-top:var(--gh-offset,68px)} */
+
+
