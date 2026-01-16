@@ -212,15 +212,9 @@
 </aside>
 </header>
 
+
 <script>
-/* =========================================================
- Expiriti Header JS (V7.1 + Mobile V5) — BLINDADO HARDENED FINAL
- - ROOT: meta[name="expiriti-base"] manda; heurística solo fallback
- - buildPath: URL() robusto (GH Pages + subcarpetas)
- - applySafePaths: idempotente (no re-engancha onerror mil veces)
- - Delegación click: data-href SIEMPRE manda (aunque href exista y esté mal)
- - MutationObserver: throttle (evita loops y costo)
-========================================================= */
+/* Expiriti Header JS (V7.1 + Mobile V5) — BLINDADO HARDENED FINAL */
 (function(){'use strict';
 if(window.__EXPIRITI_GH_V71_HARDENED__) return;
 window.__EXPIRITI_GH_V71_HARDENED__=true;
@@ -231,7 +225,6 @@ const QA=(s,c=D)=>Array.from(c.querySelectorAll(s));
 const BLANK="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
 const storage={get:k=>{try{return localStorage.getItem(k)}catch(_){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(_){}}};
 
-/* ---------------- ROOT ---------------- */
 function getRootFromMeta(){
   const m=Q('meta[name="expiriti-base"]');
   if(!m || !m.content) return null;
@@ -244,8 +237,6 @@ function getRootFromMeta(){
 function getMasterRoot(){
   const metaRoot=getRootFromMeta();
   if(metaRoot) return metaRoot;
-
-  // Fallback GH heurística (último recurso)
   const host=(location.hostname||'').toLowerCase();
   const seg=(location.pathname||'/').split('/').filter(Boolean);
   const first=(seg[0]||'').toLowerCase();
@@ -261,56 +252,43 @@ const ROOT=getMasterRoot();
 function baseAbs(){
   try{
     const origin=(location.origin && location.origin!=='null')?location.origin:location.href;
-    return new URL(ROOT, origin).toString(); // https://host/unidaduniversal.github.io/
+    return new URL(ROOT, origin).toString();
   }catch(_){ return ROOT; }
 }
 
-/* ---------------- PATH ---------------- */
 function buildPath(raw){
   raw=String(raw||'').trim();
   if(!raw) return '#';
-
-  // externos
   if(/^(https?:|mailto:|tel:|whatsapp:|sms:)/i.test(raw)) return raw;
-
-  // hashes: siempre index.html#...
   if(raw.startsWith('#')){
     try{ return new URL('index.html'+raw, baseAbs()).toString(); }
     catch(_){ return (ROOT.replace(/\/$/,'')+'/index.html')+raw; }
   }
-
-  // normaliza: si viene "/IMG/..." lo tratamos como relativo al ROOT, no al dominio
-  raw = raw.replace(/^\/+/, ''); // evita que "/" te saque del repo
+  raw = raw.replace(/^\/+/, '');
   try{ return new URL(raw, baseAbs()).toString(); }
   catch(_){ return (ROOT.replace(/\/$/,'')+'/'+raw); }
 }
 
-/* ---------------- APPLY (idempotente) ---------------- */
 function applySafePaths(container){
   container=container||D;
 
-  // Links
   QA('a.js-link[data-href]', container).forEach(a=>{
     const raw=a.getAttribute('data-href');
     if(!raw) return;
     const want=buildPath(raw);
     if(a.href!==want) a.href=want;
-    // marca para diagnósticos
     a.dataset.ghResolved='1';
   });
 
-  // Imágenes
   QA('img.js-img[data-src]', container).forEach(img=>{
     const raw=img.getAttribute('data-src');
     if(!raw) return;
     const want=buildPath(raw);
     if(img.src!==want) img.src=want;
 
-    // idempotente: no re-asignar onerror una y otra vez
     if(img.dataset.ghOnErrBound!=='1'){
       img.dataset.ghOnErrBound='1';
       img.addEventListener('error', function(){
-        // evita loop si BLANK también falla (raro, pero posible)
         if(this.dataset.ghErrored==='1') return;
         this.dataset.ghErrored='1';
         this.style.opacity='.60';
@@ -321,7 +299,6 @@ function applySafePaths(container){
   });
 }
 
-/* ---------------- UI ---------------- */
 function syncOffset(){
   const bar=Q('#gh-bar');
   const h=bar?bar.offsetHeight:68;
@@ -331,7 +308,6 @@ function syncOffset(){
 function initScrollHide(){
   const bar=Q('#gh-bar'); if(!bar) return;
   if(bar.__hideBound) return; bar.__hideBound=true;
-
   let last=W.scrollY||0;
   W.addEventListener('scroll', ()=>{
     if(D.documentElement.classList.contains('gh-open')) return;
@@ -411,7 +387,6 @@ function toggleDrawer(open){
     burger.setAttribute('aria-expanded','true');
     D.body.style.overflow='hidden';
 
-    // Re-aplica rutas al abrir (por si el partial entró tarde)
     const header=Q('#gh-header');
     if(header) applySafePaths(header);
     initMobileSystems();
@@ -448,10 +423,6 @@ function initThemeToggle(){
   sync();
 }
 
-/* =========================================================
-  BLINDAJE CLAVE:
-  Delegación: data-href SIEMPRE manda, incluso si href está mal.
-========================================================= */
 function bindBlindClicks(){
   if(D.__ghBlindClickBound) return;
   D.__ghBlindClickBound=true;
@@ -459,18 +430,13 @@ function bindBlindClicks(){
   D.addEventListener('click', (e)=>{
     const a=e.target.closest('a.js-link[data-href]');
     if(!a) return;
-
     const raw=a.getAttribute('data-href');
     if(!raw) return;
-
     const want=buildPath(raw);
     const isNewTab = a.target==='_blank' || e.metaKey || e.ctrlKey || e.button===1;
 
-    // Siempre forzamos href correcto (siempre)
     if(a.href!==want) a.href=want;
 
-    // Si el navegador ya lo resolvería ok, lo dejamos fluir, excepto hashes (mejor controlar)
-    // Para evitar edge cases, controlamos todo.
     e.preventDefault();
     if(isNewTab){ W.open(want, '_blank', 'noopener'); return; }
     location.href=want;
@@ -493,7 +459,6 @@ function bindBlindClicks(){
   W.addEventListener('pageshow', (ev)=>{ if(ev.persisted) toggleDrawer(false); });
 }
 
-/* ---------------- OBSERVER (throttle) ---------------- */
 function observeLateHeader(){
   if(D.__ghObserverBound) return;
   D.__ghObserverBound=true;
@@ -514,15 +479,12 @@ function observeLateHeader(){
   obs.observe(D.documentElement, {childList:true, subtree:true});
 }
 
-/* ---------------- BOOT ---------------- */
 function boot(){
   const header=Q('#gh-header');
   if(!header || header.__ghInited) return;
   header.__ghInited=true;
 
-  // Diagnóstico útil (solo si falta meta)
   if(!getRootFromMeta()){
-    // No rompe, pero te avisa en consola para corregir página faltante
     try{ console.warn('[Expiriti] Falta meta[name="expiriti-base"] en esta página. Usando fallback ROOT=', ROOT); }catch(_){}
   }
 
