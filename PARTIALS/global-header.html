@@ -214,6 +214,14 @@ main:first-child,.page-index main:first-child{margin-top:0}
 #gh-header .gh-svcarrow{width:34px;height:34px;border-radius:999px;background:rgba(10,14,23,.8)}
 #gh-header .gh-svcdots{margin-top:8px}
 }
+
+
+   /* FIX: Drawer móvil no abre por contain en #gh-header (fixed queda “encapsulado”) */
+@media (max-width:1023px){
+  #gh-header{contain:none!important;} /* deja que .gh-drawer/.gh-dim sean fixed real */
+  #gh-header .gh-bar{contain:layout paint;} /* si quieres conservar aislamiento/perf en la barra */
+}
+
 </style>
 
 <header class="gh" id="gh-header" role="banner">
