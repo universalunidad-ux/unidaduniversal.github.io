@@ -1,19 +1,38 @@
+/* =========================================================
+  Expiriti — header.css (GLOBAL HEADER V7 + MOBILE UI/UX V5)
+  - FIX: offset opt-in (body.has-gh) para no romper páginas con su propio top
+  - FIX: scroll lock robusto al abrir drawer (html.gh-open + body.gh-open)
+  - FIX: panels/tabs consistentes (hidden/display)
+  - FIX: carrusel servicios (snap-stop + overscroll containment)
+========================================================= */
 
+/* ========== TOKENS ========== */
 :root{--gh-bg:rgba(7,10,16,.95);--gh-border:rgba(255,255,255,.08);--gh-panel:#0a0e17;--gh-text:#e8eef6;--gh-muted:#94a3b8;--gh-brand:#2dd4bf;--gh-brand2:#60a5fa;--gh-maxw:1200px;--gh-height:68px;--gh-offset:68px;--gh-stroke:rgba(255,255,255,.12);--gh-d-gap:clamp(8px,1.2vh,12px);--gh-d-pad:clamp(10px,1.5vh,14px);--gh-card-minh:clamp(92px,12vh,118px);--gh-img-h:clamp(34px,4.2vh,44px);--gh-tab-py:clamp(8px,1.1vh,10px);--gh-tab-px:clamp(10px,1.6vh,12px);--gh-h2:clamp(12px,1.8vh,14px);--gh-sub:clamp(10px,1.5vh,12px)}
 html[data-theme="light"]{--gh-bg:rgba(255,255,255,.92);--gh-border:rgba(0,0,0,.10);--gh-panel:#fff;--gh-text:#0f172a;--gh-muted:#64748b;--gh-brand:#0d9488;--gh-brand2:#2563eb;--gh-stroke:rgba(2,6,23,.14)}
-#gh-header{
-  font-kerning:normal;
-  font-feature-settings:"kern","liga","calt";
-  text-size-adjust:100%;
-}
 
+/* ========== GLOBAL BEHAVIOR ========== */
+#gh-header{font-kerning:normal;font-feature-settings:"kern","liga","calt";text-size-adjust:100%}
+html{scroll-padding-top:var(--gh-offset,68px)}
+/* IMPORTANT: offset opt-in (evita doble padding en páginas que ya lo manejan) */
+body{padding-top:0}
+body.has-gh{padding-top:var(--gh-offset,68px)}
+/* Scroll lock robusto cuando drawer abierto */
+html.gh-open,html.gh-open body{overflow:hidden}
+body.gh-open{overflow:hidden}
+
+/* ========== SHELL ========== */
 #gh-header{position:fixed;top:0;left:0;right:0;z-index:2147483000;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 #gh-header *{box-sizing:border-box}
+#gh-header img,#gh-header svg{mix-blend-mode:normal!important;filter:none!important;opacity:1!important}
+
+/* ========== TOP BAR ========== */
 #gh-header .gh-bar{height:var(--gh-height);background:var(--gh-bg);border-bottom:1px solid var(--gh-border);transition:transform .25s ease;will-change:transform;position:relative;box-shadow:0 18px 45px rgba(0,0,0,.28)}
 html[data-theme="light"] #gh-header .gh-bar{box-shadow:0 18px 45px rgba(2,6,23,.10)!important}
 #gh-header .gh-bar::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,rgba(45,212,191,0),rgba(45,212,191,.85),rgba(96,165,250,.85),rgba(96,165,250,0));opacity:.85;pointer-events:none}
 #gh-header .gh-bar.is-hidden{transform:translateY(-100%)}
 #gh-header .gh-container{max-width:var(--gh-maxw);margin:0 auto;padding:0 clamp(15px,4vw,24px);height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+
+/* ========== BRAND ========== */
 #gh-header .gh-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--gh-text);padding:6px 8px;border-radius:14px;transition:background .18s ease;min-width:0}
 #gh-header .gh-brand:hover{background:rgba(255,255,255,.06)}
 html[data-theme="light"] #gh-header .gh-brand:hover{background:rgba(2,6,23,.05)}
@@ -22,6 +41,8 @@ html[data-theme="light"] #gh-header .gh-brand img{background:#e2e8f0}
 #gh-header .gh-brand-txt{line-height:1.1;display:flex;flex-direction:column;min-width:0}
 #gh-header .gh-brand-txt .n{font-weight:800;font-size:16px;letter-spacing:-.01em;white-space:nowrap;color:var(--gh-text)}
 #gh-header .gh-brand-txt .s{font-size:12px;color:var(--gh-muted);white-space:nowrap}
+
+/* ========== DESKTOP NAV ========== */
 #gh-header .gh-nav{display:none}
 @media(min-width:1024px){#gh-header .gh-nav{display:block}}
 #gh-header .gh-nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;align-items:center}
@@ -29,6 +50,8 @@ html[data-theme="light"] #gh-header .gh-brand img{background:#e2e8f0}
 #gh-header .gh-nav a:visited{color:var(--gh-text)}
 #gh-header .gh-nav a:hover{background:rgba(255,255,255,.08);color:var(--gh-text)}
 html[data-theme="light"] #gh-header .gh-nav a:hover{background:rgba(2,6,23,.05)!important;color:var(--gh-brand2)!important}
+
+/* ========== MEGA DROPDOWN (DESKTOP) ========== */
 #gh-header .gh-dd-wrap{position:relative}
 #gh-header .gh-dd-menu{position:absolute;top:100%;left:50%;transform:translate(-50%,12px);opacity:0;visibility:hidden;transition:.18s ease;z-index:20}
 #gh-header .gh-dd-wrap:hover .gh-dd-menu,#gh-header .gh-dd-wrap:focus-within .gh-dd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
@@ -57,6 +80,8 @@ html[data-theme="light"] #gh-header .gh-item b{color:#0b1220}
 @media(min-width:1400px){#gh-header .gh-dd-menu.mega{grid-template-columns:repeat(4,minmax(0,1fr));width:min(1000px,calc(100vw - 24px))}}
 @media(min-width:1200px){#gh-header .gh-item img{width:clamp(110px,9vw,150px)}}
 }
+
+/* ========== ACTIONS ========== */
 #gh-header .gh-actions{display:flex;align-items:center;gap:10px}
 #gh-header .gh-btn-wa{display:none;align-items:center;gap:10px;padding:7px 14px;border-radius:999px;text-decoration:none;font-weight:900;letter-spacing:.01em;color:#fff;background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));box-shadow:0 14px 30px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.12)}
 @media(min-width:600px){#gh-header .gh-btn-wa{display:inline-flex}}
@@ -69,24 +94,22 @@ html[data-theme="light"] #gh-header .gh-burger{color:#0f172a;background:rgba(255
 #gh-header .gh-theme:hover{transform:translateY(-1px);border-color:rgba(45,212,191,.24)}
 #gh-header .gh-theme:active{transform:translateY(0) scale(.98)}
 html[data-theme="light"] #gh-header .gh-theme{background:rgba(255,255,255,.85);border:1px solid rgba(2,6,23,.14);color:#0b1220}
-#gh-header img,#gh-header svg{mix-blend-mode:normal!important;filter:none!important;opacity:1!important}
+
+/* ========== ACCESSIBILITY / REDUCED MOTION ========== */
 @media(prefers-reduced-motion:reduce){#gh-header .gh-brand,#gh-header .gh-dd-menu,#gh-header .gh-bar,#gh-header .gh-nav a{transition:none!important}}
 
-
-/* === GH: evita que el header tape el contenido === */
-html{scroll-padding-top:var(--gh-offset,68px)}
-body{padding-top:var(--gh-offset,68px)}
-/* Si alguna page ya maneja su propio offset, puedes preferir main:
-main{padding-top:var(--gh-offset,68px)} */
-
-
-/* Expiriti — GH Mobile (Drawer + Tabs + Svc Carousel) MIN */
-#gh-header .gh-dim{position:fixed;inset:0;background:rgba(2,6,23,.55);backdrop-filter:saturate(140%) blur(6px);-webkit-backdrop-filter:saturate(140%) blur(6px);z-index:2147482998}
+/* =========================================================
+   GH MOBILE (Drawer + Tabs + Servicios Carousel)
+========================================================= */
+#gh-header .gh-dim{position:fixed;inset:0;background:rgba(2,6,23,.55);backdrop-filter:saturate(140%) blur(6px);-webkit-backdrop-filter:saturate(140%) blur(6px);z-index:2147482998;pointer-events:auto}
 html[data-theme="light"] #gh-header .gh-dim{background:rgba(2,6,23,.35)}
-#gh-header .gh-drawer{position:fixed;top:0;right:0;height:100dvh;width:min(92vw,420px);background:var(--gh-panel);border-left:1px solid rgba(255,255,255,.12);z-index:2147482999;transform:translateX(104%);transition:transform .22s ease;box-shadow:-28px 0 80px rgba(0,0,0,.55);display:flex;flex-direction:column}
+#gh-header .gh-drawer{position:fixed;top:0;right:0;height:100dvh;width:min(92vw,420px);background:var(--gh-panel);border-left:1px solid rgba(255,255,255,.12);z-index:2147482999;transform:translateX(104%);transition:transform .22s ease;box-shadow:-28px 0 80px rgba(0,0,0,.55);display:flex;flex-direction:column;contain:layout paint}
 html[data-theme="light"] #gh-header .gh-drawer{border-left-color:rgba(2,6,23,.10);box-shadow:-28px 0 80px rgba(2,6,23,.18)}
 html.gh-open #gh-header .gh-drawer{transform:translateX(0)}
 #gh-header .gh-drawer[hidden],#gh-header .gh-dim[hidden]{display:none!important}
+#gh-header .gh-drawer[hidden]{pointer-events:none}
+#gh-header .gh-dim[hidden]{pointer-events:none}
+
 #gh-header .gh-drawer-head{padding:var(--gh-d-pad);border-bottom:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.04),transparent)}
 html[data-theme="light"] #gh-header .gh-drawer-head{border-bottom-color:rgba(2,6,23,.10);background:linear-gradient(180deg,rgba(2,6,23,.03),transparent)}
 #gh-header .gh-dtitle-row{display:flex;align-items:center;gap:10px;min-width:0}
@@ -95,25 +118,33 @@ html[data-theme="light"] #gh-header .gh-dtitle-logo{background:#e2e8f0}
 #gh-header .gh-dtitle-txt{min-width:0}
 #gh-header .gh-dtitle-name{font-weight:900;letter-spacing:-.01em;color:var(--gh-text);line-height:1.1}
 #gh-header .gh-dtitle-sub{font-size:12px;color:var(--gh-muted);line-height:1.2;margin-top:2px}
+
 #gh-header .gh-head-cta{margin-top:10px;display:flex;align-items:center;gap:10px;justify-content:space-between}
 #gh-header .gh-headbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 10px;border-radius:14px;text-decoration:none;font-weight:900;letter-spacing:.01em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:var(--gh-text)}
 html[data-theme="light"] #gh-header .gh-headbtn{background:rgba(2,6,23,.03);border-color:rgba(2,6,23,.10);color:#0b1220}
 #gh-header .gh-close{flex:0 0 auto;width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:var(--gh-text);cursor:pointer;font-size:18px;font-weight:900}
 html[data-theme="light"] #gh-header .gh-close{background:rgba(2,6,23,.03);border-color:rgba(2,6,23,.10);color:#0b1220}
-#gh-header .gh-drawer-body{padding:var(--gh-d-pad);overflow:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:var(--gh-d-gap)}
+
+#gh-header .gh-drawer-body{padding:var(--gh-d-pad);overflow:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:var(--gh-d-gap);overscroll-behavior:contain}
 #gh-header .gh-acc{border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border-radius:18px;padding:12px}
 html[data-theme="light"] #gh-header .gh-acc{border-color:rgba(2,6,23,.10);background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))}
+
 #gh-header .gh-msys-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:0 0 10px}
 #gh-header .gh-msys-title{font-weight:950;letter-spacing:-.01em;color:var(--gh-text);font-size:16px;line-height:1}
 #gh-header .gh-msys-sub{font-size:12px;color:var(--gh-muted);line-height:1}
+
 #gh-header .gh-catbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
 #gh-header .gh-cat{appearance:none;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:var(--gh-text);padding:var(--gh-tab-py) var(--gh-tab-px);border-radius:999px;font-weight:900;letter-spacing:.01em;font-size:13px;cursor:pointer;transition:background .14s ease,border-color .14s ease,transform .14s ease}
 #gh-header .gh-cat:active{transform:scale(.98)}
 #gh-header .gh-cat.is-active{border-color:rgba(45,212,191,.28);background:linear-gradient(90deg,rgba(45,212,191,.16),rgba(96,165,250,.12))}
 html[data-theme="light"] #gh-header .gh-cat{background:rgba(2,6,23,.03);border-color:rgba(2,6,23,.10);color:#0b1220}
 html[data-theme="light"] #gh-header .gh-cat.is-active{border-color:rgba(37,99,235,.22);background:linear-gradient(90deg,rgba(13,148,136,.12),rgba(37,99,235,.10))}
+
+/* Panels: consistencia fuerte */
 #gh-header .gh-msys-panels{position:relative}
 #gh-header .gh-panel{margin:0}
+#gh-header .gh-panel[hidden]{display:none!important}
+#gh-header .gh-panel.is-open{display:block}
 #gh-header .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 #gh-header .gh-mcard{display:flex;gap:10px;align-items:center;padding:10px;border-radius:16px;text-decoration:none;color:var(--gh-text);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);min-height:var(--gh-card-minh)}
 #gh-header .gh-mcard:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
@@ -127,20 +158,23 @@ html[data-theme="light"] #gh-header .gh-mcard.gh-star{border-color:rgba(13,148,1
 #gh-header .gh-mmeta span{font-size:11px;line-height:1.2;color:var(--gh-muted)}
 html[data-theme="light"] #gh-header .gh-mmeta strong{color:#0b1220}
 #gh-header .gh-mcard-ghost{background:transparent!important;border-color:transparent!important}
+
+/* Servicios: carrusel 2x2 (snap robusto) */
 #gh-header .gh-svcwrap{position:relative}
-#gh-header .gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;border-radius:16px}
-#gh-header .gh-svcpage{flex:0 0 100%;scroll-snap-align:start}
+#gh-header .gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;border-radius:16px;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x}
+#gh-header .gh-svctrack::-webkit-scrollbar{height:0}
+#gh-header .gh-svcpage{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always}
 #gh-header .gh-svcarrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(7,10,16,.70);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;z-index:2}
 #gh-header .gh-svcarrow.prev{left:8px}
 #gh-header .gh-svcarrow.next{right:8px}
+#gh-header .gh-svcarrow:disabled{cursor:default;opacity:.35}
 html[data-theme="light"] #gh-header .gh-svcarrow{background:rgba(255,255,255,.85);border-color:rgba(2,6,23,.12);color:#0b1220}
+
 #gh-header .gh-svcdots{display:flex;gap:8px;justify-content:center;margin-top:10px}
 #gh-header .gh-svcdots .dot{width:10px;height:10px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.12);cursor:pointer}
 #gh-header .gh-svcdots .dot.is-active{background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));border-color:transparent}
 html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.18);background:rgba(2,6,23,.10)}
-#gh-header .gh-svctrack::-webkit-scrollbar{height:0}
-#gh-header .gh-svctrack{scrollbar-width:none}
+
+/* Desktop: oculta drawer/dim siempre */
 @media(min-width:1024px){#gh-header .gh-dim,#gh-header .gh-drawer{display:none!important}}
 @media(prefers-reduced-motion:reduce){#gh-header .gh-drawer,#gh-header .gh-cat,#gh-header .gh-svctrack{transition:none!important;scroll-behavior:auto!important}}
-
-
