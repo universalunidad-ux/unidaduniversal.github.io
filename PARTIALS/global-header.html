@@ -174,7 +174,6 @@ html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.1
 @media(min-width:1024px){#gh-header .gh-dim,#gh-header .gh-drawer{display:none!important}}
 @media(prefers-reduced-motion:reduce){#gh-header .gh-drawer,#gh-header .gh-cat,#gh-header .gh-svctrack{transition:none!important;scroll-behavior:auto!important}}
 
-#gh-header{isolation:isolate;contain:layout paint}
 #gh-header .gh-bar{background:rgba(7,10,16,.985)}
 html[data-theme="light"] #gh-header .gh-bar{background:rgba(255,255,255,.985)}
 body{padding-top:0}
@@ -220,6 +219,20 @@ main:first-child,.page-index main:first-child{margin-top:0}
 @media (max-width:1023px){
   #gh-header{contain:none!important;} /* deja que .gh-drawer/.gh-dim sean fixed real */
   #gh-header .gh-bar{contain:layout paint;} /* si quieres conservar aislamiento/perf en la barra */
+}
+
+   /* =========================================================
+   FIX DEFINITIVO: evitar clipping de mega menu y drawer
+   - Header NO debe tener contain
+   - Solo la barra superior puede aislarse
+========================================================= */
+#gh-header{
+  isolation:isolate;
+  contain:none !important; /* CRÍTICO */
+}
+
+#gh-header .gh-bar{
+  contain:layout paint; /* mantiene perf sin romper overlays */
 }
 
 </style>
