@@ -222,17 +222,33 @@ main:first-child,.page-index main:first-child{margin-top:0}
 }
 
    /* =========================================================
-   FIX DEFINITIVO: evitar clipping de mega menu y drawer
-   - Header NO debe tener contain
-   - Solo la barra superior puede aislarse
+   FIX DESKTOP: Mega menu debe “colgar” del header (no del documento)
+   - Evita que se vaya “al fondo” por CSS externo
+   - Mantiene animación/hover
 ========================================================= */
-#gh-header{
-  isolation:isolate;
-  contain:none !important; /* CRÍTICO */
-}
+@media (min-width:1024px){
+  /* Asegura stacking fuerte */
+  #gh-header{z-index:2147483000!important}
+  #gh-header .gh-bar{z-index:2147483001!important}
 
-#gh-header .gh-bar{
-  contain:layout paint; /* mantiene perf sin romper overlays */
+  /* El dropdown ya no depende del LI */
+  #gh-header .gh-dd-menu{
+    position:fixed!important;
+    top:var(--gh-offset,68px)!important;
+    left:50%!important;
+    transform:translate(-50%,12px)!important;
+    z-index:2147483002!important;
+    max-height:calc(100vh - var(--gh-offset,68px) - 18px);
+    overflow:auto;
+  }
+
+  /* Estado visible */
+  #gh-header .gh-dd-wrap:hover .gh-dd-menu,
+  #gh-header .gh-dd-wrap:focus-within .gh-dd-menu{
+    opacity:1!important;
+    visibility:visible!important;
+    transform:translate(-50%,0)!important;
+  }
 }
 
 </style>
