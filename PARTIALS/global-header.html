@@ -18,7 +18,9 @@ body.gh-open{overflow:hidden}
 /* ========== SHELL ========== */
 #gh-header{position:fixed;top:0;left:0;right:0;z-index:2147483000;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 #gh-header *{box-sizing:border-box}
-#gh-header img,#gh-header svg{mix-blend-mode:normal!important;filter:none!important;opacity:1!important}
+/* FIX: no anules drop-shadow locales */
+#gh-header img,#gh-header svg{mix-blend-mode:normal!important;opacity:1!important;filter:unset!important}
+#gh-header .gh-mimg,#gh-header .gh-wa-ico,#gh-header .gh-promoico{filter:drop-shadow(0 10px 22px rgba(0,0,0,.18))!important}
 
 /* ========== TOP BAR ========== */
 #gh-header .gh-bar{height:var(--gh-height);background:var(--gh-bg);border-bottom:1px solid var(--gh-border);transition:transform .25s ease;will-change:transform;position:relative;box-shadow:0 18px 45px rgba(0,0,0,.28)}
@@ -215,12 +217,6 @@ main:first-child,.page-index main:first-child{margin-top:0}
 }
 
 
-   /* FIX: Drawer móvil no abre por contain en #gh-header (fixed queda “encapsulado”) */
-@media (max-width:1023px){
-  #gh-header{contain:none!important;} /* deja que .gh-drawer/.gh-dim sean fixed real */
-  #gh-header .gh-bar{contain:layout paint;} /* si quieres conservar aislamiento/perf en la barra */
-}
-
    /* =========================================================
    FIX DEFINITIVO: evitar clipping de mega menu y drawer
    - Header NO debe tener contain
@@ -231,9 +227,45 @@ main:first-child,.page-index main:first-child{margin-top:0}
   contain:none !important; /* CRÍTICO */
 }
 
-#gh-header .gh-bar{
-  contain:layout paint; /* mantiene perf sin romper overlays */
+
+
+   /* === PATCH v2026.01.18 — GH: burger theme + pills swipe + mega fix + drawer head row === */
+
+/* 1) FIX DESKTOP: mega menu quedaba “detrás” por contain:paint (clipping) en .gh-bar */
+@media(min-width:1024px){#gh-header .gh-bar{contain:layout!important;}}
+
+/* 2) Mobile: burger siempre acorde al tema (blindado contra overrides) */
+@media(max-width:1023px){
+  #gh-header .gh-burger{border-radius:14px}
+  html[data-theme="light"] #gh-header .gh-burger{background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;color:#0b1220!important}
+  html:not([data-theme="light"]) #gh-header .gh-burger{background:rgba(15,23,42,.90)!important;border-color:rgba(255,255,255,.22)!important;color:#fff!important}
 }
+
+/* 3) Pills (catbar) swipe real (no wrap, snap, touch-action pan-x) */
+#gh-header .gh-catbar{flex-wrap:nowrap!important;overflow-x:auto!important;overscroll-behavior-x:contain;touch-action:pan-x;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory}
+#gh-header .gh-catbar::-webkit-scrollbar{display:none}
+#gh-header .gh-cat{scroll-snap-align:start}
+
+/* 4) Drawer head: “Brand + Llamar/WhatsApp + Cerrar” en la misma franja visual */
+#gh-header .gh-drawer-head{display:flex;flex-direction:column;gap:10px}
+#gh-header .gh-head-cta{margin-top:0!important;justify-content:flex-end;gap:10px}
+#gh-header .gh-dhead-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#gh-header .gh-dtitle-row{min-width:0;flex:1}
+#gh-header .gh-dhead-actions{display:flex;align-items:center;gap:10px}
+
+/* 5) Botón Promociones (entre Sistemas y Servicios) */
+#gh-header .gh-promos{padding:12px;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01))}
+html[data-theme="light"] #gh-header .gh-promos{border-color:rgba(2,6,23,.10);background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))}
+#gh-header .gh-promobtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px 12px;border-radius:16px;text-decoration:none;font-weight:950;letter-spacing:.01em;color:var(--gh-text);border:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,rgba(45,212,191,.18),rgba(96,165,250,.14))}
+html[data-theme="light"] #gh-header .gh-promobtn{color:#0b1220;border-color:rgba(2,6,23,.12);background:linear-gradient(90deg,rgba(13,148,136,.10),rgba(37,99,235,.10))}
+#gh-header .gh-promoico{width:18px;height:18px;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}
+
+
+
+   /* FIX: en la fila superior, CTAs no deben ser flex:1 */
+#gh-header .gh-dhead-actions .gh-headbtn{flex:0 0 auto!important;white-space:nowrap;padding:10px 12px}
+#gh-header .gh-dhead-actions .gh-headtxt{display:none} /* opcional: deja solo icono en top row */
+@media(min-width:360px){#gh-header .gh-dhead-actions .gh-headtxt{display:inline}}
 
 </style>
 
@@ -349,23 +381,32 @@ main:first-child,.page-index main:first-child{margin-top:0}
 <div class="gh-dim" id="gh-dim" hidden></div>
 
 <aside class="gh-drawer" id="gh-drawer" aria-hidden="true" hidden>
-  <div class="gh-drawer-head">
+<div class="gh-drawer-head">
+  <!-- fila superior: marca + acciones en la misma franja -->
+  <div class="gh-dhead-top">
     <div class="gh-dtitle-row">
       <img class="gh-dtitle-logo js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/expiritilogo.webp" alt="Expiriti" width="26" height="26">
-      <div class="gh-dtitle-txt"><div class="gh-dtitle-name">ExpIRI TI</div><div class="gh-dtitle-sub">Expertos en CONTPAQi</div></div>
+      <div class="gh-dtitle-txt">
+        <div class="gh-dtitle-name">ExpIRI TI</div>
+        <div class="gh-dtitle-sub">Expertos en CONTPAQi</div>
+      </div>
     </div>
-    <div class="gh-head-cta" aria-label="Contacto rápido">
-     <a class="gh-headbtn" href="tel:+525568437918" aria-label="Llamar">
-<img class="gh-headico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/034-telefono.webp" alt="" width="16" height="16">
-<span class="gh-headtxt">Llamar</span></a>
 
-<a class="gh-headbtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="WhatsApp">
-<img class="gh-headico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/whatsapp.svg" alt="" width="16" height="16">
-<span class="gh-headtxt">WhatsApp</span></a>
+    <div class="gh-dhead-actions" aria-label="Contacto rápido">
+      <a class="gh-headbtn" href="tel:+525568437918" aria-label="Llamar">
+        <img class="gh-headico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/034-telefono.webp" alt="" width="16" height="16">
+        <span class="gh-headtxt">Llamar</span>
+      </a>
 
-     <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
+      <a class="gh-headbtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <img class="gh-headico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/whatsapp.svg" alt="" width="16" height="16">
+        <span class="gh-headtxt">WhatsApp</span>
+      </a>
+
+      <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
     </div>
   </div>
+</div>
 
   <div class="gh-drawer-body">
     <!-- ===================== SISTEMAS (MÓVIL: TABS) ===================== -->
@@ -416,6 +457,12 @@ main:first-child,.page-index main:first-child{margin-top:0}
         </div>
       </div>
     </section>
+<section class="gh-promos" aria-label="Promociones">
+  <a class="gh-promobtn js-link" href="#" data-href="index.html#promociones">
+    <img class="gh-promoico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/003-etiqueta-de-descuento.webp" alt="">
+    <span>Promociones</span>
+  </a>
+</section>
 
     <!-- ===================== SERVICIOS (MÓVIL: CAROUSEL 2x2) ===================== -->
     <section class="gh-acc gh-msvc" id="gh-msvc" aria-label="Servicios (móvil)">
