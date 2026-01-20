@@ -13,7 +13,6 @@ body{padding-top:0}
 body.has-gh{padding-top:var(--gh-offset,68px)}
 /* Scroll lock robusto cuando drawer abierto */
 html.gh-open,html.gh-open body{overflow:hidden}
-body.gh-open{overflow:hidden}
 
 /* ========== SHELL ========== */
 #gh-header{position:fixed;top:0;left:0;right:0;z-index:2147483000;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
@@ -233,6 +232,8 @@ html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.1
   #gh-header #gh-msys .gh-mcard *{min-width:0}
 
 }
+
+   #gh-header{isolation:isolate;contain:none}#gh-header .gh-dd-menu{z-index:2147483100}#gh-header .gh-dd-menu.mega{z-index:2147483100}#gh-header .gh-catbar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;scroll-snap-type:x mandatory}#gh-header .gh-catbar::-webkit-scrollbar{display:none}#gh-header .gh-cat{scroll-snap-align:start}
 
    
 </style>
