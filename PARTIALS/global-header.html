@@ -334,6 +334,55 @@ html[data-theme="light"] #gh-header .gh-promobtn{color:#0b1220;border-color:rgba
   #gh-header #gh-msys .gh-mcard{gap:12px}
 }
 
+   /* =========================================================
+   PATCH v2026.01.18d — Drawer mobile: SYS cards vertical (logo arriba, textos abajo)
+   Afecta SOLO: #gh-msys (Sistemas) en mobile
+========================================================= */
+@media(max-width:1023px){
+
+  /* Solo el bloque Sistemas */
+  #gh-header #gh-msys .gh-mgrid{align-items:stretch}
+
+  /* Card vertical */
+  #gh-header #gh-msys .gh-mcard{
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    text-align:center!important;
+    gap:10px!important;
+    padding:12px 10px!important;
+  }
+
+  /* Icono arriba, más visible */
+  #gh-header #gh-msys .gh-mimg{
+    height:48px!important;       /* ajusta si quieres 52 */
+    max-width:72px!important;
+    margin:0 auto!important;
+  }
+
+  /* Textos centrados y responsivos */
+  #gh-header #gh-msys .gh-mmeta{
+    width:100%;
+    align-items:center!important;
+    min-width:0;
+  }
+  #gh-header #gh-msys .gh-mmeta strong{
+    text-align:center;
+    white-space:normal!important;
+    overflow:visible!important;
+  }
+  #gh-header #gh-msys .gh-mmeta span{
+    text-align:center;
+    white-space:normal!important;
+    overflow:visible!important;
+    line-height:1.25!important;
+  }
+
+  /* Evita “aplastamiento” horizontal raro */
+  #gh-header #gh-msys .gh-mcard *{min-width:0}
+
+}
+
 </style>
 
 <header class="gh" id="gh-header" role="banner">
