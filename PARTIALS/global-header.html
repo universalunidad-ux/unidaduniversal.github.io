@@ -267,6 +267,73 @@ html[data-theme="light"] #gh-header .gh-promobtn{color:#0b1220;border-color:rgba
 #gh-header .gh-dhead-actions .gh-headtxt{display:none} /* opcional: deja solo icono en top row */
 @media(min-width:360px){#gh-header .gh-dhead-actions .gh-headtxt{display:inline}}
 
+   /* =========================================================
+   PATCH v2026.01.18c — Theme-consistent mobile + desktop hover + badge + bigger sys icons
+   Pegar AL FINAL del <style>
+========================================================= */
+
+/* 1) MOBILE: no fuerces dark tokens cuando html[data-theme="light"] */
+@media(max-width:1023px){
+  /* Tu bloque móvil estaba sobre-escribiendo tokens globales; lo neutralizamos por tema */
+  html[data-theme="light"] #gh-header{
+    --gh-bg:rgba(255,255,255,.985)!important;
+    --gh-panel:#fff!important;
+    --gh-border:rgba(2,6,23,.10)!important;
+    --gh-text:#0f172a!important;
+    --gh-muted:#64748b!important;
+    --gh-stroke:rgba(2,6,23,.14)!important;
+  }
+  html[data-theme="light"] #gh-header .gh-bar{background:var(--gh-bg)!important;box-shadow:0 14px 36px rgba(2,6,23,.10)!important}
+  html[data-theme="light"] #gh-header .gh-dim{background:rgba(2,6,23,.35)!important}
+  html[data-theme="light"] #gh-header .gh-drawer{background:var(--gh-panel)!important;border-left-color:var(--gh-border)!important;box-shadow:-28px 0 80px rgba(2,6,23,.18)!important}
+
+  /* Cat pills en claro: no “dark glass” */
+  html[data-theme="light"] #gh-header .gh-cat{background:rgba(2,6,23,.03)!important;border-color:rgba(2,6,23,.10)!important;color:#0b1220!important}
+  html[data-theme="light"] #gh-header .gh-cat.is-active{background:linear-gradient(90deg,rgba(13,148,136,.12),rgba(37,99,235,.10))!important;border-color:rgba(37,99,235,.22)!important}
+
+  /* Cards en claro */
+  html[data-theme="light"] #gh-header .gh-mcard{background:rgba(2,6,23,.02)!important;border-color:rgba(2,6,23,.10)!important;box-shadow:0 14px 32px rgba(2,6,23,.10)!important}
+}
+
+/* 2) DESKTOP: hover/click de nav tipo rectangular (no pill) + color */
+@media(min-width:1024px){
+  #gh-header .gh-nav a{
+    border-radius:14px!important; /* adiós pill */
+    border:1px solid transparent;
+  }
+  #gh-header .gh-nav a:hover,
+  #gh-header .gh-nav a:focus-visible{
+    background:rgba(45,212,191,.14)!important; /* base dark */
+    border-color:rgba(45,212,191,.28)!important;
+  }
+  html[data-theme="light"] #gh-header .gh-nav a:hover,
+  html[data-theme="light"] #gh-header .gh-nav a:focus-visible{
+    background:rgba(37,99,235,.10)!important; /* base light */
+    border-color:rgba(37,99,235,.18)!important;
+    color:#0b1220!important;
+  }
+
+  /* Si quieres “activo” estilo botón sólido cuando esté presionado */
+  #gh-header .gh-nav a:active{transform:translateY(0) scale(.99)}
+}
+
+/* 3) “Servicio 360°” (badge): texto blanco, más contraste */
+#gh-header .gh-badge{
+  color:#fff!important;
+  text-shadow:0 2px 10px rgba(0,0,0,.35);
+  font-weight:950;
+}
+
+/* 4) MOBILE: iconos más grandes SOLO en Sistemas (no servicios) */
+@media(max-width:1023px){
+  #gh-header #gh-msys .gh-mimg{
+    height:44px!important;   /* antes ~36 */
+    max-width:64px!important;
+  }
+  /* opcional: un poco más de aire para que no se encimen */
+  #gh-header #gh-msys .gh-mcard{gap:12px}
+}
+
 </style>
 
 <header class="gh" id="gh-header" role="banner">
