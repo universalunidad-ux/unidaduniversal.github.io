@@ -158,7 +158,7 @@ html[data-theme="light"] #gh-header .gh-mmeta strong{color:#0b1220}
 
 /* Servicios: carrusel 2x2 (snap robusto) */
 #gh-header .gh-svcwrap{position:relative}
-#gh-header .gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;border-radius:16px;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x}
+#gh-header .gh-svctrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;border-radius:16px;scrollbar-width:none;overscroll-behavior-x:contain}
 #gh-header .gh-svctrack::-webkit-scrollbar{height:0}
 #gh-header .gh-svcpage{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always}
 #gh-header .gh-svcarrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(7,10,16,.70);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;z-index:2}
@@ -205,7 +205,7 @@ html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.1
 }
 
 /* 3) Pills (catbar) swipe real (no wrap, snap, touch-action pan-x) */
-#gh-header .gh-catbar{flex-wrap:nowrap!important;overflow-x:auto!important;overscroll-behavior-x:contain;touch-action:pan-x;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory}
+#gh-header .gh-catbar{flex-wrap:nowrap!important;overflow-x:auto!important;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory}
 #gh-header .gh-catbar::-webkit-scrollbar{display:none}
 #gh-header .gh-cat{scroll-snap-align:start}
 
@@ -352,8 +352,7 @@ html{scroll-padding-top:var(--gh-offset,68px)}body{padding-top:0}body.has-gh{pad
 
 
    /* NO  NPORRAR, VERTICAL SIEMPREEN MOBILE  */
-
-   @media(max-width:900px){.gh-drawer,.gh-menu-panel,.gh-menu,.gh-mobile-panel,.gh-nav-panel{max-height:calc(100svh - var(--gh-height,68px));height:calc(100svh - var(--gh-height,68px));overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y}.gh-drawer .gh-drawer-inner,.gh-menu-panel .gh-inner,.gh-nav-panel .gh-inner,.gh-mobile-panel .gh-inner{min-height:0;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;touch-action:pan-y}.gh-drawer,.gh-menu-panel,.gh-nav-panel{display:flex;flex-direction:column;min-height:0}.gh-drawer .gh-links,.gh-drawer .gh-msys-panels,.gh-drawer .gh-mgrid,.gh-menu-panel .gh-links,.gh-nav-panel .gh-links{min-height:0}}
+@media(max-width:1023px){html.gh-open,html.gh-open body,body.gh-open{overflow:hidden}#gh-header .gh-drawer{height:100dvh;touch-action:auto!important}#gh-header .gh-drawer-head{flex:0 0 auto}#gh-header .gh-drawer-body{flex:1 1 auto;min-height:0;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;overscroll-behavior:auto;touch-action:auto!important}#gh-header .gh-catbar{flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch;overscroll-behavior:auto;scrollbar-width:none;scroll-snap-type:x mandatory;touch-action:auto!important}#gh-header .gh-catbar::-webkit-scrollbar{display:none}#gh-header .gh-svctrack{touch-action:auto!important;overscroll-behavior:auto}}
 
    
 </style>
