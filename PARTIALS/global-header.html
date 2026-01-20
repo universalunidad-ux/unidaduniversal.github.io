@@ -382,6 +382,12 @@ html[data-theme="light"] #gh-header .gh-promobtn{color:#0b1220;border-color:rgba
   #gh-header #gh-msys .gh-mcard *{min-width:0}
 
 }
+/* =========================================================
+  NO BORRAR PATCH v2026.01.18e — TRUE MOBILE drawer HARDENED (anti overflow / anti invade)
+   Pegar AL FINAL del <style>
+========================================================= */
+   @media(max-width:1023px){#gh-header .gh-drawer,#gh-header .gh-drawer *{max-width:100%;min-width:0;box-sizing:border-box}#gh-header .gh-drawer{overflow-x:hidden}#gh-header .gh-dhead-top{display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px}#gh-header .gh-dtitle-row,#gh-header .gh-dtitle-txt{min-width:0}#gh-header .gh-dtitle-name,#gh-header .gh-dtitle-sub{max-width:100%;overflow:hidden;text-overflow:ellipsis}#gh-header .gh-dtitle-sub{white-space:normal!important;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}#gh-header .gh-dhead-actions{min-width:0;display:flex!important;align-items:center;justify-content:flex-end;gap:8px}#gh-header .gh-headbtn{flex:0 0 auto!important;white-space:nowrap;max-width:44px;padding:10px}#gh-header .gh-headtxt{display:none!important}#gh-header .gh-msys .gh-mgrid{align-items:stretch}#gh-header .gh-msys .gh-mcard{flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;text-align:center!important;gap:10px!important;padding:12px 10px!important}#gh-header .gh-msys .gh-mimg{height:48px!important;max-width:72px!important;margin:0 auto!important}#gh-header .gh-msys .gh-mmeta{width:100%;align-items:center!important}#gh-header .gh-msys .gh-mmeta strong,#gh-header .gh-msys .gh-mmeta span{text-align:center;white-space:normal!important;overflow:visible!important;line-height:1.25!important}#gh-header .gh-msys .gh-mcard *{min-width:0}}
+
 
 </style>
 
