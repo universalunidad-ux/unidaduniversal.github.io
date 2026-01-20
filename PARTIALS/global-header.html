@@ -350,6 +350,11 @@ html[data-theme="light"] #gh-header .gh-promobtn{color:#0b1220;border-color:rgba
 /* DEPURACION v2026.01.19 — Stop redundancies + burger fijo */
 html{scroll-padding-top:var(--gh-offset,68px)}body{padding-top:0}body.has-gh{padding-top:var(--gh-offset,68px)}html:not([data-theme="light"]) #gh-header{--gh-bg:rgba(7,10,16,.95);--gh-panel:#0a0e17;--gh-border:rgba(255,255,255,.08);--gh-text:#e8eef6;--gh-muted:#94a3b8;--gh-stroke:rgba(255,255,255,.12)}html[data-theme="light"] #gh-header{--gh-bg:rgba(255,255,255,.92);--gh-panel:#fff;--gh-border:rgba(2,6,23,.10);--gh-text:#0f172a;--gh-muted:#64748b;--gh-stroke:rgba(2,6,23,.14)}#gh-header .gh-bar{background:var(--gh-bg)}@media(max-width:1023px){#gh-header .gh-burger{border-radius:14px;font-weight:900;-webkit-tap-highlight-color:transparent}html[data-theme="light"] #gh-header .gh-burger{background:rgba(255,255,255,.92);border-color:rgba(2,6,23,.14);color:#0b1220}html:not([data-theme="light"]) #gh-header .gh-burger{background:rgba(15,23,42,.90);border-color:rgba(255,255,255,.22);color:#fff}}#gh-header .gh-catbar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;scroll-snap-type:x mandatory}#gh-header .gh-catbar::-webkit-scrollbar{display:none}#gh-header .gh-cat{scroll-snap-align:start}#gh-header{isolation:isolate;contain:none}
 
+
+   /* NO  NPORRAR, VERTICAL SIEMPREEN MOBILE  */
+
+   @media(max-width:900px){.gh-drawer,.gh-menu-panel,.gh-menu,.gh-mobile-panel,.gh-nav-panel{max-height:calc(100svh - var(--gh-height,68px));height:calc(100svh - var(--gh-height,68px));overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y}.gh-drawer .gh-drawer-inner,.gh-menu-panel .gh-inner,.gh-nav-panel .gh-inner,.gh-mobile-panel .gh-inner{min-height:0;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;touch-action:pan-y}.gh-drawer,.gh-menu-panel,.gh-nav-panel{display:flex;flex-direction:column;min-height:0}.gh-drawer .gh-links,.gh-drawer .gh-msys-panels,.gh-drawer .gh-mgrid,.gh-menu-panel .gh-links,.gh-nav-panel .gh-links{min-height:0}}
+
    
 </style>
 
