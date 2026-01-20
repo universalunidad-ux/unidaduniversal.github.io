@@ -24,54 +24,80 @@
 .page-index .section-title h2{font-size:clamp(22px,4.6vw,34px);line-height:1.12;letter-spacing:-.01em}
 .page-index .hero-gallery-header h2{font-size:clamp(18px,1.6vw,26px)!important;line-height:1.12!important;letter-spacing:-.01em!important;margin:0!important}
 
-/*7) HERO GALLERY: separa header/pills (evita “pegadas” y cortes visuales)*/
-.page-index .hero-gallery-header{padding:10px 16px 10px}
-.page-index .hero-gallery-groups{margin:10px 0 14px!important;padding:10px 12px 6px!important;gap:12px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;touch-action:pan-y pinch-zoom;overscroll-behavior-x:contain}
+/* =========================================================
+   EXPIRITI — HERO GALLERY OWNER (SINGLE SOURCE OF TRUTH)
+   v2026.01.20
+   Scope: body.page-index
+   Incluye: layout + header + groups + tabs + carousel + dots
+   FIX: swipe horizontal correcto (pan-x en track)
+========================================================= */
+
+/* ===== HERO CARD LAYOUT ===== */
+.page-index .hero-gallery-card{display:flex;flex-direction:column;min-height:0}
+.page-index .hero-gallery-card .body{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+
+/* ===== HEADER ===== */
+.page-index .hero-gallery-header{flex:0 0 auto;padding:10px 16px 10px;border-bottom:var(--border)}
+
+/* ===== GROUP PILLS ===== */
+.page-index .hero-gallery-groups{flex:0 0 auto;display:flex;gap:12px;margin:10px 0 14px;padding:10px 12px 6px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x pinch-zoom}
 .page-index .hero-gallery-groups::-webkit-scrollbar{height:0}
+.page-index .hero-gallery-groups>*{flex:0 0 auto;white-space:nowrap}
 .page-index .hero-group-tab{min-height:44px;padding:10px 14px;border-radius:999px}
 
-/*8) MOBILE: tabs del Hero Gallery en 2x2 (por si algún CSS previo los dejó en columna)*/
-.page-index .hero-gallery-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;padding:12px 12px 14px!important}
-@media(max-width:420px){.page-index .hero-tab{min-height:82px!important;padding:12px!important}.page-index .hero-tab img{height:46px!important;max-width:165px!important}}
+/* ===== TABS LOGOS 2x2 ===== */
+.page-index .hero-gallery-tabs{flex:0 0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px 12px 14px}
+
+/* ===== HERO CAROUSEL ===== */
+.page-index #heroGalleryCarousel{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;position:relative}
+
+/* TRACK (SWIPE REAL) */
+.page-index #heroGalleryCarousel .carousel-track{flex:1 1 auto;min-height:0;display:flex;gap:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x pinch-zoom}
+.page-index #heroGalleryCarousel .carousel-track::-webkit-scrollbar{height:0}
+
+/* SLIDE */
+.page-index #heroGalleryCarousel .carousel-slide{flex:0 0 100%;scroll-snap-align:start;min-height:0;display:flex;align-items:center;justify-content:center;padding:0}
+
+/* IMAGE */
+.page-index #heroGalleryCarousel .hero-slide img{width:100%;height:100%;display:block;object-fit:contain;object-position:center}
+
+
+/* ===== HEIGHT RULES ===== */
+.page-index #heroGalleryCarousel .carousel-track{min-height:340px}
+@media(min-width:980px){.page-index #heroGalleryCarousel .carousel-track{min-height:460px}}
+@media(max-width:980px){
+.page-index .hero-gallery-card{height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px) - 14px);overflow:hidden}
+.page-index #heroGalleryCarousel .carousel-track{min-height:180px}
+.page-index .hero-gallery-groups{padding:8px 12px 0;margin:8px 0 10px}
+.page-index .hero-gallery-tabs{padding:10px 10px 12px;gap:10px}
+  .page-index .hero-tab{display:flex;align-items:center;justify-content:center;min-height:86px;padding:14px;border-radius:14px;border:var(--border);background:rgba(255,255,255,.03);cursor:pointer}
+.page-index .hero-tab.active{border-color:rgba(96,165,250,.40);background:rgba(96,165,250,.10)}
+.page-index .hero-tab span{display:none}
+.page-index .hero-tab img{width:auto;height:52px;max-width:180px;object-fit:contain;background:transparent;border:0;border-radius:0;margin:0 auto;display:block}
+@media(max-width:420px){.page-index .hero-tab{min-height:82px;padding:12px}.page-index .hero-tab img{height:46px;max-width:165px}}
+
+}
+@media(max-width:520px){
+.page-index #heroGalleryCarousel .carousel-track{min-height:160px}
+.page-index .hero-group-tab{min-height:42px;padding:9px 12px}
+}
+@media(min-width:980px){
+.page-index .hero-gallery-card{height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 14px);overflow:hidden}
+}
+
 
 /*9) DOTS/NAV: UN SOLO OWNER “pill” PARA TODOS (incluye HERO) — NO absolute, NO invade*/
 .page-index .carousel .carousel-nav,.page-index #heroGalleryCarousel .carousel-nav{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;width:max-content!important;max-width:calc(100% - 24px)!important;margin:10px auto 12px!important;padding:6px 10px!important;border-radius:999px!important;background:rgba(7,10,18,.12)!important;border:1px solid rgba(255,255,255,.10)!important;position:static!important;inset:auto!important;transform:none!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:3;pointer-events:auto!important}
 .page-index .carousel .carousel-nav .dot,.page-index #heroGalleryCarousel .carousel-nav .dot{width:11px!important;height:11px!important;border-radius:999px!important;margin:0!important;border:1px solid rgba(255,255,255,.22)!important;background:rgba(255,255,255,.10)!important;cursor:pointer}
 .page-index .carousel .carousel-nav .dot.active,.page-index #heroGalleryCarousel .carousel-nav .dot.active{background:rgba(45,212,191,.85)!important;border-color:rgba(45,212,191,.95)!important}
 
-/*10) HERO CAROUSEL: fuerza flujo en columna para que nav quede abajo del track (sin overlap)*/
-.page-index #heroGalleryCarousel{display:flex!important;flex-direction:column!important;position:relative!important}
-.page-index #heroGalleryCarousel .carousel-track{position:relative!important;overflow:hidden!important;min-height:340px!important;padding-bottom:0!important}
-@media(min-width:980px){.page-index #heroGalleryCarousel .carousel-track{min-height:460px!important}}
 
 /*11) LIGHT: dots legibles*/
 html[data-theme="light"] .page-index .carousel .carousel-nav,html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav{background:rgba(255,255,255,.70)!important;border:1px solid rgba(2,6,23,.10)!important}
 html[data-theme="light"] .page-index .carousel .carousel-nav .dot,html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav .dot{border:1px solid rgba(2,6,23,.18)!important;background:rgba(2,6,23,.16)!important}
 html[data-theme="light"] .page-index .carousel .carousel-nav .dot.active,html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav .dot.active{background:rgba(45,212,191,.95)!important;border-color:rgba(45,212,191,.95)!important}
 
+.page-index #heroGalleryCarousel.carousel{touch-action:pan-y pinch-zoom}
 
-.page-index .hero-gallery-card{display:flex!important;flex-direction:column!important;min-height:0!important}
-.page-index .hero-gallery-card .body{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important}
-.page-index #heroGalleryGroups,.page-index #heroGalleryTabs,.page-index .hero-gallery-header{flex:0 0 auto!important}
-.page-index #heroGalleryCarousel{flex:1 1 auto!important;min-height:0!important;display:flex!important;flex-direction:column!important}
-.page-index #heroGalleryCarousel .carousel-track{flex:1 1 auto!important;min-height:0!important}
-.page-index #heroGalleryCarousel .carousel-slide{min-height:0!important}
-.page-index #heroGalleryCarousel .hero-slide img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important}
-.page-index .hero-gallery-card .cards-products,.page-index .hero-gallery-card .cards{flex:0 0 auto!important}
-.page-index .hero-gallery-card .cards-products{margin-top:10px!important;padding-bottom:10px!important}
-@media(max-width:980px){
-.page-index .hero-gallery-card{height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px) - 14px)!important;overflow:hidden!important}
-.page-index #heroGalleryCarousel{min-height:180px!important}
-.page-index .hero-gallery-groups{padding:8px 12px 0!important;margin:8px 0 10px!important}
-.page-index .hero-gallery-tabs{padding:10px 10px 12px!important;gap:10px!important}
-}
-@media(max-width:520px){
-.page-index #heroGalleryCarousel{min-height:160px!important}
-.page-index .hero-group-tab{min-height:42px!important;padding:9px 12px!important}
-.page-index .hero-tab{min-height:74px!important;padding:12px!important}
-.page-index .hero-tab img{height:44px!important}
-}
-@media(min-width:980px){
-.page-index .hero-gallery-card{height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 14px)!important;overflow:hidden!important}
-.page-index #heroGalleryCarousel{min-height:240px!important}
-}
+
+
