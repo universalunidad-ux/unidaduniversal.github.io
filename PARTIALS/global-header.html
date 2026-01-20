@@ -130,7 +130,9 @@ html[data-theme="light"] #gh-header .gh-acc{border-color:rgba(2,6,23,.10);backgr
 #gh-header .gh-msys-title{font-weight:950;letter-spacing:-.01em;color:var(--gh-text);font-size:16px;line-height:1}
 #gh-header .gh-msys-sub{font-size:12px;color:var(--gh-muted);line-height:1}
 
-#gh-header .gh-catbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+#gh-header .gh-catbar{display:flex;gap:8px;flex-wrap:nowrap;margin:0 0 12px;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;scrollbar-width:none;scroll-snap-type:x mandatory}
+#gh-header .gh-catbar::-webkit-scrollbar{display:none}
+#gh-header .gh-cat{scroll-snap-align:start}
 #gh-header .gh-cat{appearance:none;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:var(--gh-text);padding:var(--gh-tab-py) var(--gh-tab-px);border-radius:999px;font-weight:900;letter-spacing:.01em;font-size:13px;cursor:pointer;transition:background .14s ease,border-color .14s ease,transform .14s ease}
 #gh-header .gh-cat:active{transform:scale(.98)}
 #gh-header .gh-cat.is-active{border-color:rgba(45,212,191,.28);background:linear-gradient(90deg,rgba(45,212,191,.16),rgba(96,165,250,.12))}
@@ -180,55 +182,7 @@ html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.1
 @media(max-width:1023px){#gh-header .gh-bar{box-shadow:0 14px 36px rgba(0,0,0,.45)}html[data-theme="light"] #gh-header .gh-bar{box-shadow:0 14px 36px rgba(2,6,23,.10)!important}#gh-header .gh-drawer-head{padding:10px 12px}#gh-header .gh-dtitle-name{font-size:14px;font-weight:900}#gh-header .gh-dtitle-sub{font-size:11px;opacity:.85}#gh-header .gh-headbtn{display:inline-flex;align-items:center;gap:8px;padding:9px 10px;border-radius:14px;font-size:12px;font-weight:900}#gh-header .gh-headico{width:16px;height:16px;object-fit:contain}#gh-header .gh-drawer-body{padding:12px;gap:12px}#gh-header .gh-acc{border-radius:18px}#gh-header .gh-msys-head{padding-bottom:6px}#gh-header .gh-msys-title{font-size:14px;font-weight:900}#gh-header .gh-msys-sub{font-size:11px;opacity:.8}#gh-header .gh-panel{margin-top:6px}#gh-header .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#gh-header .gh-mcard{border-radius:16px;padding:10px;box-shadow:0 14px 32px rgba(0,0,0,.35)}html[data-theme="light"] #gh-header .gh-mcard{box-shadow:0 14px 32px rgba(2,6,23,.10)!important}#gh-header .gh-mimg{height:36px;object-fit:contain}#gh-header .gh-mmeta strong{font-size:13px;font-weight:900}#gh-header .gh-mmeta span{font-size:11px;opacity:.85}#gh-header .gh-svcwrap{margin-top:4px}#gh-header .gh-svcarrow{width:34px;height:34px;border-radius:999px}}
 
 
-   /* =========================================================
-   FIX DEFINITIVO: evitar clipping de mega menu y drawer
-   - Header NO debe tener contain
-   - Solo la barra superior puede aislarse
-========================================================= */
-#gh-header{
-  isolation:isolate;
-  contain:none !important; /* CRÍTICO */
-}
 
-
-
-   /* === PATCH v2026.01.18 — GH: burger theme + pills swipe + mega fix + drawer head row === */
-
-/* 1) FIX DESKTOP: mega menu quedaba “detrás” por contain:paint (clipping) en .gh-bar */
-@media(min-width:1024px){#gh-header .gh-bar{contain:layout!important;}}
-
-/* 2) Mobile: burger siempre acorde al tema (blindado contra overrides) */
-@media(max-width:1023px){
-  #gh-header .gh-burger{border-radius:14px}
-  html[data-theme="light"] #gh-header .gh-burger{background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;color:#0b1220!important}
-  html:not([data-theme="light"]) #gh-header .gh-burger{background:rgba(15,23,42,.90)!important;border-color:rgba(255,255,255,.22)!important;color:#fff!important}
-}
-
-/* 3) Pills (catbar) swipe real (no wrap, snap, touch-action pan-x) */
-#gh-header .gh-catbar{flex-wrap:nowrap!important;overflow-x:auto!important;overscroll-behavior-x:contain;touch-action:pan-x;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory}
-#gh-header .gh-catbar::-webkit-scrollbar{display:none}
-#gh-header .gh-cat{scroll-snap-align:start}
-
-/* 4) Drawer head: “Brand + Llamar/WhatsApp + Cerrar” en la misma franja visual */
-#gh-header .gh-drawer-head{display:flex;flex-direction:column;gap:10px}
-#gh-header .gh-head-cta{margin-top:0!important;justify-content:flex-end;gap:10px}
-#gh-header .gh-dhead-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-#gh-header .gh-dtitle-row{min-width:0;flex:1}
-#gh-header .gh-dhead-actions{display:flex;align-items:center;gap:10px}
-
-/* 5) Botón Promociones (entre Sistemas y Servicios) */
-#gh-header .gh-promos{padding:12px;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01))}
-html[data-theme="light"] #gh-header .gh-promos{border-color:rgba(2,6,23,.10);background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))}
-#gh-header .gh-promobtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px 12px;border-radius:16px;text-decoration:none;font-weight:950;letter-spacing:.01em;color:var(--gh-text);border:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,rgba(45,212,191,.18),rgba(96,165,250,.14))}
-html[data-theme="light"] #gh-header .gh-promobtn{color:#0b1220;border-color:rgba(2,6,23,.12);background:linear-gradient(90deg,rgba(13,148,136,.10),rgba(37,99,235,.10))}
-#gh-header .gh-promoico{width:18px;height:18px;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}
-
-
-
-   /* FIX: en la fila superior, CTAs no deben ser flex:1 */
-#gh-header .gh-dhead-actions .gh-headbtn{flex:0 0 auto!important;white-space:nowrap;padding:10px 12px}
-#gh-header .gh-dhead-actions .gh-headtxt{display:none} /* opcional: deja solo icono en top row */
-@media(min-width:360px){#gh-header .gh-dhead-actions .gh-headtxt{display:inline}}
 
 
    /* =========================================================
