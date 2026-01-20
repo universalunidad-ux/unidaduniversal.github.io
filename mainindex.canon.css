@@ -26,71 +26,61 @@
 
 /* =========================================================
    EXPIRITI — HERO GALLERY OWNER (SINGLE SOURCE OF TRUTH)
-   v2026.01.20
-   Scope: body.page-index
-   Incluye: layout + header + groups + tabs + carousel + dots
-   FIX: swipe horizontal correcto (pan-x en track)
+   v2026.01.20 — HTML-aware (arrows inside carousel)
 ========================================================= */
 
-/* ===== HERO CARD LAYOUT ===== */
+/* card layout */
 .page-index .hero-gallery-card{display:flex;flex-direction:column;min-height:0}
 .page-index .hero-gallery-card .body{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
 
-/* ===== HEADER ===== */
+/* header */
 .page-index .hero-gallery-header{flex:0 0 auto;padding:10px 16px 10px;border-bottom:var(--border)}
 
-/* ===== GROUP PILLS ===== */
+/* groups pills */
 .page-index .hero-gallery-groups{flex:0 0 auto;display:flex;gap:12px;margin:10px 0 14px;padding:10px 12px 6px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x pinch-zoom}
 .page-index .hero-gallery-groups::-webkit-scrollbar{height:0}
 .page-index .hero-gallery-groups>*{flex:0 0 auto;white-space:nowrap}
 .page-index .hero-group-tab{min-height:44px;padding:10px 14px;border-radius:999px}
 
-/* ===== TABS LOGOS 2x2 ===== */
+/* tabs container 2x2 */
 .page-index .hero-gallery-tabs{flex:0 0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px 12px 14px}
 
-/* ===== HERO CAROUSEL ===== */
-.page-index #heroGalleryCarousel{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;position:relative}
+/* hero-tab look (NOT inside media, no nested media) */
+.page-index .hero-tab{display:flex;align-items:center;justify-content:center;min-height:86px;padding:14px;border-radius:14px;border:var(--border);background:rgba(255,255,255,.03);cursor:pointer}
+.page-index .hero-tab.active{border-color:rgba(96,165,250,.40);background:rgba(96,165,250,.10)}
+.page-index .hero-tab span{display:none}
+.page-index .hero-tab img{width:auto;height:52px;max-width:180px;object-fit:contain;background:transparent;border:0;border-radius:0;margin:0 auto;display:block}
+@media(max-width:420px){.page-index .hero-tab{min-height:82px;padding:12px}.page-index .hero-tab img{height:46px;max-width:165px}}
 
-/* TRACK (SWIPE REAL) */
-.page-index #heroGalleryCarousel .carousel-track{flex:1 1 auto;min-height:0;display:flex;gap:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x pinch-zoom}
+/* carousel (HTML-aware): arrows absolute over track, nav below */
+.page-index #heroGalleryCarousel{flex:1 1 auto;min-height:0;position:relative;display:block;touch-action:pan-y pinch-zoom}
+.page-index #heroGalleryCarousel .arrowCircle{position:absolute;top:50%;transform:translateY(-50%);z-index:5}
+.page-index #heroGalleryCarousel .arrowCircle.prev{left:10px}
+.page-index #heroGalleryCarousel .arrowCircle.next{right:10px}
+
+/* track (swipe real) */
+.page-index #heroGalleryCarousel .carousel-track{min-height:340px;display:flex;gap:0;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x pinch-zoom}
 .page-index #heroGalleryCarousel .carousel-track::-webkit-scrollbar{height:0}
-
-/* SLIDE */
-.page-index #heroGalleryCarousel .carousel-slide{flex:0 0 100%;scroll-snap-align:start;min-height:0;display:flex;align-items:center;justify-content:center;padding:0}
-
-/* IMAGE */
-.page-index #heroGalleryCarousel .hero-slide img{width:100%;height:100%;display:block;object-fit:contain;object-position:center}
-
-
-/* ===== HEIGHT RULES ===== */
-.page-index #heroGalleryCarousel .carousel-track{min-height:340px}
 @media(min-width:980px){.page-index #heroGalleryCarousel .carousel-track{min-height:460px}}
 
+/* slide + img */
+.page-index #heroGalleryCarousel .carousel-slide{flex:0 0 100%;scroll-snap-align:start;min-height:0;display:flex;align-items:center;justify-content:center;padding:0}
+.page-index #heroGalleryCarousel .hero-slide img{width:100%;height:100%;display:block;object-fit:contain;object-position:center}
 
+/* height rules */
+@media(max-width:980px){
+  .page-index .hero-gallery-card{height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px) - 14px);overflow:hidden}
+  .page-index #heroGalleryCarousel .carousel-track{min-height:180px}
+  .page-index .hero-gallery-groups{padding:8px 12px 0;margin:8px 0 10px}
+  .page-index .hero-gallery-tabs{padding:10px 10px 12px;gap:10px}
 }
 @media(max-width:520px){
-.page-index #heroGalleryCarousel .carousel-track{min-height:160px}
-.page-index .hero-group-tab{min-height:42px;padding:9px 12px}
+  .page-index #heroGalleryCarousel .carousel-track{min-height:160px}
+  .page-index .hero-group-tab{min-height:42px;padding:9px 12px}
 }
 @media(min-width:980px){
-.page-index .hero-gallery-card{height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 14px);overflow:hidden}
+  .page-index .hero-gallery-card{height:calc(100dvh - var(--ghh) - env(safe-area-inset-top,0px) - 14px);overflow:hidden}
 }
-
-
-/* ===== HERO GALLERY: HTML-aware arrows + track hardening (OWNER) ===== */
-.page-index #heroGalleryCarousel{position:relative!important;display:block!important;touch-action:pan-y pinch-zoom}
-.page-index #heroGalleryCarousel .carousel-track{overflow-x:auto!important;overflow-y:hidden!important}
-.page-index #heroGalleryCarousel .arrowCircle{position:absolute!important;top:50%!important;transform:translateY(-50%)!important;z-index:5!important}
-.page-index #heroGalleryCarousel .arrowCircle.prev{left:10px!important}
-.page-index #heroGalleryCarousel .arrowCircle.next{right:10px!important}
-.page-index #heroGalleryCarousel .carousel-nav{position:static!important;display:inline-flex!important}
-
-/* ===== HERO TABS (logos) — NO inside media, NO nested media ===== */
-.page-index .hero-tab{display:flex!important;align-items:center!important;justify-content:center!important;min-height:86px!important;padding:14px!important;border-radius:14px!important;border:var(--border)!important;background:rgba(255,255,255,.03)!important;cursor:pointer}
-.page-index .hero-tab.active{border-color:rgba(96,165,250,.40)!important;background:rgba(96,165,250,.10)!important}
-.page-index .hero-tab span{display:none!important}
-.page-index .hero-tab img{width:auto!important;height:52px!important;max-width:180px!important;object-fit:contain!important;background:transparent!important;border:0!important;border-radius:0!important;margin:0 auto!important;display:block!important}
-@media(max-width:420px){.page-index .hero-tab{min-height:82px!important;padding:12px!important}.page-index .hero-tab img{height:46px!important;max-width:165px!important}}
 
 
 /*9) DOTS/NAV: UN SOLO OWNER “pill” PARA TODOS (incluye HERO) — NO absolute, NO invade*/
