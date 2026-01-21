@@ -324,14 +324,16 @@ html[data-theme="light"] .page-index .hero-gallery-header h2{text-shadow:none}
    - Track no debe forzar pan-x (deja que el JS “smart swipe” decida)
    - Evita “pegajosidad” vertical al iniciar gesto sobre carrusel */
 @media(max-width:980px){
+  /* el contenedor permite scroll vertical */
+  .page-index .carousel,
+  .page-index #heroGalleryCarousel{touch-action:pan-y pinch-zoom!important}
+
+  /* el track mantiene swipe horizontal */
   .page-index #heroGalleryCarousel .carousel-track,
   .page-index .carousel[id^="carouselReels"] .carousel-track,
-  .page-index .cards-services.is-carousel,
-  .page-index .prod-tabs,
-  .page-index .promo-filters,
-  .page-index .hero-gallery-groups{touch-action:pan-y!important}
-  .page-index .carousel-track{overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+  .page-index .cards-services.is-carousel{touch-action:pan-x pinch-zoom!important}
 }
+
 
 /* 4) FULL HEIGHT SECTIONS:
    - “fold” = viewport - header - safe-area
@@ -429,13 +431,17 @@ html[data-theme="light"] .page-index #contacto .badge{color:var(--ix-inkL)!impor
 .page-index .kicker{color:var(--ix-ink)!important;background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.10)!important}
 html[data-theme="light"] .page-index .kicker{color:var(--ix-inkL)!important;background:rgba(255,255,255,.80)!important;border:1px solid rgba(2,6,23,.12)!important}
 
-/* 2) SISTEMAS: línea arriba; abajo título+tabs; sin aire; tabs pegados al grid */
-.page-index #productos-con .productos-inline-bar{display:block!important;margin:0 0 10px!important;padding:0 0 8px!important;border-top:1px solid var(--ix-line)!important}
-html[data-theme="light"] .page-index #productos-con .productos-inline-bar{border-top-color:var(--ix-lineL)!important}
-.page-index #productos-con .prod-tabs-shell{display:block!important}
-.page-index #productos-con .prod-title{margin:10px 0 8px!important;padding:0!important}
-.page-index #productos-con .prod-title:after{content:none!important}
-.page-index #productos-con .prod-tabs{margin:0!important;padding:8px 10px!important;gap:10px!important;align-self:flex-start!important;border-radius:999px!important}
+/* SISTEMAS: línea + title + tabs + grid pegados */
+.page-index #productos-con .productos-inline-bar{
+  display:block;
+  margin:0 0 10px;
+  padding:10px 0 10px;
+  border-top:1px solid var(--ix-line);
+}
+html[data-theme="light"] .page-index #productos-con .productos-inline-bar{border-top-color:var(--ix-lineL)}
+.page-index #productos-con .prod-title{margin:10px 0 8px;padding:0}
+.page-index #productos-con .prod-title:after{content:none} /* apaga línea extra */
+.page-index #productos-con .prod-tabs{margin:0;padding:8px 10px}
 
 /* 3) TABS (Sistemas) contraste: base + active (evita texto invisible) */
 .page-index #productos-con .prod-tabs .tab{color:var(--ix-pill-ink)!important;background:var(--ix-pill-bg)!important;border:1px solid var(--ix-pill-bd)!important}
