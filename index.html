@@ -102,29 +102,42 @@
  <!-- =========================
    Sistemas CONTPAQi (Tabs)
    ========================= -->
-<section id="productos-con" class="section-full">
+<section id="productos-con" class="section-full" aria-label="Sistemas CONTPAQi">
   <div class="container">
 
-    <div class="productos-inline-bar">
-      <div class="prod-tabs-shell">
-        <h2 class="prod-title">Sistemas<span>CONTPAQi®</span></h2>
+    <!-- ÚNICA LÍNEA: SOLO AL INICIO DE LA SECCIÓN -->
+    <div class="section-divider" aria-hidden="true"></div>
 
-        <nav class="prod-tabs" aria-label="Productos CONTPAQi">
-          <button class="tab active" id="tab-contable" type="button" data-target="panel-contable" aria-controls="panel-contable" aria-selected="true">
+    <!-- TÍTULO + TABS (SIN LÍNEA EXTRA AQUÍ) -->
+    <header class="productos-inline-bar" role="group" aria-label="Categorías de sistemas">
+      <h2 class="prod-title expiriti-gradient">
+        Sistemas <span>CONTPAQi®</span>
+      </h2>
+
+      <nav class="prod-tabs-shell" aria-label="Productos CONTPAQi">
+        <div class="prod-tabs" role="tablist" aria-label="Categorías">
+          <button class="tab active" id="tab-contable" type="button"
+            data-target="panel-contable" aria-controls="panel-contable" aria-selected="true" role="tab">
             Contables
           </button>
-          <button class="tab" id="tab-comercial" type="button" data-target="panel-comercial" aria-controls="panel-comercial" aria-selected="false">
+
+          <button class="tab" id="tab-comercial" type="button"
+            data-target="panel-comercial" aria-controls="panel-comercial" aria-selected="false" role="tab" tabindex="-1">
             Comerciales
           </button>
-          <button class="tab" id="tab-nube" type="button" data-target="panel-nube" aria-controls="panel-nube" aria-selected="false">
+
+          <button class="tab" id="tab-nube" type="button"
+            data-target="panel-nube" aria-controls="panel-nube" aria-selected="false" role="tab" tabindex="-1">
             Nube
           </button>
-          <button class="tab" id="tab-productividad" type="button" data-target="panel-productividad" aria-controls="panel-productividad" aria-selected="false">
+
+          <button class="tab" id="tab-productividad" type="button"
+            data-target="panel-productividad" aria-controls="panel-productividad" aria-selected="false" role="tab" tabindex="-1">
             Productividad
           </button>
-        </nav>
-      </div>
-    </div>
+        </div>
+      </nav>
+    </header>
 
     <!-- =========================
          PANEL: CONTABLE
