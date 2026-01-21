@@ -310,5 +310,49 @@ html[data-theme="light"] .page-index #faq .faq-item p{color:rgba(11,18,32,.78)!i
 .page-index .reel-embed>*{position:relative;z-index:1;}
 
 
+/* =========================================================
+ Expiriti — INDEX FIX PACK (CSS) v2026.01.21
+ - Contraste kicker/labels/promos
+ - Arrows reels visibles en modo claro/oscuro
+ - Scroll vertical siempre (sin “amarres”)
+ - Swipe-friendly tracks (overflow + momentum)
+========================================================= */
+:root{--ix-ink:var(--text,#0b1220);--ix-ink2:var(--muted,#334155);--ix-oncard:color-mix(in srgb,var(--ix-ink) 92%,transparent);--ix-oncard2:color-mix(in srgb,var(--ix-ink2) 90%,transparent);--ix-line:color-mix(in srgb,var(--ix-ink) 18%,transparent);--ix-pill:color-mix(in srgb,var(--ix-ink) 8%,transparent);--ix-arrow-bg:color-mix(in srgb,#fff 92%,transparent);--ix-arrow-bd:color-mix(in srgb,var(--ix-ink) 22%,transparent);--ix-arrow-fg:color-mix(in srgb,var(--ix-ink) 88%,transparent)}
+html[data-theme="dark"]{--ix-ink:var(--text,#e8eef6);--ix-ink2:var(--muted,#94a3b8);--ix-line:color-mix(in srgb,var(--ix-ink) 14%,transparent);--ix-pill:color-mix(in srgb,var(--ix-ink) 10%,transparent);--ix-arrow-bg:color-mix(in srgb,#0b0f14 70%,transparent);--ix-arrow-bd:color-mix(in srgb,var(--ix-ink) 18%,transparent);--ix-arrow-fg:color-mix(in srgb,var(--ix-ink) 90%,transparent)}
+
+/* 1) Kicker (Implementación rápida...) visible */
+.page-index .hero .kicker{color:var(--ix-oncard2)!important;font-weight:600;letter-spacing:.2px;text-shadow:none}
+
+/* 2) Divider: una sola línea elegante */
+.page-index .section-divider{height:1px;background:var(--ix-line);margin:12px 0 14px;border-radius:999px}
+
+/* 3) Reels arrows: contraste real (incluye “servicios”) */
+.page-index .carousel .arrowCircle{background:var(--ix-arrow-bg)!important;border:1px solid var(--ix-arrow-bd)!important;color:var(--ix-arrow-fg)!important}
+.page-index .carousel .arrowCircle .chev{color:inherit!important;opacity:1!important}
+.page-index .carousel .arrowCircle.is-disabled{opacity:.45!important;filter:saturate(.6)}
+/* Si tu arrow usa ::before / svg */
+.page-index .carousel .arrowCircle svg,.page-index .carousel .arrowCircle::before{color:inherit!important;fill:currentColor!important}
+
+/* 4) Promos pills/badges (texto visible) */
+.page-index #promociones .promo-filters .promo-btn{color:var(--ix-oncard)!important}
+.page-index #promociones .promo-filters .promo-btn:not(.active){background:color-mix(in srgb,var(--ix-pill) 88%,transparent)!important;border:1px solid var(--ix-line)!important}
+.page-index #promociones .promo-filters .promo-btn.active{color:var(--ix-oncard)!important;border-color:color-mix(in srgb,var(--ix-ink) 28%,transparent)!important}
+
+/* 5) Contacto: tipografía consistente + labels bold + contraste */
+.page-index #contacto .section-h2{color:var(--ix-oncard)!important;font-weight:800;letter-spacing:-.02em}
+.page-index #contacto .lead{color:var(--ix-oncard2)!important}
+.page-index #contactForm label{display:block;margin:.55rem 0 .25rem;color:var(--ix-oncard)!important;font-weight:800!important;letter-spacing:.1px}
+.page-index #contactForm input,.page-index #contactForm select,.page-index #contactForm textarea{color:var(--ix-oncard)!important}
+.page-index #contactForm input::placeholder,.page-index #contactForm textarea::placeholder{color:color-mix(in srgb,var(--ix-oncard2) 85%,transparent)!important;opacity:1}
+
+/* 6) Scroll vertical SIEMPRE: evita locks por contenedores */
+html,body{overflow-x:hidden}
+.page-index{overflow-x:hidden}
+.page-index .prod-tabs,.page-index .hero-gallery-groups,.page-index #promociones .promo-filters{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.page-index .prod-tabs::-webkit-scrollbar,.page-index .hero-gallery-groups::-webkit-scrollbar,.page-index #promociones .promo-filters::-webkit-scrollbar{display:none}
+/* tracks swipe-friendly */
+.page-index .carousel .carousel-track{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;touch-action:pan-y}
+.page-index .carousel .carousel-slide{scroll-snap-align:start}
+
 
 
