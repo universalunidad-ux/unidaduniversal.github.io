@@ -374,14 +374,6 @@ html[data-theme="light"] .page-index .hint,html[data-theme="light"] .page-index 
 .page-index{--ttl-fs:clamp(1.25rem,1.05rem + .9vw,1.85rem);--ttl-lh:1.14;--ttl-fw:950}
 .page-index .section-title h2,.page-index .prod-title,.page-index h2.section-h2{font-size:var(--ttl-fs)!important;line-height:var(--ttl-lh)!important;font-weight:var(--ttl-fw)!important;letter-spacing:.1px}
 
-/* ========== 3) SISTEMAS: tabs debajo del título y debajo de línea ========== */
-.page-index .productos-inline-bar{display:block!important;margin:0 0 12px}
-.page-index .prod-tabs-shell{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;min-width:0}
-.page-index .prod-title{margin:0!important;padding:0 0 10px!important}
-.page-index .prod-title span{color:inherit!important;opacity:.75}
-.page-index .prod-title:after{content:"";display:block;height:1px;margin-top:12px;background:var(--ix-line)}
-html[data-theme="light"] .page-index .prod-title:after{background:var(--ix-lineL)}
-.page-index .prod-tabs{margin:10px 0 0!important;padding:8px 12px!important;border-radius:999px!important;align-self:flex-start!important}
 
 /* ========== 4) SISTEMAS: tabs/pills activos NO invisibles (dark/light) ========== */
 .page-index .prod-tabs .tab{color:var(--ix-pilltxt)!important;background:var(--ix-pillbg)!important;border:1px solid rgba(255,255,255,.14)!important}
@@ -427,3 +419,49 @@ html[data-theme="light"] .page-index .faq-item p{color:var(--ix-ink2L)!important
 .page-index #contacto .badge{color:var(--ix-ink)!important;background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.12)!important}
 html[data-theme="light"] .page-index #contacto .badge{color:var(--ix-inkL)!important;background:rgba(2,6,23,.05)!important;border:1px solid rgba(2,6,23,.10)!important}
 
+
+
+
+/* Expiriti — INDEX PATCH (CONTRASTE + SISTEMAS BAR + FAQ + PROMOS + SERVICIOS) v2026.01.20c */
+.page-index{--ix-line:rgba(255,255,255,.12);--ix-lineL:rgba(2,6,23,.12);--ix-ink:rgba(232,238,246,.96);--ix-ink2:rgba(232,238,246,.82);--ix-inkL:rgba(11,18,32,.92);--ix-ink2L:rgba(11,18,32,.74);--ix-pill-bg:rgba(7,10,18,.35);--ix-pill-bd:rgba(255,255,255,.12);--ix-pill-ink:rgba(232,238,246,.92);--ix-pillA-bg:rgba(96,165,250,.18);--ix-pillA-bd:rgba(96,165,250,.55);--ix-pillA-ink:rgba(232,238,246,.96);--ix-pill-bgL:rgba(255,255,255,.72);--ix-pill-bdL:rgba(2,6,23,.12);--ix-pill-inkL:rgba(11,18,32,.92);--ix-pillA-bgL:rgba(45,212,191,.18);--ix-pillA-bdL:rgba(45,212,191,.55);--ix-pillA-inkL:rgba(11,18,32,.94)}
+
+/* 1) HERO kicker legible en light/dark (Implementación rápida · Soporte cercano) */
+.page-index .kicker{color:var(--ix-ink)!important;background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.10)!important}
+html[data-theme="light"] .page-index .kicker{color:var(--ix-inkL)!important;background:rgba(255,255,255,.80)!important;border:1px solid rgba(2,6,23,.12)!important}
+
+/* 2) SISTEMAS: línea arriba; abajo título+tabs; sin aire; tabs pegados al grid */
+.page-index #productos-con .productos-inline-bar{display:block!important;margin:0 0 10px!important;padding:0 0 8px!important;border-top:1px solid var(--ix-line)!important}
+html[data-theme="light"] .page-index #productos-con .productos-inline-bar{border-top-color:var(--ix-lineL)!important}
+.page-index #productos-con .prod-tabs-shell{display:block!important}
+.page-index #productos-con .prod-title{margin:10px 0 8px!important;padding:0!important}
+.page-index #productos-con .prod-title:after{content:none!important}
+.page-index #productos-con .prod-tabs{margin:0!important;padding:8px 10px!important;gap:10px!important;align-self:flex-start!important;border-radius:999px!important}
+
+/* 3) TABS (Sistemas) contraste: base + active (evita texto invisible) */
+.page-index #productos-con .prod-tabs .tab{color:var(--ix-pill-ink)!important;background:var(--ix-pill-bg)!important;border:1px solid var(--ix-pill-bd)!important}
+.page-index #productos-con .prod-tabs .tab.active{color:var(--ix-pillA-ink)!important;background:var(--ix-pillA-bg)!important;border-color:var(--ix-pillA-bd)!important;box-shadow:0 0 0 2px rgba(96,165,250,.28)!important}
+html[data-theme="light"] .page-index #productos-con .prod-tabs .tab{color:var(--ix-pill-inkL)!important;background:var(--ix-pill-bgL)!important;border-color:var(--ix-pill-bdL)!important}
+html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active{color:var(--ix-pillA-inkL)!important;background:var(--ix-pillA-bgL)!important;border-color:var(--ix-pillA-bdL)!important;box-shadow:0 0 0 2px rgba(45,212,191,.22)!important}
+
+/* 4) PROMOS pills visibles en light/dark */
+.page-index #promociones .promo-btn{color:var(--ix-ink)!important;background:rgba(255,255,255,.03)!important;border:1px solid rgba(255,255,255,.10)!important}
+.page-index #promociones .promo-btn.active{background:rgba(45,212,191,.14)!important;border-color:rgba(45,212,191,.45)!important;color:var(--ix-ink)!important}
+html[data-theme="light"] .page-index #promociones .promo-btn{color:var(--ix-inkL)!important;background:rgba(255,255,255,.78)!important;border-color:rgba(2,6,23,.12)!important}
+html[data-theme="light"] .page-index #promociones .promo-btn.active{background:rgba(45,212,191,.18)!important;border-color:rgba(45,212,191,.55)!important;color:var(--ix-inkL)!important}
+
+/* 5) FAQ contraste: preguntas (summary) y respuestas (p) en light/dark */
+.page-index #faq .faq-item summary{color:var(--ix-ink)!important}
+.page-index #faq .faq-item p{color:var(--ix-ink2)!important}
+html[data-theme="light"] .page-index #faq .faq-item summary{color:var(--ix-inkL)!important}
+html[data-theme="light"] .page-index #faq .faq-item p{color:var(--ix-ink2L)!important}
+
+/* 6) SERVICIOS: elimina colisión .body (usa .svc-desc) + asegura legibilidad */
+.page-index #servicios .svc-desc{margin:10px 0 0!important;padding:0!important;color:var(--ix-ink2)!important;line-height:1.35}
+html[data-theme="light"] .page-index #servicios .svc-desc{color:var(--ix-ink2L)!important}
+.page-index #servicios .card.product-card h3{color:var(--ix-ink)!important}
+html[data-theme="light"] .page-index #servicios .card.product-card h3{color:var(--ix-inkL)!important}
+
+/* 7) “Full device height” (sin romper layout): hero/productos/servicios */
+.page-index .hero.section-full{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))!important}
+.page-index #productos-con.section-full,.page-index #servicios.section-full{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))!important}
+@media(min-width:980px){.page-index .hero.section-full{min-height:calc(100dvh - var(--ghh))!important}.page-index #productos-con.section-full,.page-index #servicios.section-full{min-height:calc(100dvh - var(--ghh))!important}}
