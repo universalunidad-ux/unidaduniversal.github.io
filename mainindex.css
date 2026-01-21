@@ -366,4 +366,32 @@ html[data-theme="light"] .page-index .reel-sys-tabs .reel-tab.active{background:
 .page-index #contacto .section-h2{margin:0 0 10px!important;font-size:var(--ttl-fs)!important;line-height:var(--ttl-lh)!important;font-weight:var(--ttl-fw)!important;letter-spacing:.1px!important;display:inline-block;background-image:var(--grad-exp)!important;background-repeat:no-repeat;background-size:100% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 @supports not (-webkit-background-clip:text){.page-index #contacto .section-h2{background:none!important;-webkit-text-fill-color:initial;color:inherit}}
 
+/* Expiriti — INDEX PATCH (SCROLL DOWN ALWAYS + SWIPE WHEN DEBE) v2026.01.21f */
+html,body{overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+.page-index, .page-index main{overflow:visible!important}
+@media(max-width:980px){
+  /* 1) NO “pantalla fija” en HERO (eso bloquea scroll vertical dentro/desde la sección) */
+  .page-index .hero-gallery-card{height:auto!important;min-height:0!important;overflow:visible!important}
+  .page-index .hero-gallery-card .body{min-height:0!important;overflow:visible!important}
+  .page-index #heroGalleryCarousel{touch-action:auto!important}
+
+  /* 2) Pistas horizontales: deja que el navegador decida (vertical siempre disponible) */
+  .page-index .carousel[id^="carouselReels"] .carousel-track,
+  .page-index #heroGalleryCarousel .carousel-track,
+  .page-index .cards-services.is-carousel,
+  .page-index .prod-tabs,
+  .page-index .hero-gallery-groups,
+  .page-index #promociones .promo-filters{
+    touch-action:auto!important;
+    overscroll-behavior-x:contain;
+    overscroll-behavior-y:auto;
+    -webkit-overflow-scrolling:touch
+  }
+
+  /* 3) Evita “locks” por overlays/containers */
+  .page-index .carousel[id^="carouselReels"],
+  .page-index #heroGalleryCarousel{overflow:visible!important}
+  .page-index .carousel[id^="carouselReels"] .carousel-slide{overflow:visible!important}
+}
+
 
