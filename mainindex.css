@@ -204,83 +204,6 @@ html[data-theme="light"] .page-index .carousel .carousel-nav .dot,html[data-them
 html[data-theme="light"] .page-index .carousel .carousel-nav .dot.active,html[data-theme="light"] .page-index #heroGalleryCarousel .carousel-nav .dot.active{background:rgba(45,212,191,.95)!important;border-color:rgba(45,212,191,.95)!important}
 
 
-/* =========================================================
- Expiriti — INDEX PATCH (REELS + CONTRASTE + RADIUS) v2026.01.20b
- REQ: theme.css + mainindex.canon.css | SCOPE: body.page-index
- Objetivo:
- - Reels: 1 solo “owner” visual (textos legibles en light/dark)
- - Reel vertical: thumb ocupa 100% alto/ancho del 9:16 (cover)
- - Blur: SI existe capa blur, queda CONFINADA dentro del marco
- - Rectángulos: más redondeados (consistente)
-========================================================= */
-.page-index{--ix-r:16px;--ix-r-lg:20px;--ix-r-embed:22px;--ix-ink:rgba(232,238,246,.96);--ix-ink2:rgba(232,238,246,.82);--ix-inkL:rgba(11,18,32,.92);--ix-ink2L:rgba(11,18,32,.74)}
-/* === 1) Redondeo global “rectángulos” (index only) === */
-.page-index .card,
-.page-index .carousel,
-.page-index .promo-item,
-.page-index .map-embed,
-.page-index .prod-cta-bottom .cta-big,
-.page-index .svc-link,
-.page-index .hero-tab,
-.page-index .reel-tab{border-radius:var(--ix-r-lg)!important;overflow:hidden}
-.page-index .card .body,
-.page-index .card.body{border-radius:inherit}
-.page-index .carousel{border-radius:var(--ix-r-lg)!important}
-.page-index .carousel .carousel-nav{border-radius:999px!important}
-
-/* === 2) Reels: textos SIEMPRE legibles en dark === */
-.page-index .reels-home-card .title-gradient,
-.page-index .reels-home-card .hero-gallery-header h2,
-.page-index .reels-home-card h2,
-.page-index #reelTitle-sistemas,
-.page-index #reelTitle-servicios{color:var(--ix-ink)!important;-webkit-text-fill-color:initial!important}
-.page-index .reels-home-card p,
-.page-index .reels-home-card .hint,
-.page-index .reels-home-card .muted{color:var(--ix-ink2)!important;opacity:1!important}
-
-/* === 3) Reels: textos legibles en LIGHT (sin pelearte con gradient text) === */
-html[data-theme="light"] .page-index .reels-home-card .title-gradient,
-html[data-theme="light"] .page-index .reels-home-card .hero-gallery-header h2,
-html[data-theme="light"] .page-index .reels-home-card h2,
-html[data-theme="light"] .page-index #reelTitle-sistemas,
-html[data-theme="light"] .page-index #reelTitle-servicios{color:var(--ix-inkL)!important;-webkit-text-fill-color:initial!important}
-html[data-theme="light"] .page-index .reels-home-card p,
-html[data-theme="light"] .page-index .reels-home-card .hint,
-html[data-theme="light"] .page-index .reels-home-card .muted{color:var(--ix-ink2L)!important;opacity:1!important}
-
-/* === 4) Reel vertical: marco 9:16 “pro” + thumb ocupa TODO (cover) === */
-.page-index .reel-embed{border-radius:var(--ix-r-embed)!important;overflow:hidden!important;position:relative!important;isolation:isolate;background:#050812}
-/* iframe full */
-.page-index .reel-embed iframe{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;border:0!important;display:block!important}
-/* thumb wrappers (cubre variantes comunes) */
-.page-index .reel-embed .yt-thumb,
-.page-index .reel-embed .thumb,
-.page-index .reel-embed .reel-thumb,
-.page-index .reel-embed [data-thumb]{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important}
-/* thumb media: COVER para llenar 9:16 */
-.page-index .reel-embed img,
-.page-index .reel-embed video{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;display:block!important}
-
-/* === 5) Blur CONFINADO dentro del rectángulo (si tu HTML trae capa blur) ===
-   Soporta nombres típicos: .blur / .thumb-blur / .yt-blur / .bg-blur */
-.page-index .reel-embed .blur,
-.page-index .reel-embed .thumb-blur,
-.page-index .reel-embed .yt-blur,
-.page-index .reel-embed .bg-blur{position:absolute!important;inset:-18px!important;border-radius:inherit!important;overflow:hidden!important;filter:blur(18px)!important;transform:scale(1.08)!important;opacity:.55!important;pointer-events:none!important;z-index:0!important}
-.page-index .reel-embed>*{position:relative;z-index:1}
-
-/* === 6) Tabs de reels: evita “lavado” en light/dark === */
-.page-index .reel-tab{background:rgba(255,255,255,.02)!important;border:1px solid rgba(255,255,255,.10)!important}
-.page-index .reel-tab span{color:rgba(232,238,246,.92)!important}
-.page-index .reel-tab.active{background:rgba(96,165,250,.12)!important;border-color:rgba(96,165,250,.45)!important}
-html[data-theme="light"] .page-index .reel-tab{background:rgba(255,255,255,.78)!important;border:1px solid rgba(2,6,23,.12)!important}
-html[data-theme="light"] .page-index .reel-tab span{color:rgba(11,18,32,.86)!important}
-html[data-theme="light"] .page-index .reel-tab.active{background:rgba(45,212,191,.14)!important;border-color:rgba(45,212,191,.55)!important}
-
-/* === 7) Seguridad: nada de blur fuera del frame por herencia === */
-.page-index .carousel[id^="carouselReels"] .carousel-slide{overflow:hidden!important}
-.page-index .carousel[id^="carouselReels"]{border-radius:var(--ix-r-lg)!important;overflow:hidden!important}
-
 
 /* =========================================================
  Expiriti — INDEX PATCH v2026.01.20c
@@ -471,3 +394,72 @@ html[data-theme="light"] .page-index #servicios .card.product-card h3{color:var(
 .page-index .hero.section-full{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))!important}
 .page-index #productos-con.section-full,.page-index #servicios.section-full{min-height:calc(100svh - var(--ghh) - env(safe-area-inset-top,0px))!important}
 @media(min-width:980px){.page-index .hero.section-full{min-height:calc(100dvh - var(--ghh))!important}.page-index #productos-con.section-full,.page-index #servicios.section-full{min-height:calc(100dvh - var(--ghh))!important}}
+
+
+/* ===== FIX CANON: PRODUCTOS (1 línea + título+pills debajo, sin aire) ===== */
+.page-index #productos-con .productos-inline-bar{
+  display:block!important;
+  margin:0 0 12px!important;
+  padding:12px 0 0!important;
+  border-top:1px solid var(--ix-line,rgba(255,255,255,.12))!important;
+}
+html[data-theme="light"] .page-index #productos-con .productos-inline-bar{
+  border-top-color:var(--ix-lineL,rgba(2,6,23,.12))!important;
+}
+
+/* mata el “2do separador” típico (tu regla vieja prod-title:after) */
+.page-index #productos-con .prod-title:after{content:none!important;display:none!important;}
+
+/* título en la última línea (debajo del separador) */
+.page-index #productos-con .prod-title{
+  margin:10px 0 8px!important;
+  padding:0!important;
+}
+
+/* pills inmediatamente debajo del título, sin empujar el grid */
+.page-index #productos-con .prod-tabs{
+  margin:0 0 10px!important;
+  padding:8px 12px!important;
+  border-radius:999px!important;
+  align-self:flex-start!important;
+}
+
+/* opcional: reduce aire antes del grid si algún style mete margen extra */
+.page-index #productos-con .cards-products{margin-top:0!important;}
+
+/* ===== CANON: Tabs de PRODUCTOS legibles en dark/light ===== */
+.page-index #productos-con .prod-tabs .tab{
+  color:var(--ix-pilltxt,rgba(232,238,246,.92))!important;
+  background:var(--ix-pillbg,rgba(7,10,18,.35))!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+}
+.page-index #productos-con .prod-tabs .tab.active{
+  background:var(--ix-pillactbg,rgba(96,165,250,.12))!important;
+  border-color:var(--ix-pillactbd,rgba(96,165,250,.55))!important;
+  box-shadow:0 0 0 2px rgba(96,165,250,.28)!important;
+}
+
+html[data-theme="light"] .page-index #productos-con .prod-tabs .tab{
+  color:var(--ix-pilltxtL,rgba(11,18,32,.90))!important;
+  background:var(--ix-pillbgL,rgba(255,255,255,.78))!important;
+  border:1px solid rgba(2,6,23,.12)!important;
+}
+html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active{
+  background:var(--ix-pillactbgL,rgba(45,212,191,.14))!important;
+  border-color:var(--ix-pillactbdL,rgba(45,212,191,.55))!important;
+  box-shadow:0 0 0 2px rgba(45,212,191,.22)!important;
+}
+
+/* ===== CANON: FAQ legible en light/dark ===== */
+.page-index #faq .faq-item summary{color:rgba(232,238,246,.96)!important;}
+.page-index #faq .faq-item p{color:rgba(232,238,246,.82)!important;opacity:1!important;}
+
+html[data-theme="light"] .page-index #faq .faq-item summary{color:rgba(11,18,32,.94)!important;}
+html[data-theme="light"] .page-index #faq .faq-item p{color:rgba(11,18,32,.78)!important;opacity:1!important;}
+
+/* ===== CANON: Reel embed (cover + blur confinado) ===== */
+.page-index .reel-embed{position:relative;overflow:hidden!important;isolation:isolate;}
+.page-index .reel-embed img,
+.page-index .reel-embed video{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;display:block!important;}
+.page-index .reel-embed .blur{position:absolute!important;inset:-18px!important;border-radius:inherit!important;overflow:hidden!important;filter:blur(18px)!important;transform:scale(1.08)!important;opacity:.55!important;pointer-events:none!important;z-index:0!important;}
+.page-index .reel-embed>*{position:relative;z-index:1;}
