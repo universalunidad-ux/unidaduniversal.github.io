@@ -349,3 +349,81 @@ html[data-theme="light"] .page-index .hero-gallery-header h2{text-shadow:none}
 /* 5) Prevención de “corte” por overflow hidden en contenedores globales */
 .page-index main{overflow:visible}
 
+/* =========================================================
+ Expiriti — INDEX VISIBILITY + TABS + FAQ PATCH v2026.01.20d
+ SCOPE: body.page-index
+ FIX:
+ - Kicker/H1/lead visibles en light/dark
+ - "Sistemas CONTPAQi" = tamaño títulos de sección
+ - Tabs activos NO invisibles + tabs debajo de título y debajo de línea
+ - Promo pills visibles
+ - FAQ: respuestas (light) y preguntas (dark) visibles
+ - Servicios/Sectores/descr. cards visibles (dark+light)
+========================================================= */
+.page-index{--ix-ink:rgba(232,238,246,.96);--ix-ink2:rgba(232,238,246,.84);--ix-ink3:rgba(232,238,246,.72);--ix-inkL:rgba(11,18,32,.94);--ix-ink2L:rgba(11,18,32,.78);--ix-ink3L:rgba(11,18,32,.62);--ix-line:rgba(255,255,255,.12);--ix-lineL:rgba(2,6,23,.12);--ix-pillbg:rgba(7,10,18,.35);--ix-pillbgL:rgba(255,255,255,.78);--ix-pilltxt:rgba(232,238,246,.92);--ix-pilltxtL:rgba(11,18,32,.90);--ix-pillactbg:rgba(96,165,250,.12);--ix-pillactbgL:rgba(45,212,191,.14);--ix-pillactbd:rgba(96,165,250,.55);--ix-pillactbdL:rgba(45,212,191,.55)}
+
+/* ========== 1) HERO: Kicker + textos siempre visibles ========== */
+.page-index .kicker{color:var(--ix-ink)!important;background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.12)!important}
+.page-index .lead{color:var(--ix-ink2)!important}
+.page-index .hint,.page-index .muted{color:var(--ix-ink3)!important;opacity:1!important}
+html[data-theme="light"] .page-index .kicker{color:var(--ix-inkL)!important;background:rgba(2,6,23,.05)!important;border:1px solid rgba(2,6,23,.10)!important}
+html[data-theme="light"] .page-index .lead{color:var(--ix-ink2L)!important}
+html[data-theme="light"] .page-index .hint,html[data-theme="light"] .page-index .muted{color:var(--ix-ink3L)!important}
+
+/* ========== 2) TITULO "Sistemas CONTPAQi" = tamaño títulos secciones ========== */
+.page-index{--ttl-fs:clamp(1.25rem,1.05rem + .9vw,1.85rem);--ttl-lh:1.14;--ttl-fw:950}
+.page-index .section-title h2,.page-index .prod-title,.page-index h2.section-h2{font-size:var(--ttl-fs)!important;line-height:var(--ttl-lh)!important;font-weight:var(--ttl-fw)!important;letter-spacing:.1px}
+
+/* ========== 3) SISTEMAS: tabs debajo del título y debajo de línea ========== */
+.page-index .productos-inline-bar{display:block!important;margin:0 0 12px}
+.page-index .prod-tabs-shell{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;min-width:0}
+.page-index .prod-title{margin:0!important;padding:0 0 10px!important}
+.page-index .prod-title span{color:inherit!important;opacity:.75}
+.page-index .prod-title:after{content:"";display:block;height:1px;margin-top:12px;background:var(--ix-line)}
+html[data-theme="light"] .page-index .prod-title:after{background:var(--ix-lineL)}
+.page-index .prod-tabs{margin:10px 0 0!important;padding:8px 12px!important;border-radius:999px!important;align-self:flex-start!important}
+
+/* ========== 4) SISTEMAS: tabs/pills activos NO invisibles (dark/light) ========== */
+.page-index .prod-tabs .tab{color:var(--ix-pilltxt)!important;background:var(--ix-pillbg)!important;border:1px solid rgba(255,255,255,.14)!important}
+.page-index .prod-tabs .tab.active{color:var(--ix-pilltxt)!important;background:var(--ix-pillactbg)!important;border-color:var(--ix-pillactbd)!important;box-shadow:0 0 0 2px rgba(96,165,250,.35),inset 0 1px 0 rgba(255,255,255,.10)!important}
+html[data-theme="light"] .page-index .prod-tabs .tab{color:var(--ix-pilltxtL)!important;background:var(--ix-pillbgL)!important;border:1px solid rgba(2,6,23,.12)!important}
+html[data-theme="light"] .page-index .prod-tabs .tab.active{color:var(--ix-pilltxtL)!important;background:var(--ix-pillactbgL)!important;border-color:var(--ix-pillactbdL)!important;box-shadow:0 0 0 2px rgba(45,212,191,.25),inset 0 1px 0 rgba(255,255,255,.40)!important}
+
+/* ========== 5) DESCRIPCIONES en cards de sistemas (2x2) visibles ========== */
+.page-index .cards-products p{color:var(--ix-ink2)!important}
+html[data-theme="light"] .page-index .cards-products p{color:var(--ix-ink2L)!important}
+
+/* ========== 6) SERVICIOS: títulos + texto + chips visibles (evita colisión p.body) ========== */
+.page-index .cards-services .product-card h3{color:var(--ix-ink)!important;margin:0 0 8px!important;display:flex;gap:10px;align-items:center}
+.page-index .cards-services .product-card p, 
+.page-index .cards-services .product-card p.body{color:var(--ix-ink2)!important;margin:0 0 10px!important}
+.page-index .cards-services .chip{color:var(--ix-ink)!important;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);border-radius:999px;padding:8px 12px;display:inline-flex}
+html[data-theme="light"] .page-index .cards-services .product-card h3{color:var(--ix-inkL)!important}
+html[data-theme="light"] .page-index .cards-services .product-card p,
+html[data-theme="light"] .page-index .cards-services .product-card p.body{color:var(--ix-ink2L)!important}
+html[data-theme="light"] .page-index .cards-services .chip{color:var(--ix-inkL)!important;border:1px solid rgba(2,6,23,.12);background:rgba(2,6,23,.04)}
+
+/* ========== 7) SECTORES: visibles en dark/light ========== */
+.page-index #sectores .card h3{color:var(--ix-ink)!important}
+.page-index #sectores .features li{color:var(--ix-ink2)!important}
+html[data-theme="light"] .page-index #sectores .card h3{color:var(--ix-inkL)!important}
+html[data-theme="light"] .page-index #sectores .features li{color:var(--ix-ink2L)!important}
+
+/* ========== 8) PROMOCIONES: pills visibles en light/dark ========== */
+.page-index .promo-btn{color:var(--ix-pilltxt)!important;background:rgba(255,255,255,.04)!important;border:1px solid rgba(255,255,255,.14)!important}
+.page-index .promo-btn.active{color:var(--ix-pilltxt)!important;background:rgba(45,212,191,.14)!important;border-color:rgba(45,212,191,.55)!important}
+html[data-theme="light"] .page-index .promo-btn{color:var(--ix-pilltxtL)!important;background:rgba(255,255,255,.85)!important;border:1px solid rgba(2,6,23,.12)!important}
+html[data-theme="light"] .page-index .promo-btn.active{color:var(--ix-pilltxtL)!important;background:rgba(45,212,191,.16)!important;border-color:rgba(45,212,191,.55)!important}
+
+/* ========== 9) FAQ: preguntas visibles en dark + respuestas visibles en light ========== */
+.page-index .faq-item{background:rgba(255,255,255,.03)!important;border:1px solid rgba(255,255,255,.12)!important}
+.page-index .faq-item summary{color:var(--ix-ink)!important}
+.page-index .faq-item p{color:var(--ix-ink2)!important}
+html[data-theme="light"] .page-index .faq-item{background:rgba(255,255,255,.88)!important;border:1px solid rgba(2,6,23,.10)!important}
+html[data-theme="light"] .page-index .faq-item summary{color:var(--ix-inkL)!important}
+html[data-theme="light"] .page-index .faq-item p{color:var(--ix-ink2L)!important}
+
+/* ========== 10) CONTACTO: badges visibles en dark/light (por si se lavan) ========== */
+.page-index #contacto .badge{color:var(--ix-ink)!important;background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.12)!important}
+html[data-theme="light"] .page-index #contacto .badge{color:var(--ix-inkL)!important;background:rgba(2,6,23,.05)!important;border:1px solid rgba(2,6,23,.10)!important}
+
