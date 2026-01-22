@@ -97,3 +97,28 @@ on(window,"pageshow",()=>{safe(()=>normalizeRoutes(document));safe(bindWheelOnTa
  Expiriti — INDEX FIX PACK (JS) v2026.01.21 Swipe real (pointer + touch fallback) Nunca bloquear scroll vertical salvo gesto horizontal claro
 ========================================================= */
 (()=>{"use strict";if(window.__EXPIRITI_SWIPE_FIX_20260121__)return;window.__EXPIRITI_SWIPE_FIX_20260121__=1;const e=(t,n,o)=>Math.max(n,Math.min(o,t));function i(t){if(!t||t.__ixSwipe21)return;t.__ixSwipe21=1,t.style.touchAction="pan-y";let n=!1,o=0,r=0,c=0,a=0;const d=10,s=1.15;function u(e,i){n=!0,a=0,o=e,r=i,c=t.scrollLeft}function l(i,l,f){if(!n)return;const h=i-o,p=l-r;if(0===a){if(Math.abs(h)<d&&Math.abs(p)<d)return;a=Math.abs(h)>Math.abs(p)*s?1:-1}if(1===a){f&&f.cancelable&&f.preventDefault();const n=Math.max(0,t.scrollWidth-t.clientWidth);t.scrollLeft=e(c-h,0,n)}}function f(){n=!1,a=0}t.addEventListener("pointerdown",(e=>{u(e.clientX,e.clientY);try{t.setPointerCapture(e.pointerId)}catch(e){}}),{passive:!0}),t.addEventListener("pointermove",(e=>l(e.clientX,e.clientY,e)),{passive:!1}),t.addEventListener("pointerup",(e=>{f();try{t.releasePointerCapture(e.pointerId)}catch(e){}}),{passive:!0}),t.addEventListener("pointercancel",f,{passive:!0}),t.addEventListener("touchstart",(e=>{const i=e.touches&&e.touches[0];i&&u(i.clientX,i.clientY)}),{passive:!0}),t.addEventListener("touchmove",(e=>{const i=e.touches&&e.touches[0];i&&l(i.clientX,i.clientY,e)}),{passive:!1}),t.addEventListener("touchend",f,{passive:!0}),t.addEventListener("touchcancel",f,{passive:!0})}function n(){const e=document.getElementById("heroGalleryCarousel");e&&i(e.querySelector(".carousel-track")),document.querySelectorAll(".carousel[id^='carouselReels-'] .carousel-track").forEach(i)}"loading"===document.readyState?document.addEventListener("DOMContentLoaded",n,{once:!0}):n(),window.addEventListener("pageshow",n,{passive:!0})})();
+
+
+
+/* =========================================================
+ Expiriti — PATCH v2026.01.22 (JS)
+ OBJ: “Kill-switch” de interceptores de swipe (pointer/touch) en tracks
+      => el navegador maneja pan-y vs pan-x nativo (UX estándar)
+ NOTA: esto evita la situación “no hace nada” en diagonales.
+========================================================= */
+(()=>{"use strict";if(window.__EXPIRITI_GESTURE_NATIVE__)return;window.__EXPIRITI_GESTURE_NATIVE__=1;
+const SEL=".page-index .carousel-track,.page-index #heroGalleryCarousel .carousel-track";
+function killInterceptors(el){
+  if(!el||el.dataset.nativeGestures==="1")return;el.dataset.nativeGestures="1";
+  const stop=e=>{try{e.stopImmediatePropagation()}catch(_){try{e.stopPropagation()}catch(__){}}};
+  /* Captura: bloquea handlers anteriores (normalmente en burbuja) sin tocar el default scroll */
+  ["pointerdown","pointermove","pointerup","pointercancel","touchstart","touchmove","touchend","touchcancel"].forEach(ev=>{
+    el.addEventListener(ev,stop,{capture:true,passive:true});
+  });
+  /* Asegura que CSS no limite el gesto */
+  el.style.touchAction="auto";
+}
+function init(){document.querySelectorAll(SEL).forEach(killInterceptors)}
+document.readyState==="loading"?document.addEventListener("DOMContentLoaded",init,{once:true}):init();
+window.addEventListener("pageshow",init,{passive:true});
+})();
