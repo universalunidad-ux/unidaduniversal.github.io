@@ -406,4 +406,48 @@ html,body{overflow-x:hidden;overscroll-behavior-y:auto}.page-index{overflow-x:hi
 /* Evita que reglas viejas “maten” el scroll por fixed/sticky raros */
 @media(max-width:980px){.page-index main [style*="position:fixed"],.page-index main [style*="position: fixed"],.page-index main [style*="position:sticky"],.page-index main [style*="position: sticky"]{position:static!important}}
 
+/* =========================================================
+ Expiriti — PATCH v2026.01.22 (CSS)
+ OBJ: 1) Scroll down SIEMPRE en mobile (aunque empieces gesto sobre tabs/chips/filtros)
+      2) Swipe horizontal NATIVO (sin locks) en overflow-x
+      3) Hero desktop 2 columnas, full-viewport
+========================================================= */
+
+/* [A] Regla base: nunca mates el scroll vertical del documento */
+html,body{overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+
+/* [B] Zonas horizontales: DEJA QUE EL NAVEGADOR DECIDA (auto) */
+.page-index .prod-tabs,
+.page-index .hero-gallery-groups,
+.page-index .promo-filters,
+.page-index .cards-services.is-carousel,
+.page-index .carousel-track,
+.page-index #heroGalleryCarousel .carousel-track{
+  touch-action:auto!important; /* clave: NO pan-x aquí */
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+  overscroll-behavior-y:auto;
+}
+
+/* [C] Evita “overlays” que capturen el touch fuera de su caja */
+.page-index .carousel,
+.page-index #heroGalleryCarousel{overflow:visible!important}
+
+/* [D] HERO: móvil NO debe “encerrar” la página (sin height fija ni overflow hidden) */
+@media(max-width:980px){
+  .page-index .hero-gallery-card{height:auto!important;min-height:0!important;overflow:visible!important}
+  .page-index .hero-gallery-card .body{overflow:visible!important}
+}
+
+/* [E] HERO: desktop split 2 columnas, full viewport (sin desparramarse) */
+@media(min-width:981px){
+  .page-index .ix-hero{min-height:calc(100dvh - var(--gh-height,68px));display:grid;grid-template-columns:1fr 1.15fr;gap:16px;align-items:stretch}
+  .page-index .ix-hero>.ix-hero-copy{display:flex;flex-direction:column;justify-content:center;min-width:0}
+  .page-index .ix-hero>.ix-hero-gallery{min-width:0;display:flex}
+  .page-index .ix-hero>.ix-hero-gallery .hero-gallery-card{height:100%!important;overflow:hidden!important} /* aquí sí, para que “quepa” */
+  .page-index .ix-hero>.ix-hero-gallery .hero-gallery-card .body{height:100%!important;overflow:hidden!important}
+  .page-index .ix-hero>.ix-hero-gallery #heroGalleryCarousel .carousel-track{height:100%!important;min-height:340px}
+}
+
 
