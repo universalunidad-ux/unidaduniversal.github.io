@@ -478,3 +478,51 @@ html,body{overflow-x:hidden!important;overflow-y:auto!important;-webkit-overflow
   .page-index #heroGalleryCarousel .hero-slide img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important}
 }
 
+/* Expiriti — PATCH UI/UX (HERO + 2COL ALIGN) v2026.01.22g
+   OBJ: 1) Hero gallery sin “aire” + pills modernos
+        2) Sistemas/Servicios: 2 columnas alineadas arriba (izq contenido, der reels)
+        3) Panel visual integrado detrás (sin cambiar HTML) */
+.page-index .hero.section-full{padding-top:20px;padding-bottom:22px}
+@media(max-width:980px){.page-index .hero.section-full{padding-top:16px;padding-bottom:18px}}
+
+/* 1) HERO GALLERY: compactar header + chips */
+.page-index .hero-gallery-header{padding:8px 14px!important}
+.page-index .hero-gallery-header h2{margin:0!important;line-height:1.12!important;letter-spacing:-.01em!important}
+.page-index .hero-gallery-groups{margin:6px 0 10px!important;padding:6px 10px 2px!important;gap:10px!important}
+@media(max-width:520px){.page-index .hero-gallery-groups{margin:6px 0 8px!important;padding:6px 10px 0!important;gap:8px!important}}
+.page-index .hero-group-tab{min-height:40px!important;padding:9px 12px!important;border-radius:999px!important;border:1px solid color-mix(in srgb,var(--ix-line,rgba(255,255,255,.12)) 100%,transparent)!important;background:color-mix(in srgb,var(--ix-pill,rgba(255,255,255,.06)) 92%,transparent)!important;color:color-mix(in srgb,var(--ix-oncard,rgba(232,238,246,.92)) 95%,transparent)!important;font-weight:900!important;letter-spacing:.1px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 18px rgba(0,0,0,.08)!important;transition:transform .12s ease,background .12s ease,border-color .12s ease,box-shadow .12s ease}
+.page-index .hero-group-tab:active{transform:translateY(1px)!important}
+@media(hover:hover){.page-index .hero-group-tab:hover{background:color-mix(in srgb,var(--ix-pill,rgba(255,255,255,.06)) 100%,transparent)!important;border-color:color-mix(in srgb,var(--ix-line,rgba(255,255,255,.12)) 120%,transparent)!important}}
+/* Soporta estados activos típicos (JS puede usar .active o aria-selected) */
+.page-index .hero-group-tab.active,
+.page-index .hero-group-tab[aria-selected="true"]{background:color-mix(in srgb,var(--brand,rgba(45,212,191,1)) 14%,transparent)!important;border-color:color-mix(in srgb,var(--brand,rgba(45,212,191,1)) 36%,transparent)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--brand,rgba(45,212,191,1)) 22%,transparent),inset 0 1px 0 rgba(255,255,255,.10),0 14px 26px rgba(0,0,0,.10)!important}
+
+/* 2) PRODUCTOS/SERVICIOS: quita “sensación de estar arriba” (espaciado más cerrado) */
+.page-index #productos-con .section-divider{margin:10px 0 12px!important}
+.page-index #productos-con .productos-inline-bar{margin:0 0 10px!important;padding:6px 0 0!important}
+.page-index #productos-con .prod-title{margin:6px 0 8px!important}
+.page-index #productos-con .prod-tabs{margin:0 0 10px!important}
+
+/* 3) ALIGN TOP REAL en 2 columnas (evita que v-center suba/baje) */
+.page-index #productos-con .grid-2,
+.page-index #servicios .container.grid-2{align-items:start!important}
+
+/* 4) Panel visual integrado detrás de las 2 columnas (sin tocar HTML) */
+.page-index #productos-con .section-cq,
+.page-index #servicios .container.grid-2{position:relative}
+.page-index #productos-con .section-cq>*,
+.page-index #servicios .container.grid-2>*{position:relative;z-index:1}
+.page-index #productos-con .section-cq:before,
+.page-index #servicios .container.grid-2:before{content:"";position:absolute;inset:-10px;z-index:0;border-radius:var(--r-18,var(--radius-lg,18px));background:radial-gradient(900px 520px at 0% 0%,rgba(45,212,191,.08),transparent 60%),radial-gradient(900px 520px at 100% 0%,rgba(96,165,250,.07),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid color-mix(in srgb,var(--ix-line,rgba(255,255,255,.12)) 100%,transparent);box-shadow:0 18px 50px rgba(0,0,0,.10)}
+@media(max-width:980px){.page-index #productos-con .section-cq:before,.page-index #servicios .container.grid-2:before{inset:-8px}}
+@media(max-width:520px){.page-index #productos-con .section-cq:before,.page-index #servicios .container.grid-2:before{inset:-6px}}
+
+/* 5) Reels card “menos separado” visualmente (sin cambiar tu card base): ajusta respiración interna */
+.page-index #productos-con .reels-home-card .body,
+.page-index #servicios .reels-home-card .body{padding-top:14px!important}
+.page-index #productos-con .reels-home-card .reel-title,
+.page-index #servicios .reels-home-card .reel-title{margin:0 0 8px!important}
+
+/* 6) Light mode: panel integrado no “gris sucio” */
+html[data-theme="light"] .page-index #productos-con .section-cq:before,
+html[data-theme="light"] .page-index #servicios .container.grid-2:before{background:radial-gradient(900px 520px at 0% 0%,rgba(45,212,191,.10),transparent 60%),radial-gradient(900px 520px at 100% 0%,rgba(96,165,250,.08),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.70));border:1px solid rgba(2,6,23,.10);box-shadow:0 18px 50px rgba(2,6,23,.08)}
