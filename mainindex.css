@@ -641,7 +641,21 @@ html[data-theme="light"] .page-index #servicios .container.grid-2:before{backgro
 .page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"] .svc-icon,.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"] .svc-icon{display:block;margin:0 auto 10px!important}
 .page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"] h3,.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"] h3{margin-left:auto!important;margin-right:auto!important}
 
-/* (C) BOTÓN AMARILLO: más “vivo” + texto legible (light/dark) */
-.page-index .btn-grad-yellow{border-color:rgba(250,204,21,.60)!important;background:linear-gradient(180deg,rgba(250,204,21,.60),rgba(255,255,255,.10))!important;color:#0b1220!important;font-weight:950!important}
-.page-index .btn-grad-yellow:hover{background:linear-gradient(180deg,rgba(250,204,21,.72),rgba(255,255,255,.14))!important}
-html[data-theme="dark"] .page-index .btn-grad-yellow{background:linear-gradient(180deg,rgba(250,204,21,.38),rgba(255,255,255,.06))!important;color:rgba(232,238,246,.98)!important}/* en dark, texto claro */
+
+
+
+/* OWNER ÚNICO btn amarillo */
+.page-index .btn-grad-yellow{
+  border:1px solid rgba(250,204,21,.55)!important;
+  background:linear-gradient(180deg,rgba(250,204,21,.92),rgba(250,204,21,.62))!important;
+  color:#0b1220!important;
+  font-weight:950!important;
+  box-shadow:0 10px 22px rgba(2,6,23,.10),inset 0 1px 0 rgba(255,255,255,.35)!important;
+  text-shadow:none!important;
+  filter:none!important;
+}
+.page-index .btn-grad-yellow:hover{
+  background:linear-gradient(180deg,rgba(250,204,21,.98),rgba(250,204,21,.70))!important;
+}
+html[data-theme="dark"] .page-index .btn-grad-yellow{color:rgba(232,238,246,.98)!important;}
+
