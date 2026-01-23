@@ -587,12 +587,29 @@ html[data-theme="light"] .page-index #servicios .container.grid-2:before{backgro
   .page-index .hero-group-tab{min-height:40px!important;padding:9px 12px!important}
 }
 
-/* [5] Servicios: quitar scroll interno “accidental” (si algún wrapper quedó con overflow/height) */
-.page-index #servicios,.page-index #servicios .container,.page-index #servicios .cards-services-wrap,.page-index #servicios .services-wrap{overflow:visible!important}
-.page-index #servicios .cards-services{overflow:visible!important;max-height:none!important}
 
-/* [6] Servicios: “Soporte técnico” ocupar 2x1 (desktop 2 columnas) */
+/* =========================================================
+ Expiriti — SERVICIOS PATCH v2026.01.22i
+ OBJ:
+ 1) “Soporte técnico” ocupa 2x1 en desktop (sin depender de orden)
+ 2) Quitar “scroll interno” de servicios (overflow/height accidentales)
+ 3) Evitar que el spacer cree aire raro en desktop
+========================================================= */
+
+/* [1] DESKTOP: grid real 2 columnas + soporte span completo */
 @media(min-width:981px){
-  .page-index #servicios .cards-services>article:last-child,
-  .page-index #servicios .cards-services>.card:last-child{grid-column:1/-1}
+  .page-index #servicios .cards-services{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}
+  .page-index #servicios .cards-services .svc-page{display:contents!important}
+  .page-index #servicios .cards-services .svc-spacer{display:none!important}
+  .page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1}
 }
+
+/* [2] MOBILE/TABLET: el carrusel se queda como está, pero sin scroll vertical interno */
+@media(max-width:980px){
+  .page-index #servicios .cards-services.is-carousel{overflow-x:auto!important;overflow-y:hidden!important;max-height:none!important}
+  .page-index #servicios .cards-services.is-carousel .svc-page{overflow:visible!important}
+}
+
+/* [3] “Scroll interno” global: si algún wrapper tenía height/overflow, lo neutralizamos */
+.page-index #servicios,.page-index #servicios .container,.page-index #servicios .cards-services-wrap,.page-index #servicios .services-wrap{overflow:visible!important;max-height:none!important}
+
