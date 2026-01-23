@@ -630,16 +630,8 @@ html[data-theme="light"] .page-index #servicios .container.grid-2:before{backgro
 @media(max-width:520px){.page-index .reel-tab{min-height:82px!important;padding:12px!important}.page-index .reel-tab img{height:46px!important}.page-index .reel-tab span{font-size:.82rem!important;line-height:1.12!important}}/* (2)(3) tipografía/tamaño estable */
 .page-index .reel-tab span{display:block!important;max-width:100%!important;white-space:normal!important;overflow:hidden!important;text-overflow:ellipsis!important}/* (3) texto no revienta el botón */
 
-/* Expiriti — FIX: Soporte 2x1 + Centro icon/título + Amarillo legible v2026.01.23 */
-
-/* (A) SERVICIOS: “Soporte técnico” span 2 columnas (evita hueco derecha) */
-.page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important}/* 2x1 en grid */
-@media(max-width:980px){.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important}}/* 2x1 también en páginas del carrusel (cuando son 2 cols) */
-
-/* (B) SERVICIOS: centrar icono + título (solo Soporte) sin romper otras cards */
-.page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"],.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"]{text-align:center!important}
-.page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"] .svc-icon,.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"] .svc-icon{display:block;margin:0 auto 10px!important}
-.page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"] h3,.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"] h3{margin-left:auto!important;margin-right:auto!important}
+/* SERVICIOS: SOPORTE 2x1 + centrado (MIN) */
+.page-index #servicios .cards-services{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}.page-index #servicios .cards-services .svc-spacer{display:none!important}@media(min-width:981px){.page-index #servicios .cards-services .svc-page{display:contents!important}}.page-index #servicios article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important;text-align:center!important}.page-index #servicios article[data-href="SERVICIOS/soporte.html"] h3{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important;text-align:center!important;margin-left:auto!important;margin-right:auto!important}.page-index #servicios article[data-href="SERVICIOS/soporte.html"] h3 .svc-icon{display:block!important;margin:0 auto 2px!important}.page-index #servicios article[data-href="SERVICIOS/soporte.html"] .svc-desc,.page-index #servicios article[data-href="SERVICIOS/soporte.html"] .foot{text-align:center!important}
 
 
 
@@ -658,4 +650,7 @@ html[data-theme="light"] .page-index #servicios .container.grid-2:before{backgro
   background:linear-gradient(180deg,rgba(250,204,21,.98),rgba(250,204,21,.70))!important;
 }
 html[data-theme="dark"] .page-index .btn-grad-yellow{color:rgba(232,238,246,.98)!important;}
+
+/* CTA "Quiero una demo": blanco + ancho contenido centrado (MIN) */
+.page-index a.btn.hero-btn.btn-grad-yellow[href="#contacto"]{display:inline-flex!important;width:auto!important;min-width:unset!important;max-width:100%!important;padding:12px 18px!important;border-radius:999px!important;color:#fff!important;justify-content:center!important}.page-index a.btn.hero-btn.btn-grad-yellow[href="#contacto"]{background:linear-gradient(180deg,rgba(250,204,21,.55),rgba(250,204,21,.28))!important;border:1px solid rgba(250,204,21,.55)!important;box-shadow:0 10px 18px rgba(2,6,23,.10)!important}.page-index a.btn.hero-btn.btn-grad-yellow[href="#contacto"]:hover{background:linear-gradient(180deg,rgba(250,204,21,.62),rgba(250,204,21,.32))!important}
 
