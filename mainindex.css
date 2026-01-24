@@ -322,8 +322,6 @@ html[data-theme="dark"]{--ix-ink:var(--text,#e8eef6);--ix-ink2:var(--muted,#94a3
 /* 1) Kicker (Implementación rápida...) visible */
 .page-index .hero .kicker{color:var(--ix-oncard2)!important;font-weight:600;letter-spacing:.2px;text-shadow:none}
 
-/* 2) Divider: una sola línea elegante */
-.page-index .section-divider{height:1px;background:var(--ix-line);margin:12px 0 14px;border-radius:999px}
 
 /* 3) Reels arrows: contraste real (incluye “servicios”) */
 .page-index .carousel .arrowCircle{background:var(--ix-arrow-bg)!important;border:1px solid var(--ix-arrow-bd)!important;color:var(--ix-arrow-fg)!important}
@@ -660,7 +658,6 @@ html[data-theme="light"] .page-index #servicios .container.grid-2:before{backgro
 html[data-theme="dark"] .page-index .btn-grad-yellow{color:rgba(232,238,246,.98)!important;}
 
 
-.page-index .section-divider{display:none!important;}
 
 /* =========================================================
    Expiriti — PATCH MIN (solo lo necesario)
@@ -722,16 +719,6 @@ html[data-theme="dark"] .page-index h4{
 .page-index #productos-con .prod-tabs .tab.active,.page-index #productos-con .prod-tabs .tab[aria-selected="true"],.page-index #productos-con .prod-tabs .tab.is-active{border-color:rgba(96,165,250,.55)!important;background:rgba(96,165,250,.12)!important;box-shadow:0 0 0 2px rgba(96,165,250,.28)!important}/* (3) el “owner” de activo NO depende solo de .active */
 html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[data-theme="light"] .page-index #productos-con .prod-tabs .tab[aria-selected="true"],html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.is-active{border-color:rgba(45,212,191,.55)!important;background:rgba(45,212,191,.14)!important;box-shadow:0 0 0 2px rgba(45,212,191,.22)!important}/* (3) activo visible en light */
 
-
-/* Expiriti — HERO H1 FIX (MIN) v2026.01.23 */
-.page-index .hero-h1{margin:0;line-height:1.12;font-weight:950}
-.page-index .hero-h1 .hero-line{display:block}
-.page-index .hero-h1 .hero-top{font-size:clamp(1.7rem,2.4vw,2.6rem)}
-.page-index .hero-h1 .hero-mid{font-size:clamp(1.2rem,1.8vw,2.1rem);font-weight:950}
-.page-index .hero-h1 .hero-bot{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:clamp(1.4rem,2.2vw,2.4rem)}
-.page-index .hero-h1 .hero-word{height:1em;width:auto;max-width:220px;object-fit:contain;vertical-align:baseline;transform:translateY(.08em)}
-.page-index .hero-h1 .hero-exp{max-width:180px}
-@media(max-width:520px){.page-index .hero-h1 .hero-word{max-width:160px}.page-index .hero-h1 .hero-exp{max-width:140px}}
 
 
 /* Expiriti — HERO H1 3L + IMG WORDS PATCH MIN v2026.01.23 */
