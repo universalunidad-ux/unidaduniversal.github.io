@@ -675,8 +675,6 @@ html[data-theme="dark"] .page-index .btn-grad-yellow{color:rgba(232,238,246,.98)
 }
 
 /* (2) Ubicación -> footer: quitar “aire” al final */
-.page-index #contacto{ padding-bottom:16px !important; }  /* antes quedaba muy amplio */
-.page-index #footer-placeholder{ margin-top:0 !important; } /* por si hay margen colapsado */
 
 /* (3) Hero: reduce espacio entre header y el inicio del hero (sección) */
 .page-index .hero.section-full{
@@ -710,7 +708,6 @@ html[data-theme="dark"] .page-index h4{
 
 
 /* Expiriti — PATCH CSS (Ubicación+Footer | Servicios 2x1 | Pills active persist) v2026.01.23 */
-.page-index #footer-placeholder{min-height:clamp(140px,18vh,200px)!important}/* (1) menos aire final sin “colapsar” el placeholder */ 
 .page-index #ubicacion,.page-index #mapa,.page-index .map-card,.page-index .map-embed{margin-bottom:0!important}/* (1) corta margen inferior de “Ubicación” si existe */
 .page-index #contacto{padding-bottom:14px!important}/* (1) si contacto va antes del footer, recorta padding inferior */
 .page-index main>section:last-of-type{padding-bottom:14px!important}/* (1) seguridad: último bloque con menos aire */
@@ -720,9 +717,6 @@ html[data-theme="dark"] .page-index h4{
 html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[data-theme="light"] .page-index #productos-con .prod-tabs .tab[aria-selected="true"],html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.is-active{border-color:rgba(45,212,191,.55)!important;background:rgba(45,212,191,.14)!important;box-shadow:0 0 0 2px rgba(45,212,191,.22)!important}/* (3) activo visible en light */
 
 
-
-/* Expiriti — HERO H1 3L + IMG WORDS PATCH MIN v2026.01.23 */
-.page-index .hero-h1{margin:0 0 10px;line-height:1.06;font-weight:950;letter-spacing:-.02em}.page-index .hero-h1 .hero-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.page-index .hero-h1 .hero-top{font-size:clamp(2.05rem,3.1vw,3.25rem)}.page-index .hero-h1 .hero-mid{display:block;font-size:clamp(1.55rem,2.55vw,2.75rem);margin-top:6px;line-height:1.1}.page-index .hero-h1 .hero-bot{font-size:clamp(1.9rem,3vw,3.1rem);margin-top:8px;gap:10px}.page-index .hero-h1 .hero-easy{font:inherit}.page-index .hero-word{display:inline-block;vertical-align:middle;object-fit:contain;object-position:center;max-width:100%;height:auto}.page-index .hero-contpaqi{height:clamp(20px,2.2vw,32px);width:auto;transform:translateY(-1px)}.page-index .hero-exp{height:clamp(26px,2.6vw,40px);width:auto;transform:translateY(1px)}@media(max-width:520px){.page-index .hero-h1 .hero-top{font-size:clamp(1.75rem,7vw,2.35rem)}.page-index .hero-h1 .hero-mid{font-size:clamp(1.25rem,6.2vw,2.05rem)}.page-index .hero-h1 .hero-bot{font-size:clamp(1.55rem,7vw,2.25rem)}.page-index .hero-h1 .hero-line{gap:8px}.page-index .hero-contpaqi{height:clamp(18px,5.2vw,26px)}.page-index .hero-exp{height:clamp(22px,6vw,32px)}}
 
 
 /* Expiriti — PATCH: Ubicación -> Footer sin aire v2026.01.24
@@ -741,7 +735,6 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
 
 /* Expiriti — HERO H1: corrido + baseline FIX v2026.01.24
    OBJ: 1) menos aire entre líneas 2) imágenes alineadas al texto 3) sin “subidas” por transform */
-.page-index .hero-h1{margin:0 0 10px!important;line-height:1.04!important}
 .page-index .hero-h1 .hero-line{display:flex!important;align-items:baseline!important;gap:10px!important;flex-wrap:wrap}
 .page-index .hero-h1 .hero-mid,.page-index .hero-h1 .hero-bot{margin-top:4px!important} /* antes tenías 6px y 8px */
 @media(max-width:520px){.page-index .hero-h1 .hero-mid,.page-index .hero-h1 .hero-bot{margin-top:3px!important}}
