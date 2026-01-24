@@ -721,3 +721,14 @@ html[data-theme="dark"] .page-index h4{
 @media(min-width:981px){.page-index #servicios .cards-services{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}.page-index #servicios .cards-services .svc-page{display:contents!important}}/* (2) desktop = grid real */
 .page-index #productos-con .prod-tabs .tab.active,.page-index #productos-con .prod-tabs .tab[aria-selected="true"],.page-index #productos-con .prod-tabs .tab.is-active{border-color:rgba(96,165,250,.55)!important;background:rgba(96,165,250,.12)!important;box-shadow:0 0 0 2px rgba(96,165,250,.28)!important}/* (3) el “owner” de activo NO depende solo de .active */
 html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[data-theme="light"] .page-index #productos-con .prod-tabs .tab[aria-selected="true"],html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.is-active{border-color:rgba(45,212,191,.55)!important;background:rgba(45,212,191,.14)!important;box-shadow:0 0 0 2px rgba(45,212,191,.22)!important}/* (3) activo visible en light */
+
+
+/* Expiriti — HERO H1 FIX (MIN) v2026.01.23 */
+.page-index .hero-h1{margin:0;line-height:1.12;font-weight:950}
+.page-index .hero-h1 .hero-line{display:block}
+.page-index .hero-h1 .hero-top{font-size:clamp(1.7rem,2.4vw,2.6rem)}
+.page-index .hero-h1 .hero-mid{font-size:clamp(1.2rem,1.8vw,2.1rem);font-weight:950}
+.page-index .hero-h1 .hero-bot{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:clamp(1.4rem,2.2vw,2.4rem)}
+.page-index .hero-h1 .hero-word{height:1em;width:auto;max-width:220px;object-fit:contain;vertical-align:baseline;transform:translateY(.08em)}
+.page-index .hero-h1 .hero-exp{max-width:180px}
+@media(max-width:520px){.page-index .hero-h1 .hero-word{max-width:160px}.page-index .hero-h1 .hero-exp{max-width:140px}}
