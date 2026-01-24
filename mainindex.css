@@ -738,3 +738,18 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
 .page-index #footer-placeholder{min-height:clamp(110px,12vh,160px)!important;margin-top:0!important;padding-top:0!important}
 /* Seguridad: si algún estilo global metió “aire” al final del layout */
 .page-index body,.page-index{scroll-padding-bottom:0!important}
+
+/* Expiriti — HERO H1: corrido + baseline FIX v2026.01.24
+   OBJ: 1) menos aire entre líneas 2) imágenes alineadas al texto 3) sin “subidas” por transform */
+.page-index .hero-h1{margin:0 0 10px!important;line-height:1.04!important}
+.page-index .hero-h1 .hero-line{display:flex!important;align-items:baseline!important;gap:10px!important;flex-wrap:wrap}
+.page-index .hero-h1 .hero-mid,.page-index .hero-h1 .hero-bot{margin-top:4px!important} /* antes tenías 6px y 8px */
+@media(max-width:520px){.page-index .hero-h1 .hero-mid,.page-index .hero-h1 .hero-bot{margin-top:3px!important}}
+
+/* IMGs dentro del H1: baseline real (quita “subidita”) */
+.page-index .hero-h1 img,.page-index .hero-h1 .hero-word{display:inline-block!important;vertical-align:baseline!important;transform:none!important}
+
+/* Si quieres un pelín más “centrado” visual sin subirlas: usa esta micro-correción (opcional)
+.page-index .hero-h1 img{position:relative;top:.06em}
+*/
+
