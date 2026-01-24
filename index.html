@@ -73,42 +73,38 @@
 <body class="page-index debug-freeze">
 
   <div id="header-placeholder"></div>
-  
-<main id="main-content">
-  <section class="hero section-full">
-    <div class="container hero-grid v-center">
-<div class="kicker">Implementación rápida · Soporte cercano</div>
-<h1 class="hero-h1">
-  <span class="hero-line hero-top">
-    <img class="hero-word hero-contpaqi" src="IMG/TEXTEXP%20(2).webp" alt="CONTPAQi" decoding="async">
-    <span class="hero-easy">fácil:</span>
-  </span>
-  <span class="hero-line hero-mid gradient-word">
-    licencias, cursos, desarrollos y soporte
-  </span>
-  <span class="hero-line hero-bot">
-    con
-    <img class="hero-word hero-exp" src="IMG/TEXTEXP.webp" alt="ExpIRI TI" decoding="async">
-  </span>
-</h1>
+<!-- Expiriti — HERO (2 cols desktop) FIX v2026.01.24
+     Causa: se quitó el wrapper del bloque izquierdo; el grid ya no “agrupa” el copy.
+     Solución: reintroducir .hero-copy para que el article quede como 2do hijo (col derecha). -->
+<main id="main-content"><section class="hero section-full"><div class="container hero-grid v-center">
+  <!-- COL IZQ: COPY (wrapper requerido) -->
+  <div class="hero-copy">
+    <div class="kicker">Implementación rápida · Soporte cercano</div>
+    <!-- H1 con imágenes (NO CAMBIAR) -->
+    <h1 class="hero-h1">
+      <span class="hero-line hero-top"><img class="hero-word hero-contpaqi" src="IMG/TEXTEXP%20(3).webp" alt="CONTPAQi" decoding="async"><span class="hero-easy">fácil:</span></span>
+      <span class="hero-line hero-mid gradient-word">licencias, cursos, desarrollos y soporte</span>
+      <span class="hero-line hero-bot">con <img class="hero-word hero-exp" src="IMG/TEXTEXP.webp" alt="ExpIRI TI" decoding="async"></span>
+    </h1>
+    <p class="lead">Acompañamos su <strong>inversión en CONTPAQi®</strong> con procesos bien definidos, puesta en marcha ordenada y soporte profesional para una operación confiable.</p>
+    <div class="badges"></div>
+    <a class="btn hero-btn btn-grad-yellow" href="#contacto">Quiero una demo</a>
+  </div>
 
-<p class="lead">Acompañamos su <strong>inversión en CONTPAQi®</strong> con procesos bien definidos, puesta en marcha ordenada y soporte profesional para una operación confiable.</p>
-<div class="badges"></div>
-<a class="btn hero-btn btn-grad-yellow" href="#contacto">Quiero una demo</a>
-      </div>
-      <article class="card hero-gallery-card" aria-label="Galería de sistemas CONTPAQi">
-        <div class="hero-gallery-header"><h2>Conoce más de los sistemas:</h2></div>
-        <nav class="hero-gallery-groups" id="heroGalleryGroups" aria-label="Grupos de sistemas"></nav>
-        <div class="carousel hero-carousel" id="heroGalleryCarousel" aria-label="Galería de imágenes por sistema">
-          <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-          <div class="carousel-track"></div>
-          <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-          <div class="carousel-nav" aria-label="Paginación de imágenes"></div>
-        </div>
-        <div class="hero-gallery-tabs" id="heroGalleryTabs" aria-label="Selecciona sistema para ver imágenes"></div>
-      </article>
+  <!-- COL DER: HERO GALLERY -->
+  <article class="card hero-gallery-card" aria-label="Galería de sistemas CONTPAQi">
+    <div class="hero-gallery-header"><h2>Conoce más de los sistemas:</h2></div>
+    <nav class="hero-gallery-groups" id="heroGalleryGroups" aria-label="Grupos de sistemas"></nav>
+    <div class="carousel hero-carousel" id="heroGalleryCarousel" aria-label="Galería de imágenes por sistema">
+      <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+      <div class="carousel-track"></div>
+      <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+      <div class="carousel-nav" aria-label="Paginación de imágenes"></div>
     </div>
-  </section>
+    <div class="hero-gallery-tabs" id="heroGalleryTabs" aria-label="Selecciona sistema para ver imágenes"></div>
+  </article>
+</div></section>
+
 
 <!-- =========================================================
  Expiriti — Sistemas CONTPAQi (Tabs) v2026.01.22
