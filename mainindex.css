@@ -1,4 +1,4 @@
-/* =========================================================
+ /* =========================================================
    Expiriti — mainindex.canon.css (INDEX FINAL) v2026.01.20
    REQ: theme.css | SCOPE: body.page-index | CI: sin :has()
    - Single Source of Truth: width 80% + gradients + hero gallery + dots + reels + servicios
@@ -658,6 +658,52 @@ html[data-theme="dark"] .page-index .btn-grad-yellow{color:rgba(232,238,246,.98)
 
 
 
+/* =========================================================
+   Expiriti — PATCH MIN (solo lo necesario)
+   OBJ:
+   1) btn amarillo: texto blanco (light/dark)
+   2) menos aire: Ubicación -> footer
+   3) hero gallery: +2px título + menos gaps internos + menos espacio hero->gallery
+   4) dark: evitar textos negros invisibles en secciones clave
+========================================================= */
+
+/* (1) Botón amarillo: letras blancas SIEMPRE */
+.page-index .btn-grad-yellow{
+  color:#fff !important;          /* fuerza blanco en light también */
+  text-shadow:none !important;
+}
+
+/* (2) Ubicación -> footer: quitar “aire” al final */
+
+/* (3) Hero: reduce espacio entre header y el inicio del hero (sección) */
+.page-index .hero.section-full{
+  padding-top:14px !important;   /* baja el aire superior */
+  padding-bottom:18px !important;
+}
+
+/* (3) Hero gallery: “Conoce más…” +2px */
+.page-index .hero-gallery-header h2{
+  font-size:calc(clamp(18px,1.6vw,26px) + 2px) !important;
+}
+
+/* (3) Hero gallery: menos aire entre título y chips (grupos) */
+.page-index .hero-gallery-header{ padding-bottom:6px !important; }
+.page-index .hero-gallery-groups{
+  margin-top:4px !important;     /* acerca chips al título */
+  margin-bottom:8px !important;
+  padding-top:6px !important;
+}
+
+/* (4) Dark mode: si algo está heredando negro, fuerza legibilidad en contenido */
+html[data-theme="dark"] .page-index,
+html[data-theme="dark"] .page-index p,
+html[data-theme="dark"] .page-index li,
+html[data-theme="dark"] .page-index h1,
+html[data-theme="dark"] .page-index h2,
+html[data-theme="dark"] .page-index h3,
+html[data-theme="dark"] .page-index h4{
+  color:rgba(232,238,246,.92);
+}
 
 
 /* Expiriti — PATCH CSS (Ubicación+Footer | Servicios 2x1 | Pills active persist) v2026.01.23 */
