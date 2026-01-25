@@ -599,7 +599,6 @@ html[data-theme="light"] .page-index #servicios .container.grid-2:before{backgro
   .page-index #servicios .cards-services{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}
   .page-index #servicios .cards-services .svc-page{display:contents!important}
   .page-index #servicios .cards-services .svc-spacer{display:none!important}
-  .page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1}
 }
 
 /* [2] MOBILE/TABLET: el carrusel se queda como está, pero sin scroll vertical interno */
@@ -869,4 +868,61 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
 @media(max-width:520px){
   .page-index{--h1-logo-em:1.00em;--h1-logo-max:64px}
   .page-index .hero-h1{line-height:1.04!important}
+}
+
+
+/* =========================================================
+   Expiriti — PATCH FINAL (Servicios 2x1 + Ubicación sin aire + H1 logos texto) v2026.01.24f
+   PEGAR AL FINAL del CSS (owner final)
+========================================================= */
+
+/* [A] SERVICIOS DESKTOP: asegurar grid real + Soporte 2x1 SIEMPRE */
+@media(min-width:981px){
+  .page-index #servicios .cards-services{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:var(--gap,14px)!important;
+    overflow:visible!important;
+    max-height:none!important;
+  }
+  /* Si existe wrapper .svc-page (común en tu paginación/carrusel) */
+  .page-index #servicios .cards-services .svc-page{display:contents!important}
+  .page-index #servicios .cards-services .svc-spacer{display:none!important}
+
+  /* Caso 1: article es hijo directo */
+  .page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important}
+
+  /* Caso 2: article vive dentro de .svc-page */
+  .page-index #servicios .cards-services .svc-page>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important}
+
+  /* Si por algo el layout no respeta grid-column (fallback duro) */
+  .page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"],
+  .page-index #servicios .cards-services .svc-page>article[data-href="SERVICIOS/soporte.html"]{width:100%!important}
+}
+
+/* [B] UBICACIÓN → FOOTER: quitar aire “fantasma” */
+.page-index main{padding-bottom:0!important}
+.page-index #ubicacion,
+.page-index #ubicacion .container,
+.page-index #ubicacion .map-card,
+.page-index #ubicacion .map-embed{margin-bottom:0!important;padding-bottom:0!important}
+.page-index #contacto{padding-bottom:12px!important} /* un poco de respiro, sin hueco */
+.page-index #footer-placeholder{min-height:0!important;margin:0!important;padding:0!important}
+/* Si tu footer real tiene padding-top enorme, recórtalo aquí (seguro) */
+.page-index footer{margin-top:0!important}
+
+/* [C] HERO H1: logos como texto (tamaño relativo + baseline real) */
+.page-index .hero-h1{line-height:1.02!important}
+.page-index .hero-h1 .hero-line{display:flex!important;align-items:baseline!important;gap:10px!important;flex-wrap:wrap}
+.page-index .hero-h1 img{
+  height:0.92em!important;     /* clave: tamaño relativo a la tipografía */
+  width:auto!important;
+  max-width:none!important;
+  display:inline-block!important;
+  vertical-align:baseline!important;
+  transform:none!important;
+}
+.page-index .hero-h1 .hero-mid,.page-index .hero-h1 .hero-bot{margin-top:3px!important}
+@media(max-width:520px){
+  .page-index .hero-h1 img{height:0.88em!important}
 }
