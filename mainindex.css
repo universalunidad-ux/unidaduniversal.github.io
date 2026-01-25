@@ -746,3 +746,127 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
 .page-index .hero-h1 img{position:relative;top:.06em}
 */
 
+
+/* =========================================================
+   Expiriti — PATCH (SERVICIOS 2x1 DESKTOP + MAP->FOOTER + HERO H1 LOGOS)
+   v2026.01.24
+   Pegar al FINAL del CSS (override).
+========================================================= */
+
+/* =========================================================
+   (1) SERVICIOS: desktop en GRID real + “Soporte” 2x1 (ancho completo)
+   - Robusto aunque tu JS deje .is-carousel puesto en desktop
+   - Selector tolerante: data-href*="soporte"
+========================================================= */
+@media(min-width:981px){
+  /* Fuerza layout de 2 columnas en desktop */
+  .page-index #servicios .cards-services{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:14px!important;
+    overflow:visible!important;
+    max-height:none!important;
+  }
+
+  /* Si tu markup mete páginas (svc-page), lo “aplanamos” para que el grid funcione */
+  .page-index #servicios .cards-services .svc-page{display:contents!important}
+
+  /* Quita “spacer” que a veces crea huecos raros */
+  .page-index #servicios .cards-services .svc-spacer{display:none!important}
+
+  /* Si por alguna razón quedó modo carrusel, lo neutralizamos en desktop */
+  .page-index #servicios .cards-services.is-carousel{
+    overflow:visible!important;
+    scroll-snap-type:none!important;
+  }
+
+  /* Soporte = ancho completo (2x1) */
+  .page-index #servicios .cards-services > article[data-href*="soporte"]{
+    grid-column:1 / -1!important;
+  }
+}
+
+/* En mobile/tablet déjalo como ya lo tienes, pero asegurando que el “span” no estorbe */
+@media(max-width:980px){
+  .page-index #servicios .cards-services.is-carousel .svc-page > article[data-href*="soporte"]{
+    grid-column:1 / -1!important;
+  }
+}
+
+/* =========================================================
+   (2) UBICACIÓN -> FOOTER: quitar “aire” al final
+   - Recorta padding/margins del bloque final
+   - Baja min-height de placeholder si existe
+========================================================= */
+.page-index main{padding-bottom:0!important}
+
+/* El bloque de ubicación (según tus ids/clases típicas) */
+.page-index #ubicacion,
+.page-index #mapa,
+.page-index .map-card,
+.page-index .map-embed{
+  margin-bottom:0!important;
+  padding-bottom:0!important;
+}
+
+/* Si tu última sección venía con padding grande, lo apagamos */
+.page-index main > section:last-of-type{
+  margin-bottom:0!important;
+  padding-bottom:0!important;
+}
+
+/* Placeholder de footer: suele ser el culpable del hueco */
+.page-index #footer-placeholder{
+  min-height:0!important;              /* clave */
+  height:auto!important;
+  margin-top:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+}
+
+/* Por si algún wrapper extra mete aire */
+.page-index footer,
+.page-index #footer,
+.page-index #footer .container{
+  margin-top:0!important;
+  padding-top:0!important;
+}
+
+/* =========================================================
+   (3) HERO H1: logos como texto (baseline + tamaño “tipográfico”)
+   - Hace que CONTPAQi / ExpIRI TI dentro del H1 se vean integrados
+   - Si algún logo debe ser más grande, ajustas el --h1-logo-em
+========================================================= */
+.page-index{
+  --h1-logo-em:1.05em;                 /* altura del logo relativa al tamaño del texto */
+  --h1-logo-max:76px;                  /* tope para desktop grande */
+}
+
+/* Línea del H1 más compacta (evita “aire” vertical por imágenes) */
+.page-index .hero-h1{
+  line-height:1.02!important;
+}
+
+/* Las líneas del H1 alineadas a baseline */
+.page-index .hero-h1 .hero-line{
+  display:flex!important;
+  align-items:baseline!important;
+  gap:10px!important;
+  flex-wrap:wrap!important;
+}
+
+/* IMGs dentro del H1: comportamiento “como texto” */
+.page-index .hero-h1 img{
+  height:var(--h1-logo-em)!important;
+  width:auto!important;
+  max-height:var(--h1-logo-max)!important;
+  display:inline-block!important;
+  vertical-align:baseline!important;
+  transform:none!important;
+}
+
+/* En pantallas chicas, baja ligeramente para que no “invada” */
+@media(max-width:520px){
+  .page-index{--h1-logo-em:1.00em;--h1-logo-max:64px}
+  .page-index .hero-h1{line-height:1.04!important}
+}
