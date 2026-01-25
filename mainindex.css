@@ -658,33 +658,53 @@ html[data-theme="dark"] .page-index .btn-grad-yellow{color:rgba(232,238,246,.98)
 
 
 
+/* =========================================================
+   Expiriti — PATCH MIN (solo lo necesario)
+   OBJ:
+   1) btn amarillo: texto blanco (light/dark)
+   2) menos aire: Ubicación -> footer
+   3) hero gallery: +2px título + menos gaps internos + menos espacio hero->gallery
+   4) dark: evitar textos negros invisibles en secciones clave
+========================================================= */
 
+/* (1) Botón amarillo: letras blancas SIEMPRE */
+.page-index .btn-grad-yellow{
+  color:#fff !important;          /* fuerza blanco en light también */
+  text-shadow:none !important;
+}
 
-/* Expiriti — PATCH CSS (Ubicación+Footer | Servicios 2x1 | Pills active persist) v2026.01.23 */
-.page-index #ubicacion,.page-index #mapa,.page-index .map-card,.page-index .map-embed{margin-bottom:0!important}/* (1) corta margen inferior de “Ubicación” si existe */
-.page-index #contacto{padding-bottom:14px!important}/* (1) si contacto va antes del footer, recorta padding inferior */
-.page-index main>section:last-of-type{padding-bottom:14px!important}/* (1) seguridad: último bloque con menos aire */
-.page-index #servicios .cards-services>article[data-href*="SERVICIOS/soporte"]{grid-column:1/-1!important}/* (2) Soporte 2x1 */
-@media(min-width:981px){.page-index #servicios .cards-services{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}.page-index #servicios .cards-services .svc-page{display:contents!important}}/* (2) desktop = grid real */
-.page-index #productos-con .prod-tabs .tab.active,.page-index #productos-con .prod-tabs .tab[aria-selected="true"],.page-index #productos-con .prod-tabs .tab.is-active{border-color:rgba(96,165,250,.55)!important;background:rgba(96,165,250,.12)!important;box-shadow:0 0 0 2px rgba(96,165,250,.28)!important}/* (3) el “owner” de activo NO depende solo de .active */
-html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[data-theme="light"] .page-index #productos-con .prod-tabs .tab[aria-selected="true"],html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.is-active{border-color:rgba(45,212,191,.55)!important;background:rgba(45,212,191,.14)!important;box-shadow:0 0 0 2px rgba(45,212,191,.22)!important}/* (3) activo visible en light */
+/* (2) Ubicación -> footer: quitar “aire” al final */
 
+/* (3) Hero: reduce espacio entre header y el inicio del hero (sección) */
+.page-index .hero.section-full{
+  padding-top:14px !important;   /* baja el aire superior */
+  padding-bottom:18px !important;
+}
 
+/* (3) Hero gallery: “Conoce más…” +2px */
+.page-index .hero-gallery-header h2{
+  font-size:calc(clamp(18px,1.6vw,26px) + 2px) !important;
+}
 
+/* (3) Hero gallery: menos aire entre título y chips (grupos) */
+.page-index .hero-gallery-header{ padding-bottom:6px !important; }
+.page-index .hero-gallery-groups{
+  margin-top:4px !important;     /* acerca chips al título */
+  margin-bottom:8px !important;
+  padding-top:6px !important;
+}
 
-/* Expiriti — PATCH: Ubicación -> Footer sin aire v2026.01.24
-   OBJ: 1) quitar padding/margins del último bloque 2) bajar min-height del footer placeholder
-        3) evitar hueco grande bajo el mapa/card (mobile+desktop) */
-.page-index main{padding-bottom:0!important}
-.page-index main>section:last-of-type{padding-bottom:0!important;margin-bottom:0!important}
-.page-index main>.container:last-of-type{margin-bottom:0!important;padding-bottom:0!important}
-/* Card/mapa: no “empujar” hacia abajo */
-.page-index .map-card{margin-bottom:0!important}
-.page-index .map-embed{margin-bottom:0!important}
-/* Placeholder footer: si estaba en 260px, eso crea el hueco gigante */
-.page-index #footer-placeholder{min-height:clamp(110px,12vh,160px)!important;margin-top:0!important;padding-top:0!important}
-/* Seguridad: si algún estilo global metió “aire” al final del layout */
-.page-index body,.page-index{scroll-padding-bottom:0!important}
+/* (4) Dark mode: si algo está heredando negro, fuerza legibilidad en contenido */
+html[data-theme="dark"] .page-index,
+html[data-theme="dark"] .page-index p,
+html[data-theme="dark"] .page-index li,
+html[data-theme="dark"] .page-index h1,
+html[data-theme="dark"] .page-index h2,
+html[data-theme="dark"] .page-index h3,
+html[data-theme="dark"] .page-index h4{
+  color:rgba(232,238,246,.92);
+}
+
 
 /* Expiriti — HERO H1: corrido + baseline FIX v2026.01.24
    OBJ: 1) menos aire entre líneas 2) imágenes alineadas al texto 3) sin “subidas” por transform */
@@ -699,130 +719,6 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
 .page-index .hero-h1 img{position:relative;top:.06em}
 */
 
-
-/* =========================================================
-   Expiriti — PATCH (SERVICIOS 2x1 DESKTOP + MAP->FOOTER + HERO H1 LOGOS)
-   v2026.01.24
-   Pegar al FINAL del CSS (override).
-========================================================= */
-
-/* =========================================================
-   (1) SERVICIOS: desktop en GRID real + “Soporte” 2x1 (ancho completo)
-   - Robusto aunque tu JS deje .is-carousel puesto en desktop
-   - Selector tolerante: data-href*="soporte"
-========================================================= */
-@media(min-width:981px){
-  /* Fuerza layout de 2 columnas en desktop */
-  .page-index #servicios .cards-services{
-    display:grid!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:14px!important;
-    overflow:visible!important;
-    max-height:none!important;
-  }
-
-  /* Si tu markup mete páginas (svc-page), lo “aplanamos” para que el grid funcione */
-  .page-index #servicios .cards-services .svc-page{display:contents!important}
-
-  /* Quita “spacer” que a veces crea huecos raros */
-  .page-index #servicios .cards-services .svc-spacer{display:none!important}
-
-  /* Si por alguna razón quedó modo carrusel, lo neutralizamos en desktop */
-  .page-index #servicios .cards-services.is-carousel{
-    overflow:visible!important;
-    scroll-snap-type:none!important;
-  }
-
-  /* Soporte = ancho completo (2x1) */
-  .page-index #servicios .cards-services > article[data-href*="soporte"]{
-    grid-column:1 / -1!important;
-  }
-}
-
-/* En mobile/tablet déjalo como ya lo tienes, pero asegurando que el “span” no estorbe */
-@media(max-width:980px){
-  .page-index #servicios .cards-services.is-carousel .svc-page > article[data-href*="soporte"]{
-    grid-column:1 / -1!important;
-  }
-}
-
-/* =========================================================
-   (2) UBICACIÓN -> FOOTER: quitar “aire” al final
-   - Recorta padding/margins del bloque final
-   - Baja min-height de placeholder si existe
-========================================================= */
-.page-index main{padding-bottom:0!important}
-
-/* El bloque de ubicación (según tus ids/clases típicas) */
-.page-index #ubicacion,
-.page-index #mapa,
-.page-index .map-card,
-.page-index .map-embed{
-  margin-bottom:0!important;
-  padding-bottom:0!important;
-}
-
-/* Si tu última sección venía con padding grande, lo apagamos */
-.page-index main > section:last-of-type{
-  margin-bottom:0!important;
-  padding-bottom:0!important;
-}
-
-/* Placeholder de footer: suele ser el culpable del hueco */
-.page-index #footer-placeholder{
-  min-height:0!important;              /* clave */
-  height:auto!important;
-  margin-top:0!important;
-  padding-top:0!important;
-  padding-bottom:0!important;
-}
-
-/* Por si algún wrapper extra mete aire */
-.page-index footer,
-.page-index #footer,
-.page-index #footer .container{
-  margin-top:0!important;
-  padding-top:0!important;
-}
-
-/* =========================================================
-   (3) HERO H1: logos como texto (baseline + tamaño “tipográfico”)
-   - Hace que CONTPAQi / ExpIRI TI dentro del H1 se vean integrados
-   - Si algún logo debe ser más grande, ajustas el --h1-logo-em
-========================================================= */
-.page-index{
-  --h1-logo-em:1.05em;                 /* altura del logo relativa al tamaño del texto */
-  --h1-logo-max:76px;                  /* tope para desktop grande */
-}
-
-/* Línea del H1 más compacta (evita “aire” vertical por imágenes) */
-.page-index .hero-h1{
-  line-height:1.02!important;
-}
-
-/* Las líneas del H1 alineadas a baseline */
-.page-index .hero-h1 .hero-line{
-  display:flex!important;
-  align-items:baseline!important;
-  gap:10px!important;
-  flex-wrap:wrap!important;
-}
-
-/* IMGs dentro del H1: comportamiento “como texto” */
-.page-index .hero-h1 img{
-  height:var(--h1-logo-em)!important;
-  width:auto!important;
-  max-height:var(--h1-logo-max)!important;
-  display:inline-block!important;
-  vertical-align:baseline!important;
-  transform:none!important;
-}
-
-/* En pantallas chicas, baja ligeramente para que no “invada” */
-@media(max-width:520px){
-  .page-index{--h1-logo-em:1.00em;--h1-logo-max:64px}
-  .page-index .hero-h1{line-height:1.04!important}
-}
 
 
 /* =========================================================
@@ -845,14 +741,6 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
 .page-index #contacto{padding-bottom:12px!important}
 .page-index #footer-placeholder{min-height:0!important;margin:0!important;padding:0!important}
 .page-index footer{margin-top:0!important}
-
-/* ========== [C] HERO H1: logos como texto + wrap fluido ========== */
-.page-index .hero-h1{margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:clamp(8px,1.2vw,12px);line-height:1.02!important}
-.page-index .hero-h1 img{height:.92em!important;width:auto!important;max-width:none!important;display:inline-block!important;vertical-align:baseline!important;transform:none!important;object-fit:contain}
-.page-index .hero-h1 .hero-piece{display:inline-flex;align-items:baseline;min-width:0}
-.page-index .hero-h1 .hero-con{font-weight:900}
-@media(max-width:520px){.page-index .hero-h1 img{height:.88em!important}}
-
 
 /* =========================================================
  Expiriti — HERO H1 WRAP OWNER (fluido + responsive) v2026.01.24g
@@ -879,5 +767,4 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
 
 /* Mobile: ligera reducción del logo */
 @media(max-width:520px){.page-index .hero-h1{line-height:1.06!important;gap:clamp(7px,1.2vw,10px)}.page-index .hero-h1 .hero-logo img.hero-word{height:.88em!important}}
-
 
