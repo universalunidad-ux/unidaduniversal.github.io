@@ -928,3 +928,10 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
 
 
 .page-index .hero-h1{margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:clamp(8px,1.1vw,12px);line-height:1.04!important}.page-index .hero-h1 .hero-piece{display:inline-flex;align-items:baseline;min-width:0}.page-index .hero-h1 .gradient-word{min-width:0;max-width:100%;overflow-wrap:anywhere}.page-index .hero-h1 .hero-lock{display:inline-flex;align-items:baseline;gap:.35em;white-space:nowrap}.page-index .hero-h1 .hero-logo img.hero-word{height:.92em!important;width:auto!important;max-width:none!important;display:inline-block!important;vertical-align:baseline!important;transform:none!important;object-fit:contain}.page-index .hero-h1 .hero-con{font-weight:900}@media(max-width:520px){.page-index .hero-h1{line-height:1.06!important}.page-index .hero-h1 .hero-logo img.hero-word{height:.88em!important}}
+
+/* Expiriti — HERO H1 FIX (no space-between + align con/ExpIRI TI) v2026.01.24i */
+.page-index .hero-h1{justify-content:flex-start!important;text-align:left!important}
+.page-index .hero-h1 .gradient-word{display:inline!important} /* evita que el bloque “estire” y mande 'con' al otro lado */
+.page-index .hero-h1 .hero-lock{display:inline-flex;align-items:center;gap:.35em;white-space:nowrap}
+.page-index .hero-h1 .hero-lock .hero-logo img.hero-word{height:.92em!important;vertical-align:middle!important;position:relative;top:.06em} /* baja micro para que quede a la altura de 'con' */
+@media(max-width:520px){.page-index .hero-h1 .hero-lock .hero-logo img.hero-word{height:.88em!important;top:.05em}}
