@@ -899,3 +899,31 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
 .page-index .hero-h1 .hero-con{font-weight:900}
 @media(max-width:520px){.page-index .hero-h1 img{height:.88em!important}}
 
+
+/* =========================================================
+ Expiriti — HERO H1 WRAP OWNER (fluido + responsive) v2026.01.24g
+ PEGAR AL FINAL (solo H1)
+========================================================= */
+
+/* H1 como “frase” que envuelve por piezas */
+.page-index .hero-h1{margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:clamp(8px,1.1vw,12px);line-height:1.04!important}
+
+/* Cada pieza = palabra/bloque pequeño */
+.page-index .hero-h1 .hero-piece{display:inline-flex;align-items:baseline;min-width:0}
+
+/* Logo como texto: escala relativa y baseline real */
+.page-index .hero-h1 .hero-logo img.hero-word{height:.92em!important;width:auto!important;max-width:none!important;display:inline-block!important;vertical-align:baseline!important;transform:none!important;object-fit:contain}
+
+/* “con” más firme y con espacio controlado */
+.page-index .hero-h1 .hero-con{font-weight:900;white-space:nowrap}
+
+/* Texto largo: deja wrap natural sin desbordar */
+.page-index .hero-h1 .gradient-word{min-width:0;max-width:100%;overflow-wrap:anywhere}
+
+/* Evita que el último logo se quede “solito” si puede acompañar a “con” */
+.page-index .hero-h1 .hero-con+.hero-logo{white-space:nowrap}
+
+/* Mobile: ligera reducción del logo */
+@media(max-width:520px){.page-index .hero-h1{line-height:1.06!important;gap:clamp(7px,1.2vw,10px)}.page-index .hero-h1 .hero-logo img.hero-word{height:.88em!important}}
+
+
