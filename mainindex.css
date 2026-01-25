@@ -630,13 +630,13 @@ html[data-theme="light"] .page-index #servicios .container.grid-2:before{backgro
 /* Expiriti — FIX: Soporte 2x1 + Centro icon/título + Amarillo legible v2026.01.23 */
 
 /* (A) SERVICIOS: “Soporte técnico” span 2 columnas (evita hueco derecha) */
-.page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important}/* 2x1 en grid */
-@media(max-width:980px){.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important}}/* 2x1 también en páginas del carrusel (cuando son 2 cols) */
+.page-index #servicios .cards-services>article[data-href*="SERVICIOS/soporte"]{grid-column:1/-1!important}/* 2x1 en grid */
+@media(max-width:980px){.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href*="SERVICIOS/soporte"]{grid-column:1/-1!important}}/* 2x1 también en páginas del carrusel (cuando son 2 cols) */
 
 /* (B) SERVICIOS: centrar icono + título (solo Soporte) sin romper otras cards */
-.page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"],.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"]{text-align:center!important}
-.page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"] .svc-icon,.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"] .svc-icon{display:block;margin:0 auto 10px!important}
-.page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"] h3,.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href="SERVICIOS/soporte.html"] h3{margin-left:auto!important;margin-right:auto!important}
+.page-index #servicios .cards-services>article[data-href*="SERVICIOS/soporte"],.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href*="SERVICIOS/soporte"]{text-align:center!important}
+.page-index #servicios .cards-services>article[data-href*="SERVICIOS/soporte"] .svc-icon,.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href*="SERVICIOS/soporte"] .svc-icon{display:block;margin:0 auto 10px!important}
+.page-index #servicios .cards-services>article[data-href*="SERVICIOS/soporte"] h3,.page-index #servicios .cards-services.is-carousel .svc-page>article[data-href*="SERVICIOS/soporte"] h3{margin-left:auto!important;margin-right:auto!important}
 
 
 
@@ -710,7 +710,7 @@ html[data-theme="dark"] .page-index h4{
 .page-index #ubicacion,.page-index #mapa,.page-index .map-card,.page-index .map-embed{margin-bottom:0!important}/* (1) corta margen inferior de “Ubicación” si existe */
 .page-index #contacto{padding-bottom:14px!important}/* (1) si contacto va antes del footer, recorta padding inferior */
 .page-index main>section:last-of-type{padding-bottom:14px!important}/* (1) seguridad: último bloque con menos aire */
-.page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important}/* (2) Soporte 2x1 */
+.page-index #servicios .cards-services>article[data-href*="SERVICIOS/soporte"]{grid-column:1/-1!important}/* (2) Soporte 2x1 */
 @media(min-width:981px){.page-index #servicios .cards-services{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}.page-index #servicios .cards-services .svc-page{display:contents!important}}/* (2) desktop = grid real */
 .page-index #productos-con .prod-tabs .tab.active,.page-index #productos-con .prod-tabs .tab[aria-selected="true"],.page-index #productos-con .prod-tabs .tab.is-active{border-color:rgba(96,165,250,.55)!important;background:rgba(96,165,250,.12)!important;box-shadow:0 0 0 2px rgba(96,165,250,.28)!important}/* (3) el “owner” de activo NO depende solo de .active */
 html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[data-theme="light"] .page-index #productos-con .prod-tabs .tab[aria-selected="true"],html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.is-active{border-color:rgba(45,212,191,.55)!important;background:rgba(45,212,191,.14)!important;box-shadow:0 0 0 2px rgba(45,212,191,.22)!important}/* (3) activo visible en light */
@@ -890,14 +890,14 @@ html[data-theme="light"] .page-index #productos-con .prod-tabs .tab.active,html[
   .page-index #servicios .cards-services .svc-spacer{display:none!important}
 
   /* Caso 1: article es hijo directo */
-  .page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important}
+  .page-index #servicios .cards-services>article[data-href*="SERVICIOS/soporte"]{grid-column:1/-1!important}
 
   /* Caso 2: article vive dentro de .svc-page */
-  .page-index #servicios .cards-services .svc-page>article[data-href="SERVICIOS/soporte.html"]{grid-column:1/-1!important}
+  .page-index #servicios .cards-services .svc-page>article[data-href*="SERVICIOS/soporte"]{grid-column:1/-1!important}
 
   /* Si por algo el layout no respeta grid-column (fallback duro) */
-  .page-index #servicios .cards-services>article[data-href="SERVICIOS/soporte.html"],
-  .page-index #servicios .cards-services .svc-page>article[data-href="SERVICIOS/soporte.html"]{width:100%!important}
+  .page-index #servicios .cards-services>article[data-href*="SERVICIOS/soporte"],
+  .page-index #servicios .cards-services .svc-page>article[data-href*="SERVICIOS/soporte"]{width:100%!important}
 }
 
 /* [B] UBICACIÓN → FOOTER: quitar aire “fantasma” */
