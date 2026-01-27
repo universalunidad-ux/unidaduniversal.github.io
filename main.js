@@ -197,6 +197,17 @@ TRY("yt_manager",()=>{
     img.alt="Miniatura de video";img.loading="lazy";
     img.style.cssText="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;cursor:pointer";
     const srcs=poster(id);let k=0;const next=()=>{if(k<srcs.length)img.src=srcs[k++]};img.addEventListener("error",next);next();
+    const srcs=poster(id);
+let k=0;
+
+const next=()=>{
+  if(k < srcs.length) { img.src = srcs[k++]; return; }
+  wrap.classList.add("yt-no-thumb"); // fallback visual
+};
+
+img.addEventListener("error", next);
+next();
+
     wrap.appendChild(img);
 
     const btn=D.createElement("button");
@@ -646,6 +657,7 @@ TRY("toc",()=>{
 
 })(); /* FIN IIFE PRINCIPAL */
 
+
 const poster=id=>[
   `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
   `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
@@ -653,4 +665,3 @@ const poster=id=>[
   `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
   `https://i.ytimg.com/vi/${id}/default.jpg`
 ];
-
