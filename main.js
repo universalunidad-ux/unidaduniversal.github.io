@@ -646,3 +646,11 @@ TRY("toc",()=>{
 
 })(); /* FIN IIFE PRINCIPAL */
 
+const poster=id=>[
+  `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+  `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
+  `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+  `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
+  `https://i.ytimg.com/vi/${id}/default.jpg`
+];
+
