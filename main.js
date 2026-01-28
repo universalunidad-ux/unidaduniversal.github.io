@@ -173,11 +173,16 @@ TRY("yt_manager",()=>{
     try{const p=new YT.Player(ifr,{events:{onStateChange:onState}});W.exPlayers.push(p)}catch{}
   };
 const poster=id=>[
-  `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-  `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
-  `https://i.ytimg.com/vi/${id}/default.jpg`,
+  `https://i.ytimg.com/vi_webp/${id}/maxresdefault.webp`,
+  `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+  `https://i.ytimg.com/vi_webp/${id}/sddefault.webp`,
   `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
-  `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`
+  `https://i.ytimg.com/vi_webp/${id}/hqdefault.webp`,
+  `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+  `https://i.ytimg.com/vi_webp/${id}/mqdefault.webp`,
+  `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
+  `https://i.ytimg.com/vi_webp/${id}/default.webp`,
+  `https://i.ytimg.com/vi/${id}/default.jpg`
 ];
 
   const markReady=wrap=>{if(!wrap||!wrap.classList)return;wrap.classList.add("is-ready","has-iframe")};
