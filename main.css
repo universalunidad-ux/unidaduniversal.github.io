@@ -903,141 +903,35 @@ body.page-sistemas #calc-row{
   overflow:visible!important;
 }
 
+/* =========================================================
+ EXPIRITI — PATCH FINAL (solo 2 cosas) v2026.01.10-r10 (MIN + COMENTS)
+ OBJ:
+ 1) Resumen combinado: aire consistente en data-cols="1" + layout “img2” SIEMPRE
+ 2) Integra: pill rojo más bajo + “XML en Línea…” más pegado
+ NOTA: dedupe total (reemplaza r4/r5/r6/r7/m1). Pegar AL FINAL.
+========================================================= */
+
 /* =========================
-EXPIRITI — PATCH FINAL (solo 2 cosas) v2026.01.10-r4
-1) Resumen combinado: mismo “aire” cuando hay 1 calc (data-cols="1")
-2) Integra: menos altura/aire entre pill rojo y “XML en Línea…”
-Pegar AL FINAL.
+ (1) RESUMEN COMBINADO
 ========================= */
 
-/* (1) RESUMEN COMBINADO: cuando hay 1 calculadora, dale aire extra SIEMPRE */
-body.page-sistemas #calc-row[data-cols="1"] ~ #combined-wrap{margin-top:28px!important}
-body.page-sistemas #calc-row[data-cols="1"] ~ #combined-wrap .combined-summary{margin-top:20px!important;padding:16px 16px!important}
-body.page-sistemas #calc-row[data-cols="1"] ~ #combined-wrap .cs-head{margin-bottom:14px!important;gap:12px 16px!important}
-body.page-sistemas #calc-row[data-cols="1"] ~ #combined-wrap .amount-letter{margin-top:10px!important}
+/* (1a) Aire extra cuando solo hay 1 calculadora (data-cols="1") */
+body.page-sistemas #calc-row[data-cols="1"]~#combined-wrap{margin-top:28px!important}
+body.page-sistemas #calc-row[data-cols="1"]~#combined-wrap .combined-summary{margin-top:20px!important;padding:16px!important}
+body.page-sistemas #calc-row[data-cols="1"]~#combined-wrap .amount-letter{margin-top:10px!important}
 
-/* (2) INTEGRA (slot-2 y add-more): reduce aire entre pill y texto XML + baja altura del pill */
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{
-  margin:0 auto 6px!important;          /* antes estaba muy separado */
-  padding:10px 16px!important;         /* baja altura del pill */
-  line-height:1.15!important
-}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{
-  margin:2px 0 0!important;            /* pega un poco el texto al pill */
-  line-height:1.25!important
-}
-
-/* === EXPIRITI: RESUMEN SIEMPRE COMO IMG2 + menos aire XML (SISTEMAS) v2026.01.10-r6 === */
-
-/* 1) RESUMEN COMBINADO: siempre “columna izquierda” para el título */
-body.page-sistemas #combined-wrap{display:flex;justify-content:center;margin-top:28px!important}
-body.page-sistemas #combined-wrap .combined-summary{
-  width:min(980px,100%)!important;
-  position:relative!important;
-  margin:20px auto 0!important;
-  padding:16px 16px 16px 280px!important; /* reserva columna del título */
-  border-radius:14px;
-}
-
-/* título fijo en su columna (evita “Resumen combinadoSubtotal…”) */
-body.page-sistemas #combined-wrap .cs-title{
-  position:absolute!important;
-  left:16px!important;
-  top:16px!important;
-  width:240px!important;
-  margin:0!important;
-  display:block!important;
-  font-weight:900!important;
-  line-height:1.15!important;
-  white-space:normal!important;
-}
-
-/* header/total: que arranquen en la columna derecha */
-body.page-sistemas #combined-wrap .cs-head{
-  display:flex!important;
-  align-items:flex-start!important;
-  justify-content:space-between!important;
-  gap:12px!important;
-  margin:0 0 10px!important;
-  flex-wrap:wrap!important;
-}
-body.page-sistemas #combined-wrap .total-amount{font-weight:900!important}
-
-/* texto en letras con aire consistente */
-body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
-
-/* mobile: una sola columna (título arriba) */
-@media(max-width:680px){
-  body.page-sistemas #combined-wrap .combined-summary{padding:14px!important}
-  body.page-sistemas #combined-wrap .cs-title{
-    position:static!important;width:auto!important;margin:0 0 10px!important
-  }
-}
-
-/* 2) INTEGRA: menos “aire” entre pill rojo y “XML en Línea…” (slot2 + add-more) */
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{
-  margin:0 auto 6px!important;
-  padding:10px 16px!important;
-  line-height:1.15!important
-}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{
-  margin:2px 0 0!important;
-  line-height:1.25!important;
-  display:block!important;
-  text-align:center!important
-}
-
-/* === EXPIRITI FIX: Resumen combinado igual en 1/2/3 + menos aire XML v2026.01.10-r5 === */
-
-/* 1) RESUMEN COMBINADO: SIEMPRE como img2 (aunque rows caigan dentro de .cs-head) */
-body.page-sistemas #combined-wrap .combined-summary{max-width:min(980px,100%)!important}
-body.page-sistemas #combined-wrap .cs-head{display:flex!important;flex-wrap:wrap!important;align-items:flex-start!important;gap:10px 16px!important;margin-bottom:14px!important}
-body.page-sistemas #combined-wrap .cs-title{flex:0 0 260px!important;min-width:260px!important;font-weight:900!important;line-height:1.15!important}
-@media(max-width:980px){body.page-sistemas #combined-wrap .cs-title{flex:0 0 220px!important;min-width:220px!important}}
-@media(max-width:680px){body.page-sistemas #combined-wrap .cs-title{flex:0 0 100%!important;min-width:0!important}}
-body.page-sistemas #combined-wrap .total-amount{margin-left:auto!important;font-weight:950!important}
-
-/* Si Subtotal/IVA/Total quedaron dentro del header, los bajamos a “fila nueva” full width */
-body.page-sistemas #combined-wrap .cs-head>*:not(.cs-title):not(.total-amount){
-  flex:0 0 100%!important;max-width:100%!important
-}
-/* Y formateamos cada línea como “texto izq / monto der” */
-body.page-sistemas #combined-wrap .cs-head>*:not(.cs-title):not(.total-amount){
-  display:flex!important;justify-content:space-between!important;gap:14px!important;align-items:baseline!important
-}
-body.page-sistemas #combined-wrap .cs-head>*:not(.cs-title):not(.total-amount)>*:last-child{
-  text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1
-}
-
-/* Aire consistente (evita “pegado” en 1 y 3) */
-body.page-sistemas #combined-wrap{margin-top:28px!important}
-body.page-sistemas #combined-wrap .combined-summary{margin:20px auto 0!important;padding:16px 16px!important}
-body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
-
-/* 2) INTEGRA: menos aire entre pill rojo y “XML en Línea…” (slot2 + add-more) */
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{margin:0 auto 6px!important;padding:10px 16px!important;line-height:1.15!important}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{margin:2px 0 0!important;line-height:1.25!important}
-
-
-/* === EXPIRITI FIX: Resumen combinado SIEMPRE como img2 (1/2/3) v2026.01.10-r7 === */
+/* (1b) Desktop/Tablet: “img2” fijo (título izquierda, líneas derecha) */
 body.page-sistemas #combined-wrap{display:flex;justify-content:center;margin-top:28px!important}
 body.page-sistemas #combined-wrap .combined-summary{
   width:min(980px,100%)!important;
   display:grid!important;
-  grid-template-columns:260px 1fr!important; /* col izq título, col der contenido */
-  column-gap:18px!important;
-  row-gap:10px!important;
+  grid-template-columns:260px 1fr!important; /* col izq: título | col der: líneas */
+  gap:10px 18px!important;
   padding:16px!important;
   align-items:start!important
 }
-@media(max-width:680px){
-  body.page-sistemas #combined-wrap .combined-summary{grid-template-columns:1fr!important}
-}
 
-/* Título SIEMPRE en columna izquierda (arriba) */
+/* Título: SIEMPRE aislado a la izquierda */
 body.page-sistemas #combined-wrap .cs-title{
   grid-column:1!important;
   grid-row:1!important;
@@ -1046,103 +940,82 @@ body.page-sistemas #combined-wrap .cs-title{
   line-height:1.15!important;
   white-space:normal!important
 }
-@media(max-width:680px){
-  body.page-sistemas #combined-wrap .cs-title{grid-column:1!important}
-}
 
-/* Todo lo demás a la columna derecha */
+/* Bloques de contenido: siempre a la derecha */
 body.page-sistemas #combined-wrap .cs-head,
-body.page-sistemas #combined-wrap .amount-letter{
-  grid-column:2!important
-}
-@media(max-width:680px){
-  body.page-sistemas #combined-wrap .cs-head,
-  body.page-sistemas #combined-wrap .amount-letter{grid-column:1!important}
-}
+body.page-sistemas #combined-wrap .amount-letter{grid-column:2!important}
 
-/* Acomodo interno “texto izq / monto der” */
+/* Líneas internas: “label izq / monto der” (evita que se mezclen con título) */
 body.page-sistemas #combined-wrap .cs-head{
   display:flex!important;
-  flex-direction:column!important; /* evita que se meta junto al título */
+  flex-direction:column!important;
   gap:10px!important;
   margin:0!important
 }
-body.page-sistemas #combined-wrap .cs-head > *{
+body.page-sistemas #combined-wrap .cs-head>*{
   display:flex!important;
   justify-content:space-between!important;
   gap:14px!important;
   align-items:baseline!important
 }
-body.page-sistemas #combined-wrap .cs-head > * > *:last-child{
+body.page-sistemas #combined-wrap .cs-head>* > *:last-child{
   text-align:right!important;
   white-space:nowrap!important;
   font-variant-numeric:tabular-nums;
   font-feature-settings:"tnum" 1
 }
-
-/* Total (monto grande) consistente */
 body.page-sistemas #combined-wrap .total-amount{font-weight:950!important}
+body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
 
-/* Menos aire entre pill rojo y XML (slot2 + add-more) */
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{margin:0 auto 6px!important;padding:10px 16px!important;line-height:1.15!important}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{margin:2px 0 0!important;line-height:1.25!important}
+/* (1c) Mobile: 1 columna (título arriba) */
+@media(max-width:680px){
+  body.page-sistemas #combined-wrap .combined-summary{grid-template-columns:1fr!important;padding:14px!important}
+  body.page-sistemas #combined-wrap .cs-head,
+  body.page-sistemas #combined-wrap .amount-letter{grid-column:1!important}
+}
 
-
-
-
-
-
-
-/* === EXPIRITI FIX MOBILE: Resumen combinado FUERA del scroll de calculadoras v2026.01.10-m1 === */
+/* (1d) Mobile/Tablet (<=980): sacar #combined-wrap del carril horizontal (snap/scroll) */
 @media(max-width:980px){
-
-  /* 1) Si .calc-strip o #calc-row son carril horizontal, #combined-wrap NO debe ser “slide” */
   body.page-sistemas #combined-wrap{
     flex:0 0 100%!important;
     width:100%!important;
     max-width:100%!important;
     min-width:100%!important;
-    order:9999!important;            /* lo manda abajo del carril */
-    scroll-snap-align:none!important; /* evita que “snap” lo trate como tarjeta */
+    order:9999!important;              /* manda abajo del carril */
+    scroll-snap-align:none!important;  /* no lo trata como “slide” */
     margin:16px 0 0!important;
-    overflow:visible!important;
+    overflow:visible!important
   }
-
-  /* 2) La caja interna SIEMPRE full-width en mobile */
   body.page-sistemas #combined-wrap .combined-summary{
     width:100%!important;
     max-width:100%!important;
     box-sizing:border-box!important;
-    display:block!important;          /* evita grid/columnas raras en pantallas medianas */
-    padding:14px!important;
+    display:block!important;           /* en pantallas medianas evita grids raros */
+    padding:14px!important
   }
-
-  /* 3) Layout interno simple (título arriba, líneas abajo alineadas) */
-  body.page-sistemas #combined-wrap .cs-title{
-    margin:0 0 10px!important;
-    display:block!important;
-  }
-  body.page-sistemas #combined-wrap .cs-head{
-    display:flex!important;
-    flex-direction:column!important;
-    gap:10px!important;
-    margin:0!important;
-  }
-  body.page-sistemas #combined-wrap .cs-head>*{
-    display:flex!important;
-    justify-content:space-between!important;
-    gap:14px!important;
-    align-items:baseline!important;
-  }
-  body.page-sistemas #combined-wrap .cs-head>*:last-child{font-weight:950!important} /* Total */
-  body.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
+  body.page-sistemas #combined-wrap .cs-title{margin:0 0 10px!important;display:block!important}
 }
 
+/* =========================
+ (2) INTEGRA (slot-2 + add-more)
+========================= */
 
+/* Caja: reduce padding general */
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
 
+/* Pill rojo: menos alto + menos separación abajo */
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{
+  margin:0 auto 6px!important;     /* baja el “aire” entre pill y texto */
+  padding:10px 16px!important;    /* reduce altura del pill */
+  line-height:1.15!important
+}
 
-
+/* Texto “XML en Línea…”: más pegado al pill */
+body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{
+  display:block!important;
+  margin:2px 0 0!important;
+  line-height:1.25!important
+}
 
 /* Todo el CSS canon irá bajo esto */
 body.page-index.debug-freeze {
@@ -1161,4 +1034,85 @@ body.page-index.debug-freeze {
 @keyframes exp-mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 
+
+
+/* Expiriti — PRODUCT PAGE PATCH v2026.01.28 (1A/2C/3B/4B/5C/6C/7A+/8C/9C/10A+/11C) */
+
+/* ========== 2C) Chips/pills wrap elegante ========== */
+.page-sistemas :where(.pillbar,.chips,.benefit-chips,.product-chips){display:flex;flex-wrap:wrap;gap:10px 10px}
+.page-sistemas :where(.pillbar,.chips,.benefit-chips,.product-chips) :where(.pill,.chip,button,a){max-width:100%;white-space:normal}
+
+/* ========== 3B) “¿Por qué usar…?” 2 col alineadas/pro ========== */
+.page-sistemas :where(.why-2col,.why-grid,.benefits-reels,.hero-3col,.section-cq){align-items:stretch}
+.page-sistemas :where(.why-2col,.why-grid,.benefits-reels) > :where(div,section,article){min-width:0}
+.page-sistemas :where(.why-2col,.why-grid,.benefits-reels) :where(.left,.col-left,.benefits){display:flex;flex-direction:column}
+.page-sistemas :where(.why-2col,.why-grid,.benefits-reels) :where(.right,.col-right,.reels){display:flex;flex-direction:column}
+
+/* ========== 4B) Título reels: 2 líneas clamp (sin marquee) ========== */
+.page-sistemas :where(.reel-title,.reels-title,.video-title,.carousel-title){display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-overflow:ellipsis;line-height:1.15;max-height:2.35em}
+
+/* ========== 5C) Barra CTAs responsive (5 botones) ========== */
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
+@media(max-width:860px){
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){flex-wrap:wrap}
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button){flex:1 1 calc(50% - 10px);min-width:0;white-space:nowrap}
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(1){flex-basis:calc(50% - 10px)}
+}
+
+/* ========== 6C) “Funciones destacadas”: cards misma altura real ========== */
+.page-sistemas :where(.features-grid,.funciones-grid,.cards-grid,.grid-cards){display:grid;gap:14px}
+.page-sistemas :where(.features-grid,.funciones-grid,.cards-grid,.grid-cards) > *{height:100%}
+.page-sistemas :where(.features-grid,.funciones-grid,.cards-grid,.grid-cards) :where(.card,.feature-card,.product-card){display:flex;flex-direction:column}
+.page-sistemas :where(.features-grid,.funciones-grid,.cards-grid,.grid-cards) :where(.card,.feature-card,.product-card) :where(p,.desc,.card-desc){margin-top:auto}
+
+/* ========== 7A+) Doble video: si “slide” trae 1 video, centrar vertical (mobile) ========== */
+@media(max-width:860px){
+.page-sistemas :where(.slide,.carousel-item,.reel,.media-card){display:flex;flex-direction:column}
+.page-sistemas :where(.slide,.carousel-item,.reel,.media-card) :where(.video-wrap,.yt,.embed,.iframe-wrap){margin:auto}
+}
+
+/* ========== 8C) Carrusel “Sistemas que complementan…”: peek ~1.5 en mobile ========== */
+@media(max-width:860px){
+.page-sistemas :where(.complementos,.complement-slider,.listSlider,.cards-slider) :where(.track,.carousel-track,.listSlider-track){display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px}
+.page-sistemas :where(.complementos,.complement-slider,.listSlider,.cards-slider) :where(.track,.carousel-track,.listSlider-track) > *{flex:0 0 66%;scroll-snap-align:center}
+}
+
+/* ========== 9C) CALCULADORA (sagrado desktop + mobile swipe 2–3 + no “aplastado” + resumen visible) ========== */
+.page-sistemas :where(#calculadora-section,.calc-strip){max-width:100%}
+.page-sistemas :where(#calc-row,.calc-row){display:grid;gap:18px;align-items:start}
+.page-sistemas :where(#calc-row,.calc-row) :where(.calc-container,.placeholder){min-width:0}
+
+/* Desktop sagrado: 1 = calc izq + integra der (centrado), 2 = 50/50 + integra abajo, 3 = 3 cols como ref */
+@media(min-width:861px){
+.page-sistemas :where(#calc-row,.calc-row)[data-cols="1"]{grid-template-columns:minmax(560px,760px) minmax(380px,560px)}
+.page-sistemas :where(#calc-row,.calc-row)[data-cols="1"] #calc-slot-2{align-self:center}
+.page-sistemas :where(#calc-row,.calc-row)[data-cols="2"]{grid-template-columns:1fr 1fr}
+.page-sistemas :where(#calc-row,.calc-row)[data-cols="2"] #calc-slot-2{grid-column:1/-1;max-width:980px;justify-self:center}
+.page-sistemas :where(#calc-row,.calc-row)[data-cols="3"]{grid-template-columns:repeat(3,minmax(360px,1fr))}
+.page-sistemas :where(#calc-row,.calc-row)[data-cols="3"] #add-more-panel{grid-column:1/-1;max-width:980px;justify-self:center}
+}
+
+/* Mobile: cuando hay 2–3 calculadoras => swipe horizontal (como comparativas), evita “aplastado” */
+@media(max-width:860px){
+.page-sistemas :where(#calc-row,.calc-row)[data-cols="1"]{grid-template-columns:1fr}
+.page-sistemas :where(#calc-row,.calc-row)[data-cols="2"],.page-sistemas :where(#calc-row,.calc-row)[data-cols="3"]{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px}
+.page-sistemas :where(#calc-row,.calc-row)[data-cols="2"] :where(.calc-container,.placeholder),.page-sistemas :where(#calc-row,.calc-row)[data-cols="3"] :where(.calc-container,.placeholder){flex:0 0 92%;scroll-snap-align:center}
+}
+
+/* Resumen combinado más visible (sin cambiar cálculos) */
+.page-sistemas #combined-wrap.combined-card{position:relative}
+@media(min-width:861px){
+.page-sistemas #combined-wrap.combined-card{position:sticky;top:96px;z-index:2}
+}
+
+/* ========== 10A+) Comparativas: mantener, pero mobile con scroll horizontal seguro ========== */
+@media(max-width:860px){
+.page-sistemas :where(.comparativas,.comparativa-wrap,.table-wrap){overflow-x:auto;-webkit-overflow-scrolling:touch}
+.page-sistemas :where(.comparativas,.comparativa-wrap,.table-wrap) table{min-width:760px}
+}
+
+/* ========== 11C) CTA antes de FAQ (solo CSS si el contenedor lo permite) ========== */
+.page-sistemas :where(.faq-cta-wrap,.faq-and-cta,.faq-section){display:flex;flex-direction:column}
+.page-sistemas :where(.faq-cta-wrap,.faq-and-cta,.faq-section) :where(.cta-final,.cta-start,.ready-card){order:0}
+.page-sistemas :where(.faq-cta-wrap,.faq-and-cta,.faq-section) :where(.faq,.faq-list,.accordion){order:1}
 
