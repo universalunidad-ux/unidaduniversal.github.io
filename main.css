@@ -1152,4 +1152,13 @@ body.page-index.debug-freeze {
 .yt-no-thumb{background:radial-gradient(120% 90% at 50% 40%, rgba(255,255,255,.12), rgba(0,0,0,.85))}
 
 
+.reel-title{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.reel-title.is-marquee{text-overflow:clip}
+.reel-title.is-marquee .__mqTrack{display:inline-flex;align-items:center;gap:28px;will-change:transform;animation:exp-mq var(--mq-dur,12s) linear infinite}
+.reel-title.mq-paused .__mqTrack{animation-play-state:paused}
+@media(hover:hover){.reel-title.is-marquee:hover .__mqTrack{animation-play-state:paused}}
+@media(prefers-reduced-motion:reduce){.reel-title.is-marquee .__mqTrack{animation:none!important}}
+@keyframes exp-mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+
 
