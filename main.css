@@ -268,72 +268,7 @@ html[data-theme="light"] .page-sistemas .pillbar .pill:not(.active){color:rgba(2
 #carouselVideos .yt-title{display:none!important}
 
 
-
-
-/* =========================================================
-  CALC LAYOUT (real): primary + slot2(picker2) + secondary + tertiary + add-more-panel
-  - 1 calc: primary + slot2
-  - 2 calcs: primary + secondary, y abajo add-more-panel
-  - 3 calcs: primary + secondary + tertiary
-========================================================= */
-.page-sistemas .calc-strip{max-width:var(--sys-narrow,min(1120px,70vw));margin:0 auto;padding:0 12px}
-.page-sistemas #calc-row{display:grid;gap:14px;align-items:stretch;max-width:100%}
-.page-sistemas #calc-row>*{min-width:0!important;max-width:100%}
-
-/* GRID por columnas */
-.page-sistemas #calc-row[data-cols="1"]{grid-template-columns:repeat(2,minmax(0,1fr))}
-.page-sistemas #calc-row[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
-.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
-@media(max-width:980px){
-  .page-sistemas #calc-row[data-cols="1"],
-  .page-sistemas #calc-row[data-cols="2"],
-  .page-sistemas #calc-row[data-cols="3"]{grid-template-columns:1fr}
-}
-
-/* Visibilidad por estado */
-.page-sistemas #calc-row[data-cols="1"] #calc-slot-2{display:block!important}
-.page-sistemas #calc-row[data-cols="1"] #calc-secondary{display:none!important}
-.page-sistemas #calc-row[data-cols="1"] #calc-tertiary{display:none!important}
-.page-sistemas #calc-row[data-cols="1"] #add-more-panel{display:none!important}
-
-.page-sistemas #calc-row[data-cols="2"] #calc-slot-2{display:none!important}
-.page-sistemas #calc-row[data-cols="2"] #calc-secondary{display:block!important}
-.page-sistemas #calc-row[data-cols="2"] #calc-tertiary{display:none!important}
-.page-sistemas #calc-row[data-cols="2"] #add-more-panel{display:block!important;grid-column:1/-1}
-
-.page-sistemas #calc-row[data-cols="3"] #calc-slot-2{display:none!important}
-.page-sistemas #calc-row[data-cols="3"] #calc-secondary{display:block!important}
-.page-sistemas #calc-row[data-cols="3"] #calc-tertiary{display:block!important}
-.page-sistemas #calc-row[data-cols="3"] #add-more-panel{display:none!important}
-
-/* Altura pareja + tabla con scroll SOLO en desktop cuando hay 2 o 3 */
-@media(min-width:981px){
-  .page-sistemas #calc-row[data-cols="2"] .calc-container,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container{
-    height:var(--calc-card-h,560px)!important;display:flex!important;flex-direction:column!important;overflow:hidden!important
-  }
-  @media(max-width:1180px){
-    .page-sistemas #calc-row[data-cols="2"] .calc-container,
-    .page-sistemas #calc-row[data-cols="3"] .calc-container{height:var(--calc-card-h-md,540px)!important}
-  }
-  .page-sistemas #calc-row[data-cols="2"] .calc-container form,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container form{flex:0 0 auto!important}
-  .page-sistemas #calc-row[data-cols="2"] .calc-container table,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container table{
-    flex:1 1 auto!important;max-width:100%!important;margin:10px auto 0!important;
-    display:block!important;overflow:auto!important;-webkit-overflow-scrolling:touch
-  }
-  .page-sistemas #calc-row[data-cols="2"] .calc-container thead th,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container thead th{position:sticky;top:0;z-index:2}
-  .page-sistemas #calc-row[data-cols="2"] .calc-container thead,
-  .page-sistemas #calc-row[data-cols="2"] .calc-container tbody,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container thead,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container tbody{display:table;width:100%;table-layout:fixed}
-}
-
-
-
-
+.page-sistemas .calc-strip{max-width:var(--sys-narrow,min(1120px,70vw));margin:0 auto;padding:0 12px}.page-sistemas #calc-row{display:grid;gap:14px;align-items:stretch;max-width:100%}.page-sistemas #calc-row>*{min-width:0!important;max-width:100%}.page-sistemas #calc-row[data-cols="1"]{grid-template-columns:repeat(2,minmax(0,1fr))}.page-sistemas #calc-row[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:980px){.page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:1fr}}.page-sistemas #calc-row[data-cols="1"] #calc-slot-2{display:block!important}.page-sistemas #calc-row[data-cols="1"] #calc-secondary,.page-sistemas #calc-row[data-cols="1"] #calc-tertiary,.page-sistemas #calc-row[data-cols="1"] #add-more-panel{display:none!important}.page-sistemas #calc-row[data-cols="2"] #calc-slot-2{display:none!important}.page-sistemas #calc-row[data-cols="2"] #calc-secondary{display:block!important}.page-sistemas #calc-row[data-cols="2"] #calc-tertiary{display:none!important}.page-sistemas #calc-row[data-cols="2"] #add-more-panel{display:block!important;grid-column:1/-1}.page-sistemas #calc-row[data-cols="3"] #calc-slot-2{display:none!important}.page-sistemas #calc-row[data-cols="3"] #calc-secondary,.page-sistemas #calc-row[data-cols="3"] #calc-tertiary{display:block!important}.page-sistemas #calc-row[data-cols="3"] #add-more-panel{display:none!important}
 
 /* =========================================================
  Expiriti — CALC FINAL PATCH v2026.01.09-final
@@ -431,43 +366,8 @@ html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td:last-child,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td:last-child,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td:last-child{color:#fff!important}
 
-/* ===== 4) FIX CRÍTICO: cuando hay 2 o 3 calculadoras en desktop, altura pareja + tabla con scroll interno ===== */
-@media(min-width:981px){
-  /* Mantén tu altura pareja, pero asegúrate que la tabla “quepa” con scroll */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container{
-    height:var(--calc-card-h,560px)!important;
-    display:flex!important;flex-direction:column!important;min-height:0!important
-  }
-  @media(max-width:1180px){
-    .page-sistemas #calc-row[data-cols="2"] .calc-container,
-    .page-sistemas #calc-row[data-cols="3"] .calc-container{height:var(--calc-card-h-md,540px)!important}
-  }
+@media(min-width:981px){.page-sistemas #calc-row[data-cols="2"] .calc-container,.page-sistemas #calc-row[data-cols="3"] .calc-container{height:var(--calc-card-h,560px)!important;display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important}@media(max-width:1180px){.page-sistemas #calc-row[data-cols="2"] .calc-container,.page-sistemas #calc-row[data-cols="3"] .calc-container{height:var(--calc-card-h-md,540px)!important}}}
 
-  /* La tabla ocupa el “resto” y scrollea */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container table,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container table{
-    flex:1 1 auto!important;
-    display:block!important; /* habilita overflow */
-    overflow:auto!important;
-    -webkit-overflow-scrolling:touch;
-    min-height:0!important
-  }
-
-  /* Sticky header dentro del scroll del table (funciona bien con display:block) */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container thead th,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container thead th{
-    position:sticky!important;top:0!important;z-index:3!important
-  }
-
-  /* Mantén layout de tabla usable al convertirla a block */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container thead,
-  .page-sistemas #calc-row[data-cols="2"] .calc-container tbody,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container thead,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container tbody{
-    display:table!important;width:100%!important;table-layout:fixed!important
-  }
-}
 
 /* ===== 5) Carrusel/upsell “Integra…”: ROJO sólido, SIN degradados/glass ===== */
 .page-sistemas .placeholder{background:transparent!important;border:0!important;padding:0!important;min-height:unset!important}
@@ -542,27 +442,7 @@ html[data-theme="light"] .page-sistemas .calc-container .instalacion-box .inst-h
 /* checkbox legible en amarillo */
 html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[type="checkbox"]{accent-color:#111!important}
 
-/* (4) MOBILE: 2+ CALCS => scroll horizontal (lateral) + no recortes */
-@media(max-width:980px){
-  /* el row se vuelve “carril” horizontal SOLO si hay 2 o 3 */
-  .page-sistemas #calc-row[data-cols="2"],
-  .page-sistemas #calc-row[data-cols="3"]{
-    display:flex!important;gap:14px!important;
-    overflow-x:auto!important;overflow-y:visible!important;
-    -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
-    padding:0 6px!important;margin:0 auto!important;max-width:100%!important
-  }
-  /* cada calculadora ocupa casi toda la pantalla y “snap” al mover */
-  .page-sistemas #calc-row[data-cols="2"]>.calc-container,
-  .page-sistemas #calc-row[data-cols="2"]>#calc-secondary,
-  .page-sistemas #calc-row[data-cols="3"]>.calc-container,
-  .page-sistemas #calc-row[data-cols="3"]>#calc-secondary,
-  .page-sistemas #calc-row[data-cols="3"]>#calc-tertiary{
-    flex:0 0 min(92vw,520px)!important;scroll-snap-align:start;min-width:0!important
-  }
-  /* add-more-panel debajo (no dentro del carril) */
-  .page-sistemas #calc-row[data-cols="2"] #add-more-panel{flex:0 0 100%!important;scroll-snap-align:none}
-}
+
 
 /* (5) MOBILE: FORM 2x2 (Lic+RFC arriba / Usuarios+Inst abajo) */
 @media(max-width:680px){
@@ -950,27 +830,6 @@ body.page-index.debug-freeze {
 .page-sistemas :where(.complementos,.complement-slider,.listSlider,.cards-slider) :where(.track,.carousel-track,.listSlider-track) > *{flex:0 0 66%;scroll-snap-align:center}
 }
 
-/* ========== 9C) CALCULADORA (sagrado desktop + mobile swipe 2–3 + no “aplastado” + resumen visible) ========== */
-.page-sistemas :where(#calculadora-section,.calc-strip){max-width:100%}
-.page-sistemas :where(#calc-row,.calc-row){display:grid;gap:18px;align-items:start}
-.page-sistemas :where(#calc-row,.calc-row) :where(.calc-container,.placeholder){min-width:0}
-
-/* Desktop sagrado: 1 = calc izq + integra der (centrado), 2 = 50/50 + integra abajo, 3 = 3 cols como ref */
-@media(min-width:861px){
-.page-sistemas :where(#calc-row,.calc-row)[data-cols="1"]{grid-template-columns:minmax(560px,760px) minmax(380px,560px)}
-.page-sistemas :where(#calc-row,.calc-row)[data-cols="1"] #calc-slot-2{align-self:center}
-.page-sistemas :where(#calc-row,.calc-row)[data-cols="2"]{grid-template-columns:1fr 1fr}
-.page-sistemas :where(#calc-row,.calc-row)[data-cols="2"] #calc-slot-2{grid-column:1/-1;max-width:980px;justify-self:center}
-.page-sistemas :where(#calc-row,.calc-row)[data-cols="3"]{grid-template-columns:repeat(3,minmax(360px,1fr))}
-.page-sistemas :where(#calc-row,.calc-row)[data-cols="3"] #add-more-panel{grid-column:1/-1;max-width:980px;justify-self:center}
-}
-
-/* Mobile: cuando hay 2–3 calculadoras => swipe horizontal (como comparativas), evita “aplastado” */
-@media(max-width:860px){
-.page-sistemas :where(#calc-row,.calc-row)[data-cols="1"]{grid-template-columns:1fr}
-.page-sistemas :where(#calc-row,.calc-row)[data-cols="2"],.page-sistemas :where(#calc-row,.calc-row)[data-cols="3"]{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px}
-.page-sistemas :where(#calc-row,.calc-row)[data-cols="2"] :where(.calc-container,.placeholder),.page-sistemas :where(#calc-row,.calc-row)[data-cols="3"] :where(.calc-container,.placeholder){flex:0 0 92%;scroll-snap-align:center}
-}
 
 /* Resumen combinado más visible (sin cambiar cálculos) */
 .page-sistemas #combined-wrap.combined-card{position:relative}
@@ -994,3 +853,52 @@ body.page-index.debug-freeze {
 .page-sistemas .reel-title{white-space:normal!important;overflow:hidden!important;text-overflow:ellipsis!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-height:1.15!important;max-height:2.35em!important}
 .page-sistemas .reel-title .__mqTrack{display:contents!important}
 .page-sistemas .reel-title.is-marquee{animation:none!important}
+
+/* EXPIRITI — CALC CANON (NO swipe + NO scroll interno) v2026.01.29 */
+.page-sistemas .calc-strip{max-width:var(--sys-narrow,min(1120px,70vw));margin:0 auto;padding:0 12px;overflow:visible!important}
+.page-sistemas #calc-row{display:grid!important;gap:14px;align-items:stretch;max-width:100%;overflow:visible!important}
+.page-sistemas #calc-row>*{min-width:0!important;max-width:100%}
+.page-sistemas #calc-row[data-cols="1"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+.page-sistemas #calc-row[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:980px){.page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:1fr}}
+.page-sistemas #calc-row[data-cols="1"] #calc-slot-2{display:block!important}
+.page-sistemas #calc-row[data-cols="1"] #calc-secondary,.page-sistemas #calc-row[data-cols="1"] #calc-tertiary,.page-sistemas #calc-row[data-cols="1"] #add-more-panel{display:none!important}
+.page-sistemas #calc-row[data-cols="2"] #calc-slot-2{display:none!important}
+.page-sistemas #calc-row[data-cols="2"] #calc-secondary{display:block!important}
+.page-sistemas #calc-row[data-cols="2"] #calc-tertiary{display:none!important}
+.page-sistemas #calc-row[data-cols="2"] #add-more-panel{display:block!important;grid-column:1/-1}
+.page-sistemas #calc-row[data-cols="3"] #calc-slot-2{display:none!important}
+.page-sistemas #calc-row[data-cols="3"] #calc-secondary,.page-sistemas #calc-row[data-cols="3"] #calc-tertiary{display:block!important}
+.page-sistemas #calc-row[data-cols="3"] #add-more-panel{display:none!important}
+/* mata TODO lo de “altura fija + tabla scrolleo interno + sticky header” */
+.page-sistemas #calc-row .calc-container{height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;display:block!important}
+.page-sistemas #calc-row .calc-container table{display:table!important;overflow:visible!important;max-height:none!important}
+.page-sistemas #calc-row .calc-container thead th{position:static!important;top:auto!important;z-index:auto!important}
+/* mata TODO lo de “carril horizontal” para calculadoras (solo quedan grid normales) */
+@media(max-width:980px){.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{display:grid!important;overflow:visible!important;scroll-snap-type:none!important}}
+
+
+/* (4) MOBILE: 2+ CALCS => scroll horizontal (lateral) + no recortes */
+@media(max-width:980px){
+  /* el row se vuelve “carril” horizontal SOLO si hay 2 o 3 */
+  .page-sistemas #calc-row[data-cols="2"],
+  .page-sistemas #calc-row[data-cols="3"]{
+    display:flex!important;gap:14px!important;
+    overflow-x:auto!important;overflow-y:visible!important;
+    -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
+    padding:0 6px!important;margin:0 auto!important;max-width:100%!important
+  }
+  /* cada calculadora ocupa casi toda la pantalla y “snap” al mover */
+  .page-sistemas #calc-row[data-cols="2"]>.calc-container,
+  .page-sistemas #calc-row[data-cols="2"]>#calc-secondary,
+  .page-sistemas #calc-row[data-cols="3"]>.calc-container,
+  .page-sistemas #calc-row[data-cols="3"]>#calc-secondary,
+  .page-sistemas #calc-row[data-cols="3"]>#calc-tertiary{
+    flex:0 0 min(92vw,520px)!important;scroll-snap-align:start;min-width:0!important
+  }
+  /* add-more-panel debajo (no dentro del carril) */
+  .page-sistemas #calc-row[data-cols="2"] #add-more-panel{flex:0 0 100%!important;scroll-snap-align:none}
+}
+
+
