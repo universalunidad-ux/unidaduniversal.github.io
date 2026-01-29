@@ -225,12 +225,6 @@ body>.arrowCircle{display:none!important}
 html[data-theme="light"] .page-sistemas .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;font-size:clamp(18px,2vw,22px);background:linear-gradient(135deg,var(--text),var(--brand-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;display:none}
 html[data-theme="light"] .page-sistemas .reel-title.active{display:block}
 
-/* reel-title marquee */
-.page-sistemas .reel-title{white-space:nowrap;overflow:hidden;position:relative}
-.page-sistemas .reel-title .__mqTrack{display:inline-flex;gap:32px;will-change:transform}
-@keyframes reel-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.page-sistemas .reel-title.is-marquee .__mqTrack{animation:reel-marquee linear infinite;animation-duration:var(--mq-dur,12s)}
-@media(hover:hover){.page-sistemas .reel-title.is-marquee:hover .__mqTrack{animation-play-state:paused}}
 
 /* BADGES base (Sistemas) */
 .page-sistemas .badge,.page-sistemas .badges .badge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.22);color:rgba(232,238,246,.92);font-weight:800;font-size:12.5px;line-height:1}
@@ -1025,15 +1019,6 @@ body.page-index.debug-freeze {
 .yt-no-thumb{background:radial-gradient(120% 90% at 50% 40%, rgba(255,255,255,.12), rgba(0,0,0,.85))}
 
 
-.reel-title{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.reel-title.is-marquee{text-overflow:clip}
-.reel-title.is-marquee .__mqTrack{display:inline-flex;align-items:center;gap:28px;will-change:transform;animation:exp-mq var(--mq-dur,12s) linear infinite}
-.reel-title.mq-paused .__mqTrack{animation-play-state:paused}
-@media(hover:hover){.reel-title.is-marquee:hover .__mqTrack{animation-play-state:paused}}
-@media(prefers-reduced-motion:reduce){.reel-title.is-marquee .__mqTrack{animation:none!important}}
-@keyframes exp-mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-
 
 
 /* Expiriti — PRODUCT PAGE PATCH v2026.01.28 (1A/2C/3B/4B/5C/6C/7A+/8C/9C/10A+/11C) */
@@ -1116,3 +1101,8 @@ body.page-index.debug-freeze {
 .page-sistemas :where(.faq-cta-wrap,.faq-and-cta,.faq-section) :where(.cta-final,.cta-start,.ready-card){order:0}
 .page-sistemas :where(.faq-cta-wrap,.faq-and-cta,.faq-section) :where(.faq,.faq-list,.accordion){order:1}
 
+
+/*== 4B REEL TITLE: 2-line clamp (sin marquee) | HTML: <h4 class="reel-title ..."> ==*/
+.page-sistemas .reel-title{white-space:normal!important;overflow:hidden!important;text-overflow:ellipsis!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-height:1.15!important;max-height:2.35em!important}
+.page-sistemas .reel-title .__mqTrack{display:contents!important}
+.page-sistemas .reel-title.is-marquee{animation:none!important}
