@@ -122,13 +122,6 @@ html.gh-open .page-sistemas #gh-drawer.gh-drawer{transform:translate3d(0,0,0)}
 .page-sistemas .feature-grid .fcard h4,.page-sistemas .feature-grid .fcard p{text-align:center!important}
 .page-sistemas .faq-item p{text-align:justify;text-justify:inter-word;hyphens:auto}
 
-/* PILLS (base) */
-.page-sistemas .pill{min-height:44px;padding:10px 14px!important;border-radius:14px!important;background:linear-gradient(180deg,rgba(15,23,36,.95),rgba(11,18,32,.95))!important;border:1px solid rgba(148,163,184,.35)!important;color:rgba(219,231,255,.98)!important;font-weight:900!important;line-height:1.15!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 16px rgba(0,0,0,.28);transition:transform .12s ease,box-shadow .12s ease,background .18s ease,border-color .18s ease}
-.page-sistemas .pill:hover{transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 22px rgba(0,0,0,.30)}
-.page-sistemas .pill:active{transform:translateY(1px) scale(.985);box-shadow:0 4px 12px rgba(0,0,0,.22)}
-.page-sistemas .pill.active{background:linear-gradient(145deg,var(--brand),var(--brand-2))!important;color:#081218!important;border-color:transparent!important;box-shadow:0 0 0 1px rgba(45,212,191,.45),0 12px 28px rgba(0,0,0,.40)}
-.page-sistemas .pillbar{display:flex;flex-wrap:wrap;gap:10px!important;margin:8px 0 10px}
-@media(max-width:768px){.page-sistemas .pillbar{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}.page-sistemas .pill{width:100%!important;text-align:center!important;justify-content:center!important}.page-sistemas .pillbar .pill:last-child{grid-column:1/-1!important}}
 
 /* CAROUSEL (.carousel) */
 .page-sistemas .carousel{border-radius:var(--radius,14px);overflow:hidden;min-height:320px;position:relative}
@@ -257,11 +250,6 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 #toc.collapsed .toc-panel{display:none}
 #toc.open .toc-panel{display:block}
 
-
-/* DEDUPE FIX: PILLS inactivos neutros (sin tocar .pill.active) */
-.page-sistemas .pillbar .pill:not(.active){color:rgba(232,238,246,.96)!important;background:rgba(15,23,42,.22)!important;border:1px solid rgba(148,163,184,.28)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 26px rgba(0,0,0,.18)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-html[data-theme="light"] .page-sistemas .pillbar .pill:not(.active){color:rgba(232,238,246,.98)!important;background:rgba(11,18,32,.70)!important;border:1px solid rgba(2,6,23,.14)!important}
-@media(hover:hover){.page-sistemas .pillbar .pill:not(.active):hover{transform:translateY(-1px);border-color:rgba(96,165,250,.40)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 16px 34px rgba(0,0,0,.22)!important}}
 
 /* FIX: ocultar “labels blancos” debajo del player si aparecen */
 .yt-title--hidden{display:none!important}
@@ -658,13 +646,7 @@ body.page-index.debug-freeze {
 /* ========== 4B) Título reels: 2 líneas clamp (sin marquee) ========== */
 .page-sistemas :where(.reel-title,.reels-title,.video-title,.carousel-title){display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-overflow:ellipsis;line-height:1.15;max-height:2.35em}
 
-/* ========== 5C) Barra CTAs responsive (5 botones) ========== */
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
-@media(max-width:860px){
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){flex-wrap:wrap}
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button){flex:1 1 calc(50% - 10px);min-width:0;white-space:nowrap}
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(1){flex-basis:calc(50% - 10px)}
-}
+
 
 /* ========== 6C) “Funciones destacadas”: cards misma altura real ========== */
 .page-sistemas :where(.features-grid,.funciones-grid,.cards-grid,.grid-cards){display:grid;gap:14px}
@@ -734,4 +716,24 @@ body.page-index.debug-freeze {
 
 
 @media(min-width:981px){body.page-sistemas #calc-row[data-cols="2"] .calc-container,body.page-sistemas #calc-row[data-cols="3"] .calc-container,body.page-sistemas #calc-row[data-cols="1"] .calc-container{height:auto!important;max-height:none!important;overflow:visible!important;display:block!important}}body.page-sistemas .calc-container table{display:table!important;overflow:visible!important;max-height:none!important}body.page-sistemas .calc-container thead,body.page-sistemas .calc-container tbody{display:table-row-group!important;width:auto!important;table-layout:auto!important}body.page-sistemas .calc-container thead th{position:static!important;top:auto!important}body.page-sistemas .calc-strip,body.page-sistemas #calc-row{overflow:visible!important}
+
+
+/* EXPIRITI—UNIFICAR PALETA (LIGHT=DARK) v2026.01.29-u1 */
+:root{--ex-cta-yellow:#e9aa19;--ex-cta-green:#149997;--ex-cta-pink:#fa5262;--ex-cta-blue:#46b8ff;--ex-chip-grad:linear-gradient(135deg,#149997 0%,#fa5262 100%);--ex-chip-off-bg:rgba(255,255,255,.06);--ex-chip-off-bd:rgba(148,163,184,.28);--ex-chip-off-tx:rgba(232,238,246,.92)}
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
+@media(max-width:860px){.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){flex-wrap:wrap}.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button){flex:1 1 calc(50% - 10px);min-width:0;white-space:nowrap}}
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button){color:#fff!important;border-color:transparent!important}
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(1){background:var(--ex-cta-yellow)!important}
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(2){background:var(--ex-cta-green)!important}
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(3){background:var(--ex-cta-pink)!important}
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(4),.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(5){background:transparent!important;color:var(--ex-chip-off-tx)!important;border:1px solid var(--ex-chip-off-bd)!important}
+.page-sistemas .pillbar{display:flex;flex-wrap:wrap;gap:10px!important;margin:8px 0 10px}
+.page-sistemas .pill{min-height:44px;padding:10px 14px!important;border-radius:14px!important;font-weight:900!important;line-height:1.15!important;display:inline-flex;align-items:center;justify-content:center;gap:10px;max-width:100%;white-space:normal}
+.page-sistemas .pill:not(.active){background:var(--ex-chip-off-bg)!important;border:1px solid var(--ex-chip-off-bd)!important;color:var(--ex-chip-off-tx)!important;box-shadow:none!important}
+.page-sistemas .pill.active{background:var(--ex-chip-grad)!important;border-color:transparent!important;color:#fff!important;box-shadow:0 10px 26px rgba(0,0,0,.22)!important}
+@media(max-width:768px){.page-sistemas .pillbar{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}.page-sistemas .pill{width:100%!important}.page-sistemas .pillbar .pill:last-child{grid-column:1/-1!important}}
+
+/* EXPIRITI—CTA BAR MOBILE 2x2 + 5th centered (no full) v2026.01.29-cta2 */
+.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
+@media(max-width:860px){.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button){min-width:0;white-space:nowrap}.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
 
