@@ -268,7 +268,6 @@ html[data-theme="light"] .page-sistemas .pillbar .pill:not(.active){color:rgba(2
 #carouselVideos .yt-title{display:none!important}
 
 
-.page-sistemas .calc-strip{max-width:var(--sys-narrow,min(1120px,70vw));margin:0 auto;padding:0 12px}.page-sistemas #calc-row{display:grid;gap:14px;align-items:stretch;max-width:100%}.page-sistemas #calc-row>*{min-width:0!important;max-width:100%}.page-sistemas #calc-row[data-cols="1"]{grid-template-columns:repeat(2,minmax(0,1fr))}.page-sistemas #calc-row[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}@media(max-width:980px){.page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:1fr}}.page-sistemas #calc-row[data-cols="1"] #calc-slot-2{display:block!important}.page-sistemas #calc-row[data-cols="1"] #calc-secondary,.page-sistemas #calc-row[data-cols="1"] #calc-tertiary,.page-sistemas #calc-row[data-cols="1"] #add-more-panel{display:none!important}.page-sistemas #calc-row[data-cols="2"] #calc-slot-2{display:none!important}.page-sistemas #calc-row[data-cols="2"] #calc-secondary{display:block!important}.page-sistemas #calc-row[data-cols="2"] #calc-tertiary{display:none!important}.page-sistemas #calc-row[data-cols="2"] #add-more-panel{display:block!important;grid-column:1/-1}.page-sistemas #calc-row[data-cols="3"] #calc-slot-2{display:none!important}.page-sistemas #calc-row[data-cols="3"] #calc-secondary,.page-sistemas #calc-row[data-cols="3"] #calc-tertiary{display:block!important}.page-sistemas #calc-row[data-cols="3"] #add-more-panel{display:none!important}
 
 /* =========================================================
  Expiriti — CALC FINAL PATCH v2026.01.09-final
@@ -366,7 +365,6 @@ html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td:last-child,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td:last-child,
 html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td:last-child{color:#fff!important}
 
-@media(min-width:981px){.page-sistemas #calc-row[data-cols="2"] .calc-container,.page-sistemas #calc-row[data-cols="3"] .calc-container{height:var(--calc-card-h,560px)!important;display:flex!important;flex-direction:column!important;min-height:0!important;overflow:hidden!important}@media(max-width:1180px){.page-sistemas #calc-row[data-cols="2"] .calc-container,.page-sistemas #calc-row[data-cols="3"] .calc-container{height:var(--calc-card-h-md,540px)!important}}}
 
 
 /* ===== 5) Carrusel/upsell “Integra…”: ROJO sólido, SIN degradados/glass ===== */
@@ -505,40 +503,6 @@ html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[t
 .page-sistemas #combined-wrap .cs-head{margin-bottom:14px!important}
 .page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
 
-/* (D) IMG2/IMG3 desktop: FIX definitivo “tabla cortada”
-   Clave: el alto fijo vive en .calc-container; la tabla debe ser el área scrolleable real.
-*/
-@media(min-width:981px){
-  /* 1) Contenedor: flex correcto y permite que el hijo scrollee */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container{
-    display:flex!important;flex-direction:column!important;
-    min-height:0!important;overflow:hidden!important
-  }
-
-  /* 2) La tabla: área scrolleable (y NO se pierde el final) */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container table,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container table{
-    flex:1 1 auto!important;min-height:0!important;max-height:100%!important;
-    display:block!important;overflow:auto!important;-webkit-overflow-scrolling:touch;
-    /* evita “última fila pegada” visualmente */
-    padding-bottom:2px!important
-  }
-
-  /* 3) Mantén estructura de tabla al convertir a block */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container thead,
-  .page-sistemas #calc-row[data-cols="2"] .calc-container tbody,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container thead,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container tbody{
-    display:table!important;width:100%!important;table-layout:fixed!important
-  }
-
-  /* 4) Header sticky dentro del scroll */
-  .page-sistemas #calc-row[data-cols="2"] .calc-container thead th,
-  .page-sistemas #calc-row[data-cols="3"] .calc-container thead th{
-    position:sticky!important;top:0!important;z-index:5!important
-  }
-}
 
 /* (E) IMG2: “¿Agregar un tercer sistema?” rojo corto (pill centrada, no full width) */
 html[data-theme="light"] .page-sistemas #add-more-panel .note strong{
@@ -614,35 +578,7 @@ body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{margin:4px 0 0!
 body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:12px 14px!important}
 @media(max-width:520px){body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}}
 
-/* (3) DESKTOP (2/3): FIX definitivo “tabla cortada”
-   - calc-container mantiene altura fija
-   - tabla es el área scrolleable real
-*/
-@media(min-width:981px){
-  body.page-sistemas #calc-row[data-cols="2"] .calc-container,
-  body.page-sistemas #calc-row[data-cols="3"] .calc-container{
-    display:flex!important;flex-direction:column!important;
-    height:var(--calc-card-h,560px)!important;min-height:0!important;overflow:hidden!important
-  }
-  @media(max-width:1180px){
-    body.page-sistemas #calc-row[data-cols="2"] .calc-container,
-    body.page-sistemas #calc-row[data-cols="3"] .calc-container{height:var(--calc-card-h-md,540px)!important}
-  }
-  body.page-sistemas #calc-row[data-cols="2"] .calc-container form,
-  body.page-sistemas #calc-row[data-cols="3"] .calc-container form{flex:0 0 auto!important}
-  body.page-sistemas #calc-row[data-cols="2"] .calc-container table,
-  body.page-sistemas #calc-row[data-cols="3"] .calc-container table{
-    flex:1 1 auto!important;min-height:0!important;max-height:100%!important;
-    display:block!important;overflow:auto!important;-webkit-overflow-scrolling:touch;
-    margin:10px 0 0!important;padding-bottom:2px!important
-  }
-  body.page-sistemas #calc-row[data-cols="2"] .calc-container thead,
-  body.page-sistemas #calc-row[data-cols="2"] .calc-container tbody,
-  body.page-sistemas #calc-row[data-cols="3"] .calc-container thead,
-  body.page-sistemas #calc-row[data-cols="3"] .calc-container tbody{display:table!important;width:100%!important;table-layout:fixed!important}
-  body.page-sistemas #calc-row[data-cols="2"] .calc-container thead th,
-  body.page-sistemas #calc-row[data-cols="3"] .calc-container thead th{position:sticky!important;top:0!important;z-index:6!important}
-}
+
 
 /* (4) MOBILE/TABLET: evita “no se ve nada” + scroll lateral SOLO calculadoras (2/3) */
 @media(max-width:980px){
@@ -878,27 +814,5 @@ body.page-index.debug-freeze {
 /* mata TODO lo de “carril horizontal” para calculadoras (solo quedan grid normales) */
 @media(max-width:980px){.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{display:grid!important;overflow:visible!important;scroll-snap-type:none!important}}
 
-
-/* (4) MOBILE: 2+ CALCS => scroll horizontal (lateral) + no recortes */
-@media(max-width:980px){
-  /* el row se vuelve “carril” horizontal SOLO si hay 2 o 3 */
-  .page-sistemas #calc-row[data-cols="2"],
-  .page-sistemas #calc-row[data-cols="3"]{
-    display:flex!important;gap:14px!important;
-    overflow-x:auto!important;overflow-y:visible!important;
-    -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
-    padding:0 6px!important;margin:0 auto!important;max-width:100%!important
-  }
-  /* cada calculadora ocupa casi toda la pantalla y “snap” al mover */
-  .page-sistemas #calc-row[data-cols="2"]>.calc-container,
-  .page-sistemas #calc-row[data-cols="2"]>#calc-secondary,
-  .page-sistemas #calc-row[data-cols="3"]>.calc-container,
-  .page-sistemas #calc-row[data-cols="3"]>#calc-secondary,
-  .page-sistemas #calc-row[data-cols="3"]>#calc-tertiary{
-    flex:0 0 min(92vw,520px)!important;scroll-snap-align:start;min-width:0!important
-  }
-  /* add-more-panel debajo (no dentro del carril) */
-  .page-sistemas #calc-row[data-cols="2"] #add-more-panel{flex:0 0 100%!important;scroll-snap-align:none}
-}
 
 
