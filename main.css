@@ -579,27 +579,11 @@ body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:12px 14px!imp
 @media(max-width:520px){body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}}
 
 
-  /* Mobile: cards sin alturas forzadas (evita recortes) */
-  body.page-sistemas .calc-container{height:auto!important;max-height:none!important}
-
-  /* Tabla: si se aprieta, permite scroll-x sin romper importes */
-  body.page-sistemas .calc-container table{display:block!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}
-  body.page-sistemas .calc-container thead,body.page-sistemas .calc-container tbody{display:table!important;width:100%!important;table-layout:auto!important}
-  body.page-sistemas .calc-container thead th:last-child,body.page-sistemas .calc-container tbody td:last-child{white-space:nowrap!important;text-align:right!important;min-width:150px!important}
+@media(max-width:680px){body.page-sistemas .calc-container{height:auto!important;max-height:none!important}body.page-sistemas .calc-container table{display:block!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}body.page-sistemas .calc-container thead,body.page-sistemas .calc-container tbody{display:table!important;width:100%!important;table-layout:auto!important}body.page-sistemas .calc-container thead th:last-child,body.page-sistemas .calc-container tbody td:last-child{white-space:nowrap!important;text-align:right!important;min-width:150px!important}}
 }
 
 /* (5) MICRO-FIX: alineación visual del renglón Total (si algún CSS viejo lo desfasó) */
 body.page-sistemas .calc-container :is(#tr-tot1,#tr-tot2,#tr-tot3) td{vertical-align:middle!important;line-height:1.2!important}
-
-
-/* =========================
-EXPIRITI — NO INTERNAL SCROLL v2026.01.10-ns1
-Objetivo:
-- Quitar height fijo y scroll interno
-- Tablas siempre completas (Subtotal/IVA/Total visibles)
-- 1/2/3 calculadoras: cards auto-height
-Pegar AL FINAL.
-========================= */
 
 
 /* =========================================================
