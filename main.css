@@ -353,7 +353,6 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 .page-sistemas #calc-row .calc-container thead th{position:static!important;top:auto!important;z-index:auto!important}
 
 /* (3) FORM 2x2 SOLO MOBILE (Lic+RFC / Usuarios+Instalación) */
-@media(max-width:680px){.page-sistemas .calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 12px!important;align-items:start!important}.page-sistemas .calc-container .field.lic{grid-column:1!important}.page-sistemas .calc-container .field.rfc{grid-column:2!important}.page-sistemas .calc-container .field.usr{grid-column:1!important}.page-sistemas .calc-container .inst-wrap{grid-column:2!important}.page-sistemas .calc-container .op-label{grid-column:1/-1!important}}
 
 /* (4) TABLA: full width + “Importe” alineado (SIN scroll-x) */
 .page-sistemas .calc-container table{display:table!important;width:100%!important;max-width:100%!important;margin:10px 0 0!important;table-layout:fixed;border-collapse:separate}
@@ -371,8 +370,6 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 :root{--ex-cta-yellow:#e9aa19;--ex-cta-green:#149997;--ex-cta-pink:#fa5262;--ex-cta-blue:#46b8ff;--ex-cta-tx:#0b1220;--ex-cta-tx-dark:#061018;--ex-ghost-bg:transparent;--ex-ghost-bd:rgba(148,163,184,.28);--ex-ghost-tx:rgba(232,238,246,.92)}
 .page-sistemas .cta-strip{display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
 .page-sistemas .cta-strip :where(a,button){border-color:transparent!important;text-decoration:none}
-.page-sistemas .cta-strip :where(a,button):nth-child(1){background:var(--ex-cta-yellow)!important;color:var(--ex-cta-tx-dark)!important}
-.page-sistemas .cta-strip :where(a,button):nth-child(2){background:var(--ex-cta-green)!important;color:var(--ex-cta-tx-dark)!important}
 .page-sistemas .cta-strip :where(a,button):nth-child(3){background:var(--ex-cta-pink)!important;color:#fff!important}
 .page-sistemas .cta-strip :where(a,button):nth-child(4),.page-sistemas .cta-strip :where(a,button):nth-child(5){background:var(--ex-ghost-bg)!important;border:1px solid var(--ex-ghost-bd)!important;color:var(--ex-ghost-tx)!important}
 @media(max-width:860px){.page-sistemas .cta-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas .cta-strip :where(a,button){min-width:0;white-space:nowrap;justify-content:center}.page-sistemas .cta-strip :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
@@ -388,22 +385,19 @@ html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(4)
 }
 
 
-/* === EXPIRITI PATCH v2026.01.29-u4 (CTAs text + CALC 2x2 desktop + BADGES swipe) === */
 
-/* (1) CTAs: mismos colores en ambos modos; texto blanco SOLO en 1 y 2 */
+/* === EXPIRITI DEDUPE PACK v2026.01.29-u4 === */
+/* CTAs: texto blanco en (1) y (2) en light+dark */
 .page-sistemas .cta-strip :where(a,button):nth-child(1),
 .page-sistemas .cta-strip :where(a,button):nth-child(2){color:#fff!important}
-
-/* (2) CALC: 2x2 también en DESKTOP (unifica comportamiento) */
+/* CALC: form 2x2 también en desktop */
+.page-sistemas .calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 12px!important;align-items:start!important}
 .page-sistemas .calc-container .field.lic{grid-column:1!important}
 .page-sistemas .calc-container .field.rfc{grid-column:2!important}
 .page-sistemas .calc-container .field.usr{grid-column:1!important}
 .page-sistemas .calc-container .inst-wrap{grid-column:2!important}
 .page-sistemas .calc-container .op-label{grid-column:1/-1!important}
-
-/* (3) BADGES: en mobile swipe horizontal (tipo comparativa) */
+/* BADGES: mobile swipe horizontal */
 .page-sistemas .badges{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-@media(max-width:860px){
-.page-sistemas .badges{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding:6px 2px}
-.page-sistemas .badges .badge{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
-}
+@media(max-width:860px){.page-sistemas .badges{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding:6px 2px}.page-sistemas .badges .badge{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}}
+
