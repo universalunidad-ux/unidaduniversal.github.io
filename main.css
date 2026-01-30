@@ -348,7 +348,6 @@ body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:flex}
 .page-sistemas #calc-secondary.calc-empty{display:block!important;min-height:220px!important;padding:14px!important}
 /* Layout por data-cols (grid sin swipe) */
 .page-sistemas .calc-strip{max-width:var(--sys-narrow,min(1120px,70vw));margin:0 auto;padding:0 12px;overflow:visible!important}
-@media(max-width:980px){.page-sistemas .calc-strip{width:98%;max-width:98%;margin-left:auto;margin-right:auto;padding-left:0;padding-right:0}}
 .page-sistemas #calc-row{display:grid!important;gap:14px;align-items:stretch;max-width:100%;overflow:visible!important}
 .page-sistemas #calc-row>*{min-width:0!important;max-width:100%}
 .page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -370,3 +369,5 @@ body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:flex}
 /* Fix tables sectioning (si el DOM raro lo requiere) */
 .page-sistemas .calc-container thead,.page-sistemas .calc-container tbody,.page-sistemas .calc-container tfoot{display:table-row-group!important;width:auto!important}
 
+/* CALC: ancho página SOLO mobile */
+@media(max-width:680px){.page-sistemas .calc-strip{width:100%;max-width:100%;margin-left:auto;margin-right:auto;padding-left:12px;padding-right:12px}}
