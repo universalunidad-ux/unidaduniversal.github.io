@@ -386,3 +386,24 @@ html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(4)
 .page-sistemas .cta-strip>:where(a,button){min-width:0;white-space:nowrap;justify-content:center}
 .page-sistemas .cta-strip>:where(a,button):last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:min(420px,86%)}
 }
+
+
+/* === EXPIRITI PATCH v2026.01.29-u4 (CTAs text + CALC 2x2 desktop + BADGES swipe) === */
+
+/* (1) CTAs: mismos colores en ambos modos; texto blanco SOLO en 1 y 2 */
+.page-sistemas .cta-strip :where(a,button):nth-child(1),
+.page-sistemas .cta-strip :where(a,button):nth-child(2){color:#fff!important}
+
+/* (2) CALC: 2x2 también en DESKTOP (unifica comportamiento) */
+.page-sistemas .calc-container .field.lic{grid-column:1!important}
+.page-sistemas .calc-container .field.rfc{grid-column:2!important}
+.page-sistemas .calc-container .field.usr{grid-column:1!important}
+.page-sistemas .calc-container .inst-wrap{grid-column:2!important}
+.page-sistemas .calc-container .op-label{grid-column:1/-1!important}
+
+/* (3) BADGES: en mobile swipe horizontal (tipo comparativa) */
+.page-sistemas .badges{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+@media(max-width:860px){
+.page-sistemas .badges{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding:6px 2px}
+.page-sistemas .badges .badge{flex:0 0 auto;scroll-snap-align:center;white-space:nowrap}
+}
