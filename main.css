@@ -39,7 +39,7 @@ html[data-theme="light"] .page-sistemas #carouselVideos .yt-title{color:rgba(11,
 @media(max-width:768px){.page-sistemas #comparativa .table-like{min-width:920px}}
 .page-sistemas .table-like{width:100%;min-width:720px}
 
-/* CALCULADORAS: inputs + contenedores + tabla */
+/* CALC BASE (canon, no scroll interno) */
 .page-sistemas .calc-container label{display:block;margin-top:6px;font-weight:700;font-size:13px;color:rgba(232,238,246,.92)}
 html[data-theme="light"] .page-sistemas .calc-container label{color:rgba(11,18,32,.92)}
 .page-sistemas .calc-container select,.page-sistemas .calc-container input[type="number"],.page-sistemas .calc-container input[type="text"]{width:100%;padding:8px 10px;border-radius:12px;border:1px solid rgba(148,163,184,.28);background:rgba(7,10,16,.28);color:inherit;margin:6px 0}
@@ -50,24 +50,39 @@ html[data-theme="light"] .page-sistemas .calc-container select,html[data-theme="
 .page-sistemas .placeholder .note{width:100%;max-width:100%;text-align:left;border:1px dashed rgba(148,163,184,.30);background:rgba(17,23,35,.30);border-radius:14px;padding:14px}
 .page-sistemas .placeholder .note strong{display:block;line-height:1.25}
 .page-sistemas .placeholder .note small{display:block;opacity:.9;margin-top:4px}
-.page-sistemas .calc-container form{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:12px!important;align-items:start}
+
+/* FORM default: 1 columna (desktop) */
+.page-sistemas .calc-container form{display:block!important}
 .page-sistemas .calc-container form>*{min-width:0}
-.page-sistemas .calc-container .field.lic{grid-column:1!important}
-.page-sistemas .calc-container .field.rfc{grid-column:2!important}
-.page-sistemas .calc-container .op-label{grid-column:1/-1!important}
-.page-sistemas .calc-container .field.usr{grid-column:1!important}
-.page-sistemas .calc-container .inst-wrap{grid-column:2!important}
+
+/* Instalación box */
 .page-sistemas .calc-container .instalacion-box{display:flex!important;align-items:center!important;gap:10px!important;padding:10px 12px;border:1px dashed rgba(148,163,184,.30);border-radius:10px;background:rgba(15,23,42,.20);flex-wrap:nowrap}
 .page-sistemas .calc-container .instalacion-box>label{display:flex!important;align-items:center!important;gap:10px!important;margin:0!important}
 .page-sistemas .calc-container .instalacion-box input[type="checkbox"]{margin:0!important}
 .page-sistemas .calc-container .instalacion-box .inst-hint{display:inline;margin-left:6px;opacity:.85;line-height:1.25}
-.page-sistemas .calc-container table{width:100%;max-width:640px;margin:10px auto 0;border-collapse:separate;border-spacing:0;border:1px solid rgba(148,163,184,.20);border-radius:14px;overflow:hidden;background:rgba(15,23,42,.30)}
+
+/* Tabla full width (sin max-width angosto) */
+.page-sistemas .calc-container table{width:100%;max-width:100%;margin:10px 0 0;table-layout:fixed;border-collapse:separate;border-spacing:0;border:1px solid rgba(148,163,184,.20);border-radius:14px;overflow:hidden;background:rgba(15,23,42,.30)}
 .page-sistemas .calc-container thead th{text-align:left;border-bottom:1px solid rgba(148,163,184,.18);padding:12px 14px;font-weight:900;background:rgba(15,23,42,.20)}
 html[data-theme="light"] .page-sistemas .calc-container thead th{background:rgba(2,6,23,.04)}
 .page-sistemas .calc-container td,.page-sistemas .calc-container th{padding:10px 12px;border-bottom:1px solid rgba(148,163,184,.14)}
 .page-sistemas .calc-container tr:last-child td{border-bottom:none}
+
+/* Importes siempre alineados */
+.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child{text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.page-sistemas .calc-container tbody td:first-child{overflow-wrap:anywhere}
 .page-sistemas .calc-container .price,.page-sistemas .calc-container .total,.page-sistemas .calc-container .monto{font-weight:900;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 .page-sistemas .calc-container #tr-tot1 td,.page-sistemas .calc-container #tr-tot2 td,.page-sistemas .calc-container #tr-tot3 td{font-size:14px}
+
+/* MOBILE: form 2x2 SOLO aquí */
+@media(max-width:680px){
+.page-sistemas .calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 12px!important;align-items:start!important}
+.page-sistemas .calc-container .field.lic{grid-column:1!important}
+.page-sistemas .calc-container .field.rfc{grid-column:2!important}
+.page-sistemas .calc-container .field.usr{grid-column:1!important}
+.page-sistemas .calc-container .inst-wrap{grid-column:2!important}
+.page-sistemas .calc-container .op-label{grid-column:1/-1!important}
+}
 
 /* SWITCH nube/escritorio */
 .page-sistemas #calc-primary{display:block!important}.page-sistemas .nube-only,.page-sistemas .desk-only{display:none}
@@ -268,10 +283,6 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 .page-sistemas :where(.why-2col,.why-grid,.benefits-reels) :where(.left,.col-left,.benefits){display:flex;flex-direction:column}
 .page-sistemas :where(.why-2col,.why-grid,.benefits-reels) :where(.right,.col-right,.reels){display:flex;flex-direction:column}
 
-/* ========== 4B) Título reels: 2 líneas clamp (sin marquee) ========== */
-.page-sistemas :where(.reel-title,.reels-title,.video-title,.carousel-title){display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-overflow:ellipsis;line-height:1.15;max-height:2.35em}
-
-
 
 /* ========== 6C) “Funciones destacadas”: cards misma altura real ========== */
 .page-sistemas :where(.features-grid,.funciones-grid,.cards-grid,.grid-cards){display:grid;gap:14px}
@@ -309,15 +320,23 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 .page-sistemas :where(.faq-cta-wrap,.faq-and-cta,.faq-section) :where(.cta-final,.cta-start,.ready-card){order:0}
 .page-sistemas :where(.faq-cta-wrap,.faq-and-cta,.faq-section) :where(.faq,.faq-list,.accordion){order:1}
 
+/* =========================================================
+ EXPIRITI — PATCH ÚNICO (CALC CANON + CTA + REELS) v2026.01.29-u2
+ - Sin carril horizontal (calc)
+ - Sin scroll interno / sin sticky thead
+ - Form 2x2 SOLO mobile
+ - Tabla full-width + “Importe” alineado (SIN scroll-x)
+ - CTA colores + 2x2 mobile + 5to centrado
+ - Reels: solo activo + clamp 2 líneas
+========================================================= */
 
-/* EXPIRITI — CALC CANON (NO swipe + NO scroll interno) v2026.01.29 */
+/* (1) CALC CANON: grid por data-cols (sin swipe) */
 .page-sistemas .calc-strip{max-width:var(--sys-narrow,min(1120px,70vw));margin:0 auto;padding:0 12px;overflow:visible!important}
 .page-sistemas #calc-row{display:grid!important;gap:14px;align-items:stretch;max-width:100%;overflow:visible!important}
 .page-sistemas #calc-row>*{min-width:0!important;max-width:100%}
-.page-sistemas #calc-row[data-cols="1"]{grid-template-columns:repeat(2,minmax(0,1fr))}
-.page-sistemas #calc-row[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+.page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
 .page-sistemas #calc-row[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
-@media(max-width:980px){.page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:1fr}}
+@media(max-width:980px){.page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:1fr}.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{overflow:visible!important;scroll-snap-type:none!important}}
 .page-sistemas #calc-row[data-cols="1"] #calc-slot-2{display:block!important}
 .page-sistemas #calc-row[data-cols="1"] #calc-secondary,.page-sistemas #calc-row[data-cols="1"] #calc-tertiary,.page-sistemas #calc-row[data-cols="1"] #add-more-panel{display:none!important}
 .page-sistemas #calc-row[data-cols="2"] #calc-slot-2{display:none!important}
@@ -327,18 +346,28 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 .page-sistemas #calc-row[data-cols="3"] #calc-slot-2{display:none!important}
 .page-sistemas #calc-row[data-cols="3"] #calc-secondary,.page-sistemas #calc-row[data-cols="3"] #calc-tertiary{display:block!important}
 .page-sistemas #calc-row[data-cols="3"] #add-more-panel{display:none!important}
-/* mata TODO lo de “altura fija + tabla scrolleo interno + sticky header” */
+
+/* (2) ANTI-SCROLL INTERNO: mata height/overflow/sticky heredados */
 .page-sistemas #calc-row .calc-container{height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;display:block!important}
 .page-sistemas #calc-row .calc-container table{display:table!important;overflow:visible!important;max-height:none!important}
 .page-sistemas #calc-row .calc-container thead th{position:static!important;top:auto!important;z-index:auto!important}
-/* mata TODO lo de “carril horizontal” para calculadoras (solo quedan grid normales) */
-@media(max-width:980px){.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{display:grid!important;overflow:visible!important;scroll-snap-type:none!important}}
 
+/* (3) FORM 2x2 SOLO MOBILE (Lic+RFC / Usuarios+Instalación) */
+@media(max-width:680px){.page-sistemas .calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 12px!important;align-items:start!important}.page-sistemas .calc-container .field.lic{grid-column:1!important}.page-sistemas .calc-container .field.rfc{grid-column:2!important}.page-sistemas .calc-container .field.usr{grid-column:1!important}.page-sistemas .calc-container .inst-wrap{grid-column:2!important}.page-sistemas .calc-container .op-label{grid-column:1/-1!important}}
 
-@media(min-width:981px){body.page-sistemas #calc-row[data-cols="2"] .calc-container,body.page-sistemas #calc-row[data-cols="3"] .calc-container,body.page-sistemas #calc-row[data-cols="1"] .calc-container{height:auto!important;max-height:none!important;overflow:visible!important;display:block!important}}body.page-sistemas .calc-container table{display:table!important;overflow:visible!important;max-height:none!important}body.page-sistemas .calc-container thead,body.page-sistemas .calc-container tbody{display:table-row-group!important;width:auto!important;table-layout:auto!important}body.page-sistemas .calc-container thead th{position:static!important;top:auto!important}body.page-sistemas .calc-strip,body.page-sistemas #calc-row{overflow:visible!important}
+/* (4) TABLA: full width + “Importe” alineado (SIN scroll-x) */
+.page-sistemas .calc-container table{display:table!important;width:100%!important;max-width:100%!important;margin:10px 0 0!important;table-layout:fixed;border-collapse:separate}
+.page-sistemas .calc-container thead,.page-sistemas .calc-container tbody,.page-sistemas .calc-container tfoot{display:table-row-group!important;width:auto!important}
+.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child,.page-sistemas .calc-container tfoot td:last-child{text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;min-width:0!important}
+.page-sistemas .calc-container tbody td:first-child{overflow-wrap:anywhere}
+.page-sistemas .calc-container .price,.page-sistemas .calc-container .total,.page-sistemas .calc-container .monto{white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+@media(max-width:520px){.page-sistemas .calc-container table{max-width:100%!important;width:100%!important;margin:10px 0 0!important}}
 
+/* (5) REELS: solo activo + clamp 2 líneas */
+.page-sistemas .reel-title{display:none!important;white-space:normal!important;overflow:hidden!important;text-overflow:ellipsis!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-height:1.15!important;max-height:2.35em!important}
+.page-sistemas .reel-title.active{display:-webkit-box!important}
 
-/* EXPIRITI — FIX CTA+CALC+REELS (LIGHT=DARK) v2026.01.29-f1 */
+/* (6) CTA: colores + 2x2 mobile + 5to centrado */
 :root{--ex-cta-yellow:#e9aa19;--ex-cta-green:#149997;--ex-cta-pink:#fa5262;--ex-cta-blue:#46b8ff;--ex-cta-tx:#0b1220;--ex-cta-tx-dark:#061018;--ex-ghost-bg:transparent;--ex-ghost-bd:rgba(148,163,184,.28);--ex-ghost-tx:rgba(232,238,246,.92)}
 .page-sistemas .cta-strip{display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
 .page-sistemas .cta-strip :where(a,button){border-color:transparent!important;text-decoration:none}
@@ -348,19 +377,4 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 .page-sistemas .cta-strip :where(a,button):nth-child(4),.page-sistemas .cta-strip :where(a,button):nth-child(5){background:var(--ex-ghost-bg)!important;border:1px solid var(--ex-ghost-bd)!important;color:var(--ex-ghost-tx)!important}
 @media(max-width:860px){.page-sistemas .cta-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas .cta-strip :where(a,button){min-width:0;white-space:nowrap;justify-content:center}.page-sistemas .cta-strip :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
 html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(4),html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(5){color:rgba(11,18,32,.92)!important;border-color:rgba(2,6,23,.14)!important}
-
-/* CALC mobile: evita “angosto” por max-width+auto; que use todo el card */
-@media(max-width:520px){.page-sistemas .calc-container table{max-width:100%!important;margin:10px 0 0!important}.page-sistemas .calc-container table{width:100%!important}}
-/* si tu tabla aún se “aprieta”, habilita scroll-x SOLO en mobile sin romper desktop */
-
-
-/* EXPIRITI — PATCH CANON SAFE (NO scroll-x table) v2026.01.29-p2 */
-@media(max-width:680px){.page-sistemas .calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 12px!important;align-items:start!important}.page-sistemas .calc-container .field.lic{grid-column:1!important}.page-sistemas .calc-container .field.rfc{grid-column:2!important}.page-sistemas .calc-container .field.usr{grid-column:1!important}.page-sistemas .calc-container .inst-wrap{grid-column:2!important}.page-sistemas .calc-container .op-label{grid-column:1/-1!important}}
-.page-sistemas .calc-container table{display:table!important;width:100%!important;max-width:100%!important;table-layout:fixed}
-.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child{text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;min-width:0!important}
-.page-sistemas .calc-container tbody td:first-child{overflow-wrap:anywhere}
-.page-sistemas .reel-title{display:none!important;white-space:normal!important;overflow:hidden!important;text-overflow:ellipsis!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;line-height:1.15!important;max-height:2.35em!important}
-.page-sistemas .reel-title.active{display:-webkit-box!important}
-@media(max-width:860px){.page-sistemas .cta-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas .cta-strip :where(a,button){min-width:0;white-space:nowrap;justify-content:center}.page-sistemas .cta-strip :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
-
 
