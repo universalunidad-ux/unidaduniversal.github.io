@@ -206,9 +206,6 @@ body>.arrowCircle{display:none!important}
 #icons-sec-sys.is-centered,#icons-third-sys.is-centered{justify-content:center;overflow-x:hidden}
 .page-sistemas .icons-wrap img{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:12px!important}
 
-/* reel-title (LIGHT) */
-html[data-theme="light"] .page-sistemas .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;font-size:clamp(18px,2vw,22px);background:linear-gradient(135deg,var(--text),var(--brand-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;display:none}
-html[data-theme="light"] .page-sistemas .reel-title.active{display:block}
 
 
 /* BADGES base (Sistemas) */
@@ -255,378 +252,6 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 .yt-title--hidden{display:none!important}
 #carouselVideos .yt-title{display:none!important}
 
-
-
-/* =========================================================
- Expiriti — CALC FINAL PATCH v2026.01.09-final
- - FIX CRÍTICO: tablas NO se cortan (scroll interno + thead sticky)
- - 3 columnas: altura pareja SIN perder filas (IVA/Subtotal/Total)
- - Colores:
-   * Header Concepto/Importe: VERDE + glass suave
-   * Total: VERDE + glass suave
-   * Importes (tbody): sólido (sin glass/gradiente)
-   * Instalación: AMARILLO Expiriti sólido
-   * Carrusel “Integra…”: ROJO sólido (sin degradados)
- - Fix: padding/márgenes (labels/inputs no pegados)
-========================================================= */
-:root{--ex-green:#149997;--ex-green2:#1bb3ad;--ex-yellow:#e9aa19;--ex-red:#fa5262;--ex-ink:rgba(11,18,32,.92);--ex-line:rgba(2,6,23,.10)}
-
-/* ===== 0) Tarjeta calculadora: padding real y sin recortes raros ===== */
-html[data-theme="light"] .page-sistemas .calc-container{
-  background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;border-radius:18px!important;
-  box-shadow:0 14px 34px rgba(2,6,23,.08)!important;
-  padding:14px!important; /* <- esto arregla lo “pegado” */
-  overflow:hidden!important; /* <- se necesita cuando hay scroll interno */
-  display:flex!important;flex-direction:column!important;min-width:0!important
-}
-
-/* Título (h4) sin tocar tu HTML */
-html[data-theme="light"] .page-sistemas .calc-container>h4{
-  margin:0 0 10px!important;padding:0 2px!important;font-weight:950!important;letter-spacing:.01em!important;color:var(--ex-ink)!important
-}
-
-/* ===== 1) Form: que no se “pegue” a bordes, y que permita el scroll de la tabla ===== */
-.page-sistemas .calc-container form{margin:0!important;padding:0 2px!important;flex:0 0 auto!important;min-width:0!important}
-.page-sistemas .calc-container label{margin-top:8px!important}
-.page-sistemas .calc-container .inst-wrap{min-width:0!important}
-
-/* ===== 2) Instalación: AMARILLO Expiriti sólido ===== */
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box{
-  border:1px solid rgba(233,170,25,.40)!important;
-  background:rgba(233,170,25,.18)!important;
-  border-radius:14px!important
-}
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[type="checkbox"]{accent-color:var(--ex-yellow)}
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box strong{color:rgba(11,18,32,.92)!important}
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box .inst-hint{color:rgba(11,18,32,.78)!important}
-
-/* ===== 3) Tabla base ===== */
-html[data-theme="light"] .page-sistemas .calc-container table{
-  width:100%!important;max-width:100%!important;margin:10px 0 0!important;
-  border-collapse:separate!important;border-spacing:0!important;
-  border:1px solid rgba(2,6,23,.10)!important;border-radius:16px!important;
-  background:#fff!important;overflow:hidden!important;
-  flex:1 1 auto!important;min-height:0!important; /* clave para que el scroll funcione en flex */
-}
-
-/* Header: VERDE con glass suave (solo header, no los importes) */
-html[data-theme="light"] .page-sistemas .calc-container thead th{
-  padding:12px 14px!important;font-weight:950!important;color:#fff!important;text-align:left!important;
-  background:rgba(20,153,151,.92)!important;
-  border-bottom:1px solid rgba(255,255,255,.22)!important;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)
-}
-html[data-theme="light"] .page-sistemas .calc-container thead th:last-child{text-align:right!important}
-
-/* Body: limpio (sin gradientes/glass) */
-html[data-theme="light"] .page-sistemas .calc-container tbody td{
-  padding:10px 12px!important;color:var(--ex-ink)!important;
-  background:#fff!important;border-bottom:1px solid rgba(2,6,23,.08)!important
-}
-html[data-theme="light"] .page-sistemas .calc-container tbody tr:last-child td{border-bottom:none!important}
-
-/* Importes (tbody): sólido SIN glass/gradiente */
-html[data-theme="light"] .page-sistemas .calc-container tbody td:last-child{
-  text-align:right!important;white-space:nowrap!important;
-  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1,"lnum" 1;
-  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
-  background:#fff!important /* <- explícito: nada de color/velo */
-}
-
-/* Ancho estable de la columna Importe (evita brincos por “−” o “% / $”) */
-.page-sistemas .calc-container thead th:last-child,
-.page-sistemas .calc-container tbody td:last-child{min-width:170px}
-@media(max-width:420px){
-  .page-sistemas .calc-container thead th:last-child,
-  .page-sistemas .calc-container tbody td:last-child{min-width:150px}
-}
-
-/* Total: VERDE con glass suave (fila completa) */
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td,
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td,
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td{
-  background:rgba(20,153,151,.92)!important;color:#fff!important;font-weight:950!important;
-  border-bottom:none!important;
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)
-}
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot1 td:last-child,
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot2 td:last-child,
-html[data-theme="light"] .page-sistemas .calc-container #tr-tot3 td:last-child{color:#fff!important}
-
-
-
-/* ===== 5) Carrusel/upsell “Integra…”: ROJO sólido, SIN degradados/glass ===== */
-.page-sistemas .placeholder{background:transparent!important;border:0!important;padding:0!important;min-height:unset!important}
-html[data-theme="light"] .page-sistemas .placeholder .note{
-  background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;border-radius:18px!important;
-  box-shadow:0 14px 34px rgba(2,6,23,.08)!important;padding:14px!important
-}
-html[data-theme="light"] .page-sistemas #calc-slot-2 .note strong,
-html[data-theme="light"] .page-sistemas #add-more-panel .note strong{
-  display:block!important;margin:0 0 8px!important;padding:12px 14px!important;border-radius:16px!important;
-  background:var(--ex-red)!important;color:#fff!important;text-align:center!important;
-  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important
-}
-
-/* Tiles de sistemas (panel derecho): blancos limpios, SIN gradiente */
-html[data-theme="light"] .page-sistemas .sys-icon{
-  background:#fff!important;border:1px solid rgba(2,6,23,.10)!important;border-radius:16px!important;
-  box-shadow:0 12px 26px rgba(2,6,23,.08)!important
-}
-/* Si el nombre del sistema está dentro de <strong> (como en tu CSS) lo dejamos limpio */
-html[data-theme="light"] .page-sistemas .sys-icon strong{color:rgba(11,18,32,.92)!important}
-
-/* Flechas limpias + hover rojo sólido */
-html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle{
-  background:#fff!important;border-color:rgba(2,6,23,.14)!important;color:rgba(11,18,32,.92)!important;
-  box-shadow:0 12px 26px rgba(2,6,23,.10)!important
-}
-html[data-theme="light"] .page-sistemas .icons-carousel .arrowCircle:hover{
-  background:var(--ex-red)!important;border-color:var(--ex-red)!important;color:#fff!important
-}
-
-
-/* =========================
- 4) Seguridad: evita que algún contenedor padre esté cortando (overflow hidden)
- - Solo aplica a bloque de calculadoras
-========================= */
-.page-sistemas .calc-strip,
-.page-sistemas #calc-row{overflow:visible!important}
-
-
-/* =========================
-EXPIRITI — CALC PATCH ÚNICO (LIGHT+MOBILE) v2026.01.10-r2
-Objetivo:
-- Instalación: amarillo premium + texto NEGRO
-- Mobile: form 2x2 (Lic+RFC / Usuarios+Instalación)
-- Mobile: 2+ calculadoras => scroll horizontal (no recortes)
-- Mobile: tabla no se corta; card auto-height
-- Resumen combinado: separación consistente
-Pegar AL FINAL. Elimina patches anteriores que toquen lo mismo.
-========================= */
-
-/* (0) TOKENS (solo si no existen ya) */
-:root{--ex-yellow:#e9aa19;--ex-yellow-2:#ffd36a;--ex-ink:rgba(11,18,32,.92);--ex-ink-2:rgba(11,18,32,.78)}
-
-/* (1) FUSIÓN: calc-strip en UN solo lugar (borra duplicadas) */
-.page-sistemas .calc-strip{display:grid;gap:14px;max-width:var(--sys-narrow,min(1120px,70vw));margin:0 auto;padding:0 12px}
-
-/* (2) INSTALACIÓN (LIGHT): amarillo “premium” + letra NEGRA (no blanco) */
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box{
-  border:1px solid rgba(233,170,25,.55)!important;
-  background:
-    radial-gradient(120% 140% at 20% 0%,rgba(255,255,255,.55),transparent 55%),
-    linear-gradient(180deg,rgba(255,211,106,.55),rgba(233,170,25,.22))!important;
-  border-radius:14px!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 20px rgba(2,6,23,.06)!important
-}
-/* texto negro dentro de instalación (mata cualquier “blanco” viejo) */
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box,
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box *{color:var(--ex-ink)!important}
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box strong{color:var(--ex-ink)!important}
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box .inst-hint{color:var(--ex-ink-2)!important}
-/* checkbox legible en amarillo */
-html[data-theme="light"] .page-sistemas .calc-container .instalacion-box input[type="checkbox"]{accent-color:#111!important}
-
-
-
-/* (5) MOBILE: FORM 2x2 (Lic+RFC arriba / Usuarios+Inst abajo) */
-@media(max-width:680px){
-  .page-sistemas .calc-container form{
-    display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 12px!important;
-    align-items:start!important
-  }
-  .page-sistemas .calc-container .field.lic{grid-column:1!important}
-  .page-sistemas .calc-container .field.rfc{grid-column:2!important}
-  .page-sistemas .calc-container .field.usr{grid-column:1!important}
-  .page-sistemas .calc-container .inst-wrap{grid-column:2!important}
-  .page-sistemas .calc-container .op-label{grid-column:1/-1!important}
-
-  /* card: NO max-height forzado (eso era lo que te cortaba); que crezca natural */
-  .page-sistemas .calc-container{height:auto!important;max-height:none!important;overflow:visible!important}
-
-  /* tabla: si no cabe horizontal -> scroll-x (sin cortar importes) */
-  .page-sistemas .calc-container table{display:block!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}
-  .page-sistemas .calc-container thead,.page-sistemas .calc-container tbody{display:table!important;width:100%!important;table-layout:auto!important}
-  .page-sistemas .calc-container thead th:last-child,
-  .page-sistemas .calc-container tbody td:last-child{white-space:nowrap!important;min-width:150px!important;text-align:right!important}
-  .page-sistemas .calc-container tbody td:first-child{word-break:break-word!important}
-}
-
-
-/* =========================================================
- Expiriti — PATCH UI CALC (IMG1/IMG2/IMG3) v2026.01.10-p1
- Objetivo:
- - IMG1: resumen combinado con aire + panel derecho centrado vertical + nota XML centrada
- - IMG2/IMG3 desktop: tablas NO se “cortan”; siempre puedes llegar a Subtotal/IVA/Total (scroll interno real)
- - IMG2: “¿Agregar un tercer sistema?” rojo tipo pill (no full width)
- Pegar AL FINAL (y evita tener otros patches que reescriban lo mismo).
-========================================================= */
-
-/* (A) IMG1: Panel derecho centrado verticalmente cuando data-cols="1" */
-@media(min-width:981px){
-  .page-sistemas #calc-row[data-cols="1"]{align-items:stretch}
-  .page-sistemas #calc-row[data-cols="1"] #calc-slot-2{
-    height:100%!important;min-height:0!important;
-    display:flex!important;flex-direction:column!important;
-    justify-content:center!important;align-items:stretch!important
-  }
-  .page-sistemas #calc-row[data-cols="1"] #calc-slot-2 .placeholder{
-    height:100%!important;min-height:0!important;
-    display:flex!important;flex-direction:column!important;
-    justify-content:center!important
-  }
-}
-
-/* (B) IMG1: Nota “XML en Línea…” centrada (normalmente es un <small>) */
-.page-sistemas #calc-slot-2 .note small,
-.page-sistemas #add-more-panel .note small{
-  display:block!important;text-align:center!important;
-  margin:8px 0 0!important;opacity:.9!important
-}
-
-/* (C) IMG1: Resumen combinado NO pegado (solo aire, sin cambiar estilo) */
-.page-sistemas #combined-wrap{margin-top:24px!important}
-.page-sistemas #combined-wrap .combined-summary{margin-top:18px!important;padding-top:16px!important}
-.page-sistemas #combined-wrap .cs-head{margin-bottom:14px!important}
-.page-sistemas #combined-wrap .amount-letter{margin-top:10px!important}
-
-
-/* (E) IMG2: “¿Agregar un tercer sistema?” rojo corto (pill centrada, no full width) */
-html[data-theme="light"] .page-sistemas #add-more-panel .note strong{
-  width:fit-content!important;max-width:min(520px,92%)!important;
-  margin:0 auto 10px!important;
-  padding:12px 18px!important;border-radius:999px!important;
-  text-align:center!important
-}
-
-/* === EXPIRITI PATCH v2026.01.10 (tablas no se cortan + total alineado + mobile full width + carrusel fuera del scroll) === */
-
-/* 1) Evita recortes: el card NO debe cortar la tabla; la tabla scrollea dentro si hace falta */
-.page-sistemas .calc-container{overflow:visible}
-.page-sistemas .calc-container .card,.page-sistemas .calc-card,.page-sistemas .calc-panel{overflow:visible}
-
-/* Si tu card tiene altura fija, hacemos layout tipo columna y le damos “área” scrolleable SOLO a la tabla */
-.page-sistemas .calc-container .card,.page-sistemas .calc-card,.page-sistemas .calc-panel{display:flex;flex-direction:column}
-.page-sistemas .calc-container table{width:100%;border-collapse:separate;border-spacing:0}
-.page-sistemas .calc-table-wrap,.page-sistemas .table-wrap,.page-sistemas .calc-container .table-responsive{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch}
-
-/* Si NO tienes wrapper, al menos evita que el último renglón se esconda por padding/rounding */
-.page-sistemas .calc-container table{margin-bottom:8px}
-
-/* 2) Alineación “Total” (texto y monto a misma altura) */
-.page-sistemas .calc-container tfoot td,
-.page-sistemas .calc-container #tr-total td,
-.page-sistemas .calc-container tr.total-row td{vertical-align:middle;line-height:1.2;padding-top:14px;padding-bottom:14px}
-.page-sistemas .calc-container tfoot td:last-child,
-.page-sistemas .calc-container #tr-total td:last-child,
-.page-sistemas .calc-container tr.total-row td:last-child{text-align:right;white-space:nowrap;font-weight:800}
-.page-sistemas .calc-container tfoot td:first-child,
-.page-sistemas .calc-container #tr-total td:first-child,
-.page-sistemas .calc-container tr.total-row td:first-child{font-weight:800}
-
-/* 3) “Importe” siempre legible (no brinca ni se parte raro) */
-.page-sistemas .calc-container thead th:last-child,
-.page-sistemas .calc-container tbody td:last-child{white-space:nowrap;text-align:right}
-
-/* 4) Mobile: calculadora full width y scroll horizontal SOLO para calculadoras */
-@media(max-width:768px){
-  /* la “fila” que scrollea */
-  .page-sistemas .calc-row,.page-sistemas .calc-strip{display:flex;gap:12px;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;padding-bottom:10px;-webkit-overflow-scrolling:touch}
-  /* cada calculadora ocupa 100% del viewport (menos padding), no se corta */
-  .page-sistemas .calc-container{flex:0 0 92vw;max-width:92vw;scroll-snap-align:start}
-  /* evita que inputs/tablas fuercen ancho raro */
-  .page-sistemas .calc-container *{max-width:100%}
-}
-
-/* 5) Carrusel “Integra un sistema adicional” fuera del scroll horizontal (lo forzamos a tomar 100% y romper la fila) */
-.page-sistemas .calc-row :is(.integrate-strip,.bundle-strip,.add-system-strip,.integrate-card,#integrate-strip,#bundle-strip),
-.page-sistemas .calc-strip :is(.integrate-strip,.bundle-strip,.add-system-strip,.integrate-card,#integrate-strip,#bundle-strip){flex:0 0 100%;max-width:100%;order:999;overflow:visible}
-
-/* 6) Quita “aire” entre el pill rojo y la nota “XML en Línea…” */
-.page-sistemas :is(.integrate-strip,.bundle-strip,.add-system-strip,.integrate-card,#integrate-strip,#bundle-strip) .pill,
-.page-sistemas :is(.integrate-strip,.bundle-strip,.add-system-strip,.integrate-card,#integrate-strip,#bundle-strip) .integrate-pill{margin-bottom:6px}
-.page-sistemas :is(.integrate-strip,.bundle-strip,.add-system-strip,.integrate-card,#integrate-strip,#bundle-strip) .note,
-.page-sistemas :is(.integrate-strip,.bundle-strip,.add-system-strip,.integrate-card,#integrate-strip,#bundle-strip) .integrate-note{margin-top:4px}
-
-/* === FIN PATCH === */
-
-/*==========================
-EXPIRITI — PATCH ÚNICO (IMG1/2/3) v2026.01.10-r3
-- Resumen combinado: aire tipo IMG3 (1/2/3)
-- Carrusel: menos aire entre pill rojo y nota XML
-- Tablas: NO se cortan (scroll interno real en desktop 2/3)
-- Mobile: scroll lateral SOLO calculadoras; add-more-panel visible (sticky)
-Pegar AL FINAL. (Ideal: elimina patches viejos que toquen #combined-wrap / table display:block / calc-row mobile)
-==========================*/
-
-/* (2) CARRUSEL/PANEL: reduce aire entre pill rojo y “XML en Línea…” (slot2 + add-more) */
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{margin:0 auto 6px!important}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{margin:4px 0 0!important;line-height:1.25!important}
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:12px 14px!important}
-@media(max-width:520px){body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}}
-
-
-@media(max-width:680px){body.page-sistemas .calc-container{height:auto!important;max-height:none!important}body.page-sistemas .calc-container table{display:block!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch}body.page-sistemas .calc-container thead,body.page-sistemas .calc-container tbody{display:table!important;width:100%!important;table-layout:auto!important}body.page-sistemas .calc-container thead th:last-child,body.page-sistemas .calc-container tbody td:last-child{white-space:nowrap!important;text-align:right!important;min-width:150px!important}}
-
-/* (5) MICRO-FIX: alineación visual del renglón Total (si algún CSS viejo lo desfasó) */
-body.page-sistemas .calc-container :is(#tr-tot1,#tr-tot2,#tr-tot3) td{vertical-align:middle!important;line-height:1.2!important}
-
-
-/* =========================================================
- EXPIRITI — PATCH FINAL (solo 2 cosas) v2026.01.10-r10 (MIN + COMENTS)
- OBJ:
- 1) Resumen combinado: aire consistente en data-cols="1" + layout “img2” SIEMPRE
- 2) Integra: pill rojo más bajo + “XML en Línea…” más pegado
- NOTA: dedupe total (reemplaza r4/r5/r6/r7/m1). Pegar AL FINAL.
-========================================================= */
-
-/* =========================
-(1) RESUMEN COMBINADO (R10 FIX: menos “pegado”)
-========================= */
-body.page-sistemas #calc-row[data-cols="1"]~#combined-wrap{margin-top:28px!important}
-body.page-sistemas #calc-row[data-cols="1"]~#combined-wrap .combined-summary{margin-top:20px!important;padding:18px!important}
-body.page-sistemas #calc-row[data-cols="1"]~#combined-wrap .amount-letter{margin-top:12px!important}
-body.page-sistemas #combined-wrap{display:flex;justify-content:center;margin-top:28px!important}
-body.page-sistemas #combined-wrap .combined-summary{width:min(980px,100%)!important;display:grid!important;grid-template-columns:260px 1fr!important;column-gap:18px!important;row-gap:14px!important;padding:18px!important;align-items:start!important}
-body.page-sistemas #combined-wrap .cs-title{grid-column:1!important;grid-row:1!important;margin:0!important;font-weight:900!important;line-height:1.2!important;white-space:normal!important}
-body.page-sistemas #combined-wrap .cs-head,body.page-sistemas #combined-wrap .amount-letter{grid-column:2!important}
-body.page-sistemas #combined-wrap .cs-head{display:flex!important;flex-direction:column!important;gap:12px!important;margin:0!important;line-height:1.25!important;padding-top:2px!important}
-body.page-sistemas #combined-wrap .cs-head>*{display:flex!important;justify-content:space-between!important;gap:14px!important;align-items:baseline!important;padding:2px 0!important}
-body.page-sistemas #combined-wrap .cs-head>*>*:last-child{text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
-body.page-sistemas #combined-wrap .total-amount{font-weight:950!important}
-body.page-sistemas #combined-wrap .amount-letter{margin-top:12px!important;line-height:1.25!important}
-@media(max-width:680px){body.page-sistemas #combined-wrap .combined-summary{grid-template-columns:1fr!important;padding:14px!important}body.page-sistemas #combined-wrap .cs-head,body.page-sistemas #combined-wrap .amount-letter{grid-column:1!important}}
-@media(max-width:980px){body.page-sistemas #combined-wrap{flex:0 0 100%!important;width:100%!important;max-width:100%!important;min-width:100%!important;order:9999!important;scroll-snap-align:none!important;margin:16px 0 0!important;overflow:visible!important}body.page-sistemas #combined-wrap .combined-summary{width:100%!important;max-width:100%!important;box-sizing:border-box!important;display:block!important;padding:14px!important}body.page-sistemas #combined-wrap .cs-title{margin:0 0 10px!important;display:block!important}}
-
-
-/* =========================
- (2) INTEGRA (slot-2 + add-more)
-========================= */
-
-/* Caja: reduce padding general */
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note{padding:10px 12px!important}
-
-/* Pill rojo: menos alto + menos separación abajo */
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note strong{
-  margin:0 auto 6px!important;     /* baja el “aire” entre pill y texto */
-  padding:10px 16px!important;    /* reduce altura del pill */
-  line-height:1.15!important
-}
-
-/* Texto “XML en Línea…”: más pegado al pill */
-body.page-sistemas :is(#calc-slot-2,#add-more-panel) .note small{
-  display:block!important;
-  margin:2px 0 0!important;
-  line-height:1.25!important
-}
-
-/* Todo el CSS canon irá bajo esto */
-body.page-index.debug-freeze {
-  /* activa canon */
-}
-
-.yt-no-thumb{background:radial-gradient(120% 90% at 50% 40%, rgba(255,255,255,.12), rgba(0,0,0,.85))}
 
 
 
@@ -685,11 +310,6 @@ body.page-index.debug-freeze {
 .page-sistemas :where(.faq-cta-wrap,.faq-and-cta,.faq-section) :where(.faq,.faq-list,.accordion){order:1}
 
 
-/*== 4B REEL TITLE: 2-line clamp (sin marquee) | HTML: <h4 class="reel-title ..."> ==*/
-.page-sistemas .reel-title{white-space:normal!important;overflow:hidden!important;text-overflow:ellipsis!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-height:1.15!important;max-height:2.35em!important}
-.page-sistemas .reel-title .__mqTrack{display:contents!important}
-.page-sistemas .reel-title.is-marquee{animation:none!important}
-
 /* EXPIRITI — CALC CANON (NO swipe + NO scroll interno) v2026.01.29 */
 .page-sistemas .calc-strip{max-width:var(--sys-narrow,min(1120px,70vw));margin:0 auto;padding:0 12px;overflow:visible!important}
 .page-sistemas #calc-row{display:grid!important;gap:14px;align-items:stretch;max-width:100%;overflow:visible!important}
@@ -718,22 +338,29 @@ body.page-index.debug-freeze {
 @media(min-width:981px){body.page-sistemas #calc-row[data-cols="2"] .calc-container,body.page-sistemas #calc-row[data-cols="3"] .calc-container,body.page-sistemas #calc-row[data-cols="1"] .calc-container{height:auto!important;max-height:none!important;overflow:visible!important;display:block!important}}body.page-sistemas .calc-container table{display:table!important;overflow:visible!important;max-height:none!important}body.page-sistemas .calc-container thead,body.page-sistemas .calc-container tbody{display:table-row-group!important;width:auto!important;table-layout:auto!important}body.page-sistemas .calc-container thead th{position:static!important;top:auto!important}body.page-sistemas .calc-strip,body.page-sistemas #calc-row{overflow:visible!important}
 
 
-/* EXPIRITI—UNIFICAR PALETA (LIGHT=DARK) v2026.01.29-u1 */
-:root{--ex-cta-yellow:#e9aa19;--ex-cta-green:#149997;--ex-cta-pink:#fa5262;--ex-cta-blue:#46b8ff;--ex-chip-grad:linear-gradient(135deg,#149997 0%,#fa5262 100%);--ex-chip-off-bg:rgba(255,255,255,.06);--ex-chip-off-bd:rgba(148,163,184,.28);--ex-chip-off-tx:rgba(232,238,246,.92)}
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
-@media(max-width:860px){.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){flex-wrap:wrap}.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button){flex:1 1 calc(50% - 10px);min-width:0;white-space:nowrap}}
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button){color:#fff!important;border-color:transparent!important}
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(1){background:var(--ex-cta-yellow)!important}
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(2){background:var(--ex-cta-green)!important}
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(3){background:var(--ex-cta-pink)!important}
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(4),.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(5){background:transparent!important;color:var(--ex-chip-off-tx)!important;border:1px solid var(--ex-chip-off-bd)!important}
-.page-sistemas .pillbar{display:flex;flex-wrap:wrap;gap:10px!important;margin:8px 0 10px}
-.page-sistemas .pill{min-height:44px;padding:10px 14px!important;border-radius:14px!important;font-weight:900!important;line-height:1.15!important;display:inline-flex;align-items:center;justify-content:center;gap:10px;max-width:100%;white-space:normal}
-.page-sistemas .pill:not(.active){background:var(--ex-chip-off-bg)!important;border:1px solid var(--ex-chip-off-bd)!important;color:var(--ex-chip-off-tx)!important;box-shadow:none!important}
-.page-sistemas .pill.active{background:var(--ex-chip-grad)!important;border-color:transparent!important;color:#fff!important;box-shadow:0 10px 26px rgba(0,0,0,.22)!important}
-@media(max-width:768px){.page-sistemas .pillbar{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}.page-sistemas .pill{width:100%!important}.page-sistemas .pillbar .pill:last-child{grid-column:1/-1!important}}
+/* EXPIRITI — FIX CTA+CALC+REELS (LIGHT=DARK) v2026.01.29-f1 */
+:root{--ex-cta-yellow:#e9aa19;--ex-cta-green:#149997;--ex-cta-pink:#fa5262;--ex-cta-blue:#46b8ff;--ex-cta-tx:#0b1220;--ex-cta-tx-dark:#061018;--ex-ghost-bg:transparent;--ex-ghost-bd:rgba(148,163,184,.28);--ex-ghost-tx:rgba(232,238,246,.92)}
+.page-sistemas .cta-strip{display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
+.page-sistemas .cta-strip :where(a,button){border-color:transparent!important;text-decoration:none}
+.page-sistemas .cta-strip :where(a,button):nth-child(1){background:var(--ex-cta-yellow)!important;color:var(--ex-cta-tx-dark)!important}
+.page-sistemas .cta-strip :where(a,button):nth-child(2){background:var(--ex-cta-green)!important;color:var(--ex-cta-tx-dark)!important}
+.page-sistemas .cta-strip :where(a,button):nth-child(3){background:var(--ex-cta-pink)!important;color:#fff!important}
+.page-sistemas .cta-strip :where(a,button):nth-child(4),.page-sistemas .cta-strip :where(a,button):nth-child(5){background:var(--ex-ghost-bg)!important;border:1px solid var(--ex-ghost-bd)!important;color:var(--ex-ghost-tx)!important}
+@media(max-width:860px){.page-sistemas .cta-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas .cta-strip :where(a,button){min-width:0;white-space:nowrap;justify-content:center}.page-sistemas .cta-strip :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
+html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(4),html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(5){color:rgba(11,18,32,.92)!important;border-color:rgba(2,6,23,.14)!important}
 
-/* EXPIRITI—CTA BAR MOBILE 2x2 + 5th centered (no full) v2026.01.29-cta2 */
-.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
-@media(max-width:860px){.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip){display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button){min-width:0;white-space:nowrap}.page-sistemas :where(.cta-bar,.product-cta,.cta-row,.cta-strip) :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
+/* CALC mobile: evita “angosto” por max-width+auto; que use todo el card */
+@media(max-width:520px){.page-sistemas .calc-container table{max-width:100%!important;margin:10px 0 0!important}.page-sistemas .calc-container table{width:100%!important}}
+/* si tu tabla aún se “aprieta”, habilita scroll-x SOLO en mobile sin romper desktop */
+
+
+/* EXPIRITI — PATCH CANON SAFE (NO scroll-x table) v2026.01.29-p2 */
+@media(max-width:680px){.page-sistemas .calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 12px!important;align-items:start!important}.page-sistemas .calc-container .field.lic{grid-column:1!important}.page-sistemas .calc-container .field.rfc{grid-column:2!important}.page-sistemas .calc-container .field.usr{grid-column:1!important}.page-sistemas .calc-container .inst-wrap{grid-column:2!important}.page-sistemas .calc-container .op-label{grid-column:1/-1!important}}
+.page-sistemas .calc-container table{display:table!important;width:100%!important;max-width:100%!important;table-layout:fixed}
+.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child{text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;min-width:0!important}
+.page-sistemas .calc-container tbody td:first-child{overflow-wrap:anywhere}
+.page-sistemas .reel-title{display:none!important;white-space:normal!important;overflow:hidden!important;text-overflow:ellipsis!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;line-height:1.15!important;max-height:2.35em!important}
+.page-sistemas .reel-title.active{display:-webkit-box!important}
+@media(max-width:860px){.page-sistemas .cta-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas .cta-strip :where(a,button){min-width:0;white-space:nowrap;justify-content:center}.page-sistemas .cta-strip :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
+
 
