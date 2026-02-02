@@ -379,6 +379,11 @@ html[data-theme="light"] .page-sistemas{--ex-ghost-bd:rgba(2,6,23,.16);--ex-ghos
   border-color:transparent!important
 }
 
+/* CALC NO BORRAR O AGREGAR A LA SECION CALC: ancho página SOLO mobile */
+@media(max-width:680px){.page-sistemas .calc-strip{width:100%;max-width:100%;margin-left:auto;margin-right:auto;padding-left:12px;padding-right:12px}}
+@media(max-width:520px){.page-sistemas .feature-grid .fcard{flex:0 1 calc((100% - 14px)/2)!important;max-width:calc((100% - 14px)/2)!important}}@media(max-width:390px){.page-sistemas .feature-grid .fcard{flex:0 1 100%!important;max-width:100%!important}}
+
+
 /* CTA: amarillo texto oscuro, verde texto blanco (light+dark) */
 .page-sistemas .cta-strip :where(a,button):nth-child(1),
 .page-sistemas .cta-strip :where(a,button):nth-child(1):hover,
@@ -388,3 +393,15 @@ html[data-theme="light"] .page-sistemas{--ex-ghost-bd:rgba(2,6,23,.16);--ex-ghos
 .page-sistemas .cta-strip :where(a,button):nth-child(2):hover,
 .page-sistemas .cta-strip :where(a,button):nth-child(2):active,
 .page-sistemas .cta-strip :where(a,button):nth-child(2):focus-visible{color:#fff!important}
+
+/* EXPIRITI — PATCH CTA + PILLBAR (center + gradient lock) v2026.02.02 */
+.page-sistemas{--ex-cta-tx:#fff}
+.page-sistemas .cta-strip{margin-top:14px;justify-content:center}
+.page-sistemas .cta-strip:where(.cta-strip){align-items:center}
+.page-sistemas .cta-strip :where(a,button):nth-child(1),.page-sistemas .cta-strip :where(a,button):nth-child(1):hover,.page-sistemas .cta-strip :where(a,button):nth-child(1):active,.page-sistemas .cta-strip :where(a,button):nth-child(1):focus-visible{color:var(--ex-cta-tx)!important}
+.page-sistemas #caracteristicas .pillbar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center}
+.page-sistemas #caracteristicas .pillbar :where(.pill,.chip,button,a){width:auto!important;max-width:100%;min-width:0;white-space:normal!important;text-align:center;justify-content:center}
+.page-sistemas #caracteristicas .pillbar .pill{padding:12px 18px;border-radius:999px}
+.page-sistemas #caracteristicas .pillbar .pill.active{background:linear-gradient(90deg,rgba(45,212,191,.95),rgba(250,82,98,.95))!important;border-color:transparent!important;color:#fff!important}
+@media(max-width:860px){.page-sistemas #caracteristicas .pillbar{gap:10px}.page-sistemas #caracteristicas .pillbar .pill{padding:12px 16px}}
+
