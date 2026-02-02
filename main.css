@@ -362,3 +362,29 @@ html[data-theme="light"] .page-sistemas{--ex-ghost-bd:rgba(2,6,23,.16);--ex-ghos
 .page-sistemas .cta-strip :where(a,button):nth-child(3),.page-sistemas .cta-strip :where(a,button):nth-child(3):hover,.page-sistemas .cta-strip :where(a,button):nth-child(3):active,.page-sistemas .cta-strip :where(a,button):nth-child(3):focus-visible{background:var(--ex-cta-pink)!important;color:#fff!important}
 .page-sistemas .cta-strip :where(a,button):nth-child(4),.page-sistemas .cta-strip :where(a,button):nth-child(4):hover,.page-sistemas .cta-strip :where(a,button):nth-child(4):active,.page-sistemas .cta-strip :where(a,button):nth-child(4):focus-visible,.page-sistemas .cta-strip :where(a,button):nth-child(5),.page-sistemas .cta-strip :where(a,button):nth-child(5):hover,.page-sistemas .cta-strip :where(a,button):nth-child(5):active,.page-sistemas .cta-strip :where(a,button):nth-child(5):focus-visible{background:var(--ex-ghost-bg)!important;border:1px solid var(--ex-ghost-bd)!important;color:var(--ex-ghost-tx)!important}
 @media(max-width:860px){.page-sistemas .cta-strip{display:grid!important;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas .cta-strip :where(a,button){min-width:0;justify-content:center}.page-sistemas .cta-strip :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
+
+
+/* EXPIRITI — PATCH chips centrados + gradiente fijo (light+dark) + CTA text colors v2026.02.02 */
+.page-sistemas{--ex-pill-grad:linear-gradient(90deg,rgba(20,184,166,.95),rgba(96,165,250,.85),rgba(250,82,98,.95))}
+.page-sistemas :where(.pillbar,.chips,.benefit-chips,.product-chips){display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center}
+.page-sistemas :where(.pillbar,.chips,.benefit-chips,.product-chips) :where(.pill,.chip,button,a){flex:0 1 auto;max-width:100%;text-align:center}
+@media(max-width:860px){
+  .page-sistemas :where(.pillbar,.chips,.benefit-chips,.product-chips){flex-direction:column;align-items:center}
+  .page-sistemas :where(.pillbar,.chips,.benefit-chips,.product-chips) :where(.pill,.chip,button,a){width:min(860px,100%)}
+}
+/* fuerza “activo” con el MISMO gradiente en DARK (quita verde IMG3) */
+.page-sistemas :where(.pillbar,.chips,.benefit-chips,.product-chips) :where(.active,.is-active,[aria-current="true"],[aria-selected="true"]){
+  background:var(--ex-pill-grad)!important;
+  color:#fff!important;
+  border-color:transparent!important
+}
+
+/* CTA: amarillo texto oscuro, verde texto blanco (light+dark) */
+.page-sistemas .cta-strip :where(a,button):nth-child(1),
+.page-sistemas .cta-strip :where(a,button):nth-child(1):hover,
+.page-sistemas .cta-strip :where(a,button):nth-child(1):active,
+.page-sistemas .cta-strip :where(a,button):nth-child(1):focus-visible{color:var(--ex-cta-tx,#0b1220)!important}
+.page-sistemas .cta-strip :where(a,button):nth-child(2),
+.page-sistemas .cta-strip :where(a,button):nth-child(2):hover,
+.page-sistemas .cta-strip :where(a,button):nth-child(2):active,
+.page-sistemas .cta-strip :where(a,button):nth-child(2):focus-visible{color:#fff!important}
