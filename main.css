@@ -23,6 +23,99 @@ body.page-sistemas{max-width:100%;overflow-x:hidden}
 .page-sistemas .table-like{width:100%;min-width:720px}
 
 
+/* =========================================================
+  CALC — BLOQUE ÚNICO (AGRUPADO) v2026.02.02
+  - Incluye: CALC ÚNICO v2026.01.30-u1 + Resumen combinado + Calc strip mobile width
+========================================================= */
+
+/* === EXPIRITI | CALC ÚNICO v2026.01.30-u1 (unificado, sin duplicados) === */
+/* Base UI */
+.page-sistemas .calc-container label{display:block;margin-top:6px;font-weight:700;font-size:13px;color:rgba(232,238,246,.92)}
+html[data-theme="light"] .page-sistemas .calc-container label{color:rgba(11,18,32,.92)}
+.page-sistemas .calc-container select,.page-sistemas .calc-container input[type="number"],.page-sistemas .calc-container input[type="text"]{width:100%;padding:8px 10px;border-radius:12px;border:1px solid rgba(148,163,184,.28);background:rgba(7,10,16,.28);color:inherit;margin:6px 0}
+html[data-theme="light"] .page-sistemas .calc-container select,html[data-theme="light"] .page-sistemas .calc-container input[type="number"],html[data-theme="light"] .page-sistemas .calc-container input[type="text"]{background:rgba(255,255,255,.92);border-color:rgba(2,6,23,.14)}
+.page-sistemas .calc-row{max-width:100%}
+.page-sistemas .calc-row>*{min-width:0}
+.page-sistemas .placeholder{border-radius:16px;border:1px dashed rgba(148,163,184,.28);background:rgba(15,23,42,.18);padding:14px;display:flex;align-items:center;justify-content:center;min-height:180px;height:100%;min-width:0}
+.page-sistemas .placeholder .note{width:100%;max-width:100%;text-align:left;border:1px dashed rgba(148,163,184,.30);background:rgba(17,23,35,.30);border-radius:14px;padding:14px}
+.page-sistemas .placeholder .note strong{display:block;line-height:1.25}
+.page-sistemas .placeholder .note small{display:block;opacity:.9;margin-top:4px}
+
+/* Form 2x2 (desktop+mobile) */
+.page-sistemas .calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 12px!important;align-items:start!important}
+.page-sistemas .calc-container form>*{min-width:0}
+.page-sistemas .calc-container .field.lic{grid-column:1!important}
+.page-sistemas .calc-container .field.rfc{grid-column:2!important}
+.page-sistemas .calc-container .field.usr{grid-column:1!important}
+.page-sistemas .calc-container .inst-wrap{grid-column:2!important}
+.page-sistemas .calc-container .op-label{grid-column:1/-1!important}
+
+/* Instalación box */
+.page-sistemas .calc-container .instalacion-box{display:flex!important;align-items:center!important;gap:10px!important;padding:10px 12px;border:1px dashed rgba(148,163,184,.30);border-radius:10px;background:rgba(15,23,42,.20);flex-wrap:nowrap}
+.page-sistemas .calc-container .instalacion-box>label{display:flex!important;align-items:center!important;gap:10px!important;margin:0!important}
+.page-sistemas .calc-container .instalacion-box input[type="checkbox"]{margin:0!important}
+.page-sistemas .calc-container .instalacion-box .inst-hint{display:inline;margin-left:6px;opacity:.85;line-height:1.25}
+
+/* Tabla (look + alineación) */
+.page-sistemas .calc-container table{width:100%;max-width:100%;margin:10px 0 0;table-layout:fixed;border-collapse:separate;border-spacing:0;border:1px solid rgba(148,163,184,.20);border-radius:14px;overflow:hidden;background:rgba(15,23,42,.30)}
+.page-sistemas .calc-container thead th{text-align:left;border-bottom:1px solid rgba(148,163,184,.18);padding:12px 14px;font-weight:900;background:rgba(15,23,42,.20)}
+html[data-theme="light"] .page-sistemas .calc-container thead th{background:rgba(2,6,23,.04)}
+.page-sistemas .calc-container td,.page-sistemas .calc-container th{padding:10px 12px;border-bottom:1px solid rgba(148,163,184,.14)}
+.page-sistemas .calc-container tr:last-child td{border-bottom:none}
+.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child{text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.page-sistemas .calc-container tbody td:first-child{overflow-wrap:anywhere}
+.page-sistemas .calc-container .price,.page-sistemas .calc-container .total,.page-sistemas .calc-container .monto{font-weight:900;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.page-sistemas .calc-container #tr-tot1 td,.page-sistemas .calc-container #tr-tot2 td,.page-sistemas .calc-container #tr-tot3 td{font-size:14px}
+
+/* Switch nube/escritorio (lógica) */
+.page-sistemas #calc-primary{display:block!important}.page-sistemas .nube-only,.page-sistemas .desk-only{display:none}
+body[data-calc="nube"] .page-sistemas .nube-only{display:inline}
+body[data-calc="nube"] .page-sistemas .desk-only{display:none!important}
+body[data-calc="nube"] .page-sistemas .pricing-table-nube{display:table}
+body[data-calc="nube"] .page-sistemas #calc-slot-2,body[data-calc="nube"] .page-sistemas #calc-secondary,body[data-calc="nube"] .page-sistemas #calc-tertiary,body[data-calc="nube"] .page-sistemas #add-more-panel,body[data-calc="nube"] .page-sistemas #combined-wrap,body[data-calc="nube"] .page-sistemas .icons-wrap{display:none!important}
+body[data-calc="escritorio"] .page-sistemas .nube-only{display:none!important}
+body[data-calc="escritorio"] .page-sistemas .desk-only{display:inline}
+body[data-calc="escritorio"] .page-sistemas .pricing-table-nube{display:none!important}
+body[data-calc="escritorio"] .page-sistemas #calc-slot-2,body[data-calc="escritorio"] .page-sistemas #calc-secondary,body[data-calc="escritorio"] .page-sistemas #calc-tertiary,body[data-calc="escritorio"] .page-sistemas #add-more-panel,body[data-calc="escritorio"] .page-sistemas #combined-wrap{display:block}
+body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:flex}
+
+/* Empty (UX) */
+.page-sistemas #calc-secondary.calc-empty{display:block!important;min-height:220px!important;padding:14px!important}
+
+/* Layout por data-cols (grid sin swipe) */
+.page-sistemas .calc-strip{max-width:var(--sys-narrow,min(1120px,70vw));margin:0 auto;padding:0 12px;overflow:visible!important}
+.page-sistemas #calc-row{display:grid!important;gap:14px;align-items:stretch;max-width:100%;overflow:visible!important}
+.page-sistemas #calc-row>*{min-width:0!important;max-width:100%}
+.page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:980px){.page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:1fr}.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{overflow:visible!important;scroll-snap-type:none!important}}
+.page-sistemas #calc-row[data-cols="1"] #calc-slot-2{display:block!important}
+.page-sistemas #calc-row[data-cols="1"] #calc-secondary,.page-sistemas #calc-row[data-cols="1"] #calc-tertiary,.page-sistemas #calc-row[data-cols="1"] #add-more-panel{display:none!important}
+.page-sistemas #calc-row[data-cols="2"] #calc-slot-2{display:none!important}
+.page-sistemas #calc-row[data-cols="2"] #calc-secondary{display:block!important}
+.page-sistemas #calc-row[data-cols="2"] #calc-tertiary{display:none!important}
+.page-sistemas #calc-row[data-cols="2"] #add-more-panel{display:block!important;grid-column:1/-1}
+.page-sistemas #calc-row[data-cols="3"] #calc-slot-2{display:none!important}
+.page-sistemas #calc-row[data-cols="3"] #calc-secondary,.page-sistemas #calc-row[data-cols="3"] #calc-tertiary{display:block!important}
+.page-sistemas #calc-row[data-cols="3"] #add-more-panel{display:none!important}
+
+/* Anti scroll interno / sticky */
+.page-sistemas #calc-row .calc-container{height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;display:block!important}
+.page-sistemas #calc-row .calc-container table{display:table!important;overflow:visible!important;max-height:none!important}
+.page-sistemas #calc-row .calc-container thead th{position:static!important;top:auto!important;z-index:auto!important}
+
+/* Fix tables sectioning (si el DOM raro lo requiere) */
+.page-sistemas .calc-container thead,.page-sistemas .calc-container tbody,.page-sistemas .calc-container tfoot{display:table-row-group!important;width:auto!important}
+
+/* Resumen combinado más visible (sin cambiar cálculos) */
+.page-sistemas #combined-wrap.combined-card{position:relative}
+@media(min-width:861px){
+.page-sistemas #combined-wrap.combined-card{position:sticky;top:96px;z-index:2}
+}
+
+/* CALC NO BORRAR O AGREGAR A LA SECION CALC: ancho página SOLO mobile */
+@media(max-width:680px){.page-sistemas .calc-strip{width:100%;max-width:100%;margin-left:auto;margin-right:auto;padding-left:12px;padding-right:12px}}
+
 
 
 /* ICONS CAROUSEL (panel derecho) */
@@ -224,11 +317,6 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 }
 
 
-/* Resumen combinado más visible (sin cambiar cálculos) */
-.page-sistemas #combined-wrap.combined-card{position:relative}
-@media(min-width:861px){
-.page-sistemas #combined-wrap.combined-card{position:sticky;top:96px;z-index:2}
-}
 
 /* ========== 10A+) Comparativas: mantener, pero mobile con scroll horizontal seguro ========== */
 @media(max-width:860px){
@@ -265,52 +353,6 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 
 
 
-/* === EXPIRITI | CALC ÚNICO v2026.01.30-u1 (unificado, sin duplicados) === */
-/* Base UI */
-.page-sistemas .calc-container label{display:block;margin-top:6px;font-weight:700;font-size:13px;color:rgba(232,238,246,.92)}
-html[data-theme="light"] .page-sistemas .calc-container label{color:rgba(11,18,32,.92)}
-.page-sistemas .calc-container select,.page-sistemas .calc-container input[type="number"],.page-sistemas .calc-container input[type="text"]{width:100%;padding:8px 10px;border-radius:12px;border:1px solid rgba(148,163,184,.28);background:rgba(7,10,16,.28);color:inherit;margin:6px 0}
-html[data-theme="light"] .page-sistemas .calc-container select,html[data-theme="light"] .page-sistemas .calc-container input[type="number"],html[data-theme="light"] .page-sistemas .calc-container input[type="text"]{background:rgba(255,255,255,.92);border-color:rgba(2,6,23,.14)}
-.page-sistemas .calc-row{max-width:100%}
-.page-sistemas .calc-row>*{min-width:0}
-.page-sistemas .placeholder{border-radius:16px;border:1px dashed rgba(148,163,184,.28);background:rgba(15,23,42,.18);padding:14px;display:flex;align-items:center;justify-content:center;min-height:180px;height:100%;min-width:0}
-.page-sistemas .placeholder .note{width:100%;max-width:100%;text-align:left;border:1px dashed rgba(148,163,184,.30);background:rgba(17,23,35,.30);border-radius:14px;padding:14px}
-.page-sistemas .placeholder .note strong{display:block;line-height:1.25}
-.page-sistemas .placeholder .note small{display:block;opacity:.9;margin-top:4px}
-/* Form 2x2 (desktop+mobile) */
-.page-sistemas .calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 12px!important;align-items:start!important}
-.page-sistemas .calc-container form>*{min-width:0}
-.page-sistemas .calc-container .field.lic{grid-column:1!important}
-.page-sistemas .calc-container .field.rfc{grid-column:2!important}
-.page-sistemas .calc-container .field.usr{grid-column:1!important}
-.page-sistemas .calc-container .inst-wrap{grid-column:2!important}
-.page-sistemas .calc-container .op-label{grid-column:1/-1!important}
-/* Instalación box */
-.page-sistemas .calc-container .instalacion-box{display:flex!important;align-items:center!important;gap:10px!important;padding:10px 12px;border:1px dashed rgba(148,163,184,.30);border-radius:10px;background:rgba(15,23,42,.20);flex-wrap:nowrap}
-.page-sistemas .calc-container .instalacion-box>label{display:flex!important;align-items:center!important;gap:10px!important;margin:0!important}
-.page-sistemas .calc-container .instalacion-box input[type="checkbox"]{margin:0!important}
-.page-sistemas .calc-container .instalacion-box .inst-hint{display:inline;margin-left:6px;opacity:.85;line-height:1.25}
-/* Tabla (look + alineación) */
-.page-sistemas .calc-container table{width:100%;max-width:100%;margin:10px 0 0;table-layout:fixed;border-collapse:separate;border-spacing:0;border:1px solid rgba(148,163,184,.20);border-radius:14px;overflow:hidden;background:rgba(15,23,42,.30)}
-.page-sistemas .calc-container thead th{text-align:left;border-bottom:1px solid rgba(148,163,184,.18);padding:12px 14px;font-weight:900;background:rgba(15,23,42,.20)}
-html[data-theme="light"] .page-sistemas .calc-container thead th{background:rgba(2,6,23,.04)}
-.page-sistemas .calc-container td,.page-sistemas .calc-container th{padding:10px 12px;border-bottom:1px solid rgba(148,163,184,.14)}
-.page-sistemas .calc-container tr:last-child td{border-bottom:none}
-.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child{text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
-.page-sistemas .calc-container tbody td:first-child{overflow-wrap:anywhere}
-.page-sistemas .calc-container .price,.page-sistemas .calc-container .total,.page-sistemas .calc-container .monto{font-weight:900;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
-.page-sistemas .calc-container #tr-tot1 td,.page-sistemas .calc-container #tr-tot2 td,.page-sistemas .calc-container #tr-tot3 td{font-size:14px}
-/* Switch nube/escritorio (lógica) */
-.page-sistemas #calc-primary{display:block!important}.page-sistemas .nube-only,.page-sistemas .desk-only{display:none}
-body[data-calc="nube"] .page-sistemas .nube-only{display:inline}
-body[data-calc="nube"] .page-sistemas .desk-only{display:none!important}
-body[data-calc="nube"] .page-sistemas .pricing-table-nube{display:table}
-body[data-calc="nube"] .page-sistemas #calc-slot-2,body[data-calc="nube"] .page-sistemas #calc-secondary,body[data-calc="nube"] .page-sistemas #calc-tertiary,body[data-calc="nube"] .page-sistemas #add-more-panel,body[data-calc="nube"] .page-sistemas #combined-wrap,body[data-calc="nube"] .page-sistemas .icons-wrap{display:none!important}
-body[data-calc="escritorio"] .page-sistemas .nube-only{display:none!important}
-body[data-calc="escritorio"] .page-sistemas .desk-only{display:inline}
-body[data-calc="escritorio"] .page-sistemas .pricing-table-nube{display:none!important}
-body[data-calc="escritorio"] .page-sistemas #calc-slot-2,body[data-calc="escritorio"] .page-sistemas #calc-secondary,body[data-calc="escritorio"] .page-sistemas #calc-tertiary,body[data-calc="escritorio"] .page-sistemas #add-more-panel,body[data-calc="escritorio"] .page-sistemas #combined-wrap{display:block}
-body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:flex}
 /* Empty (UX) */
 .page-sistemas #calc-secondary.calc-empty{display:block!important;min-height:220px!important;padding:14px!important}
 /* Layout por data-cols (grid sin swipe) */
@@ -329,10 +371,7 @@ body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:flex}
 .page-sistemas #calc-row[data-cols="3"] #calc-slot-2{display:none!important}
 .page-sistemas #calc-row[data-cols="3"] #calc-secondary,.page-sistemas #calc-row[data-cols="3"] #calc-tertiary{display:block!important}
 .page-sistemas #calc-row[data-cols="3"] #add-more-panel{display:none!important}
-/* Anti scroll interno / sticky */
-.page-sistemas #calc-row .calc-container{height:auto!important;max-height:none!important;min-height:0!important;overflow:visible!important;display:block!important}
-.page-sistemas #calc-row .calc-container table{display:table!important;overflow:visible!important;max-height:none!important}
-.page-sistemas #calc-row .calc-container thead th{position:static!important;top:auto!important;z-index:auto!important}
+
 /* Fix tables sectioning (si el DOM raro lo requiere) */
 .page-sistemas .calc-container thead,.page-sistemas .calc-container tbody,.page-sistemas .calc-container tfoot{display:table-row-group!important;width:auto!important}
 
@@ -362,11 +401,6 @@ html[data-theme="light"] .page-sistemas{--ex-ghost-bd:rgba(2,6,23,.16);--ex-ghos
   color:#fff!important;
   border-color:transparent!important
 }
-
-/* CALC NO BORRAR O AGREGAR A LA SECION CALC: ancho página SOLO mobile */
-@media(max-width:680px){.page-sistemas .calc-strip{width:100%;max-width:100%;margin-left:auto;margin-right:auto;padding-left:12px;padding-right:12px}}
-@media(max-width:520px){.page-sistemas .feature-grid .fcard{flex:0 1 calc((100% - 14px)/2)!important;max-width:calc((100% - 14px)/2)!important}}@media(max-width:390px){.page-sistemas .feature-grid .fcard{flex:0 1 100%!important;max-width:100%!important}}
-
 
 /* CTA: amarillo texto oscuro, verde texto blanco (light+dark) */
 .page-sistemas .cta-strip :where(a,button):nth-child(1),
