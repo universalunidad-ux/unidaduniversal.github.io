@@ -135,7 +135,6 @@ body>.arrowCircle{display:none!important}
 @media(min-width:1200px){.page-sistemas .feature-grid{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:16px!important}.page-sistemas .feature-grid .fcard{flex:0 1 calc((100% - 48px)/4)!important;max-width:calc((100% - 48px)/4)!important}}
 @media(min-width:981px) and (max-width:1199px){.page-sistemas .feature-grid{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:16px!important}.page-sistemas .feature-grid .fcard{flex:0 1 calc((100% - 32px)/3)!important;max-width:calc((100% - 32px)/3)!important}}
 @media(max-width:980px){.page-sistemas .feature-grid{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:14px!important}.page-sistemas .feature-grid .fcard{flex:0 1 calc((100% - 14px)/2)!important;max-width:calc((100% - 14px)/2)!important}}
-@media(max-width:520px){.page-sistemas .feature-grid .fcard{flex:0 1 100%!important;max-width:100%!important}}
 .page-sistemas .feature-grid .fcard{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;will-change:transform}
 @media(hover:hover){.page-sistemas .feature-grid .fcard:hover{transform:translateY(-6px);border-color:rgba(96,165,250,.55);box-shadow:0 18px 42px rgba(0,0,0,.30)}}
 .page-sistemas .feature-grid .fcard:active{transform:translateY(-3px)}
@@ -284,13 +283,19 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 @media(max-width:860px){.page-sistemas .cta-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas .cta-strip :where(a,button){min-width:0;white-space:nowrap;justify-content:center}.page-sistemas .cta-strip :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
 html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(4),html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(5){color:rgba(11,18,32,.92)!important;border-color:rgba(2,6,23,.14)!important}
 
+/* (6) CTA: colores + 2x2 mobile + 5to centrado */
+:root{--ex-cta-yellow:#e9aa19;--ex-cta-green:#149997;--ex-cta-pink:#fa5262;--ex-cta-blue:#46b8ff;--ex-cta-tx:#0b1220;--ex-cta-tx-dark:#061018;--ex-ghost-bg:transparent;--ex-ghost-bd:rgba(148,163,184,.28);--ex-ghost-tx:rgba(232,238,246,.92)}
+.page-sistemas .cta-strip{display:flex;gap:10px;flex-wrap:nowrap;align-items:center}
+.page-sistemas .cta-strip :where(a,button){border-color:transparent!important;text-decoration:none}
+.page-sistemas .cta-strip :where(a,button):nth-child(3){background:var(--ex-cta-pink)!important;color:#fff!important}
+.page-sistemas .cta-strip :where(a,button):nth-child(4),.page-sistemas .cta-strip :where(a,button):nth-child(5){background:var(--ex-ghost-bg)!important;border:1px solid var(--ex-ghost-bd)!important;color:var(--ex-ghost-tx)!important}
+@media(max-width:860px){.page-sistemas .cta-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}.page-sistemas .cta-strip :where(a,button){min-width:0;white-space:nowrap;justify-content:center}.page-sistemas .cta-strip :where(a,button):nth-child(5){grid-column:1/-1;justify-self:center;width:min(420px,86%)}}
+html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(4),html[data-theme="light"] .page-sistemas .cta-strip :where(a,button):nth-child(5){color:rgba(11,18,32,.92)!important;border-color:rgba(2,6,23,.14)!important}
+
 
 
 
 /* === EXPIRITI DEDUPE PACK v2026.01.29-u4 === */
-/* CTAs: texto blanco en (1) y (2) en light+dark */
-.page-sistemas .cta-strip :where(a,button):nth-child(1),
-.page-sistemas .cta-strip :where(a,button):nth-child(2){color:#fff!important}
 
 /* BADGES: mobile swipe horizontal */
 .page-sistemas .badges{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -371,3 +376,7 @@ body[data-calc="escritorio"] .page-sistemas .icons-wrap{display:flex}
 
 /* CALC: ancho página SOLO mobile */
 @media(max-width:680px){.page-sistemas .calc-strip{width:100%;max-width:100%;margin-left:auto;margin-right:auto;padding-left:12px;padding-right:12px}}
+
+@media(max-width:520px){.page-sistemas .feature-grid .fcard{flex:0 1 calc((100% - 14px)/2)!important;max-width:calc((100% - 14px)/2)!important}}@media(max-width:390px){.page-sistemas .feature-grid .fcard{flex:0 1 100%!important;max-width:100%!important}}
+
+.page-sistemas .pillbar :where(.pill,button.pill){background:#fff!important;border:1px solid rgba(2,6,23,.14)!important;color:rgba(11,18,32,.92)!important}
