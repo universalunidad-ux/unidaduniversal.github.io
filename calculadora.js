@@ -183,8 +183,6 @@ function createCalculator(container,sistemaName,idSuffix,combinedSelector){
   var systemPrices=allPrices[sistemaName];
   if(!systemPrices){container.innerHTML='<p style="margin:0">Error: faltan precios para <strong>'+sistemaName+"</strong>.</p>"; return;}
 
-  var title=document.createElement("h4"); title.textContent=sistemaName+" — Calculadora"; container.appendChild(title);
-
   var form=document.createElement("form"); form.className="calc-form";
 
   var licenciaLabel=document.createElement("label"); licenciaLabel.classList.add("field","lic"); licenciaLabel.textContent="Licencia:";
