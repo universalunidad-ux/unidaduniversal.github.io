@@ -504,3 +504,27 @@ TRY("toc",()=>{
 
 })(); /* FIN IIFE PRINCIPAL */
 
+document.querySelectorAll(".cta-strip[data-sistema]").forEach(strip=>{
+  const sys = strip.dataset.sistema;
+  const pdf = strip.dataset.pdf;
+
+  const wa = (msg)=>"https://wa.me/5568437918?text="+encodeURIComponent(msg);
+
+  strip.innerHTML = `
+    <a class="btn btn-grad-green hero-btn"
+       href="${wa(`Hola Expiriti, quiero comprar mi licencia de CONTPAQi ${sys}`)}"
+       target="_blank" rel="noopener">Compra ahora</a>
+    <a class="btn btn-grad-purple hero-btn"
+       href="${wa(`Hola Expiriti, quiero mi prueba gratis de 30 días de CONTPAQi ${sys}`)}"
+       target="_blank" rel="noopener">Prueba gratis</a>
+    <a class="btn btn-grad-blue hero-btn"
+       href="${wa(`Hola Expiriti, quiero agendar una demo de 45 min por Zoom de CONTPAQi ${sys}`)}"
+       target="_blank" rel="noopener">Demo de 45 min por Zoom</a>
+    <a class="btn btn-ghost hero-btn"
+       href="../PDFS/${pdf}.pdf"
+       target="_blank" rel="noopener">Ficha técnica (PDF)</a>
+    <a class="btn btn-ghost hero-btn"
+       href="#caracteristicas">Resumen ficha técnica</a>
+  `;
+});
+
