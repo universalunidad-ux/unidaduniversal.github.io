@@ -546,3 +546,5 @@ if(document.readyState==="loading") document.addEventListener("DOMContentLoaded"
 else autoInitOnce();
 
 })();} /* end guard escritorio */
+
+TRY("calc_brand_reg",()=>{const D=document;const fix=s=>(s||"").replace(/\bCONTPAQi\b/g,"CONTPAQi\u00AE");const run=()=>{const root=D.getElementById("calculadora-section");if(!root)return;root.querySelectorAll(".calc-container>h4,.calc-sub,.sys-icon strong,.calc-head-text").forEach(el=>{if(!el||el.dataset.calcRg==="1")return;const t=(el.textContent||"");if(!/\bCONTPAQi\b/.test(t))return;el.textContent=fix(t);el.dataset.calcRg="1"})};D.readyState==="loading"?D.addEventListener("DOMContentLoaded",run,{once:!0}):run();addEventListener("calc-render",run,{passive:!0});addEventListener("calc-recompute",run,{passive:!0});addEventListener("pageshow",run,{passive:!0})});
