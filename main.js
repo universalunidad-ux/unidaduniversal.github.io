@@ -93,15 +93,21 @@ TRY("base+partials",()=>{
 ========================================================= */
 TRY("catalog_sistemas",()=>{
   W.CATALOG_SISTEMAS=W.CATALOG_SISTEMAS||[
-    {name:"CONTPAQi Contabilidad",img:"IMG/contabilidadsq.webp"},
-    {name:"CONTPAQi Bancos",img:"IMG/bancossq.webp"},
-    {name:"CONTPAQi Nóminas",img:"IMG/nominassq.webp"},
-    {name:"CONTPAQi XML en Línea",img:"IMG/xmlsq.webp",noDiscount:!0},
-    {name:"CONTPAQi Comercial PRO",img:"IMG/comercialprosq.webp"},
-    {name:"CONTPAQi Comercial PREMIUM",img:"IMG/comercialpremiumsq.webp"},
-    {name:"CONTPAQi Factura Electrónica",img:"IMG/facturasq.webp"}
-  ].map(x=>({ ...x, img:(W.__EXP_ABS__?W.__EXP_ABS__(x.img):x.img) }));
+    {name:"CONTPAQi Contabilidad",imgSq:"IMG/contabilidadsq.webp",imgLogo:"IMG/contabilidad.webp"},
+    {name:"CONTPAQi Bancos",imgSq:"IMG/bancossq.webp",imgLogo:"IMG/bancos.webp"},
+    {name:"CONTPAQi Nóminas",imgSq:"IMG/nominassq.webp",imgLogo:"IMG/nominas.webp"},
+    {name:"CONTPAQi XML en Línea",imgSq:"IMG/xmlsq.webp",imgLogo:"IMG/xml.webp",noDiscount:!0},
+    {name:"CONTPAQi Comercial PRO",imgSq:"IMG/comercialprosq.webp",imgLogo:"IMG/comercialpro.webp"},
+    {name:"CONTPAQi Comercial PREMIUM",imgSq:"IMG/comercialpremiumsq.webp",imgLogo:"IMG/comercialpremium.webp"},
+    {name:"CONTPAQi Factura Electrónica",imgSq:"IMG/facturasq.webp",imgLogo:"IMG/factura.webp"}
+  ].map(x=>({
+    ...x,
+    imgSq:(W.__EXP_ABS__?W.__EXP_ABS__(x.imgSq):x.imgSq),
+    imgLogo:(W.__EXP_ABS__?W.__EXP_ABS__(x.imgLogo):x.imgLogo)
+  }));
 });
+TRY("calc_header_logo",()=>{const D=document,W=window;const getSys=()=>((D.getElementById("app")?.dataset.system)||"").trim();const findLogo=s=>{const it=(W.CATALOG_SISTEMAS||[]).find(x=>x.name===s);return it?.imgLogo||""};const mount=()=>{const sys=getSys();if(!sys)return;const p=D.getElementById("calc-primary");if(!p||p.querySelector(".calc-head"))return;const logo=findLogo(sys);const h=D.createElement("div");h.className="calc-head";h.innerHTML=`<div class="calc-head-row">${logo?`<img class="calc-syslogo" src="${logo}" alt="${sys}">`:""}<div class="calc-head-text"><div class="calc-price">Precio</div><div class="calc-sub">${sys}</div></div></div>`;p.prepend(h)};D.readyState==="loading"?D.addEventListener("DOMContentLoaded",mount,{once:!0}):mount();W.addEventListener("calc-render",mount,{passive:!0});W.addEventListener("pageshow",mount,{passive:!0})});
+
 
 /* =========================================================
  2) VIDEOS: AGRUPAR EN SLIDES DE 2 (solo si existe #carouselVideos)
