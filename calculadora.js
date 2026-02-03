@@ -550,11 +550,4 @@ else autoInitOnce();
 
 })();} /* end guard escritorio */
 
-TRY("calc_brand_reg",()=>{const D=document,fix=s=>(s||"").replace(/\bCONTPAQi\b/g,"CONTPAQi\u00AE"),run=()=>{const root=D.getElementById("calculadora-section");if(!root)return;root.querySelectorAll(".calc-sub,.sys-icon strong").forEach(el=>{if(!el||el.dataset.calcRg==="1")return;const t=el.textContent||"";if(!/\bCONTPAQi\b/.test(t))return;el.textContent=fix(t);el.dataset.calcRg="1"})};D.readyState==="loading"?D.addEventListener("DOMContentLoaded",run,{once:!0}):run();addEventListener("calc-render",run,{passive:!0});addEventListener("calc-recompute",run,{passive:!0});addEventListener("pageshow",run,{passive:!0})});
-
-window.ensureCalcHead=window.ensureCalcHead||function(e){if(!e)return null;let h=e.querySelector?.(".calc-head")||null;if(h)return h;h=document.createElement("div");h.className="calc-head";h.innerHTML='<div class="calc-head-row"><img class="calc-syslogo" alt="" decoding="async"><div><div class="calc-price"></div><div class="calc-sub"></div></div></div>';(e.firstElementChild?e.insertBefore(h,e.firstElementChild):e.appendChild(h));return h};
-window.setCalcHead=window.setCalcHead||function(e,o){if(!e||!o)return;const h=window.ensureCalcHead(e);if(!h)return;const i=h.querySelector(".calc-syslogo"),r=h.querySelector(".calc-price"),u=h.querySelector(".calc-sub");i.src=o.logoSrc||"";i.alt=o.title||"";r.textContent=o.priceText||"";u.textContent=o.subtitle||o.title||""};
-window.ensureSlotHead=window.ensureSlotHead||function(e){if(!e)return null;let h=e.querySelector?.(".calc-head")||null;if(h)return h;h=document.createElement("div");h.className="calc-head";h.innerHTML='<div class="calc-head-row"><img class="calc-syslogo" alt="" decoding="async"><div><div class="calc-price"></div><div class="calc-sub"></div></div></div>';e.insertBefore(h,e.firstChild);return h};
-window.setSlotHead=window.setSlotHead||function(e,o){if(!e||!o)return;const h=window.ensureSlotHead(e);if(!h)return;const i=h.querySelector(".calc-syslogo"),r=h.querySelector(".calc-price"),u=h.querySelector(".calc-sub");i.src=o.logoSrc||"";i.alt=o.title||"";r.textContent=o.priceText||"";u.textContent=o.subtitle||o.title||""};
-
 
