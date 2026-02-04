@@ -234,7 +234,7 @@ body>.arrowCircle{display:none!important}
 
 
 
-/* BADGES base (Sistemas) */
+/* BADGES base (Sistemas) + swipe mobile */
 .page-sistemas .badge,.page-sistemas .badges .badge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.22);color:rgba(232,238,246,.92);font-weight:800;font-size:12.5px;line-height:1}
 html[data-theme="light"] .page-sistemas .badge,html[data-theme="light"] .page-sistemas .badges .badge{border-color:rgba(2,6,23,.14);background:rgba(255,255,255,.82);color:rgba(11,18,32,.92)}
 .page-sistemas .badges .badge:nth-child(1){background:rgba(232,172,54,.18);border-color:rgba(232,172,54,.45)}
@@ -242,6 +242,7 @@ html[data-theme="light"] .page-sistemas .badge,html[data-theme="light"] .page-si
 .page-sistemas .badges .badge:nth-child(3){background:rgba(240,90,102,.16);border-color:rgba(240,90,102,.40)}
 .page-sistemas .badges .badge:nth-child(4){background:rgba(96,165,250,.16);border-color:rgba(96,165,250,.40)}
 html[data-theme="light"] .page-sistemas .badges .badge:nth-child(1),html[data-theme="light"] .page-sistemas .badges .badge:nth-child(2),html[data-theme="light"] .page-sistemas .badges .badge:nth-child(3),html[data-theme="light"] .page-sistemas .badges .badge:nth-child(4){color:rgba(11,18,32,.92)}
+@media(max-width:680px){.page-sistemas .badges{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-x;padding:2px 0;max-width:100%}.page-sistemas .badges::-webkit-scrollbar{display:none}.page-sistemas .badges .badge{flex:0 0 auto;white-space:nowrap}}
 
 /* Tabla nube (extras) */
 .pricing-table-nube{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;overflow:hidden;border-radius:14px;background:var(--card);box-shadow:var(--shadow)}
