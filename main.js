@@ -356,87 +356,11 @@ TRY("carouselX",()=>{
   });
 });
 
-/* =========================================================
- 10) CALCULADORA — COMPAT (NO DUPLICA)
-  - calculadora.js es SINGLE OWNER
-  - main.js solo dispara eventos (recompute/render)
-========================================================= */
-TRY("calc_hooks",()=>{
-  const hasCalcDom=()=>{
-    const app=D.getElementById("app");
-    if(!app) return false;
-    return !!((app.dataset.system||"").trim() && D.getElementById("calc-row"));
-  };
+/* 10) CALCULADORA — COMPAT (NO DUPLICA) */
+TRY("calc_hooks",()=>{const has=()=>{const a=D.getElementById("app");return!!(a&&((a.dataset.system||"").trim())&&D.getElementById("calc-row"))},kick=()=>{if(!has())return;try{W.dispatchEvent(new Event("calc-recompute"))}catch{}try{W.dispatchEvent(new Event("calc-render"))}catch{}};D.readyState==="loading"?D.addEventListener("DOMContentLoaded",kick,{once:!0}):kick();W.addEventListener("pageshow",kick,{passive:!0})});
 
-  const kick=()=>{
-    if(!hasCalcDom()) return;
-    try{ W.dispatchEvent(new Event("calc-recompute")); }catch{}
-    try{ W.dispatchEvent(new Event("calc-render")); }catch{}
-  };
-
-  D.readyState==="loading"
-    ? D.addEventListener("DOMContentLoaded",kick,{once:!0})
-    : kick();
-
-  W.addEventListener("pageshow",kick,{passive:!0});
-});
-
-
-/* =========================================================
- 10.5) ICONS CAROUSEL (-15%) — SOLO si existen pickers
-  - Robusto: si los .sys-icon aparecen después, se auto-activa
-========================================================= */
-TRY("icons_carousel",()=>{
-  const enhanceOne=wrap=>{
-    if(!wrap) return;
-
-    const ensure=()=>{
-      if(wrap.dataset.icInit==="1") return;
-      if(!wrap.querySelector(".sys-icon")) return; // aún no hay iconos → espera
-      wrap.dataset.icInit="1";
-
-      const slot=wrap.closest("#calc-slot-2,.calc-container,.placeholder")||wrap.parentElement;
-      const note=slot&&slot.querySelector?slot.querySelector(".note"):null; if(note)note.classList.add("note-center");
-
-      let host=wrap.closest(".icons-carousel");
-      if(!host){host=D.createElement("div");host.className="icons-carousel";wrap.parentElement.insertBefore(host,wrap);host.appendChild(wrap)}
-
-      const mkBtn=(cls,label,chev)=>{const b=D.createElement("button");b.type="button";b.className=`arrowCircle ${cls}`;b.setAttribute("aria-label",label);b.innerHTML=`<span class="chev">${chev}</span>`;return b};
-      let prev=host.querySelector(".arrowCircle.prev"),next=host.querySelector(".arrowCircle.next");
-      if(!prev){prev=mkBtn("prev","Anterior","‹");host.appendChild(prev)}
-      if(!next){next=mkBtn("next","Siguiente","›");host.appendChild(next)}
-
-      const step=()=>Math.max(220,Math.round(((wrap.querySelector(".sys-icon")?.offsetWidth)||200)+18));
-      const scrollByX=dir=>wrap.scrollBy({left:step()*dir,behavior:"smooth"});
-      prev.addEventListener("click",()=>scrollByX(-1));
-      next.addEventListener("click",()=>scrollByX(1));
-
-      const paint=()=>{
-        const canScroll=wrap.scrollWidth>wrap.clientWidth+4;
-        prev.style.display=canScroll?"":"none"; next.style.display=canScroll?"":"none";
-        const c=wrap.closest(".calc-container")||slot; if(c) c.classList.toggle("has-icons",wrap.children.length>0);
-      };
-      paint(); W.addEventListener("resize",paint,{passive:!0});
-      new MutationObserver(paint).observe(wrap,{childList:!0,subtree:!1});
-    };
-
-    // Observa el wrap siempre: cuando aparezcan botones, se activa
-    if(!wrap.dataset.icObs){
-      wrap.dataset.icObs="1";
-      new MutationObserver(()=>ensure()).observe(wrap,{childList:!0,subtree:!1});
-    }
-    ensure();
-  };
-
-  const boot=()=>{
-    enhanceOne(D.getElementById("icons-sec-sys"));
-    enhanceOne(D.getElementById("icons-third-sys"));
-  };
-
-  D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();
-  W.addEventListener("calc-render",boot,{passive:!0});
-  W.addEventListener("calc-recompute",boot,{passive:!0});
-});
+/* 10.5) ICONS CAROUSEL (-15%) */
+TRY("icons_carousel",()=>{const enhance=wrap=>{if(!wrap)return;const ensure=()=>{if(wrap.dataset.icInit==="1")return;if(!wrap.querySelector(".sys-icon"))return;wrap.dataset.icInit="1";const slot=wrap.closest("#calc-slot-2,.calc-container,.placeholder")||wrap.parentElement,note=slot&&slot.querySelector?slot.querySelector(".note"):null;note&&note.classList.add("note-center");let host=wrap.closest(".icons-carousel");host||(host=D.createElement("div"),host.className="icons-carousel",wrap.parentElement.insertBefore(host,wrap),host.appendChild(wrap));const mk=(cls,lab,chev)=>{const b=D.createElement("button");return b.type="button",b.className=`arrowCircle ${cls}`,b.setAttribute("aria-label",lab),b.innerHTML=`<span class="chev">${chev}</span>`,b},step=()=>Math.max(220,Math.round(((wrap.querySelector(".sys-icon")?.offsetWidth)||200)+18)),scroll=dir=>wrap.scrollBy({left:step()*dir,behavior:"smooth"});let prev=host.querySelector(".arrowCircle.prev"),next=host.querySelector(".arrowCircle.next");prev||(prev=mk("prev","Anterior","‹"),host.appendChild(prev));next||(next=mk("next","Siguiente","›"),host.appendChild(next));prev.addEventListener("click",()=>scroll(-1));next.addEventListener("click",()=>scroll(1));let raf=0;const paint=()=>{raf=0;const can=wrap.scrollWidth>wrap.clientWidth+4;prev.style.display=can?"":"none";next.style.display=can?"":"none";const c=wrap.closest(".calc-container")||slot;c&&c.classList.toggle("has-icons",wrap.children.length>0)},paintQ=()=>{raf||(raf=requestAnimationFrame(paint))};paintQ();if(!wrap.dataset.icResize){wrap.dataset.icResize="1";W.addEventListener("resize",paintQ,{passive:!0})}new MutationObserver(paintQ).observe(wrap,{childList:!0,subtree:!1})};if(!wrap.dataset.icObs){wrap.dataset.icObs="1";new MutationObserver(()=>ensure()).observe(wrap,{childList:!0,subtree:!1})}ensure()},boot=()=>{enhance(D.getElementById("icons-sec-sys"));enhance(D.getElementById("icons-third-sys"))};D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:!0}):boot();W.addEventListener("calc-render",boot,{passive:!0});W.addEventListener("calc-recompute",boot,{passive:!0})});
 
 /* =========================================================
  7) PÍLDORAS (filtros cards)
