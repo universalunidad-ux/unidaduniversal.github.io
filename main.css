@@ -492,3 +492,47 @@ html[data-theme="light"] .page-sistemas .sys-icon{background:#fff!important;bord
 html[data-theme="light"] .page-sistemas .sys-icon img{background:transparent!important;border-color:rgba(2,6,23,.10)!important}
 html[data-theme="light"] .page-sistemas .carousel-nav{background:#fff!important;border-top-color:rgba(2,6,23,.10)!important}
 html[data-theme="light"] .page-sistemas .arrowCircle{background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;box-shadow:0 10px 22px rgba(2,6,23,.10)!important}
+
+
+/* EXPIRITI — HERO FIT DESKTOP (no-scroll) v2026.02.06 */
+@media(min-width:981px){
+  /* 1) El “hero” de sistemas ocupa viewport - header (sin tocar diseño) */
+  main.container.hero.page-sistemas{
+    min-height:calc(100dvh - var(--gh-height,68px));
+    display:flex;flex-direction:column;
+    padding-top:10px; /* antes tenías aire extra */
+  }
+
+  /* 2) Compacta SOLO lo necesario arriba (H1 + badges) */
+  main.container.hero.page-sistemas>h1{margin:8px 0 10px!important}
+  main.container.hero.page-sistemas .badges{margin:0 0 10px!important}
+
+  /* 3) El bloque “Resumen” se estira y NO empuja scroll */
+  main.container.hero.page-sistemas section[aria-label="Resumen"]{flex:1;min-height:0}
+  main.container.hero.page-sistemas section[aria-label="Resumen"]>.card.body{height:100%;display:flex;flex-direction:column;min-height:0}
+
+  /* 4) La grilla 2 col se estira y permite que el carrusel sea elástico */
+  main.container.hero.page-sistemas .grid-2.align-center{flex:1;align-items:stretch;min-height:0}
+  main.container.hero.page-sistemas .grid-2.align-center>div{min-height:0}
+
+  /* 5) El aside (reels) se vuelve columna: títulos fijos + carrusel elástico */
+  main.container.hero.page-sistemas .grid-2.align-center aside.card.body{
+    height:100%;display:flex;flex-direction:column;min-height:0
+  }
+
+  /* 6) AQUÍ está el “100%”: quita el min-height global y usa altura relativa */
+  main.container.hero.page-sistemas .grid-2.align-center aside.card.body .carousel{
+    min-height:unset!important;
+    flex:1;min-height:0;
+    height:clamp(260px,42vh,520px); /* relativo a viewport, sin deformar diseño */
+  }
+  main.container.hero.page-sistemas .grid-2.align-center aside.card.body .carousel-track{
+    height:100%;min-height:0;align-items:stretch
+  }
+  main.container.hero.page-sistemas .grid-2.align-center aside.card.body .carousel-slide{
+    height:100%;min-height:0;align-items:center;justify-content:center
+  }
+
+  /* 7) Bonus seguro: logo H1 no crece de más en pantallas “bajitas” */
+  main.container.hero.page-sistemas>h1 img{max-height:clamp(44px,7vh,74px)}
+}
