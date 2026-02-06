@@ -76,48 +76,51 @@
 <!-- Expiriti — HERO (2 cols desktop) FIX v2026.01.24
      Causa: se quitó el wrapper del bloque izquierdo; el grid ya no “agrupa” el copy.
      Solución: reintroducir .hero-copy para que el article quede como 2do hijo (col derecha). -->
-<main id="main-content"><section class="hero section-full"><div class="container hero-grid v-center">
-  <!-- COL IZQ: COPY (wrapper requerido) -->
 
-    <!-- H1 con imágenes (NO CAMBIAR) -->
-<h1 class="hero-h1">
-  <span class="hero-piece hero-logo">
-    <img class="hero-word hero-contpaqi"
-      src="IMG/TEXTEXP%20(4).webp"
-      alt="CONTPAQi" decoding="async">
-  </span>
+<section class="hero section-full">
+  <div class="container hero-grid v-center">
 
-  <span class="hero-piece gradient-word">
-    Licencias, cursos, desarrollos y soporte
-    <span class="hero-lock">
-      con
-      <span class="hero-logo">
-        <img class="hero-word hero-exp"
-          src="IMG/TEXTEXP.webp"
-          alt="ExpIRI TI" decoding="async">
-      </span>
-    </span>
-  </span>
-</h1>
+    <!-- COL IZQ: COPY (wrapper requerido) -->
+    <div class="hero-copy">
+      <h1 class="hero-h1">
+        <span class="hero-piece hero-logo">
+          <img class="hero-word hero-contpaqi"
+            src="IMG/TEXTEXP%20(4).webp"
+            alt="CONTPAQi" decoding="async">
+        </span>
 
+        <span class="hero-piece gradient-word">
+          Licencias, cursos, desarrollos y soporte
+          <span class="hero-lock">
+            con
+            <span class="hero-logo">
+              <img class="hero-word hero-exp"
+                src="IMG/TEXTEXP.webp"
+                alt="ExpIRI TI" decoding="async">
+            </span>
+          </span>
+        </span>
+      </h1>
 
-    <div class="badges"></div>
-    <a class="btn hero-btn btn-grad-yellow" href="#contacto">Quiero una demo</a>
-  </div>
-
-  <!-- COL DER: HERO GALLERY -->
-  <article class="card hero-gallery-card" aria-label="Galería de sistemas CONTPAQi">
-    <div class="hero-gallery-header"><h2>Conoce más de los sistemas:</h2></div>
-    <nav class="hero-gallery-groups" id="heroGalleryGroups" aria-label="Grupos de sistemas"></nav>
-    <div class="carousel hero-carousel" id="heroGalleryCarousel" aria-label="Galería de imágenes por sistema">
-      <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
-      <div class="carousel-track"></div>
-      <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
-      <div class="carousel-nav" aria-label="Paginación de imágenes"></div>
+      <div class="badges"></div>
+      <a class="btn hero-btn btn-grad-yellow" href="#contacto">Quiero una demo</a>
     </div>
-    <div class="hero-gallery-tabs" id="heroGalleryTabs" aria-label="Selecciona sistema para ver imágenes"></div>
-  </article>
-</div></section>
+
+    <!-- COL DER: HERO GALLERY -->
+    <article class="card hero-gallery-card" aria-label="Galería de sistemas CONTPAQi">
+      <div class="hero-gallery-header"><h2>Conoce más de los sistemas:</h2></div>
+      <nav class="hero-gallery-groups" id="heroGalleryGroups" aria-label="Grupos de sistemas"></nav>
+      <div class="carousel hero-carousel" id="heroGalleryCarousel" aria-label="Galería de imágenes por sistema">
+        <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
+        <div class="carousel-track"></div>
+        <button class="arrowCircle next" aria-label="Siguiente" type="button"><span class="chev">›</span></button>
+        <div class="carousel-nav" aria-label="Paginación de imágenes"></div>
+      </div>
+      <div class="hero-gallery-tabs" id="heroGalleryTabs" aria-label="Selecciona sistema para ver imágenes"></div>
+    </article>
+
+  </div>
+</section>
 
 
 <!-- =========================================================
