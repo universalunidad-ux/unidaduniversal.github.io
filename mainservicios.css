@@ -11,13 +11,8 @@ Solo overrides de la página Servicios.
 /* =========================
    CLS FIX (solo Servicios)
 ========================= */
-@media (min-width:981px){
-  .page-servicios #beneficios{min-height:560px}
-  .page-servicios #beneficios h2.title-gradient{min-height:2.8em}
-  .page-servicios #beneficios .lead{min-height:7.4em}
-  .page-servicios #beneficios .reels-card{min-height:520px}
-  .page-servicios #beneficios .reel-embed{min-height:520px;max-width:380px;aspect-ratio:9/16}
-}
+@media(min-width:981px){.page-servicios #beneficios{min-height:calc(100svh - var(--ghh,68px))}.page-servicios #beneficios h2.title-gradient{min-height:2.8em}.page-servicios #beneficios .lead{min-height:7.4em}.page-servicios #beneficios .reels-card{min-height:unset;height:100%}.page-servicios #beneficios .reel-embed{min-height:unset;max-width:380px;aspect-ratio:9/16}}
+
 @media (max-width:980px){
   .page-servicios #beneficios{min-height:auto}
   .page-servicios #beneficios h2.title-gradient,
@@ -126,10 +121,6 @@ body.page-servicios .btn:active,body.page-servicios .hero-btn:active{transform:t
 /* reel-title = title-gradient (una sola vez, sin duplicados) */
 body.page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 
-/* === Expiriti SERVICIOS: HERO CTAs + REEL TITLE (LIGHT ONLY) v2026.01.07 === */
-html[data-theme="light"]{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
-
-html[data-theme="light"] .page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 
 
 /* HERO 1-viewport (desktop) — best effort */
