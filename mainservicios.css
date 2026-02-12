@@ -98,101 +98,45 @@ Solo overrides de la página Servicios.
   border-bottom:10px solid transparent;
   opacity:.95;
 }
+/* BADGES swipe (mobile) — Servicios */
+@media(max-width:720px){.page-servicios .badges{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding:2px 2px 8px;margin:10px 0}.page-servicios .badges::-webkit-scrollbar{height:6px}.page-servicios .badges::-webkit-scrollbar-thumb{background:rgba(2,6,23,.18);border-radius:999px}.page-servicios .badges .badge{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start}}
 
 /* =========================================================
-   Expiriti — PATCH SERVICIOS UI (LIGHT ONLY) v2026.01.07
+   SERVICIOS — UI CANON (LIGHT COLORS EN AMBOS MODOS) v2026.02
    Incluye:
-   - Botones principales (3 colores Expiriti + hover premium)
-   - Botones extra (blanco + letra negra)
+   - Botones principales (3 colores Expiriti + hover premium) EN AMBOS MODOS
+   - Texto blanco para CTAs + pills EN AMBOS MODOS
    - reel-title con estilo title-gradient
    Scope: <body class="page-servicios">
-   Dark mode NO se toca
+   Nota: Dark mode NO se toca con colores nuevos; se “fija” al canon de light
 ========================================================= */
-html[data-theme="light"]{
-  --ex-amber:rgb(233,170,25);
-  --ex-teal:rgb(20,153,151);
-  --ex-coral:rgb(250,82,98);
-}
+:root{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
+body.page-servicios .btn,body.page-servicios .hero-btn,body.page-servicios .pill{color:#fff!important}
+body.page-servicios .hero-btn{min-width:0;transition:transform .14s ease,box-shadow .14s ease,filter .14s ease}
 
-/* =========================
-   1) BOTONES PRINCIPALES
-========================= */
-html[data-theme="light"] .page-servicios .hero-btn{
-  color:#fff!important;
-  transition:transform .14s ease,box-shadow .14s ease,filter .14s ease;
-}
+/* Botones (colores canon) */
+body.page-servicios .btn-grad-green{background:var(--ex-amber)!important;border-color:var(--ex-amber)!important}
+body.page-servicios .btn-grad-blue{background:var(--ex-teal)!important;border-color:var(--ex-teal)!important}
+body.page-servicios .btn-ghost{background:var(--ex-coral)!important;border-color:var(--ex-coral)!important}
 
-/* --- 1° ÁMBAR --- */
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(1){
-  background:var(--ex-amber)!important;
-  border-color:var(--ex-amber)!important;
-}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(1):hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 24px rgba(233,170,25,.35);
-}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(1):active{
-  transform:translateY(0);
-  box-shadow:0 6px 14px rgba(233,170,25,.28);
-}
+/* Hover premium */
+@media(hover:hover){body.page-servicios .btn:hover,body.page-servicios .hero-btn:hover{transform:translateY(-2px);filter:saturate(1.04)}body.page-servicios .btn-grad-green:hover{box-shadow:0 10px 24px rgba(233,170,25,.35)}body.page-servicios .btn-grad-blue:hover{box-shadow:0 10px 24px rgba(20,153,151,.35)}body.page-servicios .btn-ghost:hover{box-shadow:0 10px 24px rgba(250,82,98,.35)}}
+body.page-servicios .btn:active,body.page-servicios .hero-btn:active{transform:translateY(0)}
 
-/* --- 2° TEAL --- */
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(2){
-  background:var(--ex-teal)!important;
-  border-color:var(--ex-teal)!important;
-}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(2):hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 24px rgba(20,153,151,.35);
-}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(2):active{
-  transform:translateY(0);
-  box-shadow:0 6px 14px rgba(20,153,151,.28);
-}
-
-/* --- 3° CORAL --- */
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(3){
-  background:var(--ex-coral)!important;
-  border-color:var(--ex-coral)!important;
-}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(3):hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 24px rgba(250,82,98,.35);
-}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(3):active{
-  transform:translateY(0);
-  box-shadow:0 6px 14px rgba(250,82,98,.28);
-}
-
-/* --- 4° en adelante: BLANCOS --- */
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(n+4){
-  background:rgba(255,255,255,.92)!important;
-  border-color:rgba(2,6,23,.14)!important;
-  color:rgba(11,18,32,.92)!important;
-}
-html[data-theme="light"] .page-servicios .hero-btn:nth-of-type(n+4):hover{
-  transform:translateY(-1px);
-  box-shadow:0 8px 18px rgba(2,6,23,.12);
-}
-
-/* =========================
-   2) REEL TITLE (SERVICIOS)
-   Igual a .title-gradient
-========================= */
-html[data-theme="light"] .page-servicios .reel-title{
-  margin:0 0 8px;
-  font-weight:950;
-  letter-spacing:.01em;
-  line-height:1.15;
-  background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-  color:transparent;
-}
+/* reel-title = title-gradient (una sola vez, sin duplicados) */
+body.page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 
 /* === Expiriti SERVICIOS: HERO CTAs + REEL TITLE (LIGHT ONLY) v2026.01.07 === */
 html[data-theme="light"]{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
 
 html[data-theme="light"] .page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 
+
+/* HERO 1-viewport (desktop) — best effort */
+@media(min-width:981px){
+  .page-servicios main.container.hero{min-height:calc(100svh - var(--ghh,68px));display:flex;flex-direction:column;justify-content:center;padding-top:10px;padding-bottom:10px}
+  .page-servicios #beneficios{min-height:0!important;flex:1;display:flex;align-items:stretch}
+  .page-servicios #beneficios .grid-2{flex:1;min-height:0}
+  .page-servicios #beneficios .reels-card{min-height:0!important;height:100%}
+  .page-servicios #beneficios .reel-embed{min-height:0!important}
+}
