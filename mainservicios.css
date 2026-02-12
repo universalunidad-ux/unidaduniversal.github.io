@@ -61,15 +61,13 @@ Solo overrides de la página Servicios.
 .page-servicios .reel-embed .ytPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:66px;height:46px;border-radius:14px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18)}
 .page-servicios .reel-embed .ytPlay::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-35%,-50%);width:0;height:0;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;opacity:.95}
 
-/* =========================
-   BADGES swipe móvil
-========================= */
-@media(max-width:720px){
-.page-servicios .badges{display:flex;flex-wrap:nowrap;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding:2px 2px 8px;margin:10px 0}
-.page-servicios .badges::-webkit-scrollbar{height:6px}
-.page-servicios .badges::-webkit-scrollbar-thumb{background:rgba(2,6,23,.18);border-radius:999px}
-.page-servicios .badges .badge{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start}
-}
+
+/* BADGES swipe (mobile) — Servicios (FORZADO) */
+@media(max-width:720px){body.page-servicios .badges{display:flex!important;flex-wrap:nowrap!important;gap:10px!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding:2px 10px 10px!important;margin:10px 0!important}body.page-servicios .badges::-webkit-scrollbar{height:6px}body.page-servicios .badges::-webkit-scrollbar-thumb{background:rgba(2,6,23,.18);border-radius:999px}body.page-servicios .badges .badge{flex:0 0 auto!important;white-space:nowrap!important;scroll-snap-align:start}}
+
+/* Servicios: títulos/texto centrados (hero + beneficios) */
+body.page-servicios main.container.hero,body.page-servicios main.container.hero h1,body.page-servicios #beneficios h2.title-gradient,body.page-servicios #beneficios .lead{text-align:center}
+body.page-servicios #beneficios .badges{justify-content:center}
 
 /* =========================================================
    UI CANON — Light colors en ambos modos
@@ -80,10 +78,9 @@ body.page-servicios .hero-btn,
 body.page-servicios .pill{color:#fff!important}
 body.page-servicios .hero-btn{transition:transform .14s ease,box-shadow .14s ease,filter .14s ease}
 
-/* Colores botones */
-body.page-servicios .btn-grad-green{background:var(--ex-amber)!important;border-color:var(--ex-amber)!important}
-body.page-servicios .btn-grad-blue{background:var(--ex-teal)!important;border-color:var(--ex-teal)!important}
-body.page-servicios .btn-ghost{background:var(--ex-coral)!important;border-color:var(--ex-coral)!important}
+body.page-servicios .btn.btn-grad-green,body.page-servicios .hero-btn.btn-grad-green{background:var(--ex-amber)!important;background-image:none!important;border-color:var(--ex-amber)!important}
+body.page-servicios .btn.btn-grad-blue,body.page-servicios .hero-btn.btn-grad-blue{background:var(--ex-teal)!important;background-image:none!important;border-color:var(--ex-teal)!important}
+body.page-servicios .btn.btn-ghost,body.page-servicios .hero-btn.btn-ghost{background:var(--ex-coral)!important;background-image:none!important;border-color:var(--ex-coral)!important}
 
 /* Hover premium */
 @media(hover:hover){
@@ -109,3 +106,8 @@ body.page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;lette
 .page-servicios #beneficios .reels-card{min-height:0!important;height:100%}
 .page-servicios #beneficios .reel-embed{min-height:0!important}
 }
+
+/* CTAs centrados */
+body.page-servicios .cta-row{width:100%;justify-content:center;align-items:center}
+body.page-servicios .cta-row--center{justify-content:center}
+
