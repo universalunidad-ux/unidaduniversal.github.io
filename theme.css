@@ -456,32 +456,14 @@ html[data-theme="light"]{
   --ex-coral:rgb(250,82,98);
 }
 
-/* =========================================================
-   1) HERO — 3 CTAs por POSICIÓN (sin tocar HTML)
-   Orden esperado:
-   1) Compra ahora        → ÁMBAR
-   2) Tramitar prueba     → TEAL
-   3) Sesión guiada       → CORAL
-   Los btn-ghost quedan igual
-========================================================= */
-html[data-theme="light"]
-section[aria-label="Resumen"] + div > a:nth-child(1){
-  background:var(--ex-amber)!important;
-  border-color:var(--ex-amber)!important;
-  color:#fff!important;
-}
-html[data-theme="light"]
-section[aria-label="Resumen"] + div > a:nth-child(2){
-  background:var(--ex-teal)!important;
-  border-color:var(--ex-teal)!important;
-  color:#fff!important;
-}
-html[data-theme="light"]
-section[aria-label="Resumen"] + div > a:nth-child(3){
-  background:var(--ex-coral)!important;
-  border-color:var(--ex-coral)!important;
-  color:#fff!important;
-}
+/* EXPIRITI—CTAS LIGHT + CTA 2x1 CANON v2026.02.14 (MIN) */
+html[data-theme="light"],body[data-theme="light"]{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}html[data-theme="light"] .btn::before,html[data-theme="light"] .btn::after,body[data-theme="light"] .btn::before,body[data-theme="light"] .btn::after{content:none!important;display:none!important}
+html[data-theme="light"] .btn-grad-green,body[data-theme="light"] .btn-grad-green{background:var(--ex-amber)!important;background-image:none!important;border-color:var(--ex-amber)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+html[data-theme="light"] .btn-grad-blue,body[data-theme="light"] .btn-grad-blue{background:var(--ex-teal)!important;background-image:none!important;border-color:var(--ex-teal)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+html[data-theme="light"] .btn-ghost,body[data-theme="light"] .btn-ghost{background:var(--ex-coral)!important;background-image:none!important;border-color:var(--ex-coral)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+@media(hover:hover){html[data-theme="light"] .btn-grad-green:hover,body[data-theme="light"] .btn-grad-green:hover{box-shadow:0 10px 24px rgba(233,170,25,.32)}html[data-theme="light"] .btn-grad-blue:hover,body[data-theme="light"] .btn-grad-blue:hover{box-shadow:0 10px 24px rgba(20,153,151,.30)}html[data-theme="light"] .btn-ghost:hover,body[data-theme="light"] .btn-ghost:hover{box-shadow:0 10px 24px rgba(250,82,98,.28)}}
+@media(max-width:720px){.cta-row,#sesion-guiada>div,div[style*="display:flex"][style*="flex-wrap"]{display:flex!important;flex-wrap:wrap!important;gap:10px!important;justify-content:center!important}.cta-row>.btn,#sesion-guiada>div>.btn,div[style*="display:flex"][style*="flex-wrap"]>a.btn{flex:1 1 calc(50% - 10px)!important;width:auto!important;min-width:0!important;max-width:92vw!important;justify-content:center!important}.cta-row>.btn:nth-child(3),div[style*="display:flex"][style*="flex-wrap"]>a.btn:nth-child(3){flex:0 1 auto!important}}
+
 
 /* Hover ligero (solo light) */
 html[data-theme="light"]
@@ -489,38 +471,7 @@ section[aria-label="Resumen"] + div > a:hover{
   filter:brightness(1.05) saturate(1.05);
 }
 
-/* =========================================================
-   2) CTA FINAL (#sesion-guiada)
-   - Agendar sesión → CORAL
-   - Comprar ahora  → TEAL
-========================================================= */
-html[data-theme="light"] #sesion-guiada .btn:nth-child(1){
-  background:var(--ex-coral)!important;
-  border-color:var(--ex-coral)!important;
-  color:#fff!important;
-}
-html[data-theme="light"] #sesion-guiada .btn:nth-child(2){
-  background:var(--ex-teal)!important;
-  border-color:var(--ex-teal)!important;
-  color:#fff!important;
-}
 
-/* =========================================================
-   3) PILL ACTIVO — Funciones destacadas (Expiriti)
-   Antes: azul
-   Ahora: gradiente TEAL → CORAL + texto blanco
-========================================================= */
-html[data-theme="light"] .pill.active{
-  background:linear-gradient(135deg,
-    var(--ex-teal),
-    var(--ex-coral)
-  )!important;
-  color:#fff!important;
-  border-color:transparent!important;
-  box-shadow:
-    0 0 0 1px rgba(20,153,151,.35),
-    0 12px 28px rgba(0,0,0,.25)!important;
-}
 /* === Expiriti: CTAs estándar (3 primeros) — LIGHT ONLY v2026.01.07 ===
    Aplica a bloques repetidos (Sistemas/Servicios) sin tocar HTML.
    Requiere: <a class="btn ... hero-btn"> dentro de un div inline-style con display:flex + flex-wrap
