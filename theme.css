@@ -456,36 +456,6 @@ html[data-theme="light"]{
   --ex-coral:rgb(250,82,98);
 }
 
-/* EXPIRITI—CTAS LIGHT + CTA 2x1 CANON v2026.02.14 (MIN) */
-html[data-theme="light"],body[data-theme="light"]{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}html[data-theme="light"] .btn::before,html[data-theme="light"] .btn::after,body[data-theme="light"] .btn::before,body[data-theme="light"] .btn::after{content:none!important;display:none!important}
-html[data-theme="light"] .btn-grad-green,body[data-theme="light"] .btn-grad-green{background:var(--ex-amber)!important;background-image:none!important;border-color:var(--ex-amber)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
-html[data-theme="light"] .btn-grad-blue,body[data-theme="light"] .btn-grad-blue{background:var(--ex-teal)!important;background-image:none!important;border-color:var(--ex-teal)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
-html[data-theme="light"] .btn-ghost,body[data-theme="light"] .btn-ghost{background:var(--ex-coral)!important;background-image:none!important;border-color:var(--ex-coral)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
-@media(hover:hover){html[data-theme="light"] .btn-grad-green:hover,body[data-theme="light"] .btn-grad-green:hover{box-shadow:0 10px 24px rgba(233,170,25,.32)}html[data-theme="light"] .btn-grad-blue:hover,body[data-theme="light"] .btn-grad-blue:hover{box-shadow:0 10px 24px rgba(20,153,151,.30)}html[data-theme="light"] .btn-ghost:hover,body[data-theme="light"] .btn-ghost:hover{box-shadow:0 10px 24px rgba(250,82,98,.28)}}
-@media(max-width:720px){.cta-row,#sesion-guiada>div,div[style*="display:flex"][style*="flex-wrap"]{display:flex!important;flex-wrap:wrap!important;gap:10px!important;justify-content:center!important}.cta-row>.btn,#sesion-guiada>div>.btn,div[style*="display:flex"][style*="flex-wrap"]>a.btn{flex:1 1 calc(50% - 10px)!important;width:auto!important;min-width:0!important;max-width:92vw!important;justify-content:center!important}.cta-row>.btn:nth-child(3),div[style*="display:flex"][style*="flex-wrap"]>a.btn:nth-child(3){flex:0 1 auto!important}}
-
-
-/* Hover ligero (solo light) */
-html[data-theme="light"]
-section[aria-label="Resumen"] + div > a:hover{
-  filter:brightness(1.05) saturate(1.05);
-}
-
-
-/* === Expiriti: CTAs estándar (3 primeros) — LIGHT ONLY v2026.01.07 ===
-   Aplica a bloques repetidos (Sistemas/Servicios) sin tocar HTML.
-   Requiere: <a class="btn ... hero-btn"> dentro de un div inline-style con display:flex + flex-wrap
-   No toca DARK. */
-html[data-theme="light"]{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
-html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn{transition:transform .14s ease,box-shadow .14s ease,filter .14s ease}
-html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(1){background:var(--ex-amber)!important;border-color:var(--ex-amber)!important;color:#fff!important}
-html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(2){background:var(--ex-teal)!important;border-color:var(--ex-teal)!important;color:#fff!important}
-html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(3){background:var(--ex-coral)!important;border-color:var(--ex-coral)!important;color:#fff!important}
-html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(-n+3):hover{transform:translateY(-2px);filter:brightness(1.06) saturate(1.06)}
-html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(-n+3):active{transform:translateY(0);filter:brightness(1.02)}
-
-/* Opcional: si algún día metes 6+ CTAs en ese mismo bloque, del 6 en adelante blancos (no toca tus 4/5 ghost) */
-html[data-theme="light"] div[style*="display:flex"][style*="flex-wrap"]>a.btn.hero-btn:nth-child(n+6){background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;color:rgba(11,18,32,.92)!important}
 
 /* =========================================================
  Expiriti — Reel title marquee (GLOBAL) v2026.01.07
@@ -601,4 +571,12 @@ body{padding-top:var(--gh-offset,68px)}
 /* NO BORRAR, reduce espacio entre lgoo y badges sde sistemas en mobile los badges abajo de actualizado 2025 */
 
 @media(max-width:680px){.page-sistemas .hero-word{height:20px!important;max-width:62vw!important}.page-sistemas .hero-word.hero-exp{height:22px!important}}
+
+/* EXPIRITI — THEME PATCH (LIGHT CTAs + CTA 2x1) v2026.02 (MIN) */
+:root{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
+html[data-theme="light"] .btn.btn-grad-green,body[data-theme="light"] .btn.btn-grad-green,html[data-theme="light"] .hero-btn.btn-grad-green,body[data-theme="light"] .hero-btn.btn-grad-green{background:var(--ex-amber)!important;background-image:none!important;border-color:var(--ex-amber)!important;color:#fff!important}
+html[data-theme="light"] .btn.btn-grad-blue,body[data-theme="light"] .btn.btn-grad-blue,html[data-theme="light"] .hero-btn.btn-grad-blue,body[data-theme="light"] .hero-btn.btn-grad-blue{background:var(--ex-teal)!important;background-image:none!important;border-color:var(--ex-teal)!important;color:#fff!important}
+html[data-theme="light"] .btn.btn-ghost,body[data-theme="light"] .btn.btn-ghost,html[data-theme="light"] .hero-btn.btn-ghost,body[data-theme="light"] .hero-btn.btn-ghost{background:var(--ex-coral)!important;background-image:none!important;border-color:var(--ex-coral)!important;color:#fff!important}
+@media(hover:hover){html[data-theme="light"] .btn.btn-grad-green:hover,body[data-theme="light"] .btn.btn-grad-green:hover,html[data-theme="light"] .btn.btn-grad-blue:hover,body[data-theme="light"] .btn.btn-grad-blue:hover,html[data-theme="light"] .btn.btn-ghost:hover,body[data-theme="light"] .btn.btn-ghost:hover{filter:brightness(1.06) saturate(1.06)}}
+@media(max-width:720px){.cta-row,#sesion-guiada>div,.container.hero div[style*="display:flex"][style*="flex-wrap"]{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;justify-items:center!important} .cta-row>a,#sesion-guiada>div>a,.container.hero div[style*="display:flex"][style*="flex-wrap"]>a{width:100%!important;max-width:92vw!important;min-width:0!important} .cta-row>a:nth-last-child(1):nth-child(odd),#sesion-guiada>div>a:nth-last-child(1):nth-child(odd),.container.hero div[style*="display:flex"][style*="flex-wrap"]>a:nth-last-child(1):nth-child(odd){grid-column:1/-1;max-width:72vw!important}}
 
