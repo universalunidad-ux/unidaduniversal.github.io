@@ -399,6 +399,10 @@ html[data-theme="light"] .container.hero>.hint{background:rgba(255,255,255,.92);
   - Evita duplicidad de “light patches” gigantes
   - Refuerza contraste + superficies + dots sin pisar index-specific
 ========================================================= */
+html[data-theme="light"] #sesion-guiada .btn-grad-green,
+html[data-theme="light"] #sesion-guiada .btn-grad-coral{
+  filter:saturate(1.05) contrast(1.04);
+}
 
 /* 1) Light: solo refuerzos mínimos (no reescribas todo el theme otra vez) */
 html[data-theme="light"]{
@@ -422,14 +426,6 @@ html[data-theme="light"] .carousel-nav{
 html[data-theme="light"] .dot{background:rgba(2,6,23,.22)}
 html[data-theme="light"] .dot.active{background:rgba(45,212,191,.95)}
 
-/* 4) Logos blancos: frame canónico (global) */
-html[data-theme="light"] .logo-sistema,
-html[data-theme="light"] .fcard .ficon,
-html[data-theme="light"] .listSlider .listIcon img{
-  background:var(--logo-frame-bg)!important;
-  border:var(--logo-frame-border)!important;
-  box-shadow:var(--logo-frame-ring),var(--logo-frame-shadow)!important;
-}
 
 /* === Expiriti: FIX badges coloreados en LIGHT v2026.01.07 === */
 html[data-theme="light"] .badge[style*="background:"],
@@ -447,13 +443,6 @@ html[data-theme="light"] .badge[style*="background:rgba(34, 197, 94"],
 html[data-theme="light"] .badge[style*="background:rgba(34,197,94"]{
   background:rgba(34,197,94,.22)!important;
   border-color:rgba(34,197,94,.55)!important;
-}
-
-/* === Expiriti CTAs + Pill ACTIVE (LIGHT ONLY) v2026.01.07 === */
-html[data-theme="light"]{
-  --ex-amber:rgb(233,170,25);
-  --ex-teal:rgb(20,153,151);
-  --ex-coral:rgb(250,82,98);
 }
 
 
@@ -532,29 +521,6 @@ html[data-theme="light"] .pricing-table-nube tr.pricing-extra{
 #sesion-guiada .btn:active{
   transform:translateY(0) scale(.99);
 }
-
-/* ===== VARIANTES CORRECTAS ===== */
-
-/* Comprar ahora (verde) */
-#sesion-guiada .btn-grad-green{
-  border-color:rgba(27,139,128,.40)!important;
-  background:linear-gradient(135deg,#1B8B80,#2dd4bf)!important;
-  color:#03110f!important;
-}
-
-/* Sesión guiada / acción secundaria (coral) */
-#sesion-guiada .btn-grad-coral{
-  border-color:rgba(240,90,102,.40)!important;
-  background:linear-gradient(135deg,#F05A66,#ff7a84)!important;
-  color:#1a0a0c!important;
-}
-
-/* Light mode: solo punch visual */
-html[data-theme="light"] #sesion-guiada .btn-grad-green,
-html[data-theme="light"] #sesion-guiada .btn-grad-coral{
-  filter:saturate(1.05) contrast(1.04);
-}
-
 
 
 /* Mobile */
