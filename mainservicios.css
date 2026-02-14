@@ -74,8 +74,12 @@ body.page-servicios #beneficios .badges{justify-content:center}
 ========================================================= */
 :root{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
 body.page-servicios .btn,
-body.page-servicios .hero-btn,
-body.page-servicios .pill{color:#fff!important}
+body.page-servicios .hero-btn{color:#fff!important}
+
+/* Chips (pill/badge) con paleta light en ambos modos */
+body.page-servicios .badge,body.page-servicios .pill{background:rgba(2,6,23,.06)!important;border:1px solid rgba(2,6,23,.14)!important;color:rgba(2,6,23,.86)!important}body.page-servicios .pill.active{background:rgba(20,153,151,.14)!important;border-color:rgba(20,153,151,.32)!important;color:rgba(2,6,23,.88)!important}@media(hover:hover){body.page-servicios .badge:hover,body.page-servicios .pill:hover{filter:saturate(1.06);box-shadow:0 10px 22px rgba(2,6,23,.10)}}
+
+
 body.page-servicios .hero-btn{transition:transform .14s ease,box-shadow .14s ease,filter .14s ease}
 
 body.page-servicios .btn.btn-grad-green,body.page-servicios .hero-btn.btn-grad-green{background:var(--ex-amber)!important;background-image:none!important;border-color:var(--ex-amber)!important}
@@ -110,4 +114,6 @@ body.page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;lette
 /* CTAs centrados */
 body.page-servicios .cta-row{width:100%;justify-content:center;align-items:center}
 body.page-servicios .cta-row--center{justify-content:center}
+@media(max-width:720px){body.page-servicios .hero .btn,body.page-servicios .hero-btn,body.page-servicios #sesion-guiada .btn{width:auto!important;flex:0 0 auto!important;min-width:0!important;max-width:92vw;padding-left:16px!important;padding-right:16px!important;border-radius:999px}body.page-servicios .cta-row,body.page-servicios #sesion-guiada>div{justify-content:center!important}}
+
 
