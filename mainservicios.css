@@ -72,30 +72,42 @@ body.page-servicios #beneficios .badges{justify-content:center}
 /* =========================================================
    UI CANON — Light colors en ambos modos
 ========================================================= */
+
 :root{--ex-amber:rgb(233,170,25);--ex-teal:rgb(20,153,151);--ex-coral:rgb(250,82,98)}
-body.page-servicios .btn,
-body.page-servicios .hero-btn{color:#fff!important}
 
-/* Chips (pill/badge) con paleta light en ambos modos */
-body.page-servicios .badge,body.page-servicios .pill{background:rgba(2,6,23,.06)!important;border:1px solid rgba(2,6,23,.14)!important;color:rgba(2,6,23,.86)!important}body.page-servicios .pill.active{background:rgba(20,153,151,.14)!important;border-color:rgba(20,153,151,.32)!important;color:rgba(2,6,23,.88)!important}@media(hover:hover){body.page-servicios .badge:hover,body.page-servicios .pill:hover{filter:saturate(1.06);box-shadow:0 10px 22px rgba(2,6,23,.10)}}
+/* SOLO LIGHT: CTAs + chips con paleta light (no contamina DARK) */
+html[data-theme="light"] body.page-servicios .btn,
+html[data-theme="light"] body.page-servicios .hero-btn{color:#fff!important}
 
+html[data-theme="light"] body.page-servicios .btn.btn-grad-green,
+html[data-theme="light"] body.page-servicios .hero-btn.btn-grad-green{background:var(--ex-amber)!important;background-image:none!important;border-color:var(--ex-amber)!important}
 
-body.page-servicios .hero-btn{transition:transform .14s ease,box-shadow .14s ease,filter .14s ease}
+html[data-theme="light"] body.page-servicios .btn.btn-grad-blue,
+html[data-theme="light"] body.page-servicios .hero-btn.btn-grad-blue{background:var(--ex-teal)!important;background-image:none!important;border-color:var(--ex-teal)!important}
 
-body.page-servicios .btn.btn-grad-green,body.page-servicios .hero-btn.btn-grad-green{background:var(--ex-amber)!important;background-image:none!important;border-color:var(--ex-amber)!important}
-body.page-servicios .btn.btn-grad-blue,body.page-servicios .hero-btn.btn-grad-blue{background:var(--ex-teal)!important;background-image:none!important;border-color:var(--ex-teal)!important}
-body.page-servicios .btn.btn-ghost,body.page-servicios .hero-btn.btn-ghost{background:var(--ex-coral)!important;background-image:none!important;border-color:var(--ex-coral)!important}
+html[data-theme="light"] body.page-servicios .btn.btn-ghost,
+html[data-theme="light"] body.page-servicios .hero-btn.btn-ghost{background:var(--ex-coral)!important;background-image:none!important;border-color:var(--ex-coral)!important}
 
-/* Hover premium */
+html[data-theme="light"] body.page-servicios .badge,
+html[data-theme="light"] body.page-servicios .pill{background:rgba(2,6,23,.06)!important;border:1px solid rgba(2,6,23,.14)!important;color:rgba(2,6,23,.86)!important}
+
+html[data-theme="light"] body.page-servicios .pill.active{background:rgba(20,153,151,.14)!important;border-color:rgba(20,153,151,.32)!important;color:rgba(2,6,23,.88)!important}
+
 @media(hover:hover){
-body.page-servicios .btn:hover,
-body.page-servicios .hero-btn:hover{transform:translateY(-2px);filter:saturate(1.04)}
-body.page-servicios .btn-grad-green:hover{box-shadow:0 10px 24px rgba(233,170,25,.35)}
-body.page-servicios .btn-grad-blue:hover{box-shadow:0 10px 24px rgba(20,153,151,.35)}
-body.page-servicios .btn-ghost:hover{box-shadow:0 10px 24px rgba(250,82,98,.35)}
+html[data-theme="light"] body.page-servicios .btn:hover,
+html[data-theme="light"] body.page-servicios .hero-btn:hover{transform:translateY(-2px);filter:saturate(1.04)}
+html[data-theme="light"] body.page-servicios .btn-grad-green:hover{box-shadow:0 10px 24px rgba(233,170,25,.35)}
+html[data-theme="light"] body.page-servicios .btn-grad-blue:hover{box-shadow:0 10px 24px rgba(20,153,151,.35)}
+html[data-theme="light"] body.page-servicios .btn-ghost:hover{box-shadow:0 10px 24px rgba(250,82,98,.35)}
 }
-body.page-servicios .btn:active,
-body.page-servicios .hero-btn:active{transform:translateY(0)}
+
+html[data-theme="light"] body.page-servicios .btn:active,
+html[data-theme="light"] body.page-servicios .hero-btn:active{transform:translateY(0)}
+
+html[data-theme="light"] body.page-servicios .cta-row > a.btn:nth-child(1){background:var(--ex-amber)!important;border-color:var(--ex-amber)!important;color:#fff!important}
+html[data-theme="light"] body.page-servicios .cta-row > a.btn:nth-child(2){background:var(--ex-teal)!important;border-color:var(--ex-teal)!important;color:#fff!important}
+html[data-theme="light"] body.page-servicios .cta-row > a.btn:nth-child(3){background:var(--ex-coral)!important;border-color:var(--ex-coral)!important;color:#fff!important}
+
 
 /* Reel title estilo title-gradient */
 body.page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
