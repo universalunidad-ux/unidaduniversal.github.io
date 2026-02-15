@@ -85,9 +85,9 @@ body.page-sistemas{max-width:100%;overflow-x:hidden}
 .page-sistemas .calc-container select:focus,.page-sistemas .calc-container input[type=number]:focus,.page-sistemas .calc-container input[type=text]:focus{outline:0;border-color:rgba(56,189,248,.60);box-shadow:0 0 0 4px rgba(56,189,248,.16);background:rgba(255,255,255,.08)}
 
 /* Usuarios manda altura; instalación se centra */
-.page-sistemas .calc-container .inst-wrap{grid-column:2!important;display:flex!important;align-self:stretch!important;justify-content:center!important}
+.page-sistemas .calc-container .inst-wrap{display:flex!important;align-self:stretch!important;justify-content:center!important}
 .page-sistemas .calc-container .op-label{grid-column:1/-1!important}
-@media(max-width:768px){.page-sistemas .calc-container form{grid-template-columns:1fr!important}.page-sistemas .calc-container .inst-wrap{justify-content:flex-start!important}}
+@media(max-width:768px){.page-sistemas .calc-container form{grid-template-columns:1fr!important}.page-sistemas .calc-container .inst-wrap{grid-column:1/-1!important;justify-content:flex-start!important}}
 
 /* Instalación box */
 .page-sistemas .calc-container .instalacion-box{width:100%;display:flex!important;align-items:center!important;gap:10px!important;padding:10px 12px;border:1px solid rgba(148,163,184,.22);border-radius:12px;background:rgba(255,255,255,.04);flex-wrap:nowrap}
