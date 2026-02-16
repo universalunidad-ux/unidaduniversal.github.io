@@ -27,25 +27,8 @@ Solo overrides de la página Servicios.
 /* Reserva línea título dinámico */
 .page-servicios #beneficios .reel-title[data-reel-title]{display:block;min-height:1.35em}
 
-/* =========================
-   MODALIDADES → Cards móvil
-========================= */
-@media(max-width:720px){
-.page-servicios #modalidades .pricing-table-nube thead{display:none}
-.page-servicios #modalidades .pricing-table-nube,
-.page-servicios #modalidades .pricing-table-nube tbody,
-.page-servicios #modalidades .pricing-table-nube tfoot{display:block;width:100%}
-.page-servicios #modalidades .pricing-table-nube tr{display:block;border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:12px;margin:12px 0}
-.page-servicios #modalidades .pricing-table-nube td{display:block;width:100%;padding:8px 0;border:0!important}
-.page-servicios #modalidades .pricing-table-nube td::before{display:block;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.page-servicios #modalidades .pricing-table-nube td:nth-child(1)::before{content:"Modalidad"}
-.page-servicios #modalidades .pricing-table-nube td:nth-child(2)::before{content:"Descripción"}
-.page-servicios #modalidades .pricing-table-nube td:nth-child(3)::before{content:"Inversión"}
-}
 
-/* Scroll extra si aplica */
-@media(max-width:900px){
-}
+@media(max-width:720px){.page-servicios .container,.page-servicios section{padding-left:0!important;padding-right:0!important}.page-servicios #modalidades .pricing-table-nube thead{display:none}.page-servicios #modalidades .pricing-table-nube,.page-servicios #modalidades .pricing-table-nube tbody,.page-servicios #modalidades .pricing-table-nube tfoot{display:block;width:100%}.page-servicios #modalidades .pricing-table-nube tr{display:block;border:1px solid rgba(148,163,184,.18);border-radius:0;padding:16px;margin:0 0 12px;background:#fff}.page-servicios #modalidades .pricing-table-nube td{display:block;width:100%;padding:8px 0;border:0!important}.page-servicios #modalidades .pricing-table-nube td::before{content:attr(data-label);display:block;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}.page-servicios #calculadora-section{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;width:100%;display:block}.page-servicios #calculadora-section table{min-width:600px;margin:0 16px}}html,body{overflow-x:hidden;width:100%;position:relative}
 
 /* =========================
    YT Lite
