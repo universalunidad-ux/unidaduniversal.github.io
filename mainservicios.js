@@ -622,6 +622,5 @@ const r = await fetch(withV(headerURL), { cache: "force-cache" });
       init();
     }
   })();
-(()=>{const G=document.getElementById("impGrid");if(!G)return;const C=[...G.querySelectorAll(".fcard")];const V=()=>C.filter(el=>el.offsetParent!==null&&getComputedStyle(el).display!=="none");window.EX_impLayout=()=>{C.forEach(x=>x.classList.remove("__vLast1","__vLast2a","__vLast2b"));const a=V(),m=a.length%3;if(m===1&&a.length)a[a.length-1].classList.add("__vLast1");else if(m===2&&a.length>1){a[a.length-2].classList.add("__vLast2a");a[a.length-1].classList.add("__vLast2b")}};new MutationObserver(()=>EX_impLayout()).observe(G,{subtree:!0,attributes:!0,attributeFilter:["style","class"]});addEventListener("resize",()=>EX_impLayout(),{passive:!0});EX_impLayout()})();
 
 })(); // FIN
