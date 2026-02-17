@@ -357,13 +357,8 @@ TRY("carouselX",()=>{
 /* =========================================================
  7) PÍLDORAS (filtros cards)
 ========================================================= */
-TRY("pills",()=>{
-  const pills=[...D.querySelectorAll(".pill")],cards=[...D.querySelectorAll(".feature-grid .fcard")];
-  if(!pills.length||!cards.length)return;
-  const apply=tag=>cards.forEach(c=>{c.style.display=c.classList.contains("tag-"+tag)?"":"none"});
-  pills.forEach(p=>p.addEventListener("click",()=>{pills.forEach(x=>x.classList.remove("active"));p.classList.add("active");apply(p.dataset.filter)}));
-  apply(pills[0]?.dataset.filter||"nomina");
-});
+TRY("pills",()=>{const Q=(s,c=D)=>c.querySelector(s),QA=(s,c=D)=>Array.from(c.querySelectorAll(s)),C="__span2",upd=s=>{const g=Q(".feature-grid",s);if(!g)return;const c=QA(".fcard",g);c.forEach(x=>x.classList.remove(C));const v=c.filter(x=>x.offsetParent!==null&&getComputedStyle(x).display!=="none"&&!x.hidden);v.length&&v.length%2===1&&v[v.length-1].classList.add(C)};QA("#caracteristicas").forEach(s=>{const pills=QA(".pillbar .pill",s),g=Q(".feature-grid",s);if(!pills.length||!g)return;const cards=QA(".fcard",g),apply=t=>{cards.forEach(x=>x.style.display=!t||x.classList.contains("tag-"+t)?"":"none");upd(s)};pills.forEach(p=>p.addEventListener("click",()=>{pills.forEach(x=>x.classList.remove("active"));p.classList.add("active");apply(p.dataset.filter||"")}));const first=pills[0];first?(first.classList.add("active"),apply(first.dataset.filter||"")):upd(s)})});
+
 
 /* =========================================================
  8) FAQ (solo uno abierto)
