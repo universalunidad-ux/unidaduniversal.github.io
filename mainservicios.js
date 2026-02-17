@@ -153,32 +153,8 @@ const r = await fetch(withV(headerURL), { cache: "force-cache" });
   // =========================================================
   // 5) Píldoras (filtros)
   // =========================================================
-  (function(){
-    const pills = QA(".pill");
-    const cards = QA(".feature-grid .fcard");
-    if(!pills.length || !cards.length) return;
+(function(){const C="__span2",upd=s=>{const g=Q(".feature-grid",s);if(!g)return;const c=QA(".fcard",g);c.forEach(x=>x.classList.remove(C));const v=c.filter(x=>x.offsetParent!==null&&getComputedStyle(x).display!=="none"&&!x.hidden);if(v.length&&v.length%2===1)v[v.length-1].classList.add(C)};QA("#caracteristicas").forEach(s=>{const p=QA(".pillbar .pill",s),g=Q(".feature-grid",s);if(!p.length||!g)return;const c=QA(".fcard",g),a=t=>{c.forEach(x=>{x.style.display=!t||x.classList.contains("tag-"+t)?"":"none"});upd(s)};p.forEach(b=>b.addEventListener("click",()=>{p.forEach(x=>x.classList.remove("active"));b.classList.add("active");a(b.dataset.filter||"")}));const f=p[0];f?(f.classList.add("active"),a(f.dataset.filter||"")):upd(s)})})();
 
-    function apply(tag){
-      cards.forEach(card=>{
-        if (!tag){ card.style.display = ""; return; }
-        card.style.display = card.classList.contains("tag-"+tag) ? "" : "none";
-      });
-    }
-
-    pills.forEach(p=>{
-      p.addEventListener("click", ()=>{
-        pills.forEach(x=>x.classList.remove("active"));
-        p.classList.add("active");
-        apply(p.dataset.filter || "");
-      });
-    });
-
-    const first = pills[0];
-    if (first){
-      first.classList.add("active");
-      apply(first.dataset.filter || "");
-    }
-  })();
 
   // =========================================================
   // 6) FAQ: solo uno abierto
