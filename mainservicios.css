@@ -1,53 +1,96 @@
-/* =========================================================
-Expiriti — mainservicios.css (PAGE ONLY) v2026.02
-Requiere: <body class="page-servicios">
-Solo overrides de la página Servicios.
-========================================================= */
-
-/* =========================
-   CLS FIX — Desktop adaptativo
-========================= */
-@media(min-width:981px){
-.page-servicios #beneficios{min-height:calc(100svh - var(--ghh,68px))}
-.page-servicios #beneficios h2.title-gradient{min-height:2.8em}
-.page-servicios #beneficios .lead{min-height:7.4em}
-.page-servicios #beneficios .reels-card{min-height:unset;height:100%}
-.page-servicios #beneficios .reel-embed{min-height:unset;max-width:380px;aspect-ratio:9/16}
-}
-
-/* CLS reset mobile */
-@media(max-width:980px){
-.page-servicios #beneficios{min-height:auto}
-.page-servicios #beneficios h2.title-gradient,
-.page-servicios #beneficios .lead,
-.page-servicios #beneficios .reels-card,
-.page-servicios #beneficios .reel-embed{min-height:auto}
-}
-
-/* Reserva línea título dinámico */
-.page-servicios #beneficios .reel-title[data-reel-title]{display:block;min-height:1.35em}
-
-@media(max-width:720px){.page-servicios .container,.page-servicios section{padding-left:4px!important;padding-right:4px!important}.page-servicios #calculadora-section{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;width:calc(100% + 8px);margin-left:-4px;padding:0 4px;display:block}.page-servicios #modalidades .pricing-table-nube tr{display:block;border:1px solid rgba(148,163,184,.12);border-radius:12px;padding:16px;margin:0 0 12px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.02)}.page-servicios #modalidades .pricing-table-nube td::before{content:attr(data-label);display:block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#94a3b8;margin-bottom:2px}.page-servicios #calculadora-section table{min-width:620px;margin-bottom:16px}#cta-final{margin:0 4px;border-radius:16px;overflow:hidden}}html,body{overflow-x:hidden;width:100%}
-
-
-/* =========================
-   YT Lite
-========================= */
-.page-servicios .reel-embed{position:relative}
-.page-servicios .reel-embed .ytLite{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;overflow:hidden;cursor:pointer;background:#000 center/cover no-repeat}
-.page-servicios .reel-embed .ytLite::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.35));pointer-events:none}
-.page-servicios .reel-embed .ytPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:66px;height:46px;border-radius:14px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18)}
-.page-servicios .reel-embed .ytPlay::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-35%,-50%);width:0;height:0;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;opacity:.95}
-
-/* Reel title estilo title-gradient */
-body.page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
-@media(max-width:900px){
-  .page-servicios #calculadora-section{overflow-x:auto;-webkit-overflow-scrolling:touch}
-}
-
-
-/* Expiriti — mainservicios.css (ADD) v2026.02 svc-notas+pricing+systems */
-body.page-servicios #svc-notas-poliza{--n-bg:rgba(255,255,255,.03);--n-bd:rgba(148,163,184,.18);--n-tx:rgba(232,238,246,.92);--n-muted:rgba(148,163,184,.9);--n-shadow:0 10px 26px rgba(0,0,0,.22);--n-ok:rgba(34,197,94,.95);--n-warn:rgba(245,158,11,.95);--n-ac:rgba(45,212,191,.95);--n-ac2:rgba(96,165,250,.95)}html[data-theme="light"] body.page-servicios #svc-notas-poliza{--n-bg:rgba(255,255,255,.92);--n-bd:rgba(2,6,23,.12);--n-tx:rgba(11,18,32,.92);--n-muted:rgba(51,65,85,.78);--n-shadow:0 10px 26px rgba(2,6,23,.08)}body.page-servicios #svc-notas-poliza .card.body{position:relative;overflow:hidden}body.page-servicios #svc-notas-poliza .card.body::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:radial-gradient(800px 220px at 20% 0,rgba(45,212,191,.16),transparent 60%),radial-gradient(680px 220px at 80% 30%,rgba(96,165,250,.14),transparent 62%)}body.page-servicios #svc-notas-poliza .svc-note{display:grid;grid-template-columns:140px 1fr;gap:10px 14px;padding:14px 14px;border:1px solid var(--n-bd);border-radius:14px;background:var(--n-bg);box-shadow:var(--n-shadow);margin:0 0 10px;color:var(--n-tx)}@media(max-width:720px){body.page-servicios #svc-notas-poliza .svc-note{grid-template-columns:1fr}}body.page-servicios #svc-notas-poliza .svc-note__k{font-weight:950;letter-spacing:.02em;text-transform:uppercase;font-size:11px;color:var(--n-muted)}body.page-servicios #svc-notas-poliza .svc-note__v{font-size:14px;line-height:1.35}body.page-servicios #svc-notas-poliza .svc-note--ok{border-color:rgba(34,197,94,.28)}body.page-servicios #svc-notas-poliza .svc-note--ok .svc-note__k{color:var(--n-ok)}body.page-servicios #svc-notas-poliza .svc-note--warn{border-color:rgba(245,158,11,.28)}body.page-servicios #svc-notas-poliza .svc-note--warn .svc-note__k{color:var(--n-warn)}body.page-servicios #svc-notas-poliza .svc-imp{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}body.page-servicios #svc-notas-poliza .svc-imp li{position:relative;padding:10px 12px 10px 38px;border:1px solid rgba(148,163,184,.16);border-radius:12px;background:rgba(255,255,255,.02)}html[data-theme="light"] body.page-servicios #svc-notas-poliza .svc-imp li{background:rgba(2,6,23,.02);border-color:rgba(2,6,23,.1)}body.page-servicios #svc-notas-poliza .svc-imp li::before{content:"";position:absolute;left:12px;top:12px;width:16px;height:16px;border-radius:6px;background:linear-gradient(135deg,var(--n-ac),var(--n-ac2));box-shadow:0 0 0 4px rgba(56,189,248,.12)}body.page-servicios #svc-notas-poliza .svc-hint{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px dashed rgba(96,165,250,.35);background:rgba(96,165,250,.08);color:var(--n-tx)}html[data-theme="light"] body.page-servicios #svc-notas-poliza .svc-hint{background:rgba(96,165,250,.12);border-color:rgba(2,6,23,.14)}body.page-servicios #svc-notas-poliza .svc-footnote{margin-top:10px;padding:12px 14px;border-radius:14px;border:1px solid rgba(148,163,184,.16);background:rgba(255,255,255,.02);color:var(--n-tx)}html[data-theme="light"] body.page-servicios #svc-notas-poliza .svc-footnote{background:rgba(2,6,23,.02);border-color:rgba(2,6,23,.1)}
-body.page-servicios .svc-pricing{--p-bd:rgba(148,163,184,.18);--p-bg:rgba(255,255,255,.02);--p-alt:rgba(255,255,255,.04);--p-tx:rgba(232,238,246,.92);--p-muted:rgba(148,163,184,.9);--p-shadow:0 10px 26px rgba(0,0,0,.22)}html[data-theme="light"] body.page-servicios .svc-pricing{--p-bd:rgba(2,6,23,.12);--p-bg:#fff;--p-alt:rgba(2,6,23,.03);--p-tx:rgba(11,18,32,.92);--p-muted:rgba(51,65,85,.78);--p-shadow:0 10px 26px rgba(2,6,23,.08)}body.page-servicios .svc-pricing{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--p-bd);border-radius:16px;overflow:hidden;background:var(--p-bg);box-shadow:var(--p-shadow)}body.page-servicios .svc-pricing thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--p-muted);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:12px 12px;border-bottom:1px solid var(--p-bd)}html[data-theme="light"] body.page-servicios .svc-pricing thead th{background:linear-gradient(180deg,rgba(2,6,23,.03),rgba(2,6,23,.01))}body.page-servicios .svc-pricing tbody td{padding:14px 12px;border-bottom:1px solid rgba(148,163,184,.12);vertical-align:top;color:var(--p-tx)}html[data-theme="light"] body.page-servicios .svc-pricing tbody td{border-bottom-color:rgba(2,6,23,.08)}body.page-servicios .svc-pricing tbody tr.row-alt td{background:var(--p-alt)}body.page-servicios .svc-pricing .plan-name{font-weight:850}body.page-servicios .svc-pricing .price{text-align:right;font-weight:950;white-space:nowrap}body.page-servicios .svc-pricing .price-ok{color:var(--ok)}body.page-servicios .svc-pricing .price-link{color:var(--brand-2)}body.page-servicios .svc-pricing tbody tr:hover td{background:rgba(56,189,248,.06)}html[data-theme="light"] body.page-servicios .svc-pricing tbody tr:hover td{background:rgba(96,165,250,.12)}body.page-servicios .svc-pricing tfoot td{padding:12px;border-top:1px solid var(--p-bd);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01))}html[data-theme="light"] body.page-servicios .svc-pricing tfoot td{background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))}
-body.page-servicios .svc-carousel .track{gap:12px}body.page-servicios .svc-carousel .sys{position:relative;border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:14px 14px 12px;background:rgba(255,255,255,.02);box-shadow:0 10px 26px rgba(0,0,0,.22);overflow:hidden;min-height:220px}html[data-theme="light"] body.page-servicios .svc-carousel .sys{background:#fff;border-color:rgba(2,6,23,.12);box-shadow:0 10px 26px rgba(2,6,23,.08)}body.page-servicios .svc-carousel .sys::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:radial-gradient(420px 180px at 20% 0,rgba(45,212,191,.14),transparent 60%),radial-gradient(420px 180px at 80% 35%,rgba(96,165,250,.12),transparent 62%)}body.page-servicios .svc-carousel .sys img{width:100%;height:110px;object-fit:contain;display:block;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}html[data-theme="light"] body.page-servicios .svc-carousel .sys img{filter:drop-shadow(0 10px 18px rgba(2,6,23,.12))}body.page-servicios .svc-carousel .sys h4{margin:10px 0 4px;font-weight:950;letter-spacing:.01em}body.page-servicios .svc-carousel .sys p{margin:0;color:rgba(148,163,184,.92);line-height:1.35;font-size:13.5px}html[data-theme="light"] body.page-servicios .svc-carousel .sys p{color:rgba(51,65,85,.78)}body.page-servicios .svc-carousel .arrowCircle{border:1px solid rgba(148,163,184,.22);background:rgba(255,255,255,.04)}html[data-theme="light"] body.page-servicios .svc-carousel .arrowCircle{background:#fff;border-color:rgba(2,6,23,.12)}body.page-servicios .svc-carousel .arrowCircle:active{transform:scale(.98)}
-
+/*mainservicios.css PATCH v2026.02-canon-clean | 1 linea por cosa*/
+@media(min-width:981px){.page-servicios #beneficios{min-height:calc(100svh - var(--ghh,68px))}.page-servicios #beneficios h2.title-gradient{min-height:2.8em}.page-servicios #beneficios .lead{min-height:7.4em}.page-servicios #beneficios .reels-card{min-height:unset;height:100%}.page-servicios #beneficios .reel-embed{min-height:unset;max-width:380px;aspect-ratio:9/16}}/*CLS desktop*/
+@media(max-width:980px){.page-servicios #beneficios{min-height:auto}.page-servicios #beneficios h2.title-gradient,.page-servicios #beneficios .lead,.page-servicios #beneficios .reels-card,.page-servicios #beneficios .reel-embed{min-height:auto}}/*CLS mobile reset*/
+.page-servicios #beneficios .reel-title[data-reel-title]{display:block;min-height:1.35em}/*reserva titulo dinamico*/
+@media(max-width:720px){.page-servicios .container,.page-servicios section{padding-left:4px!important;padding-right:4px!important}.page-servicios #calculadora-section{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;width:calc(100% + 8px);margin-left:-4px;padding:0 4px;display:block}.page-servicios #modalidades .pricing-table-nube tr{display:block;border:1px solid rgba(148,163,184,.12);border-radius:12px;padding:16px;margin:0 0 12px;background:rgba(255,255,255,.02);box-shadow:0 1px 3px rgba(0,0,0,.02)}html[data-theme="light"] .page-servicios #modalidades .pricing-table-nube tr{background:#fff;border-color:rgba(2,6,23,.1);box-shadow:0 1px 3px rgba(2,6,23,.06)}.page-servicios #modalidades .pricing-table-nube td::before{content:attr(data-label);display:block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#94a3b8;margin-bottom:2px}.page-servicios #calculadora-section table{min-width:620px;margin-bottom:16px}#cta-final{margin:0 4px;border-radius:16px;overflow:hidden}}/*mobile paddings + tablas card*/
+html,body{overflow-x:hidden;width:100%}/*no overflow x*/
+.page-servicios .reel-embed{position:relative}/*yt lite wrap*/
+.page-servicios .reel-embed .ytLite{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;overflow:hidden;cursor:pointer;background:#000 center/cover no-repeat}/*yt lite cover*/
+.page-servicios .reel-embed .ytLite::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.35));pointer-events:none}/*yt overlay*/
+.page-servicios .reel-embed .ytPlay{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:66px;height:46px;border-radius:14px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18)}/*yt play btn*/
+.page-servicios .reel-embed .ytPlay::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-35%,-50%);width:0;height:0;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;opacity:.95}/*yt play icon*/
+body.page-servicios #beneficios .reel-title{margin:0 0 8px;font-weight:950;letter-spacing:.01em;line-height:1.15;background:linear-gradient(135deg,var(--ex-teal),var(--ex-coral));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}/*reel title gradient*/
+@media(max-width:900px){.page-servicios #calculadora-section{overflow-x:auto;-webkit-overflow-scrolling:touch}}/*calc scroll mid*/
+/*NOTAS POLIZA*/
+body.page-servicios #svc-notas-poliza{--n-bg:rgba(255,255,255,.03);--n-bd:rgba(148,163,184,.18);--n-tx:rgba(232,238,246,.92);--n-muted:rgba(148,163,184,.9);--n-shadow:0 10px 26px rgba(0,0,0,.22);--n-ok:rgba(34,197,94,.95);--n-warn:rgba(245,158,11,.95);--n-ac:rgba(45,212,191,.95);--n-ac2:rgba(96,165,250,.95)}/*notas tokens dark*/
+html[data-theme="light"] body.page-servicios #svc-notas-poliza{--n-bg:rgba(255,255,255,.92);--n-bd:rgba(2,6,23,.12);--n-tx:rgba(11,18,32,.92);--n-muted:rgba(51,65,85,.78);--n-shadow:0 10px 26px rgba(2,6,23,.08)}/*notas tokens light*/
+body.page-servicios #svc-notas-poliza .card.body{position:relative;overflow:hidden}/*notas card wrap*/
+body.page-servicios #svc-notas-poliza .card.body::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:radial-gradient(800px 220px at 20% 0,rgba(45,212,191,.16),transparent 60%),radial-gradient(680px 220px at 80% 30%,rgba(96,165,250,.14),transparent 62%)}/*notas halo*/
+body.page-servicios #svc-notas-poliza .svc-note{display:grid;grid-template-columns:140px 1fr;gap:10px 14px;padding:14px 14px;border:1px solid var(--n-bd);border-radius:14px;background:var(--n-bg);box-shadow:var(--n-shadow);margin:0 0 10px;color:var(--n-tx)}/*nota bloque*/
+@media(max-width:720px){body.page-servicios #svc-notas-poliza .svc-note{grid-template-columns:1fr}}/*nota stack*/
+body.page-servicios #svc-notas-poliza .svc-note__k{font-weight:950;letter-spacing:.02em;text-transform:uppercase;font-size:11px;color:var(--n-muted)}/*nota key*/
+body.page-servicios #svc-notas-poliza .svc-note__v{font-size:14px;line-height:1.35}/*nota value*/
+body.page-servicios #svc-notas-poliza .svc-note--ok{border-color:rgba(34,197,94,.28)}/*nota ok border*/
+body.page-servicios #svc-notas-poliza .svc-note--ok .svc-note__k{color:var(--n-ok)}/*nota ok title*/
+body.page-servicios #svc-notas-poliza .svc-note--warn{border-color:rgba(245,158,11,.28)}/*nota warn border*/
+body.page-servicios #svc-notas-poliza .svc-note--warn .svc-note__k{color:var(--n-warn)}/*nota warn title*/
+body.page-servicios #svc-notas-poliza .svc-imp{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}/*lista imp*/
+body.page-servicios #svc-notas-poliza .svc-imp li{position:relative;padding:10px 12px 10px 38px;border:1px solid rgba(148,163,184,.16);border-radius:12px;background:rgba(255,255,255,.02)}/*item imp*/
+html[data-theme="light"] body.page-servicios #svc-notas-poliza .svc-imp li{background:rgba(2,6,23,.02);border-color:rgba(2,6,23,.1)}/*item imp light*/
+body.page-servicios #svc-notas-poliza .svc-imp li::before{content:"";position:absolute;left:12px;top:12px;width:16px;height:16px;border-radius:6px;background:linear-gradient(135deg,var(--n-ac),var(--n-ac2));box-shadow:0 0 0 4px rgba(56,189,248,.12)}/*bullet grad*/
+body.page-servicios #svc-notas-poliza .svc-hint{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px dashed rgba(96,165,250,.35);background:rgba(96,165,250,.08);color:var(--n-tx)}/*hint*/
+html[data-theme="light"] body.page-servicios #svc-notas-poliza .svc-hint{background:rgba(96,165,250,.12);border-color:rgba(2,6,23,.14)}/*hint light*/
+body.page-servicios #svc-notas-poliza .svc-footnote{margin-top:10px;padding:12px 14px;border-radius:14px;border:1px solid rgba(148,163,184,.16);background:rgba(255,255,255,.02);color:var(--n-tx)}/*footnote*/
+html[data-theme="light"] body.page-servicios #svc-notas-poliza .svc-footnote{background:rgba(2,6,23,.02);border-color:rgba(2,6,23,.1)}/*footnote light*/
+/*TABLAS pricing (planes)*/
+body.page-servicios .svc-pricing{--p-bd:rgba(148,163,184,.18);--p-bg:rgba(255,255,255,.02);--p-alt:rgba(255,255,255,.04);--p-tx:rgba(232,238,246,.92);--p-muted:rgba(148,163,184,.9);--p-shadow:0 10px 26px rgba(0,0,0,.22)}/*pricing tokens dark*/
+html[data-theme="light"] body.page-servicios .svc-pricing{--p-bd:rgba(2,6,23,.12);--p-bg:#fff;--p-alt:rgba(2,6,23,.03);--p-tx:rgba(11,18,32,.92);--p-muted:rgba(51,65,85,.78);--p-shadow:0 10px 26px rgba(2,6,23,.08)}/*pricing tokens light*/
+body.page-servicios .svc-pricing{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--p-bd);border-radius:16px;overflow:hidden;background:var(--p-bg);box-shadow:var(--p-shadow)}/*pricing table*/
+body.page-servicios .svc-pricing thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--p-muted);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:12px 12px;border-bottom:1px solid var(--p-bd)}/*pricing head*/
+html[data-theme="light"] body.page-servicios .svc-pricing thead th{background:linear-gradient(180deg,rgba(2,6,23,.03),rgba(2,6,23,.01))}/*pricing head light*/
+body.page-servicios .svc-pricing tbody td{padding:14px 12px;border-bottom:1px solid rgba(148,163,184,.12);vertical-align:top;color:var(--p-tx)}/*pricing cells*/
+html[data-theme="light"] body.page-servicios .svc-pricing tbody td{border-bottom-color:rgba(2,6,23,.08)}/*pricing cells light*/
+body.page-servicios .svc-pricing tbody tr.row-alt td{background:var(--p-alt)}/*pricing alt*/
+body.page-servicios .svc-pricing .plan-name{font-weight:850}/*pricing name*/
+body.page-servicios .svc-pricing .price{text-align:right;font-weight:950;white-space:nowrap}/*pricing price*/
+body.page-servicios .svc-pricing .price-ok{color:var(--ok)}/*pricing ok*/
+body.page-servicios .svc-pricing .price-link{color:var(--brand-2)}/*pricing link*/
+body.page-servicios .svc-pricing tbody tr:hover td{background:rgba(56,189,248,.06)}/*pricing hover*/
+html[data-theme="light"] body.page-servicios .svc-pricing tbody tr:hover td{background:rgba(96,165,250,.12)}/*pricing hover light*/
+body.page-servicios .svc-pricing tfoot td{padding:12px;border-top:1px solid var(--p-bd);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01))}/*pricing foot*/
+html[data-theme="light"] body.page-servicios .svc-pricing tfoot td{background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))}/*pricing foot light*/
+/*CAROUSEL base (sys cards)*/
+body.page-servicios .svc-carousel .track{gap:12px}/*carousel gap*/
+body.page-servicios .svc-carousel .sys{position:relative;border:1px solid rgba(148,163,184,.18);border-radius:18px;padding:16px 14px 14px;background:rgba(255,255,255,.02);box-shadow:0 10px 26px rgba(0,0,0,.22);overflow:hidden;min-height:220px}/*sys base*/
+html[data-theme="light"] body.page-servicios .svc-carousel .sys{background:#fff;border-color:rgba(2,6,23,.12);box-shadow:0 10px 26px rgba(2,6,23,.08)}/*sys light*/
+body.page-servicios .svc-carousel .sys::before{content:"";position:absolute;inset:-2px;pointer-events:none;opacity:.9}/*sys halo base*/
+body.page-servicios .svc-carousel .sys img{width:100%;height:110px;object-fit:contain;display:block;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}/*sys logo*/
+html[data-theme="light"] body.page-servicios .svc-carousel .sys img{filter:drop-shadow(0 10px 18px rgba(2,6,23,.12))}/*sys logo light*/
+body.page-servicios .svc-carousel .sys h4{margin:10px 0 4px;font-weight:950;letter-spacing:.01em}/*sys title*/
+body.page-servicios .svc-carousel .sys p{margin:0;color:rgba(148,163,184,.92);line-height:1.35;font-size:13.5px}/*sys desc*/
+html[data-theme="light"] body.page-servicios .svc-carousel .sys p{color:rgba(51,65,85,.78)}/*sys desc light*/
+body.page-servicios .svc-carousel .arrowCircle{border:1px solid rgba(148,163,184,.22);background:rgba(255,255,255,.04)}/*arrows*/
+html[data-theme="light"] body.page-servicios .svc-carousel .arrowCircle{background:#fff;border-color:rgba(2,6,23,.12)}/*arrows light*/
+body.page-servicios .svc-carousel .arrowCircle:active{transform:scale(.98)}/*arrows active*/
+/*SYS GRID 3x3 desktop / 2x2 mobile + last full*/
+@media(min-width:981px){body.page-servicios #sistemas-soportados .svc-carousel .arrowCircle,body.page-servicios #sistemas-soportados .svc-carousel .group-dots{display:none!important}body.page-servicios #sistemas-soportados .svc-carousel .track{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;overflow:visible!important;transform:none!important;padding:2px}}/*grid desktop*/
+@media(max-width:980px){body.page-servicios #sistemas-soportados .svc-carousel .arrowCircle,body.page-servicios #sistemas-soportados .svc-carousel .group-dots{display:none!important}body.page-servicios #sistemas-soportados .svc-carousel .track{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;overflow:visible!important;transform:none!important;padding:2px}body.page-servicios #sistemas-soportados .svc-carousel .sys:last-child:nth-child(odd){grid-column:1/-1}}/*grid mobile + last full*/
+@media(max-width:520px){body.page-servicios #sistemas-soportados .svc-carousel .track{grid-template-columns:1fr}}/*stack small*/
+body.page-servicios #sistemas-soportados .svc-carousel .track{scroll-snap-type:none!important}/*disable snap*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys{scroll-snap-align:none!important}/*disable snap item*/
+/*SYS ACCENTS by data-accent (no duplicates)*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.25)}/*sys hover*/
+html[data-theme="light"] body.page-servicios #sistemas-soportados .svc-carousel .sys:hover{box-shadow:0 14px 30px rgba(2,6,23,.12)}/*sys hover light*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="blue"]::before{background:radial-gradient(420px 180px at 20% 0,rgba(59,130,246,.18),transparent 60%),radial-gradient(420px 180px at 80% 40%,rgba(96,165,250,.15),transparent 62%)}/*accent blue halo*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="blue"]:hover{border-color:rgba(59,130,246,.55)}/*accent blue border*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="teal"]::before{background:radial-gradient(420px 180px at 20% 0,rgba(20,184,166,.18),transparent 60%),radial-gradient(420px 180px at 80% 40%,rgba(45,212,191,.15),transparent 62%)}/*accent teal halo*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="teal"]:hover{border-color:rgba(20,184,166,.55)}/*accent teal border*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="green"]::before{background:radial-gradient(420px 180px at 20% 0,rgba(34,197,94,.18),transparent 60%),radial-gradient(420px 180px at 80% 40%,rgba(74,222,128,.15),transparent 62%)}/*accent green halo*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="green"]:hover{border-color:rgba(34,197,94,.55)}/*accent green border*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="purple"]::before{background:radial-gradient(420px 180px at 20% 0,rgba(139,92,246,.18),transparent 60%),radial-gradient(420px 180px at 80% 40%,rgba(168,85,247,.15),transparent 62%)}/*accent purple halo*/
+body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="purple"]:hover{border-color:rgba(139,92,246,.55)}/*accent purple border*/
+/*MODALIDADES table themed*/
+body.page-servicios #modalidades .pricing-table-nube{width:100%;border-collapse:separate;border-spacing:0;border:1px solid rgba(148,163,184,.18);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.02);box-shadow:0 10px 26px rgba(0,0,0,.22)}/*modalidades table*/
+html[data-theme="light"] body.page-servicios #modalidades .pricing-table-nube{background:#fff;border-color:rgba(2,6,23,.12);box-shadow:0 10px 26px rgba(2,6,23,.08)}/*modalidades light*/
+body.page-servicios #modalidades .pricing-table-nube thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(148,163,184,.9);padding:12px;border-bottom:1px solid rgba(148,163,184,.18);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01))}/*modalidades head*/
+html[data-theme="light"] body.page-servicios #modalidades .pricing-table-nube thead th{color:rgba(51,65,85,.78);background:linear-gradient(180deg,rgba(2,6,23,.03),rgba(2,6,23,.01));border-bottom-color:rgba(2,6,23,.1)}/*modalidades head light*/
+body.page-servicios #modalidades .pricing-table-nube tbody td{padding:14px 12px;border-bottom:1px solid rgba(148,163,184,.12);vertical-align:top;color:rgba(232,238,246,.92)}/*modalidades cells*/
+html[data-theme="light"] body.page-servicios #modalidades .pricing-table-nube tbody td{border-bottom-color:rgba(2,6,23,.08);color:rgba(11,18,32,.92)}/*modalidades cells light*/
+body.page-servicios #modalidades .pricing-table-nube tbody tr.row-alt td{background:rgba(255,255,255,.04)}/*modalidades alt*/
+html[data-theme="light"] body.page-servicios #modalidades .pricing-table-nube tbody tr.row-alt td{background:rgba(2,6,23,.03)}/*modalidades alt light*/
+body.page-servicios #modalidades .pricing-table-nube tbody tr:hover td{background:rgba(56,189,248,.06)}/*modalidades hover*/
+html[data-theme="light"] body.page-servicios #modalidades .pricing-table-nube tbody tr:hover td{background:rgba(96,165,250,.12)}/*modalidades hover light*/
+body.page-servicios #modalidades .pricing-table-nube .plan-name{font-weight:850}/*modalidades name*/
+body.page-servicios #modalidades .pricing-table-nube .price{text-align:right;font-weight:950;white-space:nowrap}/*modalidades price*/
+body.page-servicios #modalidades .pricing-table-nube tfoot td{padding:14px;border-top:1px solid rgba(148,163,184,.18);text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01))}/*modalidades foot*/
+html[data-theme="light"] body.page-servicios #modalidades .pricing-table-nube tfoot td{border-top-color:rgba(2,6,23,.1);background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))}/*modalidades foot light*/
