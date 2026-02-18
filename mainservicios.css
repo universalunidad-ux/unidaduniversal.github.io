@@ -132,7 +132,7 @@ html[data-theme="light"] body.page-servicios #comparativa{--cmp-bd:rgba(2,6,23,.
 /*wrap*/
 body.page-servicios #comparativa .card.body::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:radial-gradient(900px 260px at 20% 0,rgba(59,130,246,.10),transparent 60%),radial-gradient(900px 260px at 85% 35%,rgba(45,212,191,.08),transparent 62%)}/*halo suave*/
 body.page-servicios #comparativa h4{margin:0 0 12px;color:var(--cmp-tx);letter-spacing:.01em}/*subtitulo*/
-body.page-servicios #comparativa .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--cmp-bd);border-radius:16px;overflow:hidden;background:var(--cmp-bg);box-shadow:var(--cmp-shadow)}/*tabla base*/
+body.page-servicios #comparativa .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--cmp-bd);border-radius:16px;overflow:visible;background:var(--cmp-bg);box-shadow:var(--cmp-shadow)}
 body.page-servicios #comparativa .table-like thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--cmp-muted);padding:12px 12px;border-bottom:1px solid var(--cmp-bd);background:linear-gradient(180deg,var(--cmp-head1),var(--cmp-head2));text-align:left;vertical-align:middle}/*head*/
 body.page-servicios #comparativa .table-like tbody td{padding:14px 12px;border-bottom:1px solid rgba(148,163,184,.12);color:var(--cmp-tx);vertical-align:top}/*cells*/
 html[data-theme="light"] body.page-servicios #comparativa .table-like tbody td{border-bottom-color:rgba(2,6,23,.08)}/*cells light*/
@@ -157,5 +157,9 @@ body.page-servicios #comparativa .table-like .warn{color:var(--cmp-warn);font-we
 body.page-servicios #comparativa .table-like .bad{color:var(--cmp-bad);font-weight:850}/*bad class opcional*/
 
 /* ===== Mobile: tabla legible (scroll horizontal suave) ===== */
-@media(max-width:720px){body.page-servicios #comparativa .card.body{padding:14px;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain}}/*swipe en wrapper*/
+body.page-servicios #comparativa .card.body{position:relative;overflow:visible}/*halo anclado + no recorta gestos*/
+@media(max-width:720px){body.page-servicios #comparativa .card.body{padding:14px;overflow-x:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior-x:contain}}/*scroll down siempre; swipe lo decide el browser*/
 @media(max-width:720px){body.page-servicios #comparativa .table-like{min-width:860px}}/*tabla más ancha que viewport*/
+
+@media(max-width:720px){body.page-servicios #comparativa .card.body{padding:14px;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior-x:contain}}/*scroll down siempre*/
+@media(max-width:720px){body.page-servicios #comparativa .table-like{display:table;min-width:860px}}/*asegura ancho real*/
