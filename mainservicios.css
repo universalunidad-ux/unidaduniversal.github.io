@@ -49,37 +49,11 @@ body.page-servicios .svc-pricing tbody tr:hover td{background:rgba(56,189,248,.0
 html[data-theme="light"] body.page-servicios .svc-pricing tbody tr:hover td{background:rgba(96,165,250,.12)}/*pricing hover light*/
 body.page-servicios .svc-pricing tfoot td{padding:12px;border-top:1px solid var(--p-bd);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01))}/*pricing foot*/
 html[data-theme="light"] body.page-servicios .svc-pricing tfoot td{background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))}/*pricing foot light*/
-/*CAROUSEL base (sys cards)*/
-body.page-servicios .svc-carousel .track{gap:12px}/*carousel gap*/
-body.page-servicios .svc-carousel .sys{position:relative;border:1px solid rgba(148,163,184,.18);border-radius:18px;padding:16px 14px 14px;background:rgba(255,255,255,.02);box-shadow:0 10px 26px rgba(0,0,0,.22);overflow:hidden;min-height:220px}/*sys base*/
-html[data-theme="light"] body.page-servicios .svc-carousel .sys{background:#fff;border-color:rgba(2,6,23,.12);box-shadow:0 10px 26px rgba(2,6,23,.08)}/*sys light*/
-body.page-servicios .svc-carousel .sys::before{content:"";position:absolute;inset:-2px;pointer-events:none;opacity:.9}/*sys halo base*/
-body.page-servicios .svc-carousel .sys img{width:100%;height:110px;object-fit:contain;display:block;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}/*sys logo*/
-html[data-theme="light"] body.page-servicios .svc-carousel .sys img{filter:drop-shadow(0 10px 18px rgba(2,6,23,.12))}/*sys logo light*/
-body.page-servicios .svc-carousel .sys h4{margin:10px 0 4px;font-weight:950;letter-spacing:.01em}/*sys title*/
-body.page-servicios .svc-carousel .sys p{margin:0;color:rgba(148,163,184,.92);line-height:1.35;font-size:13.5px}/*sys desc*/
-html[data-theme="light"] body.page-servicios .svc-carousel .sys p{color:rgba(51,65,85,.78)}/*sys desc light*/
-body.page-servicios .svc-carousel .arrowCircle{border:1px solid rgba(148,163,184,.22);background:rgba(255,255,255,.04)}/*arrows*/
-html[data-theme="light"] body.page-servicios .svc-carousel .arrowCircle{background:#fff;border-color:rgba(2,6,23,.12)}/*arrows light*/
-body.page-servicios .svc-carousel .arrowCircle:active{transform:scale(.98)}/*arrows active*/
+
 /*SYS GRID 3x3 desktop / 2x2 mobile + last full*/
-@media(min-width:981px){body.page-servicios #sistemas-soportados .svc-carousel .arrowCircle,body.page-servicios #sistemas-soportados .svc-carousel .group-dots{display:none!important}body.page-servicios #sistemas-soportados .svc-carousel .track{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;overflow:visible!important;transform:none!important;padding:2px}}/*grid desktop*/
-@media(max-width:980px){body.page-servicios #sistemas-soportados .svc-carousel .arrowCircle,body.page-servicios #sistemas-soportados .svc-carousel .group-dots{display:none!important}body.page-servicios #sistemas-soportados .svc-carousel .track{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;overflow:visible!important;transform:none!important;padding:2px}body.page-servicios #sistemas-soportados .svc-carousel .sys:last-child:nth-child(odd){grid-column:1/-1}}/*grid mobile + last full*/
-@media(max-width:520px){body.page-servicios #sistemas-soportados .svc-carousel /*stack small*/
+
 body.page-servicios #sistemas-soportados .svc-carousel .track{scroll-snap-type:none!important}/*disable snap*/
 body.page-servicios #sistemas-soportados .svc-carousel .sys{scroll-snap-align:none!important}/*disable snap item*/
-/*SYS ACCENTS by data-accent (no duplicates)*/
-body.page-servicios #sistemas-soportados .svc-carousel .sys:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.25)}/*sys hover*/
-html[data-theme="light"] body.page-servicios #sistemas-soportados .svc-carousel .sys:hover{box-shadow:0 14px 30px rgba(2,6,23,.12)}/*sys hover light*/
-body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="blue"]::before{background:radial-gradient(420px 180px at 20% 0,rgba(59,130,246,.18),transparent 60%),radial-gradient(420px 180px at 80% 40%,rgba(96,165,250,.15),transparent 62%)}/*accent blue halo*/
-body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="blue"]:hover{border-color:rgba(59,130,246,.55)}/*accent blue border*/
-body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="teal"]::before{background:radial-gradient(420px 180px at 20% 0,rgba(20,184,166,.18),transparent 60%),radial-gradient(420px 180px at 80% 40%,rgba(45,212,191,.15),transparent 62%)}/*accent teal halo*/
-body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="teal"]:hover{border-color:rgba(20,184,166,.55)}/*accent teal border*/
-body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="green"]::before{background:radial-gradient(420px 180px at 20% 0,rgba(34,197,94,.18),transparent 60%),radial-gradient(420px 180px at 80% 40%,rgba(74,222,128,.15),transparent 62%)}/*accent green halo*/
-body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="green"]:hover{border-color:rgba(34,197,94,.55)}/*accent green border*/
-body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="purple"]::before{background:radial-gradient(420px 180px at 20% 0,rgba(139,92,246,.18),transparent 60%),radial-gradient(420px 180px at 80% 40%,rgba(168,85,247,.15),transparent 62%)}/*accent purple halo*/
-body.page-servicios #sistemas-soportados .svc-carousel .sys[data-accent="purple"]:hover{border-color:rgba(139,92,246,.55)}/*accent purple border*/
-
 
 /*PATCH v2026.02 plataformas+cotiza+fixgrid | 1 linea por cosa*/
 body.page-servicios .carouselX.svc-carousel .track{gap:12px}/*unifica gap track*/
