@@ -123,47 +123,32 @@ body.page-servicios section[aria-labelledby="notas"] .hint{margin:10px 0 0;paddi
 html[data-theme="light"] body.page-servicios section[aria-labelledby="notas"] .hint{border-color:rgba(2,6,23,.14);background:rgba(96,165,250,.10);color:rgba(11,18,32,.92)}/*hint light*/
 
 
-body.page-servicios #comparativa .card.body::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:radial-gradient(900px 260px at 18% 0,rgba(45,212,191,.10),transparent 62%),radial-gradient(900px 260px at 82% 35%,rgba(96,165,250,.10),transparent 64%)}body.page-servicios #comparativa .table-like{--t-bd:rgba(148,163,184,.18);--t-bg:rgba(255,255,255,.02);--t-alt:rgba(255,255,255,.04);--t-tx:rgba(232,238,246,.92);--t-muted:rgba(148,163,184,.88);--t-shadow:0 10px 26px rgba(0,0,0,.18);width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--t-bd);border-radius:16px;overflow:hidden;background:var(--t-bg);box-shadow:var(--t-shadow)}html[data-theme="light"] body.page-servicios #comparativa .table-like{--t-bd:rgba(2,6,23,.12);--t-bg:#fff;--t-alt:rgba(2,6,23,.03);--t-tx:rgba(11,18,32,.92);--t-muted:rgba(51,65,85,.78);--t-shadow:0 10px 26px rgba(2,6,23,.08)}body.page-servicios #comparativa .table-like thead th{padding:12px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--t-muted);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border-bottom:1px solid var(--t-bd)}html[data-theme="light"] body.page-servicios #comparativa .table-like thead th{background:linear-gradient(180deg,rgba(2,6,23,.03),rgba(2,6,23,.01))}body.page-servicios #comparativa .table-like tbody td{padding:14px 12px;border-bottom:1px solid rgba(148,163,184,.12);color:var(--t-tx);vertical-align:top}html[data-theme="light"] body.page-servicios #comparativa .table-like tbody td{border-bottom-color:rgba(2,6,23,.08)}body.page-servicios #comparativa .table-like tbody tr:nth-child(even) td{background:var(--t-alt)}body.page-servicios #comparativa .table-like .highlight{font-weight:900;background:linear-gradient(135deg,rgba(45,212,191,.12),rgba(96,165,250,.12))}html[data-theme="light"] body.page-servicios #comparativa .table-like .highlight{background:linear-gradient(135deg,rgba(45,212,191,.18),rgba(96,165,250,.18))}
+/* === #comparativa CANON limpio v2026.02 === */
 
+/* TOKENS */
+body.page-servicios #comparativa{--bd:rgba(148,163,184,.18);--tx:rgba(232,238,246,.92);--muted:rgba(148,163,184,.9);--bg:rgba(255,255,255,.02);--row:rgba(255,255,255,.04);--hover:rgba(96,165,250,.08);--shadow:0 10px 26px rgba(0,0,0,.22);--ac:rgba(59,130,246,.10);--ac2:rgba(59,130,246,.04);--acbd:rgba(59,130,246,.26)}
+html[data-theme="light"] body.page-servicios #comparativa{--bd:rgba(2,6,23,.12);--tx:rgba(11,18,32,.92);--muted:rgba(51,65,85,.78);--bg:#fff;--row:rgba(2,6,23,.03);--hover:rgba(96,165,250,.12);--shadow:0 10px 26px rgba(2,6,23,.08);--ac:rgba(59,130,246,.08);--ac2:rgba(59,130,246,.03);--acbd:rgba(59,130,246,.20)}
 
-/* ===== Expiriti — comparativa (fresco 2026) | pega en mainservicios.css ===== */
-body.page-servicios #comparativa{--cmp-bd:rgba(148,163,184,.18);--cmp-tx:rgba(232,238,246,.92);--cmp-muted:rgba(148,163,184,.9);--cmp-bg:rgba(255,255,255,.02);--cmp-head1:rgba(255,255,255,.04);--cmp-head2:rgba(255,255,255,.01);--cmp-row:rgba(255,255,255,.015);--cmp-row2:rgba(255,255,255,.03);--cmp-hover:rgba(96,165,250,.08);--cmp-shadow:0 10px 26px rgba(0,0,0,.22);--cmp-ac:rgba(59,130,246,.10);--cmp-ac2:rgba(59,130,246,.04);--cmp-ac-bd:rgba(59,130,246,.26);--cmp-ac-glow:0 0 0 4px rgba(96,165,250,.10);--cmp-ok:rgba(34,197,94,.95);--cmp-warn:rgba(245,158,11,.95);--cmp-bad:rgba(239,68,68,.95)}/*tokens dark*/
-html[data-theme="light"] body.page-servicios #comparativa{--cmp-bd:rgba(2,6,23,.12);--cmp-tx:rgba(11,18,32,.92);--cmp-muted:rgba(51,65,85,.78);--cmp-bg:#fff;--cmp-head1:rgba(2,6,23,.03);--cmp-head2:rgba(2,6,23,.01);--cmp-row:rgba(2,6,23,.015);--cmp-row2:rgba(2,6,23,.03);--cmp-hover:rgba(96,165,250,.12);--cmp-shadow:0 10px 26px rgba(2,6,23,.08);--cmp-ac:rgba(59,130,246,.08);--cmp-ac2:rgba(59,130,246,.03);--cmp-ac-bd:rgba(59,130,246,.20);--cmp-ac-glow:0 0 0 4px rgba(59,130,246,.12)}/*tokens light*/
-/*wrap*/
-body.page-servicios #comparativa .card.body::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:radial-gradient(900px 260px at 20% 0,rgba(59,130,246,.10),transparent 60%),radial-gradient(900px 260px at 85% 35%,rgba(45,212,191,.08),transparent 62%)}/*halo suave*/
-body.page-servicios #comparativa h4{margin:0 0 12px;color:var(--cmp-tx);letter-spacing:.01em}/*subtitulo*/
-body.page-servicios #comparativa .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--cmp-bd);border-radius:16px;overflow:visible;background:var(--cmp-bg);box-shadow:var(--cmp-shadow)}
-body.page-servicios #comparativa .table-like thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--cmp-muted);padding:12px 12px;border-bottom:1px solid var(--cmp-bd);background:linear-gradient(180deg,var(--cmp-head1),var(--cmp-head2));text-align:left;vertical-align:middle}/*head*/
-body.page-servicios #comparativa .table-like tbody td{padding:14px 12px;border-bottom:1px solid rgba(148,163,184,.12);color:var(--cmp-tx);vertical-align:top}/*cells*/
-html[data-theme="light"] body.page-servicios #comparativa .table-like tbody td{border-bottom-color:rgba(2,6,23,.08)}/*cells light*/
-body.page-servicios #comparativa .table-like tbody tr:nth-child(even) td{background:var(--cmp-row)}/*zebra 1*/
-body.page-servicios #comparativa .table-like tbody tr:nth-child(odd) td{background:transparent}/*zebra 2*/
-body.page-servicios #comparativa .table-like tbody tr:hover td{background:var(--cmp-hover)}/*hover*/
-body.page-servicios #comparativa .table-like th:first-child,body.page-servicios #comparativa .table-like td:first-child{width:30%}/*col 1*/
-@media(max-width:980px){body.page-servicios #comparativa .table-like th:first-child,body.page-servicios #comparativa .table-like td:first-child{width:auto}}/*col 1 responsive*/
+/* HALO */
+body.page-servicios #comparativa .card.body::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:radial-gradient(900px 260px at 18% 0,rgba(45,212,191,.10),transparent 62%),radial-gradient(900px 260px at 82% 35%,rgba(96,165,250,.10),transparent 64%)}
 
-/* ===== Highlight “Expiriti” (fresco 2026: azul profundo suave, no chillón) ===== */
-body.page-servicios #comparativa .table-like .highlight{position:relative;background:linear-gradient(180deg,var(--cmp-ac),var(--cmp-ac2))!important}/*highlight bg*/
-body.page-servicios #comparativa .table-like thead .highlight{color:var(--cmp-tx);box-shadow:inset 0 -1px 0 var(--cmp-ac-bd)}/*highlight head*/
-body.page-servicios #comparativa .table-like tbody .highlight{box-shadow:inset 1px 0 0 var(--cmp-ac-bd),inset -1px 0 0 var(--cmp-ac-bd)}/*highlight col borders*/
-body.page-servicios #comparativa .table-like tbody tr:hover .highlight{box-shadow:inset 1px 0 0 var(--cmp-ac-bd),inset -1px 0 0 var(--cmp-ac-bd),var(--cmp-ac-glow)}/*highlight hover glow*/
-body.page-servicios #comparativa .table-like tbody tr:last-child td{border-bottom:0}/*last row clean*/
+/* TABLA */
+body.page-servicios #comparativa .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--bd);border-radius:16px;background:var(--bg);box-shadow:var(--shadow);overflow:hidden}
+body.page-servicios #comparativa .table-like thead th{padding:12px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bd)}
+body.page-servicios #comparativa .table-like tbody td{padding:14px 12px;border-bottom:1px solid rgba(148,163,184,.12);color:var(--tx);vertical-align:top}
+html[data-theme="light"] body.page-servicios #comparativa .table-like tbody td{border-bottom-color:rgba(2,6,23,.08)}
+body.page-servicios #comparativa .table-like tbody tr:nth-child(even) td{background:var(--row)}
+body.page-servicios #comparativa .table-like tbody tr:hover td{background:var(--hover)}
 
-/* ===== Iconos / estados (si usas ✅ ⚠️ ❌) ===== */
-body.page-servicios #comparativa .table-like td{font-variant-numeric:tabular-nums}/*nums*/
-body.page-servicios #comparativa .table-like td strong{font-weight:900}/*strong*/
-body.page-servicios #comparativa .table-like .ok{color:var(--cmp-ok);font-weight:850}/*ok class opcional*/
-body.page-servicios #comparativa .table-like .warn{color:var(--cmp-warn);font-weight:850}/*warn class opcional*/
-body.page-servicios #comparativa .table-like .bad{color:var(--cmp-bad);font-weight:850}/*bad class opcional*/
+/* HIGHLIGHT */
+body.page-servicios #comparativa .table-like .highlight{background:linear-gradient(180deg,var(--ac),var(--ac2))!important;font-weight:900}
+body.page-servicios #comparativa .table-like thead .highlight{box-shadow:inset 0 -1px 0 var(--acbd)}
+body.page-servicios #comparativa .table-like tbody .highlight{box-shadow:inset 1px 0 0 var(--acbd),inset -1px 0 0 var(--acbd)}
 
-/* ===== Mobile: tabla legible (scroll horizontal suave) ===== */
-body.page-servicios #comparativa .card.body{position:relative;overflow:visible}/*halo anclado + no recorta gestos*/
-
-@media(max-width:720px){body.page-servicios #comparativa .table-like{min-width:860px}}/*tabla más ancha que viewport*/
-
-@media(max-width:720px){body.page-servicios #comparativa .card.body{padding:14px;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior-x:contain}}/*scroll down siempre*/
-
-
-@media(max-width:720px){body.page-servicios #comparativa .card.body{padding:14px;overflow:visible;touch-action:pan-y}}/*vertical siempre*/
-@media(max-width:720px){body.page-servicios #comparativa .table-like{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;max-width:100%;min-width:0}}/*wrapper scroll X*/
-@media(max-width:720px){body.page-servicios #comparativa .table-like{min-width:860px}}/*tabla más ancha que viewport*/
+/* MOBILE — swipe X sin romper scroll Y */
+body.page-servicios #comparativa .card.body{position:relative;overflow:visible}
+@media(max-width:720px){
+  body.page-servicios #comparativa .card.body{overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none}
+  body.page-servicios #comparativa .card.body::-webkit-scrollbar{width:0;height:0}
+  body.page-servicios #comparativa .table-like{min-width:860px}
+}
