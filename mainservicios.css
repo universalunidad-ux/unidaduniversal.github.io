@@ -158,3 +158,7 @@ body.page-servicios #comparativa .table-like .bad{color:var(--cmp-bad);font-weig
 
 /* ===== Mobile: tabla legible (scroll horizontal suave) ===== */
 @media(max-width:720px){body.page-servicios #comparativa .card.body{padding:14px}body.page-servicios #comparativa .table-like{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;min-width:760px}}/*mobile scroll*/
+/*FIX swipe interno comparativa mobile*/
+@media(max-width:720px){body.page-servicios #comparativa .card.body{overflow:visible!important}}/*libera card*/
+@media(max-width:720px){body.page-servicios #comparativa .table-like{display:block!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scroll-snap-type:none;touch-action:pan-x;min-width:760px}}/*habilita swipe*/
+@media(max-width:720px){body.page-servicios #comparativa .table-like table{width:100%;min-width:760px}}/*asegura ancho*/
