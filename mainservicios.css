@@ -123,17 +123,18 @@ body.page-servicios section[aria-labelledby="notas"] .hint{margin:10px 0 0;paddi
 html[data-theme="light"] body.page-servicios section[aria-labelledby="notas"] .hint{border-color:rgba(2,6,23,.14);background:rgba(96,165,250,.10);color:rgba(11,18,32,.92)}/*hint light*/
 
 
-/* === #comparativa CANON limpio v2026.02 === */
+/* === #comparativa CLEAN v2026.02 === */
 
 /* TOKENS */
 body.page-servicios #comparativa{--bd:rgba(148,163,184,.18);--tx:rgba(232,238,246,.92);--muted:rgba(148,163,184,.9);--bg:rgba(255,255,255,.02);--row:rgba(255,255,255,.04);--hover:rgba(96,165,250,.08);--shadow:0 10px 26px rgba(0,0,0,.22);--ac:rgba(59,130,246,.10);--ac2:rgba(59,130,246,.04);--acbd:rgba(59,130,246,.26)}
 html[data-theme="light"] body.page-servicios #comparativa{--bd:rgba(2,6,23,.12);--tx:rgba(11,18,32,.92);--muted:rgba(51,65,85,.78);--bg:#fff;--row:rgba(2,6,23,.03);--hover:rgba(96,165,250,.12);--shadow:0 10px 26px rgba(2,6,23,.08);--ac:rgba(59,130,246,.08);--ac2:rgba(59,130,246,.03);--acbd:rgba(59,130,246,.20)}
 
 /* HALO */
+body.page-servicios #comparativa .card.body{position:relative}
 body.page-servicios #comparativa .card.body::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:radial-gradient(900px 260px at 18% 0,rgba(45,212,191,.10),transparent 62%),radial-gradient(900px 260px at 82% 35%,rgba(96,165,250,.10),transparent 64%)}
 
 /* TABLA */
-body.page-servicios #comparativa .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--bd);border-radius:16px;background:var(--bg);box-shadow:var(--shadow);overflow:hidden}
+body.page-servicios #comparativa .table-like{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--bd);border-radius:16px;background:var(--bg);box-shadow:var(--shadow);overflow:clip}
 body.page-servicios #comparativa .table-like thead th{padding:12px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--bd)}
 body.page-servicios #comparativa .table-like tbody td{padding:14px 12px;border-bottom:1px solid rgba(148,163,184,.12);color:var(--tx);vertical-align:top}
 html[data-theme="light"] body.page-servicios #comparativa .table-like tbody td{border-bottom-color:rgba(2,6,23,.08)}
@@ -145,10 +146,9 @@ body.page-servicios #comparativa .table-like .highlight{background:linear-gradie
 body.page-servicios #comparativa .table-like thead .highlight{box-shadow:inset 0 -1px 0 var(--acbd)}
 body.page-servicios #comparativa .table-like tbody .highlight{box-shadow:inset 1px 0 0 var(--acbd),inset -1px 0 0 var(--acbd)}
 
-/* MOBILE — swipe X sin romper scroll Y */
-body.page-servicios #comparativa .card.body{position:relative;overflow:visible}
+/* MOBILE — solo wrapper scroll X */
 @media(max-width:720px){
-  body.page-servicios #comparativa .card.body{overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none}
-  body.page-servicios #comparativa .card.body::-webkit-scrollbar{width:0;height:0}
+  body.page-servicios #comparativa .card.body{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none}
+  body.page-servicios #comparativa .card.body::-webkit-scrollbar{display:none}
   body.page-servicios #comparativa .table-like{min-width:860px}
 }
