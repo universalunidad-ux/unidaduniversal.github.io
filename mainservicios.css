@@ -158,8 +158,12 @@ body.page-servicios #comparativa .table-like .bad{color:var(--cmp-bad);font-weig
 
 /* ===== Mobile: tabla legible (scroll horizontal suave) ===== */
 body.page-servicios #comparativa .card.body{position:relative;overflow:visible}/*halo anclado + no recorta gestos*/
-@media(max-width:720px){body.page-servicios #comparativa .card.body{padding:14px;overflow-x:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior-x:contain}}/*scroll down siempre; swipe lo decide el browser*/
+
 @media(max-width:720px){body.page-servicios #comparativa .table-like{min-width:860px}}/*tabla más ancha que viewport*/
 
 @media(max-width:720px){body.page-servicios #comparativa .card.body{padding:14px;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch;touch-action:pan-y;overscroll-behavior-x:contain}}/*scroll down siempre*/
-@media(max-width:720px){body.page-servicios #comparativa .table-like{display:table;min-width:860px}}/*asegura ancho real*/
+
+
+@media(max-width:720px){body.page-servicios #comparativa .card.body{padding:14px;overflow:visible;touch-action:pan-y}}/*vertical siempre*/
+@media(max-width:720px){body.page-servicios #comparativa .table-like{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;max-width:100%;min-width:0}}/*wrapper scroll X*/
+@media(max-width:720px){body.page-servicios #comparativa .table-like{min-width:860px}}/*tabla más ancha que viewport*/
