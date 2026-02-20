@@ -152,3 +152,7 @@ body.page-servicios #comparativa .table-like tbody .highlight{box-shadow:inset 1
   body.page-servicios #comparativa .card.body::-webkit-scrollbar{display:none}
   body.page-servicios #comparativa .table-like{min-width:860px}
 }
+/* servs complementarios: flechas + paginado desktop + centrar col derecha si queda corta */
+
+@media(min-width:981px){#servicios-complementarios .card.body{position:relative}#servicios-complementarios .svc-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:999px;border:1px solid rgba(148,163,184,.22);background:rgba(255,255,255,.06);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:grid;place-items:center;font-weight:950;line-height:1;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.18)}html[data-theme="light"] #servicios-complementarios .svc-nav{background:#fff;border-color:rgba(2,6,23,.12);box-shadow:0 12px 30px rgba(2,6,23,.08)}#servicios-complementarios .svc-prev{left:12px}#servicios-complementarios .svc-next{right:12px}#servicios-complementarios .svc-nav[hidden]{display:none!important}#servicios-complementarios .svc-grid{align-items:stretch}#servicios-complementarios .svc-grid>.svc-list:nth-child(2){align-self:center}}
+
