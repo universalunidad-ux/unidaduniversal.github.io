@@ -1,7 +1,7 @@
   /* Expiriti — main.css (SISTEMAS ONLY) v2026.01.09-dedupe-min */
 .page-sistemas{scroll-padding-top:84px;--sys-calc-min:560px;--sys-calc-max:760px;--sys-panel-min:380px;--sys-panel-max:560px;--sys-narrow:min(1120px,70vw);--calc-card-h:560px;--calc-card-h-md:540px;max-width:100%;overflow-x:hidden}
 @media(max-width:768px){.page-sistemas{scroll-padding-top:68px}}
-.page-sistemas .container,main.page-sistemas .container{max-width:100%;overflow-x:hidden}
+.page-sistemas .container,main.page-sistemas .container{max-width:100%;overflow-x:hidden} f
 body.page-sistemas{max-width:100%;overflow-x:hidden}
 
 /* HERO + PDF */
@@ -107,19 +107,25 @@ body.page-sistemas{max-width:100%;overflow-x:hidden}
 .page-sistemas .calc-container td:last-child{padding-right:14px}
 html[data-theme=light] .page-sistemas .calc-container :is(#tot1,#tot2,#tot3) strong{color:#fff!important}
 .page-sistemas .calc-container tbody tr:last-child td:last-child{display:flex;justify-content:flex-end}.page-sistemas .calc-container tbody tr:last-child td:last-child>*{display:inline-block!important;padding:6px 10px!important;border-radius:999px!important;color:#fff!important;background:var(--ex-pill-grad,linear-gradient(90deg,rgba(20,184,166,.95),rgba(250,82,98,.95)))!important;border:2px solid rgba(255,255,255,.22)!important;box-shadow:0 10px 22px rgba(2,6,23,.14)!important}
-/* Placeholder / panel de integración */
-.page-sistemas .placeholder{padding:12px 14px;display:flex;flex-direction:column;gap:10px;align-items:stretch;justify-content:center;min-height:0;height:auto;min-width:0}
-.page-sistemas .placeholder .note{border:1px solid var(--calc-soft);background:rgba(17,23,35,.30);border-radius:14px;padding:12px 12px 10px;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto auto;grid-template-areas:"title pill""sub sub""icons icons";gap:8px 12px;align-items:start}
 
-.page-sistemas .placeholder .note>strong{grid-area:title;display:block;line-height:1.2;font-weight:950;letter-spacing:.2px;margin:0}
-.page-sistemas .placeholder .note>small{grid-area:sub;display:block;margin:0;color:var(--calc-tx2)}
-.page-sistemas .placeholder .note>.icons-wrap{grid-area:icons}
-.page-sistemas .placeholder .note small em{font-style:italic;opacity:.95}
-/* centrado cuando JS pone note-center */
-.page-sistemas .placeholder .note.note-center{text-align:center}
-.page-sistemas .placeholder .note.note-center>strong{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
-.page-sistemas .placeholder .note.note-center strong:after{content:none!important}
-.page-sistemas .placeholder .note.note-center small{max-width:62ch;margin-left:auto;margin-right:auto}
+/* EXPIRITI — INTEGRA LAYOUT + DETALLE + FORM 2x2 + SPINNERS v2026.02.26-u1 (min, overrides) */
+.page-sistemas #add-more-panel .note{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:10px!important}
+.page-sistemas #add-more-panel .note>:is(strong,small,.icons-wrap,.icons-carousel){width:100%!important}
+.page-sistemas #add-more-panel .note>strong{display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;margin:0!important}
+.page-sistemas #add-more-panel .note>small{margin:0!important}
+.page-sistemas #add-more-panel .note>.icons-wrap,.page-sistemas #add-more-panel .note>.icons-carousel{margin-top:8px!important}
+@media(max-width:768px){.page-sistemas #add-more-panel .note{gap:8px!important}.page-sistemas #add-more-panel .note>strong{justify-content:flex-start!important}}
+/* Detalle de tu inversión: menos “aire” entre concepto e importe */
+.page-sistemas :is(#combined-wrap,.calc-results) table{table-layout:auto!important}
+.page-sistemas :is(#combined-wrap,.calc-results) td,.page-sistemas :is(#combined-wrap,.calc-results) th{padding:8px 10px!important}
+.page-sistemas :is(#combined-wrap,.calc-results) td:first-child{padding-right:12px!important}
+.page-sistemas :is(#combined-wrap,.calc-results) td:last-child,.page-sistemas :is(#combined-wrap,.calc-results) th:last-child{width:1%!important;white-space:nowrap!important;text-align:right!important}
+/* Mobile: form 2x2 (no 1 col) */
+@media(max-width:768px){.page-sistemas .calc-container form{grid-template-columns:1fr 1fr!important;gap:10px 10px!important}.page-sistemas .calc-container .op-label,.page-sistemas .calc-container .inst-wrap{grid-column:1/-1!important}}
+/* Spinners en number (si el browser los soporta) */
+.page-sistemas .calc-container input[type=number]{appearance:auto!important;-webkit-appearance:auto!important;-moz-appearance:auto!important}
+.page-sistemas .calc-container input[type=number]::-webkit-inner-spin-button,.page-sistemas .calc-container input[type=number]::-webkit-outer-spin-button{opacity:1!important;-webkit-appearance:auto!important}
+
 
 
 /* Resumen combinado: separa importes a la derecha */
