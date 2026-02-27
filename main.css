@@ -488,3 +488,50 @@ html:not([data-theme=light]) .page-sistemas .icons-carousel .sys-icon,html:not([
 .page-sistemas .icons-carousel .sys-icon img,.page-sistemas #add-more-panel #icons-third-sys .sys-icon img{width:var(--int-logo);height:var(--int-logo);border-radius:16px;object-fit:contain;padding:8px;background:rgba(255,255,255,.96);border:1px solid rgba(2,6,23,.10);box-shadow:0 10px 18px rgba(2,6,23,.10)}
 html:not([data-theme=light]) .page-sistemas .icons-carousel .sys-icon img,html:not([data-theme=light]) .page-sistemas #add-more-panel #icons-third-sys .sys-icon img{background:rgba(15,23,42,.78);border-color:rgba(148,163,184,.18);box-shadow:0 14px 22px rgba(0,0,0,.22)}
 .page-sistemas .icons-carousel .sys-icon::after,.page-sistemas #add-more-panel #icons-third-sys .sys-icon::after{content:"−15%";position:absolute;top:8px;right:8px;font-weight:900;font-size:11px;letter-spacing:.3px;padding:5px 9px;border-radius:999px;background:rgba(238,192,71,.18);border:2px solid rgba(238,192,71,.85);color:rgba(238,192,71,1);box-shadow:0 4px 10px rgba(0,0,0,.12)}
+
+
+
+
+/* EXPIRITI — INTEGRA + 3ER SISTEMA (STACK OK + FLECHAS NO TAPAN) v2026.02.26-u1 */
+.page-sistemas{--int-gap:14px;--int-pad:54px;--int-tile:clamp(190px,18vw,240px);--int-logo:86px;--int-chip-bg:rgba(56,189,248,.16);--int-chip-bd:rgba(56,189,248,.38);--int-chip-tx:rgba(11,18,32,.86)}
+html:not([data-theme=light]) .page-sistemas{--int-chip-tx:#e6f6ff}
+.page-sistemas #calc-slot-2.placeholder,.page-sistemas #add-more-panel.placeholder{height:auto!important;min-height:unset!important;align-self:center!important;justify-self:stretch!important}
+.page-sistemas #calc-slot-2 .note,.page-sistemas #add-more-panel .note{border:1px solid var(--calc-soft);border-radius:14px;padding:14px 14px 12px;background:rgba(17,23,35,.30);display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
+html[data-theme=light] .page-sistemas #calc-slot-2 .note,html[data-theme=light] .page-sistemas #add-more-panel .note{background:#fff;border-color:rgba(2,6,23,.10)}
+.page-sistemas #calc-slot-2 .note>strong,.page-sistemas #add-more-panel .note>strong{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:0;font-weight:950;letter-spacing:.2px;line-height:1.15;font-size:clamp(16px,2vw,20px)}
+.page-sistemas #calc-slot-2 .note>small,.page-sistemas #add-more-panel .note>small{margin:0;font-weight:800;font-style:italic;color:var(--calc-tx2)}
+.page-sistemas .disc-chip{display:inline-flex;align-items:center;justify-content:center;padding:6px 11px;border-radius:999px;font-size:12px;line-height:1;font-weight:950;white-space:nowrap;background:var(--int-chip-bg);border:2px solid var(--int-chip-bd);color:var(--int-chip-tx)}
+.page-sistemas .icons-carousel{position:relative;display:block;width:100%;max-width:100%;overflow:hidden;border-radius:14px;padding-bottom:54px}
+.page-sistemas .icons-carousel :is(#icons-sec-sys,#icons-third-sys){display:flex;gap:var(--int-gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding:10px var(--int-pad);scroll-padding-left:var(--int-pad);scroll-padding-right:var(--int-pad);max-width:100%}
+@media(max-width:768px){.page-sistemas .icons-carousel :is(#icons-sec-sys,#icons-third-sys){padding:10px 12px;scroll-padding-left:12px;scroll-padding-right:12px}}
+.page-sistemas .icons-carousel :is(#icons-sec-sys,#icons-third-sys)>*{flex:0 0 auto;scroll-snap-align:start}
+
+/* Flechas: abajo (no tapan tiles) */
+.page-sistemas .icons-carousel .arrowCircle{position:absolute;top:auto;bottom:10px;transform:none;z-index:5;width:44px;height:44px;border-radius:999px;border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.55);display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 22px rgba(0,0,0,.18)}
+.page-sistemas .icons-carousel .arrowCircle.prev{right:58px;left:auto}
+.page-sistemas .icons-carousel .arrowCircle.next{right:10px}
+.page-sistemas .icons-carousel .arrowCircle .chev{font-size:26px;line-height:1}
+html[data-theme=light] .page-sistemas .icons-carousel .arrowCircle{background:rgba(255,255,255,.92);border-color:rgba(2,6,23,.14);box-shadow:0 10px 22px rgba(2,6,23,.10)}
+html[data-theme=light] .page-sistemas .icons-carousel .arrowCircle .chev{color:rgba(2,6,23,.86)}
+@media(max-width:768px){.page-sistemas .icons-carousel{padding-bottom:50px}.page-sistemas .icons-carousel .arrowCircle{width:40px;height:40px}.page-sistemas .icons-carousel .arrowCircle.prev{right:54px}.page-sistemas .icons-carousel .arrowCircle.next{right:8px}}
+
+/* Tiles */
+.page-sistemas .icons-carousel .sys-icon{position:relative;min-width:var(--int-tile);max-width:var(--int-tile);padding:12px 10px;border-radius:16px;border:1px solid rgba(148,163,184,.18);background:rgba(255,255,255,.92);box-shadow:0 12px 26px rgba(2,6,23,.10);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:8px;cursor:pointer;user-select:none;transform:translateZ(0);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease,filter .16s ease}
+@media(hover:hover){.page-sistemas .icons-carousel .sys-icon:hover{transform:translate3d(0,-6px,0);border-color:rgba(96,165,250,.55);box-shadow:0 18px 44px rgba(2,6,23,.16);filter:saturate(1.05)}}
+.page-sistemas .icons-carousel .sys-icon:active{transform:translate3d(0,-2px,0)}
+.page-sistemas .icons-carousel .sys-icon:focus-visible{outline:3px solid rgba(56,189,248,.45);outline-offset:3px}
+html:not([data-theme=light]) .page-sistemas .icons-carousel .sys-icon{background:rgba(15,23,42,.22);box-shadow:0 12px 26px rgba(0,0,0,.18)}
+.page-sistemas .icons-carousel .sys-icon img{width:var(--int-logo);height:var(--int-logo);border-radius:16px;object-fit:contain;padding:8px;background:rgba(255,255,255,.96);border:1px solid rgba(2,6,23,.10);box-shadow:0 10px 18px rgba(2,6,23,.10)}
+html:not([data-theme=light]) .page-sistemas .icons-carousel .sys-icon img{background:rgba(15,23,42,.78);border-color:rgba(148,163,184,.18);box-shadow:0 14px 22px rgba(0,0,0,.22)}
+.page-sistemas .icons-carousel .sys-icon::after{content:"−15%";position:absolute;top:8px;right:8px;font-weight:900;font-size:11px;letter-spacing:.3px;padding:5px 9px;border-radius:999px;background:rgba(238,192,71,.18);border:2px solid rgba(238,192,71,.85);color:rgba(238,192,71,1);box-shadow:0 4px 10px rgba(0,0,0,.12)}
+
+/* EXPIRITI — Detalle inversión (grid label|monto) v2026.02.26 */
+.page-sistemas #combined-wrap{margin-top:10px}
+.page-sistemas #combined-wrap .combined-table{width:100%;border-collapse:separate;border-spacing:0}
+.page-sistemas #combined-wrap .combined-table tr{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start}
+.page-sistemas #combined-wrap .combined-table td{padding:6px 0}
+.page-sistemas #combined-wrap .combined-table td:last-child{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+@media(max-width:680px){.page-sistemas #combined-wrap .combined-table tr{gap:10px}.page-sistemas #combined-wrap .combined-table td{padding:5px 0}}
+.page-sistemas #combined-wrap .combined-table tr:last-child td:last-child strong{display:inline-block;padding:6px 10px;border-radius:999px;color:#fff;background:var(--ex-pill-grad,linear-gradient(90deg,rgba(20,184,166,.95),rgba(250,82,98,.95)));border:2px solid rgba(255,255,255,.22);box-shadow:0 10px 22px rgba(2,6,23,.14)}
+.page-sistemas #combined-wrap .combined-table tr:last-child td:last-child>div{text-align:right}
+
