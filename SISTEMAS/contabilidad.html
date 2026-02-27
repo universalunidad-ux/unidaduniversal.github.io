@@ -338,25 +338,34 @@
         <div class="calc-row" id="calc-row" data-cols="1">
           <div id="calc-primary" class="calc-container" aria-label="Calculadora principal"></div>
 
-          <div id="calc-slot-2" class="placeholder" aria-label="Segunda calculadora">
-            <div class="note">
-              strong>Integra un sistema adicional y recibe <span class="disc-chip">−15%</span> en cada uno.</strong><br>
-              <small>“XML en Línea” no aplica para descuento.</small>
-              <div class="icons-wrap" id="icons-sec-sys"></div>
-            </div>
-          </div>
+<div id="calc-slot-2" class="placeholder" aria-label="Segunda calculadora">
+  <div class="note note-center">
+    <strong>Integra un sistema adicional y recibe <span class="disc-chip">−15%</span> en cada uno.</strong>
+    <small>“XML en Línea” no aplica para descuento.</small>
+
+    <div class="icons-carousel">
+      <button class="arrowCircle prev" type="button" aria-label="Anterior"><span class="chev">‹</span></button>
+      <div class="icons-wrap" id="icons-sec-sys"></div>
+      <button class="arrowCircle next" type="button" aria-label="Siguiente"><span class="chev">›</span></button>
+    </div>
+  </div>
+</div>
 
           <div id="calc-tertiary" class="calc-container" aria-label="Tercera calculadora" style="display:none"></div>
 
-          <div id="add-more-panel" class="placeholder" style="display:none">
-            <div class="note">
-              <strong>¿Agregar un tercer sistema?</strong><br>
-              <strong>¿Otro sistema con <span class="disc-chip">−15%</span></strong> de descuento?  <small>Descuento aplicable en cada sistema (excepto “XML en Línea”).</small>
-              <div class="icons-wrap" id="icons-third-sys"></div>
-            </div>
-          </div>
-        </div>
+    <div id="add-more-panel" class="placeholder" style="display:none">
+  <div class="note note-center">
+    <strong>¿Otro sistema con <span class="disc-chip">−15%</span> de descuento?</strong>
+    <small>Descuento aplicable en cada sistema (excepto “XML en Línea”).</small>
 
+    <div class="icons-carousel">
+      <button class="arrowCircle prev" type="button" aria-label="Anterior"><span class="chev">‹</span></button>
+      <div class="icons-wrap" id="icons-third-sys"></div>
+      <button class="arrowCircle next" type="button" aria-label="Siguiente"><span class="chev">›</span></button>
+    </div>
+  </div>
+</div>
+          
         <div id="combined-wrap" class="combined-card" hidden>
 <h4 class="title-gradient">Detalle de tu inversión</h4>
           <table class="combined-table"><tbody id="combined-table-body"></tbody></table>
