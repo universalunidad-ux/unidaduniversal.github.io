@@ -56,7 +56,7 @@ var userLabel=D.createElement("label");userLabel.classList.add("field","usr");us
 var instWrap=D.createElement("div");instWrap.className="inst-wrap";instWrap.innerHTML='<div class="instalacion-box"><label><input type="checkbox" id="instOn'+idSuffix+'" checked><span><strong id="instLblSTRONG'+idSuffix+'">Instalación (1)</strong><span id="instLblTail'+idSuffix+'">: Instalamos el sistema en tu equipo.</span></span></label></div>';form.appendChild(instWrap);
 container.appendChild(form);
 var results=D.createElement("div");results.className="calc-results";var table=D.createElement("table");table.className="calc-table";table.innerHTML='<thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead><tbody>'+
-'<tr id="tr-base'+idSuffix+'"><td id="lbl-base'+idSuffix+'">Sistema (1 usuario)</td><td id="base'+idSuffix+'">$0.00</td></tr>'+
+'<tr id="tr-base'+idSuffix+'"><td id="lbl-base'+idSuffix+'">Sistema | 1 usuario</td><td id="base'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-uadd'+idSuffix+'"><td id="lbl-uadd'+idSuffix+'">Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-disc'+idSuffix+'"><td id="lbl-disc'+idSuffix+'">Descuento (sistema)</td><td id="disc'+idSuffix+'">0% / $0.00</td></tr>'+
 '<tr id="tr-inst'+idSuffix+'"><td id="lbl-inst'+idSuffix+'">Instalación</td><td class="money-cell"><label class="disc-toggle"><input type="checkbox" id="instdiscOn'+idSuffix+'" checked aria-label="Aplicar -50% primer servicio"><span id="inst'+idSuffix+'">$0.00</span></label></td></tr>'+
