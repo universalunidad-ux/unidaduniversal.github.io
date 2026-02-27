@@ -61,8 +61,8 @@ var results=D.createElement("div");results.className="calc-results";var table=D.
 '<tr id="tr-uadd'+idSuffix+'"><td id="lbl-uadd'+idSuffix+'">Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-disc'+idSuffix+'"><td id="lbl-disc'+idSuffix+'">Descuento (sistema)</td><td id="disc'+idSuffix+'">0% / $0.00</td></tr>'+
 '<tr id="tr-inst'+idSuffix+'"><td id="lbl-inst'+idSuffix+'">Instalación</td><td id="inst'+idSuffix+'">$0.00</td></tr>'+
-'<tr id="tr-instdisc'+idSuffix+'"><td id="lbl-instdisc'+idSuffix+'"><label style="display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none"><input type="checkbox" id="instdiscOn'+idSuffix+'" checked>Instalación 50% (Si es primer servicio)</label></td><td id="instdisc'+idSuffix+'">$0.00</td></tr>'+
-'<tr id="tr-sub'+idSuffix+'"><td id="lbl-sub'+idSuffix+'">Subtotal</td><td id="sub'+idSuffix+'">$0.00</td></tr>'+
+'<tr id="tr-instdisc'+idSuffix+'"><td>Instalación 50% (Si es primer servicio)</td><td class="money-cell"><label class="disc-toggle"><input type="checkbox" id="instdiscOn'+idSuffix+'" checked aria-label="Aplicar instalación 50%"><span id="instdisc'+idSuffix+'">$0.00</span></label></td></tr>'+
+ '<tr id="tr-sub'+idSuffix+'"><td id="lbl-sub'+idSuffix+'">Subtotal</td><td id="sub'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-iva'+idSuffix+'"><td id="lbl-iva'+idSuffix+'">IVA (16%)</td><td id="iva'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-tot'+idSuffix+'"><td id="lbl-tot'+idSuffix+'"><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0.00</strong></td></tr></tbody>';results.appendChild(table);container.appendChild(results);
 try{W.expSetCalcCols&&W.expSetCalcCols()}catch(e){}
