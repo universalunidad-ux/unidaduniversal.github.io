@@ -38,12 +38,13 @@ function showThirdPanel(show){var t=$id("calc-tertiary"),p=$id("add-more-panel")
 function getSystemList(){if(Array.isArray(W.CATALOG_SISTEMAS)&&W.CATALOG_SISTEMAS.length)return W.CATALOG_SISTEMAS.map(x=>({name:x.name,img:x.img||""}));var all=W.preciosContpaqi||{};return Object.keys(all).map(k=>({name:k,img:""}))}
 function paintSystemButtons(wrapId,onPick,exclude){var wrap=$id(wrapId);if(!wrap)return;wrap.innerHTML="";var list=getSystemList();exclude=exclude||[];list.forEach(item=>{if(!item||!item.name)return;if(exclude.indexOf(item.name)!==-1)return;var b=D.createElement("button");b.type="button";b.className="sys-icon";b.setAttribute("data-system",item.name);b.setAttribute("data-sys",item.name);b.dataset.system=item.name;b.dataset.sys=item.name;b.innerHTML=item.img?'<img src="'+item.img+'" alt="">':"";b.addEventListener("click",()=>onPick(item.name));wrap.appendChild(b)})}
 
-/* CSS patch: usuarios manda altura; instalación centrada */
-(()=>{var id="calc-inline-patch-v2";if($id(id))return;var st=D.createElement("style");st.id=id;st.textContent=".calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;align-items:stretch!important}"+
+/* CSS patch: 2x2 SIEMPRE + usuarios alineado con instalación */
+(()=>{var id="calc-inline-patch-v3";if($id(id))return;var st=D.createElement("style");st.id=id;st.textContent=".calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;align-items:stretch!important}"+
+".calc-container label.field{display:flex!important;flex-direction:column!important;justify-content:center!important}"+
+".calc-container label.field.usr{align-self:stretch!important}"+
 ".calc-container .inst-wrap{display:flex!important;align-self:stretch!important;justify-content:center!important}"+
-".calc-container .instalacion-box{width:100%}"+
-"@media(max-width:768px){.calc-container form{grid-template-columns:1fr!important}.calc-container .inst-wrap{justify-content:flex-start!important}}";D.head.appendChild(st)})();
-
+".calc-container .instalacion-box{width:100%!important;height:100%!important;display:flex!important;align-items:center!important}";D.head.appendChild(st)})();
+            
 /* FIX: dim instalación cuando OFF */
 (()=>{var id="calc-inst-dim-patch";if($id(id))return;var st=D.createElement("style");st.id=id;st.textContent=".inst-wrap input[type=checkbox]:not(:checked)~span{opacity:.65}";D.head.appendChild(st)})();
 
