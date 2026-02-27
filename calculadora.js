@@ -61,7 +61,7 @@ var results=D.createElement("div");results.className="calc-results";var table=D.
 '<tr id="tr-uadd'+idSuffix+'"><td id="lbl-uadd'+idSuffix+'">Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-disc'+idSuffix+'"><td id="lbl-disc'+idSuffix+'">Descuento (sistema)</td><td id="disc'+idSuffix+'">0% / $0.00</td></tr>'+
 '<tr id="tr-inst'+idSuffix+'"><td id="lbl-inst'+idSuffix+'">Instalación</td><td id="inst'+idSuffix+'">$0.00</td></tr>'+
-'<tr id="tr-instdisc'+idSuffix+'"><td id="lbl-instdisc'+idSuffix+'">Descuento por primer servicio (instalación 50%)</td><td id="instdisc'+idSuffix+'">$0.00</td></tr>'+
+'<tr id="tr-instdisc'+idSuffix+'"><td id="lbl-instdisc'+idSuffix+'"><label style="display:inline-flex;align-items:center;gap:10px;cursor:pointer;user-select:none"><input type="checkbox" id="instdiscOn'+idSuffix+'" checked>Instalación 50% (Si es primer servicio)</label></td><td id="instdisc'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-sub'+idSuffix+'"><td id="lbl-sub'+idSuffix+'">Subtotal</td><td id="sub'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-iva'+idSuffix+'"><td id="lbl-iva'+idSuffix+'">IVA (16%)</td><td id="iva'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-tot'+idSuffix+'"><td id="lbl-tot'+idSuffix+'"><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0.00</strong></td></tr></tbody>';results.appendChild(table);container.appendChild(results);
@@ -76,7 +76,9 @@ if(lic==="nueva"||lic==="renovacion"){var anual=systemPrices.anual||{},datosLic=
 var subtotalSistemas=base+usuariosAddImporte,discountPct=0,hasPackage=safeHasTableBySel("#calc-secondary")||safeHasTableBySel("#calc-tertiary");hasPackage&&sistemaName.indexOf("XML en Línea")===-1&&(discountPct=.15);
 var discountAmt=round2(subtotalSistemas*discountPct),afterDiscount=round2(subtotalSistemas-discountAmt),instGross=calcInstallationGross(),instDiscount=round2(instGross*.5),instNet=round2(instGross-instDiscount);
 var instOn=instCheckbox(),instCount=instOn&&instOn.checked?usuarios:0,instWord=instCount===1?"Instalación":"Instalaciones",instLabel=instCount>0?instWord+" ("+instCount+")":"Instalación",inst50Label="Descuento por primer servicio ("+(instCount===1?"instalación":"instalaciones")+" 50%)",subLabel=instCount>0?("Subtotal (sistema + "+(instCount===1?"instalación":"instalaciones")+")"):"Subtotal (sistema)";
-var elLblInst=$id("lbl-inst"+idSuffix);elLblInst&&(elLblInst.textContent=instLabel);var elLblInstDisc=$id("lbl-instdisc"+idSuffix);elLblInstDisc&&(elLblInstDisc.textContent=inst50Label);var elLblSub=$id("lbl-sub"+idSuffix);elLblSub&&(elLblSub.textContent=subLabel);
+ var instOn=instCheckbox(),instCount=instOn&&instOn.checked?usuarios:0,instWord=instCount===1?"Instalación":"Instalaciones",instLabel=instCount>0?instWord+" ("+instCount+")":"Instalación",subLabel="Subtotal";
+var elLblInst=$id("lbl-inst"+idSuffix);elLblInst&&(elLblInst.textContent=instLabel);
+var elLblSub=$id("lbl-sub"+idSuffix);elLblSub&&(elLblSub.textContent=subLabel);
 var strong=$id("instLblSTRONG"+idSuffix),tailEl=$id("instLblTail"+idSuffix),nInst=Math.max(1,usuarios);strong&&(strong.textContent="Instalación ("+nInst+")");tailEl&&(tailEl.textContent=nInst===1?": Instalamos el sistema en tu equipo.":": Instalamos el sistema en tus equipos.");
 var showInst=!!(instOn&&instOn.checked),baseImponible=round2(afterDiscount+instNet),iva=round2(baseImponible*.16),total=round2(baseImponible+iva);
 setText("base"+idSuffix,fmt(base));setText("uadd"+idSuffix,fmt(usuariosAddImporte)+(usuariosExtras>0?" ("+usuariosExtras+" "+(usuariosExtras===1?"extra":"extras")+")":""));setText("disc"+idSuffix,pct(discountPct)+" / "+fmt(discountAmt));setText("inst"+idSuffix,fmt(instGross));setText("instdisc"+idSuffix,instGross>0?"− "+fmt(instDiscount):fmt(0));setText("sub"+idSuffix,fmt(baseImponible));setText("iva"+idSuffix,fmt(iva));setHTML("tot"+idSuffix,"<strong>"+fmt(total)+"</strong>");
@@ -84,7 +86,7 @@ setDisplay("tr-uadd"+idSuffix,usuariosExtras>0?"":"none");setDisplay("tr-disc"+i
 updateCombinedSummary(combinedSelector);try{setCalcCountClass()}catch(e){}}
 licenciaSel.addEventListener("change",refreshOptions);
 opSel.addEventListener("change",()=>{var lic=licenciaSel.value,op=opSel.value;if(lic==="tradicional"&&op==="crecimiento_usuario")rfcLabel.style.display="none";else{if(rfcSel.options.length===0){rfcSel.innerHTML="";if(lic==="nueva"||lic==="renovacion"){var anual=systemPrices.anual||{};anual.MonoRFC&&rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));anual.MultiRFC&&rfcSel.appendChild(new Option("MultiRFC","MultiRFC"))}else{rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));rfcSel.appendChild(new Option("MultiRFC","MultiRFC"))}var m=Array.from(rfcSel.options).find(o=>/multirfc/i.test(o.text));m&&(rfcSel.value=m.value)}rfcLabel.style.display="inline-block"}calculateAndRender()});
-rfcSel.addEventListener("change",calculateAndRender);userInput.addEventListener("change",calculateAndRender);var chk=$id("instOn"+idSuffix);chk&&chk.addEventListener("change",calculateAndRender);W.addEventListener("calc-recompute",calculateAndRender);
+rfcSel.addEventListener("change",calculateAndRender);userInput.addEventListener("change",calculateAndRender);var chk=$id("instOn"+idSuffix);chk&&chk.addEventListener("change",calculateAndRender);var chkDisc=$id("instdiscOn"+idSuffix);chkDisc&&chkDisc.addEventListener("change",calculateAndRender);W.addEventListener("calc-recompute",calculateAndRender);
 refreshOptions()}
 
 function updateCombinedSummary(sel){var wrap=qs(sel||"#combined-wrap");if(!wrap){setCalcCountClass();return}var tbody=$id("combined-table-body");if(!tbody){console.warn("Falta #combined-table-body");wrap.hidden=!0;setCalcCountClass();return}
