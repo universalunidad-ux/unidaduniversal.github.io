@@ -58,7 +58,7 @@ var results=D.createElement("div");results.className="calc-results";var table=D.
 '<tr id="tr-base'+idSuffix+'"><td id="lbl-base'+idSuffix+'">Sistema | 1 usuario</td><td id="base'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-uadd'+idSuffix+'"><td id="lbl-uadd'+idSuffix+'">Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-disc'+idSuffix+'"><td id="lbl-disc'+idSuffix+'">Descuento (sistema)</td><td id="disc'+idSuffix+'">0% / $0.00</td></tr>'+
-'<tr id="tr-inst'+idSuffix+'"><td id="lbl-inst'+idSuffix+'">Instalación</td><td class="money-cell"><span id="inst'+idSuffix+'">$0.00</span></td></tr>'+
+'<tr id="tr-inst'+idSuffix+'"><td id="lbl-inst'+idSuffix+'">Instalación</td><td class="money-cell"><label class="disc-toggle"><input type="checkbox" id="instdiscOn'+idSuffix+'" checked aria-label="Aplicar -50% si es primer servicio"><span id="inst'+idSuffix+'">$0.00</span></label></td></tr>'+
  '<tr id="tr-sub'+idSuffix+'"><td id="lbl-sub'+idSuffix+'">Subtotal</td><td id="sub'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-iva'+idSuffix+'"><td id="lbl-iva'+idSuffix+'">IVA (16%)</td><td id="iva'+idSuffix+'">$0.00</td></tr>'+
 '<tr id="tr-tot'+idSuffix+'"><td id="lbl-tot'+idSuffix+'"><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0.00</strong></td></tr></tbody>';results.appendChild(table);container.appendChild(results);
@@ -80,7 +80,7 @@ setDisplay("tr-uadd"+idSuffix,usuariosExtras>0?"":"none");setDisplay("tr-disc"+i
  updateCombinedSummary(combinedSelector);try{setCalcCountClass()}catch(e){}}
 licenciaSel.addEventListener("change",refreshOptions);
 opSel.addEventListener("change",()=>{var lic=licenciaSel.value,op=opSel.value;if(lic==="tradicional"&&op==="crecimiento_usuario")rfcLabel.style.display="none";else{if(rfcSel.options.length===0){rfcSel.innerHTML="";if(lic==="nueva"||lic==="renovacion"){var anual=systemPrices.anual||{};anual.MonoRFC&&rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));anual.MultiRFC&&rfcSel.appendChild(new Option("MultiRFC","MultiRFC"))}else{rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));rfcSel.appendChild(new Option("MultiRFC","MultiRFC"))}var m=Array.from(rfcSel.options).find(o=>/multirfc/i.test(o.text));m&&(rfcSel.value=m.value)}rfcLabel.style.display="inline-block"}calculateAndRender()});
-rfcSel.addEventListener("change",calculateAndRender);userInput.addEventListener("change",calculateAndRender);var chk=$id("instOn"+idSuffix);chk&&chk.addEventListener("change",calculateAndRender);'<tr id="tr-inst'+idSuffix+'"><td id="lbl-inst'+idSuffix+'">Instalación</td><td class="money-cell"><span id="inst'+idSuffix+'">$0.00</span></td></tr>'+W.addEventListener("calc-recompute",calculateAndRender);
+rfcSel.addEventListener("change",calculateAndRender);userInput.addEventListener("change",calculateAndRender);var chk=$id("instOn"+idSuffix);chk&&chk.addEventListener("change",calculateAndRender);var chkDisc=$id("instdiscOn"+idSuffix);chkDisc&&chkDisc.addEventListener("change",calculateAndRender);W.addEventListener("calc-recompute",calculateAndRender);
 refreshOptions()}
 
 function updateCombinedSummary(sel){var wrap=qs(sel||"#combined-wrap");if(!wrap){setCalcCountClass();return}var tbody=$id("combined-table-body");if(!tbody){console.warn("Falta #combined-table-body");wrap.hidden=!0;setCalcCountClass();return}
