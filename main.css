@@ -108,9 +108,7 @@ html[data-theme=light] .page-sistemas .calc-container :is(#tot1,#tot2,#tot3) str
 .page-sistemas .calc-container tbody tr:last-child td:last-child{display:flex;justify-content:flex-end}.page-sistemas .calc-container tbody tr:last-child td:last-child>*{display:inline-block!important;padding:6px 10px!important;border-radius:999px!important;color:#fff!important;background:var(--ex-pill-grad,linear-gradient(90deg,rgba(20,184,166,.95),rgba(250,82,98,.95)))!important;border:2px solid rgba(255,255,255,.22)!important;box-shadow:0 10px 22px rgba(2,6,23,.14)!important}
 
 
-/* Resumen combinado: separa importes a la derecha */
-.page-sistemas #combined-wrap td:last-child{padding-left:18px;text-align:right;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
-@media(max-width:680px){.page-sistemas #combined-wrap td:last-child{padding-left:12px}}
+
 
 /* Nube/Escritorio */
 .page-sistemas .nube-only,.page-sistemas .desk-only{display:none}
@@ -350,31 +348,7 @@ html[data-theme="light"] .page-sistemas{--ex-ghost-bd:rgba(2,6,23,.16);--ex-ghos
   border-color:transparent!important
 }
 
-/* CTA: amarillo texto oscuro, verde texto blanco (light+dark) */
-.page-sistemas .cta-strip :where(a,button):nth-child(1),
-.page-sistemas .cta-strip :where(a,button):nth-child(1):hover,
-.page-sistemas .cta-strip :where(a,button):nth-child(1):active,
-.page-sistemas .cta-strip :where(a,button):nth-child(1):focus-visible{
-background:var(--ex-cta-yellow)!important;color:#fff!important;
-}
 
-.page-sistemas .cta-strip :where(a,button):nth-child(2),
-.page-sistemas .cta-strip :where(a,button):nth-child(2):hover,
-.page-sistemas .cta-strip :where(a,button):nth-child(2):active,
-.page-sistemas .cta-strip :where(a,button):nth-child(2):focus-visible{
-background:var(--ex-cta-green)!important;color:#fff!important;
-}
-
-/* CALC HEADER: logo horizontal + Precio */
-.page-sistemas .calc-head{margin:0 0 10px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.75);border:1px solid rgba(2,6,23,.10)}
-.page-sistemas .calc-head-row{display:flex;align-items:center;gap:12px}
-.page-sistemas .calc-syslogo{height:34px;width:auto;max-width:160px;object-fit:contain;display:block}
-.page-sistemas .calc-price{font-weight:950;font-size:16px;line-height:1}
-.page-sistemas .calc-sub{font-weight:800;font-size:13px;opacity:.75;margin-top:2px}
-
-@media(max-width:680px){
-  .page-sistemas .calc-syslogo{height:28px;max-width:140px}
-}
 
 /* NUBE swipe (pricing-table-nube) no-:has v2026.02.02 */@media(max-width:768px){body[data-calc="nube"] .page-sistemas .pricing-table-nube{display:block;min-width:860px}body[data-calc="nube"] .page-sistemas .pricing-table-nube{max-width:none}body[data-calc="nube"] .page-sistemas .pricing-table-nube{border-radius:14px}body[data-calc="nube"] .page-sistemas .pricing-table-nube{overflow:visible}body[data-calc="nube"] .page-sistemas .pricing-table-nube{width:max-content}body[data-calc="nube"] .page-sistemas .pricing-table-nube{margin:0}body[data-calc="nube"] .page-sistemas .pricing-table-nube{table-layout:auto}body[data-calc="nube"] .page-sistemas .pricing-table-nube{white-space:nowrap}body[data-calc="nube"] .page-sistemas .card.body{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}body[data-calc="nube"] .page-sistemas .card.body{scrollbar-gutter:stable}body[data-calc="nube"] .page-sistemas .plan-name,body[data-calc="nube"] .page-sistemas .plan-desc{white-space:normal}}
 
@@ -475,3 +449,7 @@ html:not([data-theme=light]) .page-sistemas .icons-carousel .sys-icon img{backgr
 
 /* EXPIRITI CALC UX PATCH v1 (desktop inline + combined mobile fix) */
 .page-sistemas .calc-container .calc-head{margin:0!important;padding:8px 0!important}.page-sistemas .calc-container .calc-head-row{margin:0!important}.page-sistemas .calc-container .calc-form{margin-top:6px!important}.page-sistemas .calc-container form{gap:10px!important}.page-sistemas .calc-container label.field,.page-sistemas .calc-container .op-label{display:flex!important;flex-direction:column!important;justify-content:center!important}.page-sistemas .calc-container label.field.usr{align-self:stretch!important}.page-sistemas .calc-container .inst-wrap{align-self:stretch!important}.page-sistemas .calc-container select,.page-sistemas .calc-container input{width:100%!important}.page-sistemas .calc-container input[type=number]::-webkit-inner-spin-button,.page-sistemas .calc-container input[type=number]::-webkit-outer-spin-button{opacity:1!important;height:auto!important}.page-sistemas .calc-container input[type=number]{-moz-appearance:auto!important;appearance:auto!important}@media(min-width:980px){.page-sistemas .calc-container label.field,.page-sistemas .calc-container .op-label{flex-direction:row!important;align-items:center!important;gap:10px!important}.page-sistemas .calc-container label.field select,.page-sistemas .calc-container label.field input,.page-sistemas .calc-container .op-label select{flex:1 1 auto!important;min-width:260px!important}.page-sistemas .calc-container label.field{white-space:nowrap!important}}@media(max-width:520px){.page-sistemas #combined-wrap{padding:12px!important}.page-sistemas #combined-wrap table{width:100%!important;table-layout:fixed!important;border-collapse:collapse!important}.page-sistemas #combined-wrap td{vertical-align:top!important}.page-sistemas #combined-wrap td:first-child{width:68%!important;white-space:normal!important;word-break:normal!important;overflow-wrap:anywhere!important}.page-sistemas #combined-wrap td:last-child{width:32%!important;text-align:right!important;white-space:nowrap!important}.page-sistemas #combined-wrap tr:last-child td:first-child strong{white-space:nowrap!important}.page-sistemas #combined-wrap tr:last-child td:last-child strong{background:none!important;box-shadow:none!important;border:0!important;padding:0!important;border-radius:0!important;color:#000!important}.page-sistemas #combined-wrap tr:last-child td:last-child div{color:#000!important;opacity:.75!important}}
+
+
+
+
