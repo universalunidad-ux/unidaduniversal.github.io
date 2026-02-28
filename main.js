@@ -404,26 +404,9 @@ TRY("toc",()=>{
 
 })(); /* FIN IIFE PRINCIPAL */
 
-TRY("cta_strip_dynamic",()=>{
-  const boot=()=>{
-    document.querySelectorAll(".cta-strip[data-sistema]").forEach(strip=>{
-      const sys = strip.dataset.sistema || "";
-      const pdf = strip.dataset.pdf || "";
-      const wa = msg=>"https://wa.me/5568437918?text="+encodeURIComponent(msg);
+(()=>{try{const o=()=>{const t=window.__EXP_ABS__||((t)=>t);document.querySelectorAll(".cta-strip[data-sistema]").forEach(e=>{const r=(e.dataset.sistema||"").trim(),n=(e.dataset.pdf||"").trim(),c=o=>"https://wa.me/5568437918?text="+encodeURIComponent(o),a=n?t(`PDFS/${n}.pdf`):"#";e.innerHTML=`<a class="btn btn-grad-green hero-btn" href="${c(`Hola Expiriti, quiero comprar mi licencia de CONTPAQi ${r}`)}" target="_blank" rel="noopener">Compra ahora</a><a class="btn btn-grad-purple hero-btn" href="${c(`Hola Expiriti, quiero mi prueba gratis de 30 días de CONTPAQi ${r}`)}" target="_blank" rel="noopener">Prueba gratis</a><a class="btn btn-grad-blue hero-btn" href="${c(`Hola Expiriti, quiero agendar una demo de 45 min por Zoom de CONTPAQi ${r}`)}" target="_blank" rel="noopener">Demo de 45 min por Zoom</a>${n?`<a class="btn btn-ghost hero-btn" href="${a}" target="_blank" rel="noopener">Ficha técnica (PDF)</a>`:""}<a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>`})};"loading"===document.readyState?document.addEventListener("DOMContentLoaded",o,{once:!0}):o()}catch(o){console.warn("[main.js] cta_strip_dynamic falló",o)}})();
 
-      strip.innerHTML = `
-        <a class="btn btn-grad-green hero-btn" href="${wa(`Hola Expiriti, quiero comprar mi licencia de CONTPAQi ${sys}`)}" target="_blank" rel="noopener">Compra ahora</a>
-        <a class="btn btn-grad-purple hero-btn" href="${wa(`Hola Expiriti, quiero mi prueba gratis de 30 días de CONTPAQi ${sys}`)}" target="_blank" rel="noopener">Prueba gratis</a>
-        <a class="btn btn-grad-blue hero-btn" href="${wa(`Hola Expiriti, quiero agendar una demo de 45 min por Zoom de CONTPAQi ${sys}`)}" target="_blank" rel="noopener">Demo de 45 min por Zoom</a>
-        <a class="btn btn-ghost hero-btn" href="../PDFS/${pdf}.pdf" target="_blank" rel="noopener">Ficha técnica (PDF)</a>
-        <a class="btn btn-ghost hero-btn" href="#caracteristicas">Resumen ficha técnica</a>
-      `;
-    });
-  };
-  document.readyState==="loading"
-    ? document.addEventListener("DOMContentLoaded",boot,{once:true})
-    : boot();
-});
+
 
 (()=>{const G=document.getElementById("impGrid");if(!G)return;const C=[...G.querySelectorAll(".fcard")];const V=()=>C.filter(el=>el.offsetParent!==null&&getComputedStyle(el).display!=="none");window.EX_impLayout=()=>{C.forEach(x=>x.classList.remove("__vLast1","__vLast2a","__vLast2b"));const a=V(),m=a.length%3;if(m===1&&a.length)a[a.length-1].classList.add("__vLast1");else if(m===2&&a.length>1){a[a.length-2].classList.add("__vLast2a");a[a.length-1].classList.add("__vLast2b")}};new MutationObserver(()=>EX_impLayout()).observe(G,{subtree:!0,attributes:!0,attributeFilter:["style","class"]});addEventListener("resize",()=>EX_impLayout(),{passive:!0});EX_impLayout()})();
 
