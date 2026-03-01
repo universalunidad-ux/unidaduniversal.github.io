@@ -37,15 +37,7 @@ function showThirdPanel(show){var t=$id("calc-tertiary"),p=$id("add-more-panel")
 function getSystemList(){if(Array.isArray(W.CATALOG_SISTEMAS)&&W.CATALOG_SISTEMAS.length)return W.CATALOG_SISTEMAS.map(x=>({name:x.name,img:x.img||""}));var all=W.preciosContpaqi||{};return Object.keys(all).map(k=>({name:k,img:""}))}
 function paintSystemButtons(wrapId,onPick,exclude){var wrap=$id(wrapId);if(!wrap)return;wrap.innerHTML="";var list=getSystemList();exclude=exclude||[];list.forEach(item=>{if(!item||!item.name)return;if(exclude.indexOf(item.name)!==-1)return;var b=D.createElement("button");b.type="button";b.className="sys-icon";b.setAttribute("data-system",item.name);b.setAttribute("data-sys",item.name);b.dataset.system=item.name;b.dataset.sys=item.name;b.innerHTML=item.img?'<img src="'+item.img+'" alt="">':"";b.addEventListener("click",()=>onPick(item.name));wrap.appendChild(b)})}
 
-/* CSS patch: 2x2 SIEMPRE + usuarios alineado con instalación */
-(()=>{var id="calc-inline-patch-v3";if($id(id))return;var st=D.createElement("style");st.id=id;st.textContent=".calc-container form{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;align-items:stretch!important}"+
-".calc-container label.field{display:flex!important;flex-direction:column!important;justify-content:center!important}"+
-".calc-container label.field.usr{align-self:stretch!important}"+
-".calc-container .inst-wrap{display:flex!important;align-self:stretch!important;justify-content:center!important}"+
-".calc-container .instalacion-box{width:100%!important;height:100%!important;display:flex!important;align-items:center!important}";D.head.appendChild(st)})();
-            
-/* FIX: dim instalación cuando OFF */
-(()=>{var id="calc-inst-dim-patch";if($id(id))return;var st=D.createElement("style");st.id=id;st.textContent=".inst-wrap input[type=checkbox]:not(:checked)~span{opacity:.65}";D.head.appendChild(st)})();
+      
 
 function createCalculator(container,sistemaName,idSuffix,combinedSelector){if(!container)return;cleanupSuffixDupes(idSuffix,container);container.innerHTML="";container.dataset.systemName=sistemaName;var allPrices=W.preciosContpaqi||{},systemPrices=allPrices[sistemaName];if(!systemPrices){container.innerHTML='<p style="margin:0">Error: faltan precios para <strong>'+sistemaName+'</strong>.</p>';return}
 var form=D.createElement("form");form.className="calc-form";form.setAttribute("autocomplete","off");form.setAttribute("novalidate","novalidate");form.addEventListener("submit",function(e){e.preventDefault();e.stopPropagation();return!1});form.addEventListener("keydown",function(e){var k=e.key||e.code;if(k==="Enter"){var t=e.target;if(t&&/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)){e.preventDefault();e.stopPropagation();try{calculateAndRender()}catch(_){}return!1}}});
@@ -146,7 +138,7 @@ filas.forEach(f=>{var tr=D.createElement("tr");tr.innerHTML="<td>"+f.label+"</td
 var trI=D.createElement("tr");trI.innerHTML="<td>IVA total</td><td>"+fmt(ivaTotal)+"</td>";tbody.appendChild(trI);
 var trT=D.createElement("tr");trT.innerHTML='<td><strong>Total</strong></td><td><strong>'+fmt(totalCombinado)+'</strong><div style="font-size:12px;opacity:.85;margin-top:6px">'+(W.mxnLetra?mxnLetra(totalCombinado):"")+"</div></td>";tbody.appendChild(trT);
 wrap.hidden=!1;setCalcCountClass()}
-(()=>{var id="calc-usr-stepper-patch";if($id(id))return;var st=D.createElement("style");st.id=id;st.textContent=".usr-wrap{display:flex;align-items:center;gap:8px}.usr-wrap input[type=number]{width:100%;min-width:0}.usr-step{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid rgba(148,163,184,.35);background:rgba(255,255,255,.06);cursor:pointer;font-weight:800;line-height:1}html[data-theme=light] .usr-step{background:rgba(2,6,23,.04);border-color:rgba(2,6,23,.14)}.usr-step:active{transform:translateY(1px)}.usr-step:focus{outline:none}.usr-wrap input[type=number]::-webkit-outer-spin-button,.usr-wrap input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.usr-wrap input[type=number]{-moz-appearance:textfield}";D.head.appendChild(st)})();
+
 function initCalculadora(opts){opts=opts||{};var sys=opts.systemName,primarySel=opts.primarySelector||"#calc-primary",combinedSel=opts.combinedSelector||"#combined-wrap",el=qs(primarySel);if(!el){console.warn("No existe contenedor primario:",primarySel);return}createCalculator(el,sys,"1",combinedSel);
 var exclude=[sys];paintSystemButtons("icons-sec-sys",name=>{W.CalculadoraContpaqi.setSecondarySystem(name,{combinedSelector:combinedSel})},exclude);
 setCalcCountClass();setTimeout(()=>{recomputeAll()},0)}
