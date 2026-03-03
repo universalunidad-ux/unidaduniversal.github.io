@@ -49,13 +49,8 @@ var opLabel=D.createElement("label");opLabel.className="op-label";opLabel.textCo
 var rfcLabel=D.createElement("label");rfcLabel.classList.add("field","rfc");rfcLabel.textContent="Tipo (RFC):";var rfcSel=D.createElement("select");rfcSel.id="rfc"+idSuffix;rfcLabel.appendChild(rfcSel);form.appendChild(rfcLabel);
 
 var userLabel=D.createElement("label");userLabel.classList.add("field","usr");userLabel.textContent="Usuarios:";var userWrap=D.createElement("div");userWrap.className="usr-wrap";
-var btnMinus=D.createElement("button");btnMinus.type="button";btnMinus.className="usr-step usr-minus";btnMinus.setAttribute("aria-label","Disminuir usuarios");btnMinus.textContent="−";
-var btnPlus=D.createElement("button");btnPlus.type="button";btnPlus.className="usr-step usr-plus";btnPlus.setAttribute("aria-label","Aumentar usuarios");btnPlus.textContent="+";
-var userInput=D.createElement("input");userInput.type="number";userInput.inputMode="numeric";userInput.id="usr"+idSuffix;userInput.min="1";userInput.step="1";userInput.value="1";
-userWrap.appendChild(btnMinus);userWrap.appendChild(userInput);userWrap.appendChild(btnPlus);
-function clampUsers(){var v=parseInt(userInput.value||"1",10);if(!v||v<1)v=1;userInput.value=String(v);return v}
-btnMinus.addEventListener("click",function(){var v=clampUsers();userInput.value=String(Math.max(1,v-1));calculateAndRender()});
-btnPlus.addEventListener("click",function(){var v=clampUsers();userInput.value=String(v+1);calculateAndRender()});
+ var userInput=D.createElement("input");userInput.type="number";userInput.inputMode="numeric";userInput.id="usr"+idSuffix;userInput.min="1";userInput.step="1";userInput.value="1";userWrap.appendChild(userInput);function clampUsers(){var v=parseInt(userInput.value||"1",10);if(!v||v<1)v=1;userInput.value=String(v);return v}
+                                                                          
 userLabel.appendChild(userWrap);form.appendChild(userLabel);
 
 var instWrap=D.createElement("div");instWrap.className="inst-wrap";
