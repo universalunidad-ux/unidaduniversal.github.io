@@ -131,7 +131,7 @@ if(!totales.length){wrap.hidden=!0;setCalcCountClass();return}
 var totalCombinado=round2(totales.reduce((a,b)=>a+b,0));ivaTotal=round2(ivaTotal);
 filas.forEach(f=>{var tr=D.createElement("tr");tr.innerHTML="<td>"+f.label+"</td><td>"+fmt(f.val)+"</td>";tbody.appendChild(tr)});
 var trI=D.createElement("tr");trI.innerHTML="<td>IVA total</td><td>"+fmt(ivaTotal)+"</td>";tbody.appendChild(trI);
-var trT=D.createElement("tr");trT.innerHTML='<td><strong>Total</strong></td><td><strong>'+fmt(totalCombinado)+'</strong><div style="font-size:12px;opacity:.85;margin-top:6px">'+(W.mxnLetra?mxnLetra(totalCombinado):"")+"</div></td>";tbody.appendChild(trT);
+var trT=D.createElement("tr");trT.innerHTML='<td>Total</td><td>'+fmt(totalCombinado)+'<div style="font-size:12px;opacity:.85;margin-top:6px">'+(W.mxnLetra?mxnLetra(totalCombinado):"")+"</div></td>";tbody.appendChild(trT);
 wrap.hidden=!1;setCalcCountClass()}
 
 function initCalculadora(opts){opts=opts||{};var sys=opts.systemName,primarySel=opts.primarySelector||"#calc-primary",combinedSel=opts.combinedSelector||"#combined-wrap",el=qs(primarySel);if(!el){console.warn("No existe contenedor primario:",primarySel);return}createCalculator(el,sys,"1",combinedSel);
