@@ -1,7 +1,7 @@
 /* =========================================================
  Expiriti - calculadora.js (FINAL) v13.4
  - FIX CRÍTICO: anti doble carga (evita IDs duplicados usr1/lic1/tot1)
- - FIX: cleanup de duplicados por sufijo (1/2/3) si el DOM ya viene “sucio”
+ - FIX: cleanup de duplicados por sufijo (1/2/3) si el DOM ya viene “sucio” 
  - FIX: pickers 2º/3º dentro del guard (no corren en modo nube)
  - FIX: paintSystemButtons ahora sí pinta + bindea clicks
  - Mantiene: -15% por paquete (excepto “XML en Línea”) + instalación 50%
