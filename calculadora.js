@@ -54,14 +54,14 @@ var userLabel=D.createElement("label");userLabel.classList.add("field","usr");us
 userLabel.appendChild(userWrap);form.appendChild(userLabel);
 
 var instWrap=D.createElement("div");instWrap.className="inst-wrap";
-instWrap.innerHTML='<div class="instalacion-box"><label><input type="checkbox" id="instOn'+idSuffix+'" checked><span><strong id="instLblSTRONG'+idSuffix+'">Instalación (1)</strong><span id="instLblTail'+idSuffix+'">: En tu equipo.</span></span></label></div>';
+instWrap.innerHTML='<div class="instalacion-box"><label><input type="checkbox" id="instOn'+idSuffix+'" checked><span><strong id="instLblSTRONG'+idSuffix+'">Instalación (1)</strong><span id="instLblTail'+idSuffix+'">: En tu equipo.</span></span><span class="ux-info" title="Durante la anualidad de su sistema saldrán actualizaciones, con este servicio obtiene instalaciones sin costo durante la vigencia del sistema.">i</span></label></div>';
 form.appendChild(instWrap);
 
 container.appendChild(form);
 
 var results=D.createElement("div");results.className="calc-results";
 var table=D.createElement("table");table.className="calc-table";
-table.innerHTML='<thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead><tbody><tr id="tr-base'+idSuffix+'"><td id="lbl-base'+idSuffix+'">Sistema | 1 usuario</td><td id="base'+idSuffix+'">$0.00</td></tr><tr id="tr-uadd'+idSuffix+'"><td id="lbl-uadd'+idSuffix+'">Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0.00</td></tr><tr id="tr-disc'+idSuffix+'"><td id="lbl-disc'+idSuffix+'">Descuento (sistema)</td><td id="disc'+idSuffix+'">0% / $0.00</td></tr><tr id="tr-inst'+idSuffix+'"><td id="lbl-inst'+idSuffix+'">Instalación</td><td class="money-cell"><label class="disc-toggle"><input type="checkbox" id="instdiscOn'+idSuffix+'" checked aria-label="Aplicar -50% si es primer servicio"><span id="inst'+idSuffix+'">$0.00</span></label></td></tr><tr id="tr-sub'+idSuffix+'"><td id="lbl-sub'+idSuffix+'">Subtotal</td><td id="sub'+idSuffix+'">$0.00</td></tr><tr id="tr-iva'+idSuffix+'"><td id="lbl-iva'+idSuffix+'">IVA (16%)</td><td id="iva'+idSuffix+'">$0.00</td></tr><tr id="tr-tot'+idSuffix+'"><td id="lbl-tot'+idSuffix+'"><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0.00</strong></td></tr></tbody>';
+table.innerHTML='<thead><tr><th style="text-align:left">Concepto</th><th>Importe</th></tr></thead><tbody><tr id="tr-base'+idSuffix+'"><td id="lbl-base'+idSuffix+'">Sistema | 1 usuario</td><td id="base'+idSuffix+'">$0.00</td></tr><tr id="tr-uadd'+idSuffix+'"><td id="lbl-uadd'+idSuffix+'">Usuarios adicionales</td><td id="uadd'+idSuffix+'">$0.00</td></tr><tr id="tr-disc'+idSuffix+'"><td id="lbl-disc'+idSuffix+'">Descuento (sistema)</td><td id="disc'+idSuffix+'">0% / $0.00</td></tr><tr id="tr-inst'+idSuffix+'"><td id="lbl-inst'+idSuffix+'">Instalación</td><td class="money-cell"><label class="disc-toggle"><input type="checkbox" id="instdiscOn'+idSuffix+'" checked aria-label="Aplicar 50% primer servicio" title="Descuento aplicable a clientes nuevos."><span class="ux-tip" title="Descuento aplicable a clientes nuevos.">💡</span><span id="inst'+idSuffix+'">$0.00</span></label></td></tr><tr id="tr-sub'+idSuffix+'"><td id="lbl-sub'+idSuffix+'">Subtotal</td><td id="sub'+idSuffix+'">$0.00</td></tr><tr id="tr-iva'+idSuffix+'"><td id="lbl-iva'+idSuffix+'">IVA (16%)</td><td id="iva'+idSuffix+'">$0.00</td></tr><tr id="tr-tot'+idSuffix+'"><td id="lbl-tot'+idSuffix+'"><strong>Total</strong></td><td id="tot'+idSuffix+'"><strong>$0.00</strong></td></tr></tbody>';
 results.appendChild(table);container.appendChild(results);
 
 try{W.expSetCalcCols&&W.expSetCalcCols()}catch(e){}
@@ -79,7 +79,7 @@ else return writeZeros()}
 var subtotalSistemas=base+usuariosAddImporte,discountPct=0,hasPackage=safeHasTableBySel("#calc-secondary")||safeHasTableBySel("#calc-tertiary");hasPackage&&sistemaName.indexOf("XML en Línea")===-1&&(discountPct=.15);
 var discountAmt=round2(subtotalSistemas*discountPct),afterDiscount=round2(subtotalSistemas-discountAmt);
 var instGross=calcInstallationGross(),instDiscOnEl=$id("instdiscOn"+idSuffix),instDiscEnabled=!!(instDiscOnEl&&instDiscOnEl.checked),instDiscount=round2(instGross*(instDiscEnabled?0.5:0)),instNet=round2(instGross-instDiscount);
-var instOn=instCheckbox(),showInst=!!(instOn&&instOn.checked),instCount=showInst?usuarios:0,instWord=instCount===1?"Instalación":"Instalaciones",instLabel=(instCount>0?instWord+" ("+instCount+")":"Instalación")+"-50% si es 1er servicio";
+var instOn=instCheckbox(),showInst=!!(instOn&&instOn.checked),instCount=showInst?usuarios:0,eqWord=instCount===1?"equipo":"equipos",instLabel="Instalación ("+instCount+" "+eqWord+") · 50% primer servicio";
 var elLblInst=$id("lbl-inst"+idSuffix);elLblInst&&(elLblInst.textContent=instLabel);
 var baseImponible=round2(afterDiscount+(showInst?instNet:0)),iva=round2(baseImponible*.16),total=round2(baseImponible+iva);
 setText("base"+idSuffix,fmt(base));
