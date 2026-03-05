@@ -131,7 +131,7 @@ if(!totales.length){wrap.hidden=!0;setCalcCountClass();return}
 var totalCombinado=round2(totales.reduce((a,b)=>a+b,0));ivaTotal=round2(ivaTotal);
 filas.forEach(f=>{var tr=D.createElement("tr");tr.innerHTML="<td>"+f.label+"</td><td>"+fmt(f.val)+"</td>";tbody.appendChild(tr)});
 var trI=D.createElement("tr");trI.innerHTML="<td>IVA total</td><td>"+fmt(ivaTotal)+"</td>";tbody.appendChild(trI);
-var trT=D.createElement("tr");trT.innerHTML='<td>Total</td><td>'+fmt(totalCombinado)+'<div style="font-size:12px;opacity:.85;margin-top:6px">'+(W.mxnLetra?mxnLetra(totalCombinado):"")+"</div></td>";tbody.appendChild(trT);
+var trT=D.createElement("tr");trT.innerHTML='<td>Total</td><td>'+fmt(totalCombinado)+'<div style="font-size:12px;opacity:.85;margin-top:6px;line-height:1.25;white-space:normal;overflow-wrap:anywhere">'+(W.mxnLetra?mxnLetra(totalCombinado):"")+"</div></td>";tbody.appendChild(trT);
 wrap.hidden=!1;setCalcCountClass()}
 
 function initCalculadora(opts){opts=opts||{};var sys=opts.systemName,primarySel=opts.primarySelector||"#calc-primary",combinedSel=opts.combinedSelector||"#combined-wrap",el=qs(primarySel);if(!el){console.warn("No existe contenedor primario:",primarySel);return}createCalculator(el,sys,"1",combinedSel);
@@ -141,8 +141,8 @@ function setSecondarySystem(name,opts){opts=opts||{};var combinedSel=opts.combin
 var addPanel=$id("add-more-panel");addPanel&&(addPanel.style.display="");showThirdPanel(!1);
 var exclude=[($id("calc-primary")&&$id("calc-primary").dataset?$id("calc-primary").dataset.systemName:"")||"",name].filter(Boolean);
 paintSystemButtons("icons-third-sys",n3=>{W.CalculadoraContpaqi.setTertiarySystem(n3,{combinedSelector:combinedSel})},exclude);
-setCalcCountClass();recomputeAll()}
-function setTertiarySystem(name,opts){opts=opts||{};var combinedSel=opts.combinedSelector||"#combined-wrap",el=$id("calc-tertiary");if(!el){console.warn("No existe #calc-tertiary");return}el.style.display="";createCalculator(el,name,"3",combinedSel);showThirdPanel(!0);setCalcCountClass();recomputeAll()}
+setCalcCountClass();recomputeAll();try{sec&&sec.scrollIntoView({behavior:"smooth",block:"nearest",inline:"start"})}catch(e){}}
+function setTertiarySystem(name,opts){opts=opts||{};var combinedSel=opts.combinedSelector||"#combined-wrap",el=$id("calc-tertiary");if(!el){console.warn("No existe #calc-tertiary");return}el.style.display="";createCalculator(el,name,"3",combinedSel);showThirdPanel(!0);setCalcCountClass();recomputeAll();try{el&&el.scrollIntoView({behavior:"smooth",block:"nearest",inline:"start"})}catch(e){};try{el&&el.scrollIntoView({behavior:"smooth",block:"nearest",inline:"start"})}catch(e){}}
 W.CalculadoraContpaqi={init:initCalculadora,setSecondarySystem,setTertiarySystem,updateCombinedSummary};
 
 function autoInitOnce(){if(W.__EXP_CALC_AUTOINIT_DONE__)return;W.__EXP_CALC_AUTOINIT_DONE__=1;var app=$id("app"),sys=app&&app.dataset?app.dataset.system:null;sys&&qs("#calc-primary")&&W.CalculadoraContpaqi.init({systemName:sys});setCalcCountClass()}
