@@ -94,7 +94,7 @@ setDisplay("tr-disc"+idSuffix,discountPct>0?"":"none");
 setDisplay("tr-inst"+idSuffix,showInst?"":"none");
 updateCombinedSummary(combinedSelector);try{setCalcCountClass()}catch(e){}}
 
-function refreshOptions(){var lic=licenciaSel.value;opSel.innerHTML="";rfcSel.innerHTML="";rfcLabel.style.display="inline-block";opLabel.style.setProperty("display",lic==="tradicional"?"flex":"none","important");
+function refreshOptions(){var lic=licenciaSel.value;container.classList.toggle("is-tradicional",lic==="tradicional");container.classList.toggle("not-tradicional",lic!=="tradicional");opSel.innerHTML="";rfcSel.innerHTML="";rfcLabel.style.display="inline-block";opLabel.style.setProperty("display",lic==="tradicional"?"flex":"none","important");
 if(lic==="nueva"){opSel.appendChild(new Option("Anual (Nueva)","nueva_anual"));var anual=systemPrices.anual||{};anual.MonoRFC&&rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));anual.MultiRFC&&rfcSel.appendChild(new Option("MultiRFC","MultiRFC"))}
 else if(lic==="renovacion"){opSel.appendChild(new Option("Renovación anual","renovacion_anual"));var anual2=systemPrices.anual||{};anual2.MonoRFC&&rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));anual2.MultiRFC&&rfcSel.appendChild(new Option("MultiRFC","MultiRFC"))}
 else{opSel.appendChild(new Option("Actualización (versiones anteriores)","actualizacion"));opSel.appendChild(new Option("Actualización especial (inmediata anterior)","especial"));opSel.appendChild(new Option("Incremento de usuarios","crecimiento_usuario"));var trad=systemPrices.tradicional||{},hasRFC=trad.actualizacion||trad.especial;if(hasRFC){rfcSel.appendChild(new Option("MonoRFC","MonoRFC"));rfcSel.appendChild(new Option("MultiRFC","MultiRFC"))}}
