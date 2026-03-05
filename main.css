@@ -50,7 +50,7 @@ body.page-sistemas{max-width:100%;overflow-x:hidden}
 .page-sistemas #calc-row>*{min-width:0!important;max-width:100%}
 .page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
 .page-sistemas #calc-row[data-cols="3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
-@media(max-width:980px){.page-sistemas #calc-row[data-cols="1"],.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{grid-template-columns:1fr}.page-sistemas #calc-row[data-cols="2"],.page-sistemas #calc-row[data-cols="3"]{overflow:visible!important;scroll-snap-type:none!important}}
+@media(max-width:980px){.page-sistemas #calc-row{display:flex!important;gap:12px!important;overflow-x:auto!important;overflow-y:visible!important;scroll-snap-type:x mandatory!important;-webkit-overflow-scrolling:touch!important;scroll-padding-left:12px!important;scroll-padding-right:12px!important;padding:0 0 6px!important}.page-sistemas #calc-row>*{flex:0 0 100%!important;min-width:100%!important;scroll-snap-align:start!important}}
 .page-sistemas #calc-row[data-cols="1"] #calc-slot-2{display:block!important}
 .page-sistemas #calc-row[data-cols="1"] #calc-secondary,.page-sistemas #calc-row[data-cols="1"] #calc-tertiary,.page-sistemas #calc-row[data-cols="1"] #add-more-panel{display:none!important}
 .page-sistemas #calc-row[data-cols="2"] #calc-slot-2{display:none!important}
@@ -103,7 +103,7 @@ html[data-theme=light] .page-sistemas .ux-tip,html[data-theme=light] .page-siste
 .page-sistemas .calc-container thead th{text-align:left;border-bottom:1px solid rgba(148,163,184,.14);padding:12px 14px;font-weight:950;background:rgba(255,255,255,.04)}
 .page-sistemas .calc-container td,.page-sistemas .calc-container th{padding:10px 12px;border-bottom:1px solid rgba(148,163,184,.12)}
 .page-sistemas .calc-container tr:last-child td{border-bottom:none}
-.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child{width:1%;text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.page-sistemas .calc-container thead th:last-child,.page-sistemas .calc-container tbody td:last-child{width:1%;text-align:right!important;white-space:normal!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 .page-sistemas .calc-container tbody td:first-child{overflow-wrap:normal;word-break:normal}
 .page-sistemas .calc-container #lbl-tot1 strong,.page-sistemas .calc-container #lbl-tot2 strong,.page-sistemas .calc-container #lbl-tot3 strong{color:var(--calc-tx)}
 .page-sistemas .calc-container td:last-child{padding-right:14px}
@@ -112,12 +112,15 @@ html[data-theme=light] .page-sistemas .calc-container :is(#tot1,#tot2,#tot3) str
 
 .page-sistemas .calc-container tbody tr:not(:last-child) td:last-child :is(strong,b){font-weight:inherit!important}.page-sistemas .calc-container tbody tr:last-child td:last-child :is(strong,b){font-weight:950!important}
 .page-sistemas .calc-container.is-tradicional form{grid-template-columns:1fr 1fr!important}.page-sistemas .calc-container.is-tradicional label.lic{grid-column:1!important;grid-row:1!important}.page-sistemas .calc-container.is-tradicional label.rfc{grid-column:2!important;grid-row:1!important}.page-sistemas .calc-container.is-tradicional .op-label{grid-column:1/-1!important;grid-row:2!important}.page-sistemas .calc-container.is-tradicional label.usr{grid-column:1!important;grid-row:3!important}.page-sistemas .calc-container.is-tradicional .inst-wrap{grid-column:2!important;grid-row:3!important;align-self:center!important}.page-sistemas .calc-container.is-tradicional .instalacion-box{margin-top:0!important}
+.page-sistemas .calc-container tbody tr[id^="tr-inst"] td:last-child{display:table-cell!important;text-align:right!important;white-space:nowrap!important;font-weight:500!important;vertical-align:middle!important}
+.page-sistemas .calc-container tbody tr[id^="tr-inst"] td:last-child .disc-toggle{display:inline-flex!important;align-items:center!important;justify-content:flex-end!important;gap:10px!important;white-space:nowrap!important}
+.page-sistemas .calc-container tbody tr[id^="tr-inst"] td:last-child .disc-toggle input{margin:0!important;inline-size:18px;block-size:18px;flex:0 0 auto;transform:translateY(0)!important}
+.page-sistemas .calc-container tbody tr[id^="tr-inst"] td:last-child .disc-toggle span{display:inline-block!important;min-width:max-content!important}
 
-.page-sistemas .calc-container tbody tr[id^="tr-inst"] td:last-child{font-weight:500!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:10px!important}
-.page-sistemas .calc-container tbody tr[id^="tr-inst"] td:last-child *{font-weight:inherit!important;line-height:inherit!important}
-.page-sistemas .calc-container tbody tr:not(:last-child) td:last-child{display:flex!important;justify-content:flex-end!important;align-items:baseline!important;gap:6px!important;flex-wrap:wrap!important;white-space:normal!important}
+ 
+.page-sistemas .calc-container tbody tr:not(:last-child) td:last-child{display:table-cell!important;text-align:right!important;white-space:nowrap!important;font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 .calc-table td.money-cell{white-space:nowrap!important;text-align:right!important}
-
+.page-sistemas .calc-container tbody tr[id^="tr-inst"] td:last-child input[type=checkbox]{transform:translateY(-1px);margin:0!important}
 /* Nube/Escritorio */
 .page-sistemas .nube-only,.page-sistemas .desk-only{display:none}
 body[data-calc=nube] .page-sistemas .nube-only{display:inline}
@@ -256,6 +259,7 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 .pricing-table-nube .row-soft .price{font-size:15px}
 .pricing-table-nube tfoot td{padding:14px;font-size:13px;color:var(--muted);background:rgba(255,255,255,.02);border-top:1px solid var(--border)}
 .pricing-table-nube .note{text-align:center;line-height:1.5}
+
 
 /* Tabla nube alineación */
 .table-nube table{width:100%;border-collapse:separate;border-spacing:0}
