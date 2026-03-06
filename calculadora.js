@@ -54,7 +54,7 @@ var userLabel=D.createElement("label");userLabel.classList.add("field","usr");us
 userLabel.appendChild(userWrap);form.appendChild(userLabel);
 
 var instWrap=D.createElement("div");instWrap.className="inst-wrap";
-instWrap.innerHTML='<div class="instalacion-box"><label><input type="checkbox" id="instOn'+idSuffix+'" checked><span><strong id="instLblSTRONG'+idSuffix+'">Instalación (1)</strong><span id="instLblTail'+idSuffix+'">: En tu equipo.</span></span><span class="ux-info" title="Durante la anualidad de su sistema saldrán actualizaciones, con este servicio obtiene instalaciones sin costo durante la vigencia del sistema.">i</span></label></div>';
+instWrap.innerHTML='<div class="instalacion-box"><label><input type="checkbox" id="instOn'+idSuffix+'" checked><span><strong id="instLblSTRONG'+idSuffix+'">Instalación (1)</strong><span id="instLblTail'+idSuffix+'">: En tu equipo.</span></span><span class="ux-info" title="Las actualizaciones que se publiquen durante la vigencia de su sistema se instalan sin costo con este servicio.">i</span></label></div>';
 form.appendChild(instWrap);
 
 container.appendChild(form);
