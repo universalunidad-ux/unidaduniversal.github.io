@@ -61,7 +61,7 @@ body.page-sistemas{max-width:100%;overflow-x:hidden}
 .page-sistemas #calc-row[data-cols="3"] #calc-secondary,.page-sistemas #calc-row[data-cols="3"] #calc-tertiary{display:block!important}
 .page-sistemas #calc-row[data-cols="3"] #add-more-panel{display:none!important}
 .page-sistemas #calc-primary{display:block!important}
-.page-sistemas #calc-row{order:1}.page-sistemas #combined-wrap{order:2}
+.page-sistemas #calc-row{order:1}.page-sistemas .calc-mobile-extras{order:2}.page-sistemas #combined-wrap{order:3}
 
 /* CARD base */
 .page-sistemas #calc-row .calc-container,.page-sistemas .placeholder{border:1px solid var(--calc-card-br);background:linear-gradient(180deg,var(--calc-card-bg),var(--calc-card-bg2));box-shadow:var(--calc-shadow);border-radius:16px}
@@ -97,6 +97,7 @@ html[data-theme=light] .page-sistemas .calc-head-row{background:rgba(2,6,23,.09)
 .page-sistemas .calc-container .instalacion-box>label{gap:12px!important}
 .page-sistemas .ux-tip,.page-sistemas .ux-info{display:inline-flex;align-items:center;justify-content:center;inline-size:22px;block-size:22px;border-radius:999px;border:1px solid rgba(148,163,184,.28);background:rgba(255,255,255,.06);cursor:help;font-weight:950;line-height:1}
 html[data-theme=light] .page-sistemas .ux-tip,html[data-theme=light] .page-sistemas .ux-info{background:#fff;border-color:rgba(2,6,23,.14)}
+.page-sistemas .ux-info,.page-sistemas .ux-tip{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}.page-sistemas .ux-info:active,.page-sistemas .ux-tip:active{transform:scale(.98)}
 /* Table */
 .page-sistemas .calc-container .calc-results{padding:0 14px 14px}
 .page-sistemas .calc-container table{width:100%;margin:6px 0 0;table-layout:auto;border-collapse:separate;border-spacing:0;border:1px solid rgba(148,163,184,.18);border-radius:14px;overflow:hidden;background:rgba(255,255,255,.03)}
@@ -457,6 +458,7 @@ html:not([data-theme=light]) .page-sistemas .icons-carousel .sys-icon img{backgr
 .page-sistemas #combined-wrap .combined-table tr:last-child td:last-child strong{display:inline-block;padding:7px 12px;border-radius:999px;color:#fff;background:var(--ex-pill-grad,linear-gradient(90deg,rgba(20,184,166,.95),rgba(250,82,98,.95)));border:2px solid rgba(255,255,255,.22);box-shadow:0 10px 22px rgba(2,6,23,.14);font-weight:950}
 @media(max-width:820px){.page-sistemas #combined-wrap .combined-table td:first-child{width:64%}.page-sistemas #combined-wrap .combined-table td:last-child{width:36%}}
 .page-sistemas #combined-wrap .mxn-letra{margin-top:6px;font-size:12px;opacity:.85;line-height:1.25;white-space:normal;overflow-wrap:anywhere;text-align:right}@media(min-width:981px){.page-sistemas #combined-wrap .combined-table td:first-child{width:62%!important}.page-sistemas #combined-wrap .combined-table td:last-child{width:38%!important}.page-sistemas #combined-wrap .mxn-letra{max-width:46ch;margin-left:auto}}@media(max-width:520px){.page-sistemas #combined-wrap .mxn-letra{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}}
+.page-sistemas #combined-wrap .mxn-letra{display:block;margin-top:6px;font-size:12px;opacity:.85;line-height:1.22;white-space:normal;overflow-wrap:anywhere;word-break:break-word;text-align:right;text-wrap:balance}@media(min-width:981px){.page-sistemas #combined-wrap .mxn-letra{max-width:min(52ch,100%);margin-left:auto}}@media(max-width:640px){.page-sistemas #combined-wrap .mxn-letra{font-size:11px;line-height:1.16;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;max-width:100%}}
 .calc-mobile-extras{margin-top:12px;display:block}@media(min-width:981px){.calc-mobile-extras{display:none}}
 .exp-tip{position:absolute;z-index:2147483647;max-width:min(340px,92vw);padding:10px 12px;border-radius:12px;border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.96);color:rgba(232,238,246,.94);box-shadow:0 16px 44px rgba(0,0,0,.35);font-size:13px;line-height:1.25}
 html[data-theme=light] .exp-tip{background:#fff;color:rgba(11,18,32,.92);border-color:rgba(2,6,23,.14);box-shadow:0 14px 32px rgba(2,6,23,.14)}
