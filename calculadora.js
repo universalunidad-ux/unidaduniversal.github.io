@@ -6,7 +6,7 @@
  - FIX: paintSystemButtons ahora sí pinta + bindea clicks
  - Mantiene: -15% por paquete (excepto “XML en Línea”) + instalación 50%
 ========================================================= */
-
+ 
 
 /* Expiriti - calculadora.js (FINAL) v13.4-min (no dupes + headers) */
 if(document?.body?.getAttribute("data-calc")==="nube"||window.__EXPIRITI_FORCE_NUBE__===true){
