@@ -79,13 +79,14 @@ else return writeZeros()}
 var subtotalSistemas=base+usuariosAddImporte,discountPct=0,hasPackage=safeHasTableBySel("#calc-secondary")||safeHasTableBySel("#calc-tertiary");hasPackage&&sistemaName.indexOf("XML en Línea")===-1&&(discountPct=.15);
 var discountAmt=round2(subtotalSistemas*discountPct),afterDiscount=round2(subtotalSistemas-discountAmt);
 var instGross=calcInstallationGross(),instDiscOnEl=$id("instdiscOn"+idSuffix),instDiscEnabled=!!(instDiscOnEl&&instDiscOnEl.checked),instDiscount=round2(instGross*(instDiscEnabled?0.5:0)),instNet=round2(instGross-instDiscount);
-var instOn=instCheckbox(),showInst=!!(instOn&&instOn.checked),instCount=showInst?usuarios:0,instLabel=showInst?((instCount===1?"Instalación: ":"Instalaciones: ")+instCount+' <img src="../IMG/50.webp" alt="50%" class="inst50-icon" loading="lazy" decoding="async">'):"Instalación";
+var instOn=instCheckbox(),showInst=!!(instOn&&instOn.checked),instCount=showInst?usuarios:0,instLabel=showInst?((instCount===1?"Instalación: ":"Instalaciones: ")+instCount+' <span class="inst50-pill">-50%</span>'):"Instalación";
 var elLblInst=$id("lbl-inst"+idSuffix);elLblInst&&setHTML("lbl-inst"+idSuffix,instLabel);
 var baseImponible=round2(afterDiscount+(showInst?instNet:0)),iva=round2(baseImponible*.16),total=round2(baseImponible+iva);
 setText("base"+idSuffix,fmt(base));
 setText("uadd"+idSuffix,fmt(usuariosAddImporte));
-setText("lbl-uadd"+idSuffix,"Usuarios adicionales: "+Math.max(0,usuariosExtras));                        
-setText("disc"+idSuffix,pct(discountPct)+" / "+fmt(discountAmt));
+setText("lbl-uadd"+idSuffix,"Usuarios adicionales: "+Math.max(0,usuariosExtras));  
+setHTML("lbl-disc"+idSuffix,discountPct>0?'Descuento (sistema) <span class="disc15-pill">-15%</span>':"Descuento (sistema)");
+setText("disc"+idSuffix,fmt(discountAmt));
 setText("inst"+idSuffix,fmt(showInst?instNet:0));
 setText("sub"+idSuffix,fmt(baseImponible));
 setText("iva"+idSuffix,fmt(iva));
