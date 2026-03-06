@@ -1,4 +1,4 @@
-/* =========================================================
+  /* =========================================================
  Expiriti - calculadora.js (FINAL) v13.4
  - FIX CRÍTICO: anti doble carga (evita IDs duplicados usr1/lic1/tot1)
  - FIX: cleanup de duplicados por sufijo (1/2/3) si el DOM ya viene “sucio” 
