@@ -85,7 +85,7 @@ var baseImponible=round2(afterDiscount+(showInst?instNet:0)),iva=round2(baseImpo
 setText("base"+idSuffix,fmt(base));
 setText("uadd"+idSuffix,fmt(usuariosAddImporte));
 setText("lbl-uadd"+idSuffix,"Usuarios extras: "+Math.max(0,usuariosExtras));  
-setHTML("lbl-disc"+idSuffix,discountPct>0?'Desc. sistema <button type="button" class="disc15-pill ux-tip ux-tip--pill" data-tip="Descuento aplicado por CONTPAQi, en la compra o renovación de 2 o más sistemas, excepto XML en Línea." aria-label="Más información sobre descuento por sistema">-15%?</button>':"Desc. sistema");
+setHTML("lbl-disc"+idSuffix,discountPct>0?'Desc. sistema <button type="button" class="disc15-pill ux-tip ux-tip--pill" data-tip="Descuento aplicado por CONTPAQi, en la compra o renovación de 2 o más sistemas, excepto XML en Línea+." aria-label="Más información sobre descuento por sistema">-15%?</button>':"Desc. sistema");
 setText("disc"+idSuffix,fmt(discountAmt));
 setText("inst"+idSuffix,fmt(showInst?instNet:0));
 setText("sub"+idSuffix,fmt(baseImponible));
