@@ -79,13 +79,13 @@ else return writeZeros()}
 var subtotalSistemas=base+usuariosAddImporte,discountPct=0,hasPackage=safeHasTableBySel("#calc-secondary")||safeHasTableBySel("#calc-tertiary");hasPackage&&sistemaName.indexOf("XML en Línea")===-1&&(discountPct=.15);
 var discountAmt=round2(subtotalSistemas*discountPct),afterDiscount=round2(subtotalSistemas-discountAmt);
 var instGross=calcInstallationGross(),instDiscOnEl=$id("instdiscOn"+idSuffix),instDiscEnabled=!!(instDiscOnEl&&instDiscOnEl.checked),instDiscount=round2(instGross*(instDiscEnabled?0.5:0)),instNet=round2(instGross-instDiscount);
-var instOn=instCheckbox(),showInst=!!(instOn&&instOn.checked),instCount=showInst?usuarios:0,instTip=' <button type="button" class="ux-tip ux-tip--inline" data-tip="Descuento aplicable a clientes nuevos." aria-label="Más información sobre descuento">?</button>',instLabel=showInst?((instCount===1?"Instalación: ":"Instalaciones: ")+instCount+' <span class="inst50-pill">-50%</span>'+instTip):"Instalación"+instTip;
+var instOn=instCheckbox(),showInst=!!(instOn&&instOn.checked),instCount=showInst?usuarios:0,instTip=' <button type="button" class="inst50-pill ux-tip ux-tip--pill" data-tip="Descuento aplicable a clientes nuevos." aria-label="Más información sobre descuento">-50%?</button>',instLabel=showInst?((instCount===1?"Instalación: ":"Instalaciones: ")+instCount+instTip):"Instalación";
 var elLblInst=$id("lbl-inst"+idSuffix);elLblInst&&setHTML("lbl-inst"+idSuffix,instLabel);
 var baseImponible=round2(afterDiscount+(showInst?instNet:0)),iva=round2(baseImponible*.16),total=round2(baseImponible+iva);
 setText("base"+idSuffix,fmt(base));
 setText("uadd"+idSuffix,fmt(usuariosAddImporte));
 setText("lbl-uadd"+idSuffix,"Usuarios adicionales: "+Math.max(0,usuariosExtras));  
-setHTML("lbl-disc"+idSuffix,discountPct>0?'Desc. sistema<span class="disc15-pill">-15%</span>':"Desc. sistema");
+setHTML("lbl-disc"+idSuffix,discountPct>0?'Desc. sistema <button type="button" class="disc15-pill ux-tip ux-tip--pill" data-tip="Descuento aplicado por CONTPAQi, en la compra o renovación de 2 o más sistemas, excepto XML en Línea." aria-label="Más información sobre descuento por sistema">-15%?</button>':"Desc. sistema");
 setText("disc"+idSuffix,fmt(discountAmt));
 setText("inst"+idSuffix,fmt(showInst?instNet:0));
 setText("sub"+idSuffix,fmt(baseImponible));
