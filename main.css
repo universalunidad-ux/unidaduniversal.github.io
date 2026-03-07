@@ -144,12 +144,6 @@ html[data-theme=light] .page-sistemas .arrowCircle .chev{color:rgba(2,6,23,.86)}
 /* CALC: ancho página SOLO mobile */
 @media(max-width:680px){.page-sistemas .calc-strip{width:100%!important;max-width:100%!important;margin-left:auto!important;margin-right:auto!important;padding-left:0!important;padding-right:0!important}.page-sistemas #calc-row,.page-sistemas .calc-mobile-extras,.page-sistemas #combined-wrap{width:100%!important;max-width:100%!important}}@media(max-width:520px){.page-sistemas .feature-grid .fcard{flex:0 1 calc((100% - 14px)/2)!important;max-width:calc((100% - 14px)/2)!important}}@media(max-width:390px){.page-sistemas .feature-grid .fcard{flex:0 1 100%!important;max-width:100%!important}}
 
-/* COMPARATIVA */
-.page-sistemas #comparativa .card.body{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.page-sistemas #comparativa .table-like{min-width:820px}
-@media(max-width:768px){.page-sistemas #comparativa .table-like{min-width:920px}}
-.page-sistemas .table-like{width:100%;min-width:720px}
-
 /* HEADER V7 (.gh) compat */
 .page-sistemas #gh-header.gh{position:fixed;top:0;left:0;right:0;width:100%;z-index:2147483000}
 html.gh-open,body.gh-open{overflow:hidden!important;height:100%!important}
@@ -292,12 +286,6 @@ html[data-theme="light"] .pricing-table-nube .row-soft td{background:rgba(2,6,23
 @media(max-width:860px){
 .page-sistemas :where(.complementos,.complement-slider,.listSlider,.cards-slider) :where(.track,.carousel-track,.listSlider-track){display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 2px}
 .page-sistemas :where(.complementos,.complement-slider,.listSlider,.cards-slider) :where(.track,.carousel-track,.listSlider-track) > *{flex:0 0 66%;scroll-snap-align:center}
-}
-
-/* ========== 10A+) Comparativas: mantener, pero mobile con scroll horizontal seguro ========== */
-@media(max-width:860px){
-.page-sistemas :where(.comparativas,.comparativa-wrap,.table-wrap){overflow-x:auto;-webkit-overflow-scrolling:touch}
-.page-sistemas :where(.comparativas,.comparativa-wrap,.table-wrap) table{min-width:760px}
 }
 
 /* =========================================================
