@@ -10,15 +10,15 @@
   <meta name="expiriti-base" content="/unidaduniversal.github.io/" />
 
   <!-- Theme early (evita flash) -->
-  <script>
-  (function(){try{
-    var KEY="expiriti_theme";
-    var saved=localStorage.getItem(KEY);
-    var theme=saved||(window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light":"dark");
-    document.documentElement.dataset.theme=theme;
-  }catch(e){}})();
-  </script>
-
+<script>
+(function(){try{
+  var KEY="expiriti_theme";
+  var saved=localStorage.getItem(KEY);
+  var theme=(saved==="light"||saved==="dark")?saved:"light";
+  document.documentElement.dataset.theme=theme;
+}catch(e){document.documentElement.dataset.theme="light";}})();
+</script>
+ 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
