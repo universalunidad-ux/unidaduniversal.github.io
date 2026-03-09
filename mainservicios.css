@@ -18,8 +18,8 @@ html[data-theme="light"] body.page-servicios .carouselX.svc-carousel .sys,html[d
 body.page-servicios #svc-notas-poliza{--n-bg:rgba(255,255,255,.03);--n-bd:var(--svc-bd);--n-tx:rgba(232,238,246,.92);--n-muted:rgba(148,163,184,.9);--n-shadow:var(--svc-shadow);--n-ok:rgba(34,197,94,.95);--n-warn:rgba(245,158,11,.95);--n-ac:rgba(45,212,191,.95);--n-ac2:rgba(96,165,250,.95)}/*notas tokens dark*/
 html[data-theme="light"] body.page-servicios #svc-notas-poliza{--n-bg:rgba(255,255,255,.92);--n-bd:var(--svc-bd-light);--n-tx:rgba(11,18,32,.92);--n-muted:rgba(51,65,85,.78);--n-shadow:var(--svc-shadow-light)}/*notas tokens light*/
 /*notas card wrap*/
-body.page-servicios #svc-notas-poliza .card.body::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:radial-gradient(800px 220px at 20% 0,rgba(45,212,191,.16),transparent 60%),radial-gradient(680px 220px at 80% 30%,rgba(96,165,250,.14),transparent 62%)}/*notas halo*/
-body.page-servicios #svc-notas-poliza .svc-note{display:grid;grid-template-columns:140px 1fr;gap:10px 14px;padding:14px 14px;border:1px solid var(--n-bd);border-radius:14px;background:var(--n-bg);box-shadow:var(--n-shadow);margin:0 0 10px;color:var(--n-tx)}/*nota bloque*/
+body.page-servicios #svc-notas-poliza .card.body::before{content:"";position:absolute;inset:-2px;pointer-events:none;background:var(--svc-halo-teal)}/*notas halo*/
+body.page-servicios #svc-notas-poliza .svc-note{display:grid;grid-template-columns:140px 1fr;gap:10px 14px;padding:14px 14px;border:1px solid var(--n-bd);border-radius:var(--svc-radius-sm);background:var(--n-bg);box-shadow:var(--n-shadow);margin:0 0 10px;color:var(--n-tx)}/*nota bloque*/
 @media(max-width:720px){body.page-servicios #svc-notas-poliza .svc-note{grid-template-columns:1fr}}/*nota stack*/
 body.page-servicios #svc-notas-poliza .svc-note__k{font-weight:950;letter-spacing:.02em;text-transform:uppercase;font-size:11px;color:var(--n-muted)}/*nota key*/
 body.page-servicios #svc-notas-poliza .svc-note__v{font-size:14px;line-height:1.35}/*nota value*/
@@ -34,7 +34,7 @@ body.page-servicios #svc-notas-poliza .svc-imp li::before{content:"";position:ab
 body.page-servicios #svc-notas-poliza .svc-hint{margin-top:10px;padding:10px 12px;border-radius:12px;border:1px dashed rgba(96,165,250,.35);background:rgba(96,165,250,.08);color:var(--n-tx)}/*hint*/
 html[data-theme="light"] body.page-servicios #svc-notas-poliza .svc-hint{background:rgba(96,165,250,.12);border-color:rgba(2,6,23,.14)}/*hint light*/
 body.page-servicios #svc-notas-poliza .svc-footnote{margin-top:10px;padding:12px 14px;border-radius:var(--svc-radius-sm);border:1px solid var(--n-bd);background:rgba(255,255,255,.02);color:var(--n-tx)}/*footnote*/
-html[data-theme="light"] body.page-servicios #svc-notas-poliza .svc-footnote{background:rgba(2,6,23,.02);border-color:rgba(2,6,23,.1)}/*footnote light*/
+html[data-theme="light"] body.page-servicios #svc-notas-poliza .svc-footnote{background:rgba(2,6,23,.02);border-color:var(--n-bd)}/*footnote light*/
 /*TABLAS pricing (planes)*/
 body.page-servicios .svc-pricing{--p-bd:var(--svc-bd);--p-bg:rgba(255,255,255,.02);--p-alt:rgba(255,255,255,.04);--p-tx:rgba(232,238,246,.92);--p-muted:rgba(148,163,184,.9);--p-shadow:var(--svc-shadow)}/*pricing tokens dark*/
 html[data-theme="light"] body.page-servicios .svc-pricing{--p-bd:var(--svc-bd-light);--p-bg:#fff;--p-alt:rgba(2,6,23,.03);--p-tx:rgba(11,18,32,.92);--p-muted:rgba(51,65,85,.78);--p-shadow:var(--svc-shadow-light)}/*pricing tokens light*/
