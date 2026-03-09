@@ -49,7 +49,8 @@
       <span class="badge">Atención Inmediata</span>
     </div>
 
-
+<div class="badges" aria-label="Diferenciadores del servicio"><span class="svc-chip">Respuesta rápida</span><span class="svc-chip">Garantía 15 min</span><span class="svc-chip">Soporte por hora o póliza</span><span class="svc-chip">Ecosistema CONTPAQi</span></div>
+      
 
     <!-- ===== Beneficios + Reels en hero ===== -->
     <section id="beneficios" aria-label="Por qué elegirnos">
@@ -122,15 +123,12 @@
           <!-- IMPORTANTE: 1 sola línea (como pediste) -->
           <h3 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Soporte</h3>
 
-          <!-- Mantengo tus 2 títulos por si tu JS los usa; si quieres 1 solo, te lo ajusto también en JS -->
-          <h4 class="reel-title active">Resolvemos tu error en minutos</h4>
-          <h4 class="reel-title">Soporte remoto sin complicaciones</h4>
-
+<h4 class="reel-title" data-reel-title></h4>
           <div class="carousel" id="carouselReelsSoporte" aria-label="Reels Soporte">
             <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
 
             <div class="carousel-track">
-              <div class="carousel-slide is-active">
+              <div class="carousel-slide is-active" data-title="Resolvemos tu error en minutos">
                 <div class="reel-embed">
             <iframe
   src="https://www.youtube-nocookie.com/embed/inPKGICgxLc?rel=0&modestbranding=1&controls=1&fs=1"
@@ -143,7 +141,7 @@
                 </div>
               </div>
 
-              <div class="carousel-slide">
+              <div class="carousel-slide" data-title="Soporte remoto sin complicaciones">
                 <div class="reel-embed">
                   <iframe
                     src="https://www.youtube-nocookie.com/embed/LC1Ccpv_jzo?rel=0&modestbranding=1&controls=1&fs=1"
@@ -170,7 +168,7 @@
     <!-- ===== Servicios ===== -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
   
-      <div class="card body">
+      <div class="card body svc-panel">
         <h3 id="caracteristicas-title" class="title-gradient">Nuestros Servicios de Soporte</h3>
 
         <!-- FIX ARIA: sin role="tablist" -->
@@ -200,7 +198,7 @@
 <section id="sistemas-soportados" class="svc-systems" aria-labelledby="sistemas-title">
   <h3 id="sistemas-title" class="title-gradient">Sistemas que Soportamos</h3>
 
-  <div class="card body">
+  <div class="card body svc-panel">
 <div class="carouselX svc-carousel" data-step="3">
       <button class="arrowCircle prev" aria-label="Anterior" type="button"><span class="chev">‹</span></button>
 
@@ -268,7 +266,7 @@
 <section id="calculadora-section" aria-labelledby="calc">
   <h3 id="calc" class="title-gradient">Planes y Precios</h3>
 
-  <div class="card body">
+  <div class="card body svc-panel">
     <table class="pricing-table-nube svc-pricing" aria-describedby="calc">
       <thead>
         <tr><th>Servicio</th><th>Descripción</th><th style="text-align:right">Precio</th></tr>
@@ -282,7 +280,7 @@
       <tfoot>
         <tr>
           <td class="note" colspan="3" style="text-align:center;">
-            <a class="btn btn-grad-blue hero-btn" href="polizas-de-soporte.html" style="margin-top:10px;">Conocer más de Pólizas de Soporte</a>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px;"><a class="btn btn-grad-green hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n%20sobre%20la%20p%C3%B3liza%20de%20soporte%20para%20mi%20operaci%C3%B3n." target="_blank" rel="noopener"><img src="../IMG/whatsapp.svg" alt="" width="18" height="18" style="display:block">Hablar por WhatsApp</a><a class="btn btn-grad-blue hero-btn" href="https://wa.me/5568437918?text=Hola%20Expiriti%2C%20quiero%20agendar%20una%20sesi%C3%B3n%20por%20Zoom%20para%20revisar%20mi%20caso%20y%20evaluar%20la%20p%C3%B3liza%20de%20soporte." target="_blank" rel="noopener"><img src="../IMG/zoom.svg" alt="" width="18" height="18" style="display:block">Agendar sesión por Zoom</a></div>
           </td>
         </tr>
       </tfoot>
@@ -299,7 +297,7 @@
   
       <h3 id="comparativa-title" class="title-gradient">Comparativa de Servicio</h3>
 
-      <div class="card body">
+      <div class="card body svc-panel">
         <h4 style="margin-bottom:15px;">Expiriti vs Soporte Genérico (TI)</h4>
         <table class="table-like" aria-label="Comparativa Expiriti vs otros soportes">
           <thead>
@@ -331,7 +329,7 @@
     </section>
 
     <!-- ===== CTA ===== -->
-    <section id="sesion-guiada" class="card body">
+    <section id="sesion-guiada" class="card body svc-panel">
   
       <h3 class="title-gradient">¿Tu sistema CONTPAQi está fallando?</h3>
       <p>No dejes que un error detenga tu facturación o tu nómina. Contáctanos ahora mismo.</p>
@@ -346,7 +344,7 @@
       <h3 id="relacionados" class="title-gradient">Servicios complementarios</h3>
       <p class="hint" style="margin-top:4px;margin-bottom:10px;">Haz clic en el servicio que necesites para ver el detalle completo.</p>
 
-      <div class="card body">
+      <div class="card body svc-panel">
         <button class="svc-nav svc-prev" type="button" aria-label="Anterior" hidden>‹</button>
 <button class="svc-nav svc-next" type="button" aria-label="Siguiente" hidden>›</button>
         <div class="svc-grid">
