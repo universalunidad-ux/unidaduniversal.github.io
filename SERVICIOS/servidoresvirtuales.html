@@ -53,6 +53,8 @@
 
     </div>
 
+    <div class="badges" aria-label="Diferenciadores del servicio"><span class="svc-chip">Servidor gestionado</span><span class="svc-chip">Firewall y respaldos</span><span class="svc-chip">Escalable por usuarios</span><span class="svc-chip">Soporte sobre RDP</span></div>
+    
 
     <!-- ===== Beneficios + Reels en hero ===== -->
     <section id="beneficios" aria-label="Por qué elegir nuestros servidores">
@@ -167,9 +169,8 @@
         <aside class="card body reels-card" aria-label="Reels de servidores">
           <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Escritorios Virtuales</h4>
 
-          <h4 class="reel-title active">¿Qué es un escritorio virtual ExpIRI TI?</h4>
-          <h4 class="reel-title">CONTPAQi en la nube para despachos</h4>
-
+   <h4 class="reel-title" data-reel-title></h4>
+          
           <div class="carousel" id="carouselReelsServidores" aria-label="Reels Servidores">
             <button class="arrowCircle prev" aria-label="Anterior" type="button">
               <span class="chev">‹</span>
@@ -177,7 +178,7 @@
 
             <div class="carousel-track">
               <!-- Reel 1 -->
-              <div class="carousel-slide is-active">
+              <div class="carousel-slide is-active" data-title="¿Qué es un escritorio virtual ExpIRI TI?">
                 <div class="reel-embed">
     <iframe
   src="https://www.youtube-nocookie.com/embed/Vmf2CcSd8G4?rel=0&modestbranding=1&controls=1&fs=1"
@@ -191,7 +192,7 @@
               </div>
 
               <!-- Reel 2 -->
-              <div class="carousel-slide">
+              <div class="carousel-slide" data-title="CONTPAQi en la nube para despachos">
                 <div class="reel-embed">
                   <iframe
                     src="https://www.youtube-nocookie.com/embed/VIDEO_ID_SERV_2?rel=0&modestbranding=1&controls=1&fs=1"
@@ -219,7 +220,7 @@
 
     <!-- ===== Notas generales ===== -->
     <section aria-labelledby="notas">
-      <div class="card body">
+      <div class="card body svc-panel">
         <div class="warn">
           <strong>Servidores a la medida:</strong> Los planes se pueden ampliar según su crecimiento. Cada servidor se construye
           con base en la operación real de su operación (usuarios, sistemas, bases de datos).
@@ -236,7 +237,7 @@
     <!-- ===== Servicios: tipos de servidor / casos / soporte ===== -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
   
-      <div class="card body">
+      <div class="card body svc-panel">
         <h3 id="caracteristicas-title" class="title-gradient">Servicios de Escritorios Virtuales y Servidores</h3>
 
         <div class="pillbar" role="tablist" aria-label="Filtrar servicios">
@@ -354,7 +355,7 @@
     <section id="comparativa" aria-labelledby="comparativa-title">
   
       <h3 id="comparativa-title" class="title-gradient">¿Servidor gestionado o “servidor en sitio”?</h3>
-      <div class="card body">
+      <div class="card body svc-panel">
         <p class="hint" style="margin-bottom:10px;">
           Comparativa entre un <strong>Servidor Gestionado ExpIRI TI</strong>, un servidor propio “en sitio”
           y un VPS genérico sin gestión.
@@ -413,7 +414,7 @@
       Clic en el servicio que necesite para ver el detalle completo.
       </p>
 
-      <div class="card body">
+      <div class="card body svc-panel">
         <button class="svc-nav svc-prev" type="button" aria-label="Anterior" hidden>‹</button>
 <button class="svc-nav svc-next" type="button" aria-label="Siguiente" hidden>›</button>
         <div class="svc-grid">
@@ -574,7 +575,7 @@
     </section>
 
     <!-- ===== CTA ===== -->
-    <section id="sesion-guiada" class="card body">
+    <section id="sesion-guiada" class="card body svc-panel">
   
       <h3 class="title-gradient">¿Listo para su oficina en la nube?</h3>
       <p>
