@@ -44,6 +44,7 @@
       <span class="badge">Formatos amigables</span>
       <span class="badge">Capacitación básica</span>
     </div>
+     <div class="badges" aria-label="Diferenciadores del servicio"><span class="svc-chip">Diagnóstico previo</span><span class="svc-chip">Configuración guiada</span><span class="svc-chip">Pruebas antes de operar</span><span class="svc-chip">Acompañamiento inicial</span></div>
     
 
     <!-- ===== Beneficios + Reels en hero ===== -->
@@ -159,7 +160,7 @@
   <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Implementaciones</h4>
 
   <!-- Un solo título (opcional, tu JS lo puede sobrescribir) -->
-  <h4 class="reel-title active">Implementación Lucía: CONTPAQi</h4>
+  <h4 class="reel-title" data-reel-title>Implementación Lucía: CONTPAQi</h4>
 
   <div class="carousel" id="carouselReelsImplementaciones" aria-label="Reels Implementaciones">
     <button class="arrowCircle prev" aria-label="Anterior" type="button" style="display:none;">
@@ -168,7 +169,7 @@
 
     <div class="carousel-track">
       <!-- ÚNICO REEL (usa el ID que tenías en el reel 1) -->
-      <div class="carousel-slide is-active">
+      <div class="carousel-slide is-active" data-title="Implementación Lucía: CONTPAQi">
         <div class="reel-embed">
           <iframe
             src="https://www.youtube-nocookie.com/embed/IYn-rGHEfqg?rel=0&modestbranding=1&controls=1&fs=1&playsinline=1&enablejsapi=1"
@@ -198,7 +199,7 @@
     <!-- ===== Paquetes de Implementación ===== -->
     <section id="caracteristicas" aria-labelledby="caracteristicas-title">
       
-      <div class="card body">
+      <div class="card body svc-panel">
         <h3 id="caracteristicas-title" class="title-gradient">Paquetes de Implementación por Sistema</h3>
         <p class="hint" style="margin:4px 0 10px;">
           Elige el tipo de proceso que quieres ver. Más detalle se revisa en la sesión de implementación.
@@ -391,7 +392,7 @@
     <section id="comparativa" aria-labelledby="comparativa-title">
       
       <h3 id="comparativa-title" class="title-gradient">¿Implementación profesional o “solo lo instalamos”?</h3>
-      <div class="card body">
+      <div class="card body svc-panel">
         <h4 style="margin-bottom:15px;">Implementación con Expiriti vs instalación genérica</h4>
         <table class="table-like" aria-label="Comparativa implementación Expiriti vs instalación genérica">
           <thead>
@@ -445,7 +446,7 @@
         Haz clic en el servicio que necesites para ver el detalle completo.
       </p>
 
-      <div class="card body">
+      <div class="card body svc-panel">
         <button class="svc-nav svc-prev" type="button" aria-label="Anterior" hidden>‹</button>
 <button class="svc-nav svc-next" type="button" aria-label="Siguiente" hidden>›</button>
         <div class="svc-grid">
@@ -591,7 +592,7 @@
     </section>
 
     <!-- ===== CTA ===== -->
-    <section id="sesion-guiada" class="card body">
+    <section id="sesion-guiada" class="card body svc-panel">
       
       <h3 class="title-gradient">¿Listo para implementar?</h3>
       <p>Agenda una sesión y deja tu sistema CONTPAQi listo para facturar, pagar nómina o controlar inventarios sin improvisar.</p>
