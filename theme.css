@@ -82,3 +82,52 @@ html[data-theme=dark],.theme-dark{--gx-panel:rgba(15,23,42,.64);--gx-panel-2:rgb
 html[data-theme=light] .glass-ui,html[data-theme=light] .glass-panel,html[data-theme=light] .glass-card,html[data-theme=light] .glass-chip,html[data-theme=light] .pill-ui,html[data-theme=light] .status-chip,html[data-theme=light] .media-shell{color:var(--gx-text)}.glass-ui,.glass-panel,.glass-card,.glass-chip,.media-shell,.status-chip,.pill-ui{isolation:isolate}.gx-btn-glass,.gx-btn-ghost,.pill-ui,.status-chip{white-space:nowrap}.media-shell iframe,.media-shell img{max-width:100%}.card.glass-upgrade,.faq-item.glass-upgrade,.svc-link.glass-upgrade{isolation:isolate}.badge.glass-upgrade,.pill.glass-upgrade{isolation:isolate;white-space:nowrap}@media(max-width:768px){.gx-btn-glass,.gx-btn-ghost{width:100%;min-height:50px;padding:0 18px}.status-chip,.pill-ui{min-height:36px;padding:0 12px}}
 @media(max-width:860px){.badges,.svc-grid,.cmp-scroll,.card.body,.carousel-track{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none}.badges::-webkit-scrollbar,.svc-grid::-webkit-scrollbar,.cmp-scroll::-webkit-scrollbar,.card.body::-webkit-scrollbar,.carousel-track::-webkit-scrollbar{display:none}}
 
+/* ===== SAT FLOATING FAB + GLOBAL PANEL ===== */
+:root{--sat-fab-size:72px;--sat-logo-size:44px;--sat-fab-bottom:132px;--sat-fab-right:12px;--sat-halo-ok:rgba(34,197,94,.34);--sat-halo-warn:rgba(245,158,11,.32);--sat-halo-down:rgba(239,68,68,.28);--sat-halo-off:rgba(148,163,184,.22);--sat-panel-w:min(360px,calc(100vw - 24px))}
+html[data-theme="light"]{--sat-halo-ok:rgba(34,197,94,.22);--sat-halo-warn:rgba(245,158,11,.20);--sat-halo-down:rgba(239,68,68,.18);--sat-halo-off:rgba(148,163,184,.16)}
+
+#sat-fab{position:fixed;right:var(--sat-fab-right);bottom:var(--sat-fab-bottom);z-index:10029;display:flex;align-items:center;justify-content:center}
+#sat-fab .sat-fab-trigger{position:relative;width:var(--sat-fab-size);height:var(--sat-fab-size);border-radius:999px;border:1px solid rgba(232,172,54,.32);background:linear-gradient(180deg,var(--gx-panel),var(--gx-panel-2));box-shadow:var(--gx-shadow);backdrop-filter:blur(var(--gx-blur)) saturate(1.05);-webkit-backdrop-filter:blur(var(--gx-blur)) saturate(1.05);display:grid;place-items:center;cursor:pointer;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+#sat-fab .sat-fab-trigger:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+html[data-theme=light] #sat-fab .sat-fab-trigger:before{box-shadow:inset 0 1px 0 rgba(255,255,255,.62)}
+#sat-fab .sat-fab-trigger:hover{transform:translateY(-1px);box-shadow:var(--gx-shadow-md);border-color:rgba(232,172,54,.48)}
+#sat-fab .sat-fab-trigger:active{transform:translateY(1px) scale(.99)}
+#sat-fab .sat-fab-trigger:focus-visible{outline:0;box-shadow:var(--gx-shadow),var(--gx-ring)}
+#sat-fab img{position:relative;z-index:2;width:var(--sat-logo-size);height:var(--sat-logo-size);object-fit:contain;border-radius:999px;background:#fff;padding:3px;border:1px solid rgba(232,172,54,.56);box-shadow:0 6px 14px rgba(232,172,54,.14)}
+
+#sat-fab .sat-fab-halo{position:absolute;inset:8px;border-radius:999px;z-index:1;pointer-events:none;opacity:.95;transform:scale(1);transition:background .18s ease,box-shadow .18s ease}
+#sat-fab .sat-fab-halo.sat-ok{background:radial-gradient(circle,rgba(34,197,94,.06) 0,rgba(34,197,94,.03) 44%,transparent 72%);box-shadow:0 0 0 0 var(--sat-halo-ok);animation:satHaloOk 2.4s ease-out infinite}
+#sat-fab .sat-fab-halo.sat-warn{background:radial-gradient(circle,rgba(245,158,11,.06) 0,rgba(245,158,11,.03) 44%,transparent 72%);box-shadow:0 0 0 0 var(--sat-halo-warn);animation:satHaloWarn 2.4s ease-out infinite}
+#sat-fab .sat-fab-halo.sat-down{background:radial-gradient(circle,rgba(239,68,68,.05) 0,rgba(239,68,68,.025) 44%,transparent 72%);box-shadow:0 0 0 0 var(--sat-halo-down);animation:satHaloDown 2.7s ease-out infinite}
+#sat-fab .sat-fab-halo.sat-off{background:radial-gradient(circle,rgba(148,163,184,.04) 0,rgba(148,163,184,.02) 44%,transparent 72%);box-shadow:0 0 0 0 var(--sat-halo-off);animation:satHaloOff 3s ease-out infinite}
+
+@keyframes satHaloOk{0%{box-shadow:0 0 0 0 var(--sat-halo-ok)}70%{box-shadow:0 0 0 14px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+@keyframes satHaloWarn{0%{box-shadow:0 0 0 0 var(--sat-halo-warn)}70%{box-shadow:0 0 0 14px rgba(245,158,11,0)}100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}}
+@keyframes satHaloDown{0%{box-shadow:0 0 0 0 var(--sat-halo-down)}70%{box-shadow:0 0 0 13px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+@keyframes satHaloOff{0%{box-shadow:0 0 0 0 var(--sat-halo-off)}70%{box-shadow:0 0 0 11px rgba(148,163,184,0)}100%{box-shadow:0 0 0 0 rgba(148,163,184,0)}}
+
+#sat-global-panel{position:fixed;right:12px;bottom:214px;z-index:10030;width:var(--sat-panel-w)}
+#sat-global-panel[hidden]{display:none!important}
+#sat-global-panel .sat-global-card{position:relative;padding:14px;border-radius:22px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(10,14,22,.985),rgba(13,18,29,.97));box-shadow:0 28px 80px rgba(0,0,0,.34);backdrop-filter:blur(14px) saturate(1.04);-webkit-backdrop-filter:blur(14px) saturate(1.04)}
+#sat-global-panel .sat-global-card:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+#sat-global-panel .sat-global-head{margin:0 0 10px;font-size:13px;font-weight:950;letter-spacing:.04em;text-transform:uppercase;color:rgba(148,163,184,.92)}
+#sat-global-panel .sat-global-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;color:#e8eef6;font-size:13px}
+#sat-global-panel .sat-global-row strong{font-size:12px;font-weight:900;white-space:nowrap}
+#sat-global-panel .sat-global-row strong.ok{color:#22c55e}
+#sat-global-panel .sat-global-row strong.warn{color:#f59e0b}
+#sat-global-panel .sat-global-row strong.down{color:#ef4444}
+#sat-global-panel .sat-global-row strong.off{color:#94a3b8}
+#sat-global-panel .sat-global-meta{margin-top:8px;padding-top:10px;border-top:1px solid rgba(255,255,255,.10);font-size:11px;color:rgba(148,163,184,.92)}
+#sat-global-panel .sat-global-source{margin-top:8px;font-size:10.5px;line-height:1.35;color:rgba(148,163,184,.92)}
+#sat-global-panel .sat-global-refresh{margin-top:12px;width:100%;min-height:40px;padding:0 12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#fff;font-weight:900;cursor:pointer}
+#sat-global-panel .sat-global-refresh[disabled]{opacity:.6;cursor:wait}
+
+@media(max-width:768px){
+  :root{--sat-fab-size:64px;--sat-logo-size:38px;--sat-fab-right:8px;--sat-fab-bottom:118px}
+  #sat-global-panel{right:8px;bottom:192px;width:min(340px,calc(100vw - 16px))}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #sat-fab .sat-fab-halo{animation:none!important}
+  #sat-fab .sat-fab-trigger{transition:none!important}
+}
