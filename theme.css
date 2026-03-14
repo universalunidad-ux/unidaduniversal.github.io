@@ -21,8 +21,6 @@ html,body,button,input,select,textarea{font-family:Inter,-apple-system,BlinkMacS
 @media(max-width:520px){.btn{width:100%}}
 
 /* FIX: estaba "4k.card" */
-/* FIX: estaba "4k.card" */
-/* FIX: estaba "4k.card" */
 .card{position:relative;background:linear-gradient(180deg,var(--gx-panel) 0%,var(--gx-panel-2) 100%);border:1px solid var(--gx-stroke);border-radius:22px;overflow:hidden;box-shadow:0 10px 28px rgba(15,23,42,.08),var(--gx-shadow);backdrop-filter:blur(calc(var(--gx-blur) + 1px)) saturate(1.06);-webkit-backdrop-filter:blur(calc(var(--gx-blur) + 1px)) saturate(1.06);isolation:isolate;transform:translateZ(0)}
 .card:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -1px 0 rgba(255,255,255,.03)}
 html[data-theme=light] .card:before{box-shadow:inset 0 1px 0 rgba(255,255,255,.72),inset 0 -1px 0 rgba(15,23,42,.04)}
@@ -76,7 +74,7 @@ html[data-theme=dark],.theme-dark{--gx-panel:rgba(15,23,42,.64);--gx-panel-2:rgb
 html[data-theme=light] .glass-ui,html[data-theme=light] .glass-panel,html[data-theme=light] .glass-card,html[data-theme=light] .glass-chip,html[data-theme=light] .pill-ui,html[data-theme=light] .status-chip,html[data-theme=light] .media-shell{color:var(--gx-text)}.glass-ui,.glass-panel,.glass-card,.glass-chip,.media-shell,.status-chip,.pill-ui{isolation:isolate}.gx-btn-glass,.gx-btn-ghost,.pill-ui,.status-chip{white-space:nowrap}.media-shell iframe,.media-shell img{max-width:100%}.card.glass-upgrade,.faq-item.glass-upgrade,.svc-link.glass-upgrade{isolation:isolate}.badge.glass-upgrade,.pill.glass-upgrade{isolation:isolate;white-space:nowrap}@media(max-width:768px){.gx-btn-glass,.gx-btn-ghost{width:100%;min-height:50px;padding:0 18px}.status-chip,.pill-ui{min-height:36px;padding:0 12px}}
 @media(max-width:860px){.badges,.svc-grid,.cmp-scroll,.card.body,.carousel-track{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none}.badges::-webkit-scrollbar,.svc-grid::-webkit-scrollbar,.cmp-scroll::-webkit-scrollbar,.card.body::-webkit-scrollbar,.carousel-track::-webkit-scrollbar{display:none}}
 
-/* ===== SAT FLOATING FAB + GLOBAL PANEL ===== */
+/* ===== SAT ===== */
 :root{--fab-right:12px;--fab-base-bottom:14px;--fab-gap:18px;--map-fab-h:52px;--rayo-fab-h:44px;--sat-fab-size:56px;--sat-logo-size:34px;--map-bottom:var(--fab-base-bottom);--rayo-bottom:calc(var(--map-bottom) + var(--map-fab-h) + var(--fab-gap));--sat-bottom:calc(var(--rayo-bottom) + var(--rayo-fab-h) + var(--fab-gap));--sat-shell-bd:rgba(232,172,54,.42);--sat-shell-bg:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.93));--sat-ring-ok:#22c55e;--sat-ring-warn:#f59e0b;--sat-ring-down:#ef4444;--sat-panel-w:min(360px,calc(100vw - 104px));--fab-rail-w:64px;--fab-panel-gap:16px}
 #sat-fab{position:fixed;right:var(--fab-right);bottom:var(--sat-bottom);z-index:10032;display:flex;align-items:center;justify-content:center}
 #sat-fab .sat-fab-trigger{appearance:none;position:relative;width:var(--sat-fab-size);height:var(--sat-fab-size);border:1.5px solid rgba(232,172,54,.34);border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.985),rgba(255,255,255,.94));box-shadow:0 10px 24px rgba(15,23,42,.09),0 1px 0 rgba(255,255,255,.78) inset,0 0 0 1px rgba(255,255,255,.36);display:grid;place-items:center;cursor:pointer}
