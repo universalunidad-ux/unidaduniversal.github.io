@@ -94,17 +94,6 @@ window.preciosContpaqi = {
     }
   },
 
-  "CONTPAQi Despachos": {
-    "nube": {
-      "Inicial":      { "precio_base": 4990,  "usuarios_incluidos": 3 },
-      "Equipos":      { "precio_base": 7390,  "usuarios_incluidos": 5 },
-      "Empresarial":  { "precio_base": 11190, "usuarios_incluidos": 10 },
-      "Corporativo":  { "precio_base": 18990, "usuarios_incluidos": 20 },
-      "usuario_adicional": 1690,
-      "espacio_adicional": { "2GB": 1490, "5GB": 1990, "10GB": 2490 }
-    }
-  },
-
   "CONTPAQi Contabiliza": {
     "nube": {
       "Inicial":      { "precio_base": 4690,  "usuarios_incluidos": 1 },
