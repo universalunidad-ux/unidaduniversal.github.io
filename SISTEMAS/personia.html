@@ -28,14 +28,14 @@
 <link rel="stylesheet" href="../main.css?v=2026.01.03">
 </head>
 
-<body id="top" class="page-sistemas" data-calc="nube">
+  <body id="top" class="page-sistemas" data-calc="nube">
   <div id="app" data-system="CONTPAQi Personia" data-pdf="Personia" hidden></div>
 
   <!-- Header dinámico (partial) -->
   <div id="header-placeholder"></div>
+
+  <main class="container hero">
     <a class="hint" href="../index.html#productos" rel="noopener">← Volver a productos</a>
-
-
     <!-- Encabezado con logo + badge (formato Nóminas) -->
     <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
       <img src="../IMG/personia.webp"
@@ -368,8 +368,9 @@
     CONTPAQi Personia se licencia por plan anual (usuarios multi) con empleados incluidos por plan.
   </p>
 
-  <div class="card body">
-    <table class="pricing-table-nube" aria-describedby="calc">
+<div class="card body">
+  <div class="pricing-table-nube-wrap">
+    <table class="pricing-table-nube"aria-describedby="calc">
       <thead>
         <tr>
           <th>Plan</th>
@@ -417,6 +418,7 @@
         </tr>
       </tfoot>
     </table>
+  </div>
 
     <p class="hint" style="text-align:center;margin-top:15px;">
       Precios en MXN + IVA. Licenciamiento anual (365 días). Incluye soporte técnico Expiriti.
