@@ -1,4 +1,4 @@
-// main.js (al inicio)
+ // main.js (al inicio)
 if (/[?&]freeze=1\b/.test(location.search)) {
   document.body.classList.add('debug-freeze');
 }
