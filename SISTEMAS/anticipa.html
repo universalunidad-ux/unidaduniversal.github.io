@@ -269,59 +269,11 @@
 
   <div id="footer-placeholder"></div>
 
-  <script>
-  (async () => {
-    const exists = async (u) => { try { const r = await fetch(u, {method:"HEAD"}); return r.ok; } catch { return false; } };
-    const pickFirst = async (paths) => { for (const p of paths) if (await exists(p)) return p; return paths[0]; };
-
-    const isGh = location.hostname.endsWith("github.io");
-    const firstSeg = location.pathname.split("/")[1] || "";
-    const repoBase = (isGh && firstSeg) ? ("/"+firstSeg) : "";
-    const inSistemas = location.pathname.includes("/SISTEMAS/");
-
-    function prefix(p){
-      if (!p || /^https?:\/\//i.test(p)) return p;
-      if (isGh) return (repoBase + "/" + p).replace(/\/+/g,"/");
-      const depth = inSistemas ? "../" : "";
-      return (depth + p).replace(/\/+/g,"/");
-    }
-
-    const headerURL = await pickFirst([
-      "../PARTIALS/global-header.html",
-      "./PARTIALS/global-header.html",
-      `${repoBase}/PARTIALS/global-header.html`,
-      "/PARTIALS/global-header.html"
-    ]);
-    const footerURL = await pickFirst([
-      "../PARTIALS/global-footer.html",
-      "./PARTIALS/global-footer.html",
-      `${repoBase}/PARTIALS/global-footer.html`,
-      "/PARTIALS/global-footer.html"
-    ]);
-
-    const [headerHTML, footerHTML] = await Promise.all([
-      fetch(headerURL).then(r=>r.text()),
-      fetch(footerURL).then(r=>r.text())
-    ]);
-
-    const hp = document.getElementById("header-placeholder");
-    const fp = document.getElementById("footer-placeholder");
-    if (hp) hp.outerHTML = headerHTML;
-    if (fp) fp.outerHTML = footerHTML;
-
-    document.querySelectorAll(".js-abs-src[data-src]").forEach(img=>{ img.src = prefix(img.getAttribute("data-src")); });
-    document.querySelectorAll(".js-abs-href[data-href]").forEach(a=>{
-      const p = a.getAttribute("data-href"); if (!p) return;
-      const [path, hash] = p.split("#");
-      a.href = prefix(path) + (hash ? ("#"+hash) : "");
-    });
-    document.querySelectorAll(".js-img[data-src]").forEach(img=>{ img.src = prefix(img.getAttribute("data-src")); });
-    document.querySelectorAll(".js-link[data-href]").forEach(a=>{ a.href = prefix(a.getAttribute("data-href")); });
-
-    const y = document.getElementById("gf-year");
-    if (y) y.textContent = new Date().getFullYear();
-  })();
-  </script>
+<script>
+/* PARTIALS LOAD + PATHS */(()=>{const e=async u=>{try{const r=await fetch(u,{method:"HEAD"});return r.ok}catch{return!1}},t=async a=>{for(const r of a)if(await e(r))return r;return a[0]};(async()=>{const a=location.hostname.endsWith("github.io"),r=location.pathname.split("/")[1]||"",o=a&&r?"/"+r:"",c=location.pathname.includes("/SISTEMAS/"),p=s=>!s||/^https?:\/\//i.test(s)?s:a?(o+"/"+s).replace(/\/+/g,"/"):((c?"../":"")+s).replace(/\/+/g,"/"),h=await t(["../PARTIALS/global-header.html","./PARTIALS/global-header.html",`${o}/PARTIALS/global-header.html`,"/PARTIALS/global-header.html"]),f=await t(["../PARTIALS/global-footer.html","./PARTIALS/global-footer.html",`${o}/PARTIALS/global-footer.html`,"/PARTIALS/global-footer.html"]),[i,n]=await Promise.all([fetch(h).then(s=>s.text()),fetch(f).then(s=>s.text())]),d=document.getElementById("header-placeholder"),l=document.getElementById("footer-placeholder");d&&(d.outerHTML=i);l&&(l.outerHTML=n);
+/* NORMALIZA IMG/HREF */document.querySelectorAll(".js-abs-src[data-src]").forEach(s=>{s.src=p(s.getAttribute("data-src"))});document.querySelectorAll(".js-abs-href[data-href]").forEach(s=>{const g=s.getAttribute("data-href");if(!g)return;const[m,v]=g.split("#");s.href=p(m)+(v?"#"+v:"")});document.querySelectorAll(".js-img[data-src]").forEach(s=>{s.src=p(s.getAttribute("data-src"))});document.querySelectorAll(".js-link[data-href]").forEach(s=>{s.href=p(s.getAttribute("data-href"))});
+/* YEAR FOOTER */const y=document.getElementById("gf-year");y&&(y.textContent=new Date().getFullYear())})()})(); 
+</script>
 
   <script defer src="../precios-contpaqi.js?v=3"></script>
   <script defer src="../main.js"></script>
