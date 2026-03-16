@@ -139,10 +139,6 @@ html[data-theme="light"] #gh-header .gh-cat{background:rgba(2,6,23,.03);border-c
 html[data-theme="light"] #gh-header .gh-cat.is-active{border-color:rgba(37,99,235,.18);background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(246,249,252,.88));box-shadow:0 8px 18px rgba(2,6,23,.06)}
 
 /* Panels: consistencia fuerte */
-#gh-header .gh-msys-panels{position:relative}
-#gh-header .gh-panel{margin:0}
-#gh-header .gh-panel[hidden]{display:none!important}
-#gh-header .gh-panel.is-open{display:block}
 #gh-header .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 #gh-header .gh-mcard{display:flex;gap:10px;align-items:center;padding:10px;border-radius:16px;text-decoration:none;color:var(--gh-text);background:radial-gradient(120% 120% at 0% 0%,rgba(45,212,191,.10),transparent 42%),radial-gradient(120% 120% at 100% 0%,rgba(96,165,250,.10),transparent 42%),linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.018));border:1px solid rgba(255,255,255,.10);min-height:var(--gh-card-minh);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden}
 #gh-header .gh-mcard:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
@@ -179,8 +175,9 @@ html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.1
 @media(prefers-reduced-motion:reduce){#gh-header .gh-drawer,#gh-header .gh-cat,#gh-header .gh-svctrack{transition:none!important;scroll-behavior:auto!important}}
 
 
-@media(max-width:1023px){#gh-header .gh-bar{box-shadow:0 14px 36px rgba(0,0,0,.45)}html[data-theme="light"] #gh-header .gh-bar{box-shadow:0 14px 36px rgba(2,6,23,.10)!important}#gh-header .gh-drawer-head{padding:10px 12px 8px}#gh-header .gh-dtitle-name{font-size:14px;font-weight:900}#gh-header .gh-dtitle-sub{font-size:11px;opacity:.85}#gh-header .gh-headbtn{display:inline-flex;align-items:center;gap:8px;padding:8px 9px;border-radius:14px;font-size:12px;font-weight:900}#gh-header .gh-headico{width:16px;height:16px;object-fit:contain}#gh-header .gh-drawer-body{padding:10px 12px 12px;gap:10px}#gh-header .gh-acc{border-radius:18px}#gh-header .gh-msys-head{padding-bottom:4px}#gh-header .gh-msys-title{font-size:14px;font-weight:900}#gh-header .gh-msys-sub{font-size:11px;opacity:.8}#gh-header .gh-panel{margin-top:4px}#gh-header .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#gh-header .gh-mcard{border-radius:16px;padding:9px;box-shadow:0 10px 24px rgba(0,0,0,.26);min-height:96px}html[data-theme="light"] #gh-header .gh-mcard{box-shadow:0 10px 24px rgba(2,6,23,.08)!important}#gh-header .gh-mimg{height:32px;max-width:46px;object-fit:contain}#gh-header .gh-mmeta strong{font-size:12px;font-weight:900;line-height:1.12}#gh-header .gh-mmeta span{font-size:10.5px;opacity:.88;line-height:1.15}#gh-header .gh-svcwrap{margin-top:2px}#gh-header .gh-svcarrow{width:32px;height:32px;border-radius:999px}}
-
+@media(max-width:1023px){#gh-header .gh-bar{box-shadow:0 14px 36px rgba(0,0,0,.45)}html[data-theme="light"] #gh-header .gh-bar{box-shadow:0 14px 36px rgba(2,6,23,.10)!important}#gh-header .gh-drawer-head{padding:10px 12px 8px}#gh-header .gh-dtitle-name{font-size:14px;font-weight:900}#gh-header .gh-dtitle-sub{font-size:11px;opacity:.85}#gh-header .gh-headbtn{display:inline-flex;align-items:center;gap:8px;padding:8px 9px;border-radius:14px;font-size:12px;font-weight:900}#gh-header .gh-headico{width:16px;height:16px;object-fit:contain}#gh-header .gh-drawer-body{padding:10px 12px 12px;gap:10px}#gh-header .gh-acc{border-radius:18px}#gh-header .gh-msys-head{padding-bottom:4px}#gh-header .gh-msys-title{font-size:14px;font-weight:900}#gh-header .gh-msys-sub{font-size:11px;opacity:.8}#gh-header #gh-header .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#gh-header .gh-mcard{border-radius:16px;padding:9px;box-shadow:0 10px 24px rgba(0,0,0,.26);min-height:96px}html[data-theme="light"] #gh-header .gh-mcard{box-shadow:0 10px 24px rgba(2,6,23,.08)!important}#gh-header .gh-mimg{height:32px;max-width:46px;object-fit:contain}#gh-header .gh-mmeta strong{font-size:12px;font-weight:900;line-height:1.12}#gh-header .gh-mmeta span{font-size:10.5px;opacity:.88;line-height:1.15}#gh-header .gh-svcwrap{margin-top:2px}#gh-header .gh-svcarrow{width:32px;height:32px;border-radius:999px}}
+@media(max-width:1023px){#gh-header .gh-sysswipe{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;border-radius:16px}#gh-header .gh-sysswipe::-webkit-scrollbar{display:none}#gh-header .gh-syspage{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always}#gh-header .gh-syspage .gh-mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#gh-header .gh-sysdots{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}#gh-header .gh-sysdots::before{content:"Desliza";font-size:11px;font-weight:800;color:var(--gh-muted);margin-right:4px}#gh-header .gh-sysdots .dot{width:10px;height:10px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.12);cursor:pointer}html[data-theme=light] #gh-header .gh-sysdots .dot{border-color:rgba(2,6,23,.18);background:rgba(2,6,23,.10)}#gh-header .gh-sysdots .dot.is-active{background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));border-color:transparent}}
+   
 
    /* =========================================================
    FIX DEFINITIVO: evitar clipping de mega menu y drawer
@@ -193,17 +190,17 @@ html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.1
 }
 
    /* === PATCH v2026.01.18 — GH: burger theme + pills swipe + mega fix + drawer head row === */
-#gh-header{isolation:isolate;contain:none!important}#gh-header .gh-container{max-width:var(--gh-maxw)!important;margin:0 auto!important;padding:0 clamp(15px,4vw,24px)!important;height:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;position:relative}#gh-header .gh-actions{display:flex;align-items:center;gap:10px;margin-left:auto;padding-right:0!important}#gh-header .gh-theme{position:static!important;right:auto!important;top:auto!important;transform:none!important;z-index:auto!important;flex:0 0 auto;width:40px;height:40px}#gh-header .gh-brand{margin-left:0!important}#gh-header .gh-bar{background:var(--gh-bg);box-shadow:0 18px 45px rgba(0,0,0,.28)}html[data-theme=light] #gh-header .gh-bar{box-shadow:0 18px 45px rgba(2,6,23,.10)!important}@media(min-width:1024px){#gh-header .gh-bar,#gh-header .gh-bar.is-hidden{transform:none!important}#gh-header .gh-nav a{border-radius:14px!important;border:1px solid transparent;padding:10px 12px}#gh-header .gh-nav a:hover,#gh-header .gh-nav a:focus-visible{background:rgba(45,212,191,.14)!important;border-color:rgba(45,212,191,.28)!important;color:var(--gh-text)!important}html[data-theme=light] #gh-header .gh-nav a:hover,html[data-theme=light] #gh-header .gh-nav a:focus-visible{background:rgba(37,99,235,.10)!important;border-color:rgba(37,99,235,.18)!important;color:#0b1220!important}#gh-header .gh-dd-menu.mega{top:calc(100% + 10px)!important;width:min(980px,calc(100vw - 24px));padding:18px;border-radius:22px!important;background:var(--gh-panel)!important;box-shadow:0 26px 80px rgba(0,0,0,.62)!important;overflow:hidden}html[data-theme=light] #gh-header .gh-dd-menu.mega{box-shadow:0 26px 80px rgba(2,6,23,.18)!important;border-color:rgba(2,6,23,.10)!important}#gh-header .gh-col{border-radius:18px!important;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border:1px solid rgba(255,255,255,.09)}html[data-theme=light] #gh-header .gh-col{border-color:rgba(2,6,23,.10)!important;background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))!important}#gh-header .gh-item{border-radius:12px!important;padding:12px!important;background:transparent!important;border:1px solid transparent!important;box-shadow:none!important;transform:none!important}#gh-header .gh-item:hover{background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.10)!important;box-shadow:none!important;transform:none!important}html[data-theme=light] #gh-header .gh-item:hover{background:rgba(2,6,23,.035)!important;border-color:rgba(2,6,23,.10)!important}#gh-header .gh-item img{width:min(220px,100%)!important;height:auto!important;aspect-ratio:20/7!important;padding:0!important;border-radius:0!important;background:transparent!important;border:0!important;box-shadow:none!important;filter:drop-shadow(0 6px 14px rgba(0,0,0,.22))!important}#gh-header .gh-dd-wrap.gh-force-hide .gh-dd-menu,#gh-header .gh-dd-wrap.gh-force-hide:hover .gh-dd-menu,#gh-header .gh-dd-wrap.gh-force-hide:focus-within .gh-dd-menu{opacity:0!important;visibility:hidden!important;transform:translate(-50%,12px)!important;pointer-events:none!important}}@media(max-width:1023px){#gh-header .gh-bar{box-shadow:0 14px 36px rgba(0,0,0,.45)}html[data-theme=light] #gh-header .gh-bar{box-shadow:0 14px 36px rgba(2,6,23,.10)!important}#gh-header .gh-burger{border-radius:14px;font-weight:900;-webkit-tap-highlight-color:transparent}html[data-theme=light] #gh-header .gh-burger{background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;color:#0b1220!important}html:not([data-theme=light]) #gh-header .gh-burger{background:rgba(15,23,42,.90)!important;border-color:rgba(255,255,255,.22)!important;color:#fff!important}#gh-header .gh-drawer{width:min(100vw,430px)!important;height:100dvh!important;transform:translateX(104%);display:flex;flex-direction:column;contain:none!important}#gh-header .gh-drawer-head{flex:0 0 auto;padding:10px 12px!important}#gh-header .gh-drawer-body{flex:1 1 auto;min-height:0;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;padding:12px!important;gap:12px!important;overscroll-behavior:auto!important;touch-action:auto!important}#gh-header .gh-catbar{flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;touch-action:pan-x}#gh-header .gh-catbar::-webkit-scrollbar{display:none}#gh-header .gh-cat{scroll-snap-align:start}#gh-header .gh-msys-panels,#gh-header .gh-panel,#gh-header .gh-svcwrap,#gh-header .gh-svcpage{overflow:visible!important}#gh-header .gh-mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#gh-header #gh-msys .gh-mcard{flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;text-align:center!important;gap:10px!important;padding:12px 10px!important;min-height:112px!important}#gh-header #gh-msys .gh-mimg{height:48px!important;max-width:72px!important;margin:0 auto!important;padding:0!important;border-radius:0!important;background:transparent!important;border:0!important;box-shadow:none!important}#gh-header #gh-msys .gh-mmeta{width:100%;align-items:center!important;min-width:0}#gh-header #gh-msys .gh-mmeta span{text-align:center;white-space:normal!important;overflow:visible!important;line-height:1.25!important;font-size:11px!important}#gh-header #gh-msvc .gh-mimg{height:38px!important;max-width:58px!important}#gh-header .gh-svcarrow{display:none!important}#gh-header .gh-svcwrap{margin-top:4px;padding-inline:0}#gh-header .gh-svcdots{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}#gh-header .gh-svcdots::before{content:"Desliza";font-size:11px;font-weight:800;color:var(--gh-muted);margin-right:4px}}#gh-header .gh-badge{color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.35);font-weight:950}
+#gh-header{isolation:isolate;contain:none!important}#gh-header .gh-container{max-width:var(--gh-maxw)!important;margin:0 auto!important;padding:0 clamp(15px,4vw,24px)!important;height:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;position:relative}#gh-header .gh-actions{display:flex;align-items:center;gap:10px;margin-left:auto;padding-right:0!important}#gh-header .gh-theme{position:static!important;right:auto!important;top:auto!important;transform:none!important;z-index:auto!important;flex:0 0 auto;width:40px;height:40px}#gh-header .gh-brand{margin-left:0!important}#gh-header .gh-bar{background:var(--gh-bg);box-shadow:0 18px 45px rgba(0,0,0,.28)}html[data-theme=light] #gh-header .gh-bar{box-shadow:0 18px 45px rgba(2,6,23,.10)!important}@media(min-width:1024px){#gh-header .gh-bar,#gh-header .gh-bar.is-hidden{transform:none!important}#gh-header .gh-nav a{border-radius:14px!important;border:1px solid transparent;padding:10px 12px}#gh-header .gh-nav a:hover,#gh-header .gh-nav a:focus-visible{background:rgba(45,212,191,.14)!important;border-color:rgba(45,212,191,.28)!important;color:var(--gh-text)!important}html[data-theme=light] #gh-header .gh-nav a:hover,html[data-theme=light] #gh-header .gh-nav a:focus-visible{background:rgba(37,99,235,.10)!important;border-color:rgba(37,99,235,.18)!important;color:#0b1220!important}#gh-header .gh-dd-menu.mega{top:calc(100% + 10px)!important;width:min(980px,calc(100vw - 24px));padding:18px;border-radius:22px!important;background:var(--gh-panel)!important;box-shadow:0 26px 80px rgba(0,0,0,.62)!important;overflow:hidden}html[data-theme=light] #gh-header .gh-dd-menu.mega{box-shadow:0 26px 80px rgba(2,6,23,.18)!important;border-color:rgba(2,6,23,.10)!important}#gh-header .gh-col{border-radius:18px!important;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border:1px solid rgba(255,255,255,.09)}html[data-theme=light] #gh-header .gh-col{border-color:rgba(2,6,23,.10)!important;background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))!important}#gh-header .gh-item{border-radius:12px!important;padding:12px!important;background:transparent!important;border:1px solid transparent!important;box-shadow:none!important;transform:none!important}#gh-header .gh-item:hover{background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.10)!important;box-shadow:none!important;transform:none!important}html[data-theme=light] #gh-header .gh-item:hover{background:rgba(2,6,23,.035)!important;border-color:rgba(2,6,23,.10)!important}#gh-header .gh-item img{width:min(220px,100%)!important;height:auto!important;aspect-ratio:20/7!important;padding:0!important;border-radius:0!important;background:transparent!important;border:0!important;box-shadow:none!important;filter:drop-shadow(0 6px 14px rgba(0,0,0,.22))!important}#gh-header .gh-dd-wrap.gh-force-hide .gh-dd-menu,#gh-header .gh-dd-wrap.gh-force-hide:hover .gh-dd-menu,#gh-header .gh-dd-wrap.gh-force-hide:focus-within .gh-dd-menu{opacity:0!important;visibility:hidden!important;transform:translate(-50%,12px)!important;pointer-events:none!important}}@media(max-width:1023px){#gh-header .gh-bar{box-shadow:0 14px 36px rgba(0,0,0,.45)}html[data-theme=light] #gh-header .gh-bar{box-shadow:0 14px 36px rgba(2,6,23,.10)!important}#gh-header .gh-burger{border-radius:14px;font-weight:900;-webkit-tap-highlight-color:transparent}html[data-theme=light] #gh-header .gh-burger{background:rgba(255,255,255,.92)!important;border-color:rgba(2,6,23,.14)!important;color:#0b1220!important}html:not([data-theme=light]) #gh-header .gh-burger{background:rgba(15,23,42,.90)!important;border-color:rgba(255,255,255,.22)!important;color:#fff!important}#gh-header .gh-drawer{width:min(92vw,410px)!important;height:100dvh!important;transform:translateX(104%);display:flex;flex-direction:column;contain:none!important}#gh-header .gh-drawer-head{flex:0 0 auto;padding:10px 12px!important}#gh-header .gh-drawer-body{flex:1 1 auto;min-height:0;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;padding:12px!important;gap:12px!important;overscroll-behavior:auto!important;touch-action:auto!important}#gh-header .gh-catbar{flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:visible!important;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;touch-action:pan-x}#gh-header .gh-catbar::-webkit-scrollbar{display:none}#gh-header .gh-cat{scroll-snap-align:start}#gh-header #gh-header .gh-mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#gh-header #gh-msys .gh-mcard{flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;text-align:center!important;gap:10px!important;padding:12px 10px!important;min-height:112px!important}#gh-header #gh-msys .gh-mimg{height:48px!important;max-width:72px!important;margin:0 auto!important;padding:0!important;border-radius:0!important;background:transparent!important;border:0!important;box-shadow:none!important}#gh-header #gh-msys .gh-mmeta{width:100%;align-items:center!important;min-width:0}#gh-header #gh-msys .gh-mmeta span{text-align:center;white-space:normal!important;overflow:visible!important;line-height:1.25!important;font-size:11px!important}#gh-header #gh-msvc .gh-mimg{height:38px!important;max-width:58px!important}#gh-header .gh-svcarrow{display:none!important}#gh-header .gh-svcwrap{margin-top:4px;padding-inline:0}#gh-header .gh-svcdots{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}#gh-header .gh-svcdots::before{content:"Desliza";font-size:11px;font-weight:800;color:var(--gh-muted);margin-right:4px}}#gh-header .gh-badge{color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.35);font-weight:950}
    
 @media(min-width:1024px){#gh-header.gh-nohover .gh-dd-wrap:hover .gh-dd-menu,#gh-header.gh-nohover .gh-dd-wrap:focus-within .gh-dd-menu{opacity:0!important;visibility:hidden!important;transform:translate(-50%,12px)!important;pointer-events:none!important}#gh-header .gh-bar{background:#fff!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-bottom:1px solid rgba(2,6,23,.08)!important;box-shadow:0 10px 26px rgba(2,6,23,.08)!important}#gh-header .gh-container{max-width:1180px!important;margin:0 auto!important;padding:0 clamp(16px,2.2vw,24px)!important;height:68px!important;display:flex;align-items:center;justify-content:space-between;gap:18px;position:relative}#gh-header .gh-nav ul{gap:14px!important}#gh-header .gh-nav a{padding:10px 12px!important}#gh-header .gh-actions{gap:10px!important;margin-left:auto!important;padding-right:0!important}#gh-header .gh-btn-wa{padding:7px 14px!important}#gh-header .gh-theme{position:static!important;right:auto!important;top:auto!important;transform:none!important;z-index:auto!important;flex:0 0 auto}#gh-header .gh-brand{margin-left:0!important;padding-left:0!important}#gh-header .gh-dd-menu.mega{top:calc(100% + 10px)!important}}
 @media(max-width:1023px){#gh-header .gh-catbar{display:flex;align-items:center;gap:8px;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;touch-action:pan-x;padding-bottom:2px}#gh-header .gh-catbar::-webkit-scrollbar{display:none}#gh-header .gh-cat{scroll-snap-align:center;white-space:nowrap}#gh-header .gh-sysdots{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}#gh-header .gh-sysdots::before{content:"Desliza";font-size:11px;font-weight:800;color:var(--gh-muted);margin-right:4px}#gh-header .gh-sysdots .dot{width:10px;height:10px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.12);cursor:pointer}html[data-theme=light] #gh-header .gh-sysdots .dot{border-color:rgba(2,6,23,.18);background:rgba(2,6,23,.10)}#gh-header .gh-sysdots .dot.is-active{background:linear-gradient(90deg,var(--gh-brand),var(--gh-brand2));border-color:transparent}}
-   
+#gh-header .gh-promos{padding:12px;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01))}html[data-theme=light] #gh-header .gh-promos{border-color:rgba(2,6,23,.10);background:linear-gradient(180deg,rgba(2,6,23,.02),rgba(2,6,23,.01))}#gh-header .gh-promobtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px 12px;border-radius:16px;text-decoration:none;font-weight:950;letter-spacing:.01em;color:var(--gh-text);border:1px solid rgba(255,255,255,.14);background:linear-gradient(90deg,rgba(45,212,191,.18),rgba(96,165,250,.14))}html[data-theme=light] #gh-header .gh-promobtn{color:#0b1220;border-color:rgba(2,6,23,.12);background:linear-gradient(90deg,rgba(13,148,136,.10),rgba(37,99,235,.10))}#gh-header .gh-promoico{width:18px;height:18px;object-fit:contain;flex:0 0 auto}#gh-header .gh-promobtn span{font-size:14px;line-height:1.1}
+@media(max-width:1023px){#gh-header .gh-dhead-top{display:flex;align-items:center;justify-content:space-between;gap:10px}#gh-header .gh-dtitle-row{display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 auto}#gh-header .gh-dhead-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex:0 0 auto}#gh-header .gh-headbtn,#gh-header .gh-close{width:40px;height:40px;padding:0!important;border-radius:12px!important;display:inline-flex;align-items:center;justify-content:center}#gh-header .gh-headico{width:18px;height:18px;object-fit:contain}}   
                       
 </style>
 
 <header class="gh" id="gh-header" role="banner">
 
-<!-- ===================== TOP BAR ===================== -->
 <!-- ===================== TOP BAR ===================== -->
 <div class="gh-bar" id="gh-bar">
   <div class="gh-container">
@@ -428,26 +425,27 @@ html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.1
     </nav>
 
     <!-- Actions -->
-    <div class="gh-actions">
-      <a class="gh-btn-wa" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">
-        <img class="gh-wa-ico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/whatsapp.svg" alt="WhatsApp">
-        <span class="gh-wa-num">55 6843 7918</span>
-      </a>
-      <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
-      <button class="gh-theme" id="gh-theme" type="button" aria-label="Cambiar modo claro/oscuro" aria-pressed="false" title="Modo claro">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 3v2"></path>
-          <path d="M12 19v2"></path>
-          <path d="M4.22 4.22l1.42 1.42"></path>
-          <path d="M18.36 18.36l1.42 1.42"></path>
-          <path d="M3 12h2"></path>
-          <path d="M19 12h2"></path>
-          <path d="M4.22 19.78l1.42-1.42"></path>
-          <path d="M18.36 5.64l1.42-1.42"></path>
-          <path d="M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10z"></path>
-        </svg>
-      </button>
-    </div>
+<div class="gh-actions">
+  <a class="gh-btn-wa" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">
+    <img class="gh-wa-ico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/whatsapp.svg" alt="WhatsApp">
+    <span class="gh-wa-num">55 6843 7918</span>
+  </a>
+  <button class="gh-theme" id="gh-theme" type="button" aria-label="Cambiar modo claro/oscuro" aria-pressed="false" title="Modo claro">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3v2"></path>
+      <path d="M12 19v2"></path>
+      <path d="M4.22 4.22l1.42 1.42"></path>
+      <path d="M18.36 18.36l1.42 1.42"></path>
+      <path d="M3 12h2"></path>
+      <path d="M19 12h2"></path>
+      <path d="M4.22 19.78l1.42-1.42"></path>
+      <path d="M18.36 5.64l1.42-1.42"></path>
+      <path d="M12 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10z"></path>
+    </svg>
+  </button>
+  <button class="gh-burger" id="gh-burger" aria-label="Abrir menú" aria-controls="gh-drawer" aria-expanded="false">≡</button>
+</div>
+     
   </div>
 </div>
    
@@ -466,24 +464,27 @@ html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.1
       </div>
     </div>
 
-    <div class="gh-dhead-actions" aria-label="Contacto rápido">
-      <a class="gh-headbtn" href="tel:+525568437918" aria-label="Llamar">
-        <img class="gh-headico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/034-telefono.webp" alt="" width="16" height="16">
-      </a>
+     <div class="gh-dhead-actions" aria-label="Contacto rápido">
+  <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
 
-      <a class="gh-headbtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="WhatsApp">
-        <img class="gh-headico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/whatsapp.svg" alt="" width="16" height="16">
-      </a>
+  <a class="gh-headbtn" href="https://wa.me/525568437918?text=Hola%20Expiriti%2C%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <img class="gh-headico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/whatsapp.svg" alt="" width="16" height="16">
+  </a>
 
-      <button class="gh-close" id="gh-close" aria-label="Cerrar menú">✕</button>
-    </div>
+  <a class="gh-headbtn" href="tel:+525568437918" aria-label="Llamar">
+    <img class="gh-headico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/034-telefono.webp" alt="" width="16" height="16">
+  </a>
+</div>
   </div>
 </div>
 
   <div class="gh-drawer-body">
     <!-- ===================== SISTEMAS (MÓVIL: TABS) ===================== -->
 <section class="gh-acc gh-msys" id="gh-msys" aria-label="Sistemas (móvil)">
-  <div class="gh-msys-head"><div class="gh-msys-title">Sistemas</div></div>
+  <div class="gh-msys-head">
+    <div class="gh-msys-title">Sistemas</div>
+  </div>
+
   <div class="gh-catbar" role="tablist" aria-label="Categorías de sistemas">
     <button class="gh-cat is-active" type="button" data-cat="contables" role="tab" aria-selected="true">Contables</button>
     <button class="gh-cat" type="button" data-cat="comerciales" role="tab" aria-selected="false">Comerciales</button>
@@ -491,17 +492,53 @@ html[data-theme="light"] #gh-header .gh-svcdots .dot{border-color:rgba(2,6,23,.1
     <button class="gh-cat" type="button" data-cat="prod" role="tab" aria-selected="false">Productividad</button>
   </div>
 
-<div class="gh-msys-panels"><div class="gh-panel is-open" data-panel="contables" role="tabpanel"><div class="gh-mgrid"><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/contabilidad.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contabilidad.webp" alt=""><div class="gh-mmeta"><span>Pólizas y contabilidad electrónica</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/nominas.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/nominas.webp" alt=""><div class="gh-mmeta"><span>Cálculo y timbrado</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/bancos.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/bancos.webp" alt=""><div class="gh-mmeta"><span>Conciliación y tesorería</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/xml.webp" alt=""><div class="gh-mmeta"><span>CFDI del SAT a contabilidad</span></div></a></div></div><div class="gh-panel" data-panel="comerciales" role="tabpanel" hidden><div class="gh-mgrid"><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/comercialstart.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialstart.webp" alt=""><div class="gh-mmeta"><span>Ventas e inventario básico</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/comercialpro.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialpro.webp" alt=""><div class="gh-mmeta"><span>Alto volumen y sucursales</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/comercialpremium.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialpremium.webp" alt=""><div class="gh-mmeta"><span>Control y reportes</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/factura.webp" alt=""><div class="gh-mmeta"><span>Timbrado y CFDI 4.0</span></div></a></div></div><div class="gh-panel" data-panel="nube" role="tabpanel" hidden><div class="gh-mgrid"><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/contabiliza.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contabiliza.webp" alt=""><div class="gh-mmeta"><span>Contabilidad en la nube</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/personia.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/personia.webp" alt=""><div class="gh-mmeta"><span>Gestión de personal</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/vende.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/vende.webp" alt=""><div class="gh-mmeta"><span>Punto de venta nube</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/colabora.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/colabora.webp" alt=""><div class="gh-mmeta"><span>Gratis con Nóminas y Personia</span></div></a></div></div><div class="gh-panel" data-panel="prod" role="tabpanel" hidden><div class="gh-mgrid"><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/evalua.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/evalua.webp" alt=""><div class="gh-mmeta"><span>Clima laboral y NOM-035</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/analiza.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/analiza.webp" alt=""><div class="gh-mmeta"><span>Dashboards y BI</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/anticipa.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/anticipa.webp" alt=""><div class="gh-mmeta"><span>Blindaje fiscal preventivo</span></div></a><a class="gh-mcard js-link" href="#" data-href="SISTEMAS/optimiza.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/optimiza.webp" alt=""><div class="gh-mmeta"><span>Procesos y productividad</span></div></a></div></div><div class="gh-sysdots" aria-label="Paginación de sistemas">
-  <button class="dot is-active" type="button" aria-label="Ir a Contables"></button>
-  <button class="dot" type="button" aria-label="Ir a Comerciales"></button>
-  <button class="dot" type="button" aria-label="Ir a Nube"></button>
-  <button class="dot" type="button" aria-label="Ir a Productividad"></button>
-</div>
+  <div class="gh-sysswipe" id="gh-sysswipe" role="region" aria-label="Carrusel de sistemas" tabindex="0">
+    <div class="gh-syspage" data-panel="contables" role="tabpanel" aria-label="Contables">
+      <div class="gh-mgrid">
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/contabilidad.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contabilidad.webp" alt=""><div class="gh-mmeta"><span>Pólizas y contabilidad electrónica</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/nominas.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/nominas.webp" alt=""><div class="gh-mmeta"><span>Cálculo y timbrado</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/bancos.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/bancos.webp" alt=""><div class="gh-mmeta"><span>Conciliación y tesorería</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/xmlenlinea.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/xml.webp" alt=""><div class="gh-mmeta"><span>CFDI del SAT a contabilidad</span></div></a>
+      </div>
+    </div>
 
-</div>
+    <div class="gh-syspage" data-panel="comerciales" role="tabpanel" aria-label="Comerciales">
+      <div class="gh-mgrid">
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/comercialstart.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialstart.webp" alt=""><div class="gh-mmeta"><span>Ventas e inventario básico</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/comercialpro.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialpro.webp" alt=""><div class="gh-mmeta"><span>Alto volumen y sucursales</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/comercialpremium.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/comercialpremium.webp" alt=""><div class="gh-mmeta"><span>Control y reportes</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/facturaelectronica.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/factura.webp" alt=""><div class="gh-mmeta"><span>Timbrado y CFDI 4.0</span></div></a>
+      </div>
+    </div>
 
-       
-    </section>
+    <div class="gh-syspage" data-panel="nube" role="tabpanel" aria-label="Nube">
+      <div class="gh-mgrid">
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/contabiliza.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/contabiliza.webp" alt=""><div class="gh-mmeta"><span>Contabilidad en la nube</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/personia.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/personia.webp" alt=""><div class="gh-mmeta"><span>Gestión de personal</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/vende.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/vende.webp" alt=""><div class="gh-mmeta"><span>Punto de venta nube</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/colabora.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/colabora.webp" alt=""><div class="gh-mmeta"><span>Gratis con Nóminas y Personia</span></div></a>
+      </div>
+    </div>
+
+    <div class="gh-syspage" data-panel="prod" role="tabpanel" aria-label="Productividad">
+      <div class="gh-mgrid">
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/evalua.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/evalua.webp" alt=""><div class="gh-mmeta"><span>Clima laboral y NOM-035</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/analiza.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/analiza.webp" alt=""><div class="gh-mmeta"><span>Dashboards y BI</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/anticipa.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/anticipa.webp" alt=""><div class="gh-mmeta"><span>Blindaje fiscal preventivo</span></div></a>
+        <a class="gh-mcard js-link" href="#" data-href="SISTEMAS/optimiza.html"><img class="gh-mimg js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/optimiza.webp" alt=""><div class="gh-mmeta"><span>Procesos y productividad</span></div></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="gh-sysdots" aria-label="Paginación de sistemas">
+    <button class="dot is-active" type="button" aria-label="Ir a Contables"></button>
+    <button class="dot" type="button" aria-label="Ir a Comerciales"></button>
+    <button class="dot" type="button" aria-label="Ir a Nube"></button>
+    <button class="dot" type="button" aria-label="Ir a Productividad"></button>
+  </div>
+</section>
+     
+     
 <section class="gh-promos" aria-label="Promociones">
   <a class="gh-promobtn js-link" href="#" data-href="index.html#promociones">
     <img class="gh-promoico js-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" data-src="IMG/003-etiqueta-de-descuento.webp" alt="">
@@ -561,82 +598,15 @@ function getRootFromMeta(){
   if(!r.endsWith('/')) r=r+'/';
   return r;
 }
-function getMasterRoot(){
-  const metaRoot=getRootFromMeta();
-  if(metaRoot) return metaRoot;
-  const host=(location.hostname||'').toLowerCase();
-  const seg=(location.pathname||'/').split('/').filter(Boolean);
-  const first=(seg[0]||'').toLowerCase();
-  const RESERVED=new Set(['sistemas','servicios','migraciones','implementaciones','desarrollos','img','images','css','js','assets']);
-  if(host.includes('github.io')){
-    if(seg.length>0 && !RESERVED.has(first)) return '/'+seg[0]+'/';
-    return '/';
-  }
-  return '/';
-}
+function getMasterRoot(){const metaRoot=getRootFromMeta();if(metaRoot)return metaRoot;const host=(location.hostname||'').toLowerCase();const seg=(location.pathname||'/').split('/').filter(Boolean);const first=(seg[0]||'').toLowerCase();const RESERVED=new Set(['sistemas','servicios','migraciones','implementaciones','desarrollos','img','images','css','js','assets']);if(host.includes('github.io')){if(seg.length>0&&!RESERVED.has(first))return'/'+seg[0]+'/';return'/';}return'/';}
 const ROOT=getMasterRoot();
-
-function baseAbs(){
-  try{
-    const origin=(location.origin && location.origin!=='null')?location.origin:location.href;
-    return new URL(ROOT, origin).toString();
-  }catch(_){ return ROOT; }
-}
-
-function buildPath(raw){
-  raw=String(raw||'').trim();
-  if(!raw) return '#';
-  if(/^(https?:|mailto:|tel:|whatsapp:|sms:)/i.test(raw)) return raw;
-  if(raw.startsWith('#')){
-    try{ return new URL('index.html'+raw, baseAbs()).toString(); }
-    catch(_){ return (ROOT.replace(/\/$/,'')+'/index.html')+raw; }
-  }
-  raw = raw.replace(/^\/+/, '');
-  try{ return new URL(raw, baseAbs()).toString(); }
-  catch(_){ return (ROOT.replace(/\/$/,'')+'/'+raw); }
-}
-
-function applySafePaths(container){
-  container=container||D;
-
-  QA('a.js-link[data-href]', container).forEach(a=>{
-    const raw=a.getAttribute('data-href');
-    if(!raw) return;
-    const want=buildPath(raw);
-    if(a.href!==want) a.href=want;
-    a.dataset.ghResolved='1';
-  });
-
-  QA('img.js-img[data-src]', container).forEach(img=>{
-    const raw=img.getAttribute('data-src');
-    if(!raw) return;
-    const want=buildPath(raw);
-    if(img.src!==want) img.src=want;
-
-    if(img.dataset.ghOnErrBound!=='1'){
-      img.dataset.ghOnErrBound='1';
-      img.addEventListener('error', function(){
-        if(this.dataset.ghErrored==='1') return;
-        this.dataset.ghErrored='1';
-        this.style.opacity='.60';
-        this.src=BLANK;
-      }, {once:true});
-    }
-    img.dataset.ghResolved='1';
-  });
-}
-
-function syncOffset(){
-  const bar=Q('#gh-bar');
-  const h=bar?bar.offsetHeight:68;
-  D.documentElement.style.setProperty('--gh-offset', h+'px');
-}
+function baseAbs(){try{const origin=(location.origin&&location.origin!=='null')?location.origin:location.href;return new URL(ROOT,origin).toString();}catch(_){return ROOT;}}
+function buildPath(raw){raw=String(raw||'').trim();if(!raw)return'#';if(/^(https?:|mailto:|tel:|whatsapp:|sms:)/i.test(raw))return raw;if(raw.startsWith('#')){try{return new URL('index.html'+raw,baseAbs()).toString();}catch(_){return(ROOT.replace(/\/$/,'')+'/index.html')+raw;}}raw=raw.replace(/^\/+/,'');try{return new URL(raw,baseAbs()).toString();}catch(_){return(ROOT.replace(/\/$/,'')+'/'+raw);}}
+function applySafePaths(container){container=container||D;QA('a.js-link[data-href]',container).forEach(a=>{const raw=a.getAttribute('data-href');if(!raw)return;const want=buildPath(raw);if(a.href!==want)a.href=want;a.dataset.ghResolved='1';});QA('img.js-img[data-src]',container).forEach(img=>{const raw=img.getAttribute('data-src');if(!raw)return;const want=buildPath(raw);if(img.src!==want)img.src=want;if(img.dataset.ghOnErrBound!=='1'){img.dataset.ghOnErrBound='1';img.addEventListener('error',function(){if(this.dataset.ghErrored==='1')return;this.dataset.ghErrored='1';this.style.opacity='.60';this.src=BLANK;},{once:true});}img.dataset.ghResolved='1';});}
+function syncOffset(){const bar=Q('#gh-bar');const h=bar?bar.offsetHeight:68;D.documentElement.style.setProperty('--gh-offset',h+'px');}
 function ensureBodyOffset(){document.body.classList.contains('no-gh-offset')||document.body.classList.add('has-gh')}
-
-
 function initScrollHide(){const bar=Q('#gh-bar');if(!bar||bar.__hideBound)return;bar.__hideBound=true;const mq=W.matchMedia('(max-width:1023px)');let last=W.scrollY||0;const onScroll=()=>{if(!mq.matches){bar.classList.remove('is-hidden');return}if(D.documentElement.classList.contains('gh-open'))return;const y=W.scrollY||0;y>72&&y>last?bar.classList.add('is-hidden'):bar.classList.remove('is-hidden');last=y};W.addEventListener('scroll',onScroll,{passive:true});if(mq.addEventListener)mq.addEventListener('change',()=>bar.classList.remove('is-hidden'));else if(mq.addListener)mq.addListener(()=>bar.classList.remove('is-hidden'));onScroll()}
-            
-function initMobileSystems(){const root=Q('#gh-msys');if(!root||root.__inited)return;root.__inited=true;const cats=QA('.gh-cat',root);const panels=QA('.gh-panel',root);const dots=QA('.gh-sysdots .dot',root);const bar=Q('.gh-catbar',root);const KEY='expiriti_mobile_sys_cat';const order=['contables','comerciales','nube','prod'];const saved=storage.get(KEY);function centerCat(btn){if(!btn||!bar)return;const left=btn.offsetLeft-(bar.clientWidth-btn.clientWidth)/2;bar.scrollTo({left:Math.max(0,left),behavior:'smooth'})}function setCat(cat){cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle('is-active',on);b.setAttribute('aria-selected',on?'true':'false');if(on)centerCat(b)});panels.forEach(p=>{const on=p.dataset.panel===cat;p.classList.toggle('is-open',on);p.hidden=!on});dots.forEach((d,i)=>d.classList.toggle('is-active',order[i]===cat));storage.set(KEY,cat)}cats.forEach(b=>b.addEventListener('click',()=>setCat(b.dataset.cat)));dots.forEach((d,i)=>d.addEventListener('click',e=>{e.preventDefault();setCat(order[i])}));setCat(saved||'contables')}
+function initMobileSystems(){const root=Q('#gh-msys');const track=Q('#gh-sysswipe');if(!root||!track||root.__inited)return;root.__inited=true;const cats=QA('.gh-cat',root);const pages=QA('.gh-syspage',track);const dots=QA('.gh-sysdots .dot',root);const bar=Q('.gh-catbar',root);const KEY='expiriti_mobile_sys_cat';const order=['contables','comerciales','nube','prod'];const idxFromScroll=()=>{const w=track.clientWidth||1;return Math.round(track.scrollLeft/w)};function centerCat(btn){if(!btn||!bar)return;const left=btn.offsetLeft-(bar.clientWidth-btn.clientWidth)/2;bar.scrollTo({left:Math.max(0,left),behavior:'smooth'})}function syncUI(cat){const i=Math.max(0,order.indexOf(cat));cats.forEach(b=>{const on=b.dataset.cat===cat;b.classList.toggle('is-active',on);b.setAttribute('aria-selected',on?'true':'false');if(on)centerCat(b)});dots.forEach((d,k)=>d.classList.toggle('is-active',k===i));storage.set(KEY,cat)}function goTo(cat,smooth){const i=Math.max(0,order.indexOf(cat));const w=track.clientWidth||1;track.scrollTo({left:i*w,behavior:smooth?'smooth':'auto'});syncUI(cat)}cats.forEach(b=>b.addEventListener('click',()=>goTo(b.dataset.cat,true)));dots.forEach((d,i)=>d.addEventListener('click',e=>{e.preventDefault();goTo(order[i],true)}));track.addEventListener('scroll',()=>W.requestAnimationFrame(()=>{const i=idxFromScroll();syncUI(order[i]||'contables')}),{passive:true});W.addEventListener('resize',()=>{const saved=storage.get(KEY)||'contables';goTo(saved,false)},{passive:true});goTo(storage.get(KEY)||'contables',false)}
             
 function initMobileServices(){
   const root=Q('#gh-msvc');
