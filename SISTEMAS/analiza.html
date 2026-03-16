@@ -344,7 +344,12 @@
 
   <!-- Footer dinámico -->
   <div id="footer-placeholder"></div>
-
+  
+<script>
+/* PARTIALS LOAD + PATHS */(()=>{const e=async u=>{try{const r=await fetch(u,{method:"HEAD"});return r.ok}catch{return!1}},t=async a=>{for(const r of a)if(await e(r))return r;return a[0]};(async()=>{const a=location.hostname.endsWith("github.io"),r=location.pathname.split("/")[1]||"",o=a&&r?"/"+r:"",c=location.pathname.includes("/SISTEMAS/"),p=s=>!s||/^https?:\/\//i.test(s)?s:a?(o+"/"+s).replace(/\/+/g,"/"):((c?"../":"")+s).replace(/\/+/g,"/"),h=await t(["../PARTIALS/global-header.html","./PARTIALS/global-header.html",`${o}/PARTIALS/global-header.html`,"/PARTIALS/global-header.html"]),f=await t(["../PARTIALS/global-footer.html","./PARTIALS/global-footer.html",`${o}/PARTIALS/global-footer.html`,"/PARTIALS/global-footer.html"]),[i,n]=await Promise.all([fetch(h).then(s=>s.text()),fetch(f).then(s=>s.text())]),d=document.getElementById("header-placeholder"),l=document.getElementById("footer-placeholder");d&&(d.outerHTML=i);l&&(l.outerHTML=n);
+/* NORMALIZA IMG/HREF */document.querySelectorAll(".js-abs-src[data-src]").forEach(s=>{s.src=p(s.getAttribute("data-src"))});document.querySelectorAll(".js-abs-href[data-href]").forEach(s=>{const g=s.getAttribute("data-href");if(!g)return;const[m,v]=g.split("#");s.href=p(m)+(v?"#"+v:"")});document.querySelectorAll(".js-img[data-src]").forEach(s=>{s.src=p(s.getAttribute("data-src"))});document.querySelectorAll(".js-link[data-href]").forEach(s=>{s.href=p(s.getAttribute("data-href"))});
+/* YEAR FOOTER */const y=document.getElementById("gf-year");y&&(y.textContent=new Date().getFullYear())})()})(); 
+</script>
   <!-- 1) Tabla de precios (debe existir la clave del sistema) -->
   <script src="../precios-contpaqi.js"></script>
   <!-- 2) Adaptador + calculadora NUBE + UI -->
