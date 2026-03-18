@@ -670,10 +670,9 @@ function i(){const t=q("#sat-fab-trigger"),p=q("#sat-global-panel"),u=q("#sat-re
 
 if(d.readyState==="loading")d.addEventListener("DOMContentLoaded",i,{once:1});else i();
 })();
-   <script>
+   
 window.toggleDrawer=function(open){const d=document,w=window,drawer=d.querySelector('#gh-drawer'),dim=d.querySelector('#gh-dim'),burger=d.querySelector('#gh-burger'),bar=d.querySelector('#gh-bar');if(!drawer||!dim||!burger)return;if(open){if(bar)bar.classList.remove('is-hidden');drawer.hidden=false;dim.hidden=false;requestAnimationFrame(()=>{d.documentElement.classList.add('gh-open');d.body.classList.add('gh-open');drawer.setAttribute('aria-hidden','false');burger.setAttribute('aria-expanded','true');d.body.style.overflow='hidden';});}else{d.documentElement.classList.remove('gh-open');d.body.classList.remove('gh-open');drawer.setAttribute('aria-hidden','true');burger.setAttribute('aria-expanded','false');d.body.style.overflow='';setTimeout(()=>{if(!d.documentElement.classList.contains('gh-open')){dim.hidden=true;drawer.hidden=true;}},220);}};
 (function(){const d=document,theme=d.querySelector('#gh-theme');if(!theme||theme.__fixTheme)return;theme.__fixTheme=1;theme.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();const r=d.documentElement,isLight=r.getAttribute('data-theme')==='light',next=isLight?'dark':'light';r.setAttribute('data-theme',next);try{localStorage.setItem('expiriti_theme',next)}catch(_){}} ,true);})();
-</script>
 </script>
 <!-- FUTURO BACKEND SAT -->
 <!-- <script src="PARTIALS/sat-ui.js"></script> -->
