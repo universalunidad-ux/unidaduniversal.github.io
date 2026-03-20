@@ -292,21 +292,28 @@ TRY("carouselX",()=>{
     const ui=ensureUI(root),prev=ui.p,next=ui.n,dotsWrap=ui.d;
     const isMob=()=>W.matchMedia&&W.matchMedia("(max-width: 768px)").matches;
 
-    items.forEach(it=>{
-      it.setAttribute("role","link");it.setAttribute("tabindex","0");
-      let touched=0;
-      const nav=()=>{const href=it.getAttribute("data-href");if(!href)return;location.href=abs(href)};
-      it.addEventListener("click",e=>{
-        e.preventDefault();
-        if(isMob()&&!touched){
-          touched=1;it.classList.add("show-hover");
-          setTimeout(()=>{touched=0;it.classList.remove("show-hover")},2000);
-          return;
-        }
-        nav();
-      },{passive:!1});
-      it.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();nav()}});
-    });
+items.forEach(it=>{
+  it.setAttribute("role","link");
+  it.setAttribute("tabindex","0");
+
+  const nav=()=>{
+    const href=it.getAttribute("data-href");
+    if(!href)return;
+    location.href=abs(href);
+  };
+
+  it.addEventListener("click",e=>{
+    e.preventDefault();
+    nav();
+  },{passive:false});
+
+  it.addEventListener("keydown",e=>{
+    if(e.key==="Enter"||e.key===" "){
+      e.preventDefault();
+      nav();
+    }
+  });
+});
 
     const perView=()=>W.innerWidth<=980?1:3;
     const vw=()=>track.clientWidth||root.clientWidth||1;
