@@ -302,6 +302,14 @@ items.forEach(it=>{
     location.href=abs(href);
   };
 
+  it.addEventListener("touchstart",()=>{
+    if(isMob()) it.classList.add("show-hover");
+  },{passive:true});
+
+  it.addEventListener("touchend",()=>{
+    if(isMob()) setTimeout(()=>it.classList.remove("show-hover"),180);
+  },{passive:true});
+
   it.addEventListener("click",e=>{
     e.preventDefault();
     nav();
@@ -314,7 +322,6 @@ items.forEach(it=>{
     }
   });
 });
-
     const perView=()=>W.innerWidth<=980?1:3;
     const vw=()=>track.clientWidth||root.clientWidth||1;
     const pages=()=>Math.max(1,Math.ceil((track.scrollWidth-1)/vw()));
