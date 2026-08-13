@@ -42,6 +42,9 @@ jobs:
         run: node build.js # Corre el script que creamos
 
       # 3.5. Preparar la carpeta '/dist' para la publicación
+      - name: Rewrite project-site paths
+        run: node .github/pages-prefix.mjs
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

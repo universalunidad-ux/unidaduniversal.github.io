@@ -126,7 +126,7 @@ window.preciosContpaqi = {
     }
   },
 
-    "CONTPAQi Optimiza": {
+  "CONTPAQi Optimiza": {
     "nube": {
       "Demo": { "precio_base": 0, "rfc_incluidos": 3, "usuarios_incluidos": 1, "almacenamiento_gb": 1, "duracion_dias": 20 },
       "Inicial": { "precio_base": 4690, "rfc_incluidos": 15, "usuarios_incluidos": 2, "almacenamiento_gb": 5, "duracion_dias": 365 },
