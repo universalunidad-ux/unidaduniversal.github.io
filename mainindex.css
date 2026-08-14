@@ -1291,3 +1291,210 @@ body.page-index #contactForm .interest-mode{min-height:46px!important;padding:11
   }
 }
 
+/* EXPIRITI_T17_INDEX_CONTACT_START */
+
+
+/* =========================================================
+   TOP 3 INPUTS — EXACT SAME ROW / HEIGHT
+   ========================================================= */
+
+.page-index
+#contactForm
+.contact-top-grid{
+
+ display:grid!important;
+
+ grid-template-columns:
+  repeat(3,minmax(0,1fr))!important;
+
+ gap:14px!important;
+
+ align-items:start!important;
+
+ width:100%!important;
+
+ max-width:100%!important;
+}
+
+
+.page-index
+#contactForm
+.contact-top-grid
+> .contact-field{
+
+ position:relative!important;
+
+ align-self:start!important;
+
+ width:auto!important;
+ min-width:0!important;
+ max-width:none!important;
+
+ min-height:46px!important;
+
+ margin:0!important;
+ padding:0!important;
+
+ transform:none!important;
+}
+
+
+/*
+ * Nombre tiene un label textual y correo/teléfono tienen
+ * labels iconográficos. Sacamos el label textual del flujo
+ * para que NO empuje el primer input hacia abajo.
+ */
+
+.page-index
+#contactForm
+.contact-top-grid
+> .contact-field
+> label:not(.contact-icon-label){
+
+ position:absolute!important;
+
+ width:1px!important;
+ height:1px!important;
+
+ margin:-1px!important;
+ padding:0!important;
+
+ overflow:hidden!important;
+
+ clip:rect(0 0 0 0)!important;
+ clip-path:inset(50%)!important;
+
+ white-space:nowrap!important;
+
+ border:0!important;
+}
+
+
+.page-index
+#contactForm
+.contact-top-grid
+> .contact-field
+> .contact-icon-label{
+
+ top:50%!important;
+
+ margin:0!important;
+
+ transform:
+  translateY(-50%)!important;
+}
+
+
+.page-index
+#contactForm
+#nombre,
+
+.page-index
+#contactForm
+#correo,
+
+.page-index
+#contactForm
+#telefono{
+
+ display:block!important;
+
+ width:100%!important;
+ min-width:0!important;
+ max-width:none!important;
+
+ height:46px!important;
+ min-height:46px!important;
+ max-height:46px!important;
+
+ margin:0!important;
+
+ box-sizing:
+  border-box!important;
+
+ line-height:1.2!important;
+}
+
+
+/* =========================================================
+   CATEGORY PILLS — MORE AIR BEFORE LOGO GRID
+   ========================================================= */
+
+.page-index
+#contactForm
+.interest-cats{
+
+ margin:
+  14px 0 22px!important;
+
+ padding:
+  0 0 6px!important;
+
+ overflow:
+  visible!important;
+}
+
+
+.page-index
+#contactForm
+.interest-panel{
+
+ padding-bottom:
+  8px!important;
+}
+
+
+.page-index
+#contactForm
+.interest-sysgroup{
+
+ margin-top:
+  2px!important;
+}
+
+
+@media(max-width:780px){
+
+ .page-index
+ #contactForm
+ .contact-top-grid{
+
+  grid-template-columns:
+   minmax(0,1fr)!important;
+ }
+
+
+ .page-index
+ #contactForm
+ .interest-cats{
+
+  margin-bottom:
+   18px!important;
+ }
+}
+
+
+/* EXPIRITI_T17_INDEX_CONTACT_END */
+
+/* EXPIRITI_T22_INDEX_FAKE_ARROWS_START */
+
+.page-index
+.arrowCircle.is-disabled,
+
+.page-index
+.arrowCircle[aria-disabled="true"]{
+
+  display:
+    none!important;
+
+  opacity:
+    0!important;
+
+  visibility:
+    hidden!important;
+
+  pointer-events:
+    none!important;
+}
+
+/* EXPIRITI_T22_INDEX_FAKE_ARROWS_END */

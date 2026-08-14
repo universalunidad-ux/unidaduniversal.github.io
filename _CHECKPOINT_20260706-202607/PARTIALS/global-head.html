@@ -1,0 +1,39 @@
+<meta charset="utf-8" />
+<meta name="expiriti-base" content="/" />
+<script>
+(()=>{try{let k="expiriti_theme",s=localStorage.getItem(k),t=(s==="light"||s==="dark")?s:"light",h=document.documentElement;h.setAttribute("data-theme",t);h.style.background=t==="dark"?"#0a111b":"#f6f8fc";h.style.colorScheme=t}catch(e){let h=document.documentElement;h.setAttribute("data-theme","light");h.style.background="#f6f8fc";h.style.colorScheme="light"}})();
+</script>
+<style>
+html{background:#f6f8fc;color-scheme:light}
+html[data-theme="dark"]{background:#0a111b;color-scheme:dark}
+html[data-theme="light"]{background:#f6f8fc;color-scheme:light}
+body{background:#f6f8fc}
+html[data-theme="dark"] body{background:#0a111b}
+html[data-theme="light"] body{background:#f6f8fc}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" class="js-canonical" href="https://nueva.expiriti.com.mx/" />
+<meta property="og:url" class="js-og-url" content="https://nueva.expiriti.com.mx/" />
+<meta name="theme-color" content="#f6f8fc">
+<meta name="theme-color" content="#0b0f14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f8fc" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ExpIRI Ti | Distribuidor CONTPAQi" />
+<meta property="og:locale" content="es_MX" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:image" class="js-abs-meta" data-path="IMG/expiriti_og.webp" content="" />
+<meta name="twitter:image" class="js-abs-meta" data-path="IMG/expiriti_og.webp" content="" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+<link rel="stylesheet" class="js-abs" data-href="theme.css" />
+<link rel="apple-touch-icon" sizes="180x180" class="js-abs" data-href="IMG/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" class="js-abs" data-href="IMG/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" class="js-abs" data-href="IMG/favicon-16x16.png" />
+<link rel="manifest" class="js-abs" data-href="IMG/site.webmanifest" />
+<link rel="icon" class="js-abs" data-href="IMG/favicon.ico" />
+<script>
+(()=>{try{let m=document.querySelector('meta[name="expiriti-base"]'),root=(m?.content||"/").trim();root="/"+root.replace(/^\/+|\/+$/g,"")+"/";if(root==="//")root="/";let base=new URL(root,location.origin).toString(),abs=p=>new URL(String(p||"").replace(/^\/+/,""),base).toString();document.querySelectorAll("link.js-abs[data-href]").forEach(x=>x.href=abs(x.dataset.href));document.querySelectorAll("meta.js-abs-meta[data-path]").forEach(x=>x.setAttribute("content",abs(x.dataset.path)));let clean=location.origin+location.pathname.replace(/index\.html$/,"");document.querySelectorAll("link.js-canonical").forEach(x=>x.href=clean);document.querySelectorAll("meta.js-og-url").forEach(x=>x.setAttribute("content",clean))}catch(e){}})();
+</script>
+</head>

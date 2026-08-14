@@ -899,3 +899,1649 @@ body.page-servicios
   }
 }
 
+/* EXPIRITI_T12P3_COURSE_START */
+
+.page-servicios .exp-course-info-badge{
+  display:flex!important;
+  width:max-content!important;
+  max-width:calc(100% - 24px)!important;
+  margin:14px auto 0!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+}
+
+.page-servicios
+.exp-course-info-badge
+.exp-course-wa-icon{
+  display:block!important;
+  flex:0 0 auto!important;
+  margin:0 0 0 6px!important;
+}
+
+/* EXPIRITI_T12P3_COURSE_END */
+
+/* EXPIRITI_T12V1_PENDING_VIDEO_START */
+
+/*
+ * Real YouTube IDs are still pending.
+ * Keep incomplete embeds invisible instead of showing
+ * a broken player. Remove this owner when IDs are supplied.
+ */
+
+.page-servicios
+iframe[src*="VIDEO_ID_"],
+
+.page-servicios
+iframe[data-src*="VIDEO_ID_"]{
+
+ display:none!important;
+}
+
+/* EXPIRITI_T12V1_PENDING_VIDEO_END */
+
+/* EXPIRITI_T16_SERVICE_CSS_START */
+
+
+/* ==========================================================
+   REELS
+   ========================================================== */
+
+.page-servicios
+.exp-t16-reel-title{
+
+  display:
+    block!important;
+
+  margin:
+    0 0 12px!important;
+
+  font-size:
+    clamp(
+      1.1rem,
+      1.5vw,
+      1.38rem
+    )!important;
+
+  font-weight:
+    800!important;
+
+  line-height:
+    1.23!important;
+
+  letter-spacing:
+    -.015em!important;
+
+  background:
+    linear-gradient(
+      90deg,
+      #183768 0%,
+      #3478df 48%,
+      #68a4ff 100%
+    )!important;
+
+  -webkit-background-clip:
+    text!important;
+
+  background-clip:
+    text!important;
+
+  color:
+    transparent!important;
+
+  -webkit-text-fill-color:
+    transparent!important;
+}
+
+
+/* ==========================================================
+   REEL ARROWS
+   ========================================================== */
+
+.page-servicios
+.carousel{
+
+  position:
+    relative!important;
+}
+
+
+.page-servicios
+.carousel > .arrowCircle{
+
+  position:
+    absolute!important;
+
+  top:
+    50%!important;
+
+  bottom:
+    auto!important;
+
+  z-index:
+    8!important;
+
+  transform:
+    translateY(-50%)!important;
+
+  transition:
+    background-color .16s ease,
+    box-shadow .16s ease,
+    opacity .16s ease!important;
+}
+
+
+.page-servicios
+.carousel > .arrowCircle.prev{
+
+  left:
+    8px!important;
+
+  right:
+    auto!important;
+}
+
+
+.page-servicios
+.carousel > .arrowCircle.next{
+
+  right:
+    8px!important;
+
+  left:
+    auto!important;
+}
+
+
+.page-servicios
+.carousel > .arrowCircle:hover,
+
+.page-servicios
+.carousel > .arrowCircle:active,
+
+.page-servicios
+.carousel > .arrowCircle.exp-t16-arrow-feedback{
+
+  transform:
+    translateY(-50%)!important;
+
+  background:
+    rgba(59,130,246,.14)!important;
+
+  box-shadow:
+    0 0 0 5px
+    rgba(59,130,246,.10),
+    0 8px 24px
+    rgba(15,23,42,.16)!important;
+}
+
+
+/* ==========================================================
+   CURSOS CTA
+   ========================================================== */
+
+.page-servicios
+.exp-course-info-badge{
+
+  display:
+    flex!important;
+
+  width:
+    max-content!important;
+
+  max-width:
+    calc(100% - 24px)!important;
+
+  margin-left:
+    auto!important;
+
+  margin-right:
+    auto!important;
+
+  justify-self:
+    center!important;
+
+  align-self:
+    center!important;
+
+  position:
+    static!important;
+
+  transform:
+    none!important;
+}
+
+
+.page-servicios
+.exp-course-wa-icon{
+
+  background:
+    transparent!important;
+
+  border:
+    0!important;
+
+  box-shadow:
+    none!important;
+
+  filter:
+    none!important;
+}
+
+
+/* ==========================================================
+   COMPARATIVAS COMPARTIDAS
+   ========================================================== */
+
+.page-servicios
+.exp-t16-compare-wrap{
+
+  width:
+    100%!important;
+
+  max-width:
+    100%!important;
+
+  border-radius:
+    18px!important;
+
+  touch-action:
+    auto!important;
+
+  overscroll-behavior-x:
+    contain!important;
+
+  overscroll-behavior-y:
+    auto!important;
+}
+
+
+.page-servicios
+.exp-t16-compare-table{
+
+  width:
+    100%!important;
+
+  max-width:
+    100%!important;
+
+  table-layout:
+    fixed!important;
+
+  border-spacing:
+    0!important;
+}
+
+
+.page-servicios
+.exp-t16-compare-table
+:is(th,td){
+
+  min-width:
+    0!important;
+
+  white-space:
+    normal!important;
+
+  word-break:
+    normal!important;
+
+  overflow-wrap:
+    break-word!important;
+
+  hyphens:
+    none!important;
+
+  vertical-align:
+    middle!important;
+}
+
+
+.page-servicios
+.exp-t16-compare-table
+th{
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif!important;
+
+  font-size:
+    clamp(.89rem,.95vw,.98rem)!important;
+
+  font-weight:
+    800!important;
+
+  letter-spacing:
+    -.012em!important;
+
+  line-height:
+    1.2!important;
+}
+
+
+.page-servicios
+.exp-t16-compare-primary
+:is(th,td){
+
+  text-align:
+    left!important;
+}
+
+
+.page-servicios
+.exp-t16-compare-secondary
+:is(th,td){
+
+  text-align:
+    center!important;
+}
+
+
+.page-servicios
+.exp-t16-compare-secondary
+tr > :first-child{
+
+  text-align:
+    left!important;
+}
+
+
+@media(min-width:901px){
+
+  .page-servicios
+  .exp-t16-compare-wrap{
+
+    overflow-x:
+      visible!important;
+
+    overflow-y:
+      visible!important;
+  }
+
+
+  .page-servicios
+  .exp-t16-compare-table
+  tr > :first-child{
+
+    width:
+      28%!important;
+  }
+}
+
+
+@media(max-width:900px){
+
+  .page-servicios
+  .exp-t16-compare-wrap{
+
+    overflow-x:
+      auto!important;
+
+    overflow-y:
+      hidden!important;
+
+    -webkit-overflow-scrolling:
+      touch!important;
+  }
+
+
+  .page-servicios
+  .exp-t16-compare-table{
+
+    min-width:
+      820px!important;
+  }
+
+
+  .page-servicios
+  .exp-t16-compare-table
+  tr > :first-child{
+
+    width:
+      220px!important;
+  }
+}
+
+
+/* EXPIRITI_T16_SERVICE_CSS_END */
+
+/* EXPIRITI_T17_SERVICES_CSS_START */
+
+
+/* ==========================================================
+   CURSOS — PEDIR INFO LEGIBLE + CENTERED
+   ========================================================== */
+
+body.page-servicios
+.exp-course-info-badge{
+
+ display:flex!important;
+
+ align-items:center!important;
+ justify-content:center!important;
+
+ gap:7px!important;
+
+ width:max-content!important;
+
+ max-width:
+  calc(100% - 24px)!important;
+
+ margin:
+  14px auto 0!important;
+
+ padding:
+  9px 13px!important;
+
+ position:static!important;
+
+ transform:none!important;
+
+ justify-self:center!important;
+
+ color:
+  #065f46!important;
+
+ background:
+  #ecfdf5!important;
+
+ border:
+  1px solid #34d399!important;
+
+ border-radius:
+  999px!important;
+
+ text-decoration:
+  none!important;
+
+ font-weight:
+  800!important;
+
+ line-height:
+  1.1!important;
+
+ box-shadow:
+  none!important;
+}
+
+
+body.page-servicios
+.exp-course-info-badge
+:is(span,a){
+
+ color:
+  inherit!important;
+
+ text-decoration:
+  none!important;
+}
+
+
+body.page-servicios
+.exp-course-info-badge:hover,
+
+body.page-servicios
+.exp-course-info-badge:focus-visible{
+
+ color:
+  #064e3b!important;
+
+ background:
+  #d1fae5!important;
+
+ border-color:
+  #10b981!important;
+
+ text-decoration:
+  none!important;
+
+ box-shadow:
+  0 0 0 4px
+  rgba(16,185,129,.10)!important;
+}
+
+
+body.page-servicios
+.exp-course-info-badge:hover
+:is(span,a),
+
+body.page-servicios
+.exp-course-info-badge:focus-visible
+:is(span,a){
+
+ text-decoration:
+  none!important;
+
+ border-bottom:
+  0!important;
+}
+
+
+body.page-servicios
+.exp-course-info-badge::before,
+
+body.page-servicios
+.exp-course-info-badge::after{
+
+ text-decoration:
+  none!important;
+}
+
+
+body.page-servicios
+.exp-course-wa-icon{
+
+ display:block!important;
+
+ width:18px!important;
+ height:18px!important;
+
+ margin:
+  0 0 0 2px!important;
+
+ padding:0!important;
+
+ background:
+  transparent!important;
+
+ border:0!important;
+
+ border-radius:0!important;
+
+ box-shadow:none!important;
+
+ filter:none!important;
+}
+
+
+/* ==========================================================
+   SERVICE COMPARATIVE TABLES
+   ========================================================== */
+
+body.page-servicios
+table.exp-t17-compare-table{
+
+ width:100%!important;
+
+ max-width:100%!important;
+
+ table-layout:
+  fixed!important;
+
+ border-spacing:
+  0!important;
+}
+
+
+body.page-servicios
+table.exp-t17-compare-table
+:is(th,td){
+
+ white-space:
+  normal!important;
+
+ word-break:
+  normal!important;
+
+ overflow-wrap:
+  break-word!important;
+
+ hyphens:
+  none!important;
+
+ vertical-align:
+  middle!important;
+}
+
+
+body.page-servicios
+table.exp-t17-compare-table
+thead tr:first-child > *{
+
+ color:
+  #172033!important;
+
+ font-family:
+  Inter,
+  system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  sans-serif!important;
+
+ font-size:
+  .93rem!important;
+
+ font-weight:
+  850!important;
+
+ letter-spacing:
+  -.015em!important;
+
+ line-height:
+  1.18!important;
+}
+
+
+body.page-servicios
+table.exp-t17-compare-primary
+:is(th,td){
+
+ text-align:
+  left!important;
+}
+
+
+body.page-servicios
+table.exp-t17-compare-secondary
+tr > :first-child{
+
+ text-align:
+  left!important;
+}
+
+
+body.page-servicios
+table.exp-t17-compare-secondary
+tr > :not(:first-child){
+
+ text-align:
+  center!important;
+}
+
+
+/* EXPIRITI_T17_SERVICES_CSS_END */
+
+/* EXPIRITI_T18_SERVICE_HERO_CSS_START */
+
+
+/* ==========================================================
+   SERVICE TITLE + MICROBENEFITS
+   ========================================================== */
+
+body.page-servicios
+.exp-t18-service-hero-row{
+
+ display:flex!important;
+
+ align-items:center!important;
+
+ justify-content:flex-start!important;
+
+ gap:
+  12px 20px!important;
+
+ flex-wrap:wrap!important;
+
+ width:100%!important;
+
+ margin:
+  12px 0 16px!important;
+}
+
+
+body.page-servicios
+.exp-t18-service-hero-row
+> h1{
+
+ flex:
+  0 1 auto!important;
+
+ margin:
+  0!important;
+
+ padding:
+  0!important;
+}
+
+
+body.page-servicios
+.exp-t18-service-hero-row
+> .badges{
+
+ display:flex!important;
+
+ align-items:center!important;
+
+ justify-content:flex-start!important;
+
+ gap:
+  8px 18px!important;
+
+ flex:
+  1 1 420px!important;
+
+ flex-wrap:
+  wrap!important;
+
+ margin:
+  0!important;
+
+ padding:
+  0!important;
+}
+
+
+/* Non-interactive microbenefits */
+
+body.page-servicios
+.exp-t18-service-hero-row
+> .badges
+.badge{
+
+ display:inline-flex!important;
+
+ align-items:center!important;
+
+ gap:8px!important;
+
+ margin:0!important;
+
+ padding:0!important;
+
+ min-height:0!important;
+
+ color:
+  #445269!important;
+
+ background:
+  transparent!important;
+
+ background-image:
+  none!important;
+
+ border:
+  0!important;
+
+ border-radius:
+  0!important;
+
+ box-shadow:
+  none!important;
+
+ outline:
+  0!important;
+
+ font-size:
+  .82rem!important;
+
+ font-weight:
+  700!important;
+
+ line-height:
+  1.28!important;
+
+ text-decoration:
+  none!important;
+
+ cursor:
+  default!important;
+
+ pointer-events:
+  none!important;
+}
+
+
+body.page-servicios
+.exp-t18-service-hero-row
+> .badges
+.badge::before{
+
+ content:""!important;
+
+ display:block!important;
+
+ flex:
+  0 0 6px!important;
+
+ width:6px!important;
+
+ height:6px!important;
+
+ border-radius:
+  50%!important;
+
+ background:
+  linear-gradient(
+    135deg,
+    #16b8a6,
+    #4f8df7
+  )!important;
+
+ box-shadow:
+  none!important;
+}
+
+
+html[data-theme="dark"]
+body.page-servicios
+.exp-t18-service-hero-row
+> .badges
+.badge{
+
+ color:
+  #d6e0ef!important;
+}
+
+
+/* ==========================================================
+   CURSOS — MATAR DEFINITIVAMENTE UNDERLINE / AFTER
+   ========================================================== */
+
+body.page-servicios
+a.exp-course-info-badge,
+
+body.page-servicios
+a.exp-course-info-badge:link,
+
+body.page-servicios
+a.exp-course-info-badge:visited,
+
+body.page-servicios
+a.exp-course-info-badge:hover,
+
+body.page-servicios
+a.exp-course-info-badge:active,
+
+body.page-servicios
+a.exp-course-info-badge:focus,
+
+body.page-servicios
+a.exp-course-info-badge:focus-visible{
+
+ text-decoration:
+  none!important;
+
+ text-decoration-line:
+  none!important;
+
+ text-decoration-color:
+  transparent!important;
+
+ background-image:
+  none!important;
+}
+
+
+body.page-servicios
+a.exp-course-info-badge
+*,
+
+body.page-servicios
+a.exp-course-info-badge:hover
+*,
+
+body.page-servicios
+a.exp-course-info-badge:focus-visible
+*{
+
+ text-decoration:
+  none!important;
+
+ text-decoration-line:
+  none!important;
+
+ border-bottom:
+  0!important;
+}
+
+
+body.page-servicios
+a.exp-course-info-badge::after{
+
+ content:
+  none!important;
+
+ display:
+  none!important;
+
+ width:
+  0!important;
+
+ height:
+  0!important;
+
+ border:
+  0!important;
+
+ background:
+  none!important;
+
+ box-shadow:
+  none!important;
+}
+
+
+@media(max-width:780px){
+
+ body.page-servicios
+ .exp-t18-service-hero-row{
+
+  align-items:
+   flex-start!important;
+
+  gap:
+   10px!important;
+ }
+
+
+ body.page-servicios
+ .exp-t18-service-hero-row
+ > .badges{
+
+  flex-basis:
+   100%!important;
+
+  gap:
+   7px 14px!important;
+ }
+}
+
+
+/* EXPIRITI_T18_SERVICE_HERO_CSS_END */
+
+/* EXPIRITI_T19_SERVICE_GLOBAL_START */
+
+
+/* ==========================================================
+   TITLE + MICROBENEFITS — ALL SERVICES
+   ========================================================== */
+
+body.page-servicios
+.exp-t19-service-hero-line{
+
+ display:flex!important;
+
+ align-items:center!important;
+
+ justify-content:flex-start!important;
+
+ gap:
+  9px 20px!important;
+
+ flex-wrap:
+  wrap!important;
+
+ width:100%!important;
+
+ margin:
+  12px 0 18px!important;
+}
+
+
+body.page-servicios
+.exp-t19-service-hero-line
+> .exp-t19-hero-title{
+
+ flex:
+  0 1 auto!important;
+
+ margin:
+  0!important;
+
+ padding:
+  0!important;
+
+ align-self:
+  center!important;
+}
+
+
+body.page-servicios
+.exp-t19-microbenefits{
+
+ display:flex!important;
+
+ align-items:center!important;
+
+ justify-content:flex-start!important;
+
+ flex:
+  1 1 400px!important;
+
+ flex-wrap:wrap!important;
+
+ gap:
+  7px 18px!important;
+
+ margin:0!important;
+
+ padding:0!important;
+}
+
+
+body.page-servicios
+.exp-t19-microbenefits
+.badge{
+
+ display:inline-flex!important;
+
+ align-items:center!important;
+
+ gap:8px!important;
+
+ min-height:0!important;
+
+ margin:0!important;
+
+ padding:0!important;
+
+ color:
+  #46546a!important;
+
+ background:
+  transparent!important;
+
+ background-image:
+  none!important;
+
+ border:
+  0!important;
+
+ border-radius:
+  0!important;
+
+ outline:
+  0!important;
+
+ box-shadow:
+  none!important;
+
+ font-size:
+  .82rem!important;
+
+ font-weight:
+  700!important;
+
+ line-height:
+  1.28!important;
+
+ text-decoration:
+  none!important;
+
+ cursor:
+  default!important;
+
+ pointer-events:
+  none!important;
+}
+
+
+body.page-servicios
+.exp-t19-microbenefits
+.badge::before{
+
+ content:""!important;
+
+ display:block!important;
+
+ width:6px!important;
+ height:6px!important;
+
+ flex:
+  0 0 6px!important;
+
+ border-radius:
+  50%!important;
+
+ background:
+  linear-gradient(
+    135deg,
+    #17ad9f,
+    #4d8df4
+  )!important;
+
+ box-shadow:
+  none!important;
+}
+
+
+html[data-theme="dark"]
+body.page-servicios
+.exp-t19-microbenefits
+.badge{
+
+ color:
+  #d6e1ef!important;
+}
+
+
+/* ==========================================================
+   COURSES — ABSOLUTE DECORATION KILL
+
+   Applies to actual anchor AND child.
+   ========================================================== */
+
+body.page-servicios
+.exp-t19-course-decoration-clean,
+
+body.page-servicios
+.exp-t19-course-decoration-clean:link,
+
+body.page-servicios
+.exp-t19-course-decoration-clean:visited,
+
+body.page-servicios
+.exp-t19-course-decoration-clean:hover,
+
+body.page-servicios
+.exp-t19-course-decoration-clean:active,
+
+body.page-servicios
+.exp-t19-course-decoration-clean:focus,
+
+body.page-servicios
+.exp-t19-course-decoration-clean:focus-visible,
+
+body.page-servicios
+.exp-t19-course-decoration-clean *,
+
+body.page-servicios
+.exp-t19-course-decoration-clean:hover *,
+
+body.page-servicios
+.exp-t19-course-decoration-clean:focus-visible *{
+
+ text-decoration:
+  none!important;
+
+ text-decoration-line:
+  none!important;
+
+ text-decoration-style:
+  solid!important;
+
+ text-decoration-color:
+  transparent!important;
+
+ border-bottom:
+  0!important;
+
+ background-image:
+  none!important;
+}
+
+
+body.page-servicios
+.exp-t19-course-decoration-clean::before,
+
+body.page-servicios
+.exp-t19-course-decoration-clean::after{
+
+ content:
+  none!important;
+
+ display:
+  none!important;
+
+ width:
+  0!important;
+
+ height:
+  0!important;
+
+ border:
+  0!important;
+
+ border-bottom:
+  0!important;
+
+ background:
+  none!important;
+
+ background-image:
+  none!important;
+
+ box-shadow:
+  none!important;
+}
+
+
+@media(max-width:900px){
+
+ body.page-servicios
+ .exp-t19-service-hero-line{
+
+  align-items:
+   flex-start!important;
+
+  gap:
+   10px!important;
+ }
+
+
+ body.page-servicios
+ .exp-t19-microbenefits{
+
+  flex:
+   1 1 100%!important;
+
+  width:
+   100%!important;
+
+  gap:
+   7px 14px!important;
+ }
+}
+
+
+/* EXPIRITI_T19_SERVICE_GLOBAL_END */
+
+/* EXPIRITI_T21R2_SERVICES_POLISH_START */
+
+
+/* ==========================================================
+   POLIZAS / IMPLEMENTACIONES / CURSOS
+   remove pale side wash
+   ========================================================== */
+
+body.page-servicios.exp-t21r-clean-edge,
+
+body.page-servicios.exp-t21r-clean-edge
+main,
+
+body.page-servicios.exp-t21r-clean-edge
+main.hero,
+
+body.page-servicios.exp-t21r-clean-edge
+main.container{
+
+  filter:
+    none!important;
+
+  box-shadow:
+    none!important;
+}
+
+
+body.page-servicios.exp-t21r-clean-edge::before,
+
+body.page-servicios.exp-t21r-clean-edge::after,
+
+body.page-servicios.exp-t21r-clean-edge
+main::before,
+
+body.page-servicios.exp-t21r-clean-edge
+main::after,
+
+body.page-servicios.exp-t21r-clean-edge
+main.hero::before,
+
+body.page-servicios.exp-t21r-clean-edge
+main.hero::after{
+
+  content:
+    none!important;
+
+  display:
+    none!important;
+
+  opacity:
+    0!important;
+
+  background:
+    none!important;
+
+  background-image:
+    none!important;
+
+  box-shadow:
+    none!important;
+
+  filter:
+    none!important;
+}
+
+
+/* ==========================================================
+   CURSOS:
+   same row height => CTA baseline aligns automatically.
+   ========================================================== */
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid{
+
+  align-items:
+    stretch!important;
+}
+
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+> .fcard{
+
+  display:flex;
+
+  flex-direction:
+    column!important;
+
+  align-items:
+    stretch!important;
+
+  height:
+    100%!important;
+
+  box-sizing:
+    border-box!important;
+
+  padding-bottom:
+    24px!important;
+}
+
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+> .fcard
+.exp-course-info-badge{
+
+  flex:
+    0 0 auto!important;
+
+  align-self:
+    center!important;
+
+  justify-self:
+    center!important;
+
+  margin-top:
+    auto!important;
+
+  margin-right:
+    auto!important;
+
+  margin-bottom:
+    0!important;
+
+  margin-left:
+    auto!important;
+}
+
+
+/*
+ * Anchor itself may be the badge OR its parent.
+ * Remove all hover-decoration paths.
+ */
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+a.exp-course-info-badge,
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+a:has(.exp-course-info-badge),
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+a.exp-course-info-badge:hover,
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+a:has(.exp-course-info-badge):hover{
+
+  text-decoration:
+    none!important;
+
+  text-decoration-line:
+    none!important;
+
+  border-bottom:
+    0!important;
+
+  background-image:
+    none!important;
+}
+
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+a.exp-course-info-badge::before,
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+a.exp-course-info-badge::after,
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+a:has(.exp-course-info-badge)::before,
+
+body.page-servicios.exp-t21r-course-grid
+#cursosGrid
+a:has(.exp-course-info-badge)::after{
+
+  content:
+    none!important;
+
+  display:
+    none!important;
+
+  width:
+    0!important;
+
+  height:
+    0!important;
+
+  border:
+    0!important;
+
+  background:
+    none!important;
+}
+
+
+@media(max-width:780px){
+
+  body.page-servicios.exp-t21r-course-grid
+  #cursosGrid
+  > .fcard{
+
+    padding-bottom:
+      20px!important;
+  }
+}
+
+
+/* EXPIRITI_T21R2_SERVICES_POLISH_END */
+
+/* EXPIRITI_T22_SERVICE_P0_START */
+
+
+/* ==========================================================
+   LISTSLIDER
+   ========================================================== */
+
+body.page-servicios
+.listSlider
+.arrowCircle.is-disabled{
+
+  display:
+    none!important;
+
+  pointer-events:
+    none!important;
+}
+
+
+@media(max-width:900px){
+
+  /*
+   * Mobile = native horizontal swipe.
+   * No visual < > controls.
+   */
+
+  body.page-servicios
+  .listSlider
+  .arrowCircle{
+
+    display:
+      none!important;
+
+    pointer-events:
+      none!important;
+  }
+
+
+  body.page-servicios
+  .listSlider
+  .listTrack{
+
+    overflow-x:
+      auto!important;
+
+    overflow-y:
+      hidden!important;
+
+    -webkit-overflow-scrolling:
+      touch!important;
+
+    overscroll-behavior-x:
+      contain!important;
+
+    overscroll-behavior-y:
+      auto!important;
+
+    touch-action:
+      pan-x pan-y!important;
+
+    scroll-snap-type:
+      x proximity!important;
+
+    scrollbar-width:
+      none!important;
+  }
+
+
+  body.page-servicios
+  .listSlider
+  .listTrack::-webkit-scrollbar{
+
+    display:
+      none!important;
+  }
+
+
+  body.page-servicios
+  .listSlider
+  .listPage{
+
+    scroll-snap-align:
+      start!important;
+  }
+}
+
+
+/* ==========================================================
+   SERVICE COMPARISON
+   Only THEAD gets header typography.
+   ========================================================== */
+
+body.page-servicios
+table.exp-t17-compare-table
+tbody
+tr:first-child
+> *{
+
+  font-weight:
+    400!important;
+}
+
+
+/* ==========================================================
+   COURSES
+   Do NOT override filter hiding.
+   ========================================================== */
+
+body.page-servicios
+#cursosGrid
+> .fcard[hidden],
+
+body.page-servicios
+#cursosGrid
+> .fcard.hidden,
+
+body.page-servicios
+#cursosGrid
+> .fcard.is-hidden,
+
+body.page-servicios
+#cursosGrid
+> .fcard[aria-hidden="true"],
+
+body.page-servicios
+#cursosGrid
+> .fcard[style*="display: none"]{
+
+  display:
+    none!important;
+}
+
+
+/*
+ * Stable button baseline without requiring flex display.
+ */
+
+body.page-servicios
+.exp-t22-course-card{
+
+  position:
+    relative!important;
+
+  box-sizing:
+    border-box!important;
+
+  padding-bottom:
+    78px!important;
+}
+
+
+body.page-servicios
+.exp-t22-course-card
+.exp-t22-course-cta{
+
+  position:
+    absolute!important;
+
+  left:
+    50%!important;
+
+  bottom:
+    22px!important;
+
+  transform:
+    translateX(-50%)!important;
+
+  margin:
+    0!important;
+
+  width:
+    max-content!important;
+
+  max-width:
+    calc(100% - 28px)!important;
+}
+
+
+@media(max-width:780px){
+
+  body.page-servicios
+  .exp-t22-course-card{
+
+    padding-bottom:
+      72px!important;
+  }
+
+
+  body.page-servicios
+  .exp-t22-course-card
+  .exp-t22-course-cta{
+
+    bottom:
+      18px!important;
+  }
+}
+
+
+/* EXPIRITI_T22_SERVICE_P0_END */

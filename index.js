@@ -183,3 +183,171 @@ D.readyState==="loading"?D.addEventListener("DOMContentLoaded",()=>setTimeout(bo
 (()=>{if(window.__EXP_CONTACT_ANCHOR_FIX__)return;window.__EXP_CONTACT_ANCHOR_FIX__=1;const go=()=>{const el=document.querySelector("#contacto");if(!el)return;const h=document.querySelector("#gh-header")?.getBoundingClientRect().height||68;const y=el.getBoundingClientRect().top+scrollY-h-10;scrollTo({top:Math.max(0,y),behavior:"smooth"})};document.addEventListener("click",e=>{const a=e.target.closest('a[href$="#contacto"],a[data-href$="#contacto"]');if(!a)return;const raw=a.getAttribute("href")||a.dataset.href||"";if(!raw.includes("#contacto"))return;if(location.pathname.endsWith("/")||location.pathname.endsWith("/index.html")||location.pathname==="/index.html"){e.preventDefault();e.stopImmediatePropagation();history.replaceState(null,"","#contacto");go()}},true);window.addEventListener("load",()=>{if(location.hash==="#contacto")setTimeout(go,80)},{once:true})})();
 
 /* Axis-aware wheel: vertical-dominant diagonals stay on the page; horizontal input remains native. */
+
+/* __EXP_T12AR4_FORM_OWNER__ */
+(()=>{
+  const mq=matchMedia("(max-width:780px)");
+
+  const apply=()=>{
+
+    document
+      .querySelectorAll(
+        "#contactForm .contact-top-grid"
+      )
+      .forEach(grid=>{
+
+        grid.style.setProperty(
+          "display",
+          "grid",
+          "important"
+        );
+
+        grid.style.setProperty(
+          "grid-template-columns",
+          mq.matches
+            ?"minmax(0,1fr)"
+            :"repeat(3,minmax(0,1fr))",
+          "important"
+        );
+
+        grid.style.setProperty(
+          "gap",
+          "14px",
+          "important"
+        );
+
+        grid.style.setProperty(
+          "width",
+          "100%",
+          "important"
+        );
+
+
+        grid
+          .querySelectorAll(
+            ".contact-field"
+          )
+          .forEach(field=>{
+
+            field.style.setProperty(
+              "width",
+              "auto",
+              "important"
+            );
+
+            field.style.setProperty(
+              "min-width",
+              "0",
+              "important"
+            );
+
+            field.style.setProperty(
+              "max-width",
+              "none",
+              "important"
+            );
+          });
+
+
+        ["#nombre","#correo","#telefono"]
+          .forEach(sel=>{
+
+            const input=
+              grid.querySelector(sel);
+
+            if(!input)return;
+
+            input.style.setProperty(
+              "display",
+              "block",
+              "important"
+            );
+
+            input.style.setProperty(
+              "width",
+              "100%",
+              "important"
+            );
+
+            input.style.setProperty(
+              "min-width",
+              "0",
+              "important"
+            );
+
+            input.style.setProperty(
+              "max-width",
+              "none",
+              "important"
+            );
+
+            input.style.setProperty(
+              "box-sizing",
+              "border-box",
+              "important"
+            );
+          });
+      });
+  };
+
+
+  const boot=()=>{
+
+    apply();
+
+    if(mq.addEventListener){
+      mq.addEventListener(
+        "change",
+        apply
+      );
+    }else if(mq.addListener){
+      mq.addListener(apply);
+    }
+  };
+
+
+  if(document.readyState==="loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+  }
+})();
+/* END___EXP_T12AR4_FORM_OWNER__ */
+
+/* __EXP_T12AR4_DARK_OWNER__ */
+(()=>{
+  const id=
+    "exp-t12ar4-dark";
+
+  if(
+    document.getElementById(id)
+  )return;
+
+  const s=
+    document.createElement(
+      "style"
+    );
+
+  s.id=id;
+
+  s.textContent=`
+    html[data-theme="dark"]
+    .hero .hero-piece.gradient-word,
+    html[data-theme="dark"]
+    .hero .hero-piece.gradient-word .hero-lock{
+      color:#fff!important;
+      -webkit-text-fill-color:#fff!important;
+      background-image:none!important;
+    }
+  `;
+
+  document.head.appendChild(s);
+})();
+/* END___EXP_T12AR4_DARK_OWNER__ */

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <script id="exp-theme-boot">(function(){try{var k="expiriti_theme",v=localStorage.getItem(k)||"light";document.documentElement.setAttribute("data-theme",v);document.documentElement.style.colorScheme=v;document.documentElement.style.background=v==="light"?"#fff":"#070b12"}catch(e){document.documentElement.setAttribute("data-theme","light");document.documentElement.style.background="#fff"}})();</script>
@@ -44,10 +45,10 @@
   <div id="header-placeholder"></div>
 
   <main class="container hero">
-    <a class="hint" href="/index.html#productos">← Volver a productos</a>
+    <a class="hint" href="/index.html#productos-con">← Volver a productos</a>
 
     <!-- H1 ahora muestra la imagen del sistema en lugar de texto grande -->
-    <h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;">
+    <div class="exp-t19-hero-line exp-t19-system-hero-line"><h1 style="display:flex;align-items:center;gap:16px;margin:12px 0 14px;" class="exp-t19-hero-title">
       <img src="/IMG/contabilidad.webp"
            alt=""
            style="width:230px;max-width:60vw;border-radius:14px;"
@@ -55,14 +56,14 @@
       <span class="sr-only">CONTPAQi Contabilidad: software de contabilidad electrónica para cumplir con el SAT</span>
     </h1>
 
-    <div class="badges" role="list" aria-label="Características destacadas">
+    <div class="badges exp-t19-microbenefits" role="list" aria-label="Características destacadas">
       <span class="badge" role="listitem">Contabilidad electrónica</span>
       <span class="badge" role="listitem">Pólizas automáticas (Bancos/Comercial)</span>
       <span class="badge" role="listitem" style="background:rgba(96,165,250,.15);border-color:#3b82f6;color:#93c5fd;">Nueva conexión: CONTPAQi Despachos</span>  
       <span class="badge" role="listitem" style="background:rgba(34, 197, 94, 0.15); border-color:#22c55e; color:#86efac;">
         Reportes fiscales y DIOT más sencilla</span>
 
-    </div>
+    </div></div>
 
 
     <!-- =================== HERO / RESUMEN =================== -->
@@ -142,7 +143,7 @@
       <!-- Columna 2: Reels -->
       <div>
         <aside class="card body" aria-label="Reels de Contabilidad" style="margin-bottom: 0;">
-          <h4 class="title-gradient" style="margin-bottom:8px;">Reels Destacados: Contabilidad</h4>
+          
 
           <h4 class="reel-title active">Contabilidad y Contabiliza te ayudan en la DIOT</h4>
           <h4 class="reel-title">Evita Errores en la DIOT</h4>
@@ -349,7 +350,7 @@
 
       <h3 id="comparativa-title" class="title-gradient">Comparativa con otros sistemas</h3>
       <div class="card body">
-        <table class="table-like">
+        <table class="table-like exp-sys-first-comparison">
           <thead><tr><th>Característica</th><th class="highlight">CONTPAQi Contabilidad</th><th>Aspel COI</th><th>QuickBooks</th><th>Otro ERP</th></tr></thead>
           <tbody>
             <tr><td>Actualización fiscal (SAT)</td><td class="highlight">✅ Automática</td><td>⚠️ Parcial</td><td>❌ Limitada</td><td>⚠️ Depende del partner</td></tr>

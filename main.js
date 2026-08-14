@@ -349,3 +349,1524 @@ TRY("toc",()=>{const e=D.getElementById("toc");if(!e)return;const t=D.getElement
 
 /* EXPIRITI GLOBAL HEADER FINAL BIND */
 (()=>{if(window.__EXP_GH_FINAL_BIND__)return;window.__EXP_GH_FINAL_BIND__=1;const D=document,W=window,Q=(s,c=D)=>c.querySelector(s),QA=(s,c=D)=>[...c.querySelectorAll(s)],isGh=location.hostname.endsWith("github.io"),seg=(location.pathname.split("/")[1]||"").trim(),repoBase=isGh&&seg?"/"+seg:"",parts=location.pathname.replace(/\/+$/,"").split("/").filter(Boolean),contentParts=isGh?parts.slice(1):parts,depth=contentParts.length>1?"../".repeat(contentParts.length-1):"./",path=p=>{if(!p)return p;if(/^(https?:)?\/\//i.test(p)||/^(mailto:|tel:|data:)/i.test(p)||p.startsWith("#"))return p;if(p.startsWith("/"))return isGh?repoBase+p:p;return((isGh?repoBase+"/":depth)+p).replace(/([^:]\/)\/+/g,"$1")};function assets(root=D){QA(".js-img[data-src]",root).forEach(img=>{const raw=img.dataset.src;if(raw){img.src=path(raw);img.style.opacity="1"}});QA(".js-link[data-href]",root).forEach(a=>{const raw=a.dataset.href;if(raw)a.href=path(raw)});QA('a[href^="/"]',root).forEach(a=>a.href=path(a.getAttribute("href")));QA('img[src^="/"]',root).forEach(img=>img.src=path(img.getAttribute("src")));D.body.classList.add("has-gh");const y=Q("#gf-year");y&&(y.textContent=new Date().getFullYear())}function drawer(open){const h=Q("#gh-header"),dr=Q("#gh-drawer"),dim=Q("#gh-dim"),bg=Q("#gh-burger");if(!h||!dr||!dim||!bg)return;if(open){dr.hidden=false;dim.hidden=false;requestAnimationFrame(()=>{D.documentElement.classList.add("gh-open");D.body.classList.add("gh-open");dr.setAttribute("aria-hidden","false");bg.setAttribute("aria-expanded","true");D.body.style.overflow="hidden";assets(dr)})}else{D.documentElement.classList.remove("gh-open");D.body.classList.remove("gh-open");dr.setAttribute("aria-hidden","true");bg.setAttribute("aria-expanded","false");D.body.style.overflow="";setTimeout(()=>{if(!D.documentElement.classList.contains("gh-open")){dr.hidden=true;dim.hidden=true}},220)}}function mobileSystems(cat){const root=Q("#gh-msys"),track=Q("#gh-sysswipe");if(!root||!track)return;const order=["contables","comerciales","nube","prod"],i=Math.max(0,order.indexOf(cat));QA(".gh-cat",root).forEach(b=>{const on=(b.dataset.cat||"")===cat;b.classList.toggle("is-active",on);b.setAttribute("aria-selected",on?"true":"false")});track.scrollTo({left:i*(track.clientWidth||1),behavior:"smooth"});QA(".gh-sysdots .dot",root).forEach((d,k)=>d.classList.toggle("is-active",k===i))}function mobileServices(dir=1){const tr=Q("#gh-msvc .gh-svctrack");if(!tr)return;tr.scrollBy({left:dir*(tr.clientWidth||1),behavior:"smooth"})}function bind(){const h=Q("#gh-header");if(!h)return;assets(h);assets(D);if(!D.__ghFinalClicks){D.__ghFinalClicks=1;D.addEventListener("click",e=>{const b=e.target.closest("#gh-burger");if(b){e.preventDefault();e.stopImmediatePropagation();drawer(!D.documentElement.classList.contains("gh-open"));return}const c=e.target.closest("#gh-close,#gh-dim");if(c){e.preventDefault();e.stopImmediatePropagation();drawer(false);return}const t=e.target.closest("#gh-theme");if(t){e.preventDefault();e.stopImmediatePropagation();const cur=D.documentElement.getAttribute("data-theme")||localStorage.getItem("expiriti_theme")||"light",next=cur==="light"?"dark":"light";D.documentElement.setAttribute("data-theme",next);localStorage.setItem("expiriti_theme",next);t.setAttribute("aria-pressed",next==="dark"?"true":"false");return}const cat=e.target.closest("#gh-msys .gh-cat[data-cat]");if(cat){e.preventDefault();e.stopImmediatePropagation();mobileSystems(cat.dataset.cat);return}const svPrev=e.target.closest("#gh-msvc .gh-svcarrow.prev"),svNext=e.target.closest("#gh-msvc .gh-svcarrow.next");if(svPrev||svNext){e.preventDefault();e.stopImmediatePropagation();mobileServices(svPrev?-1:1);return}const link=e.target.closest("a.js-link[data-href]");if(link){const raw=link.dataset.href,want=path(raw);link.href=want;e.preventDefault();e.stopImmediatePropagation();if(link.closest("#gh-drawer"))drawer(false);if(e.metaKey||e.ctrlKey||link.target==="_blank")W.open(want,"_blank","noopener");else location.href=want;return}},true);D.addEventListener("keydown",e=>{if(e.key==="Escape")drawer(false)},{passive:true})}if(!D.__ghFinalHover){D.__ghFinalHover=1;QA("#gh-header .gh-dd-wrap").forEach(w=>{let tm=0;const open=()=>{if(W.matchMedia("(max-width:1023px)").matches)return;clearTimeout(tm);QA("#gh-header .gh-dd-wrap").forEach(x=>x!==w&&x.classList.remove("gh-open"));w.classList.add("gh-open")},close=()=>{clearTimeout(tm);tm=setTimeout(()=>w.classList.remove("gh-open"),160)};w.addEventListener("mouseenter",open);w.addEventListener("mouseleave",close)})}}const boot=()=>{bind();setTimeout(bind,120);setTimeout(bind,450)};D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:true}):boot();W.addEventListener("pageshow",boot,{passive:true})})();
+
+/* EXPIRITI_T16_SYSTEMS_UX_START */
+
+(()=>{
+  const boot=()=>{
+
+    if(
+      !document.body ||
+      !document.body.classList.contains("page-sistemas")
+    ){
+      return;
+    }
+
+
+    /* =====================================================
+       BENEFICIOS DEL HERO
+       ===================================================== */
+
+    document
+      .querySelectorAll(".listSlider")
+      .forEach(slider=>{
+
+        const grid=
+          slider.closest(".grid-2");
+
+        if(
+          !grid ||
+          !grid.querySelector(".carousel")
+        ){
+          return;
+        }
+
+
+        grid.classList.add(
+          "exp-t16-benefit-grid"
+        );
+
+
+        let column=slider;
+
+        while(
+          column.parentElement &&
+          column.parentElement!==grid
+        ){
+          column=column.parentElement;
+        }
+
+
+        if(
+          !column ||
+          column.parentElement!==grid
+        ){
+          return;
+        }
+
+
+        column.classList.add(
+          "exp-t16-benefit-column"
+        );
+
+
+        slider.classList.add(
+          "exp-t16-benefit-slider"
+        );
+
+
+        const heading=
+          column.querySelector(
+            "h2.title-gradient,h2"
+          );
+
+
+        if(heading){
+
+          heading
+            .querySelectorAll(".badge")
+            .forEach(badge=>{
+              badge.style.setProperty(
+                "display",
+                "none",
+                "important"
+              );
+            });
+        }
+
+
+        /*
+         * CTA: "Pedir ficha técnica"
+         * porque la acción abre WhatsApp para solicitarla.
+         */
+        if(
+          !column.querySelector(
+            ".exp-t16-system-ctas"
+          )
+        ){
+
+          const strip=
+            document.createElement("div");
+
+          strip.className=
+            "exp-t16-system-ctas";
+
+
+          const explicit=
+            document
+              .querySelector(
+                ".cta-strip[data-sistema]"
+              )
+              ?.dataset
+              ?.sistema
+              ?.trim();
+
+
+          const titleSystem=
+            document.title
+              .split("|")[0]
+              .replace(
+                /^CONTPAQi\s+/i,
+                ""
+              )
+              .trim();
+
+
+          const system=
+            explicit ||
+            titleSystem ||
+            "CONTPAQi";
+
+
+          const wa=
+            document.createElement("a");
+
+          wa.className=
+            "btn btn-grad-green hero-btn "
+            +"exp-t16-tech-sheet";
+
+
+          wa.href=
+            "https://wa.me/5568437918?text="
+            +encodeURIComponent(
+              "Hola ExpIRI Ti, quiero recibir la ficha técnica de CONTPAQi "
+              +system
+              +"."
+            );
+
+
+          wa.target="_blank";
+          wa.rel="noopener";
+
+
+          wa.innerHTML=
+            '<span>Pedir ficha técnica</span>'
+            +'<img '
+            +'src="/IMG/whatsapp.svg" '
+            +'class="exp-t16-wa-icon" '
+            +'alt="" '
+            +'aria-hidden="true">';
+
+
+          const call=
+            document.createElement("a");
+
+          call.className=
+            "btn btn-grad-blue hero-btn "
+            +"exp-t16-call";
+
+
+          call.href=
+            "tel:+525568437918";
+
+
+          call.innerHTML=
+            '<span>Llamada</span>'
+            +'<span aria-hidden="true">📞</span>';
+
+
+          strip.append(
+            wa,
+            call
+          );
+
+
+          slider.insertAdjacentElement(
+            "afterend",
+            strip
+          );
+        }
+      });
+
+
+    /* =====================================================
+       REELS — UNA SOLA LEYENDA
+       ===================================================== */
+
+    document
+      .querySelectorAll("aside")
+      .forEach(aside=>{
+
+        const carousel=
+          aside.querySelector(".carousel");
+
+        const legacy=[
+          ...aside.querySelectorAll(
+            ".reel-title"
+          )
+        ];
+
+
+        if(
+          !carousel ||
+          !legacy.length
+        ){
+          return;
+        }
+
+
+        aside.classList.add(
+          "exp-t16-reels"
+        );
+
+
+        [
+          ...aside.querySelectorAll(
+            "h4.title-gradient"
+          )
+        ]
+        .filter(el=>
+          /^reels\s+destacados\s*:/i
+            .test(
+              el.textContent.trim()
+            )
+        )
+        .forEach(el=>{
+          el.style.setProperty(
+            "display",
+            "none",
+            "important"
+          );
+        });
+
+
+        legacy.forEach(el=>{
+          el.style.setProperty(
+            "display",
+            "none",
+            "important"
+          );
+        });
+
+
+        let single=
+          aside.querySelector(
+            ".exp-t16-reel-title"
+          );
+
+
+        if(!single){
+
+          single=
+            document.createElement("h4");
+
+          single.className=
+            "title-gradient exp-t16-reel-title";
+
+          carousel.insertAdjacentElement(
+            "beforebegin",
+            single
+          );
+        }
+
+
+        const update=()=>{
+
+          const slides=[
+            ...carousel.querySelectorAll(
+              ".carousel-slide"
+            )
+          ];
+
+
+          const active=
+            slides.find(slide=>
+              slide.classList.contains("is-active") ||
+              slide.classList.contains("active") ||
+              slide.getAttribute("aria-current")==="true"
+            );
+
+
+          let value=
+            active?.dataset?.title
+            ||
+            active
+              ?.querySelector("[data-title]")
+              ?.dataset
+              ?.title
+            ||
+            "";
+
+
+          if(!value){
+
+            const activeLegacy=
+              legacy.find(el=>
+                el.classList.contains("active") ||
+                el.getAttribute("aria-current")==="true"
+              )
+              ||
+              (
+                legacy.length===1
+                ?legacy[0]
+                :null
+              );
+
+
+            value=
+              activeLegacy
+                ?.textContent
+                ?.trim()
+              ||
+              "";
+          }
+
+
+          if(!value){
+
+            value=
+              carousel
+                .querySelector("[data-title]")
+                ?.dataset
+                ?.title
+              ||
+              carousel
+                .querySelector("iframe[title]")
+                ?.getAttribute("title")
+              ||
+              legacy[0]
+                ?.textContent
+                ?.trim()
+              ||
+              "";
+          }
+
+
+          single.textContent=value;
+        };
+
+
+        update();
+
+
+        const observer=
+          new MutationObserver(
+            ()=>requestAnimationFrame(update)
+          );
+
+
+        observer.observe(
+          aside,
+          {
+            subtree:true,
+            attributes:true,
+            attributeFilter:[
+              "class",
+              "aria-current",
+              "aria-hidden"
+            ]
+          }
+        );
+
+
+        aside.addEventListener(
+          "click",
+          ()=>setTimeout(update,90)
+        );
+      });
+
+
+    /* =====================================================
+       TABLAS COMPARATIVAS
+
+       Primera comparativa:
+       estilo Servicios, lectura natural izquierda.
+
+       Segunda o posteriores:
+       datos centrados.
+       ===================================================== */
+
+    let comparisonIndex=0;
+
+
+    document
+      .querySelectorAll("table")
+      .forEach(table=>{
+
+        const firstRow=
+          table.querySelector("thead tr")
+          ||
+          table.querySelector("tr");
+
+
+        if(!firstRow){
+          return;
+        }
+
+
+        const cells=[
+          ...firstRow.children
+        ];
+
+
+        if(cells.length<3){
+          return;
+        }
+
+
+        const firstText=
+          (
+            cells[0]?.textContent
+            ||""
+          )
+          .trim()
+          .toLowerCase();
+
+
+        const section=
+          table.closest("section");
+
+
+        const title=
+          (
+            section
+              ?.querySelector("h2,h3,h4")
+              ?.textContent
+            ||""
+          )
+          .toLowerCase();
+
+
+        const sectionId=
+          (
+            section?.id
+            ||""
+          )
+          .toLowerCase();
+
+
+        const isComparison=
+          /^caracter[ií]stica/.test(firstText)
+          ||
+          /comparativ/.test(title)
+          ||
+          /compar/.test(sectionId);
+
+
+        if(!isComparison){
+          return;
+        }
+
+
+        comparisonIndex++;
+
+
+        table.classList.add(
+          "exp-t16-compare-table"
+        );
+
+
+        table.classList.add(
+          comparisonIndex===1
+            ?"exp-t16-compare-primary"
+            :"exp-t16-compare-secondary"
+        );
+
+
+        let wrap=
+          table.closest(
+            ".table-scroll,"
+            +".cmp-scroll,"
+            +".pricing-table-nube-wrap,"
+            +".lp-compare-wrap,"
+            +".exp-t16-compare-wrap"
+          );
+
+
+        if(!wrap){
+
+          wrap=
+            document.createElement("div");
+
+          wrap.className=
+            "exp-t16-compare-wrap";
+
+          table.parentNode.insertBefore(
+            wrap,
+            table
+          );
+
+          wrap.appendChild(table);
+
+        }else{
+
+          wrap.classList.add(
+            "exp-t16-compare-wrap"
+          );
+        }
+      });
+
+
+    /* =====================================================
+       FLECHAS DE REELS
+       No saltan, sólo feedback visual.
+       ===================================================== */
+
+    document
+      .querySelectorAll(
+        ".carousel .arrowCircle"
+      )
+      .forEach(btn=>{
+
+        const pulse=()=>{
+
+          btn.classList.add(
+            "exp-t16-arrow-feedback"
+          );
+
+          setTimeout(
+            ()=>btn.classList.remove(
+              "exp-t16-arrow-feedback"
+            ),
+            180
+          );
+        };
+
+
+        btn.addEventListener(
+          "pointerdown",
+          pulse
+        );
+
+        btn.addEventListener(
+          "click",
+          pulse
+        );
+      });
+  };
+
+
+  if(document.readyState==="loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+  }
+
+})();
+
+/* EXPIRITI_T16_SYSTEMS_UX_END */
+
+/* EXPIRITI_T16_SYSTEM_PDF_CTA_R2_START */
+
+(()=>{
+  const sheets={"analiza":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Analiza.pdf","bancos":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Bancos.pdf","colabora":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Colabora.pdf","comercialpremium":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Comercial%20Premium.pdf","comercialpro":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Comercial%20PRO.pdf","comercialstart":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Comercial%20Start.pdf","contabilidad":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Contabilidad.pdf","contabiliza":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Contabiliza.pdf","evalua":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Evalua.pdf","facturaelectronica":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Factura%20Electro%CC%81nica.pdf","nominas":"/PDFS/Ficha%20CONTPAQi%C2%AE%20No%CC%81minas.pdf","personia":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Personia.pdf","vende":"/PDFS/Ficha%20CONTPAQi%C2%AE%20Vende.pdf","xmlenlinea":"/PDFS/Ficha%20CONTPAQi%C2%AE%20XML.pdf"};
+  const intentionallyMissing=["anticipa","optimiza"];
+
+
+  const apply=()=>{
+
+    if(
+      !document.body ||
+      !document.body.classList.contains(
+        "page-sistemas"
+      )
+    ){
+      return;
+    }
+
+
+    const slug=
+      location.pathname
+        .split("/")
+        .pop()
+        .replace(/\.html$/i,"")
+        .toLowerCase();
+
+
+    const sheet=
+      document.querySelector(
+        ".exp-t16-tech-sheet"
+      );
+
+
+    const call=
+      document.querySelector(
+        ".exp-t16-call"
+      );
+
+
+    /*
+     * CTA 2 is always simply "Llamar".
+     */
+    if(call){
+
+      call.innerHTML=
+        '<span>Llamar</span>'
+        +'<span aria-hidden="true">📞</span>';
+    }
+
+
+    /*
+     * CTA 1 exists ONLY if a real ficha PDF exists.
+     */
+    if(sheets[slug]){
+
+      if(sheet){
+
+        sheet.href=
+          sheets[slug];
+
+        sheet.target=
+          "_blank";
+
+        sheet.rel=
+          "noopener";
+
+
+        sheet.innerHTML=
+          '<span>Ficha técnica</span>'
+          +'<span '
+          +'class="exp-t16-pdf-open" '
+          +'aria-hidden="true">'
+          +'↗'
+          +'</span>';
+
+
+        sheet.setAttribute(
+          "aria-label",
+          "Abrir ficha técnica en PDF"
+        );
+      }
+
+      return;
+    }
+
+
+    /*
+     * Anticipa / Optimiza currently have no actual ficha.
+     * Never fabricate or redirect them to another product.
+     */
+    if(
+      intentionallyMissing.includes(
+        slug
+      )
+    ){
+
+      if(sheet){
+        sheet.remove();
+      }
+
+      return;
+    }
+
+
+    /*
+     * Defensive default:
+     * if a future unrecognized page appears, never leave
+     * the old WhatsApp CTA pretending to be a ficha.
+     */
+    if(sheet){
+      sheet.remove();
+    }
+  };
+
+
+  if(document.readyState==="loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      apply,
+      {once:true}
+    );
+
+  }else{
+
+    apply();
+  }
+
+})();
+
+/* EXPIRITI_T16_SYSTEM_PDF_CTA_R2_END */
+
+/* EXPIRITI_T17_SYSTEMS_FINAL_START */
+
+(()=>{
+ const boot=()=>{
+
+  if(
+   !document.body ||
+   !document.body.classList.contains("page-sistemas")
+  ) return;
+
+
+  /* =======================================================
+     BENEFICIOS:
+     tarjeta visual como Servicios/Cursos,
+     pero SIN separadores horizontales.
+     ======================================================= */
+
+  document
+   .querySelectorAll(".listSlider")
+   .forEach(slider=>{
+
+    const grid=slider.closest(".grid-2");
+
+    if(
+     !grid ||
+     !grid.querySelector(".carousel")
+    ) return;
+
+    slider.classList.add(
+     "exp-t17-system-benefits"
+    );
+
+    let col=slider;
+
+    while(
+     col.parentElement &&
+     col.parentElement!==grid
+    ){
+     col=col.parentElement;
+    }
+
+    if(
+     col &&
+     col.parentElement===grid
+    ){
+     col.classList.add(
+      "exp-t17-system-benefit-column"
+     );
+    }
+   });
+
+
+  /* =======================================================
+     COMPARATIVAS:
+     se consideran ÚNICAMENTE tablas cuyo primer encabezado
+     sea exactamente "Característica".
+     Esto evita que una tabla anterior altere primary/secondary.
+     ======================================================= */
+
+  const comparisons=[
+   ...document.querySelectorAll("table")
+  ].filter(table=>{
+
+   const row=
+    table.querySelector("thead tr")
+    ||
+    table.querySelector("tr");
+
+   if(!row) return false;
+
+   const first=
+    row.children[0]
+     ?.textContent
+     ?.trim()
+     ||"";
+
+   return /^caracter[ií]stica$/i.test(first);
+  });
+
+
+  comparisons.forEach((table,index)=>{
+
+   table.classList.remove(
+    "exp-t16-compare-primary",
+    "exp-t16-compare-secondary",
+    "exp-t15-compare-table"
+   );
+
+   table.classList.add(
+    "exp-t17-compare-table",
+    index===0
+     ?"exp-t17-compare-primary"
+     :"exp-t17-compare-secondary"
+   );
+
+
+   let wrap=
+    table.closest(
+     ".table-scroll,"
+     +".cmp-scroll,"
+     +".pricing-table-nube-wrap,"
+     +".lp-compare-wrap,"
+     +".exp-t17-compare-wrap"
+    );
+
+
+   if(!wrap){
+
+    wrap=document.createElement("div");
+
+    wrap.className=
+     "exp-t17-compare-wrap";
+
+    table.parentNode.insertBefore(
+     wrap,
+     table
+    );
+
+    wrap.appendChild(table);
+
+   }else{
+
+    wrap.classList.add(
+     "exp-t17-compare-wrap"
+    );
+   }
+
+
+   const header=
+    table.querySelector("thead tr")
+    ||
+    table.querySelector("tr");
+
+   const count=
+    Math.max(
+     2,
+     header?.children.length || 2
+    );
+
+
+   const firstPct=
+    index===0 ? 28 : 25;
+
+   const otherPct=
+    (100-firstPct)/(count-1);
+
+
+   table
+    .querySelectorAll("tr")
+    .forEach(row=>{
+
+     [...row.children]
+      .forEach((cell,i)=>{
+
+       const align=
+        index===0
+         ?"left"
+         :(i===0 ? "left" : "center");
+
+
+       cell.style.setProperty(
+        "text-align",
+        align,
+        "important"
+       );
+
+
+       cell.style.setProperty(
+        "vertical-align",
+        "middle",
+        "important"
+       );
+
+
+       cell.style.setProperty(
+        "width",
+        (i===0 ? firstPct : otherPct)+"%",
+        "important"
+       );
+
+
+       cell.style.setProperty(
+        "min-width",
+        "0",
+        "important"
+       );
+
+
+       cell.style.setProperty(
+        "word-break",
+        "normal",
+        "important"
+       );
+
+
+       cell.style.setProperty(
+        "overflow-wrap",
+        "break-word",
+        "important"
+       );
+      });
+    });
+  });
+ };
+
+
+ if(document.readyState==="loading"){
+
+  document.addEventListener(
+   "DOMContentLoaded",
+   boot,
+   {once:true}
+  );
+
+ }else{
+
+  boot();
+ }
+
+})();
+
+/* EXPIRITI_T17_SYSTEMS_FINAL_END */
+
+/* EXPIRITI_T18_SYSTEM_HERO_START */
+
+(()=>{
+  const boot=()=>{
+
+    if(
+      !document.body ||
+      !document.body.classList.contains(
+        "page-sistemas"
+      )
+    ){
+      return;
+    }
+
+
+    const hero=
+      document.querySelector(
+        "main.hero"
+      );
+
+
+    if(!hero){
+      return;
+    }
+
+
+    /* =====================================================
+       HERO:
+       logo + microbeneficios en una sola línea.
+       ===================================================== */
+
+    const h1=
+      [...hero.children]
+        .find(el=>
+          el.tagName==="H1"
+        );
+
+
+    const badges=
+      [...hero.children]
+        .find(el=>
+          el.classList
+            ?.contains("badges")
+        );
+
+
+    if(h1 && badges){
+
+      /*
+       * "Nube" como badge de hero es redundante.
+       * Sólo se elimina si el texto es EXACTAMENTE Nube.
+       */
+      [
+        ...badges.querySelectorAll(
+          ".badge"
+        )
+      ]
+      .filter(el=>
+        el.textContent
+          .trim()
+          .toLowerCase()
+        ===
+        "nube"
+      )
+      .forEach(el=>el.remove());
+
+
+      if(
+        !h1.parentElement
+          .classList
+          .contains(
+            "exp-t18-hero-row"
+          )
+      ){
+
+        const row=
+          document.createElement(
+            "div"
+          );
+
+
+        row.className=
+          "exp-t18-hero-row "
+          +"exp-t18-system-hero-row";
+
+
+        hero.insertBefore(
+          row,
+          h1
+        );
+
+
+        row.appendChild(h1);
+        row.appendChild(badges);
+      }
+    }
+
+
+    /* =====================================================
+       RESUMEN:
+       quitar SOLO la tarjeta exterior que encierra
+       beneficios + reel.
+
+       Las dos tarjetas internas permanecen.
+       ===================================================== */
+
+    [
+      ...hero.querySelectorAll(
+        "section"
+      )
+    ]
+    .forEach(section=>{
+
+      const grid=
+        section.querySelector(
+          ".grid-2"
+        );
+
+
+      if(
+        !grid ||
+        !grid.querySelector(
+          ".listSlider"
+        )
+        ||
+        !grid.querySelector(
+          ".carousel"
+        )
+      ){
+        return;
+      }
+
+
+      const directShell=
+        [...section.children]
+          .find(el=>
+            el.classList
+              ?.contains("card")
+            &&
+            el.classList
+              ?.contains("body")
+            &&
+            el.querySelector(
+              ".grid-2"
+            )
+          );
+
+
+      if(directShell){
+
+        directShell.classList.add(
+          "exp-t18-flat-summary-shell"
+        );
+      }
+    });
+  };
+
+
+  if(document.readyState==="loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+  }
+
+})();
+
+/* EXPIRITI_T18_SYSTEM_HERO_END */
+
+/* EXPIRITI_T21_SYSTEM_MOBILE_SLIDER_START */
+
+(()=>{
+  const boot=()=>{
+
+    if(
+      !document.body ||
+      !document.body.classList.contains(
+        "page-sistemas"
+      )
+    ){
+      return;
+    }
+
+
+    const mq=
+      matchMedia(
+        "(max-width:900px)"
+      );
+
+
+    document
+      .querySelectorAll(
+        ".listSlider"
+      )
+      .forEach(slider=>{
+
+        if(
+          slider.dataset
+            .expT21MobileSlider
+          ===
+          "1"
+        ){
+          return;
+        }
+
+
+        const track=
+          slider.querySelector(
+            ".listTrack"
+          );
+
+        const prev=
+          slider.querySelector(
+            ".arrowCircle.prev"
+          );
+
+        const next=
+          slider.querySelector(
+            ".arrowCircle.next"
+          );
+
+
+        if(
+          !track ||
+          !prev ||
+          !next
+        ){
+          return;
+        }
+
+
+        const pages=[
+          ...track.children
+        ].filter(el=>
+          el.classList
+            .contains(
+              "listPage"
+            )
+        );
+
+
+        const len=
+          pages.length;
+
+
+        if(!len){
+          return;
+        }
+
+
+        slider.dataset
+          .expT21MobileSlider=
+          "1";
+
+
+        /*
+         * If there is only one actual page,
+         * arrows must not pretend to navigate.
+         */
+        if(len===1){
+
+          prev.hidden=true;
+          next.hidden=true;
+
+          return;
+        }
+
+
+        let index=0;
+
+
+        const pageWidth=()=>(
+          track.clientWidth
+          ||
+          slider.clientWidth
+          ||
+          1
+        );
+
+
+        const paint=n=>{
+
+          index=(
+            (n%len)
+            +len
+          )%len;
+
+
+          track.scrollTo({
+            left:
+              pageWidth()
+              *index,
+
+            behavior:
+              "smooth"
+          });
+
+
+          pages.forEach(
+            (page,i)=>{
+              page.classList.toggle(
+                "is-active",
+                i===index
+              );
+            }
+          );
+        };
+
+
+        const intercept=(
+          event,
+          delta
+        )=>{
+
+          /*
+           * Desktop keeps its existing owner.
+           * This fallback owns only mobile.
+           */
+          if(!mq.matches){
+            return;
+          }
+
+
+          event.preventDefault();
+
+          event.stopImmediatePropagation();
+
+          paint(
+            index
+            +delta
+          );
+        };
+
+
+        prev.addEventListener(
+          "click",
+          event=>
+            intercept(
+              event,
+              -1
+            ),
+          true
+        );
+
+
+        next.addEventListener(
+          "click",
+          event=>
+            intercept(
+              event,
+              1
+            ),
+          true
+        );
+
+
+        let ticking=false;
+
+
+        track.addEventListener(
+          "scroll",
+          ()=>{
+
+            if(
+              !mq.matches ||
+              ticking
+            ){
+              return;
+            }
+
+
+            ticking=true;
+
+
+            requestAnimationFrame(
+              ()=>{
+
+                const width=
+                  pageWidth();
+
+                index=Math.max(
+                  0,
+                  Math.min(
+                    len-1,
+                    Math.round(
+                      track.scrollLeft
+                      /width
+                    )
+                  )
+                );
+
+
+                ticking=false;
+              }
+            );
+          },
+          {
+            passive:true
+          }
+        );
+
+
+        window.addEventListener(
+          "resize",
+          ()=>{
+
+            if(mq.matches){
+              setTimeout(
+                ()=>paint(index),
+                50
+              );
+            }
+          }
+        );
+
+
+        if(mq.matches){
+          paint(0);
+        }
+      });
+  };
+
+
+  if(document.readyState==="loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+  }
+
+})();
+
+/* EXPIRITI_T21_SYSTEM_MOBILE_SLIDER_END */
+
+/* EXPIRITI_T22_SYSTEM_SLIDER_START */
+
+(()=>{
+  const boot=()=>{
+
+    document
+      .querySelectorAll(".listSlider")
+      .forEach(slider=>{
+
+        const track=
+          slider.querySelector(
+            ".listTrack"
+          );
+
+        if(!track){
+          return;
+        }
+
+
+        const prev=
+          slider.querySelector(
+            ".arrowCircle.prev"
+          );
+
+        const next=
+          slider.querySelector(
+            ".arrowCircle.next"
+          );
+
+
+        const isSinglePage=()=>(
+          track.scrollWidth
+          <=
+          track.clientWidth+3
+        );
+
+
+        const update=()=>{
+
+          const single=
+            isSinglePage();
+
+          [prev,next]
+            .filter(Boolean)
+            .forEach(btn=>{
+
+              btn.classList.toggle(
+                "is-disabled",
+                single
+              );
+
+              btn.setAttribute(
+                "aria-hidden",
+                single
+                  ?"true"
+                  :"false"
+              );
+            });
+        };
+
+
+        const bind=(btn,dir)=>{
+
+          if(
+            !btn
+            ||
+            btn.dataset.expT22Bound==="1"
+          ){
+            return;
+          }
+
+
+          btn.dataset.expT22Bound="1";
+
+
+          btn.addEventListener(
+            "click",
+            event=>{
+
+              /*
+               * Mobile uses native swipe.
+               * No horizontal arrow interaction.
+               */
+              if(
+                window.matchMedia(
+                  "(max-width:900px)"
+                ).matches
+              ){
+                return;
+              }
+
+
+              event.preventDefault();
+              event.stopImmediatePropagation();
+
+
+              const distance=
+                Math.max(
+                  track.clientWidth,
+                  1
+                );
+
+
+              track.scrollBy({
+                left:
+                  dir*distance,
+                behavior:
+                  "smooth"
+              });
+
+
+              setTimeout(
+                update,
+                350
+              );
+            },
+            true
+          );
+        };
+
+
+        bind(prev,-1);
+        bind(next,1);
+
+        update();
+
+
+        if(
+          "ResizeObserver"
+          in window
+        ){
+
+          new ResizeObserver(
+            update
+          ).observe(track);
+        }
+      });
+  };
+
+
+  if(document.readyState==="loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+  }
+
+})();
+
+/* EXPIRITI_T22_SYSTEM_SLIDER_END */

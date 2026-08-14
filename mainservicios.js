@@ -919,3 +919,1150 @@ function ensureModalStyles(){if($("#svcModalStyles"))return;const s=D.createElem
 
 /* EXPIRITI GLOBAL HEADER FINAL BIND */
 (()=>{if(window.__EXP_GH_FINAL_BIND__)return;window.__EXP_GH_FINAL_BIND__=1;const D=document,W=window,Q=(s,c=D)=>c.querySelector(s),QA=(s,c=D)=>[...c.querySelectorAll(s)],isGh=location.hostname.endsWith("github.io"),seg=(location.pathname.split("/")[1]||"").trim(),repoBase=isGh&&seg?"/"+seg:"",parts=location.pathname.replace(/\/+$/,"").split("/").filter(Boolean),contentParts=isGh?parts.slice(1):parts,depth=contentParts.length>1?"../".repeat(contentParts.length-1):"./",path=p=>{if(!p)return p;if(/^(https?:)?\/\//i.test(p)||/^(mailto:|tel:|data:)/i.test(p)||p.startsWith("#"))return p;if(p.startsWith("/"))return isGh?repoBase+p:p;return((isGh?repoBase+"/":depth)+p).replace(/([^:]\/)\/+/g,"$1")};function assets(root=D){QA(".js-img[data-src]",root).forEach(img=>{const raw=img.dataset.src;if(raw){img.src=path(raw);img.style.opacity="1"}});QA(".js-link[data-href]",root).forEach(a=>{const raw=a.dataset.href;if(raw)a.href=path(raw)});QA('a[href^="/"]',root).forEach(a=>a.href=path(a.getAttribute("href")));QA('img[src^="/"]',root).forEach(img=>img.src=path(img.getAttribute("src")));D.body.classList.add("has-gh");const y=Q("#gf-year");y&&(y.textContent=new Date().getFullYear())}function drawer(open){const h=Q("#gh-header"),dr=Q("#gh-drawer"),dim=Q("#gh-dim"),bg=Q("#gh-burger");if(!h||!dr||!dim||!bg)return;if(open){dr.hidden=false;dim.hidden=false;requestAnimationFrame(()=>{D.documentElement.classList.add("gh-open");D.body.classList.add("gh-open");dr.setAttribute("aria-hidden","false");bg.setAttribute("aria-expanded","true");D.body.style.overflow="hidden";assets(dr)})}else{D.documentElement.classList.remove("gh-open");D.body.classList.remove("gh-open");dr.setAttribute("aria-hidden","true");bg.setAttribute("aria-expanded","false");D.body.style.overflow="";setTimeout(()=>{if(!D.documentElement.classList.contains("gh-open")){dr.hidden=true;dim.hidden=true}},220)}}function mobileSystems(cat){const root=Q("#gh-msys"),track=Q("#gh-sysswipe");if(!root||!track)return;const order=["contables","comerciales","nube","prod"],i=Math.max(0,order.indexOf(cat));QA(".gh-cat",root).forEach(b=>{const on=(b.dataset.cat||"")===cat;b.classList.toggle("is-active",on);b.setAttribute("aria-selected",on?"true":"false")});track.scrollTo({left:i*(track.clientWidth||1),behavior:"smooth"});QA(".gh-sysdots .dot",root).forEach((d,k)=>d.classList.toggle("is-active",k===i))}function mobileServices(dir=1){const tr=Q("#gh-msvc .gh-svctrack");if(!tr)return;tr.scrollBy({left:dir*(tr.clientWidth||1),behavior:"smooth"})}function bind(){const h=Q("#gh-header");if(!h)return;assets(h);assets(D);if(!D.__ghFinalClicks){D.__ghFinalClicks=1;D.addEventListener("click",e=>{const b=e.target.closest("#gh-burger");if(b){e.preventDefault();e.stopImmediatePropagation();drawer(!D.documentElement.classList.contains("gh-open"));return}const c=e.target.closest("#gh-close,#gh-dim");if(c){e.preventDefault();e.stopImmediatePropagation();drawer(false);return}const t=e.target.closest("#gh-theme");if(t){e.preventDefault();e.stopImmediatePropagation();const cur=D.documentElement.getAttribute("data-theme")||localStorage.getItem("expiriti_theme")||"light",next=cur==="light"?"dark":"light";D.documentElement.setAttribute("data-theme",next);localStorage.setItem("expiriti_theme",next);t.setAttribute("aria-pressed",next==="dark"?"true":"false");return}const cat=e.target.closest("#gh-msys .gh-cat[data-cat]");if(cat){e.preventDefault();e.stopImmediatePropagation();mobileSystems(cat.dataset.cat);return}const svPrev=e.target.closest("#gh-msvc .gh-svcarrow.prev"),svNext=e.target.closest("#gh-msvc .gh-svcarrow.next");if(svPrev||svNext){e.preventDefault();e.stopImmediatePropagation();mobileServices(svPrev?-1:1);return}const link=e.target.closest("a.js-link[data-href]");if(link){const raw=link.dataset.href,want=path(raw);link.href=want;e.preventDefault();e.stopImmediatePropagation();if(link.closest("#gh-drawer"))drawer(false);if(e.metaKey||e.ctrlKey||link.target==="_blank")W.open(want,"_blank","noopener");else location.href=want;return}},true);D.addEventListener("keydown",e=>{if(e.key==="Escape")drawer(false)},{passive:true})}if(!D.__ghFinalHover){D.__ghFinalHover=1;QA("#gh-header .gh-dd-wrap").forEach(w=>{let tm=0;const open=()=>{if(W.matchMedia("(max-width:1023px)").matches)return;clearTimeout(tm);QA("#gh-header .gh-dd-wrap").forEach(x=>x!==w&&x.classList.remove("gh-open"));w.classList.add("gh-open")},close=()=>{clearTimeout(tm);tm=setTimeout(()=>w.classList.remove("gh-open"),160)};w.addEventListener("mouseenter",open);w.addEventListener("mouseleave",close)})}}const boot=()=>{bind();setTimeout(bind,120);setTimeout(bind,450)};D.readyState==="loading"?D.addEventListener("DOMContentLoaded",boot,{once:true}):boot();W.addEventListener("pageshow",boot,{passive:true})})();
+
+/* EXPIRITI_T16_SERVICE_UX_START */
+
+(()=>{
+  const boot=()=>{
+
+    if(
+      !document.body ||
+      !document.body.classList.contains("page-servicios")
+    ){
+      return;
+    }
+
+
+    /* =====================================================
+       REELS
+       ===================================================== */
+
+    document
+      .querySelectorAll("aside")
+      .forEach(aside=>{
+
+        const carousel=
+          aside.querySelector(".carousel");
+
+        const legacy=[
+          ...aside.querySelectorAll(
+            ".reel-title"
+          )
+        ];
+
+
+        if(
+          !carousel ||
+          !legacy.length
+        ){
+          return;
+        }
+
+
+        [
+          ...aside.querySelectorAll(
+            "h4.title-gradient"
+          )
+        ]
+        .filter(el=>
+          /^reels\s+destacados\s*:/i
+            .test(el.textContent.trim())
+        )
+        .forEach(el=>{
+          el.style.setProperty(
+            "display",
+            "none",
+            "important"
+          );
+        });
+
+
+        legacy.forEach(el=>{
+          el.style.setProperty(
+            "display",
+            "none",
+            "important"
+          );
+        });
+
+
+        let title=
+          aside.querySelector(
+            ".exp-t16-reel-title"
+          );
+
+
+        if(!title){
+
+          title=
+            document.createElement("h4");
+
+          title.className=
+            "title-gradient exp-t16-reel-title";
+
+          carousel.insertAdjacentElement(
+            "beforebegin",
+            title
+          );
+        }
+
+
+        const update=()=>{
+
+          const slides=[
+            ...carousel.querySelectorAll(
+              ".carousel-slide"
+            )
+          ];
+
+
+          const active=
+            slides.find(slide=>
+              slide.classList.contains("is-active") ||
+              slide.classList.contains("active") ||
+              slide.getAttribute("aria-current")==="true"
+            );
+
+
+          let value=
+            active?.dataset?.title
+            ||
+            active
+              ?.querySelector("[data-title]")
+              ?.dataset
+              ?.title
+            ||
+            "";
+
+
+          if(!value){
+
+            const activeLegacy=
+              legacy.find(el=>
+                el.classList.contains("active") ||
+                el.getAttribute("aria-current")==="true"
+              )
+              ||
+              (
+                legacy.length===1
+                ?legacy[0]
+                :null
+              );
+
+
+            value=
+              activeLegacy
+                ?.textContent
+                ?.trim()
+              ||
+              "";
+          }
+
+
+          if(!value){
+
+            value=
+              carousel
+                .querySelector("[data-title]")
+                ?.dataset
+                ?.title
+              ||
+              carousel
+                .querySelector("iframe[title]")
+                ?.getAttribute("title")
+              ||
+              legacy[0]
+                ?.textContent
+                ?.trim()
+              ||
+              "";
+          }
+
+
+          title.textContent=value;
+        };
+
+
+        update();
+
+
+        const observer=
+          new MutationObserver(
+            ()=>requestAnimationFrame(update)
+          );
+
+
+        observer.observe(
+          aside,
+          {
+            subtree:true,
+            attributes:true,
+            attributeFilter:[
+              "class",
+              "aria-current",
+              "aria-hidden"
+            ]
+          }
+        );
+
+
+        aside.addEventListener(
+          "click",
+          ()=>setTimeout(update,90)
+        );
+      });
+
+
+    /* =====================================================
+       COMPARATIVAS
+       ===================================================== */
+
+    let comparisonIndex=0;
+
+
+    document
+      .querySelectorAll("table")
+      .forEach(table=>{
+
+        const row=
+          table.querySelector("thead tr")
+          ||
+          table.querySelector("tr");
+
+
+        if(!row){
+          return;
+        }
+
+
+        const cells=[
+          ...row.children
+        ];
+
+
+        if(cells.length<3){
+          return;
+        }
+
+
+        const first=
+          (
+            cells[0]?.textContent
+            ||""
+          )
+          .trim()
+          .toLowerCase();
+
+
+        const section=
+          table.closest("section");
+
+
+        const title=
+          (
+            section
+              ?.querySelector("h2,h3,h4")
+              ?.textContent
+            ||""
+          )
+          .toLowerCase();
+
+
+        const id=
+          (
+            section?.id
+            ||""
+          )
+          .toLowerCase();
+
+
+        const compare=
+          /^caracter[ií]stica/.test(first)
+          ||
+          /comparativ/.test(title)
+          ||
+          /compar/.test(id);
+
+
+        if(!compare){
+          return;
+        }
+
+
+        comparisonIndex++;
+
+
+        table.classList.add(
+          "exp-t16-compare-table"
+        );
+
+
+        table.classList.add(
+          comparisonIndex===1
+            ?"exp-t16-compare-primary"
+            :"exp-t16-compare-secondary"
+        );
+
+
+        let wrap=
+          table.closest(
+            ".table-scroll,"
+            +".cmp-scroll,"
+            +".pricing-table-nube-wrap,"
+            +".lp-compare-wrap,"
+            +".exp-t16-compare-wrap"
+          );
+
+
+        if(!wrap){
+
+          wrap=
+            document.createElement("div");
+
+          wrap.className=
+            "exp-t16-compare-wrap";
+
+          table.parentNode.insertBefore(
+            wrap,
+            table
+          );
+
+          wrap.appendChild(table);
+
+        }else{
+
+          wrap.classList.add(
+            "exp-t16-compare-wrap"
+          );
+        }
+      });
+
+
+    /* =====================================================
+       CURSOS — PEDIR INFO CENTRADO
+       ===================================================== */
+
+    document
+      .querySelectorAll(
+        ".exp-course-info-badge"
+      )
+      .forEach(badge=>{
+
+        badge.style.setProperty(
+          "display",
+          "flex",
+          "important"
+        );
+
+        badge.style.setProperty(
+          "width",
+          "max-content",
+          "important"
+        );
+
+        badge.style.setProperty(
+          "max-width",
+          "calc(100% - 24px)",
+          "important"
+        );
+
+        badge.style.setProperty(
+          "margin-left",
+          "auto",
+          "important"
+        );
+
+        badge.style.setProperty(
+          "margin-right",
+          "auto",
+          "important"
+        );
+
+        badge.style.setProperty(
+          "justify-self",
+          "center",
+          "important"
+        );
+
+        badge.style.setProperty(
+          "align-self",
+          "center",
+          "important"
+        );
+
+        badge.style.setProperty(
+          "position",
+          "static",
+          "important"
+        );
+
+        badge.style.setProperty(
+          "transform",
+          "none",
+          "important"
+        );
+
+
+        const icon=
+          badge.querySelector(
+            ".exp-course-wa-icon"
+          );
+
+
+        if(icon){
+
+          icon.style.setProperty(
+            "background",
+            "transparent",
+            "important"
+          );
+
+          icon.style.setProperty(
+            "border",
+            "0",
+            "important"
+          );
+
+          icon.style.setProperty(
+            "box-shadow",
+            "none",
+            "important"
+          );
+
+          icon.style.setProperty(
+            "filter",
+            "none",
+            "important"
+          );
+        }
+      });
+
+
+    /* =====================================================
+       FLECHAS REELS
+       ===================================================== */
+
+    document
+      .querySelectorAll(
+        ".carousel .arrowCircle"
+      )
+      .forEach(btn=>{
+
+        const pulse=()=>{
+
+          btn.classList.add(
+            "exp-t16-arrow-feedback"
+          );
+
+          setTimeout(
+            ()=>btn.classList.remove(
+              "exp-t16-arrow-feedback"
+            ),
+            180
+          );
+        };
+
+
+        btn.addEventListener(
+          "pointerdown",
+          pulse
+        );
+
+        btn.addEventListener(
+          "click",
+          pulse
+        );
+      });
+  };
+
+
+  if(document.readyState==="loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+  }
+
+})();
+
+/* EXPIRITI_T16_SERVICE_UX_END */
+
+/* EXPIRITI_T17_SERVICES_FINAL_START */
+
+(()=>{
+ const boot=()=>{
+
+  if(
+   !document.body ||
+   !document.body.classList.contains("page-servicios")
+  ) return;
+
+
+  const comparisons=[
+   ...document.querySelectorAll("table")
+  ].filter(table=>{
+
+   const row=
+    table.querySelector("thead tr")
+    ||
+    table.querySelector("tr");
+
+   if(!row) return false;
+
+   const first=
+    row.children[0]
+     ?.textContent
+     ?.trim()
+     ||"";
+
+   return /^caracter[ií]stica$/i.test(first);
+  });
+
+
+  comparisons.forEach((table,index)=>{
+
+   table.classList.add(
+    "exp-t17-compare-table",
+    index===0
+     ?"exp-t17-compare-primary"
+     :"exp-t17-compare-secondary"
+   );
+
+
+   const header=
+    table.querySelector("thead tr")
+    ||
+    table.querySelector("tr");
+
+   const count=
+    Math.max(
+     2,
+     header?.children.length || 2
+    );
+
+
+   const firstPct=
+    index===0 ? 28 : 25;
+
+   const otherPct=
+    (100-firstPct)/(count-1);
+
+
+   table
+    .querySelectorAll("tr")
+    .forEach(row=>{
+
+     [...row.children]
+      .forEach((cell,i)=>{
+
+       cell.style.setProperty(
+        "text-align",
+        index===0
+         ?"left"
+         :(i===0 ? "left" : "center"),
+        "important"
+       );
+
+
+       cell.style.setProperty(
+        "width",
+        (i===0 ? firstPct : otherPct)+"%",
+        "important"
+       );
+
+
+       cell.style.setProperty(
+        "vertical-align",
+        "middle",
+        "important"
+       );
+      });
+    });
+  });
+ };
+
+
+ if(document.readyState==="loading"){
+
+  document.addEventListener(
+   "DOMContentLoaded",
+   boot,
+   {once:true}
+  );
+
+ }else{
+
+  boot();
+ }
+
+})();
+
+/* EXPIRITI_T17_SERVICES_FINAL_END */
+
+/* EXPIRITI_T18_SERVICE_HERO_START */
+
+(()=>{
+  const boot=()=>{
+
+    if(
+      !document.body ||
+      !document.body.classList.contains(
+        "page-servicios"
+      )
+    ){
+      return;
+    }
+
+
+    const hero=
+      document.querySelector(
+        "main.hero"
+      );
+
+
+    if(!hero){
+      return;
+    }
+
+
+    const h1=
+      [...hero.children]
+        .find(el=>
+          el.tagName==="H1"
+        );
+
+
+    const badges=
+      [...hero.children]
+        .find(el=>
+          el.classList
+            ?.contains("badges")
+        );
+
+
+    if(!h1 || !badges){
+      return;
+    }
+
+
+    /*
+     * El badge "Servicio" es redundante
+     * porque ya estamos en una página de Servicio.
+     */
+    [
+      ...h1.querySelectorAll(
+        ".badge"
+      )
+    ]
+    .filter(el=>
+      el.textContent
+        .trim()
+        .toLowerCase()
+      ===
+      "servicio"
+    )
+    .forEach(el=>el.remove());
+
+
+    if(
+      !h1.parentElement
+        .classList
+        .contains(
+          "exp-t18-hero-row"
+        )
+    ){
+
+      const row=
+        document.createElement(
+          "div"
+        );
+
+
+      row.className=
+        "exp-t18-hero-row "
+        +"exp-t18-service-hero-row";
+
+
+      hero.insertBefore(
+        row,
+        h1
+      );
+
+
+      row.appendChild(h1);
+      row.appendChild(badges);
+    }
+  };
+
+
+  if(document.readyState==="loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+  }
+
+})();
+
+/* EXPIRITI_T18_SERVICE_HERO_END */
+
+/* EXPIRITI_T19_SERVICE_RUNTIME_START */
+
+(()=>{
+ const boot=()=>{
+
+  if(
+   !document.body ||
+   !document.body.classList.contains(
+    "page-servicios"
+   )
+  ){
+   return;
+  }
+
+
+  /*
+   * Courses:
+   * identify the ACTUAL anchor, regardless of whether
+   * exp-course-info-badge is itself the <a> or a child.
+   */
+  document
+   .querySelectorAll(
+    ".exp-course-info-badge"
+   )
+   .forEach(badge=>{
+
+    const link=
+     badge.matches("a")
+      ?badge
+      :(
+        badge.closest("a")
+        ||
+        badge.querySelector("a")
+       );
+
+
+    badge.classList.add(
+     "exp-t19-course-decoration-clean"
+    );
+
+
+    if(link){
+
+     link.classList.add(
+      "exp-t19-course-decoration-clean"
+     );
+
+
+     for(const el of [
+      link,
+      badge,
+      ...link.querySelectorAll("*")
+     ]){
+
+      el.style.setProperty(
+       "text-decoration",
+       "none",
+       "important"
+      );
+
+      el.style.setProperty(
+       "text-decoration-line",
+       "none",
+       "important"
+      );
+
+      el.style.setProperty(
+       "border-bottom",
+       "0",
+       "important"
+      );
+     }
+    }
+   });
+ };
+
+
+ if(document.readyState==="loading"){
+
+  document.addEventListener(
+   "DOMContentLoaded",
+   boot,
+   {once:true}
+  );
+
+ }else{
+
+  boot();
+ }
+
+})();
+
+/* EXPIRITI_T19_SERVICE_RUNTIME_END */
+
+/* EXPIRITI_T22_SERVICE_RUNTIME_START */
+
+(()=>{
+  const boot=()=>{
+
+    /* =====================================================
+       LISTSLIDER
+       ===================================================== */
+
+    document
+      .querySelectorAll(".listSlider")
+      .forEach(slider=>{
+
+        const track=
+          slider.querySelector(
+            ".listTrack"
+          );
+
+        if(!track){
+          return;
+        }
+
+
+        const prev=
+          slider.querySelector(
+            ".arrowCircle.prev"
+          );
+
+        const next=
+          slider.querySelector(
+            ".arrowCircle.next"
+          );
+
+
+        const update=()=>{
+
+          const single=
+            track.scrollWidth
+            <=
+            track.clientWidth+3;
+
+
+          [prev,next]
+            .filter(Boolean)
+            .forEach(btn=>{
+
+              btn.classList.toggle(
+                "is-disabled",
+                single
+              );
+
+              btn.setAttribute(
+                "aria-hidden",
+                single
+                  ?"true"
+                  :"false"
+              );
+            });
+        };
+
+
+        const bind=(btn,dir)=>{
+
+          if(
+            !btn
+            ||
+            btn.dataset.expT22Bound==="1"
+          ){
+            return;
+          }
+
+
+          btn.dataset.expT22Bound="1";
+
+
+          btn.addEventListener(
+            "click",
+            event=>{
+
+              if(
+                window.matchMedia(
+                  "(max-width:900px)"
+                ).matches
+              ){
+                return;
+              }
+
+
+              event.preventDefault();
+              event.stopImmediatePropagation();
+
+
+              track.scrollBy({
+                left:
+                  dir*Math.max(
+                    track.clientWidth,
+                    1
+                  ),
+                behavior:
+                  "smooth"
+              });
+
+
+              setTimeout(
+                update,
+                350
+              );
+            },
+            true
+          );
+        };
+
+
+        bind(prev,-1);
+        bind(next,1);
+
+        update();
+
+
+        if(
+          "ResizeObserver"
+          in window
+        ){
+
+          new ResizeObserver(
+            update
+          ).observe(track);
+        }
+      });
+
+
+    /* =====================================================
+       CURSOS
+       Equal card heights PER VISUAL ROW without breaking
+       the existing filter.
+       ===================================================== */
+
+    const grid=
+      document.querySelector(
+        "#cursosGrid"
+      );
+
+
+    if(grid){
+
+      const badges=[
+        ...grid.querySelectorAll(
+          ".exp-course-info-badge"
+        )
+      ];
+
+
+      const cards=[
+        ...new Set(
+          badges
+            .map(badge=>
+              badge.closest(
+                ".fcard,"
+                +".course-card,"
+                +"article,"
+                +".card"
+              )
+            )
+            .filter(Boolean)
+        )
+      ];
+
+
+      cards.forEach(card=>{
+
+        card.classList.add(
+          "exp-t22-course-card"
+        );
+
+
+        const badge=
+          card.querySelector(
+            ".exp-course-info-badge"
+          );
+
+
+        if(badge){
+
+          badge.classList.add(
+            "exp-t22-course-cta"
+          );
+        }
+      });
+
+
+      grid.classList.add(
+        "exp-t22-course-grid"
+      );
+
+
+      let timer=0;
+
+
+      const equalize=()=>{
+
+        clearTimeout(timer);
+
+
+        timer=setTimeout(
+          ()=>{
+
+            cards.forEach(card=>
+              card.style.removeProperty(
+                "min-height"
+              )
+            );
+
+
+            requestAnimationFrame(
+              ()=>{
+
+                const visible=
+                  cards.filter(card=>
+                    card.getClientRects().length
+                    &&
+                    getComputedStyle(card)
+                      .display
+                    !==
+                    "none"
+                  );
+
+
+                const groups=[];
+
+
+                visible.forEach(card=>{
+
+                  const top=
+                    Math.round(
+                      card
+                        .getBoundingClientRect()
+                        .top
+                    );
+
+
+                  let group=
+                    groups.find(item=>
+                      Math.abs(
+                        item.top-top
+                      )
+                      <=4
+                    );
+
+
+                  if(!group){
+
+                    group={
+                      top,
+                      cards:[]
+                    };
+
+                    groups.push(group);
+                  }
+
+
+                  group.cards.push(card);
+                });
+
+
+                groups.forEach(group=>{
+
+                  if(
+                    group.cards.length
+                    <2
+                  ){
+                    return;
+                  }
+
+
+                  const max=
+                    Math.max(
+                      ...group.cards.map(
+                        card=>
+                          Math.ceil(
+                            card
+                              .getBoundingClientRect()
+                              .height
+                          )
+                      )
+                    );
+
+
+                  group.cards.forEach(
+                    card=>
+                      card.style.setProperty(
+                        "min-height",
+                        max+"px"
+                      )
+                  );
+                });
+              }
+            );
+          },
+          45
+        );
+      };
+
+
+      equalize();
+
+
+      window.addEventListener(
+        "resize",
+        equalize,
+        {passive:true}
+      );
+
+
+      document.addEventListener(
+        "click",
+        event=>{
+
+          if(
+            event.target.closest(
+              "[data-filter],"
+              +".filter-btn,"
+              +".tabs button,"
+              +".pills button,"
+              +"#cursosGrid button"
+            )
+          ){
+
+            setTimeout(
+              equalize,
+              100
+            );
+          }
+        }
+      );
+    }
+  };
+
+
+  if(document.readyState==="loading"){
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      {once:true}
+    );
+
+  }else{
+
+    boot();
+  }
+
+})();
+
+/* EXPIRITI_T22_SERVICE_RUNTIME_END */

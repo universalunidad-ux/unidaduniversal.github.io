@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>No disponible · sitio en mantenimiento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Fondo neutro, carga ultra rápida sin imágenes externas pesadas */
+        body {
+            background: #f1f5f9;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+
+        /* Tarjeta limpia, sombra suave, bordes redondeados */
+        .card {
+            max-width: 620px;
+            width: 100%;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+            padding: 2rem 2rem 2.5rem;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        /* Ícono/símbolo grande sin assets externos */
+        .icon-box {
+            font-size: 5.8rem;
+            line-height: 1;
+            margin-bottom: 1.2rem;
+            display: inline-block;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.02));
+        }
+
+        /* Título principal */
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #1e293b, #2d3a4e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Texto descriptivo */
+        .mensaje {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #334155;
+            margin: 1rem 0 1.4rem 0;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Código de estado sutil */
+        .status-badge {
+            background: #eef2ff;
+            color: #1e40af;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            display: inline-block;
+            margin-bottom: 1.6rem;
+            font-family: monospace;
+            letter-spacing: 0.3px;
+        }
+
+        /* Línea divisoria decorativa */
+        .divider {
+            width: 70px;
+            height: 3px;
+            background: #cbd5e1;
+            border-radius: 3px;
+            margin: 1.5rem auto 1.7rem auto;
+            opacity: 0.5;
+        }
+
+        /* Contenedor de acciones */
+        .acciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        /* Botón principal (refrescar / reintentar) */
+        .btn-primary {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.6rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background: #1e293b;
+            transform: scale(0.97);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.96);
+        }
+
+        /* Botón secundario (contacto o ayuda) */
+        .btn-secondary {
+            background: transparent;
+            color: #2c3e66;
+            border: 1px solid #cbd5e1;
+            padding: 0.8rem 1.6rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        /* enlace dentro del botón secundario manteniendo estilo */
+        .btn-secondary a {
+            text-decoration: none;
+            color: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* pie de página minimal */
+        .footer-note {
+            margin-top: 2.2rem;
+            font-size: 0.75rem;
+            color: #6c757d;
+            border-top: 1px solid #e9ecef;
+            padding-top: 1.4rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-note span {
+            opacity: 0.7;
+        }
+
+        /* adaptabilidad total */
+        @media (max-width: 500px) {
+            .card {
+                padding: 1.5rem 1.2rem 2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .icon-box {
+                font-size: 4.5rem;
+            }
+            .mensaje {
+                font-size: 1rem;
+            }
+            .btn-primary, .btn-secondary {
+                padding: 0.65rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Efecto de aparición suave (muy ligero) */
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeSlide 0.35s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="card" role="main" aria-labelledby="titulo-estado">
+        <div class="icon-box" aria-hidden="true">
+            🚧
+        </div>
+        <div class="status-badge">
+            HTTP 503 · No disponible temporalmente
+        </div>
+        <h1 id="titulo-estado">Este recurso no está disponible</h1>
+        <div class="mensaje">
+            El sitio o servicio que intentas acceder <strong>no está operativo en este momento</strong>.
+            Puede deberse a mantenimiento programado, una sobrecarga momentánea o restricción temporal.
+        </div>
+        <div class="divider"></div>
+        <div class="acciones">
+            <button class="btn-primary" id="recargarBtn">
+                <span>⟳</span> Reintentar ahora
+            </button>
+            <div class="btn-secondary">
+                <a href="mailto:soporte@ejemplo.com?subject=Consulta%20sobre%20sitio%20no%20disponible">
+                    📧 Contactar soporte
+                </a>
+            </div>
+        </div>
+        <div class="footer-note">
+            <span>🕒 Si el problema persiste, vuelve a intentarlo más tarde</span>
+            <span>🔒 Error transitorio</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---- comportamiento simple y rápido ----
+            // Botón Reintentar: recarga la página actual forzando una petición limpia
+            const reloadBtn = document.getElementById('recargarBtn');
+            if (reloadBtn) {
+                reloadBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Recargar la página actual evitando caché agresiva (pero sin complicaciones)
+                    // location.reload() fuerza reload desde servidor cuando sea posible. 
+                    // En caso de estar en un iframe o entorno especial, simplemente recarga.
+                    window.location.reload();
+                });
+            }
+
+            // adicional: si se desea un reintento con retardo programático (opcional elegante)
+            // pero se mantiene minimalista. También podemos añadir un pequeño aviso consola, pero no es necesario.
+
+            // Detectar si la página se cargó dentro de un entorno que haya mostrado error 503 real.
+            // No se necesita lógica compleja. Solamente se proporciona una experiencia clara.
+
+            // Opción: si se detecta que la URL tiene hash o parámetros, se preserva.
+            // Simplemente se añade un efecto de feedback suave en el botón.
+            const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // Solo efecto táctil, no interfiere con la funcionalidad real
+                    if (btn.classList.contains('btn-primary')) return; // ya tiene reload
+                    // Para el botón secundario que tiene enlace, no hacemos nada extra
+                });
+            });
+
+            // Guardo un pequeño log opcional (no invasivo)
+            console.log('Página de "No disponible" — modo rápido, sin dependencias externas');
+        })();
+    </script>
+</body>
+</html>
